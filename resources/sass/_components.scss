@@ -1,0 +1,49 @@
+//panel
+.panel{
+    &-left{
+        background-color:$color-secondary;
+    }
+    &-right{
+        background-color:$color-white;
+    }
+}
+
+//vue-router link
+.router-link-active,
+.router-link-exact-active .icon-logo {
+    color:$color-secondary;
+    text-decoration: none !important;
+    background-color: $color-light;
+}
+
+
+
+.icon{
+    text-decoration: none !important;
+    position: relative;
+    &-name{
+        position: absolute;
+    visibility: hidden;
+    transition: all .2s;
+    background-color: gray;
+    color:white !important;
+    padding: .2rem;
+    border-radius: .2rem;
+    //margin-left: 1rem;
+        text-decoration: none !important;
+        z-index: 1;
+        top:-.3rem;
+        left:3.5rem;
+    }
+    &:hover &-name{
+         visibility: visible;
+        text-decoration: none !important;
+    }
+    &-logo{
+        font-size: 1.5rem;
+        padding: .6rem;
+        border-radius: .5rem;
+        color:$color-light;
+    }
+}
+

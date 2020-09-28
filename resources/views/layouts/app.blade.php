@@ -7,7 +7,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>CRMFresh</title>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
@@ -15,6 +15,9 @@
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+    <link rel="shortcut icon" type="image/png" href="https://www.perfectviewcrm.com/wp-content/uploads/sites/7/2018/08/PerfectView-What-is-CRM.png">
+    
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
@@ -24,7 +27,7 @@
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
+                    CRMFresh
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
@@ -73,7 +76,44 @@
         </nav>
 
         <main class="py-4">
-            @yield('content')
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-1 panel-left">
+                                    <div class="panel">
+                   <a href="/"><img src="{{asset('img/Dream.png')}}"alt=""></a>
+                
+                @if(Auth::user())
+                   <router-link to="/dashboard" class="panel-list_item">
+                       <p><span class="icon"><i class="icon-logo far fa-calendar"></i><span class="icon-name">Dashboard</span></span></p>
+                </router-link>
+                 <router-link to="/leads" class="panel-list_item">
+                     <p><span class="icon"><i class="icon-logo far fa-user-circle"></i><span class="icon-name">Leads</span></span></p>
+                </router-link>
+                 <router-link to="/contacts" class="panel-list_item">
+                     <p><span class="icon"><i class="icon-logo far fa-user"></i><span class="icon-name">Contacts</span></span></p>
+                </router-link>
+                <router-link to="/accounts" class="panel-list_item">
+                     <p><span class="icon"><i class="icon-logo far fa-building"></i><span class="icon-name">Accounts</span> </span></p>
+                </router-link>
+                <router-link to="/deals" class="panel-list_item">
+                     <p><span class="icon"><i class="icon-logo far fa-money-bill-alt"></i><span class="icon-name">Deals</span></span></p>
+                </router-link>
+                @endif
+                
+               </div>
+                    </div>
+                    <div class="col-md-11 panel-right">
+            @if(Auth::user())
+          <router-view>
+               
+           </router-view>
+           @else
+           @yield('content')
+           @endif
+                    </div>
+                </div>
+            </div>
+           
         </main>
     </div>
 </body>
