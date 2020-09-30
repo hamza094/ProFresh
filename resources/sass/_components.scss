@@ -2,6 +2,7 @@
 .panel{
     &-left{
         background-color:$color-secondary;
+        height: 100vh;
     }
     &-right{
         background-color:$color-white;
@@ -29,7 +30,6 @@
     color:white !important;
     padding: .2rem;
     border-radius: .2rem;
-    //margin-left: 1rem;
         text-decoration: none !important;
         z-index: 1;
         top:-.3rem;
@@ -47,3 +47,89 @@
     }
 }
 
+.vue-dropdown{
+    position: relative;
+ &_item{
+    position: absolute;
+    background-color:yellow;
+    border-radius: .4rem;
+    margin-top: .2rem;
+    box-shadow: 0 0 10px rgba(0,0,0,.2);
+    z-index:2000 !important;
+     background-color: $color-white;
+    width:40vw;
+     height:80vh;
+    right: -7rem;
+     overflow: hidden;
+    &_list{
+         display: block;
+    color: black;
+            padding: .2rem 0rem .2rem 0rem;
+        text-align: center;
+    &:hover{
+        text-decoration: none;
+        background: rgba(0,0,0,0.1);
+         box-shadow: 0 0 10px rgba(0,0,0,.2);
+        color:black;
+    }
+    }
+}
+}
+
+.coo{
+    transition:all .2s;
+    margin-top:.7rem;
+    margin-right:.5rem;
+    margin-left: .5rem;
+    padding: .3rem .3rem .6rem .3rem;
+    &:hover{
+        background-color: #E5F2FD;
+        border-radius: .3rem;
+    }
+    a{
+        text-decoration: none !important;
+    }
+    i{
+    display: block;    
+        text-align: center;
+        font-size: 1.5rem;
+        padding: .6rem;
+        border-radius: .5rem;
+        color:#637E92;
+
+    }
+    span{
+        color:#333333;
+        display: block;
+        text-align: center;
+    }
+}
+
+.top{
+    background: #F5F7F9;
+    color:#999999;
+    padding: .2rem .5rem;
+    &-sales{
+        margin-top: 1rem;
+    }
+}
+
+.nav-btn{
+    background-color:$color-secondary;
+    color:$color-white;
+     width:2rem;
+    height:2rem;
+    -webkit-transition: #12344D 150ms ease-in-out;
+    transition: #12344D 150ms ease-in-out;
+    border: 1px solid #e5e5e5;
+    border-radius: 50%;
+    display: inline-block;
+     font-size: 24px;
+    line-height: 12px;
+    padding: 8px 0 0;
+    text-align: center; 
+}
+
+[v-cloak] {
+    display: none;
+}

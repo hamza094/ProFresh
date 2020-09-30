@@ -41,6 +41,8 @@
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
+                           
+
                         <!-- Authentication Links -->
                         @guest
                             <li class="nav-item">
@@ -52,6 +54,81 @@
                                 </li>
                             @endif
                         @else
+                                        <dynamic-nav class="mt-2" v-cloak>
+                               <template v-slot:trigger>
+                              <span role="button" class="nav-btn">+</span>
+                              </template>
+                          <div class="top">Records</div>
+                              <div class="row">
+                                  <div class="col-md-3">
+                                  <div class="coo">
+                                  <a href=""><i class="far fa-user-circle"></i>
+                                  <span>Add lead</span>
+                                  </a>
+                                      </div>
+                                  </div>
+                                  <div class="col-md-3">
+                                <div class="coo">
+                                 <a href=""><i class="far fa-user"></i><span>Add contact</span></a>
+                                  </div>
+                                  </div>
+                                  
+                                  <div class="col-md-3">
+                                  <div class="coo">
+                                  <a href=""><i class="far fa-building"></i><span>Add account</span></a>
+                                  </div>
+                                  </div>
+                                  <div class="col-md-3">
+                                  <div class="coo">
+                                  <a href=""><i class="far fa-money-bill-alt"></i><span>Add deal</span></a>
+                                  </div>
+                                  </div>
+                              
+                          </div>
+                               <div class="top top-sales">Sales Activities</div>
+                              <div class="row">
+                                  <div class="col-md-3">
+                                  <div class="coo">
+                                  <a href=""><i class="fas fa-tasks"></i>
+                                  <span>Add task</span>
+                                  </a>
+                                      </div>
+                                  </div>
+                                  <div class="col-md-3">
+                                <div class="coo">
+                                 <a href=""><i class="far fa-calendar-check"></i><span>Add appointment</span></a>
+                                  </div>
+                                  </div>
+                                  
+                                  <div class="col-md-3">
+                                  <div class="coo">
+                                  <a href=""><i class="fas fa-phone-volume"></i><span>Add call log</span></a>
+                                  </div>
+                                  </div>
+                                  <div class="col-md-3">
+                                  <div class="coo">
+                                  <a href=""><i class="fas fa-sms"></i><span>Send SMS</span></a>
+                                  </div>
+                                  </div>
+                              
+                          </div>
+                             <div class="top top-sales">Miscellaneous</div>
+                              <div class="row">
+                                  <div class="col-md-3">
+                                  <div class="coo">
+                                  <a href=""><i class="far fa-envelope"></i>
+                                  <span>Send email</span>
+                                  </a>
+                                      </div>
+                                  </div>
+                                  <div class="col-md-3">
+                                <div class="coo">
+                                 <a href=""><i class="fas fa-chart-pie"></i><span>Create report</span></a>
+                                  </div>
+                                  </div>
+                          </div>
+                             
+                              </dynamic-nav>
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }}
@@ -70,11 +147,11 @@
                                 </div>
                             </li>
                         @endguest
+                       
                     </ul>
                 </div>
             </div>
         </nav>
-
         <main class="py-4">
             <div class="container-fluid">
                 <div class="row">

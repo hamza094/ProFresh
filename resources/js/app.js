@@ -23,6 +23,8 @@ Vue.use(VueRouter)
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
+Vue.component('dynamic-nav', require('./components/DynamicNav.vue').default);
+
 const routes = [
   { path: '/dashboard', component: require('./components/Dashboard.vue').default },
   { path: '/leads', component: require('./components/Lead.vue').default },
