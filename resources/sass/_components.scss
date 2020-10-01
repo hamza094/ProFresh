@@ -90,7 +90,7 @@
         text-decoration: none !important;
     }
     i{
-    display: block;    
+    display: block;
         text-align: center;
         font-size: 1.5rem;
         padding: .6rem;
@@ -127,9 +127,62 @@
      font-size: 24px;
     line-height: 12px;
     padding: 8px 0 0;
-    text-align: center; 
+    text-align: center;
 }
 
 [v-cloak] {
     display: none;
+}
+
+.panel{
+    &-top{
+        border-bottom: 1px solid #CFD7DF;
+        border-top:1px solid #CFD7DF;
+        background-color: #FDFDFD;
+        &_content{
+            padding:1rem;
+        }
+
+    }
+    &-bottom{
+        border-bottom: 1px solid #cfd7df;
+        border-top:1px solid #CFD7DF;
+        background-color: #FDFDFD;
+    }
+    &-heading{
+        text-transform:uppercase;
+        color:#999999;
+        font-weight: 700;
+        font-size: 1.1rem;
+    }
+    &-exit{
+        font-size:1rem;
+    }
+    &-btn_save{
+       background-color: #1d4967 !important;
+        color:$color-white !important;
+        transition: all .2s;
+        &:hover{
+            background-color: #12344d !important;
+        }
+    }
+    &-btn_close{
+        background-color: #e3e7ea !important;
+        transition: all .2s;
+        &:hover{
+            background-color: #cbcbd4 !important;
+        }
+    }
+    &-form{
+        ::-webkit-input-placeholder {
+            font-size:.8rem !important;
+            color: #bfbfc8 !important;
+        }
+    }
+}
+
+.label-name{
+    font-size: .8rem;
+    font-weight: 700;
+    margin-bottom: 0rem !important;
 }

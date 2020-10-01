@@ -62,10 +62,8 @@
                               <div class="row">
                                   <div class="col-md-3">
                                   <div class="coo">
-                                  <a href=""><i class="far fa-user-circle"></i>
-                                  <span>Add lead</span>
-                                  </a>
-                                      </div>
+                                  <lead-button></lead-button>
+                                  </div>
                                   </div>
                                   <div class="col-md-3">
                                 <div class="coo">
@@ -192,6 +190,8 @@
             </div>
            
         </main>
+            <slideout-panel></slideout-panel>
+
     </div>
 </body>
 </html>

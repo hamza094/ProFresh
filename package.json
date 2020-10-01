@@ -21,7 +21,8 @@
         "sass": "^1.20.1",
         "sass-loader": "^8.0.0",
         "vue": "^2.5.17",
-        "vue-template-compiler": "^2.6.10"
+        "vue-template-compiler": "^2.6.10",
+        "vue2-slideout-panel": "^2.13.0"
     },
     "dependencies": {
         "vue-router": "^3.4.4"

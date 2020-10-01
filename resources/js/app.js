@@ -12,6 +12,11 @@ import VueRouter from 'vue-router'
 
 Vue.use(VueRouter)
 
+import Vue from 'vue';
+import VueSlideoutPanel from 'vue2-slideout-panel';
+
+Vue.use(VueSlideoutPanel);
+
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -24,6 +29,9 @@ Vue.use(VueRouter)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 Vue.component('dynamic-nav', require('./components/DynamicNav.vue').default);
+Vue.component('lead-button', require('./components/LeadButton.vue').default);
+Vue.component('lead-form', require('./components/LeadForm.vue').default);
+
 
 const routes = [
   { path: '/dashboard', component: require('./components/Dashboard.vue').default },

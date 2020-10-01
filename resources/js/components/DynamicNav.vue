@@ -30,7 +30,9 @@ export default{
                 this.isOpen=false;
                 document.removeEventListener('click',this.closeIfClickedOutside);
             }
-        }
+        },
+ 
+        
     }
 }
 
