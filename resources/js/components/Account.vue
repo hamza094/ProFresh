@@ -1,5 +1,5 @@
 <template>
-    <p>Account</p>
+    <div class="page-top">Accounts</div>
 </template>
 
 
@@ -7,11 +7,11 @@
 export default{
     data(){
     return{
-    
+
     };
     },
     methods:{
-    
+
     }
 }
 </script>

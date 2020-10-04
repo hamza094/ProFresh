@@ -1,5 +1,6 @@
 <template>
-    <p>Deal</p>
+    <div class="page-top">Deals</div>
+
 </template>
 
 
@@ -7,11 +8,11 @@
 export default{
     data(){
     return{
-    
+
     };
     },
     methods:{
-    
+
     }
 }
 </script>

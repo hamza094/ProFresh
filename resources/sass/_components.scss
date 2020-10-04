@@ -3,9 +3,12 @@
     &-left{
         background-color:$color-secondary;
         height: 100vh;
+        text-align: center;
     }
     &-right{
         background-color:$color-white;
+        padding-right: 0px !important;
+        padding-left: 0px !important;
     }
 }
 
@@ -59,7 +62,7 @@
      background-color: $color-white;
     width:40vw;
      height:80vh;
-    right: -7rem;
+    right: -1rem;
      overflow: hidden;
     &_list{
          display: block;
@@ -185,4 +188,17 @@
     font-size: .8rem;
     font-weight: 700;
     margin-bottom: 0rem !important;
+}
+
+.main-img{
+    height: 2.5rem;
+    width: 2.5rem;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
+.page-top{
+    background:#F5F7F9;
+    color:#1d4967;
+    padding: .8rem;
+    font-weight: 700;
 }

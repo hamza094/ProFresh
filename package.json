@@ -25,6 +25,7 @@
         "vue2-slideout-panel": "^2.13.0"
     },
     "dependencies": {
-        "vue-router": "^3.4.4"
+        "vue-router": "^3.4.5",
+        "vue-toastify": "^1.8.0"
     }
 }

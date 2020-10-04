@@ -1,5 +1,6 @@
 <template>
-    <p>Dashboard</p>
+    <div class="page-top">Activities Dashboard</div>
+
 </template>
 
 
@@ -7,11 +8,11 @@
 export default{
     data(){
     return{
-    
+
     };
     },
     methods:{
-    
+
     }
 }
 </script>

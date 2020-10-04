@@ -13,9 +13,17 @@ import VueRouter from 'vue-router'
 Vue.use(VueRouter)
 
 import Vue from 'vue';
+
 import VueSlideoutPanel from 'vue2-slideout-panel';
 
 Vue.use(VueSlideoutPanel);
+
+import VueToastify from "vue-toastify";
+Vue.use(VueToastify, {
+    position:"bottom-left",
+    theme:"light",
+    duration:3000
+});
 
 /**
  * The following block of code may be used to automatically register your
@@ -31,6 +39,7 @@ Vue.use(VueSlideoutPanel);
 Vue.component('dynamic-nav', require('./components/DynamicNav.vue').default);
 Vue.component('lead-button', require('./components/LeadButton.vue').default);
 Vue.component('lead-form', require('./components/LeadForm.vue').default);
+
 
 
 const routes = [

@@ -1,5 +1,5 @@
 <template>
-    <p>Lead</p>
+    <div class="page-top">Leads</div>
 
 </template>
 
@@ -8,11 +8,11 @@
 export default{
     data(){
     return{
-    
+
     };
     },
     methods:{
-    
+
     }
 }
 </script>

@@ -3,10 +3,13 @@
 .panel-left {
   background-color: #12344D;
   height: 100vh;
+  text-align: center;
 }
 
 .panel-right {
   background-color: #FFFFFF;
+  padding-right: 0px !important;
+  padding-left: 0px !important;
 }
 
 .router-link-active,
@@ -61,7 +64,7 @@
   background-color: #FFFFFF;
   width: 40vw;
   height: 80vh;
-  right: -7rem;
+  right: -1rem;
   overflow: hidden;
 }
 
@@ -195,6 +198,20 @@
   font-size: 0.8rem;
   font-weight: 700;
   margin-bottom: 0rem !important;
+}
+
+.main-img {
+  height: 2.5rem;
+  width: 2.5rem;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+
+.page-top {
+  background: #F5F7F9;
+  color: #1d4967;
+  padding: 0.8rem;
+  font-weight: 700;
 }
 
 /*!
