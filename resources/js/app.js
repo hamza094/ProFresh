@@ -39,7 +39,7 @@ Vue.use(VueToastify, {
 Vue.component('dynamic-nav', require('./components/DynamicNav.vue').default);
 Vue.component('lead-button', require('./components/LeadButton.vue').default);
 Vue.component('lead-form', require('./components/LeadForm.vue').default);
-
+Vue.component('single-lead', require('./components/SingleLead.vue').default);
 
 
 const routes = [

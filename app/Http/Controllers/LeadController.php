@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreLead;
 use Illuminate\Http\Request;
 use App\Lead;
 use Auth;
@@ -39,13 +40,17 @@ class LeadController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreLead $request)
     {
-      $lead=lead::create([
+        $lead=lead::create([
          'name'=>$request->name,
          'email'=>$request->email,
          'owner'=>$request->owner
       ]);
+       if(request()->wantsJson()){
+        return['message'=>$lead->path()];
+       }
+
 
     }
 
@@ -57,7 +62,15 @@ class LeadController extends Controller
      */
     public function show($id)
     {
-        //
+        $lead=Lead::findorFail($id);
+        return view('lead.show',compact('lead',$lead));
+
+    }
+
+    public function count(){
+
+        return Lead::all()->count();
+
     }
 
     /**

@@ -19,10 +19,28 @@ class LeadTest extends TestCase
     public function auth_user_can_create_lead()
     {
         $this->signIn();
-        $lead=make('App\Lead');
         $response=$this->post('api/leads',
             ['name' => 'Json','email'=>'json_pisces@outlook.com','owner'=>'admin']);
           $this->assertDatabaseHas('leads',['name'=>'Json']);
 
     }
+
+    /** @test */
+    public function a_lead_requires_a_name(){
+        $this->signIn();
+        $lead=make('App\Lead',[
+            'name'=>null
+        ]);
+        $this->post('/api/leads',$lead->toArray())
+            ->assertSessionHasErrors('name');
+
+    }
+
+    /** @test */
+    public function auth_user_visit_lead(){
+        $this->signIn();
+        $lead=create('App\Lead');
+        $this->get($lead->path())->assertSee($lead->id);
+    }
+
 }

@@ -21,5 +21,6 @@ Auth::routes();
 
 Route::resource('api/leads', 'LeadController');
 
-
 Route::get('{path}', 'HomeController@index')->where('/path', '([A-z\d-\/_.]+)?');
+
+
