@@ -20,15 +20,22 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="968b4c7e-d095-4f74-9270-5fd0bc33b68a" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/crmfresh.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/crmfresh.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/LeadController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/LeadController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Lead.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Lead.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/app.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/app.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/css/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/app.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/LeadForm.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/LeadForm.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/SingleLead.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/SingleLead.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/sass/_components.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/_components.scss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/lead/show.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/lead/show.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/Feature/LeadTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Feature/LeadTest.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -153,6 +160,7 @@
       <path value="$PROJECT_DIR$/vendor/sebastian/diff" />
       <path value="$PROJECT_DIR$/vendor/sebastian/exporter" />
       <path value="$PROJECT_DIR$/vendor/sebastian/object-enumerator" />
+      <path value="$PROJECT_DIR$/vendor/intervention/image" />
     </include_path>
   </component>
   <component name="ProjectId" id="1iGqXxtZXdIRurzGkPrfHJ9hRn5" />
@@ -206,6 +214,12 @@
       <workItem from="1601841164599" duration="1214000" />
       <workItem from="1601897963716" duration="17575000" />
       <workItem from="1601983821220" duration="10880000" />
+      <workItem from="1602068140345" duration="2765000" />
+      <workItem from="1602072331599" duration="6750000" />
+      <workItem from="1602167430622" duration="6748000" />
+      <workItem from="1602253693142" duration="8105000" />
+      <workItem from="1602341350873" duration="9853000" />
+      <workItem from="1602411639711" duration="607000" />
     </task>
     <servers />
   </component>
@@ -245,10 +259,10 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="92" y="92" width="1182" height="544" key="DiffContextDialog/0.0.1366.728@0.0.1366.728" timestamp="1601584186027" />
-    <state x="463" y="117" key="FileChooserDialogImpl" timestamp="1602002839520">
+    <state x="463" y="117" key="FileChooserDialogImpl" timestamp="1602412103218">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="463" y="117" key="FileChooserDialogImpl/0.0.1366.728@0.0.1366.728" timestamp="1602002839520" />
+    <state x="463" y="117" key="FileChooserDialogImpl/0.0.1366.728@0.0.1366.728" timestamp="1602412103217" />
     <state x="275" y="95" key="Vcs.Push.Dialog.v2" timestamp="1601669331396">
       <screen x="0" y="0" width="1366" height="728" />
     </state>

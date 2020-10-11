@@ -18,6 +18,10 @@ import VueSlideoutPanel from 'vue2-slideout-panel';
 
 Vue.use(VueSlideoutPanel);
 
+
+import "cropperjs/dist/cropper.css"
+
+
 import VueToastify from "vue-toastify";
 Vue.use(VueToastify, {
     position:"bottom-left",
@@ -40,6 +44,7 @@ Vue.component('dynamic-nav', require('./components/DynamicNav.vue').default);
 Vue.component('lead-button', require('./components/LeadButton.vue').default);
 Vue.component('lead-form', require('./components/LeadForm.vue').default);
 Vue.component('single-lead', require('./components/SingleLead.vue').default);
+Vue.component('file', require('./components/File.vue').default);
 
 
 const routes = [

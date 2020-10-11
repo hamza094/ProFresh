@@ -6,6 +6,8 @@ use App\Http\Requests\StoreLead;
 use Illuminate\Http\Request;
 use App\Lead;
 use Auth;
+use Illuminate\Support\Facades\Storage;
+use Image;
 
 class LeadController extends Controller
 {
@@ -105,5 +107,25 @@ class LeadController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function imgstore(Request $request){
+        if ($request->hasFile('file')) {
+
+            $image = $request->file;
+            $name = $request->name.'.jpg';
+            $path = 'public/images/' . $name;
+
+            $img = Image::make($image);
+
+            Storage::disk('local')->put($path, $img->encode());
+
+            $url = asset('storage/images/' . $name);
+
+            return response()->json(['url' => $url]);
+        }
+
+        return response()->json(['error' => 'No file']);
+
     }
 }

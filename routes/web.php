@@ -20,7 +20,7 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::resource('api/leads', 'LeadController');
-
+Route::post('/api/{lead}/avatar', 'LeadController@avatar')->name('avatar');
 Route::get('{path}', 'HomeController@index')->where('/path', '([A-z\d-\/_.]+)?');
 
 

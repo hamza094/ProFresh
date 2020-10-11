@@ -2,7 +2,7 @@
 .panel{
     &-left{
         background-color:$color-secondary;
-        height: 100vh;
+        //height: 100vh;
         text-align: center;
     }
     &-right{
@@ -147,6 +147,7 @@
         }
 
     }
+
     &-bottom{
         border-bottom: 1px solid #cfd7df;
         border-top:1px solid #CFD7DF;
@@ -196,9 +197,93 @@
     margin-top: 2rem;
     margin-bottom: 2rem;
 }
+
 .page-top{
     background:#F5F7F9;
     color:#1d4967;
     padding: .8rem;
     font-weight: 700;
+    border-bottom: 1px solid #EBEFF3;
+    &_heading{
+        padding-right: .5rem;
+        color:#2F80ED !important;;
+    }
+    &_arrow{
+        padding-right: .5rem;
+    }
+}
+.bisu{
+    height:100%;
+}
+.container-fluid{
+padding-left: 0px !important;
+}
+.page{
+    border-right: 1px solid #dce1e5;
+&-content{
+    overflow-y: scroll;
+    height: 100vh;
+    padding: 1.2rem;
+    &_img{
+        width: 100%;
+        height: 7rem;
+        width: 7rem;
+        border-radius: 50%;
+    }
+}
+}
+.pd-r{
+ padding-right: 0rem !important;
+}
+.hexa, .hexa div {
+    margin: 0 auto;
+    transform-origin: 50% 50%;
+    overflow: hidden;
+    width: 300px;
+    height: 300px;
+}
+.hexa {
+    width: 97px;
+    height: 84px;
+}
+.hexa div {
+    width: 100%;
+    height: 100%;
+}
+.hexa {
+    transform: rotate(120deg);
+}
+.hex1 {
+    transform: rotate(-60deg);
+}
+.hex2 {
+    transform: rotate(-60deg);
+}
+.content{
+    &-name{
+        font-weight: 700;
+        font-size:1.5rem;
+    }
+    &-info{
+        font-weight: bold;
+    }
+    &-dot{
+        background-color: #cbcbd4;
+        width: 0.4rem;
+        height: 0.4rem;
+        border-radius: 50%;
+        display: inline-block;
+        margin-right: .4rem;
+        margin-left:.4rem ;
+    }
+    &-map{
+        i{
+            color:#999999;
+            margin-right: .5rem;
+        }
+        a{
+            text-decoration: none !important;
+
+        }
+    }
 }

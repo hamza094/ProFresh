@@ -25,6 +25,8 @@
         "vue2-slideout-panel": "^2.13.0"
     },
     "dependencies": {
+        "vue-cropperjs": "^4.1.0",
+        "vue-image-crop-upload": "^2.5.0",
         "vue-router": "^3.4.5",
         "vue-toastify": "^1.8.0"
     }
