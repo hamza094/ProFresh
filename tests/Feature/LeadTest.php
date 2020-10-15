@@ -5,6 +5,8 @@ namespace Tests\Feature;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 
 class LeadTest extends TestCase
 {
@@ -42,5 +44,46 @@ class LeadTest extends TestCase
         $lead=create('App\Lead');
         $this->get($lead->path())->assertSee($lead->id);
     }
+
+    /** @test */
+    public function avatar_of_lead_can_be_added_by_auth_user()
+    {
+
+        $this->json('POST','api/lead/1/avatar')
+            ->assertStatus(401);
+    }
+
+    /** @test */
+    public function a_valid_avatar_must_be_provided(){
+        $this->signIn();
+        $lead=create('App\Lead');
+        $this->json('POST','api/lead/'.$lead->id.'/avatar',[
+            'avatar'=>'not-an-image'
+        ])->assertStatus(422);
+    }
+
+
+
+
+    public function auth_user_may_add_avatar_to_lead()
+    {
+        $this->signIn();
+        $lead=create('App\Lead');
+        Storage::fake('s3');
+        $this->json('POST','api/lead/'.$lead->id.'/avatar',[
+            'avatar_path'=>$file=UploadedFile::fake()->image('avatar.jpg')
+        ]);
+
+        Storage::disk('s3')->assertExists('avatars/'.$file->hashName());
+    }
+
+    /** @test */
+    public function a_user_can_determine_their_avatar_path()
+    {
+        $user=create('App\Lead');
+        $user->avatar_path='http://localhost/storage/avatars/me.jpg';
+        $this->assertEquals(asset('storage/avatars/me.jpg'),$user->avatar_path);
+    }
+
 
 }

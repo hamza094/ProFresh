@@ -18,6 +18,10 @@ import VueSlideoutPanel from 'vue2-slideout-panel';
 
 Vue.use(VueSlideoutPanel);
 
+import VModal from 'vue-js-modal'
+Vue.use(VModal)
+
+
 
 import "cropperjs/dist/cropper.css"
 
@@ -26,7 +30,7 @@ import VueToastify from "vue-toastify";
 Vue.use(VueToastify, {
     position:"bottom-left",
     theme:"light",
-    duration:3000
+    duration:3000,
 });
 
 /**

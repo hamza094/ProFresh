@@ -8,6 +8,8 @@ use App\Lead;
 use Auth;
 use Illuminate\Support\Facades\Storage;
 use Image;
+use File;
+
 
 class LeadController extends Controller
 {
@@ -49,6 +51,7 @@ class LeadController extends Controller
          'email'=>$request->email,
          'owner'=>$request->owner
       ]);
+
        if(request()->wantsJson()){
         return['message'=>$lead->path()];
        }
@@ -109,23 +112,17 @@ class LeadController extends Controller
         //
     }
 
-    public function imgstore(Request $request){
-        if ($request->hasFile('file')) {
-
-            $image = $request->file;
-            $name = $request->name.'.jpg';
-            $path = 'public/images/' . $name;
-
-            $img = Image::make($image);
-
-            Storage::disk('local')->put($path, $img->encode());
-
-            $url = asset('storage/images/' . $name);
-
-            return response()->json(['url' => $url]);
-        }
-
-        return response()->json(['error' => 'No file']);
-
+    public function avatar(Lead $lead, Request $request){
+        $this->validate(request(), [
+            'avatar'=>['required', 'image']
+        ]);
+        $file = $request->file('avatar');
+        $filename = uniqid($lead->id.'_').'.'.$file->getClientOriginalExtension();
+        Storage::disk('s3')->put($filename, File::get($file), 'public');
+        //Store Profile Image in s3
+        $lead_path = Storage::disk('s3')->url($filename);
+        $lead->update(['avatar_path'=>$lead_path]);
+        return response([], 204);
     }
+
 }

@@ -22,6 +22,7 @@ class CreateLeadsTable extends Migration
             $table->string("email");
             $table->char("mobile")->nullable();
             $table->string('owner');
+            $table->string('avatar_path')->nullable();
             $table->string('status')->nullable();
             $table->timestamps();
         });
