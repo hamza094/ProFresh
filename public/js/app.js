@@ -2300,6 +2300,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['lead'],
@@ -2311,8 +2323,16 @@ __webpack_require__.r(__webpack_exports__);
       imageSrc: "",
       croppedImageSrc: "",
       avatar: this.lead.profile,
-      avatar_path: this.lead.avatar_path
+      avatar_path: this.lead.avatar_path,
+      isPop: false
     };
+  },
+  watch: {
+    isPop: function isPop(_isPop) {
+      if (_isPop) {
+        document.addEventListener('click', this.emptyIfClickedOutside);
+      }
+    }
   },
   methods: {
     setImage: function setImage(e) {
@@ -2363,6 +2383,12 @@ __webpack_require__.r(__webpack_exports__);
         })["catch"](function (error) {//Vue.prototype.$notif;
         });
       });
+    },
+    emptyIfClickedOutside: function emptyIfClickedOutside(event) {
+      if (!event.target.closest('.score-dropdown')) {
+        this.isPop = false;
+        document.removeEventListener('click', this.emptyIfClickedOutside);
+      }
     }
   }
 });
@@ -43176,7 +43202,7 @@ var render = function() {
           }
         },
         [
-          _vm.lead.avatar_path == 0
+          _vm.lead.avatar_path == null
             ? _c("div", { staticClass: "img-avatar_name" }, [
                 _vm._v(
                   "\n            " +
@@ -43185,12 +43211,50 @@ var render = function() {
                 )
               ])
             : _c("div", [
-                _c("img", { attrs: { src: _vm.avatar_path, alt: "" } })
+                _c("img", {
+                  staticClass: "main-profile-img",
+                  attrs: { src: _vm.avatar_path, alt: "" }
+                })
               ]),
           _vm._v(" "),
           _vm._m(0)
         ]
       ),
+      _vm._v(" "),
+      _c("div", [
+        _c(
+          "div",
+          {
+            staticClass: "score-dropdown",
+            on: {
+              click: function($event) {
+                _vm.isPop = !_vm.isPop
+              }
+            }
+          },
+          [
+            _vm._t("trig"),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                directives: [
+                  {
+                    name: "show",
+                    rawName: "v-show",
+                    value: _vm.isPop,
+                    expression: "isPop"
+                  }
+                ],
+                staticClass: "score-dropdown_item"
+              },
+              [_vm._t("default")],
+              2
+            )
+          ],
+          2
+        )
+      ]),
       _vm._v(" "),
       _c("modal", { attrs: { name: "avatar-file", height: "auto" } }, [
         _c(

@@ -2,16 +2,28 @@
     <div>
 
         <div class="img-avatar" @click="$modal.show('avatar-file')">
-            <div class="img-avatar_name" v-if="lead.avatar_path==0">
+            <div class="img-avatar_name" v-if="lead.avatar_path==null">
                 {{lead.name.substring(0,1)}}
             </div>
                 <div v-else>
-                    <img :src="avatar_path" alt=""/>
+                    <img :src="avatar_path" alt="" class="main-profile-img"/>
                 </div>
             <div class="img-avatar_overlay">
                 <div class="img-avatar_overlay-text">Update</div>
             </div>
             </div>
+        <div>
+            <div class="score-dropdown" @click="isPop = !isPop">
+                <!-- trigger -->
+                <slot name="trig"></slot>
+
+                <!-- menu links -->
+                <div class="score-dropdown_item" v-show=isPop>
+                    <slot></slot>
+                </div>
+            </div>
+
+        </div>
         <modal name="avatar-file"
                height="auto">
             <div class="p-3 bg-white shadow rounded-lg img_avarar">
@@ -54,6 +66,14 @@ export default {
             croppedImageSrc: "",
             avatar:this.lead.profile,
             avatar_path:this.lead.avatar_path,
+            isPop:false,
+        }
+    },
+    watch:{
+        isPop(isPop){
+            if(isPop){
+                document.addEventListener('click',this.emptyIfClickedOutside);
+            }
         }
     },
     methods: {
@@ -108,6 +128,12 @@ export default {
                     })
             })
 
+        },
+        emptyIfClickedOutside(event){
+            if(!event.target.closest('.score-dropdown')){
+                this.isPop=false;
+                document.removeEventListener('click',this.emptyIfClickedOutside);
+            }
         },
 
     },

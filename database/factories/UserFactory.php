@@ -4,6 +4,7 @@
 
 use App\User;
 use App\Lead;
+use App\LeadScore;
 use Faker\Generator as Faker;
 use Illuminate\Support\Str;
 
@@ -35,3 +36,15 @@ $factory->define(Lead::class, function (Faker $faker) {
         'owner'=>'Admin'
     ];
 });
+
+$factory->define(LeadScore::class, function (Faker $faker) {
+    return [
+        'lead_id' => function () {
+            return factory('App\Lead')->create()->id;
+        },
+        'message' => 'hy berry',
+        'point'=>'Admin'
+    ];
+});
+
+

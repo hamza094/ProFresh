@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\LeadScore;
 use App\Http\Requests\StoreLead;
 use Illuminate\Http\Request;
 use App\Lead;
@@ -51,8 +52,10 @@ class LeadController extends Controller
          'email'=>$request->email,
          'owner'=>$request->owner
       ]);
+        $lead->addScore('avatar uploaded',15);
 
-       if(request()->wantsJson()){
+
+        if(request()->wantsJson()){
         return['message'=>$lead->path()];
        }
 
@@ -68,7 +71,8 @@ class LeadController extends Controller
     public function show($id)
     {
         $lead=Lead::findorFail($id);
-        return view('lead.show',compact('lead',$lead));
+        $score=$lead->scores()->sum('point');
+        return view('lead.show',compact('lead',$lead,'score',$score));
 
     }
 
@@ -116,6 +120,9 @@ class LeadController extends Controller
         $this->validate(request(), [
             'avatar'=>['required', 'image']
         ]);
+        if($lead->avatar_path==null){
+            $lead->addScore('avatar uploaded',15);
+        }
         $file = $request->file('avatar');
         $filename = uniqid($lead->id.'_').'.'.$file->getClientOriginalExtension();
         Storage::disk('s3')->put($filename, File::get($file), 'public');

@@ -325,7 +325,7 @@
 }
 
 .content-dot {
-  background-color: #cbcbd4;
+  background-color: #e5e5ee;
   width: 0.4rem;
   height: 0.4rem;
   border-radius: 50%;
@@ -343,22 +343,114 @@
   text-decoration: none !important;
 }
 
-/*.input-wrap{
-    position: relative;
-    &_label{
-        display: inline-block;
-        padding: 8px 12px;
-        cursor: pointer;
-        border-radius: 4px;
-        background-color: #9c27b0;
-        font-size: 16px;
-        color: #fff;
-    }
-}*/
-
 .img_avarar input[type=file] {
   font-size: 15px;
   color: #12344D;
+}
+
+.score-dropdown_item {
+  position: absolute;
+  border-radius: 0.2rem;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  z-index: 2000 !important;
+  background-color: #FFFFFF;
+  width: 24rem;
+  height: auto;
+  overflow: hidden;
+  top: 7rem;
+}
+
+.score-point {
+  position: relative;
+  bottom: 95px;
+  right: -64px;
+  border: 3px solid white;
+  border-radius: 50%;
+  height: 37px;
+  width: 37px;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  cursor: pointer;
+}
+
+.score-point_cold {
+  background-color: #2B87F4;
+}
+
+.score-point_hot {
+  background-color: #F26B21;
+}
+
+.score-content_para {
+  padding: 0.5rem;
+  border-bottom: 1px solid #E5E5EE;
+}
+
+.score-content_para i {
+  margin-right: 0.3rem;
+  color: #999999;
+}
+
+.score-content_point-para {
+  border-bottom: 1px solid #E5E5EE;
+  padding-left: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
+.score-content_point-cold {
+  padding-left: 1.5rem;
+}
+
+.score-content_point-cold_point {
+  border: 3px solid #2B87F4;
+  border-radius: 50%;
+  height: 37px;
+  width: 37px;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  color: #2B87F4;
+}
+
+.score-content_point-cold_status {
+  top: 2.7rem;
+  margin-left: 0.2rem;
+  position: absolute;
+  color: #2B87F4;
+}
+
+.score-content_point-hot {
+  padding-left: 1.5rem;
+}
+
+.score-content_point-hot_point {
+  border: 4px solid #F26B21;
+  border-radius: 50%;
+  height: 37px;
+  width: 37px;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  color: #F26B21;
+}
+
+.score-content_point-hot_status {
+  top: 2.7rem;
+  margin-left: 0.3rem;
+  position: absolute;
+  color: #F26B21;
+}
+
+.fa-arrow-up {
+  color: #1ab01a;
+  font-weight: 700;
+  padding-right: 0.1rem;
+}
+
+.lead-score {
+  font-size: 0.8rem;
 }
 
 /*!

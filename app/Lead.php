@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\LeadScore;
 
 class Lead extends Model
 {
@@ -27,6 +28,18 @@ class Lead extends Model
 
             return $path;
         }
+    }
+
+    public function scores(){
+        return $this->hasMany(LeadScore::class);
+    }
+
+    public function addScore($message,$point){
+        return LeadScore::create([
+            'lead_id'=>$this->id,
+            'message'=>$message,
+            'point'=>$point
+        ]);
     }
 }
 
