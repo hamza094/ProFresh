@@ -85,5 +85,15 @@ class LeadTest extends TestCase
         $this->assertEquals(asset('storage/avatars/me.jpg'),$user->avatar_path);
     }
 
+    /** @test */
+    public function signIn_user_can_update_lead(){
+        $this->signIn();
+        $lead=create('App\Lead');
+        $name="john santiman";
+        $company='sants co';
+        $owner='fella';
+        $this->withoutExceptionHandling()->patch($lead->path(),['name'=>$name,'company'=>$company,'owner'=>$owner]);
+        $this->assertDatabaseHas('leads',['id'=>$lead->id,'company'=>$company]);
+    }
 
 }

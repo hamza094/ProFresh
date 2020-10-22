@@ -29,6 +29,7 @@
             <div class="p-3 bg-white shadow rounded-lg img_avarar">
                 <input type="file" name="avatar" id="file" accept="image/*" value="Upload Avatar" @change="setImage"/>
                 <!-- Image previewer -->
+
                 <img :src="imageSrc" width="100" />
 
                 <!-- Cropper container -->

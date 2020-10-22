@@ -22,14 +22,16 @@
     <list default="true" id="968b4c7e-d095-4f74-9270-5fd0bc33b68a" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/LeadController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/LeadController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Lead.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Lead.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/factories/UserFactory.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/factories/UserFactory.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/css/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/app.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/app.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/components/SingleLead.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/SingleLead.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/sass/_components.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/_components.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/sass/_variables.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/_variables.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/layouts/app.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/app.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/lead/show.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/lead/show.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/Feature/LeadTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Feature/LeadTest.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -175,7 +177,7 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
-  <component name="RunManager" selected="PHPUnit.ExampleTest.testBasicTest">
+  <component name="RunManager" selected="PHPUnit.LeadTest.signIn_user_can_update_lead">
     <configuration name="ExampleTest" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
       <TestRunner class="Tests\Feature\ExampleTest" file="$PROJECT_DIR$/tests/Feature/ExampleTest.php" scope="Class" />
       <method v="2" />
@@ -184,12 +186,17 @@
       <TestRunner class="Tests\Feature\ExampleTest" file="$PROJECT_DIR$/tests/Feature/ExampleTest.php" method="testBasicTest" scope="Method" />
       <method v="2" />
     </configuration>
+    <configuration name="LeadTest.signIn_user_can_update_lead" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
+      <TestRunner class="Tests\Feature\LeadTest" file="$PROJECT_DIR$/tests/Feature/LeadTest.php" method="signIn_user_can_update_lead" scope="Method" />
+      <method v="2" />
+    </configuration>
     <configuration name="phpunit.xml" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
       <TestRunner scope="XML" />
       <method v="2" />
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="PHPUnit.LeadTest.signIn_user_can_update_lead" />
         <item itemvalue="PHPUnit.ExampleTest.testBasicTest" />
         <item itemvalue="PHPUnit.ExampleTest" />
       </list>
@@ -233,7 +240,9 @@
       <workItem from="1603032029164" duration="6206000" />
       <workItem from="1603102906686" duration="2042000" />
       <workItem from="1603108614920" duration="13734000" />
-      <workItem from="1603192179403" duration="755000" />
+      <workItem from="1603192179403" duration="12392000" />
+      <workItem from="1603280716718" duration="6573000" />
+      <workItem from="1603357037165" duration="519000" />
     </task>
     <servers />
   </component>
@@ -265,10 +274,10 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="137" y="17" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1366.728@0.0.1366.728" timestamp="1601580569993" />
-    <state x="456" y="164" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1601841498649">
+    <state x="456" y="164" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1603193563423">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="456" y="164" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1366.728@0.0.1366.728" timestamp="1601841498649" />
+    <state x="456" y="164" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1366.728@0.0.1366.728" timestamp="1603193563423" />
     <state x="413" y="117" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1602965793229">
       <screen x="0" y="0" width="1366" height="728" />
     </state>

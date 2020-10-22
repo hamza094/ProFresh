@@ -21,7 +21,7 @@ Vue.use(VueSlideoutPanel);
 import VModal from 'vue-js-modal'
 Vue.use(VModal)
 
-
+import 'animate.css';
 
 import "cropperjs/dist/cropper.css"
 
@@ -49,7 +49,7 @@ Vue.component('lead-button', require('./components/LeadButton.vue').default);
 Vue.component('lead-form', require('./components/LeadForm.vue').default);
 Vue.component('single-lead', require('./components/SingleLead.vue').default);
 Vue.component('file', require('./components/File.vue').default);
-
+Vue.component('lead-edit', require('./components/LeadEdit.vue').default);
 
 const routes = [
   { path: '/dashboard', component: require('./components/Dashboard.vue').default },

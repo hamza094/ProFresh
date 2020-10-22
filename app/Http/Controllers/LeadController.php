@@ -100,9 +100,19 @@ class LeadController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request,Lead $lead)
     {
-        //
+        $this->validate($request, [
+            'name'=>'required',
+            'company'=>'required',
+            'owner'=>'required',
+        ]);
+        $lead->update(request(['name', 'company','owner']));
+
+        if (request()->wantsJson()) {
+            return response($lead, 201);
+        }
+
     }
 
     /**

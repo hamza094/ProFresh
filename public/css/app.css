@@ -449,8 +449,20 @@
   padding-right: 0.1rem;
 }
 
+.model-desin {
+  background: transparent !important;
+}
+
 .lead-score {
   font-size: 0.8rem;
+}
+
+.edit-border-top {
+  border-top: 1px solid #CFD7DF;
+}
+
+.edit-border-bottom {
+  border-bottom: 1px solid #CFD7DF;
 }
 
 /*!
