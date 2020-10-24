@@ -22,9 +22,9 @@ class LeadTest extends TestCase
     {
         $this->signIn();
         $response=$this->post('api/leads',
-            ['name' => 'Json','email'=>'json_pisces@outlook.com','owner'=>'admin']);
+            ['name' => 'Json','email'=>'json_pisces@outlook.com','owner'=>'admin',
+                'mobile'=>6785434567]);
           $this->assertDatabaseHas('leads',['name'=>'Json']);
-
     }
 
     /** @test */
@@ -90,10 +90,13 @@ class LeadTest extends TestCase
         $this->signIn();
         $lead=create('App\Lead');
         $name="john santiman";
-        $company='sants co';
         $owner='fella';
-        $this->withoutExceptionHandling()->patch($lead->path(),['name'=>$name,'company'=>$company,'owner'=>$owner]);
-        $this->assertDatabaseHas('leads',['id'=>$lead->id,'company'=>$company]);
+        $email="james_picaso@outlook.com";
+        $mobile=6785434567;
+    
+
+        $this->patch($lead->path(),['name'=>$name,'owner'=>$owner,'email'=>$email,'mobile'=>$mobile]);
+        $this->assertDatabaseHas('leads',['id'=>$lead->id,'owner'=>$owner]);
     }
 
 }

@@ -33,9 +33,14 @@ $factory->define(Lead::class, function (Faker $faker) {
     return [
         'name' => $faker->name,
         'email' => $faker->unique()->safeEmail,
-        'owner'=>'Admin'
+        'owner'=>'Admin',
+        'mobile'=>6785434567,
     ];
+
+
+
 });
+
 
 $factory->define(LeadScore::class, function (Faker $faker) {
     return [

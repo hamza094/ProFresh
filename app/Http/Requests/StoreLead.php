@@ -28,7 +28,8 @@ class StoreLead extends FormRequest
         return [
             'name'=>'required',
             'email'=>'required',
-            'owner'=>'required'
+            'owner'=>'required',
+            'mobile'=>'required'
         ];
     }
 
@@ -37,7 +38,10 @@ class StoreLead extends FormRequest
         return [
             'name.required' => 'lead name required.',
             'email.required'=>'lead email required',
-            'owner'=>'lead owner required'
+            'owner.required'=>'lead owner required',
+            'mobile.required'=>'lead mobile required'
         ];
     }
 }
+
+

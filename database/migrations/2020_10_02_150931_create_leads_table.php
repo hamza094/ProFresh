@@ -17,13 +17,15 @@ class CreateLeadsTable extends Migration
             $table->id();
             $table->string("name");
             $table->string("company")->nullable();
+            $table->string('position')->nullable();
             $table->string("address")->nullable();
-            $table->char('zipcode')->nullable();
+            $table->bigInteger('zipcode')->nullable();
             $table->string("email");
-            $table->char("mobile")->nullable();
+            $table->bigInteger("mobile");
             $table->string('owner');
             $table->string('avatar_path')->nullable();
-            $table->string('status')->nullable();
+            $table->string('status')->default('Subscribed');
+            $table->string('stage')->default('New');
             $table->timestamps();
         });
     }

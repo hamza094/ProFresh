@@ -2256,6 +2256,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['lead'],
   data: function data() {
@@ -2264,12 +2270,12 @@ __webpack_require__.r(__webpack_exports__);
         name: this.lead.name,
         company: this.lead.company,
         address: this.lead.address,
-        zip: this.lead.zip,
+        zipcode: this.lead.zipcode,
         email: this.lead.email,
         mobile: this.lead.mobile,
         status: this.lead.status,
-        stage: this.lead.stage,
-        owner: this.lead.owner
+        owner: this.lead.owner,
+        position: this.lead.position
       },
       errors: {}
     };
@@ -2282,11 +2288,12 @@ __webpack_require__.r(__webpack_exports__);
         name: this.form.name,
         company: this.form.company,
         address: this.form.address,
-        zip: this.form.zip,
+        zipcode: this.form.zipcode,
         email: this.form.email,
         mobile: this.form.mobile,
         status: this.form.status,
-        owner: this.form.owner
+        owner: this.form.owner,
+        position: this.form.position
       }).then(function (response) {
         _this.$vToastify.success("Lead Updated Successfully");
 
@@ -2295,6 +2302,10 @@ __webpack_require__.r(__webpack_exports__);
       })["catch"](function (error) {
         _this.errors = error.response.data.errors;
       });
+    },
+    modalClose: function modalClose() {
+      this.$modal.hide('edit-lead');
+      this.errors = '';
     }
   }
 });
@@ -2310,10 +2321,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-//
-//
-//
-//
 //
 //
 //
@@ -43017,7 +43024,7 @@ var render = function() {
                       on: {
                         click: function($event) {
                           $event.preventDefault()
-                          return _vm.$modal.hide("edit-lead")
+                          return _vm.modalClose($event)
                         }
                       }
                     },
@@ -43087,6 +43094,48 @@ var render = function() {
                           "label",
                           {
                             staticClass: "label-name",
+                            attrs: { for: "email" }
+                          },
+                          [_vm._v("Email:")]
+                        ),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.form.email,
+                              expression: "form.email"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          attrs: { type: "text", id: "email", name: "email" },
+                          domProps: { value: _vm.form.email },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(_vm.form, "email", $event.target.value)
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _vm.errors.email
+                          ? _c("span", {
+                              staticClass: "text-danger font-italic",
+                              domProps: {
+                                textContent: _vm._s(_vm.errors.email[0])
+                              }
+                            })
+                          : _vm._e()
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "form-group" }, [
+                        _c(
+                          "label",
+                          {
+                            staticClass: "label-name",
                             attrs: { for: "company" }
                           },
                           [_vm._v("Company:")]
@@ -43123,48 +43172,6 @@ var render = function() {
                               staticClass: "text-danger font-italic",
                               domProps: {
                                 textContent: _vm._s(_vm.errors.company[0])
-                              }
-                            })
-                          : _vm._e()
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "form-group" }, [
-                        _c(
-                          "label",
-                          {
-                            staticClass: "label-name",
-                            attrs: { for: "email" }
-                          },
-                          [_vm._v("Email:")]
-                        ),
-                        _vm._v(" "),
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.form.email,
-                              expression: "form.email"
-                            }
-                          ],
-                          staticClass: "form-control",
-                          attrs: { type: "text", id: "email", name: "email" },
-                          domProps: { value: _vm.form.email },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.$set(_vm.form, "email", $event.target.value)
-                            }
-                          }
-                        }),
-                        _vm._v(" "),
-                        _vm.errors.email
-                          ? _c("span", {
-                              staticClass: "text-danger font-italic",
-                              domProps: {
-                                textContent: _vm._s(_vm.errors.email[0])
                               }
                             })
                           : _vm._e()
@@ -43215,8 +43222,11 @@ var render = function() {
                       _c("div", { staticClass: "form-group" }, [
                         _c(
                           "label",
-                          { staticClass: "label-name", attrs: { for: "work" } },
-                          [_vm._v("Work:")]
+                          {
+                            staticClass: "label-name",
+                            attrs: { for: "position" }
+                          },
+                          [_vm._v("Position:")]
                         ),
                         _vm._v(" "),
                         _c("input", {
@@ -43224,28 +43234,36 @@ var render = function() {
                             {
                               name: "model",
                               rawName: "v-model",
-                              value: _vm.form.work,
-                              expression: "form.work"
+                              value: _vm.form.position,
+                              expression: "form.position"
                             }
                           ],
                           staticClass: "form-control",
-                          attrs: { type: "text", id: "work", name: "work" },
-                          domProps: { value: _vm.form.work },
+                          attrs: {
+                            type: "text",
+                            id: "position",
+                            name: "position"
+                          },
+                          domProps: { value: _vm.form.position },
                           on: {
                             input: function($event) {
                               if ($event.target.composing) {
                                 return
                               }
-                              _vm.$set(_vm.form, "work", $event.target.value)
+                              _vm.$set(
+                                _vm.form,
+                                "position",
+                                $event.target.value
+                              )
                             }
                           }
                         }),
                         _vm._v(" "),
-                        _vm.errors.work
+                        _vm.errors.position
                           ? _c("span", {
                               staticClass: "text-danger font-italic",
                               domProps: {
-                                textContent: _vm._s(_vm.errors.work[0])
+                                textContent: _vm._s(_vm.errors.position[0])
                               }
                             })
                           : _vm._e()
@@ -43298,88 +43316,81 @@ var render = function() {
                           "label",
                           {
                             staticClass: "label-name",
-                            attrs: { for: "stage" }
-                          },
-                          [_vm._v("Lead Stage:")]
-                        ),
-                        _vm._v(" "),
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.form.stage,
-                              expression: "form.stage"
-                            }
-                          ],
-                          staticClass: "form-control",
-                          attrs: {
-                            type: "text",
-                            id: "stage",
-                            name: "stage",
-                            v: ""
-                          },
-                          domProps: { value: _vm.form.stage },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.$set(_vm.form, "stage", $event.target.value)
-                            }
-                          }
-                        }),
-                        _vm._v(" "),
-                        _vm.errors.stage
-                          ? _c("span", {
-                              staticClass: "text-danger font-italic",
-                              domProps: {
-                                textContent: _vm._s(_vm.errors.stage[0])
-                              }
-                            })
-                          : _vm._e()
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "form-group" }, [
-                        _c(
-                          "label",
-                          {
-                            staticClass: "label-name",
                             attrs: { for: "status" }
                           },
-                          [_vm._v("Subscription status:")]
+                          [_vm._v("Status: " + _vm._s(_vm.form.status))]
                         ),
                         _vm._v(" "),
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.form.status,
-                              expression: "form.status"
-                            }
-                          ],
-                          staticClass: "form-control",
-                          attrs: { type: "text", id: "status", name: "status" },
-                          domProps: { value: _vm.form.status },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
+                        _c(
+                          "select",
+                          {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.form.status,
+                                expression: "form.status"
                               }
-                              _vm.$set(_vm.form, "status", $event.target.value)
-                            }
-                          }
-                        }),
-                        _vm._v(" "),
-                        _vm.errors.status
-                          ? _c("span", {
-                              staticClass: "text-danger font-italic",
-                              domProps: {
-                                textContent: _vm._s(_vm.errors.status[0])
+                            ],
+                            staticClass: "custom-select",
+                            attrs: { id: "status", name: "status" },
+                            on: {
+                              change: function($event) {
+                                var $$selectedVal = Array.prototype.filter
+                                  .call($event.target.options, function(o) {
+                                    return o.selected
+                                  })
+                                  .map(function(o) {
+                                    var val = "_value" in o ? o._value : o.value
+                                    return val
+                                  })
+                                _vm.$set(
+                                  _vm.form,
+                                  "status",
+                                  $event.target.multiple
+                                    ? $$selectedVal
+                                    : $$selectedVal[0]
+                                )
                               }
-                            })
-                          : _vm._e()
+                            }
+                          },
+                          [
+                            _c(
+                              "option",
+                              { attrs: { selected: "", value: "Subscribed" } },
+                              [_vm._v("Subscribed")]
+                            ),
+                            _vm._v(" "),
+                            _c("option", { attrs: { value: "Unsubscribed" } }, [
+                              _vm._v("Unsubscribed")
+                            ]),
+                            _vm._v(" "),
+                            _c(
+                              "option",
+                              { attrs: { value: "Not subscribed" } },
+                              [_vm._v("Not subscribed")]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "option",
+                              { attrs: { value: "Reported as spam" } },
+                              [_vm._v("Reported as spam")]
+                            ),
+                            _vm._v(" "),
+                            _c("option", { attrs: { value: "Bounced" } }, [
+                              _vm._v("Bounced")
+                            ]),
+                            _vm._v(" "),
+                            _vm.errors.status
+                              ? _c("span", {
+                                  staticClass: "text-danger font-italic",
+                                  domProps: {
+                                    textContent: _vm._s(_vm.errors.status[0])
+                                  }
+                                })
+                              : _vm._e()
+                          ]
+                        )
                       ]),
                       _vm._v(" "),
                       _c("div", { staticClass: "form-group" }, [
@@ -43397,28 +43408,78 @@ var render = function() {
                             {
                               name: "model",
                               rawName: "v-model",
-                              value: _vm.form.zip,
-                              expression: "form.zip"
+                              value: _vm.form.zipcode,
+                              expression: "form.zipcode"
                             }
                           ],
                           staticClass: "form-control",
-                          attrs: { type: "text", id: "zip", name: "zip" },
-                          domProps: { value: _vm.form.zip },
+                          attrs: {
+                            type: "text",
+                            id: "zipcode",
+                            name: "zipcode"
+                          },
+                          domProps: { value: _vm.form.zipcode },
                           on: {
                             input: function($event) {
                               if ($event.target.composing) {
                                 return
                               }
-                              _vm.$set(_vm.form, "zip", $event.target.value)
+                              _vm.$set(_vm.form, "zipcode", $event.target.value)
                             }
                           }
                         }),
                         _vm._v(" "),
-                        _vm.errors.zip
+                        _vm.errors.zipcode
                           ? _c("span", {
                               staticClass: "text-danger font-italic",
                               domProps: {
-                                textContent: _vm._s(_vm.errors.zip[0])
+                                textContent: _vm._s(_vm.errors.zipcode[0])
+                              }
+                            })
+                          : _vm._e()
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "form-group" }, [
+                        _c(
+                          "label",
+                          {
+                            staticClass: "label-name",
+                            attrs: { for: "status" }
+                          },
+                          [_vm._v("Address:")]
+                        ),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.form.address,
+                              expression: "form.address"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          attrs: {
+                            type: "text",
+                            id: "address",
+                            name: "address"
+                          },
+                          domProps: { value: _vm.form.address },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(_vm.form, "address", $event.target.value)
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _vm.errors.address
+                          ? _c("span", {
+                              staticClass: "text-danger font-italic",
+                              domProps: {
+                                textContent: _vm._s(_vm.errors.address[0])
                               }
                             })
                           : _vm._e()
@@ -43437,7 +43498,7 @@ var render = function() {
                               on: {
                                 click: function($event) {
                                   $event.preventDefault()
-                                  return _vm.$modal.hide("edit-lead")
+                                  return _vm.modalClose($event)
                                 }
                               }
                             },
@@ -43553,48 +43614,6 @@ var render = function() {
           _c("div", { staticClass: "form-group" }, [
             _c(
               "label",
-              { staticClass: "label-name", attrs: { for: "company" } },
-              [_vm._v("Company:")]
-            ),
-            _vm._v(" "),
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.form.company,
-                  expression: "form.company"
-                }
-              ],
-              staticClass: "form-control",
-              attrs: {
-                type: "text",
-                id: "company",
-                name: "company",
-                placeholder: "Enter value"
-              },
-              domProps: { value: _vm.form.company },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.$set(_vm.form, "company", $event.target.value)
-                }
-              }
-            }),
-            _vm._v(" "),
-            _vm.errors.company
-              ? _c("span", {
-                  staticClass: "text-danger font-italic",
-                  domProps: { textContent: _vm._s(_vm.errors.company[0]) }
-                })
-              : _vm._e()
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-group" }, [
-            _c(
-              "label",
               { staticClass: "label-name", attrs: { for: "email" } },
               [_vm._v("Email:")]
             ),
@@ -43677,41 +43696,85 @@ var render = function() {
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "form-group" }, [
-            _c("label", { staticClass: "label-name", attrs: { for: "work" } }, [
-              _vm._v("Work:")
-            ]),
+            _c(
+              "label",
+              { staticClass: "label-name", attrs: { for: "company" } },
+              [_vm._v("Company:")]
+            ),
             _vm._v(" "),
             _c("input", {
               directives: [
                 {
                   name: "model",
                   rawName: "v-model",
-                  value: _vm.form.work,
-                  expression: "form.work"
+                  value: _vm.form.company,
+                  expression: "form.company"
                 }
               ],
               staticClass: "form-control",
               attrs: {
                 type: "text",
-                id: "work",
-                name: "work",
+                id: "company",
+                name: "company",
                 placeholder: "Enter value"
               },
-              domProps: { value: _vm.form.work },
+              domProps: { value: _vm.form.company },
               on: {
                 input: function($event) {
                   if ($event.target.composing) {
                     return
                   }
-                  _vm.$set(_vm.form, "work", $event.target.value)
+                  _vm.$set(_vm.form, "company", $event.target.value)
                 }
               }
             }),
             _vm._v(" "),
-            _vm.errors.work
+            _vm.errors.company
               ? _c("span", {
                   staticClass: "text-danger font-italic",
-                  domProps: { textContent: _vm._s(_vm.errors.work[0]) }
+                  domProps: { textContent: _vm._s(_vm.errors.company[0]) }
+                })
+              : _vm._e()
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "form-group" }, [
+            _c(
+              "label",
+              { staticClass: "label-name", attrs: { for: "position" } },
+              [_vm._v("Position:")]
+            ),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.form.position,
+                  expression: "form.position"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: {
+                type: "text",
+                id: "position",
+                name: "position",
+                placeholder: "Enter value"
+              },
+              domProps: { value: _vm.form.position },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.form, "position", $event.target.value)
+                }
+              }
+            }),
+            _vm._v(" "),
+            _vm.errors.position
+              ? _c("span", {
+                  staticClass: "text-danger font-italic",
+                  domProps: { textContent: _vm._s(_vm.errors.position[0]) }
                 })
               : _vm._e()
           ]),
@@ -43761,8 +43824,8 @@ var render = function() {
           _c("div", { staticClass: "form-group" }, [
             _c(
               "label",
-              { staticClass: "label-name", attrs: { for: "stage" } },
-              [_vm._v("Lead Stage:")]
+              { staticClass: "label-name", attrs: { for: "owner" } },
+              [_vm._v("Zipcode:")]
             ),
             _vm._v(" "),
             _c("input", {
@@ -43770,32 +43833,32 @@ var render = function() {
                 {
                   name: "model",
                   rawName: "v-model",
-                  value: _vm.form.stage,
-                  expression: "form.stage"
+                  value: _vm.form.zipcode,
+                  expression: "form.zipcode"
                 }
               ],
               staticClass: "form-control",
               attrs: {
                 type: "text",
-                id: "stage",
-                name: "stage",
+                id: "zipcode",
+                name: "zipcode",
                 placeholder: "Enter value"
               },
-              domProps: { value: _vm.form.stage },
+              domProps: { value: _vm.form.zipcode },
               on: {
                 input: function($event) {
                   if ($event.target.composing) {
                     return
                   }
-                  _vm.$set(_vm.form, "stage", $event.target.value)
+                  _vm.$set(_vm.form, "zipcode", $event.target.value)
                 }
               }
             }),
             _vm._v(" "),
-            _vm.errors.stage
+            _vm.errors.zipcode
               ? _c("span", {
                   staticClass: "text-danger font-italic",
-                  domProps: { textContent: _vm._s(_vm.errors.stage[0]) }
+                  domProps: { textContent: _vm._s(_vm.errors.zipcode[0]) }
                 })
               : _vm._e()
           ]),
@@ -43803,8 +43866,8 @@ var render = function() {
           _c("div", { staticClass: "form-group" }, [
             _c(
               "label",
-              { staticClass: "label-name", attrs: { for: "status" } },
-              [_vm._v("Subscription status:")]
+              { staticClass: "label-name", attrs: { for: "owner" } },
+              [_vm._v("Address:")]
             ),
             _vm._v(" "),
             _c("input", {
@@ -43812,32 +43875,32 @@ var render = function() {
                 {
                   name: "model",
                   rawName: "v-model",
-                  value: _vm.form.status,
-                  expression: "form.status"
+                  value: _vm.form.address,
+                  expression: "form.address"
                 }
               ],
               staticClass: "form-control",
               attrs: {
                 type: "text",
-                id: "status",
-                name: "status",
+                id: "address",
+                name: "address",
                 placeholder: "Enter value"
               },
-              domProps: { value: _vm.form.status },
+              domProps: { value: _vm.form.address },
               on: {
                 input: function($event) {
                   if ($event.target.composing) {
                     return
                   }
-                  _vm.$set(_vm.form, "status", $event.target.value)
+                  _vm.$set(_vm.form, "address", $event.target.value)
                 }
               }
             }),
             _vm._v(" "),
-            _vm.errors.status
+            _vm.errors.address
               ? _c("span", {
                   staticClass: "text-danger font-italic",
-                  domProps: { textContent: _vm._s(_vm.errors.status[0]) }
+                  domProps: { textContent: _vm._s(_vm.errors.address[0]) }
                 })
               : _vm._e()
           ])

@@ -48,13 +48,15 @@ class LeadController extends Controller
     public function store(StoreLead $request)
     {
         $lead=lead::create([
-         'name'=>$request->name,
-         'email'=>$request->email,
-         'owner'=>$request->owner
+            'name'=>$request->name,
+            'email'=>$request->email,
+            'owner'=>$request->owner,
+            'zipcode'=>$request->zipcode,
+            'mobile'=>$request->mobile,
+            'address'=>$request->address,
+            'position'=>$request->position,
+            'company'=>$request->company
       ]);
-        $lead->addScore('avatar uploaded',15);
-
-
         if(request()->wantsJson()){
         return['message'=>$lead->path()];
        }
@@ -104,10 +106,14 @@ class LeadController extends Controller
     {
         $this->validate($request, [
             'name'=>'required',
-            'company'=>'required',
             'owner'=>'required',
+            'email'=>'required',
+            'mobile'=>'required'
+            
         ]);
-        $lead->update(request(['name', 'company','owner']));
+
+        $lead->update(request(['name','owner','email','zipcode','mobile',
+            'address','position','status']));
 
         if (request()->wantsJson()) {
             return response($lead, 201);

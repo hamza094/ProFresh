@@ -465,6 +465,10 @@
   border-bottom: 1px solid #CFD7DF;
 }
 
+.crm-info span {
+  padding-left: 3rem;
+}
+
 /*!
  * Bootstrap v4.5.2 (https://getbootstrap.com/)
  * Copyright 2011-2020 The Bootstrap Authors
