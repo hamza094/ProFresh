@@ -93,10 +93,37 @@ class LeadTest extends TestCase
         $owner='fella';
         $email="james_picaso@outlook.com";
         $mobile=6785434567;
-    
+
 
         $this->patch($lead->path(),['name'=>$name,'owner'=>$owner,'email'=>$email,'mobile'=>$mobile]);
         $this->assertDatabaseHas('leads',['id'=>$lead->id,'owner'=>$owner]);
     }
+
+    /** @test */
+    public function lead_stage_conversion(){
+      $this->signIn();
+      $lead=create('App\Lead');
+      $stage=2;
+        $this->withoutExceptionHandling()->patch('api/lead/'.$lead->id.'/stage',[
+          'stage'=>$stage
+        ]);
+      $this->assertDatabaseHas('leads',['id'=>$lead->id,'stage'=>$stage]);
+   }
+
+   /** @test */
+   public function signIn_user_can_update_reason(){
+       $this->signIn();
+       $lead=create('App\Lead');
+       $reason="Not defined";
+       $stage=0;
+       $this->withoutExceptionHandling()->patch('api/lead/'.$lead->id.'/unqualifed',[
+         'stage'=>$stage,
+         'unqualifed'=>$reason
+       ]);
+        $this->assertDatabaseHas('leads',['id'=>$lead->id,'unqualifed'=>$reason]);
+   }
+
+
+
 
 }

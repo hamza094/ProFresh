@@ -35,6 +35,7 @@ $factory->define(Lead::class, function (Faker $faker) {
         'email' => $faker->unique()->safeEmail,
         'owner'=>'Admin',
         'mobile'=>6785434567,
+        'stage'=>1
     ];
 
 
@@ -51,5 +52,3 @@ $factory->define(LeadScore::class, function (Faker $faker) {
         'point'=>'Admin'
     ];
 });
-
-

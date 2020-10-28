@@ -30,7 +30,9 @@ import VueToastify from "vue-toastify";
 Vue.use(VueToastify, {
     position:"bottom-left",
     theme:"light",
-    duration:3000,
+    successDuration:2050,
+      errorDuration:2050,
+      canPause:false
 });
 
 /**
@@ -50,6 +52,7 @@ Vue.component('lead-form', require('./components/LeadForm.vue').default);
 Vue.component('single-lead', require('./components/SingleLead.vue').default);
 Vue.component('file', require('./components/File.vue').default);
 Vue.component('lead-edit', require('./components/LeadEdit.vue').default);
+Vue.component('lead-stage', require('./components/Stage.vue').default);
 
 const routes = [
   { path: '/dashboard', component: require('./components/Dashboard.vue').default },

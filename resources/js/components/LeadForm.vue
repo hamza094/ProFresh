@@ -10,8 +10,8 @@
                 <form action="">
                     <div class="panel-top_content">
                         <div class="form-group">
-                        <label for="lastname" class="label-name">Name:</label>
-                        <input type="text" id="lastname" class="form-control" v-model="form.name" name="lastname" placeholder="Enter value">
+                        <label for="name" class="label-name">Name:</label>
+                        <input type="text" id="lastname" class="form-control" v-model="form.name" name="name" placeholder="Enter value">
                             <span class="text-danger font-italic" v-if="errors.name" v-text="errors.name[0]"></span>
                         </div>
 

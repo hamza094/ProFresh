@@ -25,7 +25,8 @@ class CreateLeadsTable extends Migration
             $table->string('owner');
             $table->string('avatar_path')->nullable();
             $table->string('status')->default('Subscribed');
-            $table->string('stage')->default('New');
+            $table->integer('stage')->default(1);
+            $table->string('unqualifed')->nullable();
             $table->timestamps();
         });
     }

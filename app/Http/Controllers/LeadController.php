@@ -109,7 +109,7 @@ class LeadController extends Controller
             'owner'=>'required',
             'email'=>'required',
             'mobile'=>'required'
-            
+
         ]);
 
         $lead->update(request(['name','owner','email','zipcode','mobile',
@@ -146,6 +146,31 @@ class LeadController extends Controller
         $lead_path = Storage::disk('s3')->url($filename);
         $lead->update(['avatar_path'=>$lead_path]);
         return response([], 204);
+    }
+
+    public function stage(Request $request, Lead $lead){
+      $this->validate($request, [
+          'stage'=>'required',
+      ]);
+
+      $lead->update(request(['stage']));
+
+      if (request()->wantsJson()) {
+          return response($lead, 201);
+      }
+    }
+
+    public function unqualifed(Request $request,Lead $lead){
+      $this->validate($request, [
+          'unqualifed'=>'required',
+          'stage'=>'required'
+      ]);
+      $lead->update(request(['unqualifed','stage']));
+
+      if (request()->wantsJson()) {
+          return response($lead, 201);
+      }
+
     }
 
 }
