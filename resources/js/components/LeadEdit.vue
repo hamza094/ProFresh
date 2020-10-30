@@ -2,6 +2,22 @@
 
     <div class="float-right">
     <button class="btn btn-primary btn-sm" @click="$modal.show('edit-lead')">Edit Lead</button>
+    <span class="feature-dropdown" @click="featurePop = !featurePop">
+<span class="btn btn-light btn-sm"><i class="fas fa-ellipsis-v"></i></span>
+<span class="feature-dropdown_item" v-show=featurePop>
+  <ul>
+    <li class="feature-dropdown_item-content"><i class="far fa-trash-alt"></i> Trash</li>
+    <li class="feature-dropdown_item-content"><i class="far fa-envelope"></i> Email</li>
+    <li class="feature-dropdown_item-content"><i class="fas fa-mobile-alt"></i> Send SMS</li>
+    <li class="feature-dropdown_item-content"><i class="fas fa-upload"></i> Export</li>
+    <li class="feature-dropdown_item-content"><i class="far fa-user-circle"></i> Remove display picture</li>
+    <li class="feature-dropdown_item-content"><i class="fas fa-inbox"></i> Unsubscribe</li>
+    <li class="feature-dropdown_item-content"><i class="fab fa-500px"></i> Add to sequence</li>
+    <li class="feature-dropdown_item-content"><i class="fab fa-500px"></i> Remove from sequence</li>
+    <li class="feature-dropdown_item-content"><i class="far fa-trash-alt"></i> Delete</li>
+  </ul>
+</span>
+    </span>
 
     <modal name="edit-lead"
            height="auto" :scrollable="true" :shiftX="1" width="38%"
@@ -110,8 +126,16 @@ export default {
               owner:this.lead.owner,
               position:this.lead.position
           },
+           featurePop:false,
             errors:{}
         };
+    },
+    watch:{
+        stagePop(featurePop){
+            if(featurePop){
+                document.addEventListener('click',this.zeroIfClickedOutside);
+            }
+        }
     },
     methods: {
         updateLead(){
@@ -137,7 +161,13 @@ export default {
         modalClose(){
             this.$modal.hide('edit-lead');
             this.errors='';
-        }
+        },
+        zeroIfClickedOutside(event){
+            if(!event.target.closest('.feature-dropdown')){
+                this.featurePop=false;
+                document.removeEventListener('click',this.zeroIfClickedOutside);
+            }
+        },
 
     }
 }

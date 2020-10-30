@@ -77,7 +77,11 @@
                                 <div class="col-md-6">
                                     <p class="crm-info"> <b>Email</b>: <span> {{$lead->name}} </span></p>
                                     <p class="crm-info"> <b>Mobile</b>: <span> {{$lead->mobile}} </span></p>
+                                    @if($lead->unqualifed == null)
                                     <p class="crm-info"> <b>Unqualified reason</b>: <span> Not Known  </span></p>
+                                    @else
+                                    <p class="crm-info"> <b>Unqualified reason</b>: <span> {{$lead->unqualifed}}  </span></p>
+                                    @endif
                                     <p class="crm-info"> <b>Zipcode</b>: <span> {{$lead->zipcode}} </span></p>
                                     <p class="crm-info"> <b>Sales Owner</b>: <span> {{$lead->owner}} </span></p>
                                     <p class="crm-info"> <b>Subscription status</b>: <span>{{$lead->status}}</span></p>
@@ -86,7 +90,7 @@
                                     <p class="crm-info"> <b>Source</b>: <span> Organic  </span></p>
                                     <p class="crm-info"> <b>Address</b>: <span> {{$lead->address}} </span></p>
                                     <p class="crm-info"> <b>Created At</b>: <span> {{$lead->created_at->diffForHumans()}} </span></p>
-                                    <p class="crm-info"> <b>Updated At</b>: <span> {{$lead->Updated_at}} </span></p>
+                                    <p class="crm-info"> <b>Updated At</b>: <span> {{$lead->updated_at->diffForHumans()}} </span></p>
                                     <p class="crm-info"> <b>Updated By</b>: <span> Hamza </span></p>
                                     <p class="crm-info"> <b>Medium</b>: <span> Blog </span></p>
 

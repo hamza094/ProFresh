@@ -1,5 +1,6 @@
 <template>
 <div class="">
+  <p><span><b>Lead stage changed:</b> {{this.lead.updated_at | timeExactDate}}</span></p>
   <div class="row">
     <div class="arrow-pointer-pd" @click="initial">
       <p class="arrow-pointer-unq unq-bg" v-if="isSelected == 0"><span class="arrow-pointer-span">1. New Stage</span></p>

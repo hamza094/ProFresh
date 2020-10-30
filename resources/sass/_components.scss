@@ -600,10 +600,49 @@ ul{
   }
 }
 
-
 .unq-bg{
 background: #E84F51 !important;
 &::before{
       border-left: 25px solid  #E84F51  !important;
+}
+}
+
+.feature-dropdown{
+  position: relative;
+&_item{
+  position: absolute;
+  border-radius: .2rem;
+  box-shadow: 0 0 10px rgba(0,0,0,.2);
+  z-index:2000 !important;
+  right: .2rem;
+  background-color: $color-white;
+  width:13rem;
+  height:auto;
+  overflow: hidden;
+  top:1.8rem;
+  padding-top: .5rem;
+  padding-bottom: .5rem;
+  ul{
+    list-style: none;
+    display: contents;
+
+    li{
+      padding-top: .5rem;
+      padding-bottom: .5rem;
+      padding-left: 1rem;
+      font-size: .8rem;
+      font-weight: 400;
+      i{
+        padding-right:.4rem;
+      }
+    }
+  }
+&-content{
+    cursor: pointer;
+    transition: all .2s;
+    &:hover{
+      background-color: $color-light-grey;
+    }
+  }
 }
 }

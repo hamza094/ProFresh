@@ -21,6 +21,12 @@ Vue.use(VueSlideoutPanel);
 import VModal from 'vue-js-modal'
 Vue.use(VModal)
 
+import moment from 'moment';
+
+Vue.filter('timeExactDate',function(data){
+   return  moment(data).fromNow();
+})
+
 import 'animate.css';
 
 import "cropperjs/dist/cropper.css"

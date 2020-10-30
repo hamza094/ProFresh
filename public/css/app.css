@@ -642,6 +642,51 @@
   border-left: 25px solid #E84F51 !important;
 }
 
+.feature-dropdown {
+  position: relative;
+}
+
+.feature-dropdown_item {
+  position: absolute;
+  border-radius: 0.2rem;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  z-index: 2000 !important;
+  right: 0.2rem;
+  background-color: #FFFFFF;
+  width: 13rem;
+  height: auto;
+  overflow: hidden;
+  top: 1.8rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
+.feature-dropdown_item ul {
+  list-style: none;
+  display: contents;
+}
+
+.feature-dropdown_item ul li {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  padding-left: 1rem;
+  font-size: 0.8rem;
+  font-weight: 400;
+}
+
+.feature-dropdown_item ul li i {
+  padding-right: 0.4rem;
+}
+
+.feature-dropdown_item-content {
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.feature-dropdown_item-content:hover {
+  background-color: #e5e5ee;
+}
+
 /*!
  * Bootstrap v4.5.2 (https://getbootstrap.com/)
  * Copyright 2011-2020 The Bootstrap Authors
