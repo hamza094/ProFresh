@@ -31,14 +31,18 @@ import 'animate.css';
 
 import "cropperjs/dist/cropper.css"
 
+import swal from 'sweetalert2';
+
+window.swal=swal;
 
 import VueToastify from "vue-toastify";
 Vue.use(VueToastify, {
     position:"bottom-left",
     theme:"light",
     successDuration:2050,
-      errorDuration:2050,
-      canPause:false
+    warningInfoDuration:2050,
+    errorDuration:2050,
+    canPause:false
 });
 
 /**

@@ -16,8 +16,28 @@ class EventServiceProvider extends ServiceProvider
      */
     protected $listen = [
         Registered::class => [
-            SendEmailVerificationNotification::class,
-        ],
+          SendEmailVerificationNotification::class,
+      ],
+      'jdavidbakr\MailTracker\Events\EmailSentEvent' => [
+         'App\Listeners\LeadEmail',
+     ],
+     'jdavidbakr\MailTracker\Events\ViewEmailEvent' => [
+         'App\Listeners\EmailViewed',
+     ],
+     'jdavidbakr\MailTracker\Events\LinkClickedEvent' => [
+         'App\Listeners\EmailLinkClicked',
+     ],
+     'jdavidbakr\MailTracker\Events\EmailDeliveredEvent' => [
+         'App\Listeners\EmailDelivered',
+     ],
+     'jdavidbakr\MailTracker\Events\ComplaintMessageEvent' => [
+         'App\Listeners\EmailComplaint',
+     ],
+     'jdavidbakr\MailTracker\Events\PermanentBouncedMessageEvent' => [
+         'App\Listeners\BouncedEmail',
+     ],
+
+
     ];
 
     /**

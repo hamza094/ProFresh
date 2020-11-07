@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use App\LeadScore;
 use App\Http\Requests\StoreLead;
 use Illuminate\Http\Request;
@@ -10,6 +9,12 @@ use Auth;
 use Illuminate\Support\Facades\Storage;
 use Image;
 use File;
+use App\Mail\LeadMail;
+use Illuminate\Support\Facades\Mail;
+use App\Functions\LeadFunction;
+use Twilio\Rest\Client;
+use App\Exports\LeadsExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 
 class LeadController extends Controller
@@ -122,14 +127,14 @@ class LeadController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * forget the specified resource from database.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Lead $lead)
     {
-        //
+        $lead->delete();
     }
 
     public function avatar(Lead $lead, Request $request){
@@ -170,7 +175,40 @@ class LeadController extends Controller
       if (request()->wantsJson()) {
           return response($lead, 201);
       }
+   }
 
-    }
+//Lead Trash Delete
+   public function delete(Lead $lead){
+     $lead->forceDelete();
+   }
+
+   public function avatarDelete(Lead $lead){
+    if($lead->avatar_path!==null){
+   $lead->update(['avatar_path'=>null]);
+    $lead->scores()->where('message','avatar uploaded')->delete();
+     }
+}
+
+public function mail(Lead $lead,Request $request){
+  //Send Ticket Mail
+        Mail::to($lead->email)->send(
+            new LeadMail($lead,$request->subject,$request->message)
+        );
+}
+
+//Send sms on verified numbers
+public function sms(Lead $lead,Request $request){
+  $this->validate($request, [
+      'mobile'=>'required|numeric',
+      'sms'=>'required'
+  ]);
+  LeadFunction::sendMessage($request->sms,$request->mobile);
+}
+
+// Download Lead Data Excel Export
+public function export(Lead $lead){
+  return (new LeadsExport($lead))->download("lead$lead->id.xlsx");
+}
+
 
 }

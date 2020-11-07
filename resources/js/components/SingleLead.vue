@@ -65,7 +65,7 @@ export default {
         return {
             imageSrc: "",
             croppedImageSrc: "",
-            avatar:this.lead.profile,
+            //avatar:this.lead.profile,
             avatar_path:this.lead.avatar_path,
             isPop:false,
         }

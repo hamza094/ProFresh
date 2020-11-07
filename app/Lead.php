@@ -4,20 +4,26 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use App\LeadScore;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
 
 class Lead extends Model
 {
+  use SoftDeletes;
    protected $guarded=[];
+  protected $dates = ['created_at'];
+    protected $appends = ['IsSubscribedTo'];
+
 
     public function path()
     {
         return "/api/leads/{$this->id}";
     }
 
-    protected $appends = ['profile'];
+    //protected $appends = ['profile'];
 
     //User avatar path
-    public function getProfileAttribute()
+/*    public function getProfileAttribute()
     {
         if ($this->avatar_path != null) {
             $path = pathinfo($this->avatar_path);
@@ -28,7 +34,7 @@ class Lead extends Model
 
             return $path;
         }
-    }
+    }*/
 
     public function scores(){
         return $this->hasMany(LeadScore::class);
@@ -41,6 +47,31 @@ class Lead extends Model
             'point'=>$point
         ]);
     }
+
+    public function subscribers(){
+      return $this->hasMany(Subscription::class);
+    }
+
+    public function getIsSubscribedToAttribute()
+    {
+      return  $this->subscribers()
+              ->where('user_id', auth()->id())
+              ->exists();
+    }
+
+    public function subscribe($userId = null)
+{
+    $this->subscribers()->create([
+        'user_id'=>$userId ?: auth()->id()
+    ]);
+
+    return $this;
+}
+
+public function unsubscribe($userId = null)
+{
+    $this->subscribers()->where('user_id', $userId ?: auth()->id())->delete();
 }
 
 
+}

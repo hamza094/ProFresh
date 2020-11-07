@@ -661,6 +661,11 @@
   padding-bottom: 0.5rem;
 }
 
+.feature-dropdown_item a {
+  text-decoration: none !important;
+  color: inherit !important;
+}
+
 .feature-dropdown_item ul {
   list-style: none;
   display: contents;

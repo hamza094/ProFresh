@@ -10,7 +10,7 @@
                 <span class="page-top_arrow"> > </span>
                 <span> {{$lead->name}}</span>
             </span>
-                        <lead-edit :lead="{{$lead}}"></lead-edit>
+                        <lead-edit :lead="{{$lead}}" :subscribe="{{json_encode($lead->IsSubscribedTo)}}"></lead-edit>
                     </div>
                 </div>
                 <div class="page-content">
@@ -75,7 +75,7 @@
                         <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                             <div class="row">
                                 <div class="col-md-6">
-                                    <p class="crm-info"> <b>Email</b>: <span> {{$lead->name}} </span></p>
+                                    <p class="crm-info"> <b>Email</b>: <span> {{$lead->email}} </span></p>
                                     <p class="crm-info"> <b>Mobile</b>: <span> {{$lead->mobile}} </span></p>
                                     @if($lead->unqualifed == null)
                                     <p class="crm-info"> <b>Unqualified reason</b>: <span> Not Known  </span></p>

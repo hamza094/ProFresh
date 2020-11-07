@@ -622,6 +622,10 @@ background: #E84F51 !important;
   top:1.8rem;
   padding-top: .5rem;
   padding-bottom: .5rem;
+  a{
+    text-decoration: none !important;
+    color:inherit !important;
+  }
   ul{
     list-style: none;
     display: contents;

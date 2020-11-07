@@ -7,6 +7,10 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\LeadMail;
+use App\Exports\LeadsExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class LeadTest extends TestCase
 {
@@ -63,8 +67,6 @@ class LeadTest extends TestCase
     }
 
 
-
-
     public function auth_user_may_add_avatar_to_lead()
     {
         $this->signIn();
@@ -93,9 +95,7 @@ class LeadTest extends TestCase
         $owner='fella';
         $email="james_picaso@outlook.com";
         $mobile=6785434567;
-
-
-        $this->patch($lead->path(),['name'=>$name,'owner'=>$owner,'email'=>$email,'mobile'=>$mobile]);
+       $this->patch($lead->path(),['name'=>$name,'owner'=>$owner,'email'=>$email,'mobile'=>$mobile]);
         $this->assertDatabaseHas('leads',['id'=>$lead->id,'owner'=>$owner]);
     }
 
@@ -104,7 +104,7 @@ class LeadTest extends TestCase
       $this->signIn();
       $lead=create('App\Lead');
       $stage=2;
-        $this->withoutExceptionHandling()->patch('api/lead/'.$lead->id.'/stage',[
+        $this->patch('api/lead/'.$lead->id.'/stage',[
           'stage'=>$stage
         ]);
       $this->assertDatabaseHas('leads',['id'=>$lead->id,'stage'=>$stage]);
@@ -116,14 +116,75 @@ class LeadTest extends TestCase
        $lead=create('App\Lead');
        $reason="Not defined";
        $stage=0;
-       $this->withoutExceptionHandling()->patch('api/lead/'.$lead->id.'/unqualifed',[
+       $this->patch('api/lead/'.$lead->id.'/unqualifed',[
          'stage'=>$stage,
          'unqualifed'=>$reason
        ]);
         $this->assertDatabaseHas('leads',['id'=>$lead->id,'unqualifed'=>$reason]);
    }
 
+/** @test */
+   public function signIn_user_can_trash_lead(){
+      $this->signIn();
+      $lead=create('App\Lead');
+      $this->assertCount(1,$lead->get());
+      $this->delete($lead->path());
+      $this->assertCount(0,$lead->get());
+$this->assertCount(1,$lead->withTrashed()->get());
+   }
+
+   /** @test */
+      public function signIn_user_can_delete_lead(){
+         $this->signIn();
+         $lead=create('App\Lead');
+         $this->get('api/leads/'.$lead->id.'/delete');
+         $this->assertDatabaseMissing('leads',['id'=>$lead->id]);
+      }
+
+      /** @test */
+         public function signIn_user_can_delete_lead_avatar(){
+            $this->signIn();
+            $lead=create('App\Lead',['avatar_path'=>'https://encrypted-tbn0.gstatic.com']);
+            $this->patch('api/leads/'.$lead->id.'/avatar-delete');
+            $this->assertDatabaseHas('leads',['avatar_path'=>null]);
+            //$this->assertDatabaseMissing('leads',['id'=>$lead->id]);
+         }
+
+/** @test */
+public function lead_mail_sent(){
+      $this->signIn();
+      Mail::fake();
+     Mail::assertNothingSent();
+    $lead=create('App\Lead');
+       $this->post('/email/api/leads/'.$lead->id.'/mail');
+       Mail::assertSent(LeadMail::class, 1);
+}
 
 
+public function lead_sms_link_working(){
+  $this->signIn();
+
+  $lead=create('App\Lead');
+
+  $this->json('POST','/api/leads/'.$lead->id.'/sms')->assertStatus(401);
+
+}
+
+
+/**
+* @test
+*/
+public function signIn_user_can_download_lead_export()
+{
+  $this->signIn();
+  $lead=create('App\Lead',['name'=>'John O Corner']);
+    Excel::fake();
+    $this->get('api/leads/'.$lead->id.'/export');
+
+    Excel::assertDownloaded('lead'.$lead->id.'.xlsx', function(LeadsExport $export) {
+        // Assert that the correct export is downloaded.
+         return $export->query()->get()->contains('name','John O Corner');
+    });
+}
 
 }

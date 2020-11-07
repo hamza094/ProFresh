@@ -27,6 +27,7 @@ class CreateLeadsTable extends Migration
             $table->string('status')->default('Subscribed');
             $table->integer('stage')->default(1);
             $table->string('unqualifed')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }
