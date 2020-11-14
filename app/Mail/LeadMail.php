@@ -12,7 +12,6 @@ class LeadMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $lead;
     public $message;
    public $subject;
 
@@ -21,9 +20,8 @@ class LeadMail extends Mailable
      *
      * @return void
      */
-    public function __construct(Lead $lead,$message,$subject)
+    public function __construct($message,$subject)
     {
-        $this->lead=$lead;
         $this->message = $message;
        $this->subject = $subject;
     }
@@ -35,9 +33,6 @@ class LeadMail extends Mailable
      */
     public function build()
     {
-        return $this->markdown('emails.lead.mail')->withSwiftMessage(function ($message) {
-                    $message->getHeaders()
-                        ->addTextHeader('X-Model-ID',$this->lead->id);
-                });
+        return $this->markdown('emails.lead.mail');
     }
 }

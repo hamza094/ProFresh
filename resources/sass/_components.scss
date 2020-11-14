@@ -650,3 +650,67 @@ background: #E84F51 !important;
   }
 }
 }
+
+.activity{
+  ul {
+    list-style: none;
+    border-left:4px solid #D3D3D3;
+padding-left: 2rem;
+margin-left: 1rem;
+    li{
+      margin-bottom: -1.2rem;
+    }
+  }
+  &-icon{
+    position: relative;
+    top: 33px;
+    right: 55px;
+    border: 3px solid #D3D3D3;
+    border-radius: 50%;
+    height:43px;
+    width: 43px;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    &_blue{
+      color:$color-cold;
+    }
+    &_green{
+      color:#0F703B;
+    }
+    &_purple{
+      color:$color-secondary;
+    }
+    i{
+      font-size: 1.2rem;
+    }
+  }
+  &-info{
+    font-size: .7rem;
+    &_dot{
+      height: .4rem;
+      width: .4rem;
+      background-color: #D3D3D3;
+      border-radius: 50%;
+      display: inline-block;
+      margin-right: .2rem;
+      margin-left:.2rem;
+    }
+  }
+  &-more{
+    a{
+      position: relative;
+      top:24px;
+      right: 66px;
+      background-color: #D3D3D3;
+      font-size: .7rem;
+      padding:.4rem;
+      border-radius: 2rem;
+
+      &:hover{
+        text-decoration: none;
+      }
+    }
+  }
+}

@@ -5,11 +5,12 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use App\LeadScore;
 use Illuminate\Database\Eloquent\SoftDeletes;
-
+use App\Activity;
 
 class Lead extends Model
 {
   use SoftDeletes;
+  use RecordActivity;
    protected $guarded=[];
   protected $dates = ['created_at'];
     protected $appends = ['IsSubscribedTo'];
@@ -47,6 +48,11 @@ class Lead extends Model
             'point'=>$point
         ]);
     }
+
+    public function owner()
+ {
+     return $this->belongsTo(User::class,'user_id');
+ }
 
     public function subscribers(){
       return $this->hasMany(Subscription::class);

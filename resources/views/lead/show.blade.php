@@ -124,7 +124,19 @@
                     </div>
                     <hr>
                     <lead-stage :lead="{{$lead}}"></lead-stage>
+                    <hr>
+                    <h3>RECENT ACTIVITIES</h3>
+                    <div class="row">
 
+                   <div class="col-md-7 mb-5">
+                     <div class="activity">
+                      @include('lead.activities.card')
+                    </div>
+                   </div>
+                   <div class="col-md-5">
+
+                   </div>
+                    </div>
 
                 </div>
 

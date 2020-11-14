@@ -692,6 +692,75 @@
   background-color: #e5e5ee;
 }
 
+.activity ul {
+  list-style: none;
+  border-left: 4px solid #D3D3D3;
+  padding-left: 2rem;
+  margin-left: 1rem;
+}
+
+.activity ul li {
+  margin-bottom: -1.2rem;
+}
+
+.activity-icon {
+  position: relative;
+  top: 33px;
+  right: 55px;
+  border: 3px solid #D3D3D3;
+  border-radius: 50%;
+  height: 43px;
+  width: 43px;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+}
+
+.activity-icon_blue {
+  color: #2B87F4;
+}
+
+.activity-icon_green {
+  color: #0F703B;
+}
+
+.activity-icon_purple {
+  color: #12344D;
+}
+
+.activity-icon i {
+  font-size: 1.2rem;
+}
+
+.activity-info {
+  font-size: 0.7rem;
+}
+
+.activity-info_dot {
+  height: 0.4rem;
+  width: 0.4rem;
+  background-color: #D3D3D3;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 0.2rem;
+  margin-left: 0.2rem;
+}
+
+.activity-more a {
+  position: relative;
+  top: 24px;
+  right: 66px;
+  background-color: #D3D3D3;
+  font-size: 0.7rem;
+  padding: 0.4rem;
+  border-radius: 2rem;
+}
+
+.activity-more a:hover {
+  text-decoration: none;
+}
+
 /*!
  * Bootstrap v4.5.2 (https://getbootstrap.com/)
  * Copyright 2011-2020 The Bootstrap Authors

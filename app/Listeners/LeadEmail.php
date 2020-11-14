@@ -30,6 +30,6 @@ class LeadEmail
       $tracker = $event->sent_email;
   $lead_id = $event->sent_email->getHeader('X-Model-ID');
   $lead = Lead::find($lead_id);
-dd($lead_id);
+
     }
 }

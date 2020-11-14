@@ -15,7 +15,7 @@ use App\Functions\LeadFunction;
 use Twilio\Rest\Client;
 use App\Exports\LeadsExport;
 use Maatwebsite\Excel\Facades\Excel;
-
+use App\Activity;
 
 class LeadController extends Controller
 {
@@ -180,6 +180,11 @@ class LeadController extends Controller
 //Lead Trash Delete
    public function delete(Lead $lead){
      $lead->forceDelete();
+     $lead->activity()->delete();
+
+        if(request()->expectsJson()){
+            return response(['status'=>'lead deleted']);
+        }
    }
 
    public function avatarDelete(Lead $lead){
@@ -187,13 +192,16 @@ class LeadController extends Controller
    $lead->update(['avatar_path'=>null]);
     $lead->scores()->where('message','avatar uploaded')->delete();
      }
+
 }
 
 public function mail(Lead $lead,Request $request){
   //Send Ticket Mail
         Mail::to($lead->email)->send(
-            new LeadMail($lead,$request->subject,$request->message)
+            new LeadMail($request->subject,$request->message)
         );
+        $lead->recordActivity('mail_sent');
+
 }
 
 //Send sms on verified numbers
@@ -203,12 +211,19 @@ public function sms(Lead $lead,Request $request){
       'sms'=>'required'
   ]);
   LeadFunction::sendMessage($request->sms,$request->mobile);
+  $lead->recordActivity('sms_sent');
 }
 
 // Download Lead Data Excel Export
 public function export(Lead $lead){
+  $lead->recordActivity('excel_export');
   return (new LeadsExport($lead))->download("lead$lead->id.xlsx");
 }
 
+public function activity(Lead $lead){
+  $activity=Lead::where('id',$lead->id);
+  return view('lead.activities',compact('lead',$activity));
+
+}
 
 }

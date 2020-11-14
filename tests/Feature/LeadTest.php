@@ -82,6 +82,8 @@ class LeadTest extends TestCase
     /** @test */
     public function a_user_can_determine_their_avatar_path()
     {
+
+      $this->signIn();
         $user=create('App\Lead');
         $user->avatar_path='http://localhost/storage/avatars/me.jpg';
         $this->assertEquals(asset('storage/avatars/me.jpg'),$user->avatar_path);
@@ -156,7 +158,7 @@ public function lead_mail_sent(){
       Mail::fake();
      Mail::assertNothingSent();
     $lead=create('App\Lead');
-       $this->post('/email/api/leads/'.$lead->id.'/mail');
+       $this->post('/api/leads/'.$lead->id.'/mail');
        Mail::assertSent(LeadMail::class, 1);
 }
 

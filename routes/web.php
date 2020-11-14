@@ -16,16 +16,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-
-Route::group(
-  [
-    'prefix'=>'email',
-'middleware'=>'api'
-],
-  function(){
     Route::post('/api/leads/{lead}/mail','LeadController@mail');
 
-});
 
 
 
@@ -40,4 +32,5 @@ Route::resource('api/leads', 'LeadController');
 Route::get('/api/leads/{lead}/export','LeadController@export');
 Route::post('/api/leads/{lead}/subscribe','SubscriptionController@leadSubscribe');
 Route::delete('/api/leads/{lead}/unsubscribe','SubscriptionController@leadUnSubscribe');
+Route::get('/leads/{lead}/timeline_feeds','LeadController@activity');
 Route::get('{path}', 'HomeController@index')->where('/path', '([A-z\d-\/_.]+)?');

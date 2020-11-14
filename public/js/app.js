@@ -2501,7 +2501,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     leadMail: function leadMail() {
       var _this5 = this;
 
-      axios.post('/email/api/leads/' + this.lead.id + '/mail', {
+      axios.post('/api/leads/' + this.lead.id + '/mail', {
         email: this.form.email,
         subject: this.form.subject,
         message: this.form.message
@@ -69158,7 +69158,7 @@ var render = function() {
                     on: {
                       submit: function($event) {
                         $event.preventDefault()
-                        return _vm.leadSms($event)
+                        return _vm.leadMail($event)
                       }
                     }
                   },
@@ -69256,7 +69256,7 @@ var render = function() {
                             }
                           ],
                           staticClass: "form-control",
-                          attrs: { name: "subject", rows: "12" },
+                          attrs: { name: "subject", rows: "1" },
                           domProps: { value: _vm.form.subject },
                           on: {
                             input: function($event) {

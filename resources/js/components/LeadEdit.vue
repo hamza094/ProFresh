@@ -118,7 +118,7 @@
         </div>
     </div>
         <div class="panel-form">
-<form class="" @submit.prevent="leadSms">
+<form class="" @submit.prevent="leadMail">
   <div class="panel-top_content">
     <div class="form-group">
         <label for="to" class="label-name">To:</label>
@@ -131,7 +131,7 @@
     </div>
     <div class="form-group">
         <label for="subject" class="label-name">Message:</label>
-        <textarea name="subject" class="form-control" rows="12" v-model="form.subject"></textarea>
+        <textarea name="subject" class="form-control" rows="1" v-model="form.subject"></textarea>
     </div>
   </div>
   <div class="panel-bottom">
@@ -335,7 +335,7 @@ export default {
     })
   },
   leadMail(){
-    axios.post('/email/api/leads/'+this.lead.id+'/mail',{
+    axios.post('/api/leads/'+this.lead.id+'/mail',{
         email:this.form.email,
         subject:this.form.subject,
         message:this.form.message
