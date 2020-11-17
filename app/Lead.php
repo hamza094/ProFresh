@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 use App\LeadScore;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Activity;
+use Illuminate\Support\Facades\Redis;
+
 
 class Lead extends Model
 {
@@ -54,6 +56,11 @@ class Lead extends Model
      return $this->belongsTo(User::class,'user_id');
  }
 
+ public function user()
+{
+  return $this->belongsTo(User::class,'user_id');
+}
+
     public function subscribers(){
       return $this->hasMany(Subscription::class);
     }
@@ -79,5 +86,9 @@ public function unsubscribe($userId = null)
     $this->subscribers()->where('user_id', $userId ?: auth()->id())->delete();
 }
 
+public function stageupdate() {
+       $redis = Redis::connection();
+       return $redis->get('stage_update_' . $this->id);
+}
 
 }

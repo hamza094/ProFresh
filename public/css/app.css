@@ -761,6 +761,49 @@
   text-decoration: none;
 }
 
+.lead-info {
+  background-color: #F5F7F9;
+  text-align: center;
+  padding: 2rem;
+  padding: 1.2rem 0;
+  width: 85%;
+}
+
+.lead-info_score-heading {
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 0.2rem;
+}
+
+.lead-info_score-point {
+  background: #ffffff;
+  border-radius: 50%;
+  -moz-border-radius: 50%;
+  -webkit-border-radius: 50%;
+  display: inline-block;
+  font-weight: bold;
+  line-height: 80px;
+  text-align: center;
+  width: 84px;
+  font-size: 1.7rem;
+  font-weight: 400;
+}
+
+.lead-info_score-point_cold {
+  color: #2B87F4;
+  border: 3px solid #2B87F4;
+}
+
+.lead-info_score-point_hot {
+  color: #F26B21;
+  border: 3px solid #F26B21;
+}
+
+.lead-info_rec span {
+  font-weight: 700;
+  font-size: 0.8rem;
+}
+
 /*!
  * Bootstrap v4.5.2 (https://getbootstrap.com/)
  * Copyright 2011-2020 The Bootstrap Authors

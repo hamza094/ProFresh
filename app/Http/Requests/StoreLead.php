@@ -29,7 +29,7 @@ class StoreLead extends FormRequest
             'name'=>'required',
             'email'=>'required',
             'owner'=>'required',
-            'mobile'=>'required'
+            'mobile'=>'required',
         ];
     }
 
@@ -40,8 +40,7 @@ class StoreLead extends FormRequest
             'email.required'=>'lead email required',
             'owner.required'=>'lead owner required',
             'mobile.required'=>'lead mobile required'
+
         ];
     }
 }
-
-

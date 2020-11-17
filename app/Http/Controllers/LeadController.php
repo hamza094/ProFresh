@@ -16,6 +16,8 @@ use Twilio\Rest\Client;
 use App\Exports\LeadsExport;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Activity;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Redis;
 
 class LeadController extends Controller
 {
@@ -54,6 +56,7 @@ class LeadController extends Controller
     {
         $lead=lead::create([
             'name'=>$request->name,
+            'user_id'=>auth()->id(),
             'email'=>$request->email,
             'owner'=>$request->owner,
             'zipcode'=>$request->zipcode,
@@ -78,8 +81,8 @@ class LeadController extends Controller
     public function show($id)
     {
         $lead=Lead::findorFail($id);
-        $score=$lead->scores()->sum('point');
-        return view('lead.show',compact('lead',$lead,'score',$score));
+        $scores=$lead->scores()->sum('point');
+        return view('lead.show',compact('lead',$lead,'scores',$scores));
 
     }
 
@@ -159,6 +162,12 @@ class LeadController extends Controller
       ]);
 
       $lead->update(request(['stage']));
+
+      $redis = Redis::connection();
+
+      $key = 'stage_update_' . $lead->id;
+      $value = (new \DateTime())->format("Y-m-d H:i:s");
+      $redis->set($key, $value);
 
       if (request()->wantsJson()) {
           return response($lead, 201);

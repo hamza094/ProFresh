@@ -18,10 +18,10 @@
                         <div class="col-md-2">
                       <single-lead :lead="{{$lead}}" v-cloak>
                           <template v-slot:trig>
-                              @if($score <=49)
-                              <span role="button" class="score-point score-point_cold">{{$score}}</span>
+                              @if($scores <=49)
+                              <span role="button" class="score-point score-point_cold">{{$scores}}</span>
                               @else
-                                  <span role="button" class="score-point score-point_hot">{{$score}}</span>
+                                  <span role="button" class="score-point score-point_hot">{{$scores}}</span>
                               @endif
                           </template>
                           <div class="score">
@@ -32,10 +32,10 @@
                                       <div class="row">
                                           <div class="col-md-3">
                                               <p class="score-content_point-cold">
-                                                  @if($score <=49)
-                                                  <span class="score-content_point-cold_point">{{$score}}</span><br><span class="score-content_point-cold_status">Cold</span></p>
+                                                  @if($scores <=49)
+                                                  <span class="score-content_point-cold_point">{{$scores}}</span><br><span class="score-content_point-cold_status">Cold</span></p>
                                               @else
-                                                  <span class="score-content_point-hot_point">{{$score}}</span><br><span class="score-content_point-hot_status">Hot</span></p>
+                                                  <span class="score-content_point-hot_point">{{$scores}}</span><br><span class="score-content_point-hot_status">Hot</span></p>
                                               @endif
                                           </div>
                                           <div class="col-md-9">
@@ -134,7 +134,28 @@
                     </div>
                    </div>
                    <div class="col-md-5">
-
+                     <div class="lead-info">
+                       <div class="lead-info_socre">
+                         <p class="lead-info_score-heading">Score</p>
+                         @if($scores <= 49)
+                         <p class="lead-info_score-point lead-info_score-point_cold">{{$scores}}</p>
+                         @else
+                             <p class="lead-info_score-point lead-info_score-point_hot">{{$scores}}</p>
+                         @endif
+                       </div>
+                       <div class="lead-info_rec">
+                         <span>Last Seen</span>
+                         <p>{{Carbon\Carbon::parse($lead->user->lastseen())->diffforHumans()}}</p>
+                       </div>
+                       <div class="lead-info_rec">
+                         <span>Stage Updated</span>
+                         <p>{{Carbon\Carbon::parse($lead->stageUpdate())->diffforHumans()}}</p>
+                       </div>
+                       <div class="lead-info_rec">
+                         <span>Last modified</span>
+                         <p>{{$lead->updated_at->diffForHumans()}}</p>
+                       </div>
+                     </div>
                    </div>
                     </div>
 

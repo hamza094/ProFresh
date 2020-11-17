@@ -16,12 +16,13 @@ class CreateLeadsTable extends Migration
         Schema::create('leads', function (Blueprint $table) {
             $table->id();
             $table->string("name");
+            $table->integer('user_id');
             $table->string("company")->nullable();
             $table->string('position')->nullable();
             $table->string("address")->nullable();
             $table->bigInteger('zipcode')->nullable();
             $table->string("email");
-            $table->bigInteger("mobile");
+            $table->string("mobile",64);
             $table->string('owner');
             $table->string('avatar_path')->nullable();
             $table->string('status')->default('Subscribed');

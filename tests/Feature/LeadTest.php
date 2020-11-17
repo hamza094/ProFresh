@@ -160,6 +160,8 @@ public function lead_mail_sent(){
     $lead=create('App\Lead');
        $this->post('/api/leads/'.$lead->id.'/mail');
        Mail::assertSent(LeadMail::class, 1);
+       $this->assertCount(2,$lead->activity);
+
 }
 
 
@@ -169,7 +171,6 @@ public function lead_sms_link_working(){
   $lead=create('App\Lead');
 
   $this->json('POST','/api/leads/'.$lead->id.'/sms')->assertStatus(401);
-
 }
 
 
