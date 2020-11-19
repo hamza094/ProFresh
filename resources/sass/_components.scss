@@ -300,6 +300,14 @@ padding-left: 0px !important;
     }
     &-info{
         font-weight: bold;
+        a{
+          text-decoration: none;
+          color:#2F2536;
+          &:hover{
+            text-decoration: none;
+            color:#2F2536;
+          }
+        }
     }
     &-dot{
         background-color:$color-light-grey;
@@ -442,7 +450,15 @@ background: transparent !important;
 }
 .crm-info{
     span{
-        padding-left:2.5rem;
+        padding-left:.5rem;
+    }
+    a{
+      text-decoration: none;
+      color:black;
+      &:hover{
+        text-decoration: none;
+      color:black;
+      }
     }
 }
 
@@ -756,5 +772,18 @@ margin-left: 1rem;
       font-size:.8rem;
     }
   }
+  }
+  &-empty{
+    margin:3rem 0;
+    text-align: center;
+    width: inherit;
+    h4{
+      margin-bottom: 1rem;
+    }
+
+  }
+  &-account{
+
+    width: 100%;
   }
 }

@@ -15,11 +15,40 @@
         <div>
             <div class="score-dropdown" @click="isPop = !isPop">
                 <!-- trigger -->
-                <slot name="trig"></slot>
+                <span v-if="scores <= 49" role="button" class="score-point score-point_cold">{{scores}}</span>
+                <span v-else role="button" class="score-point score-point_hot">{{scores}}</span>
 
                 <!-- menu links -->
                 <div class="score-dropdown_item" v-show=isPop>
-                    <slot></slot>
+                  <div class="score">
+                      <div class="score-content">
+                          <p class="score-content_para"><i class="far fa-clock"></i><b>Lead</b> since {{lead.created_at | timeExactDate}} with current in stage
+                          <b v-if="lead.stage == 0">Unqualifed</b>
+                          <b v-if ="lead.stage == 1">New</b>
+                          <b v-if="lead.stage == 2">Connected</b>
+                          <b v-if="lead.stage == 3">Intrested</b>
+                          <b v-if="lead.stage == 4">Reviewed</b>
+                          <b v-if="lead.stage == 5">Exhibited</b>
+                          </p>
+                          <div class="score-content_point">
+                              <p class="score-content_point-para"><b>Top scoring factors</b></p>
+                              <div class="row">
+                                  <div class="col-md-3">
+                                      <p class="score-content_point-cold">
+                    <span v-if="scores <= 49"><span class="score-content_point-cold_point">{{scores}}</span><br><span class="score-content_point-cold_status">Cold</span></span>
+                    <span v-else><span  class="score-content_point-hot_point">{{scores}}</span><br><span class="score-content_point-hot_status">Hot</span></span></p>
+                                  </div>
+                                  <div class="col-md-9">
+                                  <div v-for="detail in details">
+                                    <p class="lead-score"><span><i class="fas fa-arrow-up"></i></span> {{detail.message}}</p>
+                              <p class="lead-score"><span><i class="fas fa-arrow-up"></i></span> Lead Updated</p>
+                                  </div>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+
+                  </div>
                 </div>
             </div>
 
@@ -57,7 +86,7 @@
 import VueCropper from "vue-cropperjs"
 
 export default {
-    props:['lead'],
+    props:['lead','scores','details'],
     components: {
         VueCropper,
     },

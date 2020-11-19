@@ -24,6 +24,8 @@ Became <b>Exhibited</b> lead
 Lead profile image updated
 @elseif($key == 'avatar_path' & $value==null)
 Lead Profile image removed
+@elseif($key == 'account_id')
+Account Added to Lead
 @else
 Updated lead {{$key}} to <b>{{$value}}</b>
  @endif

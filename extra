@@ -16,3 +16,52 @@
                $message->getHeaders()
                    ->addTextHeader('X-Model-ID',$this->lead->id);
            });
+
+
+           <template v-slot:trig>
+               @if($scores <=49)
+               <span role="button" class="score-point score-point_cold">{{$scores}}</span>
+               @else
+                   <span role="button" class="score-point score-point_hot">{{$scores}}</span>
+               @endif
+           </template>
+           <div class="score">
+               <div class="score-content">
+                   <p class="score-content_para"><i class="far fa-clock"></i><b>Lead</b> since {{$lead->created_at->diffForHumans()}} with current in stage
+                     @if($lead->stage==0)
+                     <b>Unqualifed</b>
+                     @elseif($lead->stage==1)
+                      <b>New</b>
+                      @elseif($lead->stage==2)
+                       <b>Connected</b>
+                       @elseif($lead->stage==3)
+                        <b>Intrested</b>
+                        @elseif($lead->stage==4)
+                         <b>Reviewed</b>
+                         @elseif($lead->stage==5)
+                          <b>Exhibited</b>
+                      @endif
+                    </p>
+                   <div class="score-content_point">
+                       <p class="score-content_point-para"><b>Top scoring factors</b></p>
+                       <div class="row">
+                           <div class="col-md-3">
+                               <p class="score-content_point-cold">
+                                   @if($scores <=49)
+                                   <span class="score-content_point-cold_point">{{$scores}}</span><br><span class="score-content_point-cold_status">Cold</span></p>
+                               @else
+                                   <span class="score-content_point-hot_point">{{$scores}}</span><br><span class="score-content_point-hot_status">Hot</span></p>
+                               @endif
+                           </div>
+                           <div class="col-md-9">
+                            @foreach($lead->scores as $score)
+                                <p class="lead-score"><span><i class="fas fa-arrow-up"></i></span> {{$score->message}}</p>
+                                   <p class="lead-score"><span><i class="fas fa-arrow-up"></i></span> Lead Updated</p>
+
+                               @endforeach
+                           </div>
+                       </div>
+                   </div>
+               </div>
+
+           </div>

@@ -33,4 +33,6 @@ Route::get('/api/leads/{lead}/export','LeadController@export');
 Route::post('/api/leads/{lead}/subscribe','SubscriptionController@leadSubscribe');
 Route::delete('/api/leads/{lead}/unsubscribe','SubscriptionController@leadUnSubscribe');
 Route::get('/leads/{lead}/timeline_feeds','LeadController@activity');
+Route::post('/api/lead/{lead}/account', 'AccountController@leadaccount');
+
 Route::get('{path}', 'HomeController@index')->where('/path', '([A-z\d-\/_.]+)?');

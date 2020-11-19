@@ -22,11 +22,6 @@ class CreateActivitiesTable extends Migration
            $table->text('changes')->nullable();
            $table->string('description');
             $table->timestamps();
-
-            $table->foreign('user_id')
-              ->references('id')
-              ->on('users')
-              ->onDelete('cascade');
         });
     }
 

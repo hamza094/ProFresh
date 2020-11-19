@@ -324,6 +324,16 @@
   font-weight: bold;
 }
 
+.content-info a {
+  text-decoration: none;
+  color: #2F2536;
+}
+
+.content-info a:hover {
+  text-decoration: none;
+  color: #2F2536;
+}
+
 .content-dot {
   background-color: #e5e5ee;
   width: 0.4rem;
@@ -466,7 +476,17 @@
 }
 
 .crm-info span {
-  padding-left: 2.5rem;
+  padding-left: 0.5rem;
+}
+
+.crm-info a {
+  text-decoration: none;
+  color: black;
+}
+
+.crm-info a:hover {
+  text-decoration: none;
+  color: black;
 }
 
 .arrow-pointer {
@@ -802,6 +822,20 @@
 .lead-info_rec span {
   font-weight: 700;
   font-size: 0.8rem;
+}
+
+.lead-empty {
+  margin: 3rem 0;
+  text-align: center;
+  width: inherit;
+}
+
+.lead-empty h4 {
+  margin-bottom: 1rem;
+}
+
+.lead-account {
+  width: 100%;
 }
 
 /*!

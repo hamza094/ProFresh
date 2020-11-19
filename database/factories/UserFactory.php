@@ -38,9 +38,6 @@ $factory->define(Lead::class, function (Faker $faker) {
         'stage'=>1,
         'user_id'=>1
     ];
-
-
-
 });
 
 
@@ -51,5 +48,16 @@ $factory->define(LeadScore::class, function (Faker $faker) {
         },
         'message' => 'hy berry',
         'point'=>'Admin'
+    ];
+});
+
+$factory->define(Account::class, function (Faker $faker) {
+    return [
+        'title' => $faker->name,
+        'country' => 'Scotland',
+        'Address'=>'William Pearl',
+        'number'=>'6785434567',
+        'industry'=>'Armor',
+        'business'=>'Sales'
     ];
 });

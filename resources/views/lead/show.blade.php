@@ -10,53 +10,36 @@
                 <span class="page-top_arrow"> > </span>
                 <span> {{$lead->name}}</span>
             </span>
-                        <lead-edit :lead="{{$lead}}" :subscribe="{{json_encode($lead->IsSubscribedTo)}}"></lead-edit>
+                        <lead-edit :lead="{{json_encode($lead)}}" :subscribe="{{json_encode($lead->IsSubscribedTo)}}"></lead-edit>
                     </div>
                 </div>
                 <div class="page-content">
                     <div class="row">
                         <div class="col-md-2">
-                      <single-lead :lead="{{$lead}}" v-cloak>
-                          <template v-slot:trig>
-                              @if($scores <=49)
-                              <span role="button" class="score-point score-point_cold">{{$scores}}</span>
-                              @else
-                                  <span role="button" class="score-point score-point_hot">{{$scores}}</span>
-                              @endif
-                          </template>
-                          <div class="score">
-                              <div class="score-content">
-                                  <p class="score-content_para"><i class="far fa-clock"></i><b>Lead</b> since {{$lead->created_at->diffForHumans()}} with current in stage <b>Connected</b></p>
-                                  <div class="score-content_point">
-                                      <p class="score-content_point-para"><b>Top scoring factors</b></p>
-                                      <div class="row">
-                                          <div class="col-md-3">
-                                              <p class="score-content_point-cold">
-                                                  @if($scores <=49)
-                                                  <span class="score-content_point-cold_point">{{$scores}}</span><br><span class="score-content_point-cold_status">Cold</span></p>
-                                              @else
-                                                  <span class="score-content_point-hot_point">{{$scores}}</span><br><span class="score-content_point-hot_status">Hot</span></p>
-                                              @endif
-                                          </div>
-                                          <div class="col-md-9">
-                                           @foreach($lead->scores as $score)
-                                               <p class="lead-score"><span><i class="fas fa-arrow-up"></i></span> {{$score->message}}</p>
-                                                  <p class="lead-score"><span><i class="fas fa-arrow-up"></i></span> Lead Updated</p>
-
-                                              @endforeach
-                                          </div>
-                                      </div>
-                                  </div>
-                              </div>
-
-                          </div>
-                      </single-lead>
+                      <single-lead :lead="{{json_encode($lead)}}" :scores="{{json_encode($scores)}}"
+                       :details="{{json_encode($lead->scores)}}"></single-lead>
                         </div>
                         <div class="col-md-10">
                             <div class="content">
                                 <p class="content-name">{{$lead->name}}</p>
-                                <p class="content-info">Sales Manager<span class="content-dot"></span>Widjets.co</p>
-                                <p class="content-map"><i class="fas fa-map-marker-alt"></i><a href="http://maps.google.com/?q=1200 Pennsylvania Ave SE, Washington, District of Columbia, 20003" target="_blank">Mongolia, Usa</a></p>
+                                <p class="content-info">
+                                  @if($lead->position !==null)
+                                  {{$lead->position}}
+                                  @else
+                                  Add Position
+                                  @endif
+                                  <span class="content-dot"></span>
+                                  @if($lead->account()->count() > 0)
+                                  <a href="/api/accounts/{{$lead->account->id}}" target="_blank">{{$lead->account->title}}</a>
+                                  @else
+                                  Add Company
+                                  @endif
+                                </p>
+                                @if($lead->address !==null)
+                                <p class="content-map"><i class="fas fa-map-marker-alt"></i><a href="http://maps.google.com/?q={{$lead->address}}" target="_blank">{{$lead->address}}</a></p>
+                                @else
+                                <p class="content-map"><i class="fas fa-map-marker-alt"></i> Add Address</p>
+                                @endif
                             </div>
 
                         </div>
@@ -99,26 +82,27 @@
                         </div>
                         <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                             <div class="row">
+                              @if($lead->account()->count() > 0)
                                 <div class="col-md-6">
-                                    <p class="crm-info"> <b>Company country</b>: <span></span></p>
-                                    <p class="crm-info"> <b>Company address</b>: <span></span></p>
-                                    <p class="crm-info"> <b>Company zipcode</b>: <span> </span></p>
-                                    <p class="crm-info"> <b>Number of employee</b>: <span>  </span></p>
-                                    <p class="crm-info"> <b>Company website</b>: <span>  </span></p>
-                                    <p class="crm-info"> <b>Industry Type</b>: <span>  </span></p>
+                                    <p class="crm-info"> <b>Company country</b>: <span> <a href="/api/acounts/1">{{$lead->account->title}}</a> </span></p>
+                                    <p class="crm-info"> <b>Company address</b>: <span> {{$lead->account->address}} </span></p>
+                                    <p class="crm-info"> <b>Company zipcode</b>: <span> {{$lead->account->zipcode}} </span></p>
+                                    <p class="crm-info"> <b>Number of employee</b>: <span> {{$lead->account->employee}}<span></p>
+                                    <p class="crm-info"> <b>Company website</b>: <span> <a  href="//{{$lead->account->website}}" target="_blank">{{$lead->account->website}}</a> </span></p>
+                                    <p class="crm-info"> <b>Industry Type</b>: <span> {{$lead->account->industry}} </span></p>
+                                 </div>
 
-
-                                </div>
                                 <div class="col-md-6">
-                                    <p class="crm-info"> <b>Company annual revenue</b>: <span>  </span></p>
-                                    <p class="crm-info"> <b>Company Phone</b>: <span>  </span></p>
-                                    <p class="crm-info"> <b>Busniess Type</b>: <span>  </span></p>
+                                    <p class="crm-info"> <b>Company annual revenue</b>: <span> {{$lead->account->revenue}} </span></p>
+                                    <p class="crm-info"> <b>Company Phone</b>: <span> {{$lead->account->number}} </span></p>
+                                    <p class="crm-info"> <b>Busniess Type</b>: <span> {{$lead->account->business}} </span></p>
                                     <p class="crm-info"> <b>Deal name</b>: <span>  </span></p>
                                     <p class="crm-info"> <b>Deal value</b>: <span>  </span></p>
                                     <p class="crm-info"> <b>Deal closed_date</b>: <span>  </span></p>
-
-
                                 </div>
+                                @else
+                                <lead-account :lead="{{json_encode($lead)}}"></lead-account>
+                                @endif
                             </div>
                         </div>
                     </div>
