@@ -838,6 +838,47 @@
   width: 100%;
 }
 
+.task {
+  margin-top: 1rem;
+}
+
+.task-top {
+  background-color: #F5F7F9;
+  padding: 0.5rem;
+}
+
+.task-top a {
+  text-decoration: none;
+}
+
+.task-top a i {
+  color: black;
+}
+
+.task-list_text {
+  font-size: 1rem;
+}
+
+.task-list_text-body {
+  -webkit-text-decoration: line-through 2px #12344D;
+          text-decoration: line-through 2px #12344D;
+}
+
+.task-list_heading {
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.task-list_time {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #524e4e;
+}
+
+.task-list i {
+  cursor: pointer;
+}
+
 /*!
  * Bootstrap v4.5.2 (https://getbootstrap.com/)
  * Copyright 2011-2020 The Bootstrap Authors

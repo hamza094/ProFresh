@@ -64,6 +64,7 @@ Vue.component('file', require('./components/File.vue').default);
 Vue.component('lead-edit', require('./components/LeadEdit.vue').default);
 Vue.component('lead-stage', require('./components/Stage.vue').default);
 Vue.component('lead-account', require('./components/LeadAccount.vue').default);
+Vue.component('lead-panel', require('./components/LeadPanel.vue').default);
 const routes = [
   { path: '/dashboard', component: require('./components/Dashboard.vue').default },
   { path: '/leads', component: require('./components/Lead.vue').default },

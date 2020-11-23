@@ -61,3 +61,13 @@ $factory->define(Account::class, function (Faker $faker) {
         'business'=>'Sales'
     ];
 });
+
+$factory->define(App\Task::class, function (Faker $faker) {
+    return [
+         'lead_id'=>function () {
+            return factory('App\Lead')->create()->id;
+        },
+        'body' => $faker->sentence,
+        'completed'=>false
+    ];
+});

@@ -780,10 +780,42 @@ margin-left: 1rem;
     h4{
       margin-bottom: 1rem;
     }
-
   }
   &-account{
-
     width: 100%;
+  }
+}
+
+.task{
+  margin-top: 1rem;
+  &-top{
+    background-color:#F5F7F9;
+    padding:.5rem;
+a{
+  text-decoration: none;
+  i{
+    color:black;
+  }
+}
+  }
+  &-list{
+    &_text{
+      font-size:1rem;
+      &-body{
+        text-decoration: line-through 2px $color-secondary;
+      }
+    }
+    &_heading{
+      font-size: .9rem;
+      font-weight: 700;
+    }
+&_time{
+  font-size: 0.7rem;
+    font-weight: 700;
+    color:#524e4e;
+}
+i{
+  cursor: pointer;
+}
   }
 }

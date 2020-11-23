@@ -1,0 +1,49 @@
+<?php
+
+namespace Tests\Unit;
+
+use Tests\TestCase;
+use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+
+class TaskTest extends TestCase
+{
+  use RefreshDatabase;
+    /**
+     * A basic unit test example.
+     *
+     * @return void
+     */
+
+     /** @test */
+   public function it_belongs_to_a_lead()
+   {
+     $this->signIn();
+       $task = create('App\Task');
+       $this->assertInstanceOf('App\Lead', $task->lead);
+   }
+
+   /** @test*/
+public function it_can_be_completed(){
+  $this->signIn();
+    $task = create('App\Task');
+    $this->assertFalse($task->completed);
+    $task->complete();
+    $this->assertTrue($task->fresh()->completed);
+    $this->assertEquals(1,$task->lead->tasks->count());
+}
+
+/** @test*/
+public function it_can_be_Uncompleted(){
+  $this->signIn();
+  $task = create('App\Task');
+        $task->complete();
+        $this->assertEquals(1,$task->lead->tasks->count());
+        $this->assertTrue($task->completed);
+        $task->incomplete();
+        $this->assertFalse($task->fresh()->completed);
+        //$this->assertEquals(0,$task->lead->tasks->count());
+}
+
+
+}

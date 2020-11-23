@@ -95,4 +95,16 @@ public function account(){
   return $this->belongsTo(Account::class,'account_id');
 }
 
+public function tasks(){
+  return $this->hasMany(Task::class);
+}
+
+public function addTask($tasks)
+ {
+       return $this->tasks()->create([
+         'body'=> $tasks
+       ]);
+
+ }
+
 }

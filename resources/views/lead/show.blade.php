@@ -147,7 +147,7 @@
 
             </div>
             <div class="col-md-4">
-                by
+                <lead-panel :lead="{{json_encode($lead)}}"></lead-panel>
             </div>
         </div>
     </div>

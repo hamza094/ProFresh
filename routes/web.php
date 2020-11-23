@@ -34,5 +34,9 @@ Route::post('/api/leads/{lead}/subscribe','SubscriptionController@leadSubscribe'
 Route::delete('/api/leads/{lead}/unsubscribe','SubscriptionController@leadUnSubscribe');
 Route::get('/leads/{lead}/timeline_feeds','LeadController@activity');
 Route::post('/api/lead/{lead}/account', 'AccountController@leadaccount');
+Route::post('/api/leads/{lead}/tasks', 'TaskController@leadstore')->name('leadtask.create');
+Route::get('/api/leads/{lead}/tasks','TaskController@leadindex');
+Route::patch('/api/leads/{lead}/tasks/{task}', 'TaskController@leadupdate')->name('task.update');
+Route::delete('/api/leads/{lead}/tasks/{task}', 'TaskController@leaddelete')->name('task.update'); 
 
 Route::get('{path}', 'HomeController@index')->where('/path', '([A-z\d-\/_.]+)?');
