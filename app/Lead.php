@@ -107,4 +107,8 @@ public function addTask($tasks)
 
  }
 
+ public function appointments(){
+   return $this->hasMany(Appointment::class);
+ }
+
 }

@@ -18,6 +18,7 @@ use Maatwebsite\Excel\Facades\Excel;
 use App\Activity;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Redis;
+use App\User;
 
 class LeadController extends Controller
 {
@@ -232,7 +233,10 @@ public function export(Lead $lead){
 public function activity(Lead $lead){
   $activity=Lead::where('id',$lead->id);
   return view('lead.activities',compact('lead',$activity));
+}
 
+public function user(){
+  return User::latest()->get();
 }
 
 }

@@ -52,7 +52,10 @@ $factory->define(LeadScore::class, function (Faker $faker) {
 });
 
 $factory->define(Account::class, function (Faker $faker) {
-    return [
+  return [
+       'lead_id'=>function () {
+          return factory('App\Lead')->create()->id;
+      },
         'title' => $faker->name,
         'country' => 'Scotland',
         'Address'=>'William Pearl',
@@ -69,5 +72,20 @@ $factory->define(App\Task::class, function (Faker $faker) {
         },
         'body' => $faker->sentence,
         'completed'=>false
+    ];
+});
+
+
+$factory->define(App\Appointment::class, function (Faker $faker) {
+    return [
+         'lead_id'=>function () {
+            return factory('App\Lead')->create()->id;
+        },
+        'title' => $faker->name,
+        'location'=>'mine avnue',
+        'outcome'=>'intrested',
+        'strtdt'=>'2020-11-14',
+        'strttm'=>'04:15',
+        'zone'=>'Asia/Hong_Kong',
     ];
 });

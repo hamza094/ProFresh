@@ -26,12 +26,16 @@
     },
     "dependencies": {
         "animate.css": "^4.1.1",
+        "luxon": "^1.25.0",
         "moment": "^2.29.1",
+        "moment-timezone": "^0.5.32",
         "sweetalert2": "^10.9.0",
         "vue-cropperjs": "^4.1.0",
+        "vue-datetime": "^1.0.0-beta.14",
         "vue-image-crop-upload": "^2.5.0",
         "vue-js-modal": "^2.0.0-rc.6",
         "vue-router": "^3.4.5",
-        "vue-toastify": "^1.8.0"
+        "vue-toastify": "^1.8.0",
+        "weekstart": "^1.0.1"
     }
 }

@@ -27,6 +27,13 @@ Vue.filter('timeExactDate',function(data){
    return  moment(data).fromNow();
 })
 
+Vue.filter('timeDate',function(data){
+   return  moment(data).format("MMM Do YY");
+})
+
+window.momenttz = require('moment-timezone');
+window.moment = require('moment');
+
 import 'animate.css';
 
 import "cropperjs/dist/cropper.css"
@@ -44,6 +51,19 @@ Vue.use(VueToastify, {
     errorDuration:2050,
     canPause:false
 });
+
+import { Datetime } from 'vue-datetime';
+// You need a specific loader for CSS files
+import 'vue-datetime/dist/vue-datetime.css';
+
+Vue.use(Datetime)
+
+Vue.component('datetime', Datetime);
+
+import { Settings } from 'luxon'
+//set to display dates for English language
+Settings.defaultLocale = 'en'
+
 
 /**
  * The following block of code may be used to automatically register your

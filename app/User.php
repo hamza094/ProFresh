@@ -49,6 +49,8 @@ class User extends Authenticatable
            $redis = Redis::connection();
            return $redis->get('last_seen_' . $this->id);
     }
-
+    public function appointments(){
+      return $this->hasMany(Appointment::class);
+    }
 
 }

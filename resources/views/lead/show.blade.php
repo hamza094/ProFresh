@@ -146,8 +146,8 @@
                 </div>
 
             </div>
-            <div class="col-md-4">
-                <lead-panel :lead="{{json_encode($lead)}}"></lead-panel>
+            <div class="col-md-4 side_panel">
+                <lead-panel :lead="{{json_encode($lead)}}" v-cloak></lead-panel>
             </div>
         </div>
     </div>
