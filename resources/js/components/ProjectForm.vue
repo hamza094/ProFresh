@@ -2,7 +2,7 @@
     <div class="panel">
        <div class="panel-top">
           <div class="panel-top_content">
-            <span class="panel-heading">Add Lead</span>
+            <span class="panel-heading">Add Project</span>
            <span class="panel-exit float-right" role="button" @click.prevent="closePanel">x</span>
           </div>
        </div>
@@ -57,7 +57,7 @@
                     <div class="panel-bottom">
                         <div class="panel-top_content float-right">
                         <button class="btn panel-btn_close" @click.prevent="closePanel">Cancel</button>
-                            <button class="btn panel-btn_save" @click.prevent="leadSubmit">Save</button>
+                            <button class="btn panel-btn_save" @click.prevent="projectSubmit">Save</button>
                         </div>
                     </div>
 
@@ -84,10 +84,10 @@ export default{
             this.errors={};
             this.form={};
         },
-        leadSubmit(){
-         axios.post('/api/leads',this.form)
+        projectSubmit(){
+         axios.post('/api/projects',this.form)
             .then(response=>{
-                this.$vToastify.success("Lead added");
+                this.$vToastify.success("Project added");
                 this.form="";
                 this.closePanel();
                 setTimeout(()=>{
@@ -102,6 +102,3 @@ export default{
     },
 }
 </script>
-
-
-

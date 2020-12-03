@@ -6,7 +6,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 use App\User;
-use App\Lead;
+use App\Project;
 
 
 class SubscriptionTest extends TestCase
@@ -14,21 +14,21 @@ class SubscriptionTest extends TestCase
   use RefreshDatabase;
 
   /** @test */
-  public function a_signIn_user_subscribe_to_lead()
+  public function a_signIn_user_subscribe_to_project()
   {
       $this->signIn();
-      $lead=create("App\Lead");
-      $this->post($lead->path().'/subscribe');
-      $this->assertCount(1, $lead->subscribers);
+      $project=create("App\Project");
+      $this->post($project->path().'/subscribe');
+      $this->assertCount(1, $project->subscribers);
   }
 
   /** @test */
-  public function a_signIn_user_unsubscribe_to_lead()
+  public function a_signIn_user_unsubscribe_to_project()
   {
       $this->signIn();
-      $lead=create("App\Lead");
-      $this->delete($lead->path().'/unsubscribe');
-      $this->assertCount(0, $lead->subscribers);
+      $project=create("App\Project");
+      $this->delete($project->path().'/unsubscribe');
+      $this->assertCount(0, $project->subscribers);
   }
 
 }

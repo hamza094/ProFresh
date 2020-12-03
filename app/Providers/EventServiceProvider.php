@@ -19,7 +19,7 @@ class EventServiceProvider extends ServiceProvider
           SendEmailVerificationNotification::class,
       ],
       'jdavidbakr\MailTracker\Events\EmailSentEvent' => [
-         'App\Listeners\LeadEmail',
+         'App\Listeners\ProjectEmail'
      ],
      'jdavidbakr\MailTracker\Events\ViewEmailEvent' => [
          'App\Listeners\EmailViewed',

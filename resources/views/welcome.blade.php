@@ -4,11 +4,11 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>CRMFresh</title>
+        <title>ProFresh</title>
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
-        <link rel="shortcut icon" type="image/png" href="https://www.perfectviewcrm.com/wp-content/uploads/sites/7/2018/08/PerfectView-What-is-CRM.png">
+        <link rel="shortcut icon" type="image/png" href="https://i.ibb.co/fMLpbVf/profresh.png">
 
 
         <!-- Styles -->
@@ -70,7 +70,7 @@
             @if (Route::has('login'))
                 <div class="top-right links">
                     @auth
-                        <a href="{{ url('/home') }}">Home</a>
+                        <a href="{{ url('/dashboard') }}">Dashboard</a>
                     @else
                         <a href="{{ route('login') }}">Login</a>
 
@@ -83,14 +83,14 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    CRMFresh
+                    ProFresh
                 </div>
 
                 <div class="links">
                     <a href="https://laravel.com/docs">Docs</a>
                     <a href="https://laravel-news.com">News</a>
                     <a href="https://blog.laravel.com">Blog</a>
-                    <a href="https://github.com/hamza094/crmfrsh">GitHub</a>
+                    <a href="https://github.com/hamza094/ProFresh">GitHub</a>
                 </div>
             </div>
         </div>

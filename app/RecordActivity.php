@@ -54,10 +54,10 @@ trait RecordActivity
     public function recordActivity($description)
     {
         $this->activity()->create([
-            'user_id' => auth()->id() ?: ($this->lead ?? $this)->owner->id,
+            'user_id' => auth()->id() ?: ($this->project ?? $this)->owner->id,
             'description' => $description,
             'changes' => $this->activityChanges(),
-            'lead_id' => class_basename($this) === 'Lead' ? $this->id : $this->lead_id
+            'project_id' => class_basename($this) === 'Project' ? $this->id : $this->project_id
         ]);
     }
     /**
@@ -67,7 +67,7 @@ trait RecordActivity
      */
     public function activity()
     {
-        if (get_class($this) === Lead::class) {
+        if (get_class($this) === Project::class) {
             return $this->hasMany(Activity::class)->latest();
         }
         return $this->morphMany(Activity::class, 'subject')->latest();

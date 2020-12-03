@@ -41,8 +41,8 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-      public function leads(){
-        return $this->hasMany(Lead::class);
+      public function projects(){
+        return $this->hasMany(Project::class);
       }
 
     public function lastseen() {

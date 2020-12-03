@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Lead;
+use App\Project;
 use App\Task;
 use App\User;
 
@@ -14,20 +14,20 @@ class TaskController extends Controller
       $this->middleware('auth');
   }
 
-  public function leadindex(Lead $lead){
-      return $lead->tasks()->latest()->get();
+  public function projectindex(Project $project){
+      return $project->tasks()->latest()->get();
   }
 
-    public function leadstore(Lead $lead,Request $request){
+    public function projectstore(Project $project,Request $request){
       $this->validate($request, [
         'body'=>'required',
     ]);
 
-      $lead->addTask(request('body'));
+      $project->addTask(request('body'));
     }
 
 
-    public function leadupdate(Lead $lead,Task $task){
+    public function projectupdate(Project $project,Task $task){
       $task->update([
             'body'=>request('body')]);
 
@@ -38,7 +38,7 @@ class TaskController extends Controller
             }
     }
 
-      public function leaddelete(Lead $lead,Task $task){
+      public function projectdelete(Project $project,Task $task){
         $task->delete();
       }
 

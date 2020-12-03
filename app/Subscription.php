@@ -8,7 +8,7 @@ class Subscription extends Model
 {
     protected $guarded=[];
 
-    public function lead(){
-      return $this->belongsTo(Lead::class,'lead_id');
+    public function project(){
+      return $this->belongsTo(Project::class,'project_id');
     }
 }

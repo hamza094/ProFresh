@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
-use App\Lead;
+use App\Project;
 
 class SubscriptionController extends Controller
 {
@@ -13,14 +13,14 @@ class SubscriptionController extends Controller
       $this->middleware('auth');
   }
 
-  public function leadSubscribe(Lead $lead)
+  public function projectSubscribe(Project $project)
   {
-     $lead->subscribe();
+     $project->subscribe();
   }
 
-  public function leadUnSubscribe(Lead $lead)
+  public function projectUnSubscribe(Project $project)
   {
-     $lead->unsubscribe();
+     $project->unsubscribe();
   }
 
 }

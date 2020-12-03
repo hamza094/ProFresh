@@ -1,23 +1,23 @@
 <template>
-  <div class="lead-account">
-    <div class="lead-empty">
-      <h4>No Account Associated to this lead</h4>
-      <p class="btn panel-btn_save" @click.prevent="$modal.show('lead-account')">Add Account</p>
+  <div class="project-account">
+    <div class="project-empty">
+      <h4>No Account Associated to this project</h4>
+      <p class="btn panel-btn_save" @click.prevent="$modal.show('project-account')">Add Account</p>
     </div>
     <div>
-      <modal name="lead-account"
+      <modal name="project-account"
              height="auto" :scrollable="true" :shiftX="1" width="38%"
               class="model-desin"
              :clickToClose=false>
           <div class="edit-border-top p-3 animate__animated animate__slideInRight">
               <div class="edit-border-bottom">
                   <div class="panel-top_content">
-                      <span class="panel-heading">Add Lead Account</span>
+                      <span class="panel-heading">Add Project Account</span>
                       <span class="panel-exit float-right" role="button" @click.prevent="modalClose()">x</span>
                   </div>
               </div>
               <div class="panel-form">
-                      <form action="" @submit.prevent="LeadAccount">
+                      <form action="" @submit.prevent="ProjectAccount">
                           <div class="panel-top_content">
                               <div class="form-group">
                                   <label for="title" class="label-name">Title:</label>
@@ -99,7 +99,7 @@
 
 <script>
 export default{
-  props:['lead'],
+  props:['project'],
   data(){
     return{
      form:{},
@@ -108,10 +108,10 @@ export default{
 
   },
   methods:{
-LeadAccount(){
-  axios.post('/api/lead/'+this.lead.id+'/account',this.form)
+ProjectAccount(){
+  axios.post('/api/project/'+this.project.id+'/account',this.form)
      .then(response=>{
-         this.$vToastify.success("Lead account added");
+         this.$vToastify.success("Project account added");
          this.form="";
          this.modalClose();
          setTimeout(()=>{
@@ -123,7 +123,7 @@ LeadAccount(){
   });
 },
 modalClose(){
-  this.$modal.hide('lead-account');
+  this.$modal.hide('project-account');
   this.form="";
   this.errors="";
 }

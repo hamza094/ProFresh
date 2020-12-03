@@ -2,13 +2,13 @@
 
 namespace App\Mail;
 
-use App\Lead;
+use App\Project;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class LeadMail extends Mailable
+class ProjectMail extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -33,6 +33,6 @@ class LeadMail extends Mailable
      */
     public function build()
     {
-        return $this->markdown('emails.lead.mail');
+        return $this->markdown('emails.project.mail');
     }
 }

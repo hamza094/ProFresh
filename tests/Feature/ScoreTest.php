@@ -2,7 +2,7 @@
 
 namespace Tests\Feature;
 
-use App\LeadScore;
+use App\ProjectScore;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Http\UploadedFile;
@@ -19,11 +19,11 @@ class ScoreTest extends TestCase
      */
 
     /** @test */
-    public function score_added_on_lead_avatar_uploaded()
+    public function score_added_on_project_avatar_uploaded()
     {
         $this->signIn();
-        $lead=create('App\Lead',['avatar_path'=>'img.png']);
-        $lead_score = create('App\LeadScore',['lead_id'=>$lead->id,'point'=>15]);
-        $this->assertEquals($lead->scores()->sum('point'),15);
+        $project=create('App\Project',['avatar_path'=>'img.png']);
+        $project_score = create('App\ProjectScore',['project_id'=>$project->id,'point'=>15]);
+        $this->assertEquals($project->scores()->sum('point'),15);
     }
 }

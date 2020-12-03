@@ -6,9 +6,9 @@
                 <div class="page-top">
                     <div>
             <span>
-                <span class="page-top_heading">Leads </span>
+                <span class="page-top_heading">Projects </span>
                 <span class="page-top_arrow"> > </span>
-                <span> <a href="{{$lead->path()}}">{{$lead->name}}</a></span>
+                <span> <a href="{{$project->path()}}">{{$project->name}}</a></span>
                 <span class="page-top_arrow"> > </span>
                 <span>Activities</span>
             </span>
@@ -17,9 +17,9 @@
 <div class="container mt-3">
   <div class="activity mb-5">
     <ul>
-       @foreach($lead->activity as $activity)
+       @foreach($project->activity as $activity)
         <li>
-        @include("lead.activities.{$activity->description}")
+        @include("project.activities.{$activity->description}")
             <p class="activity-info"><span>{{$activity->user->name}} </span><span class="activity-info_dot"></span><span> {{$activity->created_at->diffForHumans(null,true)}} ago</span></p>
         </li>
         @endforeach

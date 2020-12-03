@@ -77,17 +77,17 @@ Settings.defaultLocale = 'en'
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 Vue.component('dynamic-nav', require('./components/DynamicNav.vue').default);
-Vue.component('lead-button', require('./components/LeadButton.vue').default);
-Vue.component('lead-form', require('./components/LeadForm.vue').default);
-Vue.component('single-lead', require('./components/SingleLead.vue').default);
+Vue.component('project-button', require('./components/ProjectButton.vue').default);
+Vue.component('project-form', require('./components/ProjectForm.vue').default);
+Vue.component('single-project', require('./components/SingleProject.vue').default);
 Vue.component('file', require('./components/File.vue').default);
-Vue.component('lead-edit', require('./components/LeadEdit.vue').default);
-Vue.component('lead-stage', require('./components/Stage.vue').default);
-Vue.component('lead-account', require('./components/LeadAccount.vue').default);
-Vue.component('lead-panel', require('./components/LeadPanel.vue').default);
+Vue.component('project-edit', require('./components/ProjectEdit.vue').default);
+Vue.component('project-stage', require('./components/Stage.vue').default);
+Vue.component('project-account', require('./components/ProjectAccount.vue').default);
+Vue.component('project-panel', require('./components/ProjectPanel.vue').default);
 const routes = [
   { path: '/dashboard', component: require('./components/Dashboard.vue').default },
-  { path: '/leads', component: require('./components/Lead.vue').default },
+  { path: '/projects', component: require('./components/Project.vue').default },
   { path: '/contacts', component: require('./components/Contact.vue').default },
   { path: '/accounts', component: require('./components/Account.vue').default },
   { path: '/deals', component: require('./components/Deal.vue').default },

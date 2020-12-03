@@ -2,7 +2,7 @@
 
 namespace App\Exports;
 
-use App\Lead;
+use App\Project;
 use Maatwebsite\Excel\Concerns\FromQuery;
 use Maatwebsite\Excel\Concerns\Exportable;
 use Maatwebsite\Excel\Concerns\WithHeadings;
@@ -11,18 +11,18 @@ use Maatwebsite\Excel\Concerns\WithMapping;
 use Carbon\Carbon;
 
 
-class LeadsExport implements FromQuery, WithHeadings , WithMapping
+class ProjectsExport implements FromQuery, WithHeadings , WithMapping
 {
   use Exportable;
 
-  public function __construct(Lead $lead)
+  public function __construct(Project $project)
   {
-      $this->lead = $lead;
+      $this->project = $project;
   }
 
   public function query()
   {
-      return Lead::query()->where('id',$this->lead->id);
+      return Project::query()->where('id',$this->project->id);
   }
 
   public function headings(): array
@@ -43,21 +43,21 @@ class LeadsExport implements FromQuery, WithHeadings , WithMapping
     ];
 }
 
-public function map($lead): array
+public function map($project): array
   {
       return [
-       $lead->id,
-       $lead->name,
-       $lead->company,
-       $lead->position,
-       $lead->address,
-       $lead->zipcode,
-       $lead->email,
-       $lead->mobile,
-       $lead->status,
-       $lead->stage,
-       $lead->unqualifed,
-$lead->created_at->toDateTimeString()
+       $project->id,
+       $project->name,
+       $project->company,
+       $project->position,
+       $project->address,
+       $project->zipcode,
+       $project->email,
+       $project->mobile,
+       $project->status,
+       $project->stage,
+       $project->unqualifed,
+       $project->created_at->toDateTimeString()
 
       ];
   }

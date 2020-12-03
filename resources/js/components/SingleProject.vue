@@ -2,8 +2,8 @@
     <div>
 
         <div class="img-avatar" @click="$modal.show('avatar-file')">
-            <div class="img-avatar_name" v-if="lead.avatar_path==null">
-                {{lead.name.substring(0,1)}}
+            <div class="img-avatar_name" v-if="project.avatar_path==null">
+                {{project.name.substring(0,1)}}
             </div>
                 <div v-else>
                     <img :src="avatar_path" alt="" class="main-profile-img"/>
@@ -22,13 +22,13 @@
                 <div class="score-dropdown_item" v-show=isPop>
                   <div class="score">
                       <div class="score-content">
-                          <p class="score-content_para"><i class="far fa-clock"></i><b>Lead</b> since {{lead.created_at | timeExactDate}} with current in stage
-                          <b v-if="lead.stage == 0">Unqualifed</b>
-                          <b v-if ="lead.stage == 1">New</b>
-                          <b v-if="lead.stage == 2">Connected</b>
-                          <b v-if="lead.stage == 3">Intrested</b>
-                          <b v-if="lead.stage == 4">Reviewed</b>
-                          <b v-if="lead.stage == 5">Exhibited</b>
+                          <p class="score-content_para"><i class="far fa-clock"></i><b>Project</b> since {{project.created_at | timeExactDate}} with current in stage
+                          <b v-if="project.stage == 0">Unqualifed</b>
+                          <b v-if ="project.stage == 1">New</b>
+                          <b v-if="project.stage == 2">Connected</b>
+                          <b v-if="project.stage == 3">Intrested</b>
+                          <b v-if="project.stage == 4">Reviewed</b>
+                          <b v-if="project.stage == 5">Exhibited</b>
                           </p>
                           <div class="score-content_point">
                               <p class="score-content_point-para"><b>Top scoring factors</b></p>
@@ -40,8 +40,8 @@
                                   </div>
                                   <div class="col-md-9">
                                   <div v-for="detail in details">
-                                    <p class="lead-score"><span><i class="fas fa-arrow-up"></i></span> {{detail.message}}</p>
-                              <p class="lead-score"><span><i class="fas fa-arrow-up"></i></span> Lead Updated</p>
+                                    <p class="project-score"><span><i class="fas fa-arrow-up"></i></span> {{detail.message}}</p>
+                              <p class="project-score"><span><i class="fas fa-arrow-up"></i></span> Project Updated</p>
                                   </div>
                                   </div>
                               </div>
@@ -86,7 +86,7 @@
 import VueCropper from "vue-cropperjs"
 
 export default {
-    props:['lead','scores','details'],
+    props:['project','scores','details'],
     components: {
         VueCropper,
     },
@@ -94,8 +94,8 @@ export default {
         return {
             imageSrc: "",
             croppedImageSrc: "",
-            //avatar:this.lead.profile,
-            avatar_path:this.lead.avatar_path,
+            //avatar:this.Project.profile,
+            avatar_path:this.project.avatar_path,
             isPop:false,
         }
     },
@@ -131,11 +131,11 @@ export default {
             this.croppedImageSrc = this.$refs.cropper.getCroppedCanvas().toDataURL();
         },
         uploadImage() {
-            Vue.prototype.$leadId=this.lead.id;
+            Vue.prototype.$projectId=this.project.id;
 
             this.$vToastify.info({
                 title:'Loading...',
-                body:'Lead Avatar Uploading',
+                body:'Project Avatar Uploading',
                 position:"bottom-left",
                 theme:"light",
                 duration:3000,
@@ -144,12 +144,12 @@ export default {
 
 
             this.$refs.cropper.getCroppedCanvas().toBlob(function (blob) {
-                    var leadp=Vue.prototype.$leadId;
+                    var projectp=Vue.prototype.$projectId;
                 let formData = new FormData()
                 // Append image file
                 formData.append("avatar", blob)
 
-                axios.post('/api/lead/'+leadp+'/avatar', formData)
+                axios.post('/api/project/'+projectp+'/avatar', formData)
                     .then(response=>{
                         window.location.reload();
                     })

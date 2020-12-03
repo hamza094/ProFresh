@@ -8,22 +8,22 @@ class Task extends Model
 {
     protected $guarded=[];
 
-    protected $touches=['lead'];
+    protected $touches=['project'];
 
   protected $casts=['completed'=>'boolean'];
 
   public function path()
     {
-        return "/api/leads/{$this->lead->id}/tasks/{$this->id}";
+        return "/api/projects/{$this->project->id}/tasks/{$this->id}";
     }
 
-    public function lead(){
-      return $this->belongsTo(Lead::class,'lead_id');
+    public function project(){
+      return $this->belongsTo(Project::class,'project_id');
     }
 
-    public function Leadpath()
+    public function Projectpath()
     {
-        return "/leads/{$this->lead->id}/tasks/{$this->id}";
+        return "/projects/{$this->project->id}/tasks/{$this->id}";
     }
 
     public function complete(){

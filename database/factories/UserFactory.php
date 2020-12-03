@@ -3,8 +3,8 @@
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
 use App\User;
-use App\Lead;
-use App\LeadScore;
+use App\Project;
+use App\ProjectScore;
 use Faker\Generator as Faker;
 use Illuminate\Support\Str;
 
@@ -29,7 +29,7 @@ $factory->define(User::class, function (Faker $faker) {
     ];
 });
 
-$factory->define(Lead::class, function (Faker $faker) {
+$factory->define(Project::class, function (Faker $faker) {
     return [
         'name' => $faker->name,
         'email' => $faker->unique()->safeEmail,
@@ -41,10 +41,10 @@ $factory->define(Lead::class, function (Faker $faker) {
 });
 
 
-$factory->define(LeadScore::class, function (Faker $faker) {
+$factory->define(ProjectScore::class, function (Faker $faker) {
     return [
-        'lead_id' => function () {
-            return factory('App\Lead')->create()->id;
+        'project_id' => function () {
+            return factory('App\Project')->create()->id;
         },
         'message' => 'hy berry',
         'point'=>'Admin'
@@ -53,8 +53,8 @@ $factory->define(LeadScore::class, function (Faker $faker) {
 
 $factory->define(Account::class, function (Faker $faker) {
   return [
-       'lead_id'=>function () {
-          return factory('App\Lead')->create()->id;
+       'project_id'=>function () {
+          return factory('App\Project')->create()->id;
       },
         'title' => $faker->name,
         'country' => 'Scotland',
@@ -67,8 +67,8 @@ $factory->define(Account::class, function (Faker $faker) {
 
 $factory->define(App\Task::class, function (Faker $faker) {
     return [
-         'lead_id'=>function () {
-            return factory('App\Lead')->create()->id;
+         'project_id'=>function () {
+            return factory('App\Project')->create()->id;
         },
         'body' => $faker->sentence,
         'completed'=>false
@@ -78,8 +78,8 @@ $factory->define(App\Task::class, function (Faker $faker) {
 
 $factory->define(App\Appointment::class, function (Faker $faker) {
     return [
-         'lead_id'=>function () {
-            return factory('App\Lead')->create()->id;
+         'project_id'=>function () {
+            return factory('App\Project')->create()->id;
         },
         'title' => $faker->name,
         'location'=>'mine avnue',

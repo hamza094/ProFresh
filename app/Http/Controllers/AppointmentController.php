@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Lead;
+use App\Project;
 use App\Appointment;
 use App\User;
 use Auth;
@@ -15,7 +15,7 @@ class AppointmentController extends Controller
       $this->middleware('auth');
   }
 
-  public function store(Lead $lead,Request $request){
+  public function store(Project $project,Request $request){
 
     $this->validate($request, [
         'title'=>'required',
@@ -28,7 +28,7 @@ class AppointmentController extends Controller
     ]);
 
     $appointment=Appointment::create([
-      'lead_id'=>$lead->id,
+      'project_id'=>$project->id,
       'title'=>$request->title,
       'strtdt'=>$request->strtdt,
       'strttm'=>$request->strttm,
@@ -39,11 +39,11 @@ class AppointmentController extends Controller
     $appointment->users()->attach($request->user);
   }
 
-     public function show(Lead $lead,Request $request){
-          return  $lead->appointments()->with('users')->get();
+     public function show(Project $project,Request $request){
+          return  $project->appointments()->with('users')->get();
     }
 
-    public function update(Lead $lead,Appointment $appointment,Request $request){
+    public function update(Project $project,Appointment $appointment,Request $request){
 
       $this->validate($request, [
           'title'=>'required',
@@ -74,7 +74,7 @@ class AppointmentController extends Controller
          }
     }
 
-     public function destroy(Lead $lead,Appointment $appointment){
+     public function destroy(Project $project,Appointment $appointment){
        $appointment->delete();
        $appointment->users()->detach();
      }

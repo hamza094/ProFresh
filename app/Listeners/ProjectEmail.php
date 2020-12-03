@@ -5,9 +5,9 @@ namespace App\Listeners;
 use jdavidbakr\MailTracker\Events\EmailSentEvent;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
-use App\Lead;
+use App\Project;
 
-class LeadEmail
+class ProjectEmail
 {
     /**
      * Create the event listener.
@@ -28,8 +28,8 @@ class LeadEmail
     public function handle(EmailSentEvent $event)
     {
       $tracker = $event->sent_email;
-  $lead_id = $event->sent_email->getHeader('X-Model-ID');
-  $lead = Lead::find($lead_id);
+  $project_id = $event->sent_email->getHeader('X-Model-ID');
+  $project = Project::find($project_id);
 
     }
 }

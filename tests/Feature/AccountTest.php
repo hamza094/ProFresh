@@ -16,11 +16,11 @@ class AccountTest extends TestCase
      */
 
      /** @test */
-    public function user_create_lead_account()
+    public function user_create_project_account()
     {
       $this->signIn();
-        $lead=create('App\Lead');
-        $response=$this->withoutExceptionHandling()->post('api/lead/'.$lead->id.'/account',
+        $project=create('App\Project');
+        $response=$this->post('api/project/'.$project->id.'/account',
             ['title' => 'widjet','country'=>'turkey','address'=>'bill phase 2',
                 'number'=>'6785434567','industry'=>'armor','business'=>'sales']);
           $this->assertDatabaseHas('accounts',['title'=>'widjet']);

@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Auth;
-use App\Lead;
+use App\Project;
 use App\Account;
 
 class AccountController extends Controller
@@ -14,7 +14,7 @@ class AccountController extends Controller
       $this->middleware('auth');
   }
 
-  public function leadaccount(Lead $lead,Request $request)
+  public function projectaccount(Project $project,Request $request)
   {
 
     $this->validate($request, [
@@ -29,7 +29,7 @@ class AccountController extends Controller
 
     $account=Account::create([
         'title'=>$request->title,
-        'lead_id'=>$lead->id,
+        'project_id'=>$project->id,
         'country'=>$request->country,
         'address'=>$request->address,
         'zipcode'=>$request->zipcode,
@@ -41,10 +41,10 @@ class AccountController extends Controller
         'business'=>$request->business
   ]);
 
-      $lead->update(['account_id'=>$account->id]);
+      $project->update(['account_id'=>$account->id]);
 
     if(request()->wantsJson()){
-    return['message'=>$lead->path()];
+    return['message'=>$project->path()];
    }
 
   }

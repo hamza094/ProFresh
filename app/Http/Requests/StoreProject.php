@@ -6,7 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
 
-class StoreLead extends FormRequest
+class StoreProject extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -36,10 +36,10 @@ class StoreLead extends FormRequest
     public function messages()
     {
         return [
-            'name.required' => 'lead name required.',
-            'email.required'=>'lead email required',
-            'owner.required'=>'lead owner required',
-            'mobile.required'=>'lead mobile required'
+            'name.required' => 'project name required.',
+            'email.required'=>'project email required',
+            'owner.required'=>'project owner required',
+            'mobile.required'=>'project mobile required'
 
         ];
     }

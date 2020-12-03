@@ -1,26 +1,26 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\LeadScore;
-use App\Http\Requests\StoreLead;
+use App\ProjectScore;
+use App\Http\Requests\StoreProject;
 use Illuminate\Http\Request;
-use App\Lead;
+use App\Project;
 use Auth;
 use Illuminate\Support\Facades\Storage;
 use Image;
 use File;
-use App\Mail\LeadMail;
+use App\Mail\ProjectMail;
 use Illuminate\Support\Facades\Mail;
-use App\Functions\LeadFunction;
+use App\Functions\ProjectFunction;
 use Twilio\Rest\Client;
-use App\Exports\LeadsExport;
+use App\Exports\ProjectsExport;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Activity;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Redis;
 use App\User;
 
-class LeadController extends Controller
+class ProjectController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -53,9 +53,9 @@ class LeadController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreLead $request)
+    public function store(StoreProject $request)
     {
-        $lead=lead::create([
+        $project=project::create([
             'name'=>$request->name,
             'user_id'=>auth()->id(),
             'email'=>$request->email,
@@ -67,7 +67,7 @@ class LeadController extends Controller
             'company'=>$request->company
       ]);
         if(request()->wantsJson()){
-        return['message'=>$lead->path()];
+        return['message'=>$project->path()];
        }
 
 
@@ -81,15 +81,15 @@ class LeadController extends Controller
      */
     public function show($id)
     {
-        $lead=Lead::findorFail($id);
-        $scores=$lead->scores()->sum('point');
-        return view('lead.show',compact('lead',$lead,'scores',$scores));
+        $project=Project::findorFail($id);
+        $scores=$project->scores()->sum('point');
+        return view('project.show',compact('project',$project,'scores',$scores));
 
     }
 
     public function count(){
 
-        return Lead::all()->count();
+        return Project::all()->count();
 
     }
 
@@ -111,7 +111,7 @@ class LeadController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request,Lead $lead)
+    public function update(Request $request,Project $project)
     {
         $this->validate($request, [
             'name'=>'required',
@@ -121,11 +121,11 @@ class LeadController extends Controller
 
         ]);
 
-        $lead->update(request(['name','owner','email','zipcode','mobile',
+        $project->update(request(['name','owner','email','zipcode','mobile',
             'address','position','status']));
 
         if (request()->wantsJson()) {
-            return response($lead, 201);
+            return response($project, 201);
         }
 
     }
@@ -136,103 +136,103 @@ class LeadController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Lead $lead)
+    public function destroy(Project $project)
     {
-        $lead->delete();
+        $project->delete();
     }
 
-    public function avatar(Lead $lead, Request $request){
+    public function avatar(Project $project, Request $request){
         $this->validate(request(), [
             'avatar'=>['required', 'image']
         ]);
-        if($lead->avatar_path==null){
-            $lead->addScore('avatar uploaded',15);
+        if($project->avatar_path==null){
+            $project->addScore('avatar uploaded',15);
         }
         $file = $request->file('avatar');
-        $filename = uniqid($lead->id.'_').'.'.$file->getClientOriginalExtension();
+        $filename = uniqid($project->id.'_').'.'.$file->getClientOriginalExtension();
         Storage::disk('s3')->put($filename, File::get($file), 'public');
         //Store Profile Image in s3
-        $lead_path = Storage::disk('s3')->url($filename);
-        $lead->update(['avatar_path'=>$lead_path]);
+        $project_path = Storage::disk('s3')->url($filename);
+        $project->update(['avatar_path'=>$project_path]);
         return response([], 204);
     }
 
-    public function stage(Request $request, Lead $lead){
+    public function stage(Request $request, Project $project){
       $this->validate($request, [
           'stage'=>'required',
       ]);
 
-      $lead->update(request(['stage']));
+      $project->update(request(['stage']));
 
       $redis = Redis::connection();
 
-      $key = 'stage_update_' . $lead->id;
+      $key = 'stage_update_' . $project->id;
       $value = (new \DateTime())->format("Y-m-d H:i:s");
       $redis->set($key, $value);
 
       if (request()->wantsJson()) {
-          return response($lead, 201);
+          return response($project, 201);
       }
     }
 
-    public function unqualifed(Request $request,Lead $lead){
+    public function unqualifed(Request $request,Project $project){
       $this->validate($request, [
           'unqualifed'=>'required',
           'stage'=>'required'
       ]);
-      $lead->update(request(['unqualifed','stage']));
+      $project->update(request(['unqualifed','stage']));
 
       if (request()->wantsJson()) {
-          return response($lead, 201);
+          return response($project, 201);
       }
    }
 
-//Lead Trash Delete
-   public function delete(Lead $lead){
-     $lead->forceDelete();
-     $lead->activity()->delete();
+//Project Trash Delete
+   public function delete(Project $project){
+     $project->forceDelete();
+     $project->activity()->delete();
 
         if(request()->expectsJson()){
-            return response(['status'=>'lead deleted']);
+            return response(['status'=>'project deleted']);
         }
    }
 
-   public function avatarDelete(Lead $lead){
-    if($lead->avatar_path!==null){
-   $lead->update(['avatar_path'=>null]);
-    $lead->scores()->where('message','avatar uploaded')->delete();
+   public function avatarDelete(Project $project){
+    if($project->avatar_path!==null){
+   $project->update(['avatar_path'=>null]);
+    $project->scores()->where('message','avatar uploaded')->delete();
      }
 
 }
 
-public function mail(Lead $lead,Request $request){
+public function mail(Project $project,Request $request){
   //Send Ticket Mail
-        Mail::to($lead->email)->send(
-            new LeadMail($request->subject,$request->message)
+        Mail::to($project->email)->send(
+            new ProjectMail($request->subject,$request->message)
         );
-        $lead->recordActivity('mail_sent');
+        $project->recordActivity('mail_sent');
 
 }
 
 //Send sms on verified numbers
-public function sms(Lead $lead,Request $request){
+public function sms(Project $project,Request $request){
   $this->validate($request, [
       'mobile'=>'required|numeric',
       'sms'=>'required'
   ]);
-  LeadFunction::sendMessage($request->sms,$request->mobile);
-  $lead->recordActivity('sms_sent');
+  ProjectFunction::sendMessage($request->sms,$request->mobile);
+  $project->recordActivity('sms_sent');
 }
 
-// Download Lead Data Excel Export
-public function export(Lead $lead){
-  $lead->recordActivity('excel_export');
-  return (new LeadsExport($lead))->download("lead$lead->id.xlsx");
+// Download Project Data Excel Export
+public function export(Project $project){
+  $project->recordActivity('excel_export');
+  return (new ProjectsExport($project))->download("project$project->id.xlsx");
 }
 
-public function activity(Lead $lead){
-  $activity=Lead::where('id',$lead->id);
-  return view('lead.activities',compact('lead',$activity));
+public function activity(Project $project){
+  $activity=Project::where('id',$project->id);
+  return view('project.activities',compact('project',$activity));
 }
 
 public function user(){

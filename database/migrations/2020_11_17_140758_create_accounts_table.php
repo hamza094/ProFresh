@@ -17,7 +17,7 @@ class CreateAccountsTable extends Migration
             $table->id();
             $table->string('title');
             $table->integer('contact_id')->nullable();
-            $table->integer('lead_id')->nullable();
+            $table->integer('project_id')->nullable();
             $table->string('country');
             $table->string('address');
             $table->bigInteger('zipcode')->nullable();

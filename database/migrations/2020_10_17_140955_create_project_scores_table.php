@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateLeadScoresTable extends Migration
+class CreateProjectScoresTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class CreateLeadScoresTable extends Migration
      */
     public function up()
     {
-        Schema::create('lead_scores', function (Blueprint $table) {
+        Schema::create('project_scores', function (Blueprint $table) {
             $table->id();
-            $table->integer('lead_id');
+            $table->integer('project_id');
             $table->integer('contact_id')->nullable();
             $table->string('message');
             $table->bigInteger('point');
@@ -30,6 +30,6 @@ class CreateLeadScoresTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('lead_scores');
+        Schema::dropIfExists('project_scores');
     }
 }

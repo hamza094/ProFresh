@@ -2,15 +2,15 @@
   <div>
 <div class="task">
   <div class="task-top">
-    <span><b>Tasks</b> <a data-toggle="collapse" href="#taskLead" role="button" aria-expanded="false" aria-controls="taskLead">
+    <span><b>Tasks</b> <a data-toggle="collapse" href="#taskProject" role="button" aria-expanded="false" aria-controls="taskProject">
       <i class="fas fa-angle-down float-right"></i></a></span>
   </div>
 
   <!--Task -->
-    <div class="collapse" id="taskLead">
+    <div class="collapse" id="taskProject">
     <div class="card card-body">
     <div class="task-add">
-      <form class="" @submit.prevent="leadTask">
+      <form class="" @submit.prevent="projectTask">
         <div class="form-group">
           <label for="body">Add New Task</label>
           <input type="text" class="form-control" name="body" v-model="form.body">
@@ -18,7 +18,7 @@
   </form>
     </div>
     <div class="task-list">
-      <p class="task-list_heading">Lead Tasks</p>
+      <p class="task-list_heading">Project Tasks</p>
       <div v-for="task in tasks" :key="task.id">
         <p class="task-list_text">
           <span v-if="editing == task.id">
@@ -46,12 +46,12 @@
 <hr>
 
 <!--Appointment-->
-<div class="lead-appointment">
+<div class="project-appointment">
   <div class="task-top">
     <p><b>Appointments</b> <span class="btn btn-link btn-lg float-right" @click="modalAppoint()">+</span></p>
-    <span><a data-toggle="collapse" href="#appointmentLead" role="button" aria-expanded="false" aria-controls="appointmentLead">View all appointments</a></span>
+    <span><a data-toggle="collapse" href="#appointmentProject" role="button" aria-expanded="false" aria-controls="appointmentProject">View all appointments</a></span>
   </div>
-    <div class="collapse" id="appointmentLead">
+    <div class="collapse" id="appointmentProject">
     <div class="card card-body">
       <div class="" v-for="appointment in appointments" :key="appointment.id">
         <hr>
@@ -109,12 +109,12 @@
     <div>
 
       <!--Add Appointment model-->
-      <modal name="lead-appointment" height="auto" :scrollable="true" :shiftX="1" width="55%"
+      <modal name="project-appointment" height="auto" :scrollable="true" :shiftX="1" width="55%"
        class="model-desin"
        :clickToClose=false>
        <div class="panel-top_content">
            <span class="panel-heading">Add New Appointment</span>
-           <span class="panel-exit float-right" role="button" @click="$modal.hide('lead-appointment')">x</span>
+           <span class="panel-exit float-right" role="button" @click="$modal.hide('project-appointment')">x</span>
        </div>
       <div class="container">
         <form action=""  @submit.prevent="createAppointment()">
@@ -192,7 +192,7 @@
 
 <script>
 export default{
-  props:['lead'],
+  props:['project'],
   data(){
     return{
       form:{
@@ -229,7 +229,7 @@ export default{
   },
   methods:{
     loadTasks(){
-       axios.get('/api/leads/'+this.lead.id+'/tasks')
+       axios.get('/api/projects/'+this.project.id+'/tasks')
                .then(({data})=>(this.tasks=data));
       },
       loadUsers(){
@@ -237,13 +237,13 @@ export default{
                  .then(({data})=>(this.users=data));
         },
         loadAppoinments(){
-          axios.get('/api/leads/'+this.lead.id+'/appointments')
+          axios.get('/api/projects/'+this.project.id+'/appointments')
           .then(({data})=>(this.appointments=data));
         },
-    leadTask(){
-       axios.post('/api/leads/'+this.lead.id+'/tasks',this.form)
+    projectTask(){
+       axios.post('/api/projects/'+this.project.id+'/tasks',this.form)
           .then(response=>{
-              this.$vToastify.success("Lead Task added");
+              this.$vToastify.success("Project Task added");
               this.form.body="";
               this.loadTasks();
           }).catch(error=>{
@@ -251,16 +251,16 @@ export default{
        });
     },
     taskDelete(id){
-      axios.delete('/api/leads/'+this.lead.id+'/tasks/'+id)
+      axios.delete('/api/projects/'+this.project.id+'/tasks/'+id)
       .then(response=>{
-          this.$vToastify.info("Lead Task deleted");
+          this.$vToastify.info("Project Task deleted");
           this.loadTasks();
       }).catch(error=>{
         this.$vToastify.warning("Task deletion failed");
       })
     },
     deleteAppointment(id){
-      axios.delete('/api/leads/'+this.lead.id+'/appointment/'+id)
+      axios.delete('/api/projects/'+this.project.id+'/appointment/'+id)
       .then(response=>{
           this.$vToastify.info("Appointment deleted");
           this.loadAppoinments();
@@ -269,7 +269,7 @@ export default{
       })
     },
     taskComplete(id,task){
-      axios.patch('/api/leads/'+this.lead.id+'/tasks/'+id,{
+      axios.patch('/api/projects/'+this.project.id+'/tasks/'+id,{
         body:task.body,
         completed:true,
       }).then(response=>{
@@ -281,7 +281,7 @@ export default{
       })
     },
     taskUncomplete(id,task){
-      axios.patch('/api/leads/'+this.lead.id+'/tasks/'+id,{
+      axios.patch('/api/projects/'+this.project.id+'/tasks/'+id,{
         body:task.body,
         completed:false,
       }).then(response=>{
@@ -314,7 +314,7 @@ export default{
       this.form.user='';
     },
     taskUpdate(id,task){
-      axios.patch('/api/leads/'+this.lead.id+'/tasks/'+id,{
+      axios.patch('/api/projects/'+this.project.id+'/tasks/'+id,{
         body:this.form.editbody,
       }).then(response=>{
           this.$vToastify.success("Task Updated");
@@ -325,7 +325,7 @@ export default{
       })
     },
     appointmentUpdate(id,appointment){
-      axios.patch('/api/leads/'+this.lead.id+'/appointment/'+id,{
+      axios.patch('/api/projects/'+this.project.id+'/appointment/'+id,{
         title:this.form.title,
         strtdt:this.form.strtdt.substring(0,10),
         strttm:this.form.strttm.substring(11,16),
@@ -349,15 +349,15 @@ export default{
       })
     },
     modalAppoint(){
-      this.$modal.show('lead-appointment');
+      this.$modal.show('project-appointment');
     },
     modalClose(){
-      this.$modal.hide('lead-appointment');
+      this.$modal.hide('project-appointment');
       this.appointment={};
       this.errors={};
     },
     createAppointment(){
-      axios.post('/api/leads/'+this.lead.id+'/appointment',{
+      axios.post('/api/projects/'+this.project.id+'/appointment',{
         title:this.appointment.title,
         strtdt:this.appointment.strtdt.substring(0,10),
         strttm:this.appointment.strttm.substring(11,16),
@@ -366,7 +366,7 @@ export default{
         outcome:this.appointment.outcome,
         user:this.appointment.user
       }).then(response=>{
-          this.$vToastify.success("Lead appointment added");
+          this.$vToastify.success("Project appointment added");
           this.modalClose();
           this.loadAppoinments();
          }).catch(error=>{

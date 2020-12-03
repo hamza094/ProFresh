@@ -3,31 +3,31 @@
  @foreach ($activity->changes['after'] as $key => $value)
 
 @if($key == 'stage' &  $value == 0)
-Became <b>Unqualifed</b> lead
+Became <b>Unqualifed</b> project
 
 @elseif($key == 'stage' &  $value == 1)
-Became <b>New</b> lead
+Became <b>New</b> project
 
 @elseif($key == 'stage' & $value == 2)
-Became  <b>Contacted</b> lead
+Became  <b>Contacted</b> project
 
 @elseif($key == 'stage' & $value == 3)
-Became <b>Intrested</b> lead
+Became <b>Intrested</b> project
 
 @elseif($key == 'stage' & $value == 4)
-Became <b>Reviewed</b> lead
+Became <b>Reviewed</b> project
 
 @elseif($key == 'stage' & $value == 5)
-Became <b>Exhibited</b> lead
+Became <b>Exhibited</b> project
 
 @elseif($key == 'avatar_path' & $value!==null)
-Lead profile image updated
+Project profile image updated
 @elseif($key == 'avatar_path' & $value==null)
-Lead Profile image removed
+Project Profile image removed
 @elseif($key == 'account_id')
-Account Added to Lead
+Account Added to Project
 @else
-Updated lead {{$key}} to <b>{{$value}}</b>
+Updated project {{$key}} to <b>{{$value}}</b>
  @endif
 
  @endforeach

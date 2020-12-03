@@ -3,13 +3,13 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use App\LeadScore;
+use App\ProjectScore;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Activity;
 use Illuminate\Support\Facades\Redis;
 
 
-class Lead extends Model
+class Project extends Model
 {
   use SoftDeletes;
   use RecordActivity;
@@ -20,7 +20,7 @@ class Lead extends Model
 
     public function path()
     {
-        return "/api/leads/{$this->id}";
+        return "/api/projects/{$this->id}";
     }
 
     //protected $appends = ['profile'];
@@ -40,12 +40,12 @@ class Lead extends Model
     }*/
 
     public function scores(){
-        return $this->hasMany(LeadScore::class);
+        return $this->hasMany(ProjectScore::class);
     }
 
     public function addScore($message,$point){
-        return LeadScore::create([
-            'lead_id'=>$this->id,
+        return ProjectScore::create([
+            'project_id'=>$this->id,
             'message'=>$message,
             'point'=>$point
         ]);

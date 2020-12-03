@@ -1,38 +1,38 @@
 <template>
 
     <div class="float-right">
-    <button class="btn btn-primary btn-sm" @click="$modal.show('edit-lead')">Edit Lead</button>
+    <button class="btn btn-primary btn-sm" @click="$modal.show('edit-project')">Edit Project</button>
     <span class="feature-dropdown" @click="featurePop = !featurePop">
 <span class="btn btn-light btn-sm"><i class="fas fa-ellipsis-v"></i></span>
 <span class="feature-dropdown_item" v-show=featurePop>
   <ul>
-    <li class="feature-dropdown_item-content" @click="forgetLead"><i class="far fa-trash-alt"></i> Forget</li>
-    <li class="feature-dropdown_item-content" @click="$modal.show('lead-mail')"><i class="far fa-envelope"></i> Email</li>
-    <li class="feature-dropdown_item-content" @click="$modal.show('lead-sms')"><i class="fas fa-mobile-alt"></i> Send SMS</li>
-    <a v-bind:href="'/api/leads/' + this.lead.id +'/export'"> <li class="feature-dropdown_item-content" @click="leadExport"><i class="fas fa-upload"></i>Export</li></a>
-    <li v-if="lead.avatar_path!==null" class="feature-dropdown_item-content" @click="deleteAvatar"><i class="far fa-user-circle"></i> Remove display picture</li>
-    <li class="feature-dropdown_item-content" @click="leadUnSubscribe" v-if="this.subscription"><i class="fas fa-inbox"></i> UnSubscribe</li>
-    <li class="feature-dropdown_item-content" @click="leadSubscribe" v-else><i class="fas fa-inbox"></i> Subscribe</li>
+    <li class="feature-dropdown_item-content" @click="forgetProject"><i class="far fa-trash-alt"></i> Forget</li>
+    <li class="feature-dropdown_item-content" @click="$modal.show('project-mail')"><i class="far fa-envelope"></i> Email</li>
+    <li class="feature-dropdown_item-content" @click="$modal.show('project-sms')"><i class="fas fa-mobile-alt"></i> Send SMS</li>
+    <a v-bind:href="'/api/projects/' + this.project.id +'/export'"> <li class="feature-dropdown_item-content" @click="projectExport"><i class="fas fa-upload"></i>Export</li></a>
+    <li v-if="project.avatar_path!==null" class="feature-dropdown_item-content" @click="deleteAvatar"><i class="far fa-user-circle"></i> Remove display picture</li>
+    <li class="feature-dropdown_item-content" @click="projectUnSubscribe" v-if="this.subscription"><i class="fas fa-inbox"></i> UnSubscribe</li>
+    <li class="feature-dropdown_item-content" @click="projectSubscribe" v-else><i class="fas fa-inbox"></i> Subscribe</li>
     <li class="feature-dropdown_item-content"><i class="fab fa-500px"></i> Add to sequence</li>
     <li class="feature-dropdown_item-content"><i class="fab fa-500px"></i> Remove from sequence</li>
-    <li class="feature-dropdown_item-content" @click="deleteLead"><i class="far fa-trash-alt"></i> Delete</li>
+    <li class="feature-dropdown_item-content" @click="deleteProject"><i class="far fa-trash-alt"></i> Delete</li>
   </ul>
 </span>
     </span>
 
-    <modal name="edit-lead"
+    <modal name="edit-project"
            height="auto" :scrollable="true" :shiftX="1" width="38%"
             class="model-desin"
            :clickToClose=false>
         <div class="edit-border-top p-3 animate__animated animate__slideInRight">
             <div class="edit-border-bottom">
                 <div class="panel-top_content">
-                    <span class="panel-heading">Edit Lead {{lead.name}}</span>
+                    <span class="panel-heading">Edit Project {{project.name}}</span>
                     <span class="panel-exit float-right" role="button" @click.prevent="modalClose">x</span>
                 </div>
             </div>
             <div class="panel-form">
-                    <form action="" @submit.prevent="updateLead">
+                    <form action="" @submit.prevent="updateProject">
                         <div class="panel-top_content">
 
                             <div class="form-group">
@@ -107,18 +107,18 @@
                 </div>
         </div>
     </modal>
-    <modal name="lead-mail" height="100%" :scrollable="true" :shiftX="1" width="45%"
+    <modal name="project-mail" height="100%" :scrollable="true" :shiftX="1" width="45%"
      class="model-desin"
     :clickToClose=false >
     <div class="edit-border-top p-3 animate__animated animate__slideInRight">
     <div class="edit-border-bottom">
         <div class="panel-top_content">
-            <span class="panel-heading">Send mail to lead</span>
+            <span class="panel-heading">Send mail to project</span>
             <span class="panel-exit float-right" role="button" @click.prevent="mailClose">x</span>
         </div>
     </div>
         <div class="panel-form">
-<form class="" @submit.prevent="leadMail">
+<form class="" @submit.prevent="projectMail">
   <div class="panel-top_content">
     <div class="form-group">
         <label for="to" class="label-name">To:</label>
@@ -146,18 +146,18 @@
     </modal>
 
     <div>
-      <modal name="lead-sms" height="100%" :scrollable="true" :shiftX="1" width="45%"
+      <modal name="project-sms" height="100%" :scrollable="true" :shiftX="1" width="45%"
        class="model-desin"
       :clickToClose=false >
       <div class="edit-border-top p-3 animate__animated animate__slideInRight">
       <div class="edit-border-bottom">
           <div class="panel-top_content">
-              <span class="panel-heading">Send sms to lead</span>
-              <span class="panel-exit float-right" role="button" @click.prevent="$modal.hide('lead-sms')">x</span>
+              <span class="panel-heading">Send sms to project</span>
+              <span class="panel-exit float-right" role="button" @click.prevent="$modal.hide('project-sms')">x</span>
           </div>
       </div>
           <div class="panel-form">
-  <form class="" @submit.prevent="leadSms">
+  <form class="" @submit.prevent="projectSms">
     <div class="panel-top_content">
       <div class="form-group">
           <label for="mobile" class="label-name">Mobile Number:</label>
@@ -194,23 +194,23 @@
 
 <script>
 export default {
-    props:['lead','subscribe'],
+    props:['project','subscribe'],
     data() {
         return {
           subscription:this.subscribe,
           form:{
-              name:this.lead.name,
-              company:this.lead.company,
-              address:this.lead.address,
-              zipcode:this.lead.zipcode,
-              email:this.lead.email,
-              mobile:this.lead.mobile,
-              status:this.lead.status,
-              owner:this.lead.owner,
-              position:this.lead.position,
+              name:this.project.name,
+              company:this.project.company,
+              address:this.project.address,
+              zipcode:this.project.zipcode,
+              email:this.project.email,
+              mobile:this.project.mobile,
+              status:this.project.status,
+              owner:this.project.owner,
+              position:this.project.position,
               message:'',
               subject:'',
-              mobile:this.lead.mobile,
+              mobile:this.project.mobile,
               sms:''
 
           },
@@ -226,8 +226,8 @@ export default {
         }
     },
     methods: {
-        updateLead(){
-           axios.patch('/api/leads/'+this.lead.id,{
+        updateProject(){
+           axios.patch('/api/projects/'+this.project.id,{
                name:this.form.name,
                company:this.form.company,
                address:this.form.address,
@@ -239,7 +239,7 @@ export default {
                position:this.form.position
 
            }).then(response=>{
-               this.$vToastify.success("Lead Updated Successfully");
+               this.$vToastify.success("Project Updated Successfully");
                this.form="";
                location.reload();
            }).catch(error=>{
@@ -247,7 +247,7 @@ export default {
             });
         },
         modalClose(){
-            this.$modal.hide('edit-lead');
+            this.$modal.hide('edit-project');
             this.errors='';
         },
         zeroIfClickedOutside(event){
@@ -256,7 +256,7 @@ export default {
                 document.removeEventListener('click',this.zeroIfClickedOutside);
             }
         },
-        forgetLead(){
+        forgetProject(){
           swal.fire({
          title: 'Are you sure?',
          text: "You can be able to revert this!",
@@ -267,10 +267,10 @@ export default {
          confirmButtonText: 'Yes, forget it!'
        }).then((result) => {
          if (result.value) {
-         axios.delete('/api/leads/'+this.lead.id).then(function(){
+         axios.delete('/api/projects/'+this.project.id).then(function(){
          swal.fire(
              'Success!',
-             'Lead has been forgetted.',
+             'Project has been forgetted.',
              'success'
            )
            setTimeout(()=>{
@@ -282,7 +282,7 @@ export default {
      }
        })
      },
-     deleteLead(){
+     deleteProject(){
        swal.fire({
       title: 'Are you sure?',
       text: "You can't be able to revert this!",
@@ -293,10 +293,10 @@ export default {
       confirmButtonText: 'Yes, delete it!'
     }).then((result) => {
       if (result.value) {
-      axios.get('/api/leads/'+this.lead.id+'/delete').then(function(){
+      axios.get('/api/projects/'+this.project.id+'/delete').then(function(){
       swal.fire(
           'Success!',
-          'Lead has been deleted.',
+          'Project has been deleted.',
           'success'
         )
         setTimeout(()=>{
@@ -319,10 +319,10 @@ export default {
       confirmButtonText: 'Yes, delete it!'
     }).then((result) => {
       if (result.value) {
-      axios.patch('/api/leads/'+this.lead.id+'/avatar-delete').then(function(){
+      axios.patch('/api/projects/'+this.project.id+'/avatar-delete').then(function(){
         swal.fire(
             'Success!',
-            'Lead avatar has been deleted.',
+            'Project avatar has been deleted.',
             'success'
           )
         setTimeout(()=>{
@@ -334,8 +334,8 @@ export default {
   }
     })
   },
-  leadMail(){
-    axios.post('/api/leads/'+this.lead.id+'/mail',{
+  projectMail(){
+    axios.post('/api/projects/'+this.project.id+'/mail',{
         email:this.form.email,
         subject:this.form.subject,
         message:this.form.message
@@ -343,49 +343,49 @@ export default {
         this.$vToastify.success("Mail Sent Successfully");
         this.form.subject="";
         this.form.message=""
-        this.$modal.hide('lead-mail');
+        this.$modal.hide('project-mail');
     }).catch(error=>{
          this.errors=error.response.data.errors
      });
   },
 
   mailClose(){
-   this.$modal.hide('lead-mail');
-   this.$modal.hide('lead-sms');
+   this.$modal.hide('project-mail');
+   this.$modal.hide('project-sms');
    this.errors='';
    this.form.message='';
    this.form.subject='';
    this.form.sms='';
  },
- leadSms(){
-   axios.post('/api/leads/'+this.lead.id+'/sms',{
+ projectSms(){
+   axios.post('/api/projects/'+this.project.id+'/sms',{
        mobile:this.form.mobile,
        sms:this.form.sms
    }).then(response=>{
        this.$vToastify.success("SMS Sent Successfully");
        this.form.sms="";
-       this.$modal.hide('lead-sms');
+       this.$modal.hide('project-sms');
    }).catch(error=>{
         this.errors=error.response.data.errors
     });
  },
- leadExport(){
+ projectExport(){
 this.$vToastify.success("Data Export Successfully");
 },
-leadSubscribe(){
-   axios.post('/api/leads/'+this.lead.id+'/subscribe').
+projectSubscribe(){
+   axios.post('/api/projects/'+this.project.id+'/subscribe').
    then(response=>{
        this.subscription=true;
-     this.$vToastify.success("Lead Subscribed Successfully");
+     this.$vToastify.success("Project Subscribed Successfully");
    }).catch(error=>{
      console.log(error.response.data.errors);
    });
 },
-leadUnSubscribe(){
-axios.delete('/api/leads/'+this.lead.id+'/unsubscribe').
+projectUnSubscribe(){
+axios.delete('/api/projects/'+this.project.id+'/unsubscribe').
 then(response=>{
   this.subscription=false;
-  this.$vToastify.info("Lead UnSubscribed Successfully");
+  this.$vToastify.info("Project UnSubscribed Successfully");
 }).catch(error=>{
   console.log(error.response.data.errors);
 });

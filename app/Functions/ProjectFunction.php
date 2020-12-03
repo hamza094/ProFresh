@@ -1,10 +1,10 @@
 <?php
 namespace App\Functions;
-use App\Lead;
+use App\Project;
 use Illuminate\Http\Request;
 use Twilio\Rest\Client;
 
-class LeadFunction
+class ProjectFunction
 {
   public static function sendMessage($message, $recipients)
 {
@@ -16,7 +16,5 @@ class LeadFunction
             ['from' => $twilio_number, 'body' => $message] );
 }
 }
-
-
 
 ?>

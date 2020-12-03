@@ -2,7 +2,7 @@
 <div>
   <div>
     <div>
-      <p><span><b>Lead stage changed:</b> {{this.lead.updated_at | timeExactDate}}</span></p>
+      <p><span><b>Project stage changed:</b> {{this.project.updated_at | timeExactDate}}</span></p>
     </div>
   <div class="row">
     <div class="arrow-pointer-pd" @click="initial">
@@ -47,16 +47,16 @@
 <div>
   <modal name="stage-reason" :clickToClose=false>
     <div class="panel-top_content">
-        <span class="panel-heading">Lead Satge Unqualifed</span>
+        <span class="panel-heading">Project Satge Unqualifed</span>
         <span class="panel-exit float-right" role="button" @click.prevent="$modal.hide('stage-reason')">x</span>
 
     </div>
     <hr>
       <div class="panel-top_content">
         <div class="form-group">
-           <label for="unqstage" class="label-name">Reason of lead to be Unqualifed:</label>
+           <label for="unqstage" class="label-name">Reason of project to be Unqualifed:</label>
           <select class="custom-select" id="unqstage" name="unqstage" v-model="reason" title="Some placeholder text...">
-            <option value="Junk Lead">Junk Lead</option>
+            <option value="Junk Project">Junk Project</option>
             <option value="Unable to reach">Unable to reach</option>
             <option value="Not intrested">Not intrested</option>
           </select>
@@ -80,7 +80,7 @@
 
 <script>
   export default{
-    props:['lead'],
+    props:['project'],
     data(){
        return{
          initialStage:1,
@@ -89,9 +89,9 @@
          reviewStage:4,
          demoStage:5,
          unqualifedStage:0,
-         isSelected:this.lead.stage,
+         isSelected:this.project.stage,
            stagePop:false,
-           reason:this.lead.unqualifed
+           reason:this.project.unqualifed
 
        }
     },
@@ -104,76 +104,76 @@
     },
     methods:{
       initial(){
-axios.patch('/api/lead/'+this.lead.id+'/stage',{
+axios.patch('/api/project/'+this.project.id+'/stage',{
   stage:this.initialStage
 }).then(response=>{
   this.isSelected=1;
-     this.$vToastify.success("Lead Converted to Initial Successfully");
+     this.$vToastify.success("Project Converted to Initial Successfully");
 }).catch(error=>{
-  this.isSelected=this.lead.stage;
-  this.$vToastify.error("Error in Lead Conversion");
+  this.isSelected=this.project.stage;
+  this.$vToastify.error("Error in Project Conversion");
 });
 },
 
 contact(){
-  axios.patch('/api/lead/'+this.lead.id+'/stage',{
+  axios.patch('/api/project/'+this.project.id+'/stage',{
     stage:this.contactStage
   }).then(response=>{
     this.isSelected=2;
-       this.$vToastify.success("Lead Converted to Contact Successfully");
+       this.$vToastify.success("Project Converted to Contact Successfully");
   }).catch(error=>{
-    this.isSelected=this.lead.stage;
-    this.$vToastify.error("Error in Lead Conversion");
+    this.isSelected=this.project.stage;
+    this.$vToastify.error("Error in Project Conversion");
   });
 },
 
 interest(){
-  axios.patch('/api/lead/'+this.lead.id+'/stage',{
+  axios.patch('/api/project/'+this.project.id+'/stage',{
     stage:this.interestStage
   }).then(response=>{
     this.isSelected=3;
-       this.$vToastify.success("Lead Converted to Interest Successfully");
+       this.$vToastify.success("Project Converted to Interest Successfully");
   }).catch(error=>{
-    this.isSelected=this.lead.stage;
-    this.$vToastify.error("Error in Lead Conversion");
+    this.isSelected=this.project.stage;
+    this.$vToastify.error("Error in Project Conversion");
   });
 },
 
 review(){
-  axios.patch('/api/lead/'+this.lead.id+'/stage',{
+  axios.patch('/api/project/'+this.project.id+'/stage',{
     stage:this.reviewStage
   }).then(response=>{
     this.isSelected=4;
-       this.$vToastify.success("Lead Converted to Review Successfully");
+       this.$vToastify.success("Project Converted to Review Successfully");
   }).catch(error=>{
-    this.isSelected=this.lead.stage;
-    this.$vToastify.error("Error in Lead Conversion");
+    this.isSelected=this.project.stage;
+    this.$vToastify.error("Error in Project Conversion");
   });
 },
 
 demo(){
-  axios.patch('/api/lead/'+this.lead.id+'/stage',{
+  axios.patch('/api/project/'+this.project.id+'/stage',{
     stage:this.demoStage
   }).then(response=>{
     this.isSelected=5;
-       this.$vToastify.success("Lead Converted to Demo Successfully");
+       this.$vToastify.success("Project Converted to Demo Successfully");
   }).catch(error=>{
-    this.isSelected=this.lead.stage;
-    this.$vToastify.error("Error in Lead Conversion");
+    this.isSelected=this.project.stage;
+    this.$vToastify.error("Error in Project Conversion");
   });
 },
 
 unqualifed(){
-  axios.patch('/api/lead/'+this.lead.id+'/unqualifed',{
+  axios.patch('/api/project/'+this.project.id+'/unqualifed',{
     stage:this.unqualifedStage,
     unqualifed:this.reason
   }).then(response=>{
     this.isSelected = 0;
-       this.$vToastify.success("Lead Unqualified Successfully");
+       this.$vToastify.success("Project Unqualified Successfully");
        this.$modal.hide('stage-reason');
   }).catch(error=>{
-    this.isSelected=this.lead.stage;
-    this.$vToastify.error("Error in Lead Conversion");
+    this.isSelected=this.project.stage;
+    this.$vToastify.error("Error in Project Conversion");
   });
 },
 

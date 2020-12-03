@@ -1,10 +1,10 @@
 <template>
    <a href="" v-on:click.prevent="showPanel"><i class="far fa-user-circle"></i>
-   <span>Add lead</span>
+   <span>Add project</span>
 </a>
-   
 
-    
+
+
 </template>
 
 
@@ -18,7 +18,7 @@
         methods: {
             showPanel() {
                 const panel1Handle = this.$showPanel({
-                    component: 'lead-form',
+                    component: 'project-form',
                     openOn: 'right',
                     width:500,
                     disableBgClick:true,

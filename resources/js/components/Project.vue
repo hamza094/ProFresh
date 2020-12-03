@@ -1,5 +1,5 @@
 <template>
-    <div class="page-top">Leads</div>
+    <div class="page-top">Projects</div>
 
 </template>
 
