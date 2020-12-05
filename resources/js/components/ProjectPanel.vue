@@ -186,6 +186,17 @@
       </div>
     </modal>
     </div>
+    <hr>
+    <div class="project-note">
+      <div id="wrapper">
+        <p><b>Add Project Note:</b></p>
+    <form id="paper" method="post" @keyup.enter="leadNote">
+      <textarea placeholder="Write project notes" id="text" name="notes" rows="4" v-model="form.notes"></textarea>
+      <br>
+  </form>
+</div>
+
+    </div>
 </div>
   </div>
 </template>
@@ -206,6 +217,7 @@ export default{
         location:'',
         outcome:'',
         user:'',
+        notes:this.project.notes,
       },
       appointment:{
         title:'',
@@ -373,7 +385,18 @@ export default{
            this.errors=error.response.data.errors;
       });
     },
+    leadNote(){
+      axios.patch('/api/projects/'+this.project.id+'/notes',{
+        notes:this.form.notes,
+      }).then(response=>{
+          this.$vToastify.success("Notes Updated");
+      }).catch(error=>{
+        this.$vToastify.warning("Task Updated failed");
+      })
+    },
   },
+
+
 
   created(){
     this.loadTasks();

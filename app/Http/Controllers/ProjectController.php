@@ -239,4 +239,11 @@ public function user(){
   return User::latest()->get();
 }
 
+public function notes(Project $project,Request $request){
+  $this->validate($request, [
+      'notes'=>'required',
+  ]);
+  $project->update(['notes'=>request('notes')]);
+}
+
 }

@@ -29,7 +29,7 @@
             <div class="row">
                 <div class="col-md-1 panel-left">
                     <div class="panel">
-                        <a href="/dashboard"><img src="https://img.favpng.com/10/14/3/project-management-project-manager-organization-png-favpng-CfppRKXWN9BP9zQSB9etquzgt.jpg" class="main-img" alt=""></a>
+                        <a href="/dashboard"><img src="https://i.ibb.co/fMLpbVf/profresh.png" class="main-img" alt=""></a>
 
                         @if(Auth::user())
                             <a href="/dashboard" class="panel-list_item">

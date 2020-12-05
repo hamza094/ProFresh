@@ -190,4 +190,15 @@ public function signIn_user_can_download_project_export()
     });
 }
 
+/** @test */
+public function sign_In_user_can_update_note(){
+  $this->signIn();
+  $project=create('App\Project');
+  $this->assertDatabaseHas('projects',['notes'=>null]);
+  $notes='abra ka dabra';
+  $this->withoutExceptionHandling()->patch('api/projects/'.$project->id.'/notes',['notes'=>$notes]);
+  $this->assertDatabaseHas('projects',['notes'=>$notes]);
+
+}
+
 }

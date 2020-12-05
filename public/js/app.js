@@ -3031,6 +3031,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['project'],
   data: function data() {
@@ -3045,7 +3056,8 @@ __webpack_require__.r(__webpack_exports__);
         zone: '',
         location: '',
         outcome: '',
-        user: ''
+        user: '',
+        notes: this.project.notes
       },
       appointment: {
         title: '',
@@ -3246,6 +3258,17 @@ __webpack_require__.r(__webpack_exports__);
         _this11.loadAppoinments();
       })["catch"](function (error) {
         _this11.errors = error.response.data.errors;
+      });
+    },
+    leadNote: function leadNote() {
+      var _this12 = this;
+
+      axios.patch('/api/projects/' + this.project.id + '/notes', {
+        notes: this.form.notes
+      }).then(function (response) {
+        _this12.$vToastify.success("Notes Updated");
+      })["catch"](function (error) {
+        _this12.$vToastify.warning("Task Updated failed");
       });
     }
   },
@@ -82429,7 +82452,62 @@ var render = function() {
           )
         ],
         1
-      )
+      ),
+      _vm._v(" "),
+      _c("hr"),
+      _vm._v(" "),
+      _c("div", { staticClass: "project-note" }, [
+        _c("div", { attrs: { id: "wrapper" } }, [
+          _vm._m(2),
+          _vm._v(" "),
+          _c(
+            "form",
+            {
+              attrs: { id: "paper", method: "post" },
+              on: {
+                keyup: function($event) {
+                  if (
+                    !$event.type.indexOf("key") &&
+                    _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
+                  ) {
+                    return null
+                  }
+                  return _vm.leadNote($event)
+                }
+              }
+            },
+            [
+              _c("textarea", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.form.notes,
+                    expression: "form.notes"
+                  }
+                ],
+                attrs: {
+                  placeholder: "Write project notes",
+                  id: "text",
+                  name: "notes",
+                  rows: "4"
+                },
+                domProps: { value: _vm.form.notes },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.form, "notes", $event.target.value)
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c("br")
+            ]
+          )
+        ])
+      ])
     ])
   ])
 }
@@ -82477,6 +82555,12 @@ var staticRenderFns = [
         [_vm._v("View all appointments")]
       )
     ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("p", [_c("b", [_vm._v("Add Project Note:")])])
   }
 ]
 render._withStripped = true

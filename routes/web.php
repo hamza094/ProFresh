@@ -30,6 +30,7 @@ Route::patch('/api/projects/{project}/avatar-delete','ProjectController@avatarDe
 Route::post('/api/projects/{project}/sms','ProjectController@sms');
 Route::resource('api/projects', 'ProjectController');
 Route::get('/api/projects/{project}/export','ProjectController@export');
+Route::patch('/api/projects/{project}/notes','ProjectController@notes');
 
 //Project Subscribe
 Route::post('/api/projects/{project}/subscribe','SubscriptionController@projectSubscribe');

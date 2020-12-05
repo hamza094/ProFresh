@@ -784,6 +784,49 @@ margin-left: 1rem;
   &-account{
     width: 100%;
   }
+  &-project{
+    outline:none;
+ border:none;
+  }
+}
+#paper {
+	color:#FFF;
+	font-size:20px;
+}
+#text {
+  width: 376px;
+  overflow: hidden;
+  background-color: #FFF;
+  color: #222;
+  font-weight: normal;
+  font-size: 21px;
+  line-height: 40px;
+  padding-left: 46px;
+  padding-right: 33px;
+  padding-top: 45px;
+  padding-bottom: 34px;
+  background-image: url(https://i.ibb.co/68zNYry/lines-1.png),
+   url(https://static.tumblr.com/maopbtg/nBUmgtogx/paper.png);
+  background-repeat: repeat-y, repeat;
+  border-radius: 12px;
+  box-shadow: 0px 1px 10px #000;
+  border-top: 1px solid #FFF;
+  border-bottom: 1px solid #FFF;
+  overflow: hidden;
+  word-wrap: break-word;
+  resize: none;
+  height: 200px;
+  &:focus{
+    outline:none;
+  }
+}
+#wrapper {
+  width: 376px;
+  height: auto;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 24px;
+  margin-bottom: 100px;
 }
 
 .task{
