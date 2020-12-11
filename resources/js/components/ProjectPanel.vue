@@ -197,6 +197,22 @@
 </div>
 
     </div>
+    <hr>
+    <div class="invite">
+      <input type="text" placeholder="Search user for invitation" class="form-control" v-model="query">
+      <div class="invite-list">
+        <ul v-if="results.length > 0 && query">
+          <li v-for="result in results.slice(0,5)" :key="result.id">
+              <div v-text="result.title" @click.prevent="inviteUser(result.url)"></div>
+          </li>
+        </ul>
+      </div>
+
+    </div>
+    <hr>
+    <div class="">
+      <p> dwdkwdlwdmwkdw dld wdwledklwkdl;wekdl;wkdwd ewedkwl;dk;wkdl;wkdlwedwe dwle  </p>
+    </div>
 </div>
   </div>
 </template>
@@ -204,6 +220,11 @@
 <script>
 export default{
   props:['project'],
+  watch: {
+  query(after, before) {
+    this.searchUsers();
+  }
+},
   data(){
     return{
       form:{
@@ -236,6 +257,8 @@ export default{
       errors:{},
       appointments:{},
       getdate:moment().format("YYYY-MM-DD"),
+      query: null,
+    results: [],
 
     }
   },
@@ -394,10 +417,17 @@ export default{
         this.$vToastify.warning("Task Updated failed");
       })
     },
+    inviteUser(id){
+      alert(id);
+      this.results='';
+      this.query='';
+    },
+    searchUsers() {
+   axios.get('/api/users/search', { params: { query: this.query } })
+   .then(response => this.results = response.data)
+   .catch(error => {});
+ },
   },
-
-
-
   created(){
     this.loadTasks();
     this.loadUsers();

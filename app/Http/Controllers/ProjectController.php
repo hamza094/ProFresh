@@ -19,6 +19,7 @@ use App\Activity;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Redis;
 use App\User;
+use Spatie\Searchable\Search;
 
 class ProjectController extends Controller
 {
@@ -245,5 +246,13 @@ public function notes(Project $project,Request $request){
   ]);
   $project->update(['notes'=>request('notes')]);
 }
+
+public function search(Request $request)
+ {
+   $results = (new Search())
+   ->registerModel(User::class, ['name', 'email'])
+   ->search($request->input('query'));
+ return response()->json($results);
+ }
 
 }

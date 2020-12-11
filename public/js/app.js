@@ -3042,8 +3042,29 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['project'],
+  watch: {
+    query: function query(after, before) {
+      this.searchUsers();
+    }
+  },
   data: function data() {
     return {
       form: {
@@ -3075,7 +3096,9 @@ __webpack_require__.r(__webpack_exports__);
       users: {},
       errors: {},
       appointments: {},
-      getdate: moment().format("YYYY-MM-DD")
+      getdate: moment().format("YYYY-MM-DD"),
+      query: null,
+      results: []
     };
   },
   methods: {
@@ -3270,6 +3293,22 @@ __webpack_require__.r(__webpack_exports__);
       })["catch"](function (error) {
         _this12.$vToastify.warning("Task Updated failed");
       });
+    },
+    inviteUser: function inviteUser(id) {
+      alert(id);
+      this.results = '';
+      this.query = '';
+    },
+    searchUsers: function searchUsers() {
+      var _this13 = this;
+
+      axios.get('/api/users/search', {
+        params: {
+          query: this.query
+        }
+      }).then(function (response) {
+        return _this13.results = response.data;
+      })["catch"](function (error) {});
     }
   },
   created: function created() {
@@ -82507,7 +82546,59 @@ var render = function() {
             ]
           )
         ])
-      ])
+      ]),
+      _vm._v(" "),
+      _c("hr"),
+      _vm._v(" "),
+      _c("div", { staticClass: "invite" }, [
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.query,
+              expression: "query"
+            }
+          ],
+          staticClass: "form-control",
+          attrs: { type: "text", placeholder: "Search user for invitation" },
+          domProps: { value: _vm.query },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.query = $event.target.value
+            }
+          }
+        }),
+        _vm._v(" "),
+        _c("div", { staticClass: "invite-list" }, [
+          _vm.results.length > 0 && _vm.query
+            ? _c(
+                "ul",
+                _vm._l(_vm.results.slice(0, 5), function(result) {
+                  return _c("li", { key: result.id }, [
+                    _c("div", {
+                      domProps: { textContent: _vm._s(result.title) },
+                      on: {
+                        click: function($event) {
+                          $event.preventDefault()
+                          return _vm.inviteUser(result.url)
+                        }
+                      }
+                    })
+                  ])
+                }),
+                0
+              )
+            : _vm._e()
+        ])
+      ]),
+      _vm._v(" "),
+      _c("hr"),
+      _vm._v(" "),
+      _vm._m(3)
     ])
   ])
 }
@@ -82561,6 +82652,18 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("p", [_c("b", [_vm._v("Add Project Note:")])])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", {}, [
+      _c("p", [
+        _vm._v(
+          " dwdkwdlwdmwkdw dld wdwledklwkdl;wekdl;wkdwd ewedkwl;dk;wkdl;wkdlwedwe dwle  "
+        )
+      ])
+    ])
   }
 ]
 render._withStripped = true

@@ -55,5 +55,8 @@ Route::get('/api/projects/{project}/appointments', 'AppointmentController@show')
 Route::patch('/api/projects/{project}/appointment/{appointment}', 'AppointmentController@update');
 Route::delete('/api/projects/{project}/appointment/{appointment}', 'AppointmentController@destroy')->name('task.update');
 
+//Invitation Routes
+Route::get('/api/users/search', 'InvitationController@search');
+
 
 Route::get('{path}', 'HomeController@index')->where('/path', '([A-z\d-\/_.]+)?');

@@ -6,9 +6,10 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Redis;
+use Spatie\Searchable\Searchable;
+use Spatie\Searchable\SearchResult;
 
-
-class User extends Authenticatable
+class User extends Authenticatable implements Searchable
 {
     use Notifiable;
 
@@ -52,5 +53,12 @@ class User extends Authenticatable
     public function appointments(){
       return $this->hasMany(Appointment::class);
     }
+
+    public function getSearchResult(): SearchResult
+   {
+     $url=$this->id;
+     $email=$this->email;
+      return new SearchResult($this, $this->name,$url,$email);
+   }
 
 }
