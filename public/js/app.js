@@ -2506,8 +2506,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['project', 'subscribe'],
+  props: ['project', 'subscribe', 'members'],
   data: function data() {
     var _form;
 
@@ -2526,6 +2529,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         message: '',
         subject: ''
       }, _defineProperty(_form, "mobile", this.project.mobile), _defineProperty(_form, "sms", ''), _form),
+      projectmembers: this.members,
       featurePop: false,
       errors: {}
     };
@@ -3058,8 +3062,22 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['project'],
+  props: ['project', 'members'],
   watch: {
     query: function query(after, before) {
       this.searchUsers();
@@ -3098,8 +3116,14 @@ __webpack_require__.r(__webpack_exports__);
       appointments: {},
       getdate: moment().format("YYYY-MM-DD"),
       query: null,
-      results: []
+      results: [],
+      projectmembers: this.members
     };
+  },
+  computed: {
+    groupedMembers: function groupedMembers() {
+      return _.chunk(this.projectmembers, 2);
+    }
   },
   methods: {
     loadTasks: function loadTasks() {
@@ -3294,20 +3318,31 @@ __webpack_require__.r(__webpack_exports__);
         _this12.$vToastify.warning("Task Updated failed");
       });
     },
-    inviteUser: function inviteUser(id) {
-      alert(id);
-      this.results = '';
-      this.query = '';
+    inviteUser: function inviteUser(user) {
+      var _this13 = this;
+
+      axios.post('/api/projects/' + this.project.id + '/invitations', {
+        email: user
+      }).then(function (response) {
+        _this13.query = '';
+        _this13.results = '';
+
+        _this13.$vToastify.success("Project Invitation Sent");
+      })["catch"](function (error) {
+        _this13.query = '';
+        _this13.results = '';
+        console.log("Project Invitation Failed!");
+      });
     },
     searchUsers: function searchUsers() {
-      var _this13 = this;
+      var _this14 = this;
 
       axios.get('/api/users/search', {
         params: {
           query: this.query
         }
       }).then(function (response) {
-        return _this13.results = response.data;
+        return _this14.results = response.data;
       })["catch"](function (error) {});
     }
   },
@@ -80497,35 +80532,58 @@ var render = function() {
                         _c(
                           "label",
                           { staticClass: "label-name", attrs: { for: "to" } },
-                          [_vm._v("To:")]
+                          [_vm._v("To: Select Project Member")]
                         ),
                         _vm._v(" "),
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.form.email,
-                              expression: "form.email"
-                            }
-                          ],
-                          staticClass: "form-control",
-                          attrs: {
-                            type: "text",
-                            id: "to",
-                            name: "to",
-                            Disabled: ""
-                          },
-                          domProps: { value: _vm.form.email },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
+                        _c(
+                          "select",
+                          {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.form.email,
+                                expression: "form.email"
                               }
-                              _vm.$set(_vm.form, "email", $event.target.value)
+                            ],
+                            staticClass: "custom-select",
+                            attrs: { id: "to", name: "email", required: "" },
+                            on: {
+                              change: function($event) {
+                                var $$selectedVal = Array.prototype.filter
+                                  .call($event.target.options, function(o) {
+                                    return o.selected
+                                  })
+                                  .map(function(o) {
+                                    var val = "_value" in o ? o._value : o.value
+                                    return val
+                                  })
+                                _vm.$set(
+                                  _vm.form,
+                                  "email",
+                                  $event.target.multiple
+                                    ? $$selectedVal
+                                    : $$selectedVal[0]
+                                )
+                              }
                             }
-                          }
-                        })
+                          },
+                          _vm._l(_vm.projectmembers, function(user) {
+                            return _c(
+                              "option",
+                              { domProps: { value: user.email } },
+                              [
+                                _vm._v(
+                                  _vm._s(user.name) +
+                                    " (" +
+                                    _vm._s(user.email) +
+                                    ")"
+                                )
+                              ]
+                            )
+                          }),
+                          0
+                        )
                       ]),
                       _vm._v(" "),
                       _c("div", { staticClass: "form-group" }, [
@@ -80585,7 +80643,7 @@ var render = function() {
                             }
                           ],
                           staticClass: "form-control",
-                          attrs: { name: "subject", rows: "1" },
+                          attrs: { name: "subject", rows: "9" },
                           domProps: { value: _vm.form.subject },
                           on: {
                             input: function($event) {
@@ -81777,7 +81835,7 @@ var render = function() {
                       ]),
                       _vm._v(" "),
                       _c("span", { staticClass: "form-inline" }, [
-                        _c("b", [_vm._v(" Attendes: ")]),
+                        _c("b", [_vm._v("Member Attendes: ")]),
                         _c(
                           "select",
                           {
@@ -81811,7 +81869,7 @@ var render = function() {
                               }
                             }
                           },
-                          _vm._l(_vm.users, function(user) {
+                          _vm._l(_vm.projectmembers, function(user) {
                             return _c(
                               "option",
                               { domProps: { value: user.id } },
@@ -82391,7 +82449,7 @@ var render = function() {
                               staticClass: "label-name",
                               attrs: { for: "attendees" }
                             },
-                            [_vm._v("Attendes:")]
+                            [_vm._v("Member Attendes:")]
                           ),
                           _vm._v(" "),
                           _c(
@@ -82432,7 +82490,7 @@ var render = function() {
                                 }
                               }
                             },
-                            _vm._l(_vm.users, function(user) {
+                            _vm._l(_vm.projectmembers, function(user) {
                               return _c(
                                 "option",
                                 { domProps: { value: user.id } },
@@ -82551,6 +82609,8 @@ var render = function() {
       _c("hr"),
       _vm._v(" "),
       _c("div", { staticClass: "invite" }, [
+        _vm._m(3),
+        _vm._v(" "),
         _c("input", {
           directives: [
             {
@@ -82579,15 +82639,25 @@ var render = function() {
                 "ul",
                 _vm._l(_vm.results.slice(0, 5), function(result) {
                   return _c("li", { key: result.id }, [
-                    _c("div", {
-                      domProps: { textContent: _vm._s(result.title) },
-                      on: {
-                        click: function($event) {
-                          $event.preventDefault()
-                          return _vm.inviteUser(result.url)
+                    _c(
+                      "div",
+                      {
+                        on: {
+                          click: function($event) {
+                            $event.preventDefault()
+                            return _vm.inviteUser(result.url)
+                          }
                         }
-                      }
-                    })
+                      },
+                      [
+                        _vm._v(
+                          _vm._s(result.title) +
+                            " (" +
+                            _vm._s(result.searchable.email) +
+                            ")"
+                        )
+                      ]
+                    )
                   ])
                 }),
                 0
@@ -82598,7 +82668,54 @@ var render = function() {
       _vm._v(" "),
       _c("hr"),
       _vm._v(" "),
-      _vm._m(3)
+      _c("div", { staticClass: "project_members" }, [
+        _vm._m(4),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "collapse", attrs: { id: "memberProject" } },
+          _vm._l(_vm.groupedMembers, function(projectmembers) {
+            return _c(
+              "div",
+              { staticClass: "row" },
+              _vm._l(projectmembers, function(member) {
+                return _c(
+                  "div",
+                  {
+                    staticClass: "col-md-6",
+                    staticStyle: { position: "inherit" }
+                  },
+                  [
+                    _c("div", { staticClass: "project_members-detail" }, [
+                      _c(
+                        "a",
+                        {
+                          attrs: {
+                            href: "/users/" + member.id + "/profile",
+                            target: "_blank"
+                          }
+                        },
+                        [
+                          _c("img", {
+                            attrs: {
+                              src: "https://i.ibb.co/51ZCLB8/download-1.jpg",
+                              alt: ""
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c("p", [_vm._v(" " + _vm._s(member.name))])
+                        ]
+                      )
+                    ])
+                  ]
+                )
+              }),
+              0
+            )
+          }),
+          0
+        )
+      ])
     ])
   ])
 }
@@ -82657,10 +82774,27 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", {}, [
+    return _c("p", [_c("b", [_vm._v("Project Invitations:")])])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "task-top" }, [
       _c("p", [
-        _vm._v(
-          " dwdkwdlwdmwkdw dld wdwledklwkdl;wekdl;wkdwd ewedkwl;dk;wkdl;wkdlwedwe dwle  "
+        _c("b", [_vm._v("Project Members")]),
+        _c(
+          "a",
+          {
+            attrs: {
+              "data-toggle": "collapse",
+              href: "#memberProject",
+              role: "button",
+              "aria-expanded": "false",
+              "aria-controls": "memberProject"
+            }
+          },
+          [_c("i", { staticClass: "fas fa-angle-down float-right" })]
         )
       ])
     ])

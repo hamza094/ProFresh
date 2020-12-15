@@ -67,4 +67,12 @@ public function an_event_can_be_unfollowed_from()
    $this->assertCount(0, $project->subscribers);
 }
 
+/** @test */
+  public function it_can_invites_a_user(){
+    $this->signIn();
+      $project = create('App\Project');
+      $project->invite($user=create('App\User'));
+      $this->assertTrue($project->members->contains($user));
+  }
+
 }

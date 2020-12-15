@@ -57,6 +57,11 @@ Route::delete('/api/projects/{project}/appointment/{appointment}', 'AppointmentC
 
 //Invitation Routes
 Route::get('/api/users/search', 'InvitationController@search');
+Route::post('/api/projects/{project}/invitations', 'InvitationController@store');
+Route::get('project/{project}/member','InvitationController@accept');
+
+//Profile Routes
+Route::get('users/{user}/profile','ProfileController@show');
 
 
 Route::get('{path}', 'HomeController@index')->where('/path', '([A-z\d-\/_.]+)?');

@@ -788,6 +788,35 @@ margin-left: 1rem;
     outline:none;
  border:none;
   }
+  &_members{
+    img{
+      height: 3.8rem;
+      width:3.8rem;
+      border-radius: 50%;
+      &:hover{
+        padding: .1rem;
+        border:2px solid $color-secondary;
+      }
+    }
+    a{
+      text-decoration:none;
+      &:hover{
+        text-decoration:none;
+      }
+    }
+    &-detail{
+      width: auto;
+      vertical-align: top;
+      display: inline-flex;
+      justify-content : center;
+      margin-top: 1.5rem;
+      margin-left: 2rem;
+    }
+  }
+}
+.project_members-detail img,p{
+  margin: auto;
+   display: block
 }
 #paper {
 	color:#FFF;

@@ -10,7 +10,7 @@
                 <span class="page-top_arrow"> > </span>
                 <span> {{$project->name}}</span>
             </span>
-                        <project-edit :project="{{json_encode($project)}}" :subscribe="{{json_encode($project->IsSubscribedTo)}}"></project-edit>
+                        <project-edit :project="{{json_encode($project)}}" :subscribe="{{json_encode($project->IsSubscribedTo)}}"  :members="{{json_encode($members)}}" ></project-edit>
                     </div>
                 </div>
                 <div class="page-content">
@@ -147,7 +147,7 @@
 
             </div>
             <div class="col-md-4 side_panel">
-                <project-panel :project="{{json_encode($project)}}" v-cloak></project-panel>
+                <project-panel :project="{{json_encode($project)}}"  :members="{{json_encode($members)}}" ></project-panel>
             </div>
         </div>
     </div>

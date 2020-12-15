@@ -80,11 +80,11 @@ class ProjectController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Project $project)
     {
-        $project=Project::findorFail($id);
         $scores=$project->scores()->sum('point');
-        return view('project.show',compact('project',$project,'scores',$scores));
+        $members=$project->members->where('pivot.active',1);
+        return view('project.show',compact('project',$project,'scores',$scores,'members',$members));
 
     }
 
@@ -207,8 +207,8 @@ class ProjectController extends Controller
 }
 
 public function mail(Project $project,Request $request){
-  //Send Ticket Mail
-        Mail::to($project->email)->send(
+  //Send Project Member Mail
+        Mail::to($request['email'])->send(
             new ProjectMail($request->subject,$request->message)
         );
         $project->recordActivity('mail_sent');

@@ -13,8 +13,7 @@ class ProjectMail extends Mailable
     use Queueable, SerializesModels;
 
     public $message;
-   public $subject;
-
+    public $subject;
     /**
      * Create a new message instance.
      *
@@ -22,7 +21,7 @@ class ProjectMail extends Mailable
      */
     public function __construct($message,$subject)
     {
-        $this->message = $message;
+       $this->message = $message;
        $this->subject = $subject;
     }
 

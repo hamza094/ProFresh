@@ -77,8 +77,8 @@
             <option value="Not able to reach">Not able to reach</option>
           </select>
         </span>
-          <span class="form-inline"> <b> Attendes: </b><select class="custom-select" id="attendees" name="attendees" v-model="form.user">
-            <option v-for="user in users"  v-bind:value="user.id">{{user.name}}</option>
+          <span class="form-inline"> <b>Member Attendes: </b><select class="custom-select" id="attendees" name="attendees" v-model="form.user">
+            <option v-for="user in projectmembers"  v-bind:value="user.id">{{user.name}}</option>
           </select>
         </span>
 
@@ -168,9 +168,9 @@
           </div>
           <div class="col-md-4">
             <div class="form-group">
-               <label for="attendees" class="label-name">Attendes:</label>
+               <label for="attendees" class="label-name">Member Attendes:</label>
               <select class="custom-select" id="attendees" name="attendees" v-model="appointment.user" required>
-                <option v-for="user in users"  v-bind:value="user.id">{{user.name}}</option>
+                <option v-for="user in  projectmembers"  v-bind:value="user.id">{{user.name}}</option>
               </select>
               <span class="text-danger font-italic" v-if="errors.user" v-text="errors.user[0]"></span>
             </div>
@@ -199,19 +199,33 @@
     </div>
     <hr>
     <div class="invite">
+      <p><b>Project Invitations:</b></p>
       <input type="text" placeholder="Search user for invitation" class="form-control" v-model="query">
       <div class="invite-list">
         <ul v-if="results.length > 0 && query">
           <li v-for="result in results.slice(0,5)" :key="result.id">
-              <div v-text="result.title" @click.prevent="inviteUser(result.url)"></div>
+              <div @click.prevent="inviteUser(result.url)">{{result.title}} ({{result.searchable.email}})</div>
           </li>
         </ul>
       </div>
-
     </div>
     <hr>
-    <div class="">
-      <p> dwdkwdlwdmwkdw dld wdwledklwkdl;wekdl;wkdwd ewedkwl;dk;wkdl;wkdlwedwe dwle  </p>
+    <div class="project_members">
+      <div class="task-top">
+        <p><b>Project Members</b><a data-toggle="collapse" href="#memberProject" role="button" aria-expanded="false" aria-controls="memberProject">
+          <i class="fas fa-angle-down float-right"></i></a></p>
+      </div>
+      <div class="collapse" id="memberProject">
+        <div v-for="projectmembers in groupedMembers" class="row">
+        <div v-for="member in projectmembers" class="col-md-6" style="position:inherit">
+          <div class="project_members-detail">
+             <a v-bind:href="'/users/'+member.id+'/profile'" target="_blank"> <img src="https://i.ibb.co/51ZCLB8/download-1.jpg" alt="">
+              <p> {{member.name}}</p>
+              </a>
+              </div>
+        </div>
+      </div>
+</div>
     </div>
 </div>
   </div>
@@ -219,11 +233,11 @@
 
 <script>
 export default{
-  props:['project'],
+  props:['project','members'],
   watch: {
   query(after, before) {
     this.searchUsers();
-  }
+  },
 },
   data(){
     return{
@@ -259,9 +273,15 @@ export default{
       getdate:moment().format("YYYY-MM-DD"),
       query: null,
     results: [],
-
+    projectmembers:this.members
     }
   },
+  computed:{
+    groupedMembers() {
+     return _.chunk(this.projectmembers, 2)
+  }
+  },
+
   methods:{
     loadTasks(){
        axios.get('/api/projects/'+this.project.id+'/tasks')
@@ -417,10 +437,19 @@ export default{
         this.$vToastify.warning("Task Updated failed");
       })
     },
-    inviteUser(id){
-      alert(id);
-      this.results='';
-      this.query='';
+    inviteUser(user){
+      axios.post('/api/projects/'+this.project.id+'/invitations',{
+        email:user,
+      }).then(response=>{
+        this.query='';
+        this.results='';
+          this.$vToastify.success("Project Invitation Sent");
+      }).catch(error=>{
+        this.query='';
+        this.results='';
+        console.log("Project Invitation Failed!");
+      })
+
     },
     searchUsers() {
    axios.get('/api/users/search', { params: { query: this.query } })

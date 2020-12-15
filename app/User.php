@@ -56,9 +56,13 @@ class User extends Authenticatable implements Searchable
 
     public function getSearchResult(): SearchResult
    {
-     $url=$this->id;
-     $email=$this->email;
-      return new SearchResult($this, $this->name,$url,$email);
+     $url=$this->email;
+      return new SearchResult($this, $this->name,$url);
    }
+
+   public function members()
+    {
+        return $this->belongsToMany(Project::class,'project_members')->withPivot('active');
+    }
 
 }

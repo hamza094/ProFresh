@@ -121,8 +121,11 @@
 <form class="" @submit.prevent="projectMail">
   <div class="panel-top_content">
     <div class="form-group">
-        <label for="to" class="label-name">To:</label>
-        <input type="text" id="to" class="form-control"  name="to" v-model="form.email" Disabled>
+        <label for="to" class="label-name">To: Select Project Member</label>
+        <select class="custom-select" id="to" name="email" v-model="form.email" required>
+          <option v-for="user in  projectmembers"  v-bind:value="user.email">{{user.name}} ({{user.email}})</option>
+        </select>
+
     </div>
 
     <div class="form-group">
@@ -131,7 +134,7 @@
     </div>
     <div class="form-group">
         <label for="subject" class="label-name">Message:</label>
-        <textarea name="subject" class="form-control" rows="1" v-model="form.subject"></textarea>
+        <textarea name="subject" class="form-control" rows="9" v-model="form.subject"></textarea>
     </div>
   </div>
   <div class="panel-bottom">
@@ -194,7 +197,7 @@
 
 <script>
 export default {
-    props:['project','subscribe'],
+    props:['project','subscribe','members'],
     data() {
         return {
           subscription:this.subscribe,
@@ -214,6 +217,7 @@ export default {
               sms:''
 
           },
+          projectmembers:this.members,
            featurePop:false,
             errors:{}
         };

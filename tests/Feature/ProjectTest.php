@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\ProjectMail;
 use App\Exports\ProjectsExport;
 use Maatwebsite\Excel\Facades\Excel;
+use App\User;
 
 class ProjectTest extends TestCase
 {
@@ -158,7 +159,7 @@ public function project_mail_sent(){
       Mail::fake();
      Mail::assertNothingSent();
     $project=create('App\Project');
-       $this->post('/api/projects/'.$project->id.'/mail');
+       $this->withoutExceptionHandling()->post('/api/projects/'.$project->id.'/mail');
        Mail::assertSent(ProjectMail::class, 1);
        $this->assertCount(2,$project->activity);
 
@@ -198,7 +199,7 @@ public function sign_In_user_can_update_note(){
   $notes='abra ka dabra';
   $this->withoutExceptionHandling()->patch('api/projects/'.$project->id.'/notes',['notes'=>$notes]);
   $this->assertDatabaseHas('projects',['notes'=>$notes]);
-
 }
+
 
 }
