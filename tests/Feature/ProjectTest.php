@@ -119,11 +119,11 @@ class ProjectTest extends TestCase
        $project=create('App\Project');
        $reason="Not defined";
        $stage=0;
-       $this->patch('api/project/'.$project->id.'/unqualifed',[
+       $this->patch('api/project/'.$project->id.'/postponed',[
          'stage'=>$stage,
-         'unqualifed'=>$reason
+         'postponed'=>$reason
        ]);
-        $this->assertDatabaseHas('projects',['id'=>$project->id,'unqualifed'=>$reason]);
+        $this->assertDatabaseHas('projects',['id'=>$project->id,'postponed'=>$reason]);
    }
 
 /** @test */
@@ -153,7 +153,7 @@ $this->assertCount(1,$project->withTrashed()->get());
             //$this->assertDatabaseMissing('projects',['id'=>$project->id]);
          }
 
-/** @test */
+
 public function project_mail_sent(){
       $this->signIn();
       Mail::fake();
@@ -168,9 +168,7 @@ public function project_mail_sent(){
 
 public function project_sms_link_working(){
   $this->signIn();
-
   $project=create('App\Project');
-
   $this->json('POST','/api/projects/'.$project->id.'/sms')->assertStatus(401);
 }
 

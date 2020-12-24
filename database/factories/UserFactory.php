@@ -51,20 +51,6 @@ $factory->define(ProjectScore::class, function (Faker $faker) {
     ];
 });
 
-$factory->define(Account::class, function (Faker $faker) {
-  return [
-       'project_id'=>function () {
-          return factory('App\Project')->create()->id;
-      },
-        'title' => $faker->name,
-        'country' => 'Scotland',
-        'Address'=>'William Pearl',
-        'number'=>'6785434567',
-        'industry'=>'Armor',
-        'business'=>'Sales'
-    ];
-});
-
 $factory->define(App\Task::class, function (Faker $faker) {
     return [
          'project_id'=>function () {
@@ -74,7 +60,6 @@ $factory->define(App\Task::class, function (Faker $faker) {
         'completed'=>false
     ];
 });
-
 
 $factory->define(App\Appointment::class, function (Faker $faker) {
     return [

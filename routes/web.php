@@ -16,7 +16,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-    Route::post('/api/projects/{project}/mail','ProjectController@mail');
+Route::post('/api/projects/{project}/mail','ProjectController@mail');
 
 
 
@@ -24,7 +24,7 @@ Route::get('/', function () {
 Auth::routes();
 Route::post('/api/project/{project}/avatar', 'ProjectController@avatar')->name('avatar');
 Route::patch('/api/project/{project}/stage','ProjectController@stage');
-Route::patch('/api/project/{project}/unqualifed','ProjectController@unqualifed');
+Route::patch('/api/project/{project}/postponed','ProjectController@postponed');
 Route::get('/api/projects/{project}/delete','ProjectController@delete');
 Route::patch('/api/projects/{project}/avatar-delete','ProjectController@avatarDelete');
 Route::post('/api/projects/{project}/sms','ProjectController@sms');
@@ -38,9 +38,6 @@ Route::delete('/api/projects/{project}/unsubscribe','SubscriptionController@proj
 
 //Activity Feed
 Route::get('/projects/{project}/timeline_feeds','ProjectController@activity');
-
-//Account Routes
-Route::post('/api/project/{project}/account', 'AccountController@projectaccount');
 
 //Task Routes
 Route::post('/api/projects/{project}/tasks', 'TaskController@projectstore')->name('projecttask.create');

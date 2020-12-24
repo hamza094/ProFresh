@@ -17,7 +17,6 @@ class CreateProjectsTable extends Migration
             $table->id();
             $table->string("name");
             $table->integer('user_id');
-            $table->integer('account_id')->nullable();
             $table->text('notes')->nullable();
             $table->string("company")->nullable();
             $table->string('position')->nullable();
@@ -27,9 +26,8 @@ class CreateProjectsTable extends Migration
             $table->string("mobile",64);
             $table->string('owner');
             $table->string('avatar_path')->nullable();
-            $table->string('status')->default('Subscribed');
             $table->integer('stage')->default(1);
-            $table->string('unqualifed')->nullable();
+            $table->string('postponed')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

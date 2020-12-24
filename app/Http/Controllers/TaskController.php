@@ -22,8 +22,11 @@ class TaskController extends Controller
       $this->validate($request, [
         'body'=>'required',
     ]);
-
       $project->addTask(request('body'));
+
+      if(!$project->scores()->where('message','Task Added')->exists()){
+        $project->addScore('Task Added',10);
+      }
     }
 
 
@@ -40,6 +43,8 @@ class TaskController extends Controller
 
       public function projectdelete(Project $project,Task $task){
         $task->delete();
+        $task->activity()->delete();
+        $project->recordActivity('deleted_task',$task->body);
       }
 
 }

@@ -83,7 +83,6 @@ Vue.component('single-project', require('./components/SingleProject.vue').defaul
 Vue.component('file', require('./components/File.vue').default);
 Vue.component('project-edit', require('./components/ProjectEdit.vue').default);
 Vue.component('project-stage', require('./components/Stage.vue').default);
-Vue.component('project-account', require('./components/ProjectAccount.vue').default);
 Vue.component('project-panel', require('./components/ProjectPanel.vue').default);
 const routes = [
   { path: '/dashboard', component: require('./components/Dashboard.vue').default },

@@ -71,18 +71,6 @@
                                 <span class="text-danger font-italic" v-if="errors.owner" v-text="errors.owner[0]"></span>
                             </div>
 
-                              <div class="form-group">
-                                 <label for="status" class="label-name">Status: {{form.status}}</label>
-                                <select class="custom-select" id="status" name="status" v-model="form.status">
-                                  <option selected value="Subscribed">Subscribed</option>
-                                  <option value="Unsubscribed">Unsubscribed</option>
-                                  <option value="Not subscribed">Not subscribed</option>
-                                  <option value="Reported as spam">Reported as spam</option>
-                                  <option value="Bounced">Bounced</option>
-                                <span class="text-danger font-italic" v-if="errors.status" v-text="errors.status[0]"></span>
-                                </select>
-                              </div>
-
                             <div class="form-group">
                                 <label for="status" class="label-name">Zip Code:</label>
                                 <input type="text" id="zipcode" class="form-control" name="zipcode"  v-model="form.zipcode">
@@ -164,11 +152,13 @@
     <div class="panel-top_content">
       <div class="form-group">
           <label for="mobile" class="label-name">Mobile Number:</label>
-          <input type="text" id="to" class="form-control"  name="mobile" v-model="form.mobile" Disabled>
+          <select class="custom-select" id="mobile" name="mobile" v-model="form.mobile" required>
+            <option v-for="user in  projectmembers"  v-bind:value="user.mobile">
+              <span v-if="user.mobile != null"> {{user.name}} ({{user.mobile}}) </span>
+            </option>
+          </select>
           <span class="text-danger font-italic" v-if="errors.mobile" v-text="errors.mobile[0]"></span>
           <span class="text-info font-italic">*Sms sent only on verified numbers due to trillo trial version sent mail to us to get verified number</span>
-
-
       </div>
       <div class="form-group">
           <label for="sms" class="label-name">Message:</label>
@@ -208,7 +198,6 @@ export default {
               zipcode:this.project.zipcode,
               email:this.project.email,
               mobile:this.project.mobile,
-              status:this.project.status,
               owner:this.project.owner,
               position:this.project.position,
               message:'',
@@ -238,7 +227,6 @@ export default {
                zipcode:this.form.zipcode,
                email:this.form.email,
                mobile:this.form.mobile,
-               status:this.form.status,
                owner:this.form.owner,
                position:this.form.position
 

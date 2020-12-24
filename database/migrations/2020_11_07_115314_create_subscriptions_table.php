@@ -17,7 +17,6 @@ class CreateSubscriptionsTable extends Migration
             $table->id();
             $table->integer('user_id');
             $table->integer('project_id')->nullable();
-            $table->integer('contact_id')->nullable();
             $table->timestamps();
         });
     }

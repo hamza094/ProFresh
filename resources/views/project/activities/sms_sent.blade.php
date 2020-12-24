@@ -1,2 +1,2 @@
 <span class="activity-icon activity-icon_purple"><i class="fas fa-mobile-alt"></i></span>
- SMS sent to project mobile number
+ SMS sent to  {{$activity->detail}}

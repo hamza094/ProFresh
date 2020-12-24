@@ -5,6 +5,8 @@ namespace Tests\Unit;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use App\Task;
+use App\Project;
 
 class ProjectTest extends TestCase
 {
@@ -32,14 +34,6 @@ class ProjectTest extends TestCase
       $this->assertInstanceOf('App\User',$project->user);
   }
 
-
-  public function it_belongs_to_a_Account()
-  {
-    $this->signIn();
-      $project = create('App\Project');
-      $this->assertInstanceOf('App\Account', $project->account);
-  }
-
   /** @test */
   public function a_project_can_add_a_task()
   {
@@ -48,6 +42,22 @@ class ProjectTest extends TestCase
       $project->addTask('run berry run');
       $this->assertCount(1,$project->tasks);
   }
+
+  /** @test */
+ public function a_project_has_tasks()
+{
+  $this->signIn();
+    $project=create('App\Project');
+    $this->assertInstanceOf('Illuminate\Database\Eloquent\Collection', $project->tasks);
+}
+
+/** @test */
+public function a_project_has_appointments()
+{
+$this->signIn();
+  $project=create('App\Project');
+  $this->assertInstanceOf('Illuminate\Database\Eloquent\Collection', $project->appointments);
+}
 
   /** @test */
   public function an_project_can_be_followed_to(){

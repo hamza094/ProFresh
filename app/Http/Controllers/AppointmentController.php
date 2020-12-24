@@ -7,6 +7,7 @@ use App\Project;
 use App\Appointment;
 use App\User;
 use Auth;
+use App\Activity;
 
 class AppointmentController extends Controller
 {
@@ -37,6 +38,9 @@ class AppointmentController extends Controller
       'outcome'=>$request->outcome
     ]);
     $appointment->users()->attach($request->user);
+    if(!$project->scores()->where('message','Appointment Added')->exists()){
+      $project->addScore('Appointment Added',10);
+    }
   }
 
      public function show(Project $project,Request $request){
@@ -69,14 +73,34 @@ class AppointmentController extends Controller
 
           if ($appointment->users->contains(request('user'))) {
             $appointment->users()->detach(request('user'));
+            $user=User::find(request('user'));
+            Activity::create([
+              'user_id'=>auth()->id(),
+              'project_id'=>$project->id,
+              'subject_type'=>'App\Appointment',
+              'subject_id'=>$appointment->id,
+              'description'=>'detached_user',
+              'detail'=>$user->name.'/_/'.$user->id,
+            ]);
            }else{
            $appointment->users()->attach(request('user'));
+           $user=User::find(request('user'));
+           Activity::create([
+             'user_id'=>auth()->id(),
+             'project_id'=>$project->id,
+             'subject_type'=>'App\Appointment',
+             'subject_id'=>$appointment->id,
+             'description'=>'attached_user',
+             'detail'=>$user->name.'/_/'.$user->id,
+           ]);
          }
     }
 
      public function destroy(Project $project,Appointment $appointment){
        $appointment->delete();
        $appointment->users()->detach();
+        $appointment->activity()->delete();
+        $project->recordActivity('deleted_appointment',$appointment->title);
      }
 
 }

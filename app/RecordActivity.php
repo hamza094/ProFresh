@@ -15,7 +15,7 @@ trait RecordActivity
     {
         foreach (self::recordableEvents() as $event) {
             static::$event(function ($model) use ($event) {
-                $model->recordActivity($model->activityDescription($event));
+                $model->recordActivity($model->activityDescription($event),'default');
             });
             if ($event === 'updated') {
                 static::updating(function ($model) {
@@ -51,13 +51,14 @@ trait RecordActivity
      *
      * @param string $description
      */
-    public function recordActivity($description)
+    public function recordActivity($description,$detail)
     {
         $this->activity()->create([
             'user_id' => auth()->id() ?: ($this->project ?? $this)->owner->id,
             'description' => $description,
             'changes' => $this->activityChanges(),
-            'project_id' => class_basename($this) === 'Project' ? $this->id : $this->project_id
+            'project_id' => class_basename($this) === 'Project' ? $this->id : $this->project_id,
+            'detail'=> $detail
         ]);
     }
     /**

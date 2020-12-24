@@ -535,38 +535,51 @@ background: transparent !important;
 
 
 .arrow-pointer-unq{
-        width: 108px;
-    height: 32px;
     background:#B92D2D;
-    position: relative;
-    text-align: center;
     color:#ffffff;
-    &:hover{
-        cursor:pointer;
-    };
   &::before{
-   content: "";
-    position: absolute;
-    right: -25px;
-    bottom: 0px;
-    width: 0;
-    height: 0;
     border-left: 25px solid  #B92D2D;
-    border-top: 16px solid transparent;
-    border-bottom: 16px solid transparent;
   }
   &::after{
-    content: "";
-    position: absolute;
-    left: 0px;
-    bottom: 0px;
-    width: 0;
-    height: 0;
     border-left: 25px solid #ffffff;
-    border-top: 16px solid transparent;
-    border-bottom: 16px solid transparent;
   }
 }
+
+.arrow-pointer-clo{
+    background:#196F3D;
+    color:#ffffff;
+  &::before{
+    border-left: 25px solid  #196F3D;
+  }
+  &::after{
+    border-left: 25px solid #ffffff;
+  }
+}
+
+.unq-bg{
+background: #E84F51 !important;
+color:#ffffff !important;
+
+&::before{
+      border-left: 25px solid  #E84F51  !important;
+}
+&::after{
+  border-left: 25px solid #ffffff !important;
+}
+}
+
+.clo-bg{
+background: #27AE60 !important;
+color:#ffffff !important;
+
+&::before{
+      border-left: 25px solid  #27AE60  !important;
+}
+&::after{
+  border-left: 25px solid #ffffff !important;
+}
+}
+
 
 .padding-0{
         padding-right:0 !important;
@@ -616,12 +629,6 @@ ul{
   }
 }
 
-.unq-bg{
-background: #E84F51 !important;
-&::before{
-      border-left: 25px solid  #E84F51  !important;
-}
-}
 
 .feature-dropdown{
   position: relative;
@@ -697,6 +704,15 @@ margin-left: 1rem;
     }
     &_purple{
       color:$color-secondary;
+    }
+    &_primary{
+      color:$color-primary;
+    }
+    &_danger{
+      color:#E74C3C;
+    }
+    &_appoint{
+      color:#B41BBF;
     }
     i{
       font-size: 1.2rem;
@@ -940,6 +956,12 @@ padding-bottom: .2rem;
 &:hover{
   background-color:#e5e5ee;
 }
+}
+}
 
-  }
+.pro-info{
+  font-weight: 700;
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: .5rem;
 }

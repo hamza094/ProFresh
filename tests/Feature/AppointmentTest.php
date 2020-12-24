@@ -44,17 +44,10 @@ class AppointmentTest extends TestCase
     $project=create('App\Project');
     $user=create('App\User');
     $appointment=create('App\Appointment',['project_id'=>$project->id]);
-    $title= 'mine mella';
-    $location='fsl pakistan';
-    $outcome='Intrested';
-    $strtdt='11-20-17';
-    $strttm='14:05';
-    $zone='Asia/pacific';
-    $outcome='Not intrested';
-    $this->patch('/api/projects/'.$project->id.'/appointment/'.$project->id,
-    ['title'=>$title,'location'=>$location,'outcome'=>$outcome,'strtdt'=>$strtdt,'strttm'=>$strttm,'zone'=>$zone,'outcome'=>$outcome]);
+    $this->patch('/api/projects/'.$project->id.'/appointment/'.$appointment->id,
+    ['title'=>'mine appoint','location'=>'fsl','outcome'=>'Intrested','strtdt'=>'11-20-17','strttm'=>'14:05','zone'=>'Asia/pacific']);
     $appointment->users()->attach($user);
-    $this->assertDatabaseHas('appointments',['id'=>$appointment->id,'zone'=>$zone]);
+    $this->assertDatabaseHas('appointments',['id'=>$appointment->id,'zone'=>'Asia/pacific']);
   }
 
 

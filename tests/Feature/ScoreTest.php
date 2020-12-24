@@ -19,11 +19,16 @@ class ScoreTest extends TestCase
      */
 
     /** @test */
-    public function score_added_on_project_avatar_uploaded()
+    public function get_sum_of_project_score_on_performing_project_related_activity()
     {
         $this->signIn();
         $project=create('App\Project',['avatar_path'=>'img.png']);
-        $project_score = create('App\ProjectScore',['project_id'=>$project->id,'point'=>15]);
-        $this->assertEquals($project->scores()->sum('point'),15);
+        $project->addScore('Avatar Uploaded',15);
+        $task=$project->addTask('test task');
+        $project->addScore('Task Added',10);
+        $appointment=create('App\Appointment',['project_id'=>$project->id]);
+        $project->addScore('Appointment Added',10);
+        $this->assertEquals($project->scores()->sum('point'),35);
     }
+
 }

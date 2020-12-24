@@ -434,7 +434,8 @@ export default{
       }).then(response=>{
           this.$vToastify.success("Notes Updated");
       }).catch(error=>{
-        this.$vToastify.warning("Task Updated failed");
+        this.$vToastify.warning("Notes Updatation failed");
+        this.form.notes=this.project.notes
       })
     },
     inviteUser(user){

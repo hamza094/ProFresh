@@ -16,7 +16,6 @@ class CreateProjectScoresTable extends Migration
         Schema::create('project_scores', function (Blueprint $table) {
             $table->id();
             $table->integer('project_id');
-            $table->integer('contact_id')->nullable();
             $table->string('message');
             $table->bigInteger('point');
             $table->timestamps();

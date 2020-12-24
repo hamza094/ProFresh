@@ -6,11 +6,16 @@ use Illuminate\Database\Eloquent\Model;
 
 class Task extends Model
 {
+  use RecordActivity;
+
     protected $guarded=[];
 
     protected $touches=['project'];
 
   protected $casts=['completed'=>'boolean'];
+
+  protected static $recordableEvents = ['created','updated','deleted'];
+
 
   public function path()
     {
@@ -25,6 +30,10 @@ class Task extends Model
     {
         return "/projects/{$this->project->id}/tasks/{$this->id}";
     }
+
+    public function activity(){
+       return $this->morphMany(Activity::class,'subject')->latest();
+   }
 
     public function complete(){
       $this->update(['completed'=>true]);

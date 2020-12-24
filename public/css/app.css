@@ -567,40 +567,55 @@
 }
 
 .arrow-pointer-unq {
-  width: 108px;
-  height: 32px;
   background: #B92D2D;
-  position: relative;
-  text-align: center;
   color: #ffffff;
 }
 
-.arrow-pointer-unq:hover {
-  cursor: pointer;
-}
-
 .arrow-pointer-unq::before {
-  content: "";
-  position: absolute;
-  right: -25px;
-  bottom: 0px;
-  width: 0;
-  height: 0;
   border-left: 25px solid #B92D2D;
-  border-top: 16px solid transparent;
-  border-bottom: 16px solid transparent;
 }
 
 .arrow-pointer-unq::after {
-  content: "";
-  position: absolute;
-  left: 0px;
-  bottom: 0px;
-  width: 0;
-  height: 0;
   border-left: 25px solid #ffffff;
-  border-top: 16px solid transparent;
-  border-bottom: 16px solid transparent;
+}
+
+.arrow-pointer-clo {
+  background: #196F3D;
+  color: #ffffff;
+}
+
+.arrow-pointer-clo::before {
+  border-left: 25px solid #196F3D;
+}
+
+.arrow-pointer-clo::after {
+  border-left: 25px solid #ffffff;
+}
+
+.unq-bg {
+  background: #E84F51 !important;
+  color: #ffffff !important;
+}
+
+.unq-bg::before {
+  border-left: 25px solid #E84F51 !important;
+}
+
+.unq-bg::after {
+  border-left: 25px solid #ffffff !important;
+}
+
+.clo-bg {
+  background: #27AE60 !important;
+  color: #ffffff !important;
+}
+
+.clo-bg::before {
+  border-left: 25px solid #27AE60 !important;
+}
+
+.clo-bg::after {
+  border-left: 25px solid #ffffff !important;
 }
 
 .padding-0 {
@@ -652,14 +667,6 @@
 
 .stage-dropdown_item-content:hover {
   background-color: #e5e5ee;
-}
-
-.unq-bg {
-  background: #E84F51 !important;
-}
-
-.unq-bg::before {
-  border-left: 25px solid #E84F51 !important;
 }
 
 .feature-dropdown {
@@ -747,6 +754,18 @@
 
 .activity-icon_purple {
   color: #12344D;
+}
+
+.activity-icon_primary {
+  color: #FFA800;
+}
+
+.activity-icon_danger {
+  color: #E74C3C;
+}
+
+.activity-icon_appoint {
+  color: #B41BBF;
 }
 
 .activity-icon i {
@@ -1008,6 +1027,13 @@ p {
 
 .invite li:hover {
   background-color: #e5e5ee;
+}
+
+.pro-info {
+  font-weight: 700;
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5rem;
 }
 
 /*!

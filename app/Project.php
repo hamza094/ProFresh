@@ -91,10 +91,6 @@ public function stageupdate() {
        return $redis->get('stage_update_' . $this->id);
 }
 
-public function account(){
-  return $this->belongsTo(Account::class,'account_id');
-}
-
 public function tasks(){
   return $this->hasMany(Task::class);
 }

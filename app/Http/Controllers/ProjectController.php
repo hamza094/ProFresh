@@ -123,7 +123,7 @@ class ProjectController extends Controller
         ]);
 
         $project->update(request(['name','owner','email','zipcode','mobile',
-            'address','position','status']));
+            'address','position']));
 
         if (request()->wantsJson()) {
             return response($project, 201);
@@ -147,7 +147,7 @@ class ProjectController extends Controller
             'avatar'=>['required', 'image']
         ]);
         if($project->avatar_path==null){
-            $project->addScore('avatar uploaded',15);
+            $project->addScore('Avatar Uploaded',15);
         }
         $file = $request->file('avatar');
         $filename = uniqid($project->id.'_').'.'.$file->getClientOriginalExtension();
@@ -176,12 +176,12 @@ class ProjectController extends Controller
       }
     }
 
-    public function unqualifed(Request $request,Project $project){
+    public function postponed(Request $request,Project $project){
       $this->validate($request, [
-          'unqualifed'=>'required',
+          'postponed'=>'required',
           'stage'=>'required'
       ]);
-      $project->update(request(['unqualifed','stage']));
+      $project->update(request(['postponed','stage']));
 
       if (request()->wantsJson()) {
           return response($project, 201);
@@ -201,7 +201,7 @@ class ProjectController extends Controller
    public function avatarDelete(Project $project){
     if($project->avatar_path!==null){
    $project->update(['avatar_path'=>null]);
-    $project->scores()->where('message','avatar uploaded')->delete();
+    $project->scores()->where('message','Avatar Uploaded')->delete();
      }
 
 }
@@ -211,7 +211,12 @@ public function mail(Project $project,Request $request){
         Mail::to($request['email'])->send(
             new ProjectMail($request->subject,$request->message)
         );
-        $project->recordActivity('mail_sent');
+        $project->recordActivity('mail_sent',$request->email);
+
+        if(!$project->scores()->where('message','Sent Mail')->exists()){
+          $project->addScore('Sent Mail',10);
+        };
+
 
 }
 
@@ -222,13 +227,22 @@ public function sms(Project $project,Request $request){
       'sms'=>'required'
   ]);
   ProjectFunction::sendMessage($request->sms,$request->mobile);
-  $project->recordActivity('sms_sent');
+  $project->recordActivity('sms_sent',$request->mobile);
+
+  if(!$project->scores()->where('message','Sent Sms')->exists()){
+    $project->addScore('Sent Sms',10);
+  };
 }
 
 // Download Project Data Excel Export
 public function export(Project $project){
-  $project->recordActivity('excel_export');
+  $project->recordActivity('excel_export','default');
   return (new ProjectsExport($project))->download("project$project->id.xlsx");
+
+  if(!$project->scores()->where('message','Excel Export')->exists()){
+    $project->addScore('Excel Export',10);
+  };
+
 }
 
 public function activity(Project $project){
@@ -245,6 +259,10 @@ public function notes(Project $project,Request $request){
       'notes'=>'required',
   ]);
   $project->update(['notes'=>request('notes')]);
+
+    if(!$project->scores()->where('message','Notes Updated')->exists()){
+      $project->addScore('Notes Updated',10);
+    }
 }
 
 public function search(Request $request)

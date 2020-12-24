@@ -23,12 +23,13 @@
                   <div class="score">
                       <div class="score-content">
                           <p class="score-content_para"><i class="far fa-clock"></i><b>Project</b> since {{project.created_at | timeExactDate}} with current in stage
-                          <b v-if="project.stage == 0">Unqualifed</b>
-                          <b v-if ="project.stage == 1">New</b>
-                          <b v-if="project.stage == 2">Connected</b>
-                          <b v-if="project.stage == 3">Intrested</b>
-                          <b v-if="project.stage == 4">Reviewed</b>
-                          <b v-if="project.stage == 5">Exhibited</b>
+                          <b v-if="project.stage == 0">Postponed</b>
+                          <b v-if ="project.stage == 1">Initial</b>
+                          <b v-if="project.stage == 2">Defined</b>
+                          <b v-if="project.stage == 3">Designing</b>
+                          <b v-if="project.stage == 4">Developing</b>
+                          <b v-if="project.stage == 5">Execution</b>
+                          <b v-if="project.stage == 6">Closure</b>
                           </p>
                           <div class="score-content_point">
                               <p class="score-content_point-para"><b>Top scoring factors</b></p>
@@ -39,10 +40,15 @@
                     <span v-else><span  class="score-content_point-hot_point">{{scores}}</span><br><span class="score-content_point-hot_status">Hot</span></span></p>
                                   </div>
                                   <div class="col-md-9">
-                                  <div v-for="detail in details">
+                                    <div v-if="details == 0" class="">
+                                      <h5>The Project score hasn't added</h5>
+                                    </div>
+                                      <div v-for="details in groupedDetails" class="row">
+                                  <div v-for="detail in details" class="col-md-6">
                                     <p class="project-score"><span><i class="fas fa-arrow-up"></i></span> {{detail.message}}</p>
-                              <p class="project-score"><span><i class="fas fa-arrow-up"></i></span> Project Updated</p>
                                   </div>
+                                </div>
+
                                   </div>
                               </div>
                           </div>
@@ -105,6 +111,11 @@ export default {
                 document.addEventListener('click',this.emptyIfClickedOutside);
             }
         }
+    },
+    computed:{
+      groupedDetails() {
+       return _.chunk(this.details, 2)
+    }
     },
     methods: {
         setImage(e) {
