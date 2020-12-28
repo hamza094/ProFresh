@@ -745,6 +745,15 @@ margin-left: 1rem;
       }
     }
   }
+  &-search{
+    ul{
+      list-style: none;
+    a {
+      text-decoration: none;
+      font-size: 1rem;
+    }
+    }
+  }
 }
 
 .project{
@@ -964,4 +973,8 @@ padding-bottom: .2rem;
   font-size: 1rem;
   text-transform: uppercase;
   letter-spacing: .5rem;
+}
+
+.activity-font{
+font-weight: bold; 
 }

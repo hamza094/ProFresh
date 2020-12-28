@@ -37,7 +37,7 @@ Route::post('/api/projects/{project}/subscribe','SubscriptionController@projectS
 Route::delete('/api/projects/{project}/unsubscribe','SubscriptionController@projectUnSubscribe');
 
 //Activity Feed
-Route::get('/projects/{project}/timeline_feeds','ProjectController@activity');
+Route::get('/projects/{project}/timeline_feeds','ProjectController@activity')->name('activities');
 
 //Task Routes
 Route::post('/api/projects/{project}/tasks', 'TaskController@projectstore')->name('projecttask.create');

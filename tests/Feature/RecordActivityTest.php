@@ -139,7 +139,7 @@ public function invitation_sent_to_user(){
         'email'=>$InvitedUser->email
     ]);
    $this->assertCount(2,$project->activity);
-   $this->assertEquals('sent_member',$project->activity->last()->description);
+   $this->assertEquals('sent_member_project',$project->activity->last()->description);
  }
 
 /** @test */
@@ -150,6 +150,6 @@ public function invitation_sent_to_user(){
    $this->signIn($user);
     $this->get('project/'.$project->id.'/member');
 $this->assertCount(2,$project->activity);
-$this->assertEquals('accept_member',$project->activity->last()->description);
+$this->assertEquals('accept_member_project',$project->activity->last()->description);
 }
 }

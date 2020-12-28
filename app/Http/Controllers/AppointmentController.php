@@ -79,7 +79,7 @@ class AppointmentController extends Controller
               'project_id'=>$project->id,
               'subject_type'=>'App\Appointment',
               'subject_id'=>$appointment->id,
-              'description'=>'detached_user',
+              'description'=>'userdetach_appointment',
               'detail'=>$user->name.'/_/'.$user->id,
             ]);
            }else{
@@ -90,7 +90,7 @@ class AppointmentController extends Controller
              'project_id'=>$project->id,
              'subject_type'=>'App\Appointment',
              'subject_id'=>$appointment->id,
-             'description'=>'attached_user',
+             'description'=>'userattach_appointment',
              'detail'=>$user->name.'/_/'.$user->id,
            ]);
          }

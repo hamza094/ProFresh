@@ -227,7 +227,7 @@ public function sms(Project $project,Request $request){
       'sms'=>'required'
   ]);
   ProjectFunction::sendMessage($request->sms,$request->mobile);
-  $project->recordActivity('sms_sent',$request->mobile);
+  $project->recordActivity('sms_project',$request->mobile);
 
   if(!$project->scores()->where('message','Sent Sms')->exists()){
     $project->addScore('Sent Sms',10);
@@ -236,7 +236,7 @@ public function sms(Project $project,Request $request){
 
 // Download Project Data Excel Export
 public function export(Project $project){
-  $project->recordActivity('excel_export','default');
+  $project->recordActivity('export_project','default');
   return (new ProjectsExport($project))->download("project$project->id.xlsx");
 
   if(!$project->scores()->where('message','Excel Export')->exists()){
@@ -246,8 +246,23 @@ public function export(Project $project){
 }
 
 public function activity(Project $project){
-  $activity=Project::where('id',$project->id);
-  return view('project.activities',compact('project',$activity));
+
+  $activities=$project->activity();
+
+  if ($id = request('mine')) {
+              $user = User::where('id', $id)->firstOrFail();
+              $activities->where('user_id', $user->id);
+          }elseif(request('task')){
+            $activities->where('description', 'LIKE', '%'.'_task'.'%');
+          }elseif(request('appointment')){
+           $activities->where('description', 'LIKE', '%'.'_appointment'.'%');
+         }elseif(request('related')){
+            $activities=$project->activity()->where('description', 'LIKE', '%'.'_project'.'%');
+           }
+          $activities = $activities->paginate(10);
+
+
+  return view('project.activities.activities',compact('activities',$activities,'project',$project));
 }
 
 public function user(){
