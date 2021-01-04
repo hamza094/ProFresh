@@ -16,20 +16,22 @@ class InvitationTest extends TestCase
      */
 
      /** @test */
-     public function a_signIn_can_invite_user(){
-         $this->signIn();
-         $project=create('App\Project');
+     public function project_owner_can_invite_user(){
+       $user=create('App\User');
+        $this->signIn($user);
+        $project=create('App\Project',['user_id'=>$user->id]);
          $InvitedUser=create('App\User');
-         $this->withoutExceptionHandling()->post($project->path().'/invitations',[
+         $this->post($project->path().'/invitations',[
              'email'=>$InvitedUser->email
          ]);
         $this->assertTrue($project->members->contains($InvitedUser));
       }
 
       /** @test */
-        public function a_user_can_not_reinvite(){
-            $this->signIn();
-            $project=create('App\Project');
+        public function project_owner_can_not_reinvite(){
+          $user=create('App\User');
+           $this->signIn($user);
+           $project=create('App\Project',['user_id'=>$user->id]);
             $InvitedUser=create('App\User');
             $this->post($project->path().'/invitations',[
                 'email'=>$InvitedUser->email]);
@@ -46,9 +48,32 @@ class InvitationTest extends TestCase
               $project = create('App\Project');
               $project->invite($user=create('App\User'));
             $this->signIn($user);
-             $this->withoutExceptionHandling()->get('project/'.$project->id.'/member');
+             $this->get('project/'.$project->id.'/member');
              $this->assertDatabaseHas('project_members', [
        "project_id" => $project->id, "user_id" => $user->id,'active'=>1]);
        }
+
+       /** @test */
+       public function authorized_user_can_ignore_project_request(){
+           $project = create('App\Project');
+           $project->invite($user=create('App\User'));
+         $this->signIn($user);
+          $this->get('project/'.$project->id.'/cancel');
+          $this->assertDatabaseMissing('project_members', [
+    "project_id" => $project->id, "user_id" => $user->id]);
+    }
+
+       /** @test */
+       public function project_owner_can_cancel_project_member_membership(){
+          $user=create('App\User');
+          $this->signIn($user);
+          $project=create('App\Project',['user_id'=>$user->id]);
+          $user2=create('App\User');
+          $project->members()->attach($user2);
+           $this->get('api/project/'.$project->id.'/cancel/'.$user2->id);
+           $this->assertDatabaseMissing('project_members', [
+       "project_id" => $project->id, "user_id" => $user2->id]);
+
+    }
 
 }

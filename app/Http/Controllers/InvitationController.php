@@ -23,6 +23,7 @@ class InvitationController extends Controller
    }
 
    public function store(Project $project,Request $request){
+     $this->authorize('manage',$project);
      $user=User::whereEmail(request('email'))->first();
      if (! $project->members->contains($user->id)) {
      $project->invite($user);
@@ -38,5 +39,20 @@ class InvitationController extends Controller
      $user->members()->updateExistingPivot($project,['active'=>1]);
      $project->recordActivity('accept_member_project',$user->name.'/_/'.$user->id);
      $project->addScore("Invitaion Accept by $user->name",15);
+     return redirect()->back();
   }
+
+  public function ignore(Project $project){
+    $user=Auth::user();
+     $project->members()->detach($user);
+     return redirect()->back();
+  }
+
+  public function cancel(Project $project,User $user){
+     $this->authorize('manage',$project);
+     $project->members()->detach($user);
+     $project->recordActivity('cancel_member_project',$user->name.'/_/'.$user->id);
+     $project->scores()->where('message',"Invitaion Accept by $user->name")->delete();
+  }
+
 }

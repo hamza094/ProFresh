@@ -60,7 +60,6 @@ class ProjectController extends Controller
             'name'=>$request->name,
             'user_id'=>auth()->id(),
             'email'=>$request->email,
-            'owner'=>$request->owner,
             'zipcode'=>$request->zipcode,
             'mobile'=>$request->mobile,
             'address'=>$request->address,
@@ -116,13 +115,14 @@ class ProjectController extends Controller
     {
         $this->validate($request, [
             'name'=>'required',
-            'owner'=>'required',
             'email'=>'required',
             'mobile'=>'required'
 
         ]);
 
-        $project->update(request(['name','owner','email','zipcode','mobile',
+        $this->authorize('access',$project);
+
+        $project->update(request(['name','email','zipcode','mobile',
             'address','position']));
 
         if (request()->wantsJson()) {
@@ -139,10 +139,12 @@ class ProjectController extends Controller
      */
     public function destroy(Project $project)
     {
+      $this->authorize('manage',$project);
         $project->delete();
     }
 
     public function avatar(Project $project, Request $request){
+      $this->authorize('access',$project);
         $this->validate(request(), [
             'avatar'=>['required', 'image']
         ]);
@@ -162,6 +164,7 @@ class ProjectController extends Controller
       $this->validate($request, [
           'stage'=>'required',
       ]);
+     $this->authorize('access',$project);
 
       $project->update(request(['stage']));
 
@@ -181,6 +184,9 @@ class ProjectController extends Controller
           'postponed'=>'required',
           'stage'=>'required'
       ]);
+      $this->authorize('access',$project);
+
+
       $project->update(request(['postponed','stage']));
 
       if (request()->wantsJson()) {
@@ -190,6 +196,7 @@ class ProjectController extends Controller
 
 //Project Trash Delete
    public function delete(Project $project){
+     $this->authorize('manage',$project);
      $project->forceDelete();
      $project->activity()->delete();
 
@@ -199,6 +206,7 @@ class ProjectController extends Controller
    }
 
    public function avatarDelete(Project $project){
+     $this->authorize('access',$project);
     if($project->avatar_path!==null){
    $project->update(['avatar_path'=>null]);
     $project->scores()->where('message','Avatar Uploaded')->delete();
@@ -273,6 +281,8 @@ public function notes(Project $project,Request $request){
   $this->validate($request, [
       'notes'=>'required',
   ]);
+  $this->authorize('access',$project);
+
   $project->update(['notes'=>request('notes')]);
 
     if(!$project->scores()->where('message','Notes Updated')->exists()){

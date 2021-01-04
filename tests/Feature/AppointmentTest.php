@@ -16,10 +16,11 @@ class AppointmentTest extends TestCase
      */
 
      /** @test */
-    public function signIn_user_create_appointment()
+    public function authorized_user_create_appointment()
     {
-      $this->signIn();
-      $project=create('App\Project');
+      $user=create('App\User');
+       $this->signIn($user);
+       $project=create('App\Project',['user_id'=>$user->id]);
       $response=$this->post('api/projects/'.$project->id.'/appointment',
           ['title' => 'mine hella','location'=>'lhr pakistan','outcome'=>'Not Intrested',
         'strtdt'=>'11-20-17','strttm'=>'14:05','zone'=>'Asia/pacific','outcome'=>'Not intrested']);
@@ -40,13 +41,14 @@ class AppointmentTest extends TestCase
 
    /** @test */
     public function an_appointment_can_be_updated(){
-    $this->signIn();
-    $project=create('App\Project');
     $user=create('App\User');
+    $this->signIn($user);
+    $project=create('App\Project',['user_id'=>$user->id]);
+    $user2=create('App\User');
     $appointment=create('App\Appointment',['project_id'=>$project->id]);
     $this->patch('/api/projects/'.$project->id.'/appointment/'.$appointment->id,
     ['title'=>'mine appoint','location'=>'fsl','outcome'=>'Intrested','strtdt'=>'11-20-17','strttm'=>'14:05','zone'=>'Asia/pacific']);
-    $appointment->users()->attach($user);
+    $appointment->users()->attach($user2);
     $this->assertDatabaseHas('appointments',['id'=>$appointment->id,'zone'=>'Asia/pacific']);
   }
 

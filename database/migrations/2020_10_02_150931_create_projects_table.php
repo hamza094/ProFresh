@@ -24,7 +24,6 @@ class CreateProjectsTable extends Migration
             $table->bigInteger('zipcode')->nullable();
             $table->string("email");
             $table->string("mobile",64);
-            $table->string('owner');
             $table->string('avatar_path')->nullable();
             $table->integer('stage')->default(1);
             $table->string('postponed')->nullable();

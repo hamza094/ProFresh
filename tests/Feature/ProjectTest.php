@@ -26,8 +26,8 @@ class ProjectTest extends TestCase
     public function auth_user_can_create_project()
     {
         $this->signIn();
-        $response=$this->post('api/projects',
-            ['name' => 'Json','email'=>'json_pisces@outlook.com','owner'=>'admin',
+        $response=$this->withoutExceptionHandling()->post('api/projects',
+            ['name' => 'Json','email'=>'json_pisces@outlook.com',
                 'mobile'=>6785434567]);
           $this->assertDatabaseHas('projects',['name'=>'Json']);
     }
@@ -60,18 +60,20 @@ class ProjectTest extends TestCase
 
     /** @test */
     public function a_valid_avatar_must_be_provided(){
-        $this->signIn();
-        $project=create('App\Project');
+      $user=create('App\User');
+       $this->signIn($user);
+       $project=create('App\Project',['user_id'=>$user->id]);
         $this->json('POST','api/project/'.$project->id.'/avatar',[
             'avatar'=>'not-an-image'
         ])->assertStatus(422);
     }
 
 
-    public function auth_user_may_add_avatar_to_project()
+    public function authorize_user_may_add_avatar_to_project()
     {
-        $this->signIn();
-        $project=create('App\Project');
+      $user=create('App\User');
+       $this->signIn($user);
+       $project=create('App\Project',['user_id'=>$user->id]);
         Storage::fake('s3');
         $this->json('POST','api/project/'.$project->id.'/avatar',[
             'avatar_path'=>$file=UploadedFile::fake()->image('avatar.jpg')
@@ -84,28 +86,31 @@ class ProjectTest extends TestCase
     public function a_user_can_determine_their_avatar_path()
     {
 
-      $this->signIn();
-        $user=create('App\Project');
+      $user=create('App\User');
+       $this->signIn($user);
+       $project=create('App\Project',['user_id'=>$user->id]);
         $user->avatar_path='http://localhost/storage/avatars/me.jpg';
         $this->assertEquals(asset('storage/avatars/me.jpg'),$user->avatar_path);
     }
 
     /** @test */
-    public function signIn_user_can_update_project(){
-        $this->signIn();
-        $project=create('App\Project');
+    public function authorized_user_can_update_project(){
+      $user=create('App\User');
+       $this->signIn($user);
+       $project=create('App\Project',['user_id'=>$user->id]);
         $name="john santiman";
-        $owner='fella';
         $email="james_picaso@outlook.com";
         $mobile=6785434567;
-       $this->patch($project->path(),['name'=>$name,'owner'=>$owner,'email'=>$email,'mobile'=>$mobile]);
-        $this->assertDatabaseHas('projects',['id'=>$project->id,'owner'=>$owner]);
+       $this->patch($project->path(),['name'=>$name,'email'=>$email,'mobile'=>$mobile]);
+        $this->assertDatabaseHas('projects',['id'=>$project->id,'mobile'=>$mobile]);
     }
 
     /** @test */
-    public function project_stage_conversion(){
-      $this->signIn();
-      $project=create('App\Project');
+    public function authorized_user_can_change_project_stage(){
+      $user=create('App\User');
+       $this->signIn($user);
+       $project=create('App\Project',['user_id'=>$user->id]);
+
       $stage=2;
         $this->patch('api/project/'.$project->id.'/stage',[
           'stage'=>$stage
@@ -114,9 +119,10 @@ class ProjectTest extends TestCase
    }
 
    /** @test */
-   public function signIn_user_can_update_reason(){
-       $this->signIn();
-       $project=create('App\Project');
+   public function authorized_user_can_update_reason(){
+     $user=create('App\User');
+      $this->signIn($user);
+      $project=create('App\Project',['user_id'=>$user->id]);
        $reason="Not defined";
        $stage=0;
        $this->patch('api/project/'.$project->id.'/postponed',[
@@ -127,9 +133,10 @@ class ProjectTest extends TestCase
    }
 
 /** @test */
-   public function signIn_user_can_trash_project(){
-      $this->signIn();
-      $project=create('App\Project');
+   public function project_owner_can_trash_project(){
+     $user=create('App\User');
+      $this->signIn($user);
+      $project=create('App\Project',['user_id'=>$user->id]);
       $this->assertCount(1,$project->get());
       $this->delete($project->path());
       $this->assertCount(0,$project->get());
@@ -137,17 +144,19 @@ $this->assertCount(1,$project->withTrashed()->get());
    }
 
    /** @test */
-      public function signIn_user_can_delete_project(){
-         $this->signIn();
-         $project=create('App\Project');
+      public function project_owner_can_delete_project(){
+        $user=create('App\User');
+         $this->signIn($user);
+         $project=create('App\Project',['user_id'=>$user->id]);
          $this->get('api/projects/'.$project->id.'/delete');
          $this->assertDatabaseMissing('projects',['id'=>$project->id]);
       }
 
       /** @test */
          public function signIn_user_can_delete_project_avatar(){
-            $this->signIn();
-            $project=create('App\Project',['avatar_path'=>'https://encrypted-tbn0.gstatic.com']);
+           $user=create('App\User');
+            $this->signIn($user);
+            $project=create('App\Project',['avatar_path'=>'https://encrypted-tbn0.gstatic.com','user_id'=>$user->id]);
             $this->patch('api/projects/'.$project->id.'/avatar-delete');
             $this->assertDatabaseHas('projects',['avatar_path'=>null]);
             //$this->assertDatabaseMissing('projects',['id'=>$project->id]);
@@ -176,7 +185,7 @@ public function project_sms_link_working(){
 /**
 * @test
 */
-public function signIn_user_can_download_project_export()
+public function user_can_download_project_export()
 {
   $this->signIn();
   $project=create('App\Project',['name'=>'John O Corner']);
@@ -190,9 +199,10 @@ public function signIn_user_can_download_project_export()
 }
 
 /** @test */
-public function sign_In_user_can_update_note(){
-  $this->signIn();
-  $project=create('App\Project');
+public function authorize_user_can_update_note(){
+  $user=create('App\User');
+   $this->signIn($user);
+   $project=create('App\Project',['user_id'=>$user->id]);
   $this->assertDatabaseHas('projects',['notes'=>null]);
   $notes='abra ka dabra';
   $this->withoutExceptionHandling()->patch('api/projects/'.$project->id.'/notes',['notes'=>$notes]);

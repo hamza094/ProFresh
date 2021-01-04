@@ -56,6 +56,8 @@ Route::delete('/api/projects/{project}/appointment/{appointment}', 'AppointmentC
 Route::get('/api/users/search', 'InvitationController@search');
 Route::post('/api/projects/{project}/invitations', 'InvitationController@store');
 Route::get('project/{project}/member','InvitationController@accept');
+Route::get('project/{project}/cancel','InvitationController@ignore');
+Route::get('/api/project/{project}/cancel/{user}','InvitationController@cancel');
 
 //Profile Routes
 Route::get('users/{user}/profile','ProfileController@show');

@@ -38,18 +38,14 @@
                         <span class="text-danger font-italic" v-if="errors.position" v-text="errors.position[0]"></span>
 
                     </div>
-                    <div class="form-group">
-                        <label for="owner" class="label-name">Sales owner:</label>
-                        <input type="text" id="owner" class="form-control" name="owner" v-model="form.owner" placeholder="Enter value" >
-                        <span class="text-danger font-italic" v-if="errors.owner" v-text="errors.owner[0]"></span>
-                    </div>
+
                         <div class="form-group">
-                            <label for="owner" class="label-name">Zipcode:</label>
+                            <label for="zipcoder" class="label-name">Zipcode:</label>
                             <input type="text" id="zipcode" class="form-control" name="zipcode" v-model="form.zipcode" placeholder="Enter value" >
                             <span class="text-danger font-italic" v-if="errors.zipcode" v-text="errors.zipcode[0]"></span>
                         </div>
                         <div class="form-group">
-                            <label for="owner" class="label-name">Address:</label>
+                            <label for="address" class="label-name">Address:</label>
                             <input type="text" id="address" class="form-control" name="address" v-model="form.address" placeholder="Enter value">
                             <span class="text-danger font-italic" v-if="errors.address" v-text="errors.address[0]"></span>
                         </div>
@@ -64,12 +60,7 @@
                 </form>
         </div>
     </div>
-
-
-
 </template>
-
-
 <script>
 export default{
     data(){

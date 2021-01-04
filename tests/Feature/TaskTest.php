@@ -17,8 +17,9 @@ class TaskTest extends TestCase
 
      /** @test */
      public function task_requires_a_body(){
-         $this->signIn();
-         $project=create('App\Project',['user_id'=>auth()->id()]);
+       $user=create('App\User');
+        $this->signIn($user);
+        $project=create('App\Project',['user_id'=>$user->id]);
          $task=make('App\Task',['body'=>null]);
          $this->post($project->path().'/tasks',$task->toArray())
              ->assertSessionHasErrors('body');
@@ -27,8 +28,9 @@ class TaskTest extends TestCase
      /** @test */
      public function a_project_can_have_a_task()
      {
-       $this->signIn();
-      $project=create('App\Project',['user_id'=>auth()->id()]);
+       $user=create('App\User');
+        $this->signIn($user);
+        $project=create('App\Project',['user_id'=>$user->id]);
       $task=create('App\Task');
       $this->post($project->path().'/tasks',$task->toArray());
       $this->assertDatabaseHas('tasks',['body'=>$task->body]);
@@ -48,8 +50,9 @@ class TaskTest extends TestCase
 
    /** @test */
  public function task_marked_as_completed(){
-     $this->signIn();
-     $project=create('App\Project');
+   $user=create('App\User');
+    $this->signIn($user);
+    $project=create('App\Project',['user_id'=>$user->id]);
      $task=$project->addTask('test task');
      $this->patch($task->path(), ['body' => 'changed','completed'=>true]);
      $this->assertDatabaseHas('tasks',['body'=>'changed','completed'=>true]);
@@ -57,8 +60,9 @@ class TaskTest extends TestCase
 
  /** @test */
 public function task_marked_as_incomplete(){
- $this->signIn();
- $project=create('App\Project');
+  $user=create('App\User');
+   $this->signIn($user);
+   $project=create('App\Project',['user_id'=>$user->id]);
  $task=$project->addTask('test task');
  $this->patch($task->path(), ['body' => 'changed','completed'=>true]);
   $this->patch($task->path(), ['body' => 'changed','completed'=>false]);

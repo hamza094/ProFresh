@@ -48,8 +48,9 @@ public function creating_a_project()
 /** @test */
 public function deleting_project_remove_all_project_related_activities()
 {
-  $this->signIn();
-    $project=create('App\Project');
+  $user=create('App\User');
+   $this->signIn($user);
+   $project=create('App\Project',['user_id'=>$user->id]);
  $this->get('api/projects/'.$project->id.'/delete');
 $this->assertCount(0,$project->activity);
 }
@@ -107,8 +108,9 @@ public function creating_an_appointment(){
 
 /** @test */
 public function updating_an_appointment(){
-  $this->signIn();
-  $project=create('App\Project');
+  $user=create('App\User');
+   $this->signIn($user);
+   $project=create('App\Project',['user_id'=>$user->id]);
  $appointment=create('App\Appointment',['title'=>'My Appointment','project_id'=>$project->id]);
  $this->patch('/api/projects/'.$project->id.'/appointment/'.$appointment->id,
  ['title'=>'mine appoint','location'=>'pakistan','outcome'=>'Intrested','strtdt'=>'11-20-17','strttm'=>'14:05','zone'=>'Asia/pacific','outcome'=>'Not intrested']);
@@ -132,8 +134,9 @@ $this->assertEquals('deleted_appointment',$project->activity->last()->descriptio
 
 /** @test */
 public function invitation_sent_to_user(){
-    $this->signIn();
-    $project=create('App\Project');
+  $user=create('App\User');
+   $this->signIn($user);
+   $project=create('App\Project',['user_id'=>$user->id]);
     $InvitedUser=create('App\User');
     $this->post($project->path().'/invitations',[
         'email'=>$InvitedUser->email
@@ -152,4 +155,21 @@ public function invitation_sent_to_user(){
 $this->assertCount(2,$project->activity);
 $this->assertEquals('accept_member_project',$project->activity->last()->description);
 }
+
+/** @test */
+  public function canceling_project_membership(){
+    $user=create('App\User');
+    $this->signIn($user);
+    $project=create('App\Project',['user_id'=>$user->id]);
+    $user2=create('App\User');
+    $project->members()->attach($user2);
+     $this->get('api/project/'.$project->id.'/cancel/'.$user2->id);
+     $this->assertDatabaseMissing('project_members', [
+    "project_id" => $project->id, "user_id" => $user2->id]);
+    $this->assertCount(2,$project->activity);
+    $this->assertEquals('cancel_member_project',$project->activity->last()->description);
+  }
+
+
+
 }

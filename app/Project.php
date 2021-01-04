@@ -113,7 +113,7 @@ public function addTask($tasks)
 
   public function members()
    {
-       return $this->belongsToMany(User::class,'project_members')->withPivot('active');;
+       return $this->belongsToMany(User::class,'project_members')->withPivot('active');
    }
 
 

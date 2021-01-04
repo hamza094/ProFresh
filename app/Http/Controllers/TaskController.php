@@ -12,6 +12,7 @@ class TaskController extends Controller
   public function __construct()
   {
       $this->middleware('auth');
+
   }
 
   public function projectindex(Project $project){
@@ -22,6 +23,8 @@ class TaskController extends Controller
       $this->validate($request, [
         'body'=>'required',
     ]);
+    $this->authorize('access',$project);
+
       $project->addTask(request('body'));
 
       if(!$project->scores()->where('message','Task Added')->exists()){
@@ -31,6 +34,8 @@ class TaskController extends Controller
 
 
     public function projectupdate(Project $project,Task $task){
+      $this->authorize('access',$project);
+
       $task->update([
             'body'=>request('body')]);
 

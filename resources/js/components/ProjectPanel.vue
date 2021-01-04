@@ -77,7 +77,8 @@
             <option value="Not able to reach">Not able to reach</option>
           </select>
         </span>
-          <span class="form-inline"> <b>Member Attendes: </b><select class="custom-select" id="attendees" name="attendees" v-model="form.user">
+        <span class="form-inline" v-if="projectmembers == 0"><b>Member Attendes:</b> No project member has been found</span>
+          <span v-else class="form-inline"> <b>Member Attendes: </b><select class="custom-select" id="attendees" name="attendees" v-model="form.user">
             <option v-for="user in projectmembers"  v-bind:value="user.id">{{user.name}}</option>
           </select>
         </span>
@@ -114,7 +115,7 @@
        :clickToClose=false>
        <div class="panel-top_content">
            <span class="panel-heading">Add New Appointment</span>
-           <span class="panel-exit float-right" role="button" @click="$modal.hide('project-appointment')">x</span>
+           <span class="panel-exit float-right" role="button" @click="modalClose()">x</span>
        </div>
       <div class="container">
         <form action=""  @submit.prevent="createAppointment()">
@@ -169,7 +170,8 @@
           <div class="col-md-4">
             <div class="form-group">
                <label for="attendees" class="label-name">Member Attendes:</label>
-              <select class="custom-select" id="attendees" name="attendees" v-model="appointment.user" required>
+               <p v-if="projectmembers == 0">Invite project member to fix an appointment with them.</p>
+              <select v-else class="custom-select" id="attendees" name="attendees" v-model="appointment.user">
                 <option v-for="user in  projectmembers"  v-bind:value="user.id">{{user.name}}</option>
               </select>
               <span class="text-danger font-italic" v-if="errors.user" v-text="errors.user[0]"></span>
@@ -216,21 +218,25 @@
           <i class="fas fa-angle-down float-right"></i></a></p>
       </div>
       <div class="collapse" id="memberProject">
-        <div v-for="projectmembers in groupedMembers" class="row">
-        <div v-for="member in projectmembers" class="col-md-6" style="position:inherit">
+      <div v-if="projectmembers == 0">
+        <p class="text-center"><b>No project member has been found.</b></p>
+      </div>
+        <div v-else v-for="projectmembers in groupedMembers" class="row">
+        <div v-for="member in projectmembers" class="col-md-6" style="position:inherit" :key="member.id">
           <div class="project_members-detail">
              <a v-bind:href="'/users/'+member.id+'/profile'" target="_blank"> <img src="https://i.ibb.co/51ZCLB8/download-1.jpg" alt="">
               <p> {{member.name}}</p>
               </a>
+              <a v-if="project.owner" href="#" @click="cancelMembership(member.id,member)">x</a>
               </div>
         </div>
       </div>
 </div>
     </div>
+    <hr>
 </div>
   </div>
 </template>
-
 <script>
 export default{
   props:['project','members'],
@@ -457,6 +463,27 @@ export default{
    .then(response => this.results = response.data)
    .catch(error => {});
  },
+ cancelMembership(id,member){
+   var self = this;
+   swal.fire({
+  title: 'Cancel Membership',
+  text: "Are you sure! You won't revert this!",
+  type: 'warning',
+  showCancelButton: true,
+  confirmButtonColor: '#3085d6',
+  cancelButtonColor: '#d33',
+  confirmButtonText: 'Yes, Cancel membership!'
+ }).then((result) => {
+  if (result.value) {
+  axios.get('/api/project/'+this.project.id+'/cancel/'+id).then(function(){
+      self.projectmembers.splice(member);
+      self.$vToastify.info("Project Member Removed");
+}).catch(function(){
+      swal.fire("Failed!","There was  an errors","warning");
+  });
+ }
+ })
+},
   },
   created(){
     this.loadTasks();

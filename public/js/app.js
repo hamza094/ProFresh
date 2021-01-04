@@ -2349,12 +2349,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['project', 'subscribe', 'members'],
   data: function data() {
@@ -2369,7 +2363,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         zipcode: this.project.zipcode,
         email: this.project.email,
         mobile: this.project.mobile,
-        owner: this.project.owner,
         position: this.project.position,
         message: '',
         subject: ''
@@ -2397,7 +2390,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         zipcode: this.form.zipcode,
         email: this.form.email,
         mobile: this.form.mobile,
-        owner: this.form.owner,
         position: this.form.position
       }).then(function (response) {
         _this.$vToastify.success("Project Updated Successfully");
@@ -2634,15 +2626,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2687,6 +2670,12 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -3190,6 +3179,29 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (response) {
         return _this14.results = response.data;
       })["catch"](function (error) {});
+    },
+    cancelMembership: function cancelMembership(id, member) {
+      var _this15 = this;
+
+      var self = this;
+      swal.fire({
+        title: 'Cancel Membership',
+        text: "Are you sure! You won't revert this!",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, Cancel membership!'
+      }).then(function (result) {
+        if (result.value) {
+          axios.get('/api/project/' + _this15.project.id + '/cancel/' + id).then(function () {
+            self.projectmembers.splice(member);
+            self.$vToastify.info("Project Member Removed");
+          })["catch"](function () {
+            swal.fire("Failed!", "There was  an errors", "warning");
+          });
+        }
+      });
     }
   },
   created: function created() {
@@ -79062,49 +79074,55 @@ var render = function() {
             },
             [
               _c("ul", [
-                _c(
-                  "li",
-                  {
-                    staticClass: "feature-dropdown_item-content",
-                    on: { click: _vm.forgetProject }
-                  },
-                  [
-                    _c("i", { staticClass: "far fa-trash-alt" }),
-                    _vm._v(" Forget")
-                  ]
-                ),
+                _vm.authorize("projectOwner", _vm.project)
+                  ? _c(
+                      "li",
+                      {
+                        staticClass: "feature-dropdown_item-content",
+                        on: { click: _vm.forgetProject }
+                      },
+                      [
+                        _c("i", { staticClass: "far fa-trash-alt" }),
+                        _vm._v(" Forget")
+                      ]
+                    )
+                  : _vm._e(),
                 _vm._v(" "),
-                _c(
-                  "li",
-                  {
-                    staticClass: "feature-dropdown_item-content",
-                    on: {
-                      click: function($event) {
-                        return _vm.$modal.show("project-mail")
-                      }
-                    }
-                  },
-                  [
-                    _c("i", { staticClass: "far fa-envelope" }),
-                    _vm._v(" Email")
-                  ]
-                ),
+                _vm.projectmembers != 0
+                  ? _c(
+                      "li",
+                      {
+                        staticClass: "feature-dropdown_item-content",
+                        on: {
+                          click: function($event) {
+                            return _vm.$modal.show("project-mail")
+                          }
+                        }
+                      },
+                      [
+                        _c("i", { staticClass: "far fa-envelope" }),
+                        _vm._v(" Email")
+                      ]
+                    )
+                  : _vm._e(),
                 _vm._v(" "),
-                _c(
-                  "li",
-                  {
-                    staticClass: "feature-dropdown_item-content",
-                    on: {
-                      click: function($event) {
-                        return _vm.$modal.show("project-sms")
-                      }
-                    }
-                  },
-                  [
-                    _c("i", { staticClass: "fas fa-mobile-alt" }),
-                    _vm._v(" Send SMS")
-                  ]
-                ),
+                _vm.projectmembers != 0
+                  ? _c(
+                      "li",
+                      {
+                        staticClass: "feature-dropdown_item-content",
+                        on: {
+                          click: function($event) {
+                            return _vm.$modal.show("project-sms")
+                          }
+                        }
+                      },
+                      [
+                        _c("i", { staticClass: "fas fa-mobile-alt" }),
+                        _vm._v(" Send SMS")
+                      ]
+                    )
+                  : _vm._e(),
                 _vm._v(" "),
                 _c(
                   "a",
@@ -79170,17 +79188,19 @@ var render = function() {
                 _vm._v(" "),
                 _vm._m(2),
                 _vm._v(" "),
-                _c(
-                  "li",
-                  {
-                    staticClass: "feature-dropdown_item-content",
-                    on: { click: _vm.deleteProject }
-                  },
-                  [
-                    _c("i", { staticClass: "far fa-trash-alt" }),
-                    _vm._v(" Delete")
-                  ]
-                )
+                _vm.authorize("projectOwner", _vm.project)
+                  ? _c(
+                      "li",
+                      {
+                        staticClass: "feature-dropdown_item-content",
+                        on: { click: _vm.deleteProject }
+                      },
+                      [
+                        _c("i", { staticClass: "far fa-trash-alt" }),
+                        _vm._v(" Delete")
+                      ]
+                    )
+                  : _vm._e()
               ])
             ]
           )
@@ -79462,48 +79482,6 @@ var render = function() {
                               staticClass: "text-danger font-italic",
                               domProps: {
                                 textContent: _vm._s(_vm.errors.position[0])
-                              }
-                            })
-                          : _vm._e()
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "form-group" }, [
-                        _c(
-                          "label",
-                          {
-                            staticClass: "label-name",
-                            attrs: { for: "owner" }
-                          },
-                          [_vm._v("Sales owner:")]
-                        ),
-                        _vm._v(" "),
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.form.owner,
-                              expression: "form.owner"
-                            }
-                          ],
-                          staticClass: "form-control",
-                          attrs: { type: "text", id: "owner", name: "owner" },
-                          domProps: { value: _vm.form.owner },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.$set(_vm.form, "owner", $event.target.value)
-                            }
-                          }
-                        }),
-                        _vm._v(" "),
-                        _vm.errors.owner
-                          ? _c("span", {
-                              staticClass: "text-danger font-italic",
-                              domProps: {
-                                textContent: _vm._s(_vm.errors.owner[0])
                               }
                             })
                           : _vm._e()
@@ -80381,49 +80359,7 @@ var render = function() {
           _c("div", { staticClass: "form-group" }, [
             _c(
               "label",
-              { staticClass: "label-name", attrs: { for: "owner" } },
-              [_vm._v("Sales owner:")]
-            ),
-            _vm._v(" "),
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.form.owner,
-                  expression: "form.owner"
-                }
-              ],
-              staticClass: "form-control",
-              attrs: {
-                type: "text",
-                id: "owner",
-                name: "owner",
-                placeholder: "Enter value"
-              },
-              domProps: { value: _vm.form.owner },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.$set(_vm.form, "owner", $event.target.value)
-                }
-              }
-            }),
-            _vm._v(" "),
-            _vm.errors.owner
-              ? _c("span", {
-                  staticClass: "text-danger font-italic",
-                  domProps: { textContent: _vm._s(_vm.errors.owner[0]) }
-                })
-              : _vm._e()
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-group" }, [
-            _c(
-              "label",
-              { staticClass: "label-name", attrs: { for: "owner" } },
+              { staticClass: "label-name", attrs: { for: "zipcoder" } },
               [_vm._v("Zipcode:")]
             ),
             _vm._v(" "),
@@ -80465,7 +80401,7 @@ var render = function() {
           _c("div", { staticClass: "form-group" }, [
             _c(
               "label",
-              { staticClass: "label-name", attrs: { for: "owner" } },
+              { staticClass: "label-name", attrs: { for: "address" } },
               [_vm._v("Address:")]
             ),
             _vm._v(" "),
@@ -81027,51 +80963,57 @@ var render = function() {
                         )
                       ]),
                       _vm._v(" "),
-                      _c("span", { staticClass: "form-inline" }, [
-                        _c("b", [_vm._v("Member Attendes: ")]),
-                        _c(
-                          "select",
-                          {
-                            directives: [
+                      _vm.projectmembers == 0
+                        ? _c("span", { staticClass: "form-inline" }, [
+                            _c("b", [_vm._v("Member Attendes:")]),
+                            _vm._v(" No project member has been found")
+                          ])
+                        : _c("span", { staticClass: "form-inline" }, [
+                            _c("b", [_vm._v("Member Attendes: ")]),
+                            _c(
+                              "select",
                               {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.form.user,
-                                expression: "form.user"
-                              }
-                            ],
-                            staticClass: "custom-select",
-                            attrs: { id: "attendees", name: "attendees" },
-                            on: {
-                              change: function($event) {
-                                var $$selectedVal = Array.prototype.filter
-                                  .call($event.target.options, function(o) {
-                                    return o.selected
-                                  })
-                                  .map(function(o) {
-                                    var val = "_value" in o ? o._value : o.value
-                                    return val
-                                  })
-                                _vm.$set(
-                                  _vm.form,
-                                  "user",
-                                  $event.target.multiple
-                                    ? $$selectedVal
-                                    : $$selectedVal[0]
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.form.user,
+                                    expression: "form.user"
+                                  }
+                                ],
+                                staticClass: "custom-select",
+                                attrs: { id: "attendees", name: "attendees" },
+                                on: {
+                                  change: function($event) {
+                                    var $$selectedVal = Array.prototype.filter
+                                      .call($event.target.options, function(o) {
+                                        return o.selected
+                                      })
+                                      .map(function(o) {
+                                        var val =
+                                          "_value" in o ? o._value : o.value
+                                        return val
+                                      })
+                                    _vm.$set(
+                                      _vm.form,
+                                      "user",
+                                      $event.target.multiple
+                                        ? $$selectedVal
+                                        : $$selectedVal[0]
+                                    )
+                                  }
+                                }
+                              },
+                              _vm._l(_vm.projectmembers, function(user) {
+                                return _c(
+                                  "option",
+                                  { domProps: { value: user.id } },
+                                  [_vm._v(_vm._s(user.name))]
                                 )
-                              }
-                            }
-                          },
-                          _vm._l(_vm.projectmembers, function(user) {
-                            return _c(
-                              "option",
-                              { domProps: { value: user.id } },
-                              [_vm._v(_vm._s(user.name))]
+                              }),
+                              0
                             )
-                          }),
-                          0
-                        )
-                      ]),
+                          ]),
                       _vm._v(" "),
                       _c("span", { staticClass: "float-right" }, [
                         _c(
@@ -81251,7 +81193,7 @@ var render = function() {
                     attrs: { role: "button" },
                     on: {
                       click: function($event) {
-                        return _vm.$modal.hide("project-appointment")
+                        return _vm.modalClose()
                       }
                     }
                   },
@@ -81645,53 +81587,57 @@ var render = function() {
                             [_vm._v("Member Attendes:")]
                           ),
                           _vm._v(" "),
-                          _c(
-                            "select",
-                            {
-                              directives: [
+                          _vm.projectmembers == 0
+                            ? _c("p", [
+                                _vm._v(
+                                  "Invite project member to fix an appointment with them."
+                                )
+                              ])
+                            : _c(
+                                "select",
                                 {
-                                  name: "model",
-                                  rawName: "v-model",
-                                  value: _vm.appointment.user,
-                                  expression: "appointment.user"
-                                }
-                              ],
-                              staticClass: "custom-select",
-                              attrs: {
-                                id: "attendees",
-                                name: "attendees",
-                                required: ""
-                              },
-                              on: {
-                                change: function($event) {
-                                  var $$selectedVal = Array.prototype.filter
-                                    .call($event.target.options, function(o) {
-                                      return o.selected
-                                    })
-                                    .map(function(o) {
-                                      var val =
-                                        "_value" in o ? o._value : o.value
-                                      return val
-                                    })
-                                  _vm.$set(
-                                    _vm.appointment,
-                                    "user",
-                                    $event.target.multiple
-                                      ? $$selectedVal
-                                      : $$selectedVal[0]
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.appointment.user,
+                                      expression: "appointment.user"
+                                    }
+                                  ],
+                                  staticClass: "custom-select",
+                                  attrs: { id: "attendees", name: "attendees" },
+                                  on: {
+                                    change: function($event) {
+                                      var $$selectedVal = Array.prototype.filter
+                                        .call($event.target.options, function(
+                                          o
+                                        ) {
+                                          return o.selected
+                                        })
+                                        .map(function(o) {
+                                          var val =
+                                            "_value" in o ? o._value : o.value
+                                          return val
+                                        })
+                                      _vm.$set(
+                                        _vm.appointment,
+                                        "user",
+                                        $event.target.multiple
+                                          ? $$selectedVal
+                                          : $$selectedVal[0]
+                                      )
+                                    }
+                                  }
+                                },
+                                _vm._l(_vm.projectmembers, function(user) {
+                                  return _c(
+                                    "option",
+                                    { domProps: { value: user.id } },
+                                    [_vm._v(_vm._s(user.name))]
                                   )
-                                }
-                              }
-                            },
-                            _vm._l(_vm.projectmembers, function(user) {
-                              return _c(
-                                "option",
-                                { domProps: { value: user.id } },
-                                [_vm._v(_vm._s(user.name))]
-                              )
-                            }),
-                            0
-                          ),
+                                }),
+                                0
+                              ),
                           _vm._v(" "),
                           _vm.errors.user
                             ? _c("span", {
@@ -81867,48 +81813,74 @@ var render = function() {
         _c(
           "div",
           { staticClass: "collapse", attrs: { id: "memberProject" } },
-          _vm._l(_vm.groupedMembers, function(projectmembers) {
-            return _c(
-              "div",
-              { staticClass: "row" },
-              _vm._l(projectmembers, function(member) {
-                return _c(
-                  "div",
-                  {
-                    staticClass: "col-md-6",
-                    staticStyle: { position: "inherit" }
-                  },
-                  [
-                    _c("div", { staticClass: "project_members-detail" }, [
-                      _c(
-                        "a",
+          [
+            _vm.projectmembers == 0
+              ? _c("div", [_vm._m(5)])
+              : _vm._l(_vm.groupedMembers, function(projectmembers) {
+                  return _c(
+                    "div",
+                    { staticClass: "row" },
+                    _vm._l(projectmembers, function(member) {
+                      return _c(
+                        "div",
                         {
-                          attrs: {
-                            href: "/users/" + member.id + "/profile",
-                            target: "_blank"
-                          }
+                          key: member.id,
+                          staticClass: "col-md-6",
+                          staticStyle: { position: "inherit" }
                         },
                         [
-                          _c("img", {
-                            attrs: {
-                              src: "https://i.ibb.co/51ZCLB8/download-1.jpg",
-                              alt: ""
-                            }
-                          }),
-                          _vm._v(" "),
-                          _c("p", [_vm._v(" " + _vm._s(member.name))])
+                          _c("div", { staticClass: "project_members-detail" }, [
+                            _c(
+                              "a",
+                              {
+                                attrs: {
+                                  href: "/users/" + member.id + "/profile",
+                                  target: "_blank"
+                                }
+                              },
+                              [
+                                _c("img", {
+                                  attrs: {
+                                    src:
+                                      "https://i.ibb.co/51ZCLB8/download-1.jpg",
+                                    alt: ""
+                                  }
+                                }),
+                                _vm._v(" "),
+                                _c("p", [_vm._v(" " + _vm._s(member.name))])
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _vm.project.owner
+                              ? _c(
+                                  "a",
+                                  {
+                                    attrs: { href: "#" },
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.cancelMembership(
+                                          member.id,
+                                          member
+                                        )
+                                      }
+                                    }
+                                  },
+                                  [_vm._v("x")]
+                                )
+                              : _vm._e()
+                          ])
                         ]
                       )
-                    ])
-                  ]
-                )
-              }),
-              0
-            )
-          }),
-          0
+                    }),
+                    0
+                  )
+                })
+          ],
+          2
         )
-      ])
+      ]),
+      _vm._v(" "),
+      _c("hr")
     ])
   ])
 }
@@ -81990,6 +81962,14 @@ var staticRenderFns = [
           [_c("i", { staticClass: "fas fa-angle-down float-right" })]
         )
       ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("p", { staticClass: "text-center" }, [
+      _c("b", [_vm._v("No project member has been found.")])
     ])
   }
 ]
@@ -112438,6 +112418,22 @@ var app = new vue__WEBPACK_IMPORTED_MODULE_1___default.a({
 
 /***/ }),
 
+/***/ "./resources/js/authorizations.js":
+/*!****************************************!*\
+  !*** ./resources/js/authorizations.js ***!
+  \****************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+var user = window.App.user;
+module.exports = {
+  projectOwner: function projectOwner(project) {
+    return project.user_id === user.id;
+  }
+};
+
+/***/ }),
+
 /***/ "./resources/js/bootstrap.js":
 /*!***********************************!*\
   !*** ./resources/js/bootstrap.js ***!
@@ -112446,11 +112442,30 @@ var app = new vue__WEBPACK_IMPORTED_MODULE_1___default.a({
 /***/ (function(module, exports, __webpack_require__) {
 
 window._ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
+window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
 /**
  * We'll load jQuery and the Bootstrap jQuery plugin which provides support
  * for JavaScript based Bootstrap features such as modals and tabs. This
  * code may be modified to fit the specific needs of your application.
  */
+
+var authorizations = __webpack_require__(/*! ./authorizations */ "./resources/js/authorizations.js");
+
+Vue.prototype.authorize = function () {
+  if (!window.App.signedIn) return false;
+
+  for (var _len = arguments.length, params = new Array(_len), _key = 0; _key < _len; _key++) {
+    params[_key] = arguments[_key];
+  }
+
+  if (typeof params[0] === 'string') {
+    return authorizations[params[0]](params[1]);
+  }
+
+  return params[0](window.App.user);
+};
+
+Vue.prototype.signedIn = window.App.signedIn;
 
 try {
   window.Popper = __webpack_require__(/*! popper.js */ "./node_modules/popper.js/dist/esm/popper.js")["default"];

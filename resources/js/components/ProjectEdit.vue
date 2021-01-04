@@ -6,16 +6,16 @@
 <span class="btn btn-light btn-sm"><i class="fas fa-ellipsis-v"></i></span>
 <span class="feature-dropdown_item" v-show=featurePop>
   <ul>
-    <li class="feature-dropdown_item-content" @click="forgetProject"><i class="far fa-trash-alt"></i> Forget</li>
-    <li class="feature-dropdown_item-content" @click="$modal.show('project-mail')"><i class="far fa-envelope"></i> Email</li>
-    <li class="feature-dropdown_item-content" @click="$modal.show('project-sms')"><i class="fas fa-mobile-alt"></i> Send SMS</li>
+    <li class="feature-dropdown_item-content" v-if="authorize('projectOwner',project)" @click="forgetProject"><i class="far fa-trash-alt"></i> Forget</li>
+    <li class="feature-dropdown_item-content" v-if="projectmembers != 0" @click="$modal.show('project-mail')"><i class="far fa-envelope"></i> Email</li>
+    <li class="feature-dropdown_item-content" v-if="projectmembers != 0" @click="$modal.show('project-sms')"><i class="fas fa-mobile-alt"></i> Send SMS</li>
     <a v-bind:href="'/api/projects/' + this.project.id +'/export'"> <li class="feature-dropdown_item-content" @click="projectExport"><i class="fas fa-upload"></i>Export</li></a>
     <li v-if="project.avatar_path!==null" class="feature-dropdown_item-content" @click="deleteAvatar"><i class="far fa-user-circle"></i> Remove display picture</li>
     <li class="feature-dropdown_item-content" @click="projectUnSubscribe" v-if="this.subscription"><i class="fas fa-inbox"></i> UnSubscribe</li>
     <li class="feature-dropdown_item-content" @click="projectSubscribe" v-else><i class="fas fa-inbox"></i> Subscribe</li>
     <li class="feature-dropdown_item-content"><i class="fab fa-500px"></i> Add to sequence</li>
     <li class="feature-dropdown_item-content"><i class="fab fa-500px"></i> Remove from sequence</li>
-    <li class="feature-dropdown_item-content" @click="deleteProject"><i class="far fa-trash-alt"></i> Delete</li>
+    <li class="feature-dropdown_item-content" v-if="authorize('projectOwner',project)" @click="deleteProject"><i class="far fa-trash-alt"></i> Delete</li>
   </ul>
 </span>
     </span>
@@ -63,12 +63,6 @@
                                 <label for="position" class="label-name">Position:</label>
                                 <input type="text" id="position" class="form-control" name="position"  v-model="form.position">
                                 <span class="text-danger font-italic" v-if="errors.position" v-text="errors.position[0]"></span>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="owner" class="label-name">Sales owner:</label>
-                                <input type="text" id="owner" class="form-control" name="owner"  v-model="form.owner">
-                                <span class="text-danger font-italic" v-if="errors.owner" v-text="errors.owner[0]"></span>
                             </div>
 
                             <div class="form-group">
@@ -198,7 +192,6 @@ export default {
               zipcode:this.project.zipcode,
               email:this.project.email,
               mobile:this.project.mobile,
-              owner:this.project.owner,
               position:this.project.position,
               message:'',
               subject:'',
@@ -227,7 +220,6 @@ export default {
                zipcode:this.form.zipcode,
                email:this.form.email,
                mobile:this.form.mobile,
-               owner:this.form.owner,
                position:this.form.position
 
            }).then(response=>{

@@ -33,10 +33,11 @@ $factory->define(Project::class, function (Faker $faker) {
     return [
         'name' => $faker->name,
         'email' => $faker->unique()->safeEmail,
-        'owner'=>'Admin',
         'mobile'=>6785434567,
         'stage'=>1,
-        'user_id'=>1
+        'user_id'=>function () {
+            return factory('App\User')->create()->id;
+        },
     ];
 });
 

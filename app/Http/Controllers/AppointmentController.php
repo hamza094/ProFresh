@@ -27,6 +27,8 @@ class AppointmentController extends Controller
         'outcome'=>'required',
         //'user'=>'required'
     ]);
+    $this->authorize('access',$project);
+
 
     $appointment=Appointment::create([
       'project_id'=>$project->id,
@@ -56,6 +58,8 @@ class AppointmentController extends Controller
           'location'=>'required',
           'outcome'=>'required',
       ]);
+      $this->authorize('access',$project);
+
 
       $appointment->update([
             'title'=>request('title'),

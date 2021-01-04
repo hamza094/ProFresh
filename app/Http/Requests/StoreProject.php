@@ -28,7 +28,6 @@ class StoreProject extends FormRequest
         return [
             'name'=>'required',
             'email'=>'required',
-            'owner'=>'required',
             'mobile'=>'required',
         ];
     }
@@ -38,7 +37,6 @@ class StoreProject extends FormRequest
         return [
             'name.required' => 'project name required.',
             'email.required'=>'project email required',
-            'owner.required'=>'project owner required',
             'mobile.required'=>'project mobile required'
 
         ];
