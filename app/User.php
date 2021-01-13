@@ -50,7 +50,7 @@ class User extends Authenticatable implements Searchable
            $redis = Redis::connection();
            return $redis->get('last_active_' . $this->id);
     }
-    
+
     public function appointments(){
       return $this->hasMany(Appointment::class);
     }

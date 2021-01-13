@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\User;
 use Spatie\Searchable\Search;
 use App\Project;
+use App\Notifications\ProjectInvitation;
+use App\Notifications\AcceptInvitation;
 use Auth;
 
 class InvitationController extends Controller
@@ -28,6 +30,7 @@ class InvitationController extends Controller
      if (! $project->members->contains($user->id)) {
      $project->invite($user);
      $project->recordActivity('sent_member_project',$user->name.'/_/'.$user->id);
+     $user->notify(new ProjectInvitation($project));
      if(!$project->scores()->where('message','Invitaion Sent')->exists()){
        $project->addScore('Invitaion Sent',5);
      }
@@ -35,15 +38,16 @@ class InvitationController extends Controller
   }
 
   public function accept(Project $project){
-    $user=Auth::user();
+     $user=Auth::user();
      $user->members()->updateExistingPivot($project,['active'=>1]);
      $project->recordActivity('accept_member_project',$user->name.'/_/'.$user->id);
+     $project->owner->notify(new AcceptInvitation($project,$user));
      $project->addScore("Invitaion Accept by $user->name",15);
      return redirect()->back();
   }
 
   public function ignore(Project $project){
-    $user=Auth::user();
+     $user=Auth::user();
      $project->members()->detach($user);
      return redirect()->back();
   }

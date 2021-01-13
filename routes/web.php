@@ -62,5 +62,10 @@ Route::get('/api/project/{project}/cancel/{user}','InvitationController@cancel')
 //Profile Routes
 Route::get('users/{user}/profile','ProfileController@show');
 
+Route::get('/profile/{user}/notifications', 'NotificationsController@index');
+
+Route::delete('/profile/{user}/notifications/{notification}', 'NotificationsController@destroy');
+
+
 
 Route::get('{path}', 'HomeController@index')->where('/path', '([A-z\d-\/_.]+)?');

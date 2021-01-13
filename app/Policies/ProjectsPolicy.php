@@ -28,6 +28,6 @@ class ProjectsPolicy
 
      public function access(User $user, Project $project)
     {
-        return $user->is($project->owner) || $project->members->contains($user);
+        return $user->is($project->owner) || $project->members->where('pivot.active',1)->contains($user);
     }
 }

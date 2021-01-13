@@ -1049,6 +1049,39 @@ p {
   font-weight: bold;
 }
 
+.icon-color {
+  color: purple;
+}
+
+.notification {
+  position: absolute;
+}
+
+.notification-icon {
+  font-size: 1rem;
+}
+
+.notification-count {
+  position: relative;
+  bottom: 31px;
+  right: -7px;
+  border-radius: 50%;
+  height: 18px;
+  width: 18px;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  background-color: #12344D;
+  font-size: 0.65rem;
+  font-weight: 700;
+}
+
+.rt {
+  right: -2rem !important;
+  margin-top: 1.2rem !important;
+}
+
 /*!
  * Bootstrap v4.5.2 (https://getbootstrap.com/)
  * Copyright 2011-2020 The Bootstrap Authors

@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Project;
 use App\Task;
 use App\User;
+use App\Notifications\ProjectTask;
+
 
 class TaskController extends Controller
 {
@@ -26,6 +28,16 @@ class TaskController extends Controller
     $this->authorize('access',$project);
 
       $project->addTask(request('body'));
+
+      foreach($project->members->where('pivot.active',1) as $member){
+        if(auth()->user()->id != $member->id){
+          $member->notify(new ProjectTask($project));
+        }
+      }
+
+      if(auth()->user()->id != $project->owner->id){
+      $project->owner->notify(new ProjectTask($project));
+     }
 
       if(!$project->scores()->where('message','Task Added')->exists()){
         $project->addScore('Task Added',10);

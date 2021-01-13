@@ -43,7 +43,7 @@ class InvitationTest extends TestCase
           }
 
           /** @test */
-          public function a_signIn_user_accept_project_request(){
+          public function authorized_signIn_user_accept_project_request(){
             $this->signIn();
               $project = create('App\Project');
               $project->invite($user=create('App\User'));

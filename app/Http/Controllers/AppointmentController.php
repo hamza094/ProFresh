@@ -8,6 +8,8 @@ use App\Appointment;
 use App\User;
 use Auth;
 use App\Activity;
+use App\Notifications\ProjectAppointment;
+
 
 class AppointmentController extends Controller
 {
@@ -40,9 +42,21 @@ class AppointmentController extends Controller
       'outcome'=>$request->outcome
     ]);
     $appointment->users()->attach($request->user);
+
+    foreach($project->members->where('pivot.active',1) as $member){
+      if(auth()->user()->id != $member->id){
+        $member->notify(new ProjectAppointment($project));
+      }
+    }
+
+    if(auth()->user()->id != $project->owner->id){
+    $project->owner->notify(new ProjectAppointment($project));
+   }
+
     if(!$project->scores()->where('message','Appointment Added')->exists()){
       $project->addScore('Appointment Added',10);
     }
+
   }
 
      public function show(Project $project,Request $request){

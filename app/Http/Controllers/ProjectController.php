@@ -20,6 +20,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Redis;
 use App\User;
 use Spatie\Searchable\Search;
+use App\Notifications\ProjectUpdated;
 
 class ProjectController extends Controller
 {
@@ -125,6 +126,16 @@ class ProjectController extends Controller
         $project->update(request(['name','email','zipcode','mobile',
             'address','position']));
 
+            foreach($project->members->where('pivot.active',1) as $member){
+              if(auth()->user()->id != $member->id){
+                $member->notify(new ProjectUpdated($project));
+              }
+            }
+
+            if(auth()->user()->id != $project->owner->id){
+            $project->owner->notify(new ProjectUpdated($project));
+          }
+
         if (request()->wantsJson()) {
             return response($project, 201);
         }
@@ -174,6 +185,16 @@ class ProjectController extends Controller
       $value = (new \DateTime())->format("Y-m-d H:i:s");
       $redis->set($key, $value);
 
+      foreach($project->members->where('pivot.active',1) as $member){
+        if(auth()->user()->id != $member->id){
+          $member->notify(new ProjectUpdated($project));
+        }
+      }
+
+      if(auth()->user()->id != $project->owner->id){
+      $project->owner->notify(new ProjectUpdated($project));
+    }
+
       if (request()->wantsJson()) {
           return response($project, 201);
       }
@@ -188,6 +209,16 @@ class ProjectController extends Controller
 
 
       $project->update(request(['postponed','stage']));
+
+      foreach($project->members->where('pivot.active',1) as $member){
+        if(auth()->user()->id != $member->id){
+          $member->notify(new ProjectUpdated($project));
+        }
+      }
+
+      if(auth()->user()->id != $project->owner->id){
+      $project->owner->notify(new ProjectUpdated($project));
+    }
 
       if (request()->wantsJson()) {
           return response($project, 201);
@@ -285,9 +316,20 @@ public function notes(Project $project,Request $request){
 
   $project->update(['notes'=>request('notes')]);
 
+  foreach($project->members->where('pivot.active',1) as $member){
+    if(auth()->user()->id != $member->id){
+      $member->notify(new ProjectUpdated($project));
+    }
+   }
+
+    if(auth()->user()->id != $project->owner->id){
+   $project->owner->notify(new ProjectUpdated($project));
+}
+
     if(!$project->scores()->where('message','Notes Updated')->exists()){
       $project->addScore('Notes Updated',10);
     }
+
 }
 
 public function search(Request $request)
