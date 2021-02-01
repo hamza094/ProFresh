@@ -26,6 +26,7 @@
     },
     "dependencies": {
         "animate.css": "^4.1.1",
+        "emoji-mart-vue": "^2.6.6",
         "laravel-echo": "^1.10.0",
         "luxon": "^1.25.0",
         "moment": "^2.29.1",
@@ -38,6 +39,7 @@
         "vue-js-modal": "^2.0.0-rc.6",
         "vue-router": "^3.4.5",
         "vue-toastify": "^1.8.0",
+        "vue-upload-component": "^2.8.22",
         "weekstart": "^1.0.1"
     }
 }

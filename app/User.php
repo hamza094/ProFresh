@@ -66,4 +66,9 @@ class User extends Authenticatable implements Searchable
         return $this->belongsToMany(Project::class,'project_members')->withPivot('active');
     }
 
+     public function groups()
+    {
+        return $this->belongsToMany(Group::class)->withTimestamps();
+    }
+
 }

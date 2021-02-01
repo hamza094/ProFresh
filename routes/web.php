@@ -66,6 +66,9 @@ Route::get('/profile/{user}/notifications', 'NotificationsController@index');
 
 Route::delete('/profile/{user}/notifications/{notification}', 'NotificationsController@destroy');
 
+Route::get('/api/project/{project}/groups', 'GroupController@store');
 
+Route::resource('/api/project/{project}/conversations', 'ConversationController');
+Route::get('/api/project/{project}/conversation','ConversationController@conversation');
 
 Route::get('{path}', 'HomeController@index')->where('/path', '([A-z\d-\/_.]+)?');

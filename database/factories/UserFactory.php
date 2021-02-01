@@ -75,3 +75,10 @@ $factory->define(App\Appointment::class, function (Faker $faker) {
         'zone'=>'Asia/Hong_Kong',
     ];
 });
+
+$factory->define(App\Group::class, function (Faker $faker) {
+    return [
+       'name'=> $faker->name,
+        'project_id' => 1,
+    ];
+});

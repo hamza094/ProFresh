@@ -61,6 +61,10 @@ class Project extends Model
   return $this->belongsTo(User::class,'user_id');
 }
 
+public function group(){
+  return $this->belongsTo(Group::class,'group_id');
+}
+
     public function subscribers(){
       return $this->hasMany(Subscription::class);
     }

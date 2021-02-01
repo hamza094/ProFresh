@@ -1010,3 +1010,107 @@ font-weight: bold;
   right: -2rem !important;
   margin-top: 1.2rem !important;
 }
+
+.chat 
+{
+   list-style: none;
+    margin: 0;
+    padding: 0;
+
+    li{
+       margin-bottom: 10px;
+    padding-bottom: 5px;
+    border-bottom: 1px dotted #B3A9A9;
+    }
+
+    &-panel{
+     overflow-y: scroll;
+    height: 350px;
+    }
+
+  ::-webkit-scrollbar-track{
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    background-color: #F5F5F5;
+  }
+  ::-webkit-scrollbar{
+    width: 12px;
+    background-color: #F5F5F5;
+  }
+  ::-webkit-scrollbar-thumb{
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+    background-color: #555;
+  }
+  &-circle{
+     height: .5rem;
+  width: .5rem;
+  background-color:#228B22;
+  border-radius: 50%;
+  display: inline-block;
+  margin-left: .2rem;
+  }
+  &-image{
+   height: 10rem;
+   width: 10rem;
+  }
+  &-emotion{
+    color: #122069;
+    font-weight: 700;
+    font-size: 1rem;
+    margin-left: .2rem;
+    &:hover{
+      cursor:pointer;
+    };
+  }
+  &-message{
+    font-size: 1rem;
+  }
+  &-floating{
+    z-index: 10;
+
+
+  }
+  &-time{
+    font-size: .8rem;
+    font-weight: 700;
+  }
+  &-user_image{
+      height: 2.2rem;
+      width:2.2rem;
+      border-radius: 50%;
+  }
+}
+.gioj{
+}
+
+.chat li.left .chat-body
+{
+    margin-left: 60px;
+}
+
+.chat li.right .chat-body
+{
+    margin-right: 60px;
+}
+
+
+.chat li .chat-body p
+{
+    margin: 0;
+    color: #777777;
+}
+
+.chat-card .slidedown .fas, .chat .fas
+{
+    margin-right: 5px;
+}
+#btn-chat{
+  margin-right: .5rem;
+}
+.file-uploads {
+    display: initial !important;
+    &:hover{
+       cursor: pointer;
+    }
+}
+
+

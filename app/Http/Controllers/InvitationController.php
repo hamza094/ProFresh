@@ -9,6 +9,7 @@ use App\Project;
 use App\Notifications\ProjectInvitation;
 use App\Notifications\AcceptInvitation;
 use Auth;
+use App\Group;
 
 class InvitationController extends Controller
 {
@@ -43,6 +44,13 @@ class InvitationController extends Controller
      $project->recordActivity('accept_member_project',$user->name.'/_/'.$user->id);
      $project->owner->notify(new AcceptInvitation($project,$user));
      $project->addScore("Invitaion Accept by $user->name",15);
+
+      $users=[];
+
+     array_push($users,$user->id);
+
+     $project->group->users()->attach($users);
+
      return redirect()->back();
   }
 

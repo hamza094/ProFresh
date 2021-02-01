@@ -1082,6 +1082,112 @@ p {
   margin-top: 1.2rem !important;
 }
 
+.chat {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.chat li {
+  margin-bottom: 10px;
+  padding-bottom: 5px;
+  border-bottom: 1px dotted #B3A9A9;
+}
+
+.chat-panel {
+  overflow-y: scroll;
+  height: 350px;
+}
+
+.chat ::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  background-color: #F5F5F5;
+}
+
+.chat ::-webkit-scrollbar {
+  width: 12px;
+  background-color: #F5F5F5;
+}
+
+.chat ::-webkit-scrollbar-thumb {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  background-color: #555;
+}
+
+.chat-circle {
+  height: 0.5rem;
+  width: 0.5rem;
+  background-color: #228B22;
+  border-radius: 50%;
+  display: inline-block;
+  margin-left: 0.2rem;
+}
+
+.chat-image {
+  height: 10rem;
+  width: 10rem;
+}
+
+.chat-emotion {
+  color: #122069;
+  font-weight: 700;
+  font-size: 1rem;
+  margin-left: 0.2rem;
+}
+
+.chat-emotion:hover {
+  cursor: pointer;
+}
+
+.chat-message {
+  font-size: 1rem;
+}
+
+.chat-floating {
+  z-index: 10;
+}
+
+.chat-time {
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.chat-user_image {
+  height: 2.2rem;
+  width: 2.2rem;
+  border-radius: 50%;
+}
+
+.chat li.left .chat-body {
+  margin-left: 60px;
+}
+
+.chat li.right .chat-body {
+  margin-right: 60px;
+}
+
+.chat li .chat-body p {
+  margin: 0;
+  color: #777777;
+}
+
+.chat-card .slidedown .fas,
+.chat .fas {
+  margin-right: 5px;
+}
+
+#btn-chat {
+  margin-right: 0.5rem;
+}
+
+.file-uploads {
+  display: initial !important;
+}
+
+.file-uploads:hover {
+  cursor: pointer;
+}
+
 /*!
  * Bootstrap v4.5.2 (https://getbootstrap.com/)
  * Copyright 2011-2020 The Bootstrap Authors

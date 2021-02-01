@@ -23,6 +23,7 @@ Vue.use(VModal)
 
 import moment from 'moment';
 
+
 Vue.filter('timeExactDate',function(data){
    return  moment(data).fromNow();
 })
@@ -64,6 +65,8 @@ import { Settings } from 'luxon'
 //set to display dates for English language
 Settings.defaultLocale = 'en'
 
+const VueUploadComponent = require('vue-upload-component')
+Vue.component('file-upload', VueUploadComponent)
 
 /**
  * The following block of code may be used to automatically register your

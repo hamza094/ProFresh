@@ -21,6 +21,9 @@ use Illuminate\Support\Facades\Redis;
 use App\User;
 use Spatie\Searchable\Search;
 use App\Notifications\ProjectUpdated;
+use App\Group;
+use App\Conversation;
+
 
 class ProjectController extends Controller
 {
@@ -67,6 +70,25 @@ class ProjectController extends Controller
             'position'=>$request->position,
             'company'=>$request->company
       ]);
+
+      $group = Group::create([
+        'name' => $project->name . " Chat Group",
+        'project_id'=>$project->id
+      ]);
+
+       $users=[];
+       array_push($users, $project->user->id);
+
+       $group->users()->attach($users);
+
+       $project->update(['group_id'=>$group->id]);
+
+       Conversation::create([
+       'message'=>"Welcome to ". $project->name,
+        'user_id'=>$project->user->id,
+        'group_id'=>$group->id
+      ]);
+
         if(request()->wantsJson()){
         return['message'=>$project->path()];
        }
@@ -84,7 +106,12 @@ class ProjectController extends Controller
     {
         $scores=$project->scores()->sum('point');
         $members=$project->members->where('pivot.active',1);
-        return view('project.show',compact('project',$project,'scores',$scores,'members',$members));
+        $projectgroup=$project->group;
+        $cons=$project->group->conversations->count();
+        return view('project.show',compact('project',$project,'scores',$scores,
+          'members',$members,'projectgroup',$projectgroup,'cons',$cons));
+
+      
 
     }
 
