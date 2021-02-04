@@ -22,13 +22,12 @@ class ScoreTest extends TestCase
     public function get_sum_of_project_score_on_performing_project_related_activity()
     {
         $this->signIn();
-        $project=create('App\Project',['avatar_path'=>'img.png']);
-        $project->addScore('Avatar Uploaded',15);
+        $project=create('App\Project');
         $task=$project->addTask('test task');
         $project->addScore('Task Added',10);
         $appointment=create('App\Appointment',['project_id'=>$project->id]);
         $project->addScore('Appointment Added',10);
-        $this->assertEquals($project->scores()->sum('point'),35);
+        $this->assertEquals($project->scores()->sum('point'),20);
     }
 
 }

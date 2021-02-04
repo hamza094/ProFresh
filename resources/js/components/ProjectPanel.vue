@@ -224,7 +224,9 @@
         <div v-else v-for="projectmembers in groupedMembers" class="row">
         <div v-for="member in projectmembers" class="col-md-6" style="position:inherit" :key="member.id">
           <div class="project_members-detail">
-             <a v-bind:href="'/users/'+member.id+'/profile'" target="_blank"> <img src="https://i.ibb.co/51ZCLB8/download-1.jpg" alt="">
+             <a v-bind:href="'/users/'+member.id+'/profile'" target="_blank">
+             <img :src="member.avatar_path" v-if="member.avatar_path!=null" >
+              <img v-else src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQvsQZEtAw99ePVsNhLCexVsSKct6D13NluBQ&usqp=CAU" alt="">
               <p> {{member.name}}</p>
               </a>
               <a v-if="project.owner" href="#" @click="cancelMembership(member.id,member)">x</a>
@@ -257,7 +259,8 @@
                         <li v-for="conversation in conversations">
                             <div class="chat-body clearfix">
                                 <div class="header">
-                                    <img src="https://i.ibb.co/51ZCLB8/download-1.jpg" alt="User Avatar" class="chat-user_image" />
+                                    <img :src="conversation.user.avatar_path" alt="User Avatar" class="chat-user_image" v-if="conversation.user.avatar_path!=null" />
+                                     <img v-else src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQvsQZEtAw99ePVsNhLCexVsSKct6D13NluBQ&usqp=CAU" alt="" class="chat-user_image">
                                     <strong class="primary-font">{{ conversation.user.name }}</strong>
                                 </div>
                                 <p v-if="conversation.message" class="mt-2">

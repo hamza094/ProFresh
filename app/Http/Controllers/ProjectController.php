@@ -6,9 +6,6 @@ use App\Http\Requests\StoreProject;
 use Illuminate\Http\Request;
 use App\Project;
 use Auth;
-use Illuminate\Support\Facades\Storage;
-use Image;
-use File;
 use App\Mail\ProjectMail;
 use Illuminate\Support\Facades\Mail;
 use App\Functions\ProjectFunction;
@@ -181,22 +178,6 @@ class ProjectController extends Controller
         $project->delete();
     }
 
-    public function avatar(Project $project, Request $request){
-      $this->authorize('access',$project);
-        $this->validate(request(), [
-            'avatar'=>['required', 'image']
-        ]);
-        if($project->avatar_path==null){
-            $project->addScore('Avatar Uploaded',15);
-        }
-        $file = $request->file('avatar');
-        $filename = uniqid($project->id.'_').'.'.$file->getClientOriginalExtension();
-        Storage::disk('s3')->put($filename, File::get($file), 'public');
-        //Store Profile Image in s3
-        $project_path = Storage::disk('s3')->url($filename);
-        $project->update(['avatar_path'=>$project_path]);
-        return response([], 204);
-    }
 
     public function stage(Request $request, Project $project){
       $this->validate($request, [
@@ -263,14 +244,6 @@ class ProjectController extends Controller
         }
    }
 
-   public function avatarDelete(Project $project){
-     $this->authorize('access',$project);
-    if($project->avatar_path!==null){
-   $project->update(['avatar_path'=>null]);
-    $project->scores()->where('message','Avatar Uploaded')->delete();
-     }
-
-}
 
 public function mail(Project $project,Request $request){
   //Send Project Member Mail

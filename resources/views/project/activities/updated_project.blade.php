@@ -23,14 +23,11 @@ Project phase converted to <b>Execution</b>
 @elseif($key == 'stage' & $value == 6)
 Project phase converted to <b>Closure</b>
 
-@elseif($key == 'avatar_path' & $value!==null)
-Project profile image updated
-
-@elseif($key == 'avatar_path' & $value==null)
-Project Profile image removed
-
 @elseif($key == 'account_id')
 Account Added to Project
+
+@elseif($key == 'group_id')
+Group Chat Added to the project
 
 @else
 Updated project <i>{{$key}}</i> to <b>{{ Str::limit($value, 25) }} </b>

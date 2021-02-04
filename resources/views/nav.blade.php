@@ -167,8 +167,12 @@
 
                                     </dynamic-nav>
                                     <li class="nav-item dropdown">
-                                        <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                            {{ str_limit(Auth::user()->name,6) }}
+                                        <a id="navbarDropdown" class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                            @if(Auth::user()->avatar_path !== null)
+                                            <img src="{{Auth::user()->avatar_path}}" alt="User Avatar" class="chat-user_image" />
+                                            @else
+                                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQvsQZEtAw99ePVsNhLCexVsSKct6D13NluBQ&usqp=CAU" alt="User Avatar" class="chat-user_image" />
+                                            @endif
                                         </a>
 
                                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">

@@ -5,8 +5,6 @@ namespace Tests\Feature;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
-use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\ProjectMail;
 use App\Exports\ProjectsExport;
@@ -50,48 +48,7 @@ class ProjectTest extends TestCase
         $this->get($project->path())->assertSee($project->id);
     }
 
-    /** @test */
-    public function avatar_of_project_can_be_added_by_auth_user()
-    {
 
-        $this->json('POST','api/project/1/avatar')
-            ->assertStatus(401);
-    }
-
-    /** @test */
-    public function a_valid_avatar_must_be_provided(){
-      $user=create('App\User');
-       $this->signIn($user);
-       $project=create('App\Project',['user_id'=>$user->id]);
-        $this->json('POST','api/project/'.$project->id.'/avatar',[
-            'avatar'=>'not-an-image'
-        ])->assertStatus(422);
-    }
-
-
-    public function authorize_user_may_add_avatar_to_project()
-    {
-      $user=create('App\User');
-       $this->signIn($user);
-       $project=create('App\Project',['user_id'=>$user->id]);
-        Storage::fake('s3');
-        $this->json('POST','api/project/'.$project->id.'/avatar',[
-            'avatar_path'=>$file=UploadedFile::fake()->image('avatar.jpg')
-        ]);
-
-        Storage::disk('s3')->assertExists('avatars/'.$file->hashName());
-    }
-
-    /** @test */
-    public function a_user_can_determine_their_avatar_path()
-    {
-
-      $user=create('App\User');
-       $this->signIn($user);
-       $project=create('App\Project',['user_id'=>$user->id]);
-        $user->avatar_path='http://localhost/storage/avatars/me.jpg';
-        $this->assertEquals(asset('storage/avatars/me.jpg'),$user->avatar_path);
-    }
 
     /** @test */
     public function authorized_user_can_update_project(){
@@ -151,16 +108,6 @@ $this->assertCount(1,$project->withTrashed()->get());
          $this->get('api/projects/'.$project->id.'/delete');
          $this->assertDatabaseMissing('projects',['id'=>$project->id]);
       }
-
-      /** @test */
-         public function signIn_user_can_delete_project_avatar(){
-           $user=create('App\User');
-            $this->signIn($user);
-            $project=create('App\Project',['avatar_path'=>'https://encrypted-tbn0.gstatic.com','user_id'=>$user->id]);
-            $this->patch('api/projects/'.$project->id.'/avatar-delete');
-            $this->assertDatabaseHas('projects',['avatar_path'=>null]);
-            //$this->assertDatabaseMissing('projects',['id'=>$project->id]);
-         }
 
 
 public function project_mail_sent(){

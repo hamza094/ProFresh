@@ -1,0 +1,38 @@
+<div class="img-avatar" @click="$modal.show('avatar-file')">
+            <div class="img-avatar_name" v-if="user.avatar_path==null">
+                {{user.name.substring(0,1)}}
+            </div>
+                <div v-else>
+                    <img :src="avatar_path" alt="" class="main-profile-img"/>
+                </div>
+            <div class="img-avatar_overlay">
+                <div class="img-avatar_overlay-text">Update</div>
+            </div>
+            </div>
+            
+    <modal name="avatar-file"
+               height="auto">
+            <div class="p-3 bg-white shadow rounded-lg img_avarar">
+                <input type="file" name="avatar" id="file" accept="image/*" value="Upload Avatar" @change="setImage"/>
+                <!-- Image previewer -->
+
+                <img :src="imageSrc" width="100" />
+
+                <!-- Cropper container -->
+                <div
+                    v-if="this.imageSrc"
+                    class="my-3 d-flex align-items-center justify-content-center mx-auto">
+                    <vue-cropper
+                        class="mr-2 w-50"
+                        ref="cropper"
+                        :guides="true"
+                        :src="imageSrc"
+                        :aspectRatio="0.9"
+                    ></vue-cropper>
+
+                    <!-- Cropped image previewer -->
+                    <img class="ml-2 w-50 bg-light" :src="croppedImageSrc" />
+                </div>
+                <button  class="btn panel-btn_close" v-if="this.imageSrc" @click="cropImage">Crop</button>
+                <button class="btn panel-btn_save" v-if="this.croppedImageSrc" @click="uploadImage()">Upload</button>
+            </div></modal>

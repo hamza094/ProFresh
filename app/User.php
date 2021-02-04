@@ -20,9 +20,7 @@ class User extends Authenticatable implements Searchable
      *
      * @var array
      */
-    protected $fillable = [
-        'name', 'email', 'password',
-    ];
+    protected $guarded = [];
 
     /**
      * The attributes that should be hidden for arrays.
@@ -41,6 +39,11 @@ class User extends Authenticatable implements Searchable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function path()
+    {
+        return "/users/{$this->id}/profile";
+    }
 
       public function projects(){
         return $this->hasMany(Project::class);

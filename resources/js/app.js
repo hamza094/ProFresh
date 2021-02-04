@@ -88,6 +88,7 @@ Vue.component('project-edit', require('./components/ProjectEdit.vue').default);
 Vue.component('project-stage', require('./components/Stage.vue').default);
 Vue.component('project-panel', require('./components/ProjectPanel.vue').default);
 Vue.component('notifications', require('./components/Notification.vue').default);
+Vue.component('profile', require('./components/Profile.vue').default);
 const routes = [
   { path: '/dashboard', component: require('./components/Dashboard.vue').default },
   { path: '/projects', component: require('./components/Project.vue').default },

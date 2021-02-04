@@ -1,6 +1,7 @@
 @extends('header')
 @section('crm')
-    <div class="container ">
+    <div class="container">
+<profile :user="{{json_encode($user)}}"></profile>    	
 <p>hy:{{$user->name}}</p>
 @if(auth()->user()->id == $user->id)
 @foreach($members as $member)

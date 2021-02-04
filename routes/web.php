@@ -22,11 +22,9 @@ Route::post('/api/projects/{project}/mail','ProjectController@mail');
 
 
 Auth::routes();
-Route::post('/api/project/{project}/avatar', 'ProjectController@avatar')->name('avatar');
 Route::patch('/api/project/{project}/stage','ProjectController@stage');
 Route::patch('/api/project/{project}/postponed','ProjectController@postponed');
 Route::get('/api/projects/{project}/delete','ProjectController@delete');
-Route::patch('/api/projects/{project}/avatar-delete','ProjectController@avatarDelete');
 Route::post('/api/projects/{project}/sms','ProjectController@sms');
 Route::resource('api/projects', 'ProjectController');
 Route::get('/api/projects/{project}/export','ProjectController@export');
@@ -61,13 +59,17 @@ Route::get('/api/project/{project}/cancel/{user}','InvitationController@cancel')
 
 //Profile Routes
 Route::get('users/{user}/profile','ProfileController@show');
+Route::post('/api/user/{user}/avatar', 'ProfileController@avatar')->name('avatar');
+Route::patch('/api/user/{user}/avatar-delete','ProfileController@avatarDelete');
 
+
+//Notifications Routes 
 Route::get('/profile/{user}/notifications', 'NotificationsController@index');
-
 Route::delete('/profile/{user}/notifications/{notification}', 'NotificationsController@destroy');
 
-Route::get('/api/project/{project}/groups', 'GroupController@store');
 
+//Group Chat Routes
+Route::get('/api/project/{project}/groups', 'GroupController@store');
 Route::resource('/api/project/{project}/conversations', 'ConversationController');
 Route::get('/api/project/{project}/conversation','ConversationController@conversation');
 

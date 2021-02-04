@@ -23,22 +23,6 @@ class Project extends Model
         return "/api/projects/{$this->id}";
     }
 
-    //protected $appends = ['profile'];
-
-    //User avatar path
-/*    public function getProfileAttribute()
-    {
-        if ($this->avatar_path != null) {
-            $path = pathinfo($this->avatar_path);
-
-            return $path['dirname'].'/'.$path['filename'].'-thumb.jpg';
-        } else {
-            $path = 'https://i.pinimg.com/originals/53/54/f7/5354f750a2816333f42efbeeacb4e244.jpg';
-
-            return $path;
-        }
-    }*/
-
     public function scores(){
         return $this->hasMany(ProjectScore::class);
     }
