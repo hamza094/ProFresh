@@ -8,6 +8,14 @@ class Group extends Model
 {
     protected $guarded=[];
 
+     public static function boot()
+    {
+        parent::boot();
+        static::deleting(function ($group) {
+            $group->conversations->each->delete();
+        });
+    }
+
     public function users(){
           return $this->belongsToMany(User::class)->withTimestamps();
       }

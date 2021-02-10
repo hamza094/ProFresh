@@ -44,20 +44,15 @@ class InvitationController extends Controller
      $project->recordActivity('accept_member_project',$user->name.'/_/'.$user->id);
      $project->owner->notify(new AcceptInvitation($project,$user));
      $project->addScore("Invitaion Accept by $user->name",15);
-
-      $users=[];
-
+     $users=[];
      array_push($users,$user->id);
-
      $project->group->users()->attach($users);
-
-     return redirect()->back();
   }
 
   public function ignore(Project $project){
      $user=Auth::user();
      $project->members()->detach($user);
-     return redirect()->back();
+     
   }
 
   public function cancel(Project $project,User $user){

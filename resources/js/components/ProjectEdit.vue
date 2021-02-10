@@ -10,7 +10,6 @@
     <li class="feature-dropdown_item-content" v-if="projectmembers != 0" @click="$modal.show('project-mail')"><i class="far fa-envelope"></i> Email</li>
     <li class="feature-dropdown_item-content" v-if="projectmembers != 0" @click="$modal.show('project-sms')"><i class="fas fa-mobile-alt"></i> Send SMS</li>
     <a v-bind:href="'/api/projects/' + this.project.id +'/export'"> <li class="feature-dropdown_item-content" @click="projectExport"><i class="fas fa-upload"></i>Export</li></a>
-    <li v-if="project.avatar_path!==null" class="feature-dropdown_item-content" @click="deleteAvatar"><i class="far fa-user-circle"></i> Remove display picture</li>
     <li class="feature-dropdown_item-content" @click="projectUnSubscribe" v-if="this.subscription"><i class="fas fa-inbox"></i> UnSubscribe</li>
     <li class="feature-dropdown_item-content" @click="projectSubscribe" v-else><i class="fas fa-inbox"></i> Subscribe</li>
     <li class="feature-dropdown_item-content"><i class="fab fa-500px"></i> Add to sequence</li>

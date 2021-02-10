@@ -9,7 +9,7 @@
                 <div class="img-avatar_overlay-text">Update</div>
             </div>
             </div>
-            
+
     <modal name="avatar-file"
                height="auto">
             <div class="p-3 bg-white shadow rounded-lg img_avarar">
@@ -36,3 +36,7 @@
                 <button  class="btn panel-btn_close" v-if="this.imageSrc" @click="cropImage">Crop</button>
                 <button class="btn panel-btn_save" v-if="this.croppedImageSrc" @click="uploadImage()">Upload</button>
             </div></modal>
+
+https://crm-fresh.s3.ap-south-1.amazonaws.com/3_60...
+
+            

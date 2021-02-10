@@ -13,7 +13,7 @@ class User extends Authenticatable implements Searchable
 {
     use Notifiable;
 
-    //protected $appends = ['lastSeen'];
+    protected $appends = ['LastSeen'];
 
     /**
      * The attributes that are mass assignable.
@@ -21,6 +21,17 @@ class User extends Authenticatable implements Searchable
      * @var array
      */
     protected $guarded = [];
+
+      public static function boot()
+    {
+        parent::boot();
+        static::deleting(function ($user) {
+            $user->groups->each->delete();
+            $user->projects->each->forceDelete();
+
+        });
+    }
+
 
     /**
      * The attributes that should be hidden for arrays.
@@ -66,12 +77,17 @@ class User extends Authenticatable implements Searchable
 
    public function members()
     {
-        return $this->belongsToMany(Project::class,'project_members')->withPivot('active');
+        return $this->belongsToMany(Project::class,'project_members')->withPivot('active')->withTimestamps()->with('owner');
     }
 
      public function groups()
     {
         return $this->belongsToMany(Group::class)->withTimestamps();
+    }
+
+    public function getlastSeenAttribute()
+    {
+      return  $this->lastseen();
     }
 
 }

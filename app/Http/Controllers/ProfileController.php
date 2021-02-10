@@ -41,8 +41,38 @@ class ProfileController extends Controller
        if($user->avatar_path!==null){
       $user->update(['avatar_path'=>null]);
      }
+  }
 
-}
+  public function update(Request $request,User $user)
+    {
+        
+        $this->authorize('owner',$user);
 
+        $this->validate($request, [
+            'name'=>'required',
+            'email'=>'required',
+        ]);
+        
+        $user->name = $request->input('name');
+        $user->email = $request->input('email');
+        $user->mobile = $request->input('mobile');
+        $user->company = $request->input('company');
+        $user->bio = $request->input('bio');
+        $user->address = $request->input('address');
+        $user->position = $request->input('position');
+        if (! $request->input('password') == '') {
+            $user->password = Hash::make($request->input('password'));
+        }
+         $user->save();
+    }
+
+    public function destroy(User $user)
+    {
+      $this->authorize('owner',$user);
+      $user->delete();
+      if(request()->expectsJson()){
+            return response(['status'=>'profile deleted']);
+        }
+    }
 
 }

@@ -152,8 +152,19 @@ public function authorize_user_can_update_note(){
    $project=create('App\Project',['user_id'=>$user->id]);
   $this->assertDatabaseHas('projects',['notes'=>null]);
   $notes='abra ka dabra';
-  $this->withoutExceptionHandling()->patch('api/projects/'.$project->id.'/notes',['notes'=>$notes]);
+  $this->patch('api/projects/'.$project->id.'/notes',['notes'=>$notes]);
   $this->assertDatabaseHas('projects',['notes'=>$notes]);
+}
+
+        /** @test */
+    public function group_deleted_on_user_deletion()
+    {
+      $user=create('App\User');
+       $this->signIn($user);
+        $group=create('App\Group');
+     $group->users()->attach($user);
+     $user->delete();
+      $this->assertDatabaseMissing('groups',['id'=>$group->id]);
 }
 
 

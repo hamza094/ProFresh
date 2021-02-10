@@ -69,7 +69,39 @@ class ProfileTest extends TestCase
          public function profile_owner_can_delete_his_avatar(){
            $user=create('App\User',['avatar_path'=>'https://encrypted-tbn0.gstatic.com']);
             $this->signIn($user);
-            $this->withoutExceptionHandling()->patch('api/user/'.$user->id.'/avatar-delete');
+            $this->patch('api/user/'.$user->id.'/avatar-delete');
             $this->assertDatabaseHas('users',['avatar_path'=>null]);
          }
+
+
+        /** @test */
+        public function profile_owner_can_update_his_profile(){
+        $user=create('App\User');
+        $this->signIn($user);
+        $Updatedname='Assemble';
+        $UpdatedEmail='Cap_avenge@yahoo.com';
+        $this->patch("/api/user/{$user->id}/profile",['name'=>$Updatedname,'email'=>$UpdatedEmail]);
+        $this->assertDatabaseHas('users',['id'=>$user->id,'name'=>$Updatedname]);
+    }
+
+    /** @test */
+      public function profile_owner_can_delete_project(){
+        $user=create('App\User');
+         $this->signIn($user);
+         $project=create('App\Project',['user_id'=>$user->id]);
+         $this->withoutExceptionHandling()->delete('api/user/'.$user->id.'/profile');
+         $this->assertDatabaseMissing('users',['id'=>$user->id]);
+         $this->assertDatabaseMissing('projects',['id'=>$project->id]);
+      }
+
+              /** @test */
+    public function group_deleted_on_user_deletion()
+    {
+      $user=create('App\User');
+       $this->signIn($user);
+        $group=create('App\Group');
+     $group->users()->attach($user);
+     $user->delete();
+      $this->assertDatabaseMissing('groups',['id'=>$group->id]);
+}
 }

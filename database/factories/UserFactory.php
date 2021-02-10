@@ -82,3 +82,11 @@ $factory->define(App\Group::class, function (Faker $faker) {
         'project_id' => 1,
     ];
 });
+
+$factory->define(App\Conversation::class, function (Faker $faker) {
+    return [
+       'message'=> $faker->sentence,
+        'user_id' => 1,
+        'group_id'=>2
+    ];
+});

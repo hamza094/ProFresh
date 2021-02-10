@@ -61,6 +61,8 @@ Route::get('/api/project/{project}/cancel/{user}','InvitationController@cancel')
 Route::get('users/{user}/profile','ProfileController@show');
 Route::post('/api/user/{user}/avatar', 'ProfileController@avatar')->name('avatar');
 Route::patch('/api/user/{user}/avatar-delete','ProfileController@avatarDelete');
+Route::patch("/api/user/{user}/profile",'ProfileController@update');
+Route::delete("/api/user/{user}/profile",'ProfileController@destroy');
 
 
 //Notifications Routes 
