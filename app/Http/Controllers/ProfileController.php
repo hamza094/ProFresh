@@ -9,7 +9,7 @@ use Auth;
 use Illuminate\Support\Facades\Storage;
 use Image;
 use File;
-
+use App\Paypal;
 class ProfileController extends Controller
 {
   public function __construct()
@@ -18,8 +18,24 @@ class ProfileController extends Controller
   }
 
   public function show(User $user){
-    $members=$user->members;
-   return view('profile.show',compact('user',$user,'members',$members));
+    //$members=$user->members;
+if(Paypal::where('user_id',$user->id)->exists()){
+  $paypal='subscribed';
+}else{
+  $paypal='unsubscribed';
+}
+
+
+     /*$availablePlans=[
+       'price_1IJejOLbPiqgp3U5jzTsYjVW' =>'Monthly',
+       'price_1IJepYLbPiqgp3U5mqEuYgQr' =>'Yearly',
+    ];
+    $data=[
+      'intent' => $user->createSetupIntent(),
+      'plans'=> $availablePlans
+    ];
+
+   return view('profile.show',compact('user',$user,'members',$members,'paypal',$paypal))->with($data);*/
 }
 
   public function avatar(User $user, Request $request){

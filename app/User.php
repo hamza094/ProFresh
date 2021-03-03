@@ -8,10 +8,14 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Redis;
 use Spatie\Searchable\Searchable;
 use Spatie\Searchable\SearchResult;
+use Laravel\Cashier\Billable;
 
 class User extends Authenticatable implements Searchable
 {
     use Notifiable;
+    use Billable;
+
+    protected $guarded = [];
 
     protected $appends = ['LastSeen'];
 
@@ -20,7 +24,6 @@ class User extends Authenticatable implements Searchable
      *
      * @var array
      */
-    protected $guarded = [];
 
       public static function boot()
     {
@@ -90,4 +93,15 @@ class User extends Authenticatable implements Searchable
       return  $this->lastseen();
     }
 
+   public function paypal(){
+        return $this->belongsTo('App\Paypal');
+    }
+     
+     //add user paypal record in database
+    public function paypal_info(){
+        $this->paypal()->create([
+        'user_id'=>$this->id,
+        'name'=>'ProFresh Agreement'
+    ]);
+    }
 }

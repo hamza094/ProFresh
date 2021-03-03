@@ -29,5 +29,24 @@ return [
         'secret' => env('AWS_SECRET_ACCESS_KEY'),
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
+    
+    'stripe' => [
+        'model' => App\User::class,
+        'key' => env('STRIPE_KEY'),
+        'secret' => env('STRIPE_SECRET'),
+    ],
+   
+    'paypal' => [
+        'id' => env('PAYPAL_ID'),
+        'secret' => env('PAYPAL_SECRET'),
+        'url'=>[
+            'executeAgreement'=>[
+                'success'=>'http://localhost:8000/execute-agreement/true',
+                'failure'=>'http://localhost:8000/execute-agreement/false'
+            ]
+        ]
+    ],
+
+
 
 ];
