@@ -84,7 +84,7 @@
 
                               <div class="form-group">
                                 <label for="bio" class="label-name">Your Bio:</label>
-                                <textarea type="text" id="bio" name="bio" class="form-control"></textarea v-model="form.bio">
+                                <textarea type="text" v-model="form.bio" id="bio" name="bio" class="form-control">{{user.bio}}</textarea>
                                 <span class="text-danger font-italic" v-if="errors.bio" v-text="errors.bio[0]"></span>
                             </div>
 
@@ -159,9 +159,11 @@
                             <div class="content">
                                 <p class="content-name">{{user.name}}</p>
                                 <p class="content-info">
-                                  {{user.company}}
+                                <span v-if="user.company==null">Not Defined</span>
+                                  <span v-else>{{user.company}}</span>
                                   <span class="content-dot"></span>
-                                  {{user.position}}
+                                  <span v-if="user.position==null">Not Defined</span>
+                                  <span v-else>{{user.position}}</span>
                                 </p>
                             </div>
                           </div>
@@ -171,14 +173,22 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <p class="crm-info"> <b>Email</b>: <span> {{user.email}} </span></p>
-                                    <p class="crm-info"> <b>Mobile</b>: <span> {{user.mobile}} </span></p>
-                                    <p class="crm-info"> <b>Address</b>: <span> {{user.address}} </span></p>
+                                    <p class="crm-info"> <b>Mobile</b>: 
+                                     <span v-if="user.mobile==null"> Not Defined </span>
+                                      <span> {{user.mobile}} </span>
+                                    </p>
+                                    <p class="crm-info"> <b>Address</b>: 
+                                      <span v-if="user.address==null"> Not Defined </span>
+                                      <span v-else> {{user.address}} </span>
+                                    </p>
                                     <p class="crm-info"> <b>Created At</b>: <span> {{user.created_at | timeDate}} </span></p>
                                     <p class="crm-info"> <b>Updated At</b>: <span> {{user.updated_at | timeDate}} </span></p>
                                     <p class="crm-info"> <b>Last Seen</b>: <span> {{user.updated_at | timeExactDate}} </span></p>
                                 </div>
                                 <div class="col-md-6">
-                                    <p class="crm-info"> <b>bio</b>: <span>"{{user.bio}}"</span></p>
+                              <p class="crm-info"> <b>Bio</b>:<span v-if="user.bio==null">"Donec in odio eget risus placerat molestie. Etiam augue turpis, tristique nec accumsan a, vehicula vitae quam. Sed imperdiet vulputate mi in molestie. Sed lacus quam, suscipit ut velit et, commodo sagittis leo. Nunc tristique odio nec justo tempor maximus. Praesent id nisl nulla. Quisque vestibulum massa felis, in pellentesque justo varius ut. Donec nibh massa, viverra quis convallis in, dictum sed metus. Aliquam ut ullamcorper tortor. Pellentesque sagittis dolor turpis, eu dictum risus lacinia ut"</span>
+                                <span v-else>"{{user.bio}}"</span>
+                              </p>
                             </div>
                             </div>
 
@@ -186,12 +196,12 @@
               <p class="pro-info">Project Invitations</p>
 
               <div v-if="authorize('profileOwner',owner)">
-<div class="row">
+<div class="row" v-if="this.members != 0">
 <div class="col-md-5 ml-3" v-for="member in this.members">
   <div class="card" v-if="member.pivot.active == 0" :id="'project-'+member.id">
      <p class="mt-3">Project Name: <a v-bind:href="'/api/projects/'+member.id" target="_blank"><b>{{member.name}}</b></a></p>
      <p>Owner Name: <a v-bind:href="'/user/'+member.id+'/profile'" target="_blank"><b>{{member.owner.name}}</b></a></p>
-        <p>Invitation Send On: <b>{{member.pivot.created_at | timeDate}}</b></p>
+        <p>Invitation Received On: <b>{{member.pivot.created_at | timeDate}}</b></p>
   <p class="text-center"><button class="btn btn-primary btn-sm" @click.prevent="becomeMember(member.id)">Become Member
   </button>
 <button class="btn btn-danger btn-sm" @click.prevent="rejectInvitation(member.id)">Ignore Invitation</button></p>
@@ -202,6 +212,9 @@
     </div>
 </div>
 </div>
+</div>
+<div v-else>
+  <h3>No project Invitation found</h3>
 </div>
 </div>
    </div>
@@ -330,7 +343,6 @@ export default{
                this.user.bio=this.form.bio;
                this.user.address=this.form.address;
                this.user.position=this.form.position;
-               this.form="";
                this.$modal.hide('edit-profile');
            }).catch(error=>{
                 console.log(error.response.data.errors);

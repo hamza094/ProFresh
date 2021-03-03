@@ -31,8 +31,8 @@ Route::get('/api/projects/{project}/export','ProjectController@export');
 Route::patch('/api/projects/{project}/notes','ProjectController@notes');
 
 //Project Subscribe
-Route::post('/api/projects/{project}/subscribe','SubscriptionController@projectSubscribe');
-Route::delete('/api/projects/{project}/unsubscribe','SubscriptionController@projectUnSubscribe');
+Route::post('/api/projects/{project}/subscribe','SubscribeController@projectSubscribe');
+Route::delete('/api/projects/{project}/unsubscribe','SubscribeController@projectUnSubscribe');
 
 //Activity Feed
 Route::get('/projects/{project}/timeline_feeds','ProjectController@activity')->name('activities');
@@ -69,10 +69,20 @@ Route::delete("/api/user/{user}/profile",'ProfileController@destroy');
 Route::get('/profile/{user}/notifications', 'NotificationsController@index');
 Route::delete('/profile/{user}/notifications/{notification}', 'NotificationsController@destroy');
 
+Route::post('subscribe','SubscriptionController@subscribe')->name('subscribe');
+
 
 //Group Chat Routes
 Route::get('/api/project/{project}/groups', 'GroupController@store');
 Route::resource('/api/project/{project}/conversations', 'ConversationController');
 Route::get('/api/project/{project}/conversation','ConversationController@conversation');
+
+Route::get('plan/create','SubscriptionController@createPlan');
+Route::get('plan/list','SubscriptionController@listPlan');
+Route::get('plan/{id}','SubscriptionController@showPlan');
+Route::get('plan/{id}/active','SubscriptionController@activePlan');
+Route::post('plan/{id}/agreement/create','SubscriptionController@createAgreement')->
+name('create-aggreement');
+Route::get('execute-agreement/{status}','SubscriptionController@executeAgreement');
 
 Route::get('{path}', 'HomeController@index')->where('/path', '([A-z\d-\/_.]+)?');

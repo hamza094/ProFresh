@@ -50,7 +50,7 @@ public function group(){
 }
 
     public function subscribers(){
-      return $this->hasMany(Subscription::class);
+      return $this->hasMany(Subscribe::class);
     }
 
     public function getIsSubscribedToAttribute()
