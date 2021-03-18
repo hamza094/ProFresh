@@ -11,10 +11,6 @@ use Auth;
 
 class SubscriptionController extends Controller
 {
-    public function __construct()
-  {
-      $this->middleware('auth');
-  }
 
   public function subscribe(Request $request){
   	$user=auth()->user();

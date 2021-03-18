@@ -59,8 +59,8 @@ protected function payer(): Payer{
 
 protected function shippingAddress(): ShippingAddress{
   $shippingAddress = new ShippingAddress();
-$shippingAddress->setLine1('Online')
-    ->setCity('Online')
+$shippingAddress->setLine1('111 First Street')
+    ->setCity('Saratoga')
     ->setState('CA')
     ->setPostalCode('95070')
     ->setCountryCode('US');

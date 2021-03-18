@@ -16,26 +16,32 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::post('/api/projects/{project}/mail','ProjectController@mail');
-
-
-
-
 Auth::routes();
-Route::patch('/api/project/{project}/stage','ProjectController@stage');
-Route::patch('/api/project/{project}/postponed','ProjectController@postponed');
-Route::get('/api/projects/{project}/delete','ProjectController@delete');
-Route::post('/api/projects/{project}/sms','ProjectController@sms');
+
+Route::middleware(['auth'])->group(function () {
+
+//Return All Users
+Route::get('/api/users', 'HomeController@users');	
+
+//Project Routes	
 Route::resource('api/projects', 'ProjectController');
-Route::get('/api/projects/{project}/export','ProjectController@export');
-Route::patch('/api/projects/{project}/notes','ProjectController@notes');
+Route::get('/api/projects/{project}/delete','ProjectController@delete');
 
-//Project Subscribe
+//Project Activity Feed
+Route::get('/projects/{project}/timeline_feeds','ProjectController@activity')->name('activities'); 
+
+//Project Feature Routes	
+Route::post('/api/projects/{project}/mail','FeaturesController@mail');
+Route::patch('/api/project/{project}/stage','FeaturesController@stage');
+Route::post('/api/projects/{project}/sms','FeaturesController@sms');
+Route::get('/api/projects/{project}/export','FeaturesController@export');
+Route::patch('/api/projects/{project}/notes','FeaturesController@notes'); 
+Route::patch('/api/project/{project}/postponed','FeaturesController@postponed');
+ 
+
+//Project Subscribe Route
 Route::post('/api/projects/{project}/subscribe','SubscribeController@projectSubscribe');
-Route::delete('/api/projects/{project}/unsubscribe','SubscribeController@projectUnSubscribe');
-
-//Activity Feed
-Route::get('/projects/{project}/timeline_feeds','ProjectController@activity')->name('activities');
+Route::delete('/api/projects/{project}/unsubscribe','SubscribeController@projectUnSubscribe'); 
 
 //Task Routes
 Route::post('/api/projects/{project}/tasks', 'TaskController@projectstore')->name('projecttask.create');
@@ -44,7 +50,6 @@ Route::patch('/api/projects/{project}/tasks/{task}', 'TaskController@projectupda
 Route::delete('/api/projects/{project}/tasks/{task}', 'TaskController@projectdelete')->name('task.update');
 
 //Appointment Routes
-Route::get('/api/users', 'ProjectController@user');
 Route::post('/api/projects/{project}/appointment', 'AppointmentController@store');
 Route::get('/api/projects/{project}/appointments', 'AppointmentController@show');
 Route::patch('/api/projects/{project}/appointment/{appointment}', 'AppointmentController@update');
@@ -64,19 +69,12 @@ Route::patch('/api/user/{user}/avatar-delete','ProfileController@avatarDelete');
 Route::patch("/api/user/{user}/profile",'ProfileController@update');
 Route::delete("/api/user/{user}/profile",'ProfileController@destroy');
 
-
 //Notifications Routes 
 Route::get('/profile/{user}/notifications', 'NotificationsController@index');
 Route::delete('/profile/{user}/notifications/{notification}', 'NotificationsController@destroy');
 
+//Subscription Routes
 Route::post('subscribe','SubscriptionController@subscribe')->name('subscribe');
-
-
-//Group Chat Routes
-Route::get('/api/project/{project}/groups', 'GroupController@store');
-Route::resource('/api/project/{project}/conversations', 'ConversationController');
-Route::get('/api/project/{project}/conversation','ConversationController@conversation');
-
 Route::get('plan/create','SubscriptionController@createPlan');
 Route::get('plan/list','SubscriptionController@listPlan');
 Route::get('plan/{id}','SubscriptionController@showPlan');
@@ -84,5 +82,13 @@ Route::get('plan/{id}/active','SubscriptionController@activePlan');
 Route::post('plan/{id}/agreement/create','SubscriptionController@createAgreement')->
 name('create-aggreement');
 Route::get('execute-agreement/{status}','SubscriptionController@executeAgreement');
+ 
+});
 
+//Group Chat Routes
+Route::get('/api/project/{project}/groups', 'GroupController@store');
+Route::resource('/api/project/{project}/conversations', 'ConversationController');
+Route::get('/api/project/{project}/conversation','ConversationController@conversation');
+
+//SPA Routes
 Route::get('{path}', 'HomeController@index')->where('/path', '([A-z\d-\/_.]+)?');

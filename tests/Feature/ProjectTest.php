@@ -27,11 +27,22 @@ class ProjectTest extends TestCase
         $response=$this->withoutExceptionHandling()->post('api/projects',
             ['name' => 'Json','email'=>'json_pisces@outlook.com',
                 'mobile'=>6785434567]);
-          $this->assertDatabaseHas('projects',['name'=>'Json']);
+          $this->withoutExceptionHandling()->assertDatabaseHas('projects',['name'=>'Json']);
     }
 
     /** @test */
-    public function a_project_requires_a_name(){
+   public function a_project_requires_a_name(){
+        $this->signIn();
+        $project=make('App\Project',[
+            'name'=>null
+        ]);
+        $this->post('/api/projects',$project->toArray())
+            ->assertSessionHasErrors('name');
+
+    }
+
+     /** @test */
+    public function updated_project_requires_a_name(){
         $this->signIn();
         $project=make('App\Project',[
             'name'=>null
@@ -58,7 +69,7 @@ class ProjectTest extends TestCase
         $name="john santiman";
         $email="james_picaso@outlook.com";
         $mobile=6785434567;
-       $this->patch($project->path(),['name'=>$name,'email'=>$email,'mobile'=>$mobile]);
+       $this->withoutExceptionHandling()->patch($project->path(),['name'=>$name,'email'=>$email,'mobile'=>$mobile]);
         $this->assertDatabaseHas('projects',['id'=>$project->id,'mobile'=>$mobile]);
     }
 

@@ -55,7 +55,9 @@ class InvitationTest extends TestCase
 
        /** @test */
        public function authorized_user_can_ignore_project_request(){
-           $project = create('App\Project');
+        $user1=create('App\User');
+        $this->signIn($user1);
+           $project = create('App\Project',['user_id'=>$user1->id]);
            $project->invite($user=create('App\User'));
          $this->signIn($user);
           $this->get('project/'.$project->id.'/cancel');

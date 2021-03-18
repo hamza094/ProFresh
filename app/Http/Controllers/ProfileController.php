@@ -12,13 +12,9 @@ use File;
 use App\Paypal;
 class ProfileController extends Controller
 {
-  public function __construct()
-  {
-      $this->middleware('auth');
-  }
 
   public function show(User $user){
-    //$members=$user->members;
+    $members=$user->members;
 if(Paypal::where('user_id',$user->id)->exists()){
   $paypal='subscribed';
 }else{
@@ -26,7 +22,7 @@ if(Paypal::where('user_id',$user->id)->exists()){
 }
 
 
-     /*$availablePlans=[
+     $availablePlans=[
        'price_1IJejOLbPiqgp3U5jzTsYjVW' =>'Monthly',
        'price_1IJepYLbPiqgp3U5mqEuYgQr' =>'Yearly',
     ];
@@ -35,7 +31,7 @@ if(Paypal::where('user_id',$user->id)->exists()){
       'plans'=> $availablePlans
     ];
 
-   return view('profile.show',compact('user',$user,'members',$members,'paypal',$paypal))->with($data);*/
+   return view('profile.show',compact('user',$user,'members',$members,'paypal',$paypal))->with($data);
 }
 
   public function avatar(User $user, Request $request){

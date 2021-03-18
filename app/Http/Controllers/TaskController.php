@@ -11,12 +11,7 @@ use App\Notifications\ProjectTask;
 
 class TaskController extends Controller
 {
-  public function __construct()
-  {
-      $this->middleware('auth');
-
-  }
-
+ 
   public function projectindex(Project $project){
       return $project->tasks()->latest()->get();
   }

@@ -6,7 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
 
-class StoreProject extends FormRequest
+class ProjectRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -29,6 +29,10 @@ class StoreProject extends FormRequest
             'name'=>'required',
             'email'=>'required',
             'mobile'=>'required',
+            'zipcode'=>'',
+            'address'=>'string',
+            'position'=>'string',
+            'company'=>'string'
         ];
     }
 
@@ -38,7 +42,6 @@ class StoreProject extends FormRequest
             'name.required' => 'project name required.',
             'email.required'=>'project email required',
             'mobile.required'=>'project mobile required'
-
         ];
     }
 }
