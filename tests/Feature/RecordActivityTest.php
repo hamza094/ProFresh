@@ -112,7 +112,7 @@ public function updating_an_appointment(){
    $this->signIn($user);
    $project=create('App\Project',['user_id'=>$user->id]);
  $appointment=create('App\Appointment',['title'=>'My Appointment','project_id'=>$project->id]);
- $this->patch('/api/projects/'.$project->id.'/appointment/'.$appointment->id,
+ $this->patch('/api/project/'.$project->id.'/appointment/'.$appointment->id,
  ['title'=>'mine appoint','location'=>'pakistan','outcome'=>'Intrested','strtdt'=>'11-20-17','strttm'=>'14:05','zone'=>'Asia/pacific','outcome'=>'Not intrested']);
   $this->assertCount(4,$project->activity);
   tap($project->activity->last(), function ($activity) {
@@ -128,7 +128,7 @@ public function deleting_an_appointment(){
   $project=create('App\Project');
   $appointment=create('App\Appointment',['title'=>'My Appointment','project_id'=>$project->id]);
   $appointment->delete();
-$this->assertCount(3,$project->activity);
+$this->assertCount(2,$project->activity);
 $this->assertEquals('deleted_appointment',$project->activity->last()->description);
 }
 

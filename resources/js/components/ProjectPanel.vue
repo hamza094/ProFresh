@@ -391,7 +391,7 @@ export default{
                  .then(({data})=>(this.users=data));
         },
         loadAppoinments(){
-          axios.get('/api/projects/'+this.project.id+'/appointments')
+          axios.get('/api/project/'+this.project.id+'/appointment')
           .then(({data})=>(this.appointments=data));
         },
     projectTask(){
@@ -414,7 +414,7 @@ export default{
       })
     },
     deleteAppointment(id){
-      axios.delete('/api/projects/'+this.project.id+'/appointment/'+id)
+      axios.delete('/api/project/'+this.project.id+'/appointment/'+id)
       .then(response=>{
           this.$vToastify.info("Appointment deleted");
           this.loadAppoinments();
@@ -479,7 +479,7 @@ export default{
       })
     },
     appointmentUpdate(id,appointment){
-      axios.patch('/api/projects/'+this.project.id+'/appointment/'+id,{
+      axios.patch('/api/project/'+this.project.id+'/appointment/'+id,{
         title:this.form.title,
         strtdt:this.form.strtdt.substring(0,10),
         strttm:this.form.strttm.substring(11,16),
@@ -511,7 +511,7 @@ export default{
       this.errors={};
     },
     createAppointment(){
-      axios.post('/api/projects/'+this.project.id+'/appointment',{
+      axios.post('/api/project/'+this.project.id+'/appointment',{
         title:this.appointment.title,
         strtdt:this.appointment.strtdt.substring(0,10),
         strttm:this.appointment.strttm.substring(11,16),

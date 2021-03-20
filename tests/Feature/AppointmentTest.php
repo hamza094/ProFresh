@@ -21,7 +21,7 @@ class AppointmentTest extends TestCase
       $user=create('App\User');
        $this->signIn($user);
        $project=create('App\Project',['user_id'=>$user->id]);
-      $response=$this->post('api/projects/'.$project->id.'/appointment',
+      $response=$this->withoutExceptionHandling()->post('api/project/'.$project->id.'/appointment',
           ['title' => 'mine hella','location'=>'lhr pakistan','outcome'=>'Not Intrested',
         'strtdt'=>'11-20-17','strttm'=>'14:05','zone'=>'Asia/pacific','outcome'=>'Not intrested']);
         $this->assertDatabaseHas('appointments',['title'=>'mine hella']);
@@ -34,7 +34,7 @@ class AppointmentTest extends TestCase
         $appointment=make('App\Appointment',[
             'title'=>null
         ]);
-        $this->post('api/projects/'.$project->id.'/appointment',$appointment->toArray())
+        $this->post('api/project/'.$project->id.'/appointment',$appointment->toArray())
             ->assertSessionHasErrors('title');
 
     }
@@ -46,7 +46,7 @@ class AppointmentTest extends TestCase
     $project=create('App\Project',['user_id'=>$user->id]);
     $user2=create('App\User');
     $appointment=create('App\Appointment',['project_id'=>$project->id]);
-    $this->patch('/api/projects/'.$project->id.'/appointment/'.$appointment->id,
+    $this->patch('/api/project/'.$project->id.'/appointment/'.$appointment->id,
     ['title'=>'mine appoint','location'=>'fsl','outcome'=>'Intrested','strtdt'=>'11-20-17','strttm'=>'14:05','zone'=>'Asia/pacific']);
     $appointment->users()->attach($user2);
     $this->assertDatabaseHas('appointments',['id'=>$appointment->id,'zone'=>'Asia/pacific']);
@@ -58,7 +58,7 @@ class AppointmentTest extends TestCase
         $this->signIn();
         $project=create('App\Project');
         $appointment=create('App\Appointment',['project_id'=>$project->id]);
-        $this->delete('/api/projects/'.$project->id.'/appointment/'.$project->id);
+        $this->delete('/api/project/'.$project->id.'/appointment/'.$appointment->id);
         $this->assertDatabaseMissing('appointments',['id'=>$appointment->id]);
      }
 

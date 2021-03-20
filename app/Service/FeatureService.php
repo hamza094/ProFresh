@@ -67,15 +67,13 @@ class FeatureService
   }
 
     /**
-    * Add score and record activity.
+    * Record score and activity.
     *
     * @param  int  $project, char $message, int $count, char $activity, char $info
     */ 
     public function recordScoreAndActivity($project,$message,$count,$activity,$info)
     {
-      if(!$project->scores()->where('message',$message)->exists()){
-          $project->addScore($message,$count);
-        };
+        $this->recordScore($project,$message,$count);
 
         $project->recordActivity($activity,$info);
     }

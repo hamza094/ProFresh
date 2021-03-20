@@ -17,7 +17,7 @@ class CreateAppointmentsTable extends Migration
           $table->id();
           $table->string('title');
           $table->bigInteger('project_id');
-          $table->date('strtdt');
+          $table->date('strtdt')->nullable();
           $table->string('strttm');
           $table->string('zone');
           $table->string('location');

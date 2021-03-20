@@ -6,7 +6,6 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
-use App\Notifications\ProjectUpdated;
 
 
 class Controller extends BaseController
@@ -18,17 +17,29 @@ class Controller extends BaseController
      *
      * @param  int  $project
     */
-  public function sendNotificationToMember($project){
-
+  public function sendNotificationToMember($project,$notification)
+  {
   	  foreach($project->activeMembers as $member){
       if(auth()->id() != $member->id){
-       $member->notify(new ProjectUpdated($project));
+       $member->notify($notification);
       }
      }
 
       if(auth()->id() != $project->owner->id){
-      $project->owner->notify(new ProjectUpdated($project));
+      $project->owner->notify($notification);
      }
+  }
+
+    /**
+     * Add score.
+     *
+     * @param  string $project, int $count
+    */
+  public function recordScore($project,$message,$count)
+  {
+    if(!$project->scores()->where('message',$message)->exists()){
+          $project->addScore($message,$count);
+        };
   }
 
 }

@@ -78,7 +78,7 @@ class NotificationsTest extends TestCase
       $this->signIn($thomas);
       $this->get('project/'.$project->id.'/member');
       $this->signIn($user);
-      $this->post('api/projects/'.$project->id.'/appointment',
+      $this->post('api/project/'.$project->id.'/appointment',
           ['title' => 'mine hella','location'=>'lhr pakistan','outcome'=>'Not Intrested',
         'strtdt'=>'11-20-17','strttm'=>'14:05','zone'=>'Asia/pacific','outcome'=>'Not intrested']);
       $this->assertCount(2,$thomas->fresh()->notifications);

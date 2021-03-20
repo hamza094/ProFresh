@@ -37,6 +37,9 @@ Route::post('/api/projects/{project}/sms','FeaturesController@sms');
 Route::get('/api/projects/{project}/export','FeaturesController@export');
 Route::patch('/api/projects/{project}/notes','FeaturesController@notes'); 
 Route::patch('/api/project/{project}/postponed','FeaturesController@postponed');
+
+//Appointment Routes
+Route::resource('api/project/{project}/appointment', 'AppointmentController');
  
 
 //Project Subscribe Route
@@ -48,12 +51,6 @@ Route::post('/api/projects/{project}/tasks', 'TaskController@projectstore')->nam
 Route::get('/api/projects/{project}/tasks','TaskController@projectindex');
 Route::patch('/api/projects/{project}/tasks/{task}', 'TaskController@projectupdate')->name('task.update');
 Route::delete('/api/projects/{project}/tasks/{task}', 'TaskController@projectdelete')->name('task.update');
-
-//Appointment Routes
-Route::post('/api/projects/{project}/appointment', 'AppointmentController@store');
-Route::get('/api/projects/{project}/appointments', 'AppointmentController@show');
-Route::patch('/api/projects/{project}/appointment/{appointment}', 'AppointmentController@update');
-Route::delete('/api/projects/{project}/appointment/{appointment}', 'AppointmentController@destroy')->name('task.update');
 
 //Invitation Routes
 Route::get('/api/users/search', 'InvitationController@search');

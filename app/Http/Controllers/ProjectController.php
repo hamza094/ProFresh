@@ -18,8 +18,9 @@ class ProjectController extends Controller
     private $projectService;
 
   /**
-    /* Service For Project Feature 
-     * App\Service\FeatureService
+    * Service For Project Feature 
+    *
+    * App\Service\FeatureService
     */
   public function __construct(ProjectService $projectService){
    $this->projectService=$projectService;
@@ -73,7 +74,7 @@ class ProjectController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  int  $project
      */
     public function update(Project $project,ProjectRequest $request)
     {
@@ -81,7 +82,9 @@ class ProjectController extends Controller
 
         $project->update($request->validated());
 
-        $this->sendNotificationToMember($project);
+        $notification = new ProjectUpdated($project);
+
+        $this->sendNotificationToMember($project,$notification);
 
         if (request()->wantsJson()) {
             return response($project, 201);

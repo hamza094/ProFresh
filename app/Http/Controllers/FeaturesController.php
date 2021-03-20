@@ -6,6 +6,7 @@ use App\Project;
 use App\ProjectScore;
 use Illuminate\Http\Request;
 use App\Service\FeatureService;
+use App\Notifications\ProjectUpdated;
 
 
 class FeaturesController extends Controller
@@ -41,7 +42,7 @@ class FeaturesController extends Controller
 
       $this->featureService->recordStageUpdate($project);
 
-      $this->sendNotificationToMember($project);
+      $this->sendNotificationToMember($project,ProjectUpdated);
 
       if (request()->wantsJson()) {
           return response($project, 201);
@@ -67,7 +68,7 @@ class FeaturesController extends Controller
 
       $project->update(request(['postponed','stage']));
 
-      $this->sendNotificationToMember($project);
+      $this->sendNotificationToMember($project,ProjectUpdated);
 
       if (request()->wantsJson()) {
           return response($project, 201);
@@ -123,7 +124,7 @@ class FeaturesController extends Controller
 
       $project->update(['notes'=>request('notes')]);
 
-      $this->sendNotificationToMember($project);
+      $this->sendNotificationToMember($project,ProjectUpdated);
 
      if(!$project->scores()->where('message','Notes Updated')->exists()){
       $project->addScore('Notes Updated',10);
