@@ -42,7 +42,7 @@ class FeaturesController extends Controller
 
       $this->featureService->recordStageUpdate($project);
 
-      $this->sendNotificationToMember($project,ProjectUpdated);
+      $this->sendNotification($project,new ProjectUpdated($project));
 
       if (request()->wantsJson()) {
           return response($project, 201);
@@ -68,7 +68,7 @@ class FeaturesController extends Controller
 
       $project->update(request(['postponed','stage']));
 
-      $this->sendNotificationToMember($project,ProjectUpdated);
+      $this->sendNotification($project,new ProjectUpdated($project));
 
       if (request()->wantsJson()) {
           return response($project, 201);
@@ -124,7 +124,7 @@ class FeaturesController extends Controller
 
       $project->update(['notes'=>request('notes')]);
 
-      $this->sendNotificationToMember($project,ProjectUpdated);
+      $this->sendNotification($project,new ProjectUpdated($project));
 
      if(!$project->scores()->where('message','Notes Updated')->exists()){
       $project->addScore('Notes Updated',10);

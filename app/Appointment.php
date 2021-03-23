@@ -28,9 +28,8 @@ class Appointment extends Model
   protected static function boot()
     {
      parent::boot();
-     static::deleting(function($appointment) {
+     static::deleted(function($appointment) {
         $appointment->users()->detach();
-        $appointment->activity()->delete();
     });
     }
 

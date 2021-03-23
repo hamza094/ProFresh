@@ -5,46 +5,43 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Project;
 use App\Task;
-use App\User;
 use App\Notifications\ProjectTask;
-
+use App\Http\Requests\TaskRequest;
 
 class TaskController extends Controller
 {
- 
-  public function projectindex(Project $project){
-      return $project->tasks()->latest()->get();
+  
+  /**
+    * Show all project related tasks 
+    *
+    */
+  public function index(Project $project)
+  {
+    return $project->tasks()->latest()->get();
   }
 
-    public function projectstore(Project $project,Request $request){
-      $this->validate($request, [
-        'body'=>'required',
-    ]);
-    $this->authorize('access',$project);
+   /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\TaskRequest  $request
+     */
+    public function store(Project $project,TaskRequest $request)
+    {
+      $project->tasks()->create($request->validated());
 
-      $project->addTask(request('body'));
+      $this->sendNotification($project,new ProjectTask($project));
 
-      foreach($project->members->where('pivot.active',1) as $member){
-        if(auth()->user()->id != $member->id){
-          $member->notify(new ProjectTask($project));
-        }
-      }
-
-      if(auth()->user()->id != $project->owner->id){
-      $project->owner->notify(new ProjectTask($project));
-     }
-
-      if(!$project->scores()->where('message','Task Added')->exists()){
-        $project->addScore('Task Added',10);
-      }
+      $this->recordScore($project,'Task Added',10);
     }
 
-
-    public function projectupdate(Project $project,Task $task){
-      $this->authorize('access',$project);
-
-      $task->update([
-            'body'=>request('body')]);
+    /**
+     * Update the specified resource.
+     *
+     * @param  int  $project
+     */
+    public function update(Project $project,Task $task,TaskRequest $request)
+    {
+       $task->update($request->validated());
 
          if(request('completed')){
             $task->complete();
@@ -52,10 +49,18 @@ class TaskController extends Controller
               $task->incomplete();
             }
     }
-
-      public function projectdelete(Project $project,Task $task){
+    
+    /**
+     * Delete the specified resource from database.
+     *
+     * @param  int  $project
+     */
+      public function destroy(Project $project,Task $task)
+      {
         $task->delete();
+
         $task->activity()->delete();
+
         $project->recordActivity('deleted_task',$task->body);
       }
 

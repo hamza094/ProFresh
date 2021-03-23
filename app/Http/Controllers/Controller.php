@@ -17,18 +17,39 @@ class Controller extends BaseController
      *
      * @param  int  $project
     */
-  public function sendNotificationToMember($project,$notification)
+  public function sendNotification($project,$notification)
   {
-  	  foreach($project->activeMembers as $member){
+  	  $this->sendNotificationToMember($project,$notification);
+
+      $this->sendNotificationToProjectOwner($project,$notification);
+  }
+
+    /**
+    * Send Notification to member.
+    *
+    * @param  int  $project
+    */
+  protected function sendNotificationToMember($project,$notification)
+  {
+     foreach($project->activeMembers as $member){
       if(auth()->id() != $member->id){
        $member->notify($notification);
       }
      }
+  }
 
-      if(auth()->id() != $project->owner->id){
+  /**
+    * Send Notification to owner.
+    *
+    * @param  int  $project
+    */
+  protected function sendNotificationToProjectOwner($project,$notification)
+  {
+     if(auth()->id() != $project->owner->id){
       $project->owner->notify($notification);
      }
   }
+
 
     /**
      * Add score.

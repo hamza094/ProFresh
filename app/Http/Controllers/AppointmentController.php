@@ -5,8 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Project;
 use App\Appointment;
-use App\User;
-use App\Activity;
 use App\Http\Requests\AppointmentRequest;
 use App\Service\AppointmentService;
 
@@ -41,8 +39,6 @@ class AppointmentController extends Controller
      */
   public function store(Project $project,AppointmentRequest $request)
   {
-    $this->authorize('access',$project);
-
     $appointment=$project->appointments()->create($request->validated());
 
     $this->appointmentService->performAppointmentRelatedTasks($project,$appointment);    
@@ -58,19 +54,9 @@ class AppointmentController extends Controller
     public function update(Project $project,Appointment $appointment,AppointmentRequest 
       $request)
     {
-      $this->authorize('access',$project);
-
       $appointment->update($request->validated());
 
-      $appointment->update(['strtdt'=>$appointment->strtdt]);
-
-      if($request->filled('strtdt'))
-      {
-        $appointment->update(['strtdt'=>request('strtdt')]);
-      }
-
-      $this->appointmentService->attachDetachUser($project,$request,$appointment);
-      
+      $this->appointmentService->performRelatedOperation($project,$request,$appointment);
     }
 
     /**
@@ -81,5 +67,9 @@ class AppointmentController extends Controller
      public function destroy(Project $project,Appointment $appointment)
      {
        $appointment->delete();
+
+       $appointment->activity()->delete();
+       
+       $project->recordActivity('deleted_appointment',$appointment->title);
      }
 }

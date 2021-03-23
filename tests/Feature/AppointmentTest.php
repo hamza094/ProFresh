@@ -29,14 +29,14 @@ class AppointmentTest extends TestCase
 
     /** @test */
     public function an_appointment_requires_a_title(){
-        $this->signIn();
-        $project=create('App\Project');
+        $user=create('App\User');
+    $this->signIn($user);
+    $project=create('App\Project',['user_id'=>$user->id]);
         $appointment=make('App\Appointment',[
             'title'=>null
         ]);
         $this->post('api/project/'.$project->id.'/appointment',$appointment->toArray())
             ->assertSessionHasErrors('title');
-
     }
 
    /** @test */
@@ -55,10 +55,11 @@ class AppointmentTest extends TestCase
 
      /** @test */
      public function signIn_user_can_delete_appointment(){
-        $this->signIn();
-        $project=create('App\Project');
+        $user=create('App\User');
+       $this->signIn($user);
+       $project=create('App\Project',['user_id'=>$user->id]);
         $appointment=create('App\Appointment',['project_id'=>$project->id]);
-        $this->delete('/api/project/'.$project->id.'/appointment/'.$appointment->id);
+        $this->withoutExceptionHandling()->delete('/api/project/'.$project->id.'/appointment/'.$appointment->id);
         $this->assertDatabaseMissing('appointments',['id'=>$appointment->id]);
      }
 

@@ -29,7 +29,7 @@ class ProjectController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\ProjectRequest  $request
      */
     public function store(ProjectRequest $request)
     {
@@ -45,9 +45,9 @@ class ProjectController extends Controller
 
        }catch(\Exception $ex){
 
-         DB::rollBack();
+        DB::rollBack();
 
-         throw $ex;
+        throw $ex;
        }
 
        if(request()->wantsJson()){
@@ -82,9 +82,7 @@ class ProjectController extends Controller
 
         $project->update($request->validated());
 
-        $notification = new ProjectUpdated($project);
-
-        $this->sendNotificationToMember($project,$notification);
+        $this->sendNotification($project,new ProjectUpdated($project));
 
         if (request()->wantsJson()) {
             return response($project, 201);
@@ -112,6 +110,8 @@ class ProjectController extends Controller
      $this->authorize('manage',$project);
 
      $project->forceDelete();
+
+     $appointment->activity()->delete();
      
         if(request()->expectsJson()){
             return response(['status'=>'project deleted']);

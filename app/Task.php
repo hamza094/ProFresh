@@ -19,10 +19,11 @@ class Task extends Model
 
   public function path()
     {
-        return "/api/projects/{$this->project->id}/tasks/{$this->id}";
+        return "/api/project/{$this->project->id}/task/{$this->id}";
     }
 
-    public function project(){
+    public function project()
+    {
       return $this->belongsTo(Project::class,'project_id');
     }
 
@@ -31,16 +32,19 @@ class Task extends Model
         return "/projects/{$this->project->id}/tasks/{$this->id}";
     }
 
-    public function activity(){
+    public function activity()
+    {
        return $this->morphMany(Activity::class,'subject')->latest();
-   }
+    }
 
-    public function complete(){
+    public function complete()
+    {
       $this->update(['completed'=>true]);
-   }
+    }
 
-   public function incomplete(){
+    public function incomplete()
+    {
       $this->update(['completed'=>false]);
-  }
+    }
 
 }

@@ -383,7 +383,7 @@ export default{
 
   methods:{
     loadTasks(){
-       axios.get('/api/projects/'+this.project.id+'/tasks')
+       axios.get('/api/project/'+this.project.id+'/task')
                .then(({data})=>(this.tasks=data));
       },
       loadUsers(){
@@ -395,7 +395,7 @@ export default{
           .then(({data})=>(this.appointments=data));
         },
     projectTask(){
-       axios.post('/api/projects/'+this.project.id+'/tasks',this.form)
+       axios.post('/api/project/'+this.project.id+'/task',this.form)
           .then(response=>{
               this.$vToastify.success("Project Task added");
               this.form.body="";
@@ -405,7 +405,7 @@ export default{
        });
     },
     taskDelete(id){
-      axios.delete('/api/projects/'+this.project.id+'/tasks/'+id)
+      axios.delete('/api/project/'+this.project.id+'/task/'+id)
       .then(response=>{
           this.$vToastify.info("Project Task deleted");
           this.loadTasks();
@@ -423,7 +423,7 @@ export default{
       })
     },
     taskComplete(id,task){
-      axios.patch('/api/projects/'+this.project.id+'/tasks/'+id,{
+      axios.patch('/api/project/'+this.project.id+'/task/'+id,{
         body:task.body,
         completed:true,
       }).then(response=>{
@@ -435,7 +435,7 @@ export default{
       })
     },
     taskUncomplete(id,task){
-      axios.patch('/api/projects/'+this.project.id+'/tasks/'+id,{
+      axios.patch('/api/project/'+this.project.id+'/task/'+id,{
         body:task.body,
         completed:false,
       }).then(response=>{
@@ -468,7 +468,7 @@ export default{
       this.form.user='';
     },
     taskUpdate(id,task){
-      axios.patch('/api/projects/'+this.project.id+'/tasks/'+id,{
+      axios.patch('/api/project/'+this.project.id+'/task/'+id,{
         body:this.form.editbody,
       }).then(response=>{
           this.$vToastify.success("Task Updated");

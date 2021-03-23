@@ -63,7 +63,7 @@ class NotificationsTest extends TestCase
       $this->signIn($thomas);
       $this->get('project/'.$project->id.'/member');
       $this->signIn($user);
-      $this->post('/api/projects/'.$project->id.'/tasks',['body'=>'simpson']);
+      $this->post('/api/project/'.$project->id.'/task',['body'=>'simpson']);
       $this->assertCount(2,$thomas->fresh()->notifications);
   }
 
@@ -94,7 +94,7 @@ class NotificationsTest extends TestCase
       ]);
       $this->signIn($thomas);
       $this->get('project/'.$project->id.'/member');
-      $this->post('/api/projects/'.$project->id.'/tasks',['body'=>'simpson']);
+      $this->post('/api/project/'.$project->id.'/task',['body'=>'simpson']);
       $this->assertCount(1,$thomas->fresh()->notifications);
   }
     

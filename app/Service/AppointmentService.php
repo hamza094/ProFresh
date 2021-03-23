@@ -17,11 +17,26 @@ class AppointmentService extends \App\Http\Controllers\Controller
   {
     $appointment->users()->attach(request('user'));
 
-    $notification = new ProjectAppointment($project);
-
-    $this->sendNotificationToMember($project,$notification);
+    $this->sendNotification($project,new ProjectAppointment($project));
 
     $this->recordScore($project,'Appointment Added',10);
+  }
+
+ /**
+    * Update strtdt if available.
+    *
+    * @param  int  $project, int $appointment
+    */ 
+  public function performRelatedOperation($project,$request,$appointment)
+  {
+    $appointment->update(['strtdt'=>$appointment->strtdt]);
+
+      if($request->filled('strtdt'))
+      {
+        $appointment->update(['strtdt'=>request('strtdt')]);
+      }
+   
+     $this->attachDetachUser($project,$request,$appointment);  
   }
 
   /**
@@ -29,20 +44,19 @@ class AppointmentService extends \App\Http\Controllers\Controller
     *
     * @param  int  $project, int $appointment
     */ 
-  public function attachDetachUser($project,$request,$appointment)
+  protected function attachDetachUser($project,$request,$appointment)
   {
       if($request->filled('user')){
 
-            $appointment->users()->attach(request('user'));
+           $appointment->users()->attach(request('user'));
 
            $this->RecordActivity($project,'userattach_appointment');
 
-            if ($appointment->users->contains(request('user'))) {
+           if ($appointment->users->contains(request('user'))) {
                 
             $appointment->users()->detach(request('user'));
 
             $this->RecordActivity($project,$user,'userdetach_appointment');
-
            }
         }
   }
@@ -64,7 +78,6 @@ class AppointmentService extends \App\Http\Controllers\Controller
              'detail'=>$user->name.'/_/'.$user->id,
            ]);
     }
-
 }
 
 ?>

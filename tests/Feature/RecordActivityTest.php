@@ -128,7 +128,7 @@ public function deleting_an_appointment(){
   $project=create('App\Project');
   $appointment=create('App\Appointment',['title'=>'My Appointment','project_id'=>$project->id]);
   $appointment->delete();
-$this->assertCount(2,$project->activity);
+$this->assertCount(3,$project->activity);
 $this->assertEquals('deleted_appointment',$project->activity->last()->description);
 }
 

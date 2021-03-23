@@ -39,18 +39,14 @@ Route::patch('/api/projects/{project}/notes','FeaturesController@notes');
 Route::patch('/api/project/{project}/postponed','FeaturesController@postponed');
 
 //Appointment Routes
-Route::resource('api/project/{project}/appointment', 'AppointmentController');
- 
+Route::resource('api/project/{project}/appointment', 'AppointmentController')->middleware('can:access,project');
+
+//Task Routes
+Route::resource('api/project/{project}/task', 'TaskController')->middleware('can:access,project');
 
 //Project Subscribe Route
 Route::post('/api/projects/{project}/subscribe','SubscribeController@projectSubscribe');
 Route::delete('/api/projects/{project}/unsubscribe','SubscribeController@projectUnSubscribe'); 
-
-//Task Routes
-Route::post('/api/projects/{project}/tasks', 'TaskController@projectstore')->name('projecttask.create');
-Route::get('/api/projects/{project}/tasks','TaskController@projectindex');
-Route::patch('/api/projects/{project}/tasks/{task}', 'TaskController@projectupdate')->name('task.update');
-Route::delete('/api/projects/{project}/tasks/{task}', 'TaskController@projectdelete')->name('task.update');
 
 //Invitation Routes
 Route::get('/api/users/search', 'InvitationController@search');
