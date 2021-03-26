@@ -60,7 +60,7 @@ class InvitationTest extends TestCase
            $project = create('App\Project',['user_id'=>$user1->id]);
            $project->invite($user=create('App\User'));
          $this->signIn($user);
-          $this->get('project/'.$project->id.'/cancel');
+          $this->withoutExceptionHandling()->get('project/'.$project->id.'/cancel');
           $this->assertDatabaseMissing('project_members', [
     "project_id" => $project->id, "user_id" => $user->id]);
     }
@@ -72,7 +72,7 @@ class InvitationTest extends TestCase
           $project=create('App\Project',['user_id'=>$user->id]);
           $user2=create('App\User');
           $project->members()->attach($user2);
-           $this->get('api/project/'.$project->id.'/cancel/'.$user2->id);
+           $this->withoutExceptionHandling()->get('api/project/'.$project->id.'/cancel/'.$user2->id);
            $this->assertDatabaseMissing('project_members', [
        "project_id" => $project->id, "user_id" => $user2->id]);
 

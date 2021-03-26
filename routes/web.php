@@ -32,11 +32,17 @@ Route::get('/projects/{project}/timeline_feeds','ProjectController@activity')->n
 
 //Project Feature Routes	
 Route::post('/api/projects/{project}/mail','FeaturesController@mail');
-Route::patch('/api/project/{project}/stage','FeaturesController@stage');
+
+Route::patch('/api/project/{project}/stage','FeaturesController@stage')->
+middleware('can:access,project');
+
 Route::post('/api/projects/{project}/sms','FeaturesController@sms');
 Route::get('/api/projects/{project}/export','FeaturesController@export');
-Route::patch('/api/projects/{project}/notes','FeaturesController@notes'); 
-Route::patch('/api/project/{project}/postponed','FeaturesController@postponed');
+
+Route::patch('/api/projects/{project}/notes','FeaturesController@notes')->
+middleware('can:access,project');
+
+Route::patch('/api/project/{project}/postponed','FeaturesController@postponed')->middleware('can:access,project');
 
 //Appointment Routes
 Route::resource('api/project/{project}/appointment', 'AppointmentController')->middleware('can:access,project');
@@ -50,10 +56,13 @@ Route::delete('/api/projects/{project}/unsubscribe','SubscribeController@project
 
 //Invitation Routes
 Route::get('/api/users/search', 'InvitationController@search');
-Route::post('/api/projects/{project}/invitations', 'InvitationController@store');
+
+Route::post('/api/projects/{project}/invitations', 'InvitationController@store')->middleware('can:manage,project');
+
 Route::get('project/{project}/member','InvitationController@accept');
 Route::get('project/{project}/cancel','InvitationController@ignore');
-Route::get('/api/project/{project}/cancel/{user}','InvitationController@cancel');
+
+Route::get('/api/project/{project}/cancel/{user}','InvitationController@cancel')->middleware('can:manage,project');
 
 //Profile Routes
 Route::get('users/{user}/profile','ProfileController@show');

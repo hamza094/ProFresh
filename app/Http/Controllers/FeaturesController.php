@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Project;
-use App\ProjectScore;
 use Illuminate\Http\Request;
 use App\Service\FeatureService;
 use App\Notifications\ProjectUpdated;
@@ -32,8 +31,6 @@ class FeaturesController extends Controller
 
      public function stage(Project $project,Request $request){
 
-     $this->authorize('access',$project);
-
       $this->validate($request, [
           'stage'=>'required',
       ]);
@@ -58,9 +55,6 @@ class FeaturesController extends Controller
      */
     public function postponed(Project $project,Request $request)
     {
-      
-      $this->authorize('access',$project);
-
       $this->validate($request, [
           'postponed'=>'required',
           'stage'=>'required'
@@ -104,8 +98,6 @@ class FeaturesController extends Controller
 
   $this->featureService->recordScoreAndActivity($project,'Sent Sms',10,'sms_project',
     $request->mobile);
-
-
     }
 
     /**
@@ -120,17 +112,13 @@ class FeaturesController extends Controller
        $this->validate($request, [
        'notes'=>'required',
       ]);
-      $this->authorize('access',$project);
 
       $project->update(['notes'=>request('notes')]);
 
       $this->sendNotification($project,new ProjectUpdated($project));
 
-     if(!$project->scores()->where('message','Notes Updated')->exists()){
-      $project->addScore('Notes Updated',10);
+      $this->recordScore($project,'Notes Updated',10);
     }
-
-}
 
     /**
      * Download Project Data Excel Export.

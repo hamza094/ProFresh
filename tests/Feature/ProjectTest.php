@@ -78,11 +78,10 @@ class ProjectTest extends TestCase
       $user=create('App\User');
        $this->signIn($user);
        $project=create('App\Project',['user_id'=>$user->id]);
-
-      $stage=2;
-        $this->patch('api/project/'.$project->id.'/stage',[
+       $stage=2;
+       $this->patch('api/project/'.$project->id.'/stage',[
           'stage'=>$stage
-        ]);
+      ]);
       $this->assertDatabaseHas('projects',['id'=>$project->id,'stage'=>$stage]);
    }
 

@@ -64,8 +64,6 @@ class ProjectService
         'group_id'=>$group->id
         ]);
   }
-  
-
 }
 
 ?>
