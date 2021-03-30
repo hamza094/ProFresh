@@ -48,7 +48,7 @@ class FeaturesController extends Controller
 
 
    /**
-     * Postpon Project Stage.
+     * Postpone Project Stage.
      *
      * @param  int  $project
      * @return \Illuminate\Http\Response

@@ -65,11 +65,9 @@ Route::get('project/{project}/cancel','InvitationController@ignore');
 Route::get('/api/project/{project}/cancel/{user}','InvitationController@cancel')->middleware('can:manage,project');
 
 //Profile Routes
-Route::get('users/{user}/profile','ProfileController@show');
+Route::resource('/api/profile/user','ProfileController');
 Route::post('/api/user/{user}/avatar', 'ProfileController@avatar')->name('avatar');
 Route::patch('/api/user/{user}/avatar-delete','ProfileController@avatarDelete');
-Route::patch("/api/user/{user}/profile",'ProfileController@update');
-Route::delete("/api/user/{user}/profile",'ProfileController@destroy');
 
 //Notifications Routes 
 Route::get('/profile/{user}/notifications', 'NotificationsController@index');

@@ -325,14 +325,15 @@ export default{
             this.errors='';
         },
         updateProfile(){
-           axios.patch('/api/user/'+this.user.id+'/profile',{
+           axios.patch('/api/profile/user/'+this.user.id,{
                name:this.form.name,
                email:this.form.email,
                company:this.form.company,
                mobile:this.form.mobile,
                bio:this.form.bio,
                address:this.form.address,
-               position:this.form.position
+               position:this.form.position,
+               password:this.form.password
 
            }).then(response=>{
                this.$vToastify.success("Profile Updated Successfully");
@@ -405,7 +406,7 @@ export default{
       confirmButtonText: 'Yes, delete it!'
     }).then((result) => {
       if (result.value) {
-      axios.delete('/api/user/'+this.user.id+'/profile').then(function(){
+      axios.delete('/api/profile/user'+this.user.id).then(function(){
       swal.fire(
           'Success!',
           'Profile has been deleted.',

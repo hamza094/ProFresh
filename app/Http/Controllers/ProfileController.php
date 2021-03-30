@@ -6,85 +6,106 @@ use Illuminate\Http\Request;
 use App\Project;
 use App\User;
 use Auth;
-use Illuminate\Support\Facades\Storage;
-use Image;
-use File;
 use App\Paypal;
+use App\Service\UserService;
+use App\Http\Requests\UserRequest;
+
 class ProfileController extends Controller
 {
+    private $profileService;
 
-  public function show(User $user){
-    $members=$user->members;
-if(Paypal::where('user_id',$user->id)->exists()){
-  $paypal='subscribed';
-}else{
-  $paypal='unsubscribed';
-}
+  /**
+    * Service For Profile Feature 
+    *
+    * App\Service\ProfileService
+    */
+  public function __construct(UserService $userService)
+  {
+    $this->userService=$userService;
 
-
-     $availablePlans=[
-       'price_1IJejOLbPiqgp3U5jzTsYjVW' =>'Monthly',
-       'price_1IJepYLbPiqgp3U5mqEuYgQr' =>'Yearly',
-    ];
-    $data=[
-      'intent' => $user->createSetupIntent(),
-      'plans'=> $availablePlans
-    ];
-
-   return view('profile.show',compact('user',$user,'members',$members,'paypal',$paypal))->with($data);
-}
-
-  public function avatar(User $user, Request $request){
-        $this->authorize('owner',$user);
-        $this->validate(request(), [
-            'avatar'=>['required', 'image']
-        ]);
-        $file = $request->file('avatar');
-        $filename = uniqid($user->id.'_').'.'.$file->getClientOriginalExtension();
-        Storage::disk('s3')->put($filename, File::get($file), 'public');
-        //Store Profile Image in s3
-        $user_path = Storage::disk('s3')->url($filename);
-        $user->update(['avatar_path'=>$user_path]);
-        return response([], 204);
-    }
-
-    public function avatarDelete(User $user){
-      $this->authorize('owner',$user);
-       if($user->avatar_path!==null){
-      $user->update(['avatar_path'=>null]);
-     }
+    $this->middleware('can:owner,user')->except('show');
   }
 
-  public function update(Request $request,User $user)
+    /**
+     * Display the specified user.
+     *
+     * @param  int  $user
+     */
+  public function show(User $user)
+  {
+   $members=$user->members;
+
+   //Get user paypal subscription status
+   if(Paypal::where('user_id',$user->id)->exists())
+   {
+    $paypal='subscribed';
+   }else{
+   $paypal='unsubscribed';
+   }
+ 
+   //Show paypal plan 
+   $data=$this->userService->showPaypalPlan($user);
+
+   return view('profile.show',compact('user',$user,'members',
+     $members,'paypal',$paypal))->with($data);
+  }
+
+    /**
+     * Store user avatar.
+     *
+     * @param  int  $user
+     *
+     * @param  \Illuminate\Http\Request  $request
+     */
+  public function avatar(User $user, Request $request)
+  {
+    $this->validate(request(), [
+      'avatar'=>['required', 'image']]);
+
+    $this->userService->storeAvatar($user);
+      
+    return response([], 204);
+  }
+
+    /**
+     * Delete user avatar.
+     *
+     * @param  int  $user
+     */
+  public function avatarDelete(User $user)
+  {
+    if($user->avatar_path!==null)
     {
-        
-        $this->authorize('owner',$user);
-
-        $this->validate($request, [
-            'name'=>'required',
-            'email'=>'required',
-        ]);
-        
-        $user->name = $request->input('name');
-        $user->email = $request->input('email');
-        $user->mobile = $request->input('mobile');
-        $user->company = $request->input('company');
-        $user->bio = $request->input('bio');
-        $user->address = $request->input('address');
-        $user->position = $request->input('position');
-        if (! $request->input('password') == '') {
-            $user->password = Hash::make($request->input('password'));
-        }
-         $user->save();
+      $user->update(['avatar_path'=>null]);
     }
+  }
 
-    public function destroy(User $user)
+  /**
+     * Update the specified resource in storage.
+     *
+     * @param  int  $user
+     * 
+     * @return  \Illuminate\Http\Request  $request
+     */
+  public function update(UserRequest $request,User $user)
+  {
+    $user->update($request->validated());
+
+    $this->userService->updatePassword($user);       
+  }
+
+   /**
+     * Delete the specified resource from database.
+     *
+     * @param  int  $user
+     */
+  public function destroy(User $user)
+  {
+    $user->delete();
+
+    if(request()->expectsJson())
     {
-      $this->authorize('owner',$user);
-      $user->delete();
-      if(request()->expectsJson()){
-            return response(['status'=>'profile deleted']);
-        }
+      return response(['status'=>'profile deleted']);
     }
-
+    }
 }
