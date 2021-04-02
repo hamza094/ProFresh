@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Notifications\ProjectTask;
+use App\Http\Requests\TaskRequest;
 use Illuminate\Http\Request;
 use App\Project;
 use App\Task;
-use App\Notifications\ProjectTask;
-use App\Http\Requests\TaskRequest;
 
 class TaskController extends Controller
 {

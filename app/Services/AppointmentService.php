@@ -1,5 +1,5 @@
 <?php
-namespace App\Service;
+namespace App\Services;
 use App\Project;
 use Illuminate\Http\Request;
 use App\Notifications\ProjectAppointment;
@@ -46,19 +46,19 @@ class AppointmentService extends \App\Http\Controllers\Controller
     */ 
   protected function attachDetachUser($project,$request,$appointment)
   {
-      if($request->filled('user')){
+    if($request->filled('user')){
 
-           $appointment->users()->attach(request('user'));
+      $appointment->users()->attach(request('user'));
 
-           $this->RecordActivity($project,'userattach_appointment');
+      $this->RecordActivity($project,'userattach_appointment');
 
-           if ($appointment->users->contains(request('user'))) {
+      if ($appointment->users->contains(request('user'))) {
                 
-            $appointment->users()->detach(request('user'));
+      $appointment->users()->detach(request('user'));
 
-            $this->RecordActivity($project,$user,'userdetach_appointment');
-           }
-        }
+      $this->RecordActivity($project,$user,'userdetach_appointment');
+     }
+    }
   }
 
   /**

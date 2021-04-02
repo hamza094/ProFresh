@@ -1,5 +1,5 @@
 <?php
-namespace App\Service;
+namespace App\Services;
 use App\Project;
 use Illuminate\Http\Request;
 use Twilio\Rest\Client;

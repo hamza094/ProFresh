@@ -85,9 +85,8 @@ Route::get('execute-agreement/{status}','SubscriptionController@executeAgreement
  
 });
 
-//Group Chat Routes
-Route::get('/api/project/{project}/groups', 'GroupController@store');
-Route::resource('/api/project/{project}/conversations', 'ConversationController');
+//Group Chat Conversation Routes
+Route::post('/api/project/{project}/conversations', 'ConversationController@store');
 Route::get('/api/project/{project}/conversation','ConversationController@conversation');
 
 //SPA Routes

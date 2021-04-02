@@ -45,7 +45,7 @@ class GroupTest extends TestCase
        $this->signIn($user);
         $group=create('App\Group');
         $project = create('App\Project',['group_id'=>$group->id,'user_id'=>$user->id]);
-      $response=$this->withoutExceptionHandling()->post('/api/project/'.$project->id.'/conversations',
+      $response=$this->post('/api/project/'.$project->id.'/conversations',
           ['message'=>'abra ka dabra','group_id' => $group->id,'user_id' => $user->id]);
         $this->assertDatabaseHas('conversations',['message'=>'abra ka dabra']);
     }

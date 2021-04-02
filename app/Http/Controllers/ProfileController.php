@@ -7,7 +7,7 @@ use App\Project;
 use App\User;
 use Auth;
 use App\Paypal;
-use App\Service\UserService;
+use App\Services\UserService;
 use App\Http\Requests\UserRequest;
 
 class ProfileController extends Controller
@@ -62,7 +62,9 @@ class ProfileController extends Controller
     $this->validate(request(), [
       'avatar'=>['required', 'image']]);
 
-    $this->userService->storeAvatar($user);
+    $user_path=$this->storeFile($request,'avatar',$user->id);
+
+    $user->update(['avatar_path'=>$user_path]);
       
     return response([], 204);
   }
@@ -107,5 +109,5 @@ class ProfileController extends Controller
     {
       return response(['status'=>'profile deleted']);
     }
-    }
+  }
 }

@@ -11,49 +11,92 @@ use Auth;
 
 class SubscriptionController extends Controller
 {
+  
+   /**
+    * Subscription with stripe.
+    */
+  public function subscribe(Request $request)
+  {
+    $paymentMethod=$request->payment_method;
 
-  public function subscribe(Request $request){
-  	$user=auth()->user();
-     $paymentMethod=$request->payment_method;
-     $planId=$request->plan;
-     $user->newSubscription('main',$planId)->create($paymentMethod);
-     return response(['status'=>'success']);
+    $planId=$request->plan;
+
+    auth()->user()->newSubscription('main',$planId)->create($paymentMethod);
+
+    return response(['status'=>'success']);
   }
 
-
-  public function createPlan(){
+  /**
+    * Create new paypal plan.
+    */
+  public function createPlan()
+  {
     $plan = new CreatePlan();
+
     return $plan->create();
   }
 
-  public function listPlan(){
-     $plan = new CreatePlan();
+  /**
+   * List all paypal plan.
+   */
+  public function listPlan()
+  {
+    $plan = new CreatePlan();
+
     $listPlan= $plan->listPlan();
+
     return $listPlan;
   }
 
-  public function showPlan($id){
-     $plan = new CreatePlan();
+  /**
+   * Show specific all paypal plan.
+   * @param  int  $id
+   */
+  public function showPlan($id)
+  {
+    $plan = new CreatePlan();
+
     $showPlan= $plan->planDetail($id);
+
     return $showPlan;
   }
 
-  public function activePlan($id){
+  /**
+   * Activate paypal plan.
+   * @param  int  $id
+   */
+  public function activePlan($id)
+  {
     $plan = new CreatePlan();
+
     $active = $plan->active($id);
+
     return $active;
   }
-
-  public function createAgreement($id){
+  
+  /**
+   * Create paypal agreement.
+   * @param  int  $id
+   */
+  public function createAgreement($id)
+  {
     $agreement=new PaypalAgreement;
+
     return $agreement->create($id);
   }
 
-  public function executeAgreement($status){
+  /**
+   * Execute paypal agreement.
+   */
+  public function executeAgreement($status)
+  {
     if($status=='true'){
       $agreement=new PaypalAgreement;
+
       $agreement->execute(request('token'));
+
       Auth::user()->paypal_info();
+
      return view('home');     
     }
   }

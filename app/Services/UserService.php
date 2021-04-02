@@ -1,28 +1,13 @@
 <?php
-namespace App\Service;
+namespace App\Services;
 use File;
 use App\Project;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 
-class UserService
+class UserService extends \App\Http\Controllers\Controller
 {
-  /**
-    * Store user avatar in S3.
-    *
-    * @param  int  $user 
-    */
-  public function storeAvatar($user)
-  {
-    $file = $request->file('avatar');
-    $filename = uniqid($user->id.'_').'.'.$file->getClientOriginalExtension();
-    Storage::disk('s3')->put($filename, File::get($file), 'public');
-    //Store Profile Image in s3
-    $user_path = Storage::disk('s3')->url($filename);
-    $user->update(['avatar_path'=>$user_path]);
-   }
-
   /**
    * Show paypal plan.
    *

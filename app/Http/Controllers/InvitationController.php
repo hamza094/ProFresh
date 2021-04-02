@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\User;
 use Spatie\Searchable\Search;
 use App\Project;
-use App\Service\InvitationService;
+use App\Services\InvitationService;
 use Auth;
 
 class InvitationController extends Controller

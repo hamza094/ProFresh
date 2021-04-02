@@ -4,20 +4,19 @@ namespace App\Http\Controllers;
 
 use App\Project;
 use Illuminate\Http\Request;
-use App\Service\FeatureService;
+use App\Services\FeatureService;
 use App\Notifications\ProjectUpdated;
+use Illuminate\Foundation\Validation\ValidatesRequests;
 
 
 class FeaturesController extends Controller
 { 
-
   private $featureService;
 
-    /**
-    /* Service For Project Feature 
-     * App\Service\FeatureService
+  /**
+    * Service For Project Feature 
+    * App\Service\FeatureService
     */
-
   public function __construct(FeatureService $featureService){
    $this->featureService=$featureService;
   }
@@ -28,9 +27,8 @@ class FeaturesController extends Controller
      * @param  int  $project
      * @return \Illuminate\Http\Response
      */
-
-     public function stage(Project $project,Request $request){
-
+     public function stage(Project $project,Request $request)
+     {
       $this->validate($request, [
           'stage'=>'required',
       ]);
@@ -89,15 +87,15 @@ class FeaturesController extends Controller
      */
     public function sms(Project $project,Request $request)
     {
-       $this->validate($request, [
+      $this->validate($request, [
        'mobile'=>'required|numeric',
        'sms'=>'required'
       ]);
 
-    $this->featureService->sendMessage($request->sms,$request->mobile);
+      $this->featureService->sendMessage($request->sms,$request->mobile);
 
-  $this->featureService->recordScoreAndActivity($project,'Sent Sms',10,'sms_project',
-    $request->mobile);
+      $this->featureService->recordScoreAndActivity($project,'Sent Sms',10,'sms_project',
+      $request->mobile);
     }
 
     /**

@@ -1,5 +1,5 @@
 <?php
-namespace App\Service;
+namespace App\Services;
 use Auth;
 use App\User;
 use App\Project;

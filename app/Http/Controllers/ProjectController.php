@@ -9,7 +9,7 @@ use App\ProjectScore;
 use Illuminate\Http\Request;
 use App\Http\Requests\ProjectRequest;
 use App\Notifications\ProjectUpdated;
-use App\Service\ProjectService;
+use App\Services\ProjectService;
 use App\Repository\ProjectRepository;
 use Illuminate\Support\Facades\DB;
 
