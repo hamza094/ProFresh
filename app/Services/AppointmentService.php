@@ -22,11 +22,6 @@ class AppointmentService extends \App\Http\Controllers\Controller
     $this->recordScore($project,'Appointment Added',10);
   }
 
- /**
-    * Update strtdt if available.
-    *
-    * @param  int  $project, int $appointment
-    */ 
   public function performRelatedOperation($project,$request,$appointment)
   {
     $appointment->update(['strtdt'=>$appointment->strtdt]);
@@ -35,7 +30,7 @@ class AppointmentService extends \App\Http\Controllers\Controller
       {
         $appointment->update(['strtdt'=>request('strtdt')]);
       }
-   
+
      $this->attachDetachUser($project,$request,$appointment);  
   }
 
@@ -69,14 +64,14 @@ class AppointmentService extends \App\Http\Controllers\Controller
   protected function RecordActivity($project,$user,$description)
   {
     $user=User::find(request('user'));
-     Activity::create([
-             'user_id'=>auth()->id(),
-             'project_id'=>$project->id,
-             'subject_type'=>'App\Appointment',
-             'subject_id'=>$appointment->id,
-             'description'=>'userattach_appointment',
-             'detail'=>$user->name.'/_/'.$user->id,
-           ]);
+
+    $project->activity()->create([
+      'user_id'=>auth()->id(),
+      'subject_type'=>'App\Appointment',
+      'subject_id'=>$appointment->id,
+      'description'=>'userattach_appointment',
+      'detail'=>$user->name.'/_/'.$user->id,
+      ]);
     }
 }
 

@@ -22,15 +22,11 @@ class ProjectController extends Controller
     *
     * App\Service\FeatureService
     */
-  public function __construct(ProjectService $projectService){
-   $this->projectService=$projectService;
+  public function __construct(ProjectService $projectService)
+  {
+    $this->projectService=$projectService;
   }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\ProjectRequest  $request
-     */
     public function store(ProjectRequest $request)
     {
        DB::beginTransaction();
@@ -55,36 +51,25 @@ class ProjectController extends Controller
     }
 }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $project
-     */
     public function show(Project $project)
     {
-        $score_sum=$project->scores()->sum('point');
+      $score_sum=$project->scores()->sum('point');
 
-        $conversation_count=$project->group->conversations->count();
+      $conversation_count=$project->group->conversations->count();
 
-        return view('project.show',compact('project',$project,'score_sum',$score_sum,
+      return view('project.show',compact('project',$project,'score_sum',$score_sum,
           'conversation_count',$conversation_count));          
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $project
-     */
     public function update(Project $project,ProjectRequest $request)
     {
-        $this->authorize('access',$project);
+      $this->authorize('access',$project);
 
-        $project->update($request->validated());
+      $project->update($request->validated());
 
-        $this->sendNotification($project,new ProjectUpdated($project));
+      $this->sendNotification($project,new ProjectUpdated($project));
 
-        if (request()->wantsJson()) {
+      if (request()->wantsJson()) {
             return response($project, 201);
         }
     }
@@ -100,18 +85,13 @@ class ProjectController extends Controller
         $project->delete();
     }
 
-     /**
-     * Delete the specified resource from database.
-     *
-     * @param  int  $project
-     */
     public function delete(Project $project)
     {
-     $this->authorize('manage',$project);
+      $this->authorize('manage',$project);
 
-     $project->forceDelete();
+      $project->forceDelete();
 
-     $appointment->activity()->delete();
+      $appointment->activity()->delete();
      
         if(request()->expectsJson()){
             return response(['status'=>'project deleted']);

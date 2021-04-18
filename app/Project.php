@@ -46,7 +46,7 @@ class Project extends Model
 
     public function owner()
     {
-     return $this->belongsTo(User::class,'user_id');
+      return $this->belongsTo(User::class,'user_id');
     }
 
    public function user()
@@ -56,7 +56,7 @@ class Project extends Model
 
    public function group()
    {
-    return $this->belongsTo(Group::class,'group_id');
+     return $this->belongsTo(Group::class,'group_id');
    }
 
     public function subscribers()
@@ -66,9 +66,8 @@ class Project extends Model
 
     public function getIsSubscribedToAttribute()
     {
-      return  $this->subscribers()
-              ->where('user_id', auth()->id())
-              ->exists();
+      return  $this->subscribers
+              ->where('user_id', auth()->id());
     }
 
     public function subscribe($userId = null)

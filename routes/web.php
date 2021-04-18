@@ -82,7 +82,6 @@ Route::get('plan/{id}/active','SubscriptionController@activePlan');
 Route::post('plan/{id}/agreement/create','SubscriptionController@createAgreement')->
 name('create-aggreement');
 Route::get('execute-agreement/{status}','SubscriptionController@executeAgreement');
- 
 });
 
 //Group Chat Conversation Routes

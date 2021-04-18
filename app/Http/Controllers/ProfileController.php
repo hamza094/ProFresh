@@ -69,11 +69,6 @@ class ProfileController extends Controller
     return response([], 204);
   }
 
-    /**
-     * Delete user avatar.
-     *
-     * @param  int  $user
-     */
   public function avatarDelete(User $user)
   {
     if($user->avatar_path!==null)
@@ -82,13 +77,6 @@ class ProfileController extends Controller
     }
   }
 
-  /**
-     * Update the specified resource in storage.
-     *
-     * @param  int  $user
-     * 
-     * @return  \Illuminate\Http\Request  $request
-     */
   public function update(UserRequest $request,User $user)
   {
     $user->update($request->validated());
@@ -96,11 +84,6 @@ class ProfileController extends Controller
     $this->userService->updatePassword($user);       
   }
 
-   /**
-     * Delete the specified resource from database.
-     *
-     * @param  int  $user
-     */
   public function destroy(User $user)
   {
     $user->delete();

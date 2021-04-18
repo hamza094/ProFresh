@@ -22,24 +22,14 @@ class ProjectService
       $this->initilizeGroupChatting($project,$group);
     }
 
-    /**
-    * Create Project Group.
-    *
-    * @param  int  $project 
-    */
   protected function createProjectGroup($project)
   {
-     return Group::create([
-        'name' => $project->name . " Chat Group",
-        'project_id'=>$project->id
+      return $project->group()->create([
+        'name'=> $project->name . " Chat Group",
+        'project_id'=> $project->id
       ]); 
   }
 
-  /**
-    * Attach project owner with group and associate group to project.
-    *
-    * @param  int  $project, int $group 
-    */
   protected function attachProjectOwnerToGroup($project,$group)
   {
       $users=[];
@@ -51,17 +41,11 @@ class ProjectService
       $project->update(['group_id'=>$group->id]); 
   }
 
-   /**
-    * Create project group chat first conversation.
-    *
-    * @param  int  $project, int $group 
-    */
-   protected function initilizeGroupChatting($project,$group)
+  protected function initilizeGroupChatting($project,$group)
    {
-     Conversation::create([
+     $group->conversations()->create([
         'message'=>"Welcome to ". $project->name,
         'user_id'=>$project->user->id,
-        'group_id'=>$group->id
         ]);
   }
 }

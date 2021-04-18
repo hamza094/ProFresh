@@ -15,11 +15,6 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
-    /**
-     *Send Notification to member and owner.
-     *
-     * @param  int  $project
-    */
   public function sendNotification($project,$notification)
   {
   	  $this->sendNotificationToMember($project,$notification);
@@ -27,11 +22,6 @@ class Controller extends BaseController
       $this->sendNotificationToProjectOwner($project,$notification);
   }
 
-    /**
-    * Send Notification to member.
-    *
-    * @param  int  $project
-    */
   protected function sendNotificationToMember($project,$notification)
   {
      foreach($project->activeMembers as $member){
@@ -41,11 +31,6 @@ class Controller extends BaseController
      }
   }
 
-  /**
-    * Send Notification to owner.
-    *
-    * @param  int  $project
-    */
   protected function sendNotificationToProjectOwner($project,$notification)
   {
      if(auth()->id() != $project->owner->id){
@@ -53,11 +38,6 @@ class Controller extends BaseController
      }
   }
 
-    /**
-     * Add score.
-     *
-     * @param  string $project, int $count
-    */
   public function recordScore($project,$message,$count)
   {
     if(!$project->scores()->where('message',$message)->exists()){

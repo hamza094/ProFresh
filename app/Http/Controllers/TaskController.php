@@ -11,57 +11,38 @@ use App\Task;
 class TaskController extends Controller
 {
   
-  /**
-    * Show all project related tasks 
-    *
-    */
   public function index(Project $project)
   {
     return $project->tasks()->latest()->get();
   }
 
-   /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\TaskRequest  $request
-     */
-    public function store(Project $project,TaskRequest $request)
-    {
-      $project->tasks()->create($request->validated());
+  public function store(Project $project,TaskRequest $request)
+  {
+    $project->tasks()->create($request->validated());
 
-      $this->sendNotification($project,new ProjectTask($project));
+    $this->sendNotification($project,new ProjectTask($project));
 
-      $this->recordScore($project,'Task Added',10);
-    }
+    $this->recordScore($project,'Task Added',10);
+  }
 
-    /**
-     * Update the specified resource.
-     *
-     * @param  int  $project
-     */
-    public function update(Project $project,Task $task,TaskRequest $request)
-    {
-       $task->update($request->validated());
+  public function update(Project $project,Task $task,TaskRequest $request)
+  {
+    $task->update($request->validated());
 
-         if(request('completed')){
-            $task->complete();
-            }else{
-              $task->incomplete();
-            }
+    if(request('completed')){
+       $task->complete();
+      }else{
+       $task->incomplete();
+      }
     }
     
-    /**
-     * Delete the specified resource from database.
-     *
-     * @param  int  $project
-     */
-      public function destroy(Project $project,Task $task)
-      {
-        $task->delete();
+  public function destroy(Project $project,Task $task)
+  {
+    $task->delete();
 
-        $task->activity()->delete();
+    $task->activity()->delete();
 
-        $project->recordActivity('deleted_task',$task->body);
-      }
+    $project->recordActivity('deleted_task',$task->body);
+  }
 
 }

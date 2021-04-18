@@ -100,5 +100,4 @@ class SubscriptionController extends Controller
      return view('home');     
     }
   }
-
 }

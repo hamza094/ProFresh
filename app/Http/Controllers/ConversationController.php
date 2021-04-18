@@ -11,7 +11,7 @@ use App\Services\ConversationService;
 class ConversationController extends Controller
 {
     /**
-     *  Realtime project group conversation.
+     * Realtime project group conversation.
      *
      * @param  int  $project
      * @return \Illuminate\Http\Response
@@ -33,11 +33,6 @@ class ConversationController extends Controller
         return $conversation->load('user');
     }
 
-    /**
-     * Load Project conversations with user.
-     *
-     * @param  int  $project
-     */
     public function conversation(Project $project)
     {
       return $project->group->conversations->load('user');

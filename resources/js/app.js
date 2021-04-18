@@ -80,16 +80,27 @@ Vue.component('file-upload', VueUploadComponent)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 Vue.component('dynamic-nav', require('./components/DynamicNav.vue').default);
+
 Vue.component('project-button', require('./components/ProjectButton.vue').default);
+
 Vue.component('project-form', require('./components/ProjectForm.vue').default);
-Vue.component('single-project', require('./components/SingleProject.vue').default);
+
+Vue.component('project-feature', require('./components/ProjectFeatures.vue').default);
+
 Vue.component('file', require('./components/File.vue').default);
+
 Vue.component('project-edit', require('./components/ProjectEdit.vue').default);
+
 Vue.component('project-stage', require('./components/Stage.vue').default);
+
 Vue.component('project-panel', require('./components/ProjectPanel.vue').default);
+
 Vue.component('notifications', require('./components/Notification.vue').default);
+
 Vue.component('profile', require('./components/Profile.vue').default);
+
 Vue.component('subscription', require('./components/Subscription.vue').default);
+
 const routes = [
   { path: '/dashboard', component: require('./components/Dashboard.vue').default },
   { path: '/projects', component: require('./components/Project.vue').default },

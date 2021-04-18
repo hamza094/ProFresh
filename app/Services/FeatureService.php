@@ -13,11 +13,7 @@ use App\Mail\ProjectMail;
 
 class FeatureService
 {
-	/**
-    * Sms Message Method.
-    *
-    * @param  int  $recipients, string $message
-   */
+
   public static function sendMessage($message, $recipients)
   {
     $account_sid = getenv("TWILIO_SID");
@@ -28,11 +24,6 @@ class FeatureService
             ['from' => $twilio_number, 'body' => $message] );
   }
 
-    /**
-    * Excel Export And Record its Score and activity.
-    *
-    * @param  int  $project
-     */
   public function excelExport($project)
   {
     return (new ProjectsExport($project))->download("project$project->id.xlsx");
@@ -40,11 +31,6 @@ class FeatureService
     self::recordScoreAndActivity($project,'Excel Export',10,'export_project','default');
   }
   
-   /**
-    * Record Stage update with redis.
-    *
-    * @param  int  $project
-     */
   public function recordStageUpdate($project)
   {
   	$redis = Redis::connection();
@@ -53,11 +39,6 @@ class FeatureService
     $redis->set($key, $value);
   }
 
-  /**
-    *Send Mail to member.
-    *
-    * @param  int  $project 
-   */
   public function sendMailToMember($project,$request)
   {
     Mail::to($request['email'])->send(
@@ -66,16 +47,11 @@ class FeatureService
   	self::recordScoreAndActivity($project,'Sent Mail',10,'mail_sent',$request->email);
   }
 
-    /**
-    * Record score and activity.
-    *
-    * @param  int  $project, char $message, int $count, char $activity, char $info
-    */ 
-    public function recordScoreAndActivity($project,$message,$count,$activity,$info)
+  public function recordScoreAndActivity($project,$message,$count,$activity,$info)
     {
-        $this->recordScore($project,$message,$count);
+      $this->recordScore($project,$message,$count);
 
-        $project->recordActivity($activity,$info);
+      $project->recordActivity($activity,$info);
     }
 }
 

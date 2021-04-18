@@ -17,8 +17,9 @@ class FeaturesController extends Controller
     * Service For Project Feature 
     * App\Service\FeatureService
     */
-  public function __construct(FeatureService $featureService){
-   $this->featureService=$featureService;
+  public function __construct(FeatureService $featureService)
+  {
+    $this->featureService=$featureService;
   }
 
     /**
@@ -29,7 +30,7 @@ class FeaturesController extends Controller
      */
      public function stage(Project $project,Request $request)
      {
-      $this->validate($request, [
+        $this->validate($request, [
           'stage'=>'required',
       ]);
 
@@ -67,12 +68,6 @@ class FeaturesController extends Controller
       }
    }
 
-    /**
-     * Send Project Mail.
-     *
-     * @param  int  $project
-     * @return \Illuminate\Http\Response
-     */    
     public function mail(Project $project,Request $request)
     {
         $this->featureService->sendMailToMember($project,$request);
@@ -98,13 +93,6 @@ class FeaturesController extends Controller
       $request->mobile);
     }
 
-    /**
-     *Project Notes.
-     *
-     * @param  int  $project
-     * @return \Illuminate\Http\Response
-     */
-
     public function notes(Project $project,Request $request)
     {
        $this->validate($request, [
@@ -118,11 +106,6 @@ class FeaturesController extends Controller
       $this->recordScore($project,'Notes Updated',10);
     }
 
-    /**
-     * Download Project Data Excel Export.
-     *
-     * @param  int  $project
-     */
     public function export(Project $project)
     {
       $this->featureService->excelExport($project);

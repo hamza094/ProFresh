@@ -10,11 +10,7 @@ use App\Notifications\AcceptInvitation;
 
 class InvitationService
 {
-   /**
-     * Send project invitation request.
-     *
-     * @param  int  $project
-     */
+
   public function sendInvitation($user,$project)
   {
     if (! $project->members->contains($user->id))
@@ -25,27 +21,15 @@ class InvitationService
    }
   }
 
-  /**
-     * Accept project invitation request.
-     *
-     * @param  int  $project
-     */
   public function acceptInvitation($project)
   {
-    $user=Auth::user();
+    Auth::user()->members()->updateExistingPivot($project,['active'=>1]);
 
-    $user->members()->updateExistingPivot($project,['active'=>1]);
+    $this->executeRelatedTasks($project,Auth::user());
 
-    $this->executeRelatedTasks($project,$user);
-
-    $this->attachUserToGroupChat($project,$user);
+    $this->attachUserToGroupChat($project,Auth::user());
   }
 
-  /**
-     * Cancel project invitation request.
-     *
-     * @param  int  $project, $int user
-     */
   public function cancelInvitation($user,$project)
   {
     $project->members()->detach($user);
@@ -55,11 +39,6 @@ class InvitationService
     $project->scores()->where('message',"Invitaion Accept by $user->name")->delete();
   }
   
-    /**
-     * Search users to send invitation.
-     *
-     * @param  int  $project, $int user
-     */
   public function memberSearch()
   {
     return (new Search())
@@ -67,11 +46,6 @@ class InvitationService
      ->search($request->input('query'));
   }
   
-  /**
-     * Perform tasks after send project invitation.
-     *
-     * @param  int  $project, $int user
-     */
   protected function performRelatedTasks($project,$user)
   {
     $project->recordActivity('sent_member_project',$user->name.'/_/'.$user->id);
@@ -81,11 +55,6 @@ class InvitationService
     $this->recordScore($project,'Invitaion Sent',5);
   }
   
-    /**
-     * Perform tasks after accept project invitation.
-     *
-     * @param  int  $project, $int user
-     */
   protected function executeRelatedTasks($project,$user)
   {
     $project->recordActivity('accept_member_project',$user->name.'/_/'.$user->id);

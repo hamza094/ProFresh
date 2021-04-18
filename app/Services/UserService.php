@@ -33,10 +33,6 @@ class UserService extends \App\Http\Controllers\Controller
     ];
    }
 
-  /**
-  * Update user password if exists.
-  * 
-  */
    public function updatePassword($user)
    {
       if (request('password')) {
