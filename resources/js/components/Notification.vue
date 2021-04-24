@@ -1,11 +1,12 @@
 <template>
    <div>
         <li class="dropdown mt-3 mr-4">
+          
             <a href="#"  data-toggle="dropdown" class="notification">
                <i class="far fa-bell notification-icon"></i>
                <span v-if="notifications.length" class="notification-count">{{notifications.length}}</span>
-
             </a>
+
             <ul class="dropdown-menu  dropdown-menu-right rt">
                 <li v-for="notification in notifications" :key="notification.id" v-if="notifications.length">
     <a class="dropdown-item" :href="notification.data.link"  @click.prevent="markAsRead(notification)">

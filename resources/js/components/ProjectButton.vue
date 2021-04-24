@@ -1,10 +1,5 @@
 <template>
-   <a href="" v-on:click.prevent="showPanel"><i class="far fa-user-circle"></i>
-   <span>Add project</span>
-</a>
-
-
-
+ <span role="button" class="nav-btn" v-on:click.prevent="showPanel">+</span>
 </template>
 
 
