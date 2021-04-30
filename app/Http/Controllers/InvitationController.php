@@ -31,7 +31,7 @@ class InvitationController extends Controller
      */
   public function search(Request $request)
   {
-    $results = $this->invitationService->memberSearch();
+    $results = $this->invitationService->memberSearch($request);
 
     return response()->json($results);
    }

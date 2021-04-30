@@ -39,7 +39,7 @@ class InvitationService
     $project->scores()->where('message',"Invitaion Accept by $user->name")->delete();
   }
   
-  public function memberSearch()
+  public function memberSearch($request)
   {
     return (new Search())
      ->registerModel(User::class, ['name', 'email'])

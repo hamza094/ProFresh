@@ -23,6 +23,10 @@ Vue.use(VModal)
 
 import moment from 'moment';
 
+import alertNotice from './mixins/alertNotice';
+
+Vue.mixin(alertNotice); 
+
 
 Vue.filter('timeExactDate',function(data){
    return  moment(data).fromNow();
@@ -89,7 +93,7 @@ Vue.component('project-features', require('./components/ProjectFeature/ProjectFe
 
 Vue.component('project-stage', require('./components/Stage.vue').default);
 
-Vue.component('project-panel', require('./components/ProjectPanel.vue').default);
+Vue.component('project-panel', require('./components/ProjectPanel/Panel.vue').default);
 
 Vue.component('notifications', require('./components/Notification.vue').default);
 

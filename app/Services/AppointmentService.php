@@ -43,15 +43,15 @@ class AppointmentService extends \App\Http\Controllers\Controller
   {
     if($request->filled('user')){
 
-      $appointment->users()->attach(request('user'));
-
-      $this->RecordActivity($project,'userattach_appointment');
-
       if ($appointment->users->contains(request('user'))) {
                 
       $appointment->users()->detach(request('user'));
 
-      $this->RecordActivity($project,$user,'userdetach_appointment');
+      $this->RecordActivity($appointment,$project,'userdetach_appointment');
+     }else{
+      $appointment->users()->attach(request('user'));
+
+      $this->RecordActivity($appointment,$project,'userattach_appointment');
      }
     }
   }
@@ -61,7 +61,7 @@ class AppointmentService extends \App\Http\Controllers\Controller
     *
     * @param  int  $project, int $appointment, string $description
     */
-  protected function RecordActivity($project,$user,$description)
+  protected function RecordActivity($appointment,$project,$description)
   {
     $user=User::find(request('user'));
 

@@ -69,7 +69,7 @@ trait RecordActivity
     public function activity()
     {
         if (get_class($this) === Project::class) {
-            return $this->hasMany(Activity::class)->with('user')->latest();
+            return $this->hasMany(Activity::class)->with('user','subject')->latest();
         }
         return $this->morphMany(Activity::class, 'subject')->with('user')->latest();
     }
