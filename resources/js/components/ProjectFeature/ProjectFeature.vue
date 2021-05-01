@@ -76,11 +76,11 @@ export default {
         },
 
         forgetProject(){
-        var self = this;
+          var self=this;
         this.sweetAlert('Yes, forget it!').then((result) => {
         if (result.value) {
          axios.delete('/api/projects/'+this.project.id).then(function(){
-         self.redirectSuccess('/dashboard');
+         self.redirectSuccess('Project forgetted successfully','/dashboard');
          }).catch(function(){
              swal.fire("Failed!","There was something wrong.","warning");
          });
@@ -93,7 +93,7 @@ export default {
       this.sweetAlert('Yes, delete it!').then((result) => {
       if (result.value) {
       axios.get('/api/projects/'+this.project.id+'/delete').then(function(){
-      self.redirectSuccess('/dashboard');
+      self.redirectSuccess('Project deleted successfully','/dashboard');
       }).catch(function(){
           swal.fire("Failed!","There was something wrong.","warning");
       });
@@ -124,17 +124,6 @@ then(response=>{
   console.log(error.response.data.errors);
 });
 },
-
-   redirectSuccess($redirect){
-     swal.fire(
-          'Success!',
-          'Project has been deleted.',
-          'success'
-        )
-        setTimeout(()=>{
-             window.location.href=$redirect;
-        },3000)
-   }
   }
 }
 </script>

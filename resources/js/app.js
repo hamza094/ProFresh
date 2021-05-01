@@ -97,7 +97,7 @@ Vue.component('project-panel', require('./components/ProjectPanel/Panel.vue').de
 
 Vue.component('notifications', require('./components/Notification.vue').default);
 
-Vue.component('profile', require('./components/Profile.vue').default);
+Vue.component('profile', require('./components/Profile/Profile.vue').default);
 
 const routes = [
   { path: '/dashboard', component: require('./components/Dashboard.vue').default },

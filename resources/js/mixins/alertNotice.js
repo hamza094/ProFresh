@@ -12,6 +12,17 @@ export default{
       confirmButtonText: $action
     })
    },
+
+  redirectSuccess($message,$redirect){
+     swal.fire(
+       'Success!',
+        $message,
+        'success'
+        )
+        setTimeout(()=>{
+             window.location.href=$redirect;
+        },3000)
+   }
    
     }
 }
