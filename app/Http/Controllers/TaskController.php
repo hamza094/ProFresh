@@ -2,66 +2,47 @@
 
 namespace App\Http\Controllers;
 
+use App\Notifications\ProjectTask;
+use App\Http\Requests\TaskRequest;
 use Illuminate\Http\Request;
 use App\Project;
 use App\Task;
-use App\User;
-use App\Notifications\ProjectTask;
-
 
 class TaskController extends Controller
 {
-  public function __construct()
+  
+  public function index(Project $project)
   {
-      $this->middleware('auth');
-
+    return $project->tasks()->latest()->get();
   }
 
-  public function projectindex(Project $project){
-      return $project->tasks()->latest()->get();
+  public function store(Project $project,TaskRequest $request)
+  {
+    $project->tasks()->create($request->validated());
+
+    $this->sendNotification($project,new ProjectTask($project));
+
+    $this->recordScore($project,'Task Added',10);
   }
 
-    public function projectstore(Project $project,Request $request){
-      $this->validate($request, [
-        'body'=>'required',
-    ]);
-    $this->authorize('access',$project);
+  public function update(Project $project,Task $task,TaskRequest $request)
+  {
+    $task->update($request->validated());
 
-      $project->addTask(request('body'));
-
-      foreach($project->members->where('pivot.active',1) as $member){
-        if(auth()->user()->id != $member->id){
-          $member->notify(new ProjectTask($project));
-        }
-      }
-
-      if(auth()->user()->id != $project->owner->id){
-      $project->owner->notify(new ProjectTask($project));
-     }
-
-      if(!$project->scores()->where('message','Task Added')->exists()){
-        $project->addScore('Task Added',10);
+    if(request('completed')){
+       $task->complete();
+      }else{
+       $task->incomplete();
       }
     }
+    
+  public function destroy(Project $project,Task $task)
+  {
+    $task->delete();
 
+    $task->activity()->delete();
 
-    public function projectupdate(Project $project,Task $task){
-      $this->authorize('access',$project);
-
-      $task->update([
-            'body'=>request('body')]);
-
-         if(request('completed')){
-            $task->complete();
-            }else{
-              $task->incomplete();
-            }
-    }
-
-      public function projectdelete(Project $project,Task $task){
-        $task->delete();
-        $task->activity()->delete();
-        $project->recordActivity('deleted_task',$task->body);
-      }
+    $project->recordActivity('deleted_task',$task->body);
+  }
 
 }

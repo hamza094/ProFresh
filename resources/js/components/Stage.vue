@@ -9,32 +9,36 @@
       <p class="arrow-pointer unq-bg" v-if="isSelected == 0"><span class="arrow-pointer-span">Initial Phase</span></p>
       <p class="arrow-pointer clo-bg" v-else-if="isSelected == 6"><span class="arrow-pointer-span">Initial Phase</span></p>
       <p class="arrow-pointer-select" v-else="isSelected > 0"><span class="arrow-pointer-span">Initial Phase</span></p>
-
     </div>
+
      <div class="arrow-pointer-pd" @click="defination">
        <p class="arrow-pointer unq-bg" v-if="isSelected == 0"><span class="arrow-pointer-span">2. Defination</span></p>
        <p class="arrow-pointer clo-bg" v-else-if="isSelected == 6"><span class="arrow-pointer-span">2. Defination</span></p>
        <p class="arrow-pointer-select" v-else-if="isSelected > 1"><span class="arrow-pointer-span">2. Defination</span></p>
        <p class="arrow-pointer" v-else><span class="arrow-pointer-span">2. Defination</span></p>
     </div>
+
      <div class="arrow-pointer-pd" @click="design">
        <p class="arrow-pointer unq-bg" v-if="isSelected == 0"><span class="arrow-pointer-span">3. Designing</span></p>
        <p class="arrow-pointer clo-bg" v-else-if="isSelected == 6"><span class="arrow-pointer-span">3. Designing</span></p>
        <p class="arrow-pointer-select" v-else-if="isSelected > 2"><span class="arrow-pointer-span">3. Designing</span></p>
        <p class="arrow-pointer" v-else><span class="arrow-pointer-span">3. Designing</span></p>
     </div>
+
      <div class="arrow-pointer-pd" @click="develop">
        <p class="arrow-pointer unq-bg" v-if="isSelected == 0"><span class="arrow-pointer-span">4. Developing</span></p>
        <p class="arrow-pointer clo-bg" v-else-if="isSelected == 6"><span class="arrow-pointer-span">4. Developing</span></p>
        <p class="arrow-pointer-select" v-else-if="isSelected > 3"><span class="arrow-pointer-span">4. Developing</span></p>
        <p class="arrow-pointer" v-else><span class="arrow-pointer-span">4. Developing</span></p>
     </div>
+
      <div class="arrow-pointer-pd" @click="execute">
        <p class="arrow-pointer unq-bg" v-if="isSelected == 0"><span class="arrow-pointer-span">5. Execution</span></p>
        <p class="arrow-pointer clo-bg" v-else-if="isSelected == 6"><span class="arrow-pointer-span">5. Execution</span></p>
        <p class="arrow-pointer-select" v-else-if="isSelected > 4"><span class="arrow-pointer-span">5. Execution</span></p>
        <p class="arrow-pointer" v-else><span class="arrow-pointer-span">5. Execution</span></p>
     </div>
+
      <div class="stage-dropdown" @click="stagePop = !stagePop">
        <p class="arrow-pointer arrow-pointer-unq" v-if="isSelected == 0"><span class="arrow-pointer-span">Postponed <i class="fas fa-angle-double-down"></i></span></p>
        <p class="arrow-pointer arrow-pointer-clo" v-else-if="isSelected == 6"><span class="arrow-pointer-span">6. Closure <i class="fas fa-angle-double-down"></i></span></p>
@@ -45,9 +49,9 @@
            <li class="stage-dropdown_item-content" @click="projectClosure">Closure</li>
            <li class="stage-dropdown_item-content" @click="$modal.show('stage-reason')">Postponed</li>
          </ul>
-
        </div>
     </div>
+    
   </div>
 </div>
 <div>
