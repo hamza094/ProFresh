@@ -31,10 +31,10 @@ class GroupTest extends TestCase
           public function project_member_add_to_chat_group(){
             $this->signIn();
             $group=create('App\Group');
-              $project = create('App\Project',['group_id'=>$group->id]);
-              $project->invite($user=create('App\User'));
+            $project = create('App\Project',['group_id'=>$group->id]);
+            $project->invite($user=create('App\User'));
             $this->signIn($user);
-             $this->get('project/'.$project->id.'/member');
+            $this->get('project/'.$project->id.'/member');
             $this->assertTrue($project->group->users->contains($user));
        }
 
@@ -54,10 +54,10 @@ class GroupTest extends TestCase
     public function conversation_deleted_on_group_deletion()
     {
       $user=create('App\User');
-       $this->signIn($user);
-        $group=create('App\Group');
-     $conversation=create('App\Conversation',['group_id'=>$group->id]);
-     $group->delete();
+      $this->signIn($user);
+      $group=create('App\Group');
+      $conversation=create('App\Conversation',['group_id'=>$group->id]);
+      $group->delete();
       $this->assertDatabaseMissing('conversations',['id'=>$conversation->id]);
 }
 
