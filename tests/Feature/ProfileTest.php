@@ -21,7 +21,7 @@ class ProfileTest extends TestCase
      public function sign_user_see_his_profile(){
        $this->signIn();
        $user=create('App\User');
-       $this->get('users/'.$user->id.'/profile')->assertSee($user->name);
+       $this->withoutExceptionHandling()->get('/api/profile/user/'.$user->id)->assertSee($user->name);
      }
 
     /** @test */     
@@ -80,7 +80,7 @@ class ProfileTest extends TestCase
         $this->signIn($user);
         $Updatedname='Assemble';
         $UpdatedEmail='Cap_avenge@yahoo.com';
-        $this->patch("/api/user/{$user->id}/profile",['name'=>$Updatedname,'email'=>$UpdatedEmail]);
+        $this->patch("/api/profile/user/{$user->id}",['name'=>$Updatedname,'email'=>$UpdatedEmail]);
         $this->assertDatabaseHas('users',['id'=>$user->id,'name'=>$Updatedname]);
     }
 
@@ -89,7 +89,7 @@ class ProfileTest extends TestCase
         $user=create('App\User');
          $this->signIn($user);
          $project=create('App\Project',['user_id'=>$user->id]);
-         $this->withoutExceptionHandling()->delete('api/user/'.$user->id.'/profile');
+         $this->delete('api/profile/user/'.$user->id);
          $this->assertDatabaseMissing('users',['id'=>$user->id]);
          $this->assertDatabaseMissing('projects',['id'=>$project->id]);
       }

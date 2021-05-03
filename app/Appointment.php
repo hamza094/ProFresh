@@ -25,6 +25,16 @@ class Appointment extends Model
      return $this->morphMany(Activity::class,'subject')->latest();
  }
 
+  protected static function boot()
+    {
+     parent::boot();
+     static::deleted(function($appointment) {
+        $appointment->users()->detach();
+    });
+    }
+
+
+
 
 
 }

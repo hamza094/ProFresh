@@ -38,6 +38,9 @@ $factory->define(Project::class, function (Faker $faker) {
         'user_id'=>function () {
             return factory('App\User')->create()->id;
         },
+        'group_id'=>function () {
+            return factory('App\Group')->create()->id;
+        },
     ];
 });
 

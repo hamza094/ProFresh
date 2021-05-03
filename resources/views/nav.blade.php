@@ -76,12 +76,6 @@
                             <a href="/contacts" class="panel-list_item">
                                 <p><span class="icon"><i class="icon-logo far fa-user"></i><span class="icon-name">Contacts</span></span></p>
                             </a>
-                            <a href="/accounts" class="panel-list_item">
-                                <p><span class="icon"><i class="icon-logo far fa-building"></i><span class="icon-name">Accounts</span> </span></p>
-                            </a>
-                            <a href="/deals" class="panel-list_item">
-                                <p><span class="icon"><i class="icon-logo far fa-money-bill-alt"></i><span class="icon-name">Deals</span></span></p>
-                            </a>
                         @endif
 
                     </div>
@@ -118,80 +112,9 @@
                                     @endif
                                 @else
                                 <notifications class="mr-3"></notifications>
+                                
+                                 <project-button class="mt-2"></project-button>
 
-                                    <dynamic-nav class="mt-2" v-cloak>
-                                        <template v-slot:trigger>
-                                            <span role="button" class="nav-btn">+</span>
-                                        </template>
-                                        <div class="top">Records</div>
-                                        <div class="row">
-                                            <div class="col-md-3">
-                                                <div class="coo">
-                                                    <project-button></project-button>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-3">
-                                                <div class="coo">
-                                                    <a href=""><i class="far fa-user"></i><span>Add contact</span></a>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-md-3">
-                                                <div class="coo">
-                                                    <a href=""><i class="far fa-building"></i><span>Add account</span></a>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-3">
-                                                <div class="coo">
-                                                    <a href=""><i class="far fa-money-bill-alt"></i><span>Add deal</span></a>
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                        <div class="top top-sales">Sales Activities</div>
-                                        <div class="row">
-                                            <div class="col-md-3">
-                                                <div class="coo">
-                                                    <a href=""><i class="fas fa-tasks"></i>
-                                                        <span>Add task</span>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-3">
-                                                <div class="coo">
-                                                    <a href=""><i class="far fa-calendar-check"></i><span>Add appointment</span></a>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-md-3">
-                                                <div class="coo">
-                                                    <a href=""><i class="fas fa-phone-volume"></i><span>Add call log</span></a>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-3">
-                                                <div class="coo">
-                                                    <a href=""><i class="fas fa-sms"></i><span>Send SMS</span></a>
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                        <div class="top top-sales">Miscellaneous</div>
-                                        <div class="row">
-                                            <div class="col-md-3">
-                                                <div class="coo">
-                                                    <a href=""><i class="far fa-envelope"></i>
-                                                        <span>Send email</span>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-3">
-                                                <div class="coo">
-                                                    <a href=""><i class="fas fa-chart-pie"></i><span>Create report</span></a>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    </dynamic-nav>
                                     <li class="nav-item dropdown">
                                         <a id="navbarDropdown" class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                             @if(Auth::user()->avatar_path !== null)
@@ -202,7 +125,7 @@
                                         </a>
 
                                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                          <a class="dropdown-item" href="/users/{{ Auth::user()->id}}/profile">
+                                          <a class="dropdown-item" href="/api/profile/user/{{ Auth::user()->id}}">
                                               Profile
                                           </a>
 

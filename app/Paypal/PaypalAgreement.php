@@ -10,14 +10,14 @@ use PayPal\Api\ShippingAddress;
 
 class PaypalAgreement extends Paypal{
 
-public function create($id){
-
-   return redirect($this->agreement($id));
+public function create($id)
+{
+  return redirect($this->agreement($id));
 }
 
-protected function agreement($id): string{
-
-	$agreement = new Agreement();
+  protected function agreement($id): string
+  {
+    $agreement = new Agreement();
      $agreement->setName('ProFresh Agreement')
     ->setDescription('ProFresh Agreement')
     ->setStartDate(gmdate("Y-m-d\TH:i:s\Z", strtotime("+1 day")));
@@ -32,52 +32,51 @@ protected function agreement($id): string{
 
     $agreement = $agreement->create($this->apiContext);
 
-
-	  return $agreement->getApprovalLink();
-
-
-} catch (\Exception $ex) {
+    return $agreement->getApprovalLink();
+  } catch (\Exception $ex) {
     dd($ex);
+  }
+  }
 
-}
-
-    
-}
-
-protected function plan($id): Plan{
+protected function plan($id): Plan
+{
 	$plan = new Plan();
-   $plan->setId($id);
-   return $plan;
+
+  $plan->setId($id);
+
+  return $plan;
 
 }
 
-protected function payer(): Payer{
- $payer = new Payer();
+  protected function payer(): Payer
+  {
+   $payer = new Payer();
+
     $payer->setPaymentMethod('paypal');
-    return $payer;
-}
 
-protected function shippingAddress(): ShippingAddress{
+    return $payer;
+  }
+
+protected function shippingAddress(): ShippingAddress
+{
   $shippingAddress = new ShippingAddress();
-$shippingAddress->setLine1('Online')
-    ->setCity('Online')
+  $shippingAddress->setLine1('111 First Street')
+    ->setCity('Saratoga')
+>>>>>>> d6a92abbc7169d0a2d65386e414193170067155c
     ->setState('CA')
     ->setPostalCode('95070')
     ->setCountryCode('US');
     return $shippingAddress;
 }
 
-  public function execute($token){
+  public function execute($token)
+  {
     $agreement = new Agreement();
     try {
         $agreement->execute($token, $this->apiContext);
 } catch (\Exception $ex) {
     dd($ex);
 
-}
-    
+}    
   } 
-
-
-
 }

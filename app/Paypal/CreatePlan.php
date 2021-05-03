@@ -15,29 +15,28 @@ class CreatePlan extends Paypal{
 
 	public function create()
 	{
-
     $plan = $this->Plan();
+
     $paymentDefinition = $this->PaymentDefinition();
+
     $chargeModel = $this->ChargeModel();
 
    $paymentDefinition->setChargeModels(array($chargeModel));
 
    $merchantPreferences = $this->MerchantPreferences(); 
 
+   $plan->setPaymentDefinitions(array($paymentDefinition));
 
-$plan->setPaymentDefinitions(array($paymentDefinition));
-$plan->setMerchantPreferences($merchantPreferences);
+   $plan->setMerchantPreferences($merchantPreferences);
 
-    $output = $plan->create($this->apiContext);
+   $output = $plan->create($this->apiContext);
 
-    return $output;
-
+   return $output;
 }
 
-
-protected function Plan() :Plan
-{
-   $plan = new Plan();
+  protected function Plan() :Plan
+  { 
+    $plan = new Plan();
 
     $plan->setName('ProFresh Online Subscription')
     ->setDescription('Monthly Subscription For profresh plan to access all features')
@@ -46,8 +45,8 @@ protected function Plan() :Plan
     return $plan;
 }
 
-protected function PaymentDefinition() :PaymentDefinition
-{
+ protected function PaymentDefinition() :PaymentDefinition
+  {
     $paymentDefinition = new PaymentDefinition();
     $paymentDefinition->setName('Regular Payments')
     ->setType('REGULAR')
@@ -56,22 +55,24 @@ protected function PaymentDefinition() :PaymentDefinition
     ->setCycles("12")
     ->setAmount(new Currency(array('value' => 15, 'currency' => 'USD')));
     return $paymentDefinition;
-}
 
-protected function ChargeModel() :ChargeModel
-{
+  }
+
+  protected function ChargeModel() :ChargeModel
+  {
    $chargeModel = new ChargeModel();
     $chargeModel->setType('SHIPPING')
     ->setAmount(new Currency(array('value' => 0, 'currency' => 'USD')));
 
     return $chargeModel;
-}
+  }
 
 protected function MerchantPreferences() :MerchantPreferences
 {
-   $merchantPreferences = new MerchantPreferences();
+  $merchantPreferences = new MerchantPreferences();
 
-   $merchantPreferences->setReturnUrl(config('services.paypal.url.executeAgreement.success'))
+  $merchantPreferences->setReturnUrl(config
+    ('services.paypal.url.executeAgreement.success'))
     ->setCancelUrl(config('services.paypal.url.executeAgreement.failure'))
     ->setAutoBillAmount("yes")
     ->setInitialFailAmountAction("CONTINUE")
@@ -79,24 +80,30 @@ protected function MerchantPreferences() :MerchantPreferences
     ->setSetupFee(new Currency(array('value' => 1, 'currency' => 'USD')));
 
     return $merchantPreferences;
-}
+  }
 
-  public function listPlan(){
-        $params = array('page_size' => '5');
+  public function listPlan()
+  {
+    $params = array('page_size' => '5');
+
     $planList = Plan::all($params, $this->apiContext);
+
     return $planList;
   }
 
-  public function planDetail($id){
+  public function planDetail($id)
+  {
     $plan = Plan::get($id,$this->apiContext);
+
     return $plan;
   }
 
-  public function active($id){
-
+  public function active($id)
+  {
     $createdPlan=$this->planDetail($id);
 
-     $patch = new Patch();
+    $patch = new Patch();
+>>>>>>> d6a92abbc7169d0a2d65386e414193170067155c
 
     $value = new PayPalModel('{
            "state":"ACTIVE"
@@ -105,15 +112,15 @@ protected function MerchantPreferences() :MerchantPreferences
     $patch->setOp('replace')
         ->setPath('/')
         ->setValue($value);
+
     $patchRequest = new PatchRequest();
+
     $patchRequest->addPatch($patch);
 
     $createdPlan->update($patchRequest, $this->apiContext);
 
     $plan = Plan::get($createdPlan->getId(), $this->apiContext);
 
-   return $plan;
-
+    return $plan;
   }
-
 }

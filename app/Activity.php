@@ -19,4 +19,10 @@ protected $casts = ['changes' => 'array'];
 {
     return $this->belongsTo(User::class);
 }
+
+  public function project()
+    {
+        return $this->belongsTo('App\Project');
+    }
+
 }

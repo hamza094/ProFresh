@@ -8,11 +8,6 @@ use App\Project;
 
 class SubscribeController extends Controller
 {
-  public function __construct()
-  {
-      $this->middleware('auth');
-  }
-
   public function projectSubscribe(Project $project)
   {
      $project->subscribe();

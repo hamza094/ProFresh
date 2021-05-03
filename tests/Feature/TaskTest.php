@@ -17,12 +17,12 @@ class TaskTest extends TestCase
 
      /** @test */
      public function task_requires_a_body(){
-       $user=create('App\User');
-        $this->signIn($user);
-        $project=create('App\Project',['user_id'=>$user->id]);
+        $user=create('App\User');
+    $this->signIn($user);
+    $project=create('App\Project',['user_id'=>$user->id]);
          $task=make('App\Task',['body'=>null]);
-         $this->post($project->path().'/tasks',$task->toArray())
-             ->assertSessionHasErrors('body');
+          $this->post('api/project/'.$project->id.'/task',$task->toArray())
+            ->assertSessionHasErrors('body');
      }
 
      /** @test */
@@ -32,7 +32,7 @@ class TaskTest extends TestCase
         $this->signIn($user);
         $project=create('App\Project',['user_id'=>$user->id]);
       $task=create('App\Task');
-      $this->post($project->path().'/tasks',$task->toArray());
+      $this->post($task->path(),$task->toArray());
       $this->assertDatabaseHas('tasks',['body'=>$task->body]);
       //$this->get($project->path())->assertSee($task->body);
    }
@@ -71,10 +71,11 @@ public function task_marked_as_incomplete(){
 
 /** @test */
    public function signIn_user_can_delete_task(){
-      $this->signIn();
-      $project=create('App\Project');
-      $task=create('App\Task');
-      $this->delete($task->path());
+      $user=create('App\User');
+      $this->signIn($user);
+      $project=create('App\Project',['user_id'=>$user->id]);
+      $task=create('App\Task',['project_id'=>$project->id]);
+      $this->withoutExceptionHandling()->delete($task->path());
       $this->assertDatabaseMissing('tasks',['id'=>$task->id]);
    }
 
