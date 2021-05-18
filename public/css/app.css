@@ -1188,6 +1188,70 @@ p {
   cursor: pointer;
 }
 
+/* Form design */
+
+.form {
+  border: 1px solid #12344D;
+  border-radius: 0.3rem;
+  width: 80%;
+  padding: 0.7rem;
+  box-shadow: 0 0 17px rgba(0, 0, 0, 0.3);
+}
+
+.form-header {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin: 0.2rem;
+  color: #999999;
+  text-transform: capitalize;
+}
+
+.form-body {
+  padding: 0.5rem;
+}
+
+.form-label {
+  color: #12344D;
+  font-weight: 800;
+}
+
+.form-link {
+  color: #12344D;
+  font-weight: 800;
+  margin-top: 0.5rem;
+}
+
+.form-link:hover {
+  color: #12344D;
+  text-decoration: none;
+}
+
+.form-btn {
+  text-decoration: none;
+  color: #fff;
+  border: none;
+  background-color: #12344D;
+  width: 100%;
+  border-radius: 2rem;
+  padding: 0.3rem;
+  font-size: 1.3rem;
+  letter-spacing: 0.2rem;
+  transition: all 0.2s;
+  margin-top: 0.3rem;
+}
+
+.form-btn:hover {
+  background-color: #FFA800;
+}
+
+.form-btn:active {
+  outline: none !important;
+}
+
+.form-btn:focus {
+  outline: none !important;
+}
+
 /*!
  * Bootstrap v4.5.2 (https://getbootstrap.com/)
  * Copyright 2011-2020 The Bootstrap Authors
