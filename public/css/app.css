@@ -1234,7 +1234,7 @@ p {
   width: 100%;
   border-radius: 2rem;
   padding: 0.3rem;
-  font-size: 1.3rem;
+  font-size: 1.1rem;
   letter-spacing: 0.2rem;
   transition: all 0.2s;
   margin-top: 0.3rem;
@@ -1250,6 +1250,141 @@ p {
 
 .form-btn:focus {
   outline: none !important;
+}
+
+.padding-0 {
+  padding-right: 0;
+}
+
+.intro-left_header {
+  font-size: 2.3rem;
+  letter-spacing: 0.2rem;
+  text-transform: capitalize;
+}
+
+.intro-left_border {
+  display: inline-block;
+  width: 5.8rem;
+  height: 0.2rem;
+  background-color: #999999;
+  border: 1px solid #999999;
+  margin-bottom: 1.8rem;
+  margin-top: 0.5rem;
+}
+
+.intro-left_para {
+  font-size: 1.6rem;
+  letter-spacing: 0.1rem;
+  margin-bottom: 2rem;
+}
+
+.intro-left_btn {
+  color: #fff;
+  text-decoration: none;
+  background-color: #2C587E;
+  border-radius: 0.2rem;
+  padding: 0.6rem 0.9rem;
+  font-size: 1.2rem;
+  letter-spacing: 0.1rem;
+  transition: all 0.2s;
+}
+
+.intro-left_btn:hover {
+  color: #fff;
+  text-decoration: none;
+  background-color: #12344D;
+}
+
+.intro-right img {
+  width: 100%;
+}
+
+.about {
+  margin-top: 1.5rem;
+}
+
+.about-img {
+  margin-left: 1rem;
+}
+
+.about-img img {
+  width: 100%;
+}
+
+.about-content {
+  margin-top: 2rem;
+}
+
+.about-content-1,
+.about-content-2,
+.about-content-3 {
+  margin-top: 1.5rem;
+}
+
+.about-content_heading {
+  font-size: 1.2rem;
+  font-style: italic;
+  font-weight: 700;
+}
+
+.about-content_para {
+  margin-top: 0.5rem;
+  font-size: 1.2rem;
+}
+
+.about-more a {
+  color: #12344D;
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.about-more a span {
+  padding-right: 0.5rem;
+}
+
+.about-more a:hover {
+  text-decoration: none;
+  color: #12344D;
+}
+
+.heading {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 2.5rem;
+}
+
+.heading-border {
+  display: inline-block;
+  width: 6.5rem;
+  height: 0.2rem;
+  background-image: linear-gradient(to right bottom, rgba(18, 52, 77, 0.9), rgba(94, 168, 230, 0.9));
+  margin-bottom: 1.8rem;
+  margin-top: 0.5rem;
+}
+
+.feature {
+  margin-bottom: 2rem;
+}
+
+.feature-content span {
+  font-weight: 700;
+  font-size: 2rem;
+}
+
+.feature-content p {
+  margin-top: 0.5rem;
+  font-size: 1.2rem;
+  letter-spacing: 0.1rem;
+}
+
+.feature-img img {
+  width: 60%;
+}
+
+.ft {
+  background-color: #12344D;
+  color: #FFFFFF;
+  font-size: 1.3rem;
 }
 
 /*!
