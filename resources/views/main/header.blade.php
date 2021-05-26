@@ -61,7 +61,7 @@
                                 @else
 
                                 <li class="nav-item">
-                                            <a class="nav-link" href="/home">{{ __('Dashboard') }}</a>
+                                            <a class="nav-link" href="/dashboard">{{ __('Dashboard') }}</a>
                                         </li>
 
                                         <li class="nav-item">

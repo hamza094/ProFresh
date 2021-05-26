@@ -1,5 +1,5 @@
 <template>
-    <div class="page-top">Activities Dashboard</div>
+    <div class="page-top">Welcome To Your Dashboard</div>
 
 </template>
 

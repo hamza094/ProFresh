@@ -2,6 +2,7 @@
 
 .panel-left {
   background-color: #12344D;
+  height: 100vh;
   text-align: center;
 }
 
@@ -1250,6 +1251,10 @@ p {
 
 .form-btn:focus {
   outline: none !important;
+}
+
+.error-img img {
+  width: 100%;
 }
 
 .padding-0 {

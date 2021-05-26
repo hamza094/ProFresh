@@ -2,7 +2,7 @@
 .panel{
     &-left{
         background-color:$color-secondary;
-        //height: 100vh;
+        height: 100vh;
         text-align: center;
     }
     &-right{
@@ -1167,3 +1167,8 @@ font-weight: bold;
   }
 }
 
+.error-img{
+  img{
+    width:100%;
+  }
+}
