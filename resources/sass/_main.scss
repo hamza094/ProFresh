@@ -122,4 +122,10 @@
 background-color:$color-secondary;
 color:$color-white;
 font-size: 1.3rem;
+&-p{
+background-color:$color-light-grey;
+
+font-size: 1.3rem;
+margin-top: 2rem;
+}
 }

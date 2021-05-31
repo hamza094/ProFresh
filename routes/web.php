@@ -84,6 +84,9 @@ name('create-aggreement');
 Route::get('execute-agreement/{status}','SubscriptionController@executeAgreement');
 });
 
+Route::get('/api/projectoverview', 'ProjectController@projectoverview');
+
+
 //Group Chat Conversation Routes
 Route::post('/api/project/{project}/conversations', 'ConversationController@store');
 Route::get('/api/project/{project}/conversation','ConversationController@conversation');

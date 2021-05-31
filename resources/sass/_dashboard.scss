@@ -1,0 +1,20 @@
+.dashboard{
+	margin: 0rem 2rem 2rem 2rem;
+	&-link{
+		&:hover{
+        text-decoration: none;
+		};
+	}
+ &-projects{
+ 	padding: .5rem;
+	box-shadow: 0 0 17px rgb(0 0 0 / 30%);
+	border-radius: 2rem;
+	background-image: linear-gradient(to right bottom,rgba($color-secondary,0.9),rgba(#0037A5,0.8));
+	color:$color-white;
+	font-size: 1rem;
+    border:2px solid #ffffff;
+	&:hover .dashboard-link{
+	  text-decoration:none;
+	};
+}
+}
