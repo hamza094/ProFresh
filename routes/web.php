@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Route::get('/', function () {
-    return view('welcome');
+    return view('main.home');
 });
 
 Auth::routes();
@@ -83,6 +83,9 @@ Route::post('plan/{id}/agreement/create','SubscriptionController@createAgreement
 name('create-aggreement');
 Route::get('execute-agreement/{status}','SubscriptionController@executeAgreement');
 });
+
+Route::get('/api/projectoverview', 'ProjectController@projectoverview');
+
 
 //Group Chat Conversation Routes
 Route::post('/api/project/{project}/conversations', 'ConversationController@store');

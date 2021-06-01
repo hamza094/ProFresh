@@ -1,5 +1,7 @@
 <template>
-    <p>Error</p>
+    <div class="error-img">
+    	<img :src="'img/404.png'">
+    </div>
 </template>
 
 

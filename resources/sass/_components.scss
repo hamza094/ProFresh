@@ -2,7 +2,6 @@
 .panel{
     &-left{
         background-color:$color-secondary;
-        //height: 100vh;
         text-align: center;
     }
     &-right{
@@ -19,7 +18,6 @@
     text-decoration: none !important;
     background-color: $color-light;
 }
-
 
 
 .icon{
@@ -1113,4 +1111,63 @@ font-weight: bold;
     }
 }
 
+/* Form design */
+.form{
+  border:1px solid $color-secondary;
+  border-radius: .3rem; 
+  width:80%;
+  padding:.7rem;
+  box-shadow: 0 0 17px rgb(0 0 0 / 30%);
+  &-header{
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin:.2rem;
+    color:$color-grey;
+    text-transform:capitalize; 
+  }
+  &-body{
+    padding: .5rem;  
+  }
+  &-label{
+    color:$color-secondary;
+    font-weight: 800;
+  }
+  &-link{
+    color:$color-secondary;
+    font-weight: 800;
+    margin-top: .5rem;
+    &:hover{
+      color:$color-secondary;
+       text-decoration: none;
+    };
+  }
+  &-btn{
+    text-decoration: none;
+    color:#fff;
+    border:none;
+    background-color:$color-secondary;
+    width: 100%;
+    border-radius:2rem;
+    padding: .3rem; 
+    font-size: 1.1rem;
+    letter-spacing: .2rem;
+    transition: all .2s;
+    margin-top: .3rem;
+    &:hover{
+      background-color:$color-primary;
+    };
+    &:active{
+      outline:none !important;
+    };
+    &:focus{
+      outline:none !important;
+    };
+  }
+}
+
+.error-img{
+  img{
+    width:100%;
+  }
+}
 

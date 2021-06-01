@@ -1,6 +1,6 @@
 <template>
    <div>
-        <li class="dropdown mt-3 mr-4">
+        <li class="dropdown  mr-5">
           
             <a href="#"  data-toggle="dropdown" class="notification">
                <i class="far fa-bell notification-icon"></i>

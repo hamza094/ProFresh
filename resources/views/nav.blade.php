@@ -64,7 +64,7 @@
             <div class="row">
                 <div class="col-md-1 panel-left">
                     <div class="panel">
-                        <a href="/dashboard"><img src="https://i.ibb.co/fMLpbVf/profresh.png" class="main-img" alt=""></a>
+                        <a href="/"><img src="{{asset('img/profresh.png')}}" class="main-img" alt=""></a>
 
                         @if(Auth::user())
                             <a href="/dashboard" class="panel-list_item">
@@ -73,18 +73,35 @@
                             <a href="/projects" class="panel-list_item">
                                 <p><span class="icon"><i class="icon-logo far fa-user-circle"></i><span class="icon-name">Projects</span></span></p>
                             </a>
-                            <a href="/contacts" class="panel-list_item">
-                                <p><span class="icon"><i class="icon-logo far fa-user"></i><span class="icon-name">Contacts</span></span></p>
+                             <project-button></project-button>
+                             <a href="/api/profile/user/{{ Auth::user()->id}}" 
+                                class="panel-list_item">
+                                <p>
+                                 <span class="icon">
+                                 @if(Auth::user()->avatar_path !== null)
+                                            <img src="{{Auth::user()->avatar_path}}" alt="User Avatar" class="chat-user_image" />
+                                            @else
+                                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQvsQZEtAw99ePVsNhLCexVsSKct6D13NluBQ&usqp=CAU" alt="User Avatar" class="chat-user_image" /><span class="icon-name">Profile</span>
+                                            @endif</span>                       
+                                </p>
+                            </a>
+                             <a href="{{ route('logout') }}" 
+                              onclick="event.preventDefault();
+                              document.getElementById('logout-form').submit();" 
+                              class="panel-list_item">
+                                <p><span class="icon"><i class="icon-logo fas fa-sign-out-alt"></i><span class="icon-name">Logout</span></span></p>
                             </a>
                         @endif
-
+                      <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                    @csrf
+                    </form>
                     </div>
                 </div>
                 <div class="col-md-11 panel-right">
 
                     <nav class="navbar navbar-expand-md navbar-light bg-white">
-                        <a class="navbar-brand" href="{{ url('/') }}">
-                            ProFresh
+                        <a class="navbar-brand" href="/dashboard">
+                            <b>Dashboard</b>
                         </a>
                         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                             <span class="navbar-toggler-icon"></span>
@@ -103,45 +120,16 @@
                                 <!-- Authentication Links -->
                                 @guest
                                     <li class="nav-item">
-                                        <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                                        <a class="nav-link" href="{{ route('login') }}">{{ __('Sign In') }}</a>
                                     </li>
                                     @if (Route::has('register'))
                                         <li class="nav-item">
-                                            <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                                            <a class="nav-link" href="{{ route('register') }}">{{ __('Sign Up') }}</a>
                                         </li>
                                     @endif
                                 @else
                                 <notifications class="mr-3"></notifications>
-                                
-                                 <project-button class="mt-2"></project-button>
-
-                                    <li class="nav-item dropdown">
-                                        <a id="navbarDropdown" class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                            @if(Auth::user()->avatar_path !== null)
-                                            <img src="{{Auth::user()->avatar_path}}" alt="User Avatar" class="chat-user_image" />
-                                            @else
-                                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQvsQZEtAw99ePVsNhLCexVsSKct6D13NluBQ&usqp=CAU" alt="User Avatar" class="chat-user_image" />
-                                            @endif
-                                        </a>
-
-                                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                          <a class="dropdown-item" href="/api/profile/user/{{ Auth::user()->id}}">
-                                              Profile
-                                          </a>
-
-                                            <a class="dropdown-item" href="{{ route('logout') }}"
-                                               onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                                {{ __('Logout') }}
-                                            </a>
-
-                                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                                @csrf
-                                            </form>
-
-                                        </div>
-                                    </li>
-                                @endguest
+                                 @endguest
 
                             </ul>
                         </div>
