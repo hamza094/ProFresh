@@ -115,4 +115,9 @@ class ProjectController extends Controller
 
       return view('project.activities.activities',compact('activities',$activities,'project',$project));
      }
+
+
+     public function overview(){
+      
+     }
 }

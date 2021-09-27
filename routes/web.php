@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Route::get('/', function () {
-    return view('welcome');
+    return view('main.home');
 });
 
 Auth::routes();
@@ -84,9 +84,16 @@ name('create-aggreement');
 Route::get('execute-agreement/{status}','SubscriptionController@executeAgreement');
 });
 
+Route::get('/api/projectoverview', 'ProjectController@projectoverview');
+
+
 //Group Chat Conversation Routes
 Route::post('/api/project/{project}/conversations', 'ConversationController@store');
 Route::get('/api/project/{project}/conversation','ConversationController@conversation');
+
+//Dashboard Routes
+Route::get('api/userproject','DashboardController@userprojects');
+Route::get('api/projectcount','DashboardController@projectcount');
 
 //SPA Routes
 Route::get('{path}', 'HomeController@index')->where('/path', '([A-z\d-\/_.]+)?');

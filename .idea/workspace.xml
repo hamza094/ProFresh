@@ -20,19 +20,42 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="968b4c7e-d095-4f74-9270-5fd0bc33b68a" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/crmfresh.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/crmfresh.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/LeadController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/LeadController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Requests/StoreLead.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Requests/StoreLead.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/factories/UserFactory.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/factories/UserFactory.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2020_10_02_150931_create_leads_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_10_02_150931_create_leads_table.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/img/404.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/img/Capture.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/img/activity.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/img/pf1.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/img/profresh.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/img/subscription.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/components/Dashboard/Dashboard.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/components/Dashboard/ProjectChart.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/sass/_dashboard.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/sass/_main.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/main/header.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/main/home.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/ProjectController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/ProjectController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/extra" beforeDir="false" afterPath="$PROJECT_DIR$/extra" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/css/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/app.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/LeadEdit.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/LeadEdit.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/LeadForm.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/LeadForm.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/Dashboard.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/Error.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Error.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/Notification.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Notification.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/ProjectButton.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/ProjectButton.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/sass/_components.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/_components.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/lead/show.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/lead/show.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/Feature/LeadTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Feature/LeadTest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/sass/app.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/app.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/auth/login.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/auth/login.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/auth/passwords/confirm.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/auth/passwords/confirm.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/auth/passwords/email.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/auth/passwords/email.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/auth/passwords/reset.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/auth/passwords/reset.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/auth/register.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/auth/register.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/auth/verify.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/auth/verify.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/layouts/app.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/app.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/nav.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/nav.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/welcome.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,9 +64,7 @@
   </component>
   <component name="ComposerSettings" doNotAsk="true" synchronizationState="SYNCHRONIZE">
     <pharConfigPath>$PROJECT_DIR$/composer.json</pharConfigPath>
-    <execution>
-      <executable />
-    </execution>
+    <execution />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -179,7 +200,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="full.screen.before.presentation.mode" value="false" />
-    <property name="last_opened_file_path" value="C:/dream" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
@@ -220,7 +241,7 @@
       </list>
     </option>
   </component>
-  <component name="SpellCheckerSettings" BundledDictionaries="0" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" Dictionaries="0" CorrectionsLimit="5" DefaultDictionary="application-level" UseSingleDictionary="true" />
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -268,6 +289,7 @@
       <workItem from="1603461770387" duration="2600000" />
       <workItem from="1603482932671" duration="636000" />
       <workItem from="1603483783500" duration="311000" />
+      <workItem from="1632741838901" duration="264000" />
     </task>
     <servers />
   </component>
@@ -279,13 +301,12 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State>
-              <option name="COLUMN_ORDER" />
-            </State>
+            <State />
           </value>
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="WindowStateProjectService">
     <state x="397" y="5" key="#PHP" timestamp="1601714758700">

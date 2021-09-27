@@ -1,5 +1,7 @@
 <template>
- <span role="button" class="nav-btn" v-on:click.prevent="showPanel">+</span>
+<a v-on:click.prevent="showPanel" class="panel-list_item">
+<p><span class="icon"><i class="icon-logo fas fa-plus-circle"></i><span class="icon-name">New Project</span></span></p>
+</a>
 </template>
 
 

@@ -8,6 +8,10 @@ require('./bootstrap');
 
 window.Vue = require('vue');
 
+import Vuex from 'vuex'
+
+Vue.use(Vuex)
+
 import VueRouter from 'vue-router'
 
 Vue.use(VueRouter)
@@ -25,8 +29,9 @@ import moment from 'moment';
 
 import alertNotice from './mixins/alertNotice';
 
-Vue.mixin(alertNotice); 
 
+
+Vue.mixin(alertNotice); 
 
 Vue.filter('timeExactDate',function(data){
    return  moment(data).fromNow();
@@ -60,6 +65,8 @@ Vue.use(VueToastify, {
 import { Datetime } from 'vue-datetime';
 // You need a specific loader for CSS files
 import 'vue-datetime/dist/vue-datetime.css';
+
+import Chart from 'chart.js';
 
 Vue.use(Datetime)
 
@@ -100,7 +107,7 @@ Vue.component('notifications', require('./components/Notification.vue').default)
 Vue.component('profile', require('./components/Profile/Profile.vue').default);
 
 const routes = [
-  { path: '/dashboard', component: require('./components/Dashboard.vue').default },
+  { path: '/dashboard', component: require('./components/Dashboard/Dashboard.vue').default },
   { path: '/projects', component: require('./components/Project.vue').default },
   { path: '/contacts', component: require('./components/Contact.vue').default },
   { path: '*', component:require('./components/Error.vue').default}
