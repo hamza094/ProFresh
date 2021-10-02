@@ -1,8 +1,8 @@
 <?php
 namespace App\Services;
 use Auth;
-use App\User;
-use App\Project;
+use App\Models\User;
+use App\Models\Project;
 use Illuminate\Http\Request;
 use Spatie\Searchable\Search;
 use App\Notifications\ProjectInvitation;

@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
-use App\User;
+use App\Models\User;
 use Spatie\Searchable\Search;
-use App\Project;
+use App\Models\Project;
 use App\Services\InvitationService;
 use Auth;
 
-class InvitationController extends Controller
+class InvitationController extends ApiController
 {
   private $invitationService;
 

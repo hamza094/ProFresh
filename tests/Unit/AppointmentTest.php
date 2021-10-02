@@ -3,6 +3,8 @@
 namespace Tests\Unit;
 
 use Tests\TestCase;
+use App\Models\Appointment;
+use App\Models\Project;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
@@ -19,8 +21,8 @@ class AppointmentTest extends TestCase
      /** @test */
      public function it_belongs_to_a_project()
      {
-       $this->signIn();
-         $appointment = create('App\Appointment');
-         $this->assertInstanceOf('App\Project', $appointment->project);
+          $this->login();
+         $appointment =Appointment::factory()->create();
+         $this->assertInstanceOf(Project::class, $appointment->project);
      }
 }

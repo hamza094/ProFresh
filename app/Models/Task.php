@@ -1,12 +1,15 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
+use App\Traits\RecordActivity;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Task extends Model
 {
-  use RecordActivity;
+    use HasFactory;
+    use RecordActivity;
 
     protected $guarded=[];
 

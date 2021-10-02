@@ -11,7 +11,7 @@ use Spatie\Searchable\ModelSearchAspect;
 use Spatie\Searchable\Search;
 use Spatie\Searchable\Tests\Models\TestModel;
 use Spatie\Searchable\Tests\stubs\CustomNameSearchAspect;
-use App\User;
+use App\Models\User;
 
 class SearchableTest extends TestCase
 {

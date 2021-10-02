@@ -5,7 +5,11 @@ namespace Tests\Feature;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
-use App\User;
+use App\Models\User;
+use App\Models\Project;
+use App\Models\Appointment;
+use App\Http\Requests\AppointmentRequest;
+
 
 class AppointmentTest extends TestCase
 {
@@ -16,49 +20,71 @@ class AppointmentTest extends TestCase
      * @return void
      */
 
-     public function setup() :void {
+    public function setup() :void 
+    {
         parent::setup();
-        $this->user=factory('App\User')->create();
-        $this->signIn($this->user);
-      }
+        $this->user=User::factory()->create();
+        $this->loginAs($this->user);
+        $this->project=Project::factory()->create([ 'user_id'=>$this->user->id]);
+    }
 
      /** @test */
     public function authorized_user_create_appointment()
     {
-      $project=create('App\Project',['user_id'=>$this->user->id]);
-      $response=$this->post('api/project/'.$project->id.'/appointment',
-          ['title' => 'mine hella','location'=>'lhr pakistan','outcome'=>'Not Intrested',
-        'strtdt'=>'11-20-17','strttm'=>'14:05','zone'=>'Asia/pacific','outcome'=>'Not intrested']);
-        $this->assertDatabaseHas('appointments',['title'=>'mine hella']);
+        $data=[
+        'title' => 'Project Discussion',
+        'location'=>'Lhr\Pakistan',
+        'outcome'=>'Not Intrested',
+        'strtdt'=>'11-20-17',
+        'strttm'=>'14:05',
+        'zone'=>'Asia/pacific'
+        ];
+
+        $response=$this->post('api/project/'.$this->project->id.'/appointment',$data);
+        $this->assertDatabaseHas('appointments',['title'=>'Project Discussion']);
     }
 
     /** @test */
-    public function an_appointment_requires_a_title(){
-    $project=create('App\Project',['user_id'=>$this->user->id]);
-        $appointment=make('App\Appointment',[
-            'title'=>null
-        ]);
-        $this->post('api/project/'.$project->id.'/appointment',$appointment->toArray())
+    /*public function an_appointment_requires_a_title()
+    {
+
+       $appointment=Appointment::factory()->make(['title'=>null,'project_id'=>$this->project->id]);
+
+       $this->withoutExceptionHandling()->post('api/project/'.$this->project->id.'/appointment',
+        $appointment->toArray())
             ->assertSessionHasErrors('title');
-    }
+    }*/
 
    /** @test */
-    public function an_appointment_can_be_updated(){
-    $project=create('App\Project',['user_id'=>$this->user->id]);
-    $user2=create('App\User');
-    $appointment=create('App\Appointment',['project_id'=>$project->id]);
-    $this->patch('/api/project/'.$project->id.'/appointment/'.$appointment->id,
-    ['title'=>'mine appoint','location'=>'fsl','outcome'=>'Intrested','strtdt'=>'11-20-17','strttm'=>'14:05','zone'=>'Asia/pacific']);
-    $appointment->users()->attach($user2);
-    $this->assertDatabaseHas('appointments',['id'=>$appointment->id,'zone'=>'Asia/pacific']);
-  }
+    public function an_appointment_can_be_updated()
+    {
+       $data=[
+         'title'=>'Project Enhancement',
+         'location'=>'Fsl\Pakistan',
+         'outcome'=>'Intrested',
+         'strtdt'=>'11-20-17',
+         'strttm'=>'14:05',
+         'zone'=>'Asia/pacific'
+    ];
+
+       $user2=User::factory()->create();
+
+       $appointment=Appointment::factory()->create(['project_id'=>$this->project->id]);
+
+       $this->patch('/api/project/'.$this->project->id.'/appointment/'.$appointment->id,$data);
+
+       $appointment->users()->attach($user2);
+
+       $this->assertDatabaseHas('appointments',['id'=>$appointment->id,'zone'=>'Asia/pacific']);
+    }
 
      /** @test */
-     public function signIn_user_can_delete_appointment(){
-       $project=create('App\Project',['user_id'=>$this->user->id]);
-        $appointment=create('App\Appointment',['project_id'=>$project->id]);
-        $this->delete('/api/project/'.$project->id.'/appointment/'.$appointment->id);
+    public function signIn_user_can_delete_appointment()
+    {
+        $appointment=Appointment::factory()->create(['project_id'=>$this->project->id]);
+
+        $this->delete('/api/project/'.$this->project->id.'/appointment/'.$appointment->id);
         $this->assertDatabaseMissing('appointments',['id'=>$appointment->id]);
-     }
+    }
 
 }

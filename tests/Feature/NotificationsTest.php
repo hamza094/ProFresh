@@ -17,10 +17,10 @@ class NotificationsTest extends TestCase
 
      /** @test */
      public function invited_user_can_get_project_invitation_notification(){
-       $user=create('App\User');
+       $user=create('App\Models\User');
         $this->signIn($user);
-        $project=create('App\Project',['user_id'=>$user->id]);
-         $InvitedUser=create('App\User');
+        $project=create('App\Models\Project',['user_id'=>$user->id]);
+         $InvitedUser=create('App\Models\User');
          $this->post($project->path().'/invitations',[
              'email'=>$InvitedUser->email
          ]);
@@ -30,8 +30,8 @@ class NotificationsTest extends TestCase
       /** @test */
       public function project_owner_get_accepted_project_notification(){
         $this->signIn();
-          $project = create('App\Project');
-          $project->invite($user=create('App\User'));
+          $project = create('App\Models\Project');
+          $project->invite($user=create('App\Models\User'));
         $this->signIn($user);
          $this->get('project/'.$project->id.'/member');
    $this->assertCount(1,$project->owner->fresh()->notifications);
@@ -39,9 +39,9 @@ class NotificationsTest extends TestCase
 
    /** @test */
   public function authorized_user_can_get_notification_when_project_update(){
-     $this->signIn($user=create('App\User'));
-     $project=create('App\Project',['user_id'=>$user->id]);
-      $thomas=create('App\User');
+     $this->signIn($user=create('App\Models\User'));
+     $project=create('App\Models\Project',['user_id'=>$user->id]);
+      $thomas=create('App\Models\User');
       $this->post($project->path().'/invitations',[
           'email'=>$thomas->email
       ]);
@@ -54,9 +54,9 @@ class NotificationsTest extends TestCase
 
   /** @test */
   public function authorized_can_get_notification_when_task_is_added(){
-     $this->signIn($user=create('App\User'));
-     $project=create('App\Project',['user_id'=>$user->id]);
-      $thomas=create('App\User');
+     $this->signIn($user=create('App\Models\User'));
+     $project=create('App\Models\Project',['user_id'=>$user->id]);
+      $thomas=create('App\Models\User');
       $this->post($project->path().'/invitations',[
           'email'=>$thomas->email
       ]);
@@ -69,9 +69,9 @@ class NotificationsTest extends TestCase
 
   /** @test */
   public function authorized_can_get_notification_when_appointment_is_added(){
-     $this->signIn($user=create('App\User'));
-     $project=create('App\Project',['user_id'=>$user->id]);
-      $thomas=create('App\User');
+     $this->signIn($user=create('App\Models\User'));
+     $project=create('App\Models\Project',['user_id'=>$user->id]);
+      $thomas=create('App\Models\User');
       $this->post($project->path().'/invitations',[
           'email'=>$thomas->email
       ]);
@@ -86,9 +86,9 @@ class NotificationsTest extends TestCase
     
   /** @test */
   public function signIn_user_can_not_get_his_notification(){
-     $this->signIn($user=create('App\User'));
-     $project=create('App\Project',['user_id'=>$user->id]);
-      $thomas=create('App\User');
+     $this->signIn($user=create('App\Models\User'));
+     $project=create('App\Models\Project',['user_id'=>$user->id]);
+      $thomas=create('App\Models\User');
       $this->post($project->path().'/invitations',[
           'email'=>$thomas->email
       ]);
@@ -102,10 +102,10 @@ class NotificationsTest extends TestCase
       /** @test */
  public function user_can_fetch_their_notifications()
  {
-   $user=create('App\User');
+   $user=create('App\Models\User');
     $this->signIn($user);
-    $project=create('App\Project',['user_id'=>$user->id]);
-     $InvitedUser=create('App\User');
+    $project=create('App\Models\Project',['user_id'=>$user->id]);
+     $InvitedUser=create('App\Models\User');
      $this->post($project->path().'/invitations',[
          'email'=>$InvitedUser->email
      ]);
@@ -117,10 +117,10 @@ class NotificationsTest extends TestCase
  /** @test */
   public function a_user_can_clear_a_notification()
   {
-    $user=create('App\User');
+    $user=create('App\Models\User');
      $this->signIn($user);
-     $project=create('App\Project',['user_id'=>$user->id]);
-      $InvitedUser=create('App\User');
+     $project=create('App\Models\Project',['user_id'=>$user->id]);
+      $InvitedUser=create('App\Models\User');
       $this->post($project->path().'/invitations',[
           'email'=>$InvitedUser->email
       ]);

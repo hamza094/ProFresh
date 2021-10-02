@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
 use App\Notifications\ProjectTask;
 use App\Http\Requests\TaskRequest;
 use Illuminate\Http\Request;
-use App\Project;
-use App\Task;
+use App\Models\Project;
+use App\Models\Task;
 
-class TaskController extends Controller
+class TaskController extends ApiController
 {
   
   public function index(Project $project)

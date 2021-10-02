@@ -1,17 +1,19 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Support\Facades\Redis;
 use Spatie\Searchable\Searchable;
 use Spatie\Searchable\SearchResult;
 use Laravel\Cashier\Billable;
 
 class User extends Authenticatable implements Searchable
-{
+{   
+    use HasFactory;
     use Notifiable;
     use Billable;
 

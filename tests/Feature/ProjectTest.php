@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\ProjectMail;
 use App\Exports\ProjectsExport;
 use Maatwebsite\Excel\Facades\Excel;
-use App\User;
+use App\Models\User;
 
 class ProjectTest extends TestCase
 {
@@ -33,7 +33,7 @@ class ProjectTest extends TestCase
     /** @test */
    public function a_project_requires_a_name(){
         $this->signIn();
-        $project=make('App\Project',[
+        $project=make('App\Models\Project',[
             'name'=>null
         ]);
         $this->post('/api/projects',$project->toArray())
@@ -44,7 +44,7 @@ class ProjectTest extends TestCase
      /** @test */
     public function updated_project_requires_a_name(){
         $this->signIn();
-        $project=make('App\Project',[
+        $project=make('App\Models\Project',[
             'name'=>null
         ]);
         $this->post('/api/projects',$project->toArray())
@@ -55,7 +55,7 @@ class ProjectTest extends TestCase
     /** @test */
     public function auth_user_visit_project(){
         $this->signIn();
-        $project=create('App\Project');
+        $project=create('App\Models\Project');
         $this->get($project->path())->assertSee($project->id);
     }
 
@@ -63,9 +63,9 @@ class ProjectTest extends TestCase
 
     /** @test */
     public function authorized_user_can_update_project(){
-      $user=create('App\User');
+      $user=create('App\Models\User');
        $this->signIn($user);
-       $project=create('App\Project',['user_id'=>$user->id]);
+       $project=create('App\Models\Project',['user_id'=>$user->id]);
         $name="john santiman";
         $email="james_picaso@outlook.com";
         $mobile=6785434567;
@@ -75,9 +75,9 @@ class ProjectTest extends TestCase
 
     /** @test */
     public function authorized_user_can_change_project_stage(){
-      $user=create('App\User');
+      $user=create('App\Models\User');
        $this->signIn($user);
-       $project=create('App\Project',['user_id'=>$user->id]);
+       $project=create('App\Models\Project',['user_id'=>$user->id]);
        $stage=2;
        $this->patch('api/project/'.$project->id.'/stage',[
           'stage'=>$stage
@@ -87,9 +87,9 @@ class ProjectTest extends TestCase
 
    /** @test */
    public function authorized_user_can_update_reason(){
-     $user=create('App\User');
+     $user=create('App\Models\User');
       $this->signIn($user);
-      $project=create('App\Project',['user_id'=>$user->id]);
+      $project=create('App\Models\Project',['user_id'=>$user->id]);
        $reason="Not defined";
        $stage=0;
        $this->patch('api/project/'.$project->id.'/postponed',[
@@ -101,9 +101,9 @@ class ProjectTest extends TestCase
 
 /** @test */
    public function project_owner_can_trash_project(){
-     $user=create('App\User');
+     $user=create('App\Models\User');
       $this->signIn($user);
-      $project=create('App\Project',['user_id'=>$user->id]);
+      $project=create('App\Models\Project',['user_id'=>$user->id]);
       $this->assertCount(1,$project->get());
       $this->delete($project->path());
       $this->assertCount(0,$project->get());
@@ -112,9 +112,9 @@ $this->assertCount(1,$project->withTrashed()->get());
 
    /** @test */
       public function project_owner_can_delete_project(){
-        $user=create('App\User');
+        $user=create('App\Models\User');
          $this->signIn($user);
-         $project=create('App\Project',['user_id'=>$user->id]);
+         $project=create('App\Models\Project',['user_id'=>$user->id]);
          $this->get('api/projects/'.$project->id.'/delete');
          $this->assertDatabaseMissing('projects',['id'=>$project->id]);
       }
@@ -124,7 +124,7 @@ public function project_mail_sent(){
       $this->signIn();
       Mail::fake();
      Mail::assertNothingSent();
-    $project=create('App\Project');
+    $project=create('App\Models\Project');
        $this->withoutExceptionHandling()->post('/api/projects/'.$project->id.'/mail');
        Mail::assertSent(ProjectMail::class, 1);
        $this->assertCount(2,$project->activity);
@@ -134,7 +134,7 @@ public function project_mail_sent(){
 
 public function project_sms_link_working(){
   $this->signIn();
-  $project=create('App\Project');
+  $project=create('App\Models\Project');
   $this->json('POST','/api/projects/'.$project->id.'/sms')->assertStatus(401);
 }
 
@@ -145,7 +145,7 @@ public function project_sms_link_working(){
 public function user_can_download_project_export()
 {
   $this->signIn();
-  $project=create('App\Project',['name'=>'John O Corner']);
+  $project=create('App\Models\Project',['name'=>'John O Corner']);
     Excel::fake();
     $this->get('api/projects/'.$project->id.'/export');
 
@@ -157,9 +157,9 @@ public function user_can_download_project_export()
 
 /** @test */
 public function authorize_user_can_update_note(){
-  $user=create('App\User');
+  $user=create('App\Models\User');
    $this->signIn($user);
-   $project=create('App\Project',['user_id'=>$user->id]);
+   $project=create('App\Models\Project',['user_id'=>$user->id]);
   $this->assertDatabaseHas('projects',['notes'=>null]);
   $notes='abra ka dabra';
   $this->patch('api/projects/'.$project->id.'/notes',['notes'=>$notes]);
@@ -169,9 +169,9 @@ public function authorize_user_can_update_note(){
         /** @test */
     public function group_deleted_on_user_deletion()
     {
-      $user=create('App\User');
+      $user=create('App\Models\User');
        $this->signIn($user);
-        $group=create('App\Group');
+        $group=create('App\Models\Group');
      $group->users()->attach($user);
      $user->delete();
       $this->assertDatabaseMissing('groups',['id'=>$group->id]);

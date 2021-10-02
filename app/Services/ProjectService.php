@@ -1,9 +1,9 @@
 <?php
 namespace App\Services;
-use App\Project;
+use App\Models\Project;
 use Illuminate\Http\Request;
-use App\Conversation;
-use App\Group;
+use App\Models\Conversation;
+use App\Models\Group;
 
 class ProjectService
 {

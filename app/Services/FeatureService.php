@@ -1,6 +1,6 @@
 <?php
 namespace App\Services;
-use App\Project;
+use App\Models\Project;
 use Illuminate\Http\Request;
 use Twilio\Rest\Client;
 use Maatwebsite\Excel\Facades\Excel;

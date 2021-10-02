@@ -17,10 +17,10 @@ class TaskTest extends TestCase
 
      /** @test */
      public function task_requires_a_body(){
-        $user=create('App\User');
+        $user=create('App\Models\User');
     $this->signIn($user);
-    $project=create('App\Project',['user_id'=>$user->id]);
-         $task=make('App\Task',['body'=>null]);
+    $project=create('App\Models\Project',['user_id'=>$user->id]);
+         $task=make('App\Models\Task',['body'=>null]);
           $this->post('api/project/'.$project->id.'/task',$task->toArray())
             ->assertSessionHasErrors('body');
      }
@@ -28,10 +28,10 @@ class TaskTest extends TestCase
      /** @test */
      public function a_project_can_have_a_task()
      {
-       $user=create('App\User');
+       $user=create('App\Models\User');
         $this->signIn($user);
-        $project=create('App\Project',['user_id'=>$user->id]);
-      $task=create('App\Task');
+        $project=create('App\Models\Project',['user_id'=>$user->id]);
+      $task=create('App\Models\Task');
       $this->post($task->path(),$task->toArray());
       $this->assertDatabaseHas('tasks',['body'=>$task->body]);
       //$this->get($project->path())->assertSee($task->body);
@@ -50,9 +50,9 @@ class TaskTest extends TestCase
 
    /** @test */
  public function task_marked_as_completed(){
-   $user=create('App\User');
+   $user=create('App\Models\User');
     $this->signIn($user);
-    $project=create('App\Project',['user_id'=>$user->id]);
+    $project=create('App\Models\Project',['user_id'=>$user->id]);
      $task=$project->addTask('test task');
      $this->patch($task->path(), ['body' => 'changed','completed'=>true]);
      $this->assertDatabaseHas('tasks',['body'=>'changed','completed'=>true]);
@@ -60,9 +60,9 @@ class TaskTest extends TestCase
 
  /** @test */
 public function task_marked_as_incomplete(){
-  $user=create('App\User');
+  $user=create('App\Models\User');
    $this->signIn($user);
-   $project=create('App\Project',['user_id'=>$user->id]);
+   $project=create('App\Models\Project',['user_id'=>$user->id]);
  $task=$project->addTask('test task');
  $this->patch($task->path(), ['body' => 'changed','completed'=>true]);
   $this->patch($task->path(), ['body' => 'changed','completed'=>false]);
@@ -71,10 +71,10 @@ public function task_marked_as_incomplete(){
 
 /** @test */
    public function signIn_user_can_delete_task(){
-      $user=create('App\User');
+      $user=create('App\Models\User');
       $this->signIn($user);
-      $project=create('App\Project',['user_id'=>$user->id]);
-      $task=create('App\Task',['project_id'=>$project->id]);
+      $project=create('App\Models\Project',['user_id'=>$user->id]);
+      $task=create('App\Models\Task',['project_id'=>$project->id]);
       $this->withoutExceptionHandling()->delete($task->path());
       $this->assertDatabaseMissing('tasks',['id'=>$task->id]);
    }

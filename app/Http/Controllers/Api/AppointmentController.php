@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
-use App\Project;
-use App\Appointment;
+use App\Models\Project;
+use App\Models\Appointment;
 use App\Http\Requests\AppointmentRequest;
 use App\Services\AppointmentService;
 
-class AppointmentController extends Controller
+class AppointmentController extends ApiController
 {
   private $appointmentService;
   
@@ -29,6 +29,7 @@ class AppointmentController extends Controller
 
   public function store(Project $project,AppointmentRequest $request)
   {
+    
     $appointment=$project->appointments()->create($request->validated());
 
     $this->appointmentService->performAppointmentRelatedTasks($project,$appointment);  

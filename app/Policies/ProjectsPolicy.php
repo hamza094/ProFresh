@@ -2,8 +2,8 @@
 
 namespace App\Policies;
 
-use App\Project;
-use App\User;
+use App\Models\Project;
+use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class ProjectsPolicy
@@ -26,7 +26,7 @@ class ProjectsPolicy
     }
 
 
-     public function access(User $user, Project $project)
+    public function access(User $user, Project $project)
     {
         return $user->is($project->owner) || $project->activeMembers->contains($user);
     }

@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
-use App\User;
+use App\Models\User;
 use Auth;
 
-class NotificationsController extends Controller
+class NotificationsController extends ApiController
 {
   /**
      * show all notifications.

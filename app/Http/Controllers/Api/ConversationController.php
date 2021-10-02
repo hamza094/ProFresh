@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
 use App\Events\NewMessage;
-use App\Project;
+use App\Models\Project;
 use App\Services\ConversationService;
 
 
-class ConversationController extends Controller
+class ConversationController extends ApiController
 {
     /**
      * Realtime project group conversation.

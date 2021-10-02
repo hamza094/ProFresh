@@ -1,16 +1,16 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
-use App\Project;
-use App\User;
+use App\Models\Project;
+use App\Models\User;
 use Auth;
-use App\Paypal;
+use App\Models\Paypal;
 use App\Services\UserService;
 use App\Http\Requests\UserRequest;
 
-class ProfileController extends Controller
+class ProfileController extends ApiController
 {
   private $profileService;
 
@@ -22,8 +22,6 @@ class ProfileController extends Controller
   public function __construct(UserService $userService)
   {
     $this->userService=$userService;
-
-    $this->middleware('can:owner,user')->except('show');
   }
 
     /**

@@ -20,14 +20,14 @@ class TaskTest extends TestCase
    public function it_belongs_to_a_project()
    {
      $this->signIn();
-       $task = create('App\Task');
-       $this->assertInstanceOf('App\Project', $task->project);
+       $task = create('App\Models\Task');
+       $this->assertInstanceOf('App\Models\Project', $task->project);
    }
 
    /** @test*/
 public function it_can_be_completed(){
   $this->signIn();
-    $task = create('App\Task');
+    $task = create('App\Models\Task');
     $this->assertFalse($task->completed);
     $task->complete();
     $this->assertTrue($task->fresh()->completed);
@@ -37,7 +37,7 @@ public function it_can_be_completed(){
 /** @test*/
 public function it_can_be_Uncompleted(){
   $this->signIn();
-  $task = create('App\Task');
+  $task = create('App\Models\Task');
         $task->complete();
         $this->assertEquals(1,$task->project->tasks->count());
         $this->assertTrue($task->completed);

@@ -1,11 +1,11 @@
 <?php
 namespace App\Services;
-use App\Project;
-use App\Conversation;
+use App\Models\Project;
+use App\Models\Conversation;
 use Illuminate\Http\Request;
-use App\User;
+use App\Models\User;
 
-class ConversationService extends \App\Http\Controllers\Controller
+class ConversationService extends \App\Http\Controllers\Api\ApiController
 {
 
   public function storeFileConversation($project,$request)

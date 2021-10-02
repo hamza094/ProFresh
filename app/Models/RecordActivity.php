@@ -1,5 +1,7 @@
 <?php
-namespace App;
+
+namespace App\Models;
+
 trait RecordActivity
 {
     /**

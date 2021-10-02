@@ -1,17 +1,19 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
+use App\Traits\RecordActivity;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\ProjectScore;
+use App\Models\ProjectScore;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use App\Activity;
+use App\Models\Activity;
 use Illuminate\Support\Facades\Redis;
 use Auth;
 
-
 class Project extends Model
 {
+  use HasFactory;
   use SoftDeletes;
   use RecordActivity;
   protected $guarded=[];

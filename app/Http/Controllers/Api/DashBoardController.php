@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
 
 use Auth;
 
-use App\User;
+use App\Models\User;
 
-class DashBoardController extends Controller
+class DashBoardController extends ApiController
 {
     public function userprojects(Request $request){
 

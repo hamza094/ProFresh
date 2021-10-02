@@ -5,7 +5,7 @@ namespace App\Listeners;
 use jdavidbakr\MailTracker\Events\EmailSentEvent;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
-use App\Project;
+use App\Models\Project;
 
 class ProjectEmail
 {

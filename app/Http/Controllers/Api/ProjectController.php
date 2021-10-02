@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
 use Auth;
-use App\User;
-use App\Project;
-use App\ProjectScore;
+use App\Models\User;
+use App\Models\Project;
+use App\Models\ProjectScore;
 use Illuminate\Http\Request;
 use App\Http\Requests\ProjectRequest;
 use App\Notifications\ProjectUpdated;
@@ -13,7 +13,7 @@ use App\Services\ProjectService;
 use App\Repository\ProjectRepository;
 use Illuminate\Support\Facades\DB;
 
-class ProjectController extends Controller
+class ProjectController extends ApiController
 {
     private $projectService;
 

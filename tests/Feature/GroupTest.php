@@ -30,9 +30,9 @@ class GroupTest extends TestCase
        /** @test */
           public function project_member_add_to_chat_group(){
             $this->signIn();
-            $group=create('App\Group');
-            $project = create('App\Project',['group_id'=>$group->id]);
-            $project->invite($user=create('App\User'));
+            $group=create('App\Models\Group');
+            $project = create('App\Models\Project',['group_id'=>$group->id]);
+            $project->invite($user=create('App\Models\User'));
             $this->signIn($user);
             $this->get('project/'.$project->id.'/member');
             $this->assertTrue($project->group->users->contains($user));
@@ -41,9 +41,9 @@ class GroupTest extends TestCase
       /** @test */
     public function authorized_user_participated_in_group_chat()
     {
-      $user=create('App\User');
+      $user=create('App\Models\User');
        $this->signIn($user);
-        $group=create('App\Group');
+        $group=create('App\Models\Group');
         $project = create('App\Project',['group_id'=>$group->id,'user_id'=>$user->id]);
       $response=$this->post('/api/project/'.$project->id.'/conversations',
           ['message'=>'abra ka dabra','group_id' => $group->id,'user_id' => $user->id]);
@@ -53,10 +53,10 @@ class GroupTest extends TestCase
         /** @test */
     public function conversation_deleted_on_group_deletion()
     {
-      $user=create('App\User');
+      $user=create('App\Models\User');
       $this->signIn($user);
-      $group=create('App\Group');
-      $conversation=create('App\Conversation',['group_id'=>$group->id]);
+      $group=create('App\Models\Group');
+      $conversation=create('App\Models\Conversation',['group_id'=>$group->id]);
       $group->delete();
       $this->assertDatabaseMissing('conversations',['id'=>$conversation->id]);
 }

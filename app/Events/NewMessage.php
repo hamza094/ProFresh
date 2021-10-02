@@ -2,7 +2,7 @@
 
 namespace App\Events;
 
-use App\Conversation;
+use App\Models\Conversation;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;

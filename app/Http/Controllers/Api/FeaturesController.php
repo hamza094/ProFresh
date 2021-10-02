@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
-use App\Project;
+use App\Models\Project;
 use Illuminate\Http\Request;
 use App\Services\FeatureService;
 use App\Notifications\ProjectUpdated;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 
 
-class FeaturesController extends Controller
+class FeaturesController extends ApiController
 { 
   private $featureService;
 

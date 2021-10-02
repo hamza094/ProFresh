@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
-use App\User;
-use App\Project;
+use App\Models\User;
+use App\Models\Project;
 
-class SubscribeController extends Controller
+class SubscribeController extends ApiController
 {
   public function projectSubscribe(Project $project)
   {

@@ -1,12 +1,12 @@
 <?php
 namespace App\Services;
-use App\Project;
+use App\Models\Project;
 use Illuminate\Http\Request;
 use App\Notifications\ProjectAppointment;
-use App\Activity;
-use App\User;
+use App\Models\Activity;
+use App\Models\User;
 
-class AppointmentService extends \App\Http\Controllers\Controller
+class AppointmentService extends \App\Http\Controllers\Api\ApiController
 {
   /**
     * Attach user, send notification, record score.

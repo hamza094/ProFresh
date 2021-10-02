@@ -1,8 +1,8 @@
 <?php
 namespace App\Repository;
 
-use App\User;
-use App\Project;
+use App\Models\User;
+use App\Models\Project;
 use Illuminate\Http\Request;
 
   /**
