@@ -5,8 +5,10 @@ use Illuminate\Http\Request;
 use App\Notifications\ProjectAppointment;
 use App\Models\Activity;
 use App\Models\User;
+use App\Helpers\SendNotification; 
+use App\Helpers\ProjectHelper; 
 
-class AppointmentService extends \App\Http\Controllers\Api\ApiController
+class AppointmentService 
 {
   /**
     * Attach user, send notification, record score.
@@ -17,9 +19,9 @@ class AppointmentService extends \App\Http\Controllers\Api\ApiController
   {
     $appointment->users()->attach(request('user'));
 
-    $this->sendNotification($project,new ProjectAppointment($project));
+    SendNotification::send($project,new ProjectAppointment($project));
 
-    $this->recordScore($project,'Appointment Added',10);
+    ProjectHelper::recordScore($project,'Appointment Added',10);
   }
 
   public function performRelatedOperation($project,$request,$appointment)

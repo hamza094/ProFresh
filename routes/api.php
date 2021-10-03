@@ -92,7 +92,7 @@ Route::delete('/profile/{user}/notifications/{notification}', [NotificationsCont
 
 //Profile Routes
 Route::group(['prefix' => 'profile'], function() {
-
+  
 Route::get('/user/{user}',[ProfileController::class,'show']);
 
 Route::apiResource('/user',ProfileController::class)->only('update','delete')->

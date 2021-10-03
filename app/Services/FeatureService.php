@@ -8,8 +8,7 @@ use App\Exports\ProjectsExport;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Redis;
 use App\Mail\ProjectMail;
-
-
+use App\Helpers\ProjectHelper;
 
 class FeatureService
 {
@@ -49,7 +48,7 @@ class FeatureService
 
   public function recordScoreAndActivity($project,$message,$count,$activity,$info)
     {
-      $this->recordScore($project,$message,$count);
+      ProjectHelper::recordScore($project,$message,$count);
 
       $project->recordActivity($activity,$info);
     }

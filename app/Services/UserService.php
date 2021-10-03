@@ -1,12 +1,10 @@
 <?php
 namespace App\Services;
-use File;
 use App\Models\Project;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 
-class UserService extends \App\Http\Controllers\Api\ApiController
+class UserService
 {
   /**
    * Show paypal plan.

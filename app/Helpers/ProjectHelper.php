@@ -1,20 +1,18 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Helpers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
 use File;
 
-class ApiController extends Controller
+class ProjectHelper extends Controller
 {
 
   public function recordScore($project,$message,$count)
   {
-    if(!$project->scores()->where('message',$message)->exists()){
-          $project->addScore($message,$count);
-        };
+    $project->scores()->where('message',$message)->exists() ?: $project->addScore($message,$count);
   }
 
     /**

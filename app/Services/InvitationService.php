@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Spatie\Searchable\Search;
 use App\Notifications\ProjectInvitation;
 use App\Notifications\AcceptInvitation;
+use App\Helpers\ProjectHelper;
 
 class InvitationService
 {
@@ -52,7 +53,7 @@ class InvitationService
 
     $user->notify(new ProjectInvitation($project));
 
-    $this->recordScore($project,'Invitaion Sent',5);
+    ProjectHelper::recordScore($project,'Invitaion Sent',5);
   }
   
   protected function executeRelatedTasks($project,$user)

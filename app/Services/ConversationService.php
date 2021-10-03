@@ -4,8 +4,9 @@ use App\Models\Project;
 use App\Models\Conversation;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Helpers\ProjectHelper; 
 
-class ConversationService extends \App\Http\Controllers\Api\ApiController
+class ConversationService 
 {
 
   public function storeFileConversation($project,$request)
@@ -14,7 +15,7 @@ class ConversationService extends \App\Http\Controllers\Api\ApiController
             'file'=>'required'
         ]);
 
-    $value = $this->storeFile($request,'file',auth()->id());
+    $value = ProjectHelper::storeFile($request,'file',auth()->id());
 
     return $this->createConversation($project,'file',$value);
   }
