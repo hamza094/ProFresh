@@ -10,12 +10,12 @@ use Illuminate\Support\Facades\Redis;
 use Spatie\Searchable\Searchable;
 use Spatie\Searchable\SearchResult;
 use Laravel\Cashier\Billable;
+use Laravel\Sanctum\HasApiTokens;
+
 
 class User extends Authenticatable implements Searchable
 {   
-    use HasFactory;
-    use Notifiable;
-    use Billable;
+    use HasFactory, Notifiable, Billable, HasApiTokens;
 
     protected $guarded = [];
 

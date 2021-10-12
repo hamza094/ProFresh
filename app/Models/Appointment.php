@@ -8,8 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Appointment extends Model
 {
-  use HasFactory;
-  use RecordActivity;
+  use HasFactory, RecordActivity;
 
   protected $guarded=[];
 

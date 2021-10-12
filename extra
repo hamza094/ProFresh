@@ -59,3 +59,7 @@ https://crm-fresh.s3.ap-south-1.amazonaws.com/3_60...
              <!--@endforeach-->
 
 
+     let token = localStorage.getItem("token")
+ const config = {
+    headers: { Authorization: `Bearer ${token}` }
+};

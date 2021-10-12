@@ -29,8 +29,6 @@ import moment from 'moment';
 
 import alertNotice from './mixins/alertNotice';
 
-
-
 Vue.mixin(alertNotice); 
 
 Vue.filter('timeExactDate',function(data){
@@ -106,10 +104,15 @@ Vue.component('notifications', require('./components/Notification.vue').default)
 
 Vue.component('profile', require('./components/Profile/Profile.vue').default);
 
+Vue.component('register', require('./components/Authentication/Register.vue').default);
+
+//Vue.component('login', require('./components/Authentication/Login.vue').default);
+
 const routes = [
-  { path: '/dashboard', component: require('./components/Dashboard/Dashboard.vue').default },
+  { path: '/dashboard', name:'dashboard', component: require('./components/Dashboard/Dashboard.vue').default },
   { path: '/projects', component: require('./components/Project.vue').default },
   { path: '/contacts', component: require('./components/Contact.vue').default },
+  { path: '/login', component: require('./components/Authentication/Login.vue').default },
   { path: '*', component:require('./components/Error.vue').default}
 ]
 

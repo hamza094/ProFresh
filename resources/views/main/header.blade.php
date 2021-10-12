@@ -7,6 +7,11 @@
 
     <title>ProFresh - Work on big ideas</title>
 
+      <script>window.Laravel = {csrfToken: '{{ csrf_token() }}'}</script>
+
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
     <link rel="shortcut icon" type="image/png" href="{{asset('img/profresh.png')}}">
 
     <!-- Scripts -->

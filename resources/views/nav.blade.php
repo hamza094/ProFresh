@@ -6,10 +6,6 @@
 
     <script>window.Laravel = {csrfToken: '{{ csrf_token() }}'}</script>
 
-
-    <!-- CSRF Token -->
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-
     <title>ProFresh</title>
 
     <!-- Scripts -->
@@ -19,7 +15,8 @@
   window.App={!! json_encode([
               'csrfToken'=>csrf_token(),
               'user'=>Auth::user(),
-              'signedIn'=>Auth::check()
+              'signedIn'=>Auth::check(),
+              //'api_token'=>Auth::user()->currentAccessToken(),
               ]) !!};
   </script>
 

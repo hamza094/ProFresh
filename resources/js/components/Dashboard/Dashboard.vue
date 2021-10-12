@@ -88,10 +88,6 @@ export default{
             this.invite=false;
             this.trash=true;
       },
-        activeProjects(){
-
-        }
-
     },
     created(){
         this.actived();

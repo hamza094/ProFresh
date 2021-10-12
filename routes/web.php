@@ -2,7 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 
-use App\Http\Controllers\SubscriptionController;
 use App\Http\Controllers\HomeController;
 
 
@@ -23,9 +22,6 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::middleware(['auth'])->group(function () {
-
-//Subscription Routes
-Route::post('subscribe',[SubscriptionController::class,'subscribe'])->name('subscribe');
 
 //Plan Route Prefix
 Route::group(['prefix' => 'plan'], function() {
