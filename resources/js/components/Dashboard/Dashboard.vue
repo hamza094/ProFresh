@@ -68,21 +68,21 @@ export default{
     },
     methods:{
       actived(){
-        axios.get('/api/userproject?active=true').
+        axios.get('/api/v1/userproject?active=true').
             then(({data})=>(this.projects=data));
             this.active=true;
             this.invite=false;
             this.trash=false;
       },
       invited(){
-        axios.get('/api/userproject?invited=true').
+        axios.get('/api/v1/userproject?invited=true').
             then(({data})=>(this.projects=data));
             this.active=false;
             this.invite=true;
             this.trash=false;
       },
       trashed(){
-         axios.get('/api/userproject?trashed=true').
+         axios.get('/api/v1/userproject?trashed=true').
             then(({data})=>(this.projects=data));
             this.active=false;
             this.invite=false;

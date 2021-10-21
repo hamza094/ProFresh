@@ -1,5 +1,9 @@
 @import url(https://fonts.googleapis.com/css?family=Nunito);@charset "UTF-8";
 
+.panel {
+  height: 100vh;
+}
+
 .panel-left {
   background-color: #12344D;
   text-align: center;
@@ -1394,7 +1398,6 @@ p {
 .ft-p {
   background-color: #e5e5ee;
   font-size: 1.3rem;
-  margin-top: 2rem;
 }
 
 .dashboard {

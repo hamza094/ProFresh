@@ -6,12 +6,13 @@
                 <div class="form-header">Sign In</div>
 
                 <div class="form-body">
-                    <form method="POST" @submit.prevent="UserLogin">
+                    <form method="POST" @submit.prevent="userLogin">
                         <div class="form-group">
                             <label for="email" class="form-label">E-Mail Address</label>
 
                             <div class="col-md-8">
                                 <input id="email" type="email" class="form-control" name="email" v-model="form.email" required autocomplete="email" autofocus>
+                                 <span class="text-danger font-italic" v-if="errors.email" v-text="errors.email[0]"></span>
                             </div>
                         </div>
 
@@ -20,6 +21,7 @@
 
                             <div class="col-md-8">
                                 <input id="password" type="password" class="form-control" name="password" v-model="form.password" required autocomplete="current-password">
+                                <span class="text-danger font-italic" v-if="errors.email" v-text="errors.email[0]"></span>
                             </div>
                         </div>
 
@@ -53,10 +55,6 @@
 <script>
 
 export default{
-	props:[],
-
-		
-
 	data(){
 		return{
 			 errors:{},
@@ -69,18 +67,25 @@ export default{
 	},
 
 	methods:{
-		UserLogin(){
-        axios.post('/api/login',this.form,{
+		userLogin(){
+        axios.post('/api/v1/login',this.form,{
       }).then(response=>{
-        let accessToken= JSON.stringify('Bearer ' + response.data);
-        let bearerToken= accessToken.replace(/\\n/g, '');
-        localStorage.setItem('token',bearerToken);
-        this.$router.push('/dashboard');
-         }).catch(error=>{
-           this.errors=error.response;
-      });
-		}
 
+        let accessToken= JSON.stringify('Bearer ' + response.data.access_token);
+
+        let bearerToken= accessToken.replace(/\\n/g, '');
+
+        localStorage.setItem('token',bearerToken);
+
+        this.$bus.$emit('logged', 'User logged');
+
+        this.$vToastify.success("You are login successfully");
+
+        this.$router.push('/home');
+         }).catch(error=>{
+           this.errors=error.response.data.errors;
+      });
+		},
     }
 }	
 

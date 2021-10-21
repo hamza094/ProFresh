@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\HomeController;
 
+use App\Http\Controllers\SubscriptionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,7 +17,7 @@ use App\Http\Controllers\HomeController;
 |
 */
 Route::get('/', function () {
-    return view('main.home');
+    return view('welcome.home');
 });
 
 Auth::routes();
@@ -37,4 +38,4 @@ Route::get('execute-agreement/{status}',[SubscriptionController::class,'executeA
 });
 
 //SPA Routes
-Route::get('{path}', [HomeController::class,'index'])->where('/path', '([A-z\d-\/_.]+)?');
+Route::get('{path}', HomeController::class)->where('/path', '([A-z\d-\/_.]+)?');

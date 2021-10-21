@@ -11,7 +11,7 @@
                             <label for="name" class="form-label">Name</label>
                             <div class="col-md-8">
                                 <input id="name" type="text" class="form-control" name="name" v-model="form.name" required autocomplete="name" autofocus>
-                                 <span class="text-danger font-italic" v-if="errors.password" v-text="errors.name[0]"></span>
+                                 <span class="text-danger font-italic" v-if="errors.name" v-text="errors.name[0]"></span>
                             </div>
                         </div>
 
@@ -20,7 +20,7 @@
 
                             <div class="col-md-8">
                                 <input id="email" type="email" class="form-control" name="email" v-model="form.email" value="" required autocomplete="email">
-                                 <span class="text-danger font-italic" v-if="errors.password" v-text="errors.email[0]"></span>
+                                 <span class="text-danger font-italic" v-if="errors.email" v-text="errors.email[0]"></span>
                             </div>
                         </div>
 
@@ -38,7 +38,7 @@
 
                             <div class="col-md-8">
                                 <input id="password-confirm" type="password" class="form-control" name="password_confirmation" v-model="form.password_confirmation" required autocomplete="new-password">
-                                 <span class="text-danger font-italic" v-if="errors.password" v-text="errors.password_confirmation[0]"></span>
+                                 <span class="text-danger font-italic" v-if="errors.password_confirmation" v-text="errors.password_confirmation[0]"></span>
                             </div>
                         </div>
 
@@ -61,10 +61,6 @@
 <script>
 
 export default{
-	props:[],
-
-		
-
 	data(){
 		return{
              errors:{},
@@ -79,14 +75,12 @@ export default{
 	},
 	methods:{
       RegisterUser(){
-        axios.post('/api/register',{
-        name:this.form.name,
-        email:this.form.email,
-        password:this.form.password,
-        password_confirmation:this.form.password_confirmation,
+        axios.post('/api/v1/register',this.form,{
       }).then(response=>{
-          window.location.href='/login';
+        swal.fire("Account Registered","Please Login to continue","success");
+          this.$router.push('/login');
          }).catch(error=>{
+            console.log(error.response.data.errors);
            this.errors=error.response.data.errors;
       });
       }

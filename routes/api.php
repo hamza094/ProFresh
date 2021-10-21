@@ -30,10 +30,15 @@ use App\Http\Controllers\Api\
 |
 */
 
-Route::post('register', [RegisterController::class, 'register']);
-Route::post('login', [LoginController::class, 'login']);
+Route::group(['prefix'=>'v1'], function () {
+
+Route::post('register', [RegisterController::class, 'register'])->name('auth.register');
+Route::post('login', [LoginController::class, 'login'])->name('auth.login');
+
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
+
+Route::post('logout', [LoginController::class, 'logout'])->name('auth.logout');  
 
 Route::get('/welcome',[WelcomeController::class,'index']); 
 
@@ -117,5 +122,4 @@ Route::get('/projectcount',[DashboardController::class,'projectcount']);
 Route::get('/userproject',[DashboardController::class,'userprojects']);
 });
 
-
-
+});

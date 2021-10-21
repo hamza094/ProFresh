@@ -86,7 +86,7 @@ class RegisterController extends ApiController
     protected function registered(Request $request, $user)
     {
         return response()->json([
-            'user'     => $request->user()
+            'user' => $request->user()
         ]);
     }
 
@@ -100,12 +100,10 @@ class RegisterController extends ApiController
 
         event(new Registered($user = $this->create($request->all())));
 
-        $this->guard()->login($user);
-
         if ($response = $this->registered($request, $user)) {
-            return $response;
+            return response()->json(['response'=>$response], 201);
         }
-
+            return response()->json(null, 404);
      
     }
     

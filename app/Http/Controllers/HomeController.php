@@ -13,7 +13,7 @@ class HomeController extends Controller
      * @return void
      */
 
-    public function index()
+    public function __invoke()
     {
       return view('home');
     }
