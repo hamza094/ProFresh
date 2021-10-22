@@ -1,4 +1,4 @@
-# ProFresh [![Build Status](https://travis-ci.org/hamza094/ProFresh.svg?branch=master)](https://travis-ci.org/hamza094/ProFresh)
+# ProFresh 
 
 Real-Time Project Management Web Software with a TDD approach
 
