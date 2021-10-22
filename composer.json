@@ -8,7 +8,7 @@
     ],
     "license": "MIT",
     "require": {
-        "php": "^7.2.5",
+        "php": "^7.2.5|^8.0",
         "barryvdh/laravel-debugbar": "^3.5",
         "fideloper/proxy": "^4.2",
         "friendsofphp/php-cs-fixer": "^2.18",
