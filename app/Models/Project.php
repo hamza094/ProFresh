@@ -13,9 +13,8 @@ use Auth;
 
 class Project extends Model
 {
-  use HasFactory;
-  use SoftDeletes;
-  use RecordActivity;
+  use HasFactory, SoftDeletes, RecordActivity;
+
   protected $guarded=[];
   protected $dates = ['created_at'];
   protected $appends = ['IsSubscribedTo'];

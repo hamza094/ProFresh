@@ -1,4 +1,4 @@
-<template>
+f<template>
   <modal name="edit-profile"
            height="auto" :scrollable="true" :shiftX=".98" width="38%"
             class="model-desin" :clickToClose=false>

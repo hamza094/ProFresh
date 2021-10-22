@@ -14,7 +14,13 @@ Vue.use(Vuex)
 
 import VueRouter from 'vue-router'
 
+import routes from './routes';
+
+import VueBus from 'vue-bus';
+
 Vue.use(VueRouter)
+
+Vue.use(VueBus);
 
 import Vue from 'vue';
 
@@ -28,8 +34,6 @@ Vue.use(VModal)
 import moment from 'moment';
 
 import alertNotice from './mixins/alertNotice';
-
-
 
 Vue.mixin(alertNotice); 
 
@@ -106,12 +110,7 @@ Vue.component('notifications', require('./components/Notification.vue').default)
 
 Vue.component('profile', require('./components/Profile/Profile.vue').default);
 
-const routes = [
-  { path: '/dashboard', component: require('./components/Dashboard/Dashboard.vue').default },
-  { path: '/projects', component: require('./components/Project.vue').default },
-  { path: '/contacts', component: require('./components/Contact.vue').default },
-  { path: '*', component:require('./components/Error.vue').default}
-]
+Vue.component('navbar', require('./components/Navbar.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -119,12 +118,7 @@ const routes = [
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-const router = new VueRouter({
-    mode: 'history',
-  routes // short for `routes: routes`
-})
-
 const app = new Vue({
     el: '#app',
-     router
+     router: new VueRouter(routes)
 });

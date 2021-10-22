@@ -2,9 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 
-use App\Http\Controllers\SubscriptionController;
 use App\Http\Controllers\HomeController;
 
+use App\Http\Controllers\SubscriptionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,15 +17,12 @@ use App\Http\Controllers\HomeController;
 |
 */
 Route::get('/', function () {
-    return view('main.home');
+    return view('welcome.home');
 });
 
 Auth::routes();
 
 Route::middleware(['auth'])->group(function () {
-
-//Subscription Routes
-Route::post('subscribe',[SubscriptionController::class,'subscribe'])->name('subscribe');
 
 //Plan Route Prefix
 Route::group(['prefix' => 'plan'], function() {
@@ -41,4 +38,4 @@ Route::get('execute-agreement/{status}',[SubscriptionController::class,'executeA
 });
 
 //SPA Routes
-Route::get('{path}', [HomeController::class,'index'])->where('/path', '([A-z\d-\/_.]+)?');
+Route::get('{path}', HomeController::class)->where('/path', '([A-z\d-\/_.]+)?');

@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\Auth\RegisterController;
+use App\Http\Controllers\Api\Auth\LoginController;
 
 use App\Http\Controllers\Api\
 {
@@ -14,7 +16,8 @@ use App\Http\Controllers\Api\
   ProfileController,
   ConversationController,
   DashboardController,
-  UserController
+  UserController,
+  WelcomeController,
 };
 /*
 |--------------------------------------------------------------------------
@@ -27,7 +30,17 @@ use App\Http\Controllers\Api\
 |
 */
 
-Route::group(['middleware' => ['auth:api']], function () {
+Route::group(['prefix'=>'v1'], function () {
+
+Route::post('register', [RegisterController::class, 'register'])->name('auth.register');
+Route::post('login', [LoginController::class, 'login'])->name('auth.login');
+
+
+Route::group(['middleware' => ['auth:sanctum']], function () {
+
+Route::post('logout', [LoginController::class, 'logout'])->name('auth.logout');  
+
+Route::get('/welcome',[WelcomeController::class,'index']); 
 
 //Return All Users
 Route::get('/users',[UserController::class,'index']);	
@@ -105,10 +118,8 @@ Route::patch('/{user}/avatar-delete',[ProfileController::class,'avatarDelete']);
 Route::get('/projectoverview', [ProjectController::class,'projectoverview']);
 
 //Dashboard Routes
-Route::get('/userproject',[DashboardController::class,'userprojects']);
 Route::get('/projectcount',[DashboardController::class,'projectcount']);
-
+Route::get('/userproject',[DashboardController::class,'userprojects']);
 });
 
-
-
+});

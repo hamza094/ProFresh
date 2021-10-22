@@ -2,6 +2,7 @@ window._ = require('lodash');
 
 window.Vue = require('vue');
 
+Vue.config.productionTip = false
 /**
  * We'll load jQuery and the Bootstrap jQuery plugin which provides support
  * for JavaScript based Bootstrap features such as modals and tabs. This
@@ -22,6 +23,7 @@ window.Vue = require('vue');
 
  Vue.prototype.signedIn = window.App.signedIn;
 
+
 try {
     window.Popper = require('popper.js').default;
     window.$ = window.jQuery = require('jquery');
@@ -36,6 +38,19 @@ try {
  */
 
 window.axios = require('axios');
+
+axios.defaults.withCredentials = true;
+
+axios.interceptors.request.use(function (config) {
+
+  config.headers.common = {
+    'Authorization': JSON.parse(localStorage.getItem("token")),
+    'Content-Type': 'application/json',
+    'Accept': 'application/json'
+  }
+
+  return config
+});
 
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 window.axios.defaults.headers.common['X-CSRF-TOKEN'] = window.Laravel.csrfToken;
