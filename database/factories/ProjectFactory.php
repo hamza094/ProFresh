@@ -25,11 +25,10 @@ class ProjectFactory extends Factory
     {
         return [
         'user_id'=>User::factory(),
-        'group_id'=>2,
-        'name' => $this->faker->name,
+        'group_id'=>0,
+        'name' => $this->faker->catchPhrase,
         'about'=>$this->faker->text($maxNbChars = 250),
         'stage'=>'initial'
         ];
     }
 }
-

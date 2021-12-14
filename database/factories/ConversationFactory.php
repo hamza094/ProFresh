@@ -25,8 +25,8 @@ class ConversationFactory extends Factory
     {
         return [
         'message'=> $this->faker->sentence,
-        'user_id'=>User::factory();
-        'group_id'=>Group::factory();
+        'user_id'=>User::factory(),
+        'group_id'=>Group::factory(),
         ];
     }
 }

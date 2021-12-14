@@ -135,7 +135,7 @@ return [
     */
 
     'providers' => [
-        
+
         /*
          * Laravel Framework Service Providers...
          */
@@ -162,6 +162,7 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
+        Bugsnag\BugsnagLaravel\BugsnagServiceProvider::class,
 
         /*
          * Package Service Providers...

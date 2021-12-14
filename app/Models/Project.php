@@ -75,7 +75,7 @@ class Project extends Model
     {
       $this->subscribers()->create([
         'user_id'=>$userId ?: auth()->id()
-    ]); 
+    ]);
     return $this;
     }
 

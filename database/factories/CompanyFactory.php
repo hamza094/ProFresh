@@ -26,7 +26,7 @@ class CompanyFactory extends Factory
         'user_id'=>User::factory();
         'name' => $this->faker->paragraph($nbSentences = 3, $variableNbSentences = true),
         'about'=>$this->faker->company,
-        'country'=>$this->faker->country, 
+        'country'=>$this->faker->country,
         'address'=>$this->faker->address,
         'email'=>$this->faker->unique()->safeEmail,
         'phone_number'=>$this->faker->tollFreePhoneNumber

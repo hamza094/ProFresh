@@ -4,7 +4,10 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 
-class ProjectSeeder extends Seeder
+use App\Models\User;
+use App\Models\Project;
+
+class CompanySeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -13,6 +16,6 @@ class ProjectSeeder extends Seeder
      */
     public function run()
     {
-        //
+    
     }
 }

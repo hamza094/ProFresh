@@ -14,7 +14,7 @@ use Laravel\Sanctum\HasApiTokens;
 
 
 class User extends Authenticatable implements Searchable
-{   
+{
     use HasFactory, Notifiable, Billable, HasApiTokens;
 
     protected $guarded = [];
@@ -61,9 +61,10 @@ class User extends Authenticatable implements Searchable
         return "/users/{$this->id}/profile";
     }
 
-      public function projects(){
-        return $this->hasMany(Project::class);
-      }
+    public function projects()
+    {
+       return $this->hasMany(Project::class);
+    }
 
     public function lastseen() {
            $redis = Redis::connection();
@@ -98,7 +99,7 @@ class User extends Authenticatable implements Searchable
    public function paypal(){
         return $this->belongsTo('App\Paypal');
     }
-     
+
      //add user paypal record in database
     public function paypal_info(){
         $this->paypal()->create([
