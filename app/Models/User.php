@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Contracts\Auth\CanResetPassword;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Support\Facades\Redis;
@@ -11,9 +12,9 @@ use Spatie\Searchable\Searchable;
 use Spatie\Searchable\SearchResult;
 use Laravel\Cashier\Billable;
 use Laravel\Sanctum\HasApiTokens;
+use App\Jobs\QueuedVerifyEmailJob;
 
-
-class User extends Authenticatable implements Searchable
+class User extends Authenticatable implements Searchable, MustVerifyEmail
 {
     use HasFactory, Notifiable, Billable, HasApiTokens;
 
@@ -55,6 +56,12 @@ class User extends Authenticatable implements Searchable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function sendEmailVerificationNotification()
+   {
+       //dispactches the job to the queue passing it this User object
+        QueuedVerifyEmailJob::dispatch($this);
+   }
 
     public function path()
     {

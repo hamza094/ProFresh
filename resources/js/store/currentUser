@@ -1,0 +1,66 @@
+import router from '../router.js'
+
+const state = {
+  user:{},
+  errors:{},
+  loggedIn:false
+};
+const getters = {};
+const actions = {
+
+  loginUser({commit,state},user){
+    axios.post('/api/v1/login',user,{
+  }).then(response=>{
+
+      this.createUserToken(response);
+
+      commit('setUser',response.data.user);
+      commit('loggedIn',true);
+
+      router.push('/home');
+      commit('setErrors','');
+
+     }).catch(error=>{
+       commit('setErrors',error.response.data.errors);
+  });
+},
+
+createUserToken(response){
+  let accessToken= JSON.stringify('Bearer ' + response.data.access_token);
+
+  let bearerToken= accessToken.replace(/\\n/g, '');
+  localStorage.setItem('token',bearerToken);
+},
+
+logoutUser({commit,state}){
+   axios.post('/api/v1/logout',{
+}).then(response=>{
+    localStorage.removeItem('token');
+    commit('setUser',null);
+    commit('loggedIn',false);
+    router.push('/login');
+   }).catch(error=>{
+     this.errors=error.response.data.errors;
+});
+}
+
+};
+const mutations = {
+  setErrors(state,data){
+    state.errors=data;
+  },
+  setUser(state,data){
+    state.user=data;
+  },
+  loggedIn(state,data){
+    state.loggedIn=data;
+  },
+};
+
+export default{
+  namespaced: true,
+  state,
+  getters,
+  actions,
+  mutations
+}

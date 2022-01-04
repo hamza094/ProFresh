@@ -9,7 +9,7 @@
            <p class="intro-left_header">Work on big ideas,<br>without the busy work.
            </p>
            <span class="intro-left_border"></span>
-           <p class="intro-left_para">ProFresh is a Project Management Web System that helps teams to manage and track their whole projects in one place. With ProFresh, you'll stay on top of everything. 
+           <p class="intro-left_para">ProFresh is a Project Management Web System that helps teams to manage and track their whole projects in one place. With ProFresh, you'll stay on top of everything.
            </p>
 
            <a href="/dashboard" target="_blank" class="intro-left_btn">Try For Free</a>
@@ -30,7 +30,7 @@
       </div>
      <div class="row">
        <div class="col-md-6">
-        <div class="about-img"> 
+        <div class="about-img">
           <img src="{{asset('img/capture.jpg')}}">
         </div>
        </div>
@@ -73,7 +73,7 @@
               <img src="{{asset('img/Subscription.png')}}">
             </div>
           </div>
-        </div> 
+        </div>
       </div>
 <div class="feature">
          <div class="row">
@@ -88,7 +88,7 @@
               <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent condimentum lorem nisl, non bibendum tortor porta sed. Aliquam luctus at tortor sed dapibus. Phasellus molestie urna vitae leo porta.</p>
             </div>
           </div>
-        </div> 
+        </div>
       </div>
    </section>
     </div>
@@ -96,8 +96,8 @@
    <section class="footer">
      <footer class="page-footer font-small blue">
   <!-- Copyright -->
-  <div class="footer-copyright text-center py-3 ft">© 2021 Copyright:
-    <a href="http://localhost:8000/"> Profresh.com</a>
+  <div class="footer-copyright text-center py-3 ft">© 2022 Copyright:
+    <a href="/"> Profresh.com</a>
   </div>
   <!-- Copyright -->
 </footer>

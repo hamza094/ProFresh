@@ -12,4 +12,11 @@ class UserController extends ApiController
     {
         return User::latest()->get();
     }
+
+    public function user()
+    {
+      return response()->json([
+      'user' => auth()->user(),
+    ], 200);
+    }
 }

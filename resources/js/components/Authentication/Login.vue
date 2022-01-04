@@ -6,13 +6,13 @@
                 <div class="form-header">Sign In</div>
 
                 <div class="form-body">
-                    <form method="POST" @submit.prevent="userLogin">
+                    <form method="POST" @submit.prevent="login()">
                         <div class="form-group">
                             <label for="email" class="form-label">E-Mail Address</label>
 
                             <div class="col-md-8">
-                                <input id="email" type="email" class="form-control" name="email" v-model="form.email" required autocomplete="email" autofocus>
-                                 <span class="text-danger font-italic" v-if="errors.email" v-text="errors.email[0]"></span>
+                                <input id="email" type="email" class="form-control" name="email" v-model="user.email" required autocomplete="email" autofocus>
+                                 <span class="text-danger font-italic" v-if="this.errors.email" v-text="this.errors.email[0]"></span>
                             </div>
                         </div>
 
@@ -20,15 +20,15 @@
                             <label for="password" class="form-label">Password</label>
 
                             <div class="col-md-8">
-                                <input id="password" type="password" class="form-control" name="password" v-model="form.password" required autocomplete="current-password">
-                                <span class="text-danger font-italic" v-if="errors.email" v-text="errors.email[0]"></span>
+                                <input id="password" type="password" class="form-control" name="password" v-model="user.password" required autocomplete="current-password">
+                                <span class="text-danger font-italic" v-if="this.errors.password" v-text="this.errors.password[0]"></span>
                             </div>
                         </div>
 
                         <div class="form-group">
                             <div class="">
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="remember" v-model="form.remember" id="remember">
+                                    <input class="form-check-input" type="checkbox" name="remember" v-model="user.remember" id="remember">
 
                                     <label class="form-check-label form-label" for="remember">
                                         Remember Me
@@ -36,6 +36,10 @@
                                 </div>
                             </div>
                         </div>
+
+                        <router-link to="/forgot-password">
+                            <span>Forget Password?</span>
+                        </router-link>
 
                         <div class="form-group">
                             <div class="col-md-8">
@@ -54,38 +58,28 @@
 
 <script>
 
-export default{
+export default {
 	data(){
 		return{
-			 errors:{},
-			 form:{
-                email:'',
-                password:'',
-                remember:''
+			 user:{
+              email:'',
+              password:'',
+              remember:''
             }
 		};
 	},
+  computed:{
+    errors:{
+      get(){
+        return this.$store.state.currentUser.errors
+      }
+    }
+  },
 
 	methods:{
-		userLogin(){
-        axios.post('/api/v1/login',this.form,{
-      }).then(response=>{
-
-        let accessToken= JSON.stringify('Bearer ' + response.data.access_token);
-
-        let bearerToken= accessToken.replace(/\\n/g, '');
-
-        localStorage.setItem('token',bearerToken);
-
-        this.$bus.$emit('logged', 'User logged');
-
-        this.$vToastify.success("You are login successfully");
-
-        this.$router.push('/home');
-         }).catch(error=>{
-           this.errors=error.response.data.errors;
-      });
-		},
+    login(){
+      this.$store.dispatch('currentUser/loginUser',this.user);
+    }
     }
 }
 

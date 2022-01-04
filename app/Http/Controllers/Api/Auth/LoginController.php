@@ -12,9 +12,8 @@ use App\Http\Controllers\Api\ApiController;
 class LoginController extends ApiController
 {
 
-public function login(Request $request) 
+public function login(Request $request)
 {
-
     $request->validate([
         'email' => 'required|email',
         'password' => 'required'
@@ -36,7 +35,7 @@ public function login(Request $request)
 
    public function logout(Request $request)
    {
-      $request->user()->tokens()->delete();
+       $request->user()->tokens()->delete();
 
        return response()->json('User logout successfully', 200);
 

@@ -6,3 +6,41 @@ DB_PORT=3306
 DB_DATABASE=profresh
 DB_USERNAME=sail
 DB_PASSWORD=password
+
+navbar
+<script>
+export default {
+    data() {
+        return {
+          //isLogged: this.checkIfIsLogged(),
+        };
+    },
+    computed:{
+      loggedIn:{
+        get(){
+          return this.$store.state.currentUser.loggedIn
+        }
+      }
+    },
+    /*created () {
+    this.$bus.$on('logged', () => {
+      this.isLogged = this.checkIfIsLogged()
+    })
+  },*/
+    methods: {
+        /* checkIfIsLogged () {
+      let token = localStorage.getItem('token')
+      if (token) {
+        return true
+      } else {
+        return false
+      }
+    },*/
+     signOut(){
+       this.$store.dispatch('currentUser/logoutUser');
+
+    },
+    }
+}
+
+</script>

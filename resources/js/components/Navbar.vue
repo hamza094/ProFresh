@@ -4,10 +4,8 @@
 
             <div class="col-md-1 panel-left">
                 <div class="panel">
-
-                    <a href="/"><img src="img/profresh.png" class="main-img" alt=""></a>
-
-                    <div v-if="isLogged === true">
+                    <a href="/"><img src="/img/profresh.png" class="main-img" alt=""></a>
+                    <div v-if="loggedIn === true">
                     <router-link to="/dashboard" class="panel-list_item">
                         <p><span class="icon">
                                 <i class="icon-logo far fa-calendar"></i>
@@ -45,13 +43,13 @@
                         <!-- Right Side Of Navbar -->
                         <ul class="navbar-nav ml-auto">
                             <!-- Authentication Links -->
-                            <li class="nav-item" v-if="isLogged === false">
+                            <li class="nav-item" v-if="loggedIn !== true">
                                 <router-link class="nav-link" to='/login'>Sign In</router-link>
                             </li>
-                            <li class="nav-item" v-if="isLogged === false">
+                            <li class="nav-item" v-if="loggedIn !== true">
                                 <router-link class="nav-link" to='/register'>Sign Up</router-link>
                             </li>
-                            <notifications  class="mr-3" v-if="isLogged === true"></notifications>
+                             <notifications  class="mr-3" v-if="loggedIn === true"></notifications>
                         </ul>
                     </div>
                 </nav>
@@ -65,38 +63,16 @@
 </template>
 <script>
 export default {
-    data() {
-        return {
-          isLogged: this.checkIfIsLogged()
-        };
-    },
-    created () {
-    this.$bus.$on('logged', () => {
-      this.isLogged = this.checkIfIsLogged()
-    })
-  },
-    methods: {
-         checkIfIsLogged () {
-      let token = localStorage.getItem('token')
-      if (token) {
-        return true
-      } else {
-        return false
+    computed:{
+      loggedIn:{
+        get(){
+          return this.$store.state.currentUser.loggedIn
+        }
       }
     },
-    signOut(){
-        axios.post('/api/v1/logout',{
-      }).then(response=>{
-        localStorage.removeItem('token');
-
-        this.isLogged = this.checkIfIsLogged();
-
-        this.$vToastify.success("You are logged out");
-
-        this.$router.push('/login');
-         }).catch(error=>{
-           this.errors=error.response.data.errors;
-      });
+    methods: {
+     signOut(){
+       this.$store.dispatch('currentUser/logoutUser');
     },
     }
 }

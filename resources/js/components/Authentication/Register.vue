@@ -77,14 +77,13 @@ export default{
       RegisterUser(){
         axios.post('/api/v1/register',this.form,{
       }).then(response=>{
-        swal.fire("Account Registered","Please Login to continue","success");
+        swal.fire("Account Registered","Please Verify your account and login","success");
           this.$router.push('/login');
          }).catch(error=>{
-            console.log(error.response.data.errors);
            this.errors=error.response.data.errors;
       });
       }
     }
-}	
+}
 
 </script>

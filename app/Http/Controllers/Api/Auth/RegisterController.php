@@ -104,7 +104,6 @@ class RegisterController extends ApiController
             return response()->json(['response'=>$response], 201);
         }
             return response()->json(null, 404);
-     
     }
-    
+
 }

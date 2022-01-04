@@ -12,13 +12,11 @@ import Vuex from 'vuex'
 
 Vue.use(Vuex)
 
-import VueRouter from 'vue-router'
+import router from './router.js'
 
-import routes from './routes';
+import store from "./store";
 
 import VueBus from 'vue-bus';
-
-Vue.use(VueRouter)
 
 Vue.use(VueBus);
 
@@ -35,7 +33,7 @@ import moment from 'moment';
 
 import alertNotice from './mixins/alertNotice';
 
-Vue.mixin(alertNotice); 
+Vue.mixin(alertNotice);
 
 Vue.filter('timeExactDate',function(data){
    return  moment(data).fromNow();
@@ -120,5 +118,6 @@ Vue.component('navbar', require('./components/Navbar.vue').default);
 
 const app = new Vue({
     el: '#app',
-     router: new VueRouter(routes)
+     store,
+     router,
 });

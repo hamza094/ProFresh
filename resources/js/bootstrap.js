@@ -23,6 +23,7 @@ Vue.config.productionTip = false
 
  Vue.prototype.signedIn = window.App.signedIn;
 
+ Vue.prototype.$user = '';
 
 try {
     window.Popper = require('popper.js').default;

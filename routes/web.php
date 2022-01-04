@@ -6,6 +6,9 @@ use App\Http\Controllers\HomeController;
 
 use App\Http\Controllers\SubscriptionController;
 
+use App\Http\Controllers\Api\Auth\VerificationController;
+
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -34,8 +37,9 @@ Route::post('/{id}/agreement/create',[SubscriptionController::class,'createAgree
 name('create-aggreement');
 });
 
+
 Route::get('execute-agreement/{status}',[SubscriptionController::class,'executeAgreement']);
 });
 
 //SPA Routes
-Route::get('{path}', HomeController::class)->where('/path', '([A-z\d-\/_.]+)?');
+Route::get('{path}', HomeController::class)->where('path', '(.*)');
