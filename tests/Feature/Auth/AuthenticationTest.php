@@ -35,7 +35,7 @@ class AuthenticationTest extends TestCase
     {
         $password = Hash::make('password');
 
-        $response=$this->json('POST', route('auth.register'),
+        $response=$this->postJson(route('auth.register'),
             ['name' => 'Elvis William',
             'email'=>'mihupocob@mailinator.com',
              'password' => $password,
@@ -48,7 +48,7 @@ class AuthenticationTest extends TestCase
     /** @test */
     public function return_user_and_access_token_after_successful_login()
     {
-        $response = $this->json('POST', route('auth.login'), [
+        $response = $this->postJson(route('auth.login'), [
             'email' =>'johndoe@example.org',
             'password' => 'testpassword',
         ]);
@@ -60,7 +60,7 @@ class AuthenticationTest extends TestCase
     /** @test */
     public function show_validation_email_error()
     {
-        $response = $this->json('POST', route('auth.login'), [
+        $response = $this->postJson(route('auth.login'), [
             'email' => 'test@test.com',
             'password' => 'testpassword'
         ]);
@@ -70,22 +70,22 @@ class AuthenticationTest extends TestCase
     }
 
     /** @test */
-    public function test_authenticated_user_can_logout()
+    public function authenticated_user_can_logout()
     {
         Sanctum::actingAs(
             User::first(),
         );
 
-        $response = $this->json('POST', route('auth.logout'), []);
+        $response = $this->postJson(route('auth.logout'), []);
         $response->assertStatus(200);
     }
 
     /** @test */
-   public function teset_can_not_register_with_existing_email()
+   public function registration_with_existing_email_not_allowed()
    {
       $password = Hash::make('password');
 
-       $response=$this->json('POST', route('auth.register'),
+       $response=$this->postJson(route('auth.register'),
            ['name' => 'Elvis William',
            'email'=>'johndoe@example.org',
             'password' => $password,
@@ -93,8 +93,4 @@ class AuthenticationTest extends TestCase
         ])->assertStatus(422)
         ->assertJsonValidationErrors(['email']);
    }
-
-
-
-
 }

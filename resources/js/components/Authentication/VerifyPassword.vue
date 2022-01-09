@@ -9,10 +9,10 @@
 									<h5>Congratulations! Your Account has been verified Successfully.
 										Please log in to continue </h5>
 								</div>
-								<div class="card-body" v-else-if="error == 'verification.already_verified'">
+								<div class="card-body" v-if="error == 'verification.already_verified'">
 									<h5>Account already verified. Please log in to continue</h5>
 								</div>
-								<div class="card-body" v-else>
+								<div class="card-body" v-if="error == 'verification.invalid'">
 									<h5>Verification Error. Please log in to get the verified link again </h5>
 								</div>
             </div>
@@ -29,13 +29,14 @@
 	   try {
 	     const { data } = await axios.post(`/api/v1/email/verify/${to.params.id}?${qs(to.query)}`)
 	     next(vm => { vm.success = data.status })
+			 console.log(data.success);
 	    } catch (e) {
 	      next(vm => { vm.error = e.response.data.status })
 	    }
 	  },
 		data: () => ({
-	error: '',
-	success: ''
+	  error: '',
+	  success: ''
 })
 }
 

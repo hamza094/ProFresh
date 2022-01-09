@@ -19,13 +19,13 @@ class ResetPasswordTest extends TestCase
     *
     * @return void
   */
-   public function test_sends_password_reset_email()
+   public function can_sends_password_reset_email()
    {
       $user = User::factory()->create();
 
       Notification::fake();
 
-      $this->withoutExceptionHandling()->postJson('/api/v1/forgot-password', ['email' => $user->email]);
+      $this->postJson('/api/v1/forgot-password', ['email' => $user->email]);
 
       Notification::assertSentTo($user, ResetPassword::class);
 }
@@ -37,7 +37,7 @@ class ResetPasswordTest extends TestCase
   */
 
     /** @test */
-    public function test_user_reset_their_password()
+    public function user_reset_their_password()
     {
        $user = User::factory()->create();
 

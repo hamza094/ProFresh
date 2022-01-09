@@ -66,8 +66,11 @@ export default{
 	},
 	methods:{
       resetPassword(){
-        axios.post('/api/v1/reset-password',this.form,{
-               token: this.$route.params.token
+        axios.post('/api/v1/reset-password',{
+					email: this.form.email,
+					password: this.form.password,
+					password_confirmation: this.form.password_confirmation,
+          token: this.$route.params.token
       }).then(response=>{
         swal.fire("Password Changed","Please Login to continue","success");
           this.$router.push('/login');

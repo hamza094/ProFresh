@@ -17,10 +17,10 @@ class VerificationController extends ApiController
   /**
     * Create a new controller instance.
     */
-  /* public function __construct()
+   public function __construct()
    {
-       $this->middleware('throttle:6,1')->only('verify', 'resend');
-   }*/
+       $this->middleware('throttle:6,1')->only('resend');
+   }
 
    /**
  * Mark the user's email address as verified.

@@ -35,7 +35,12 @@ Route::group(['prefix'=>'v1'], function () {
 
   Route::post('/email/verify/{id}', [VerificationController::class, 'verify'])
     ->name('verification.verify');
+
+    Route::get('/password/reset/{token}', [VerificationController::class, 'resetForm'])
+      ->name('password.reset');
+
 });
+
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
 

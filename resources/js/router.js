@@ -10,7 +10,6 @@ import Dashboard from './components/Dashboard/Dashboard';
 import ForgotPassword from './components/Authentication/ForgotPassword';
 import ResetPassword from './components/Authentication/ResetPassword';
 import VerifyPassword from './components/Authentication/VerifyPassword';
-import VerifyInvalid from './components/Authentication/VerifyInvalid';
 import Projects from './components/Projects';
 import NotFound from './components/Error';
 
@@ -63,7 +62,7 @@ let router = new Router({
             beforeEnter: guest,
         },
         {
-            path: '/password/reset/:token',
+            path: '/api/v1/password/reset/:token',
             component: ResetPassword,
             name: 'Reset',
             beforeEnter: guest,

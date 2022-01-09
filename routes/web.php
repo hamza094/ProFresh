@@ -23,8 +23,6 @@ Route::get('/', function () {
     return view('welcome.home');
 });
 
-Auth::routes();
-
 Route::middleware(['auth'])->group(function () {
 
 //Plan Route Prefix

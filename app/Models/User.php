@@ -13,6 +13,7 @@ use Spatie\Searchable\SearchResult;
 use Laravel\Cashier\Billable;
 use Laravel\Sanctum\HasApiTokens;
 use App\Jobs\QueuedVerifyEmailJob;
+use App\Jobs\QueuedPasswordResetJob;
 
 class User extends Authenticatable implements Searchable, MustVerifyEmail
 {
@@ -61,6 +62,12 @@ class User extends Authenticatable implements Searchable, MustVerifyEmail
    {
        //dispactches the job to the queue passing it this User object
         QueuedVerifyEmailJob::dispatch($this);
+   }
+
+   public function sendPasswordResetNotification($token)
+   {
+       //dispactches the job to the queue passing it this User object
+       QueuedPasswordResetJob::dispatch($this,$token);
    }
 
     public function path()

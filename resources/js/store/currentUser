@@ -8,11 +8,11 @@ const state = {
 const getters = {};
 const actions = {
 
-  loginUser({commit,state},user){
+  loginUser({commit,state,dispatch},user){
     axios.post('/api/v1/login',user,{
   }).then(response=>{
 
-      this.createUserToken(response);
+      dispatch('createUserToken',response);
 
       commit('setUser',response.data.user);
       commit('loggedIn',true);
@@ -25,7 +25,7 @@ const actions = {
   });
 },
 
-createUserToken(response){
+createUserToken({commit},response){
   let accessToken= JSON.stringify('Bearer ' + response.data.access_token);
 
   let bearerToken= accessToken.replace(/\\n/g, '');

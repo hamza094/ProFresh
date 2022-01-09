@@ -40,8 +40,6 @@ public function login(Request $request)
        return response()->json('User logout successfully', 200);
 
    }
-
-
 }
 
 ?>
