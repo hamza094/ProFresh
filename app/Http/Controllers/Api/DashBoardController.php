@@ -24,6 +24,6 @@ class DashBoardController extends ApiController
 
     public function projectcount(){
       $projectcount=auth()->user()->projects->count();
-      return response()->json($projectcount); 
+      return response()->json($projectcount);
     }
 }

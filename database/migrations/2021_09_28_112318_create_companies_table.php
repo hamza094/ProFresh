@@ -17,7 +17,7 @@ class CreateCompaniesTable extends Migration
             $table->id();
             $table->string("name");
             $table->text("about");
-            $table->integer('user_id');
+            $table->uuid('user_id');
             $table->string("country");
             $table->string('address');
             $table->bigInteger('po_box')->nullable();

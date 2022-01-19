@@ -5,7 +5,6 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 
 use App\Models\Appointment;
-use App\Models\User;
 use App\Models\Project;
 
 class AppointmentSeeder extends Seeder
@@ -17,10 +16,9 @@ class AppointmentSeeder extends Seeder
      */
     public function run()
     {
-      $users= User::all();
-      $projects = Project::all();
+       $projects = Project::all();
 
-        $projects->each(function ($project) use ($users) {
+        $projects->each(function ($project){
             Appointment::factory(2)->create([
                 'project_id' => $project->id
             ])->each(function($appointment) use($project) {

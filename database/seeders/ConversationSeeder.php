@@ -5,7 +5,6 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use App\Models\Project;
 use App\Models\Conversation;
-use App\Models\User;
 
 class ConversationSeeder extends Seeder
 {
@@ -16,15 +15,13 @@ class ConversationSeeder extends Seeder
      */
     public function run()
     {
-      $users= User::all();
       $projects = Project::all();
 
-        $projects->each(function ($project) use ($users) {
+        $projects->each(function ($project){
             Conversation::factory(1)->create([
                 'group_id' => $project->group->id,
-            ])->each(function($conversation) use($project) {
-                $conversation->update(['user_id'=>$project->user->id]);
-            });
+                'user_id'=>$project->user->id,
+            ]);
         });
     }
 }

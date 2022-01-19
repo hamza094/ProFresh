@@ -14,10 +14,11 @@ use Laravel\Cashier\Billable;
 use Laravel\Sanctum\HasApiTokens;
 use App\Jobs\QueuedVerifyEmailJob;
 use App\Jobs\QueuedPasswordResetJob;
+use App\Traits\HasUuid;
 
 class User extends Authenticatable implements Searchable, MustVerifyEmail
 {
-    use HasFactory, Notifiable, Billable, HasApiTokens;
+    use HasFactory, Notifiable, Billable, HasApiTokens, HasUuid;
 
     protected $guarded = [];
 
@@ -29,7 +30,7 @@ class User extends Authenticatable implements Searchable, MustVerifyEmail
      * @var array
      */
 
-      public static function boot()
+      /*protected static function boot()
     {
         parent::boot();
         static::deleting(function ($user) {
@@ -37,7 +38,7 @@ class User extends Authenticatable implements Searchable, MustVerifyEmail
             $user->projects->each->forceDelete();
 
         });
-    }
+    }*/
 
 
     /**
@@ -88,6 +89,11 @@ class User extends Authenticatable implements Searchable, MustVerifyEmail
     public function appointments(){
       return $this->hasMany(Appointment::class);
     }
+
+    public function phone()
+   {
+       return $this->hasOne(UserInfo::class);
+   }
 
     public function getSearchResult(): SearchResult
    {

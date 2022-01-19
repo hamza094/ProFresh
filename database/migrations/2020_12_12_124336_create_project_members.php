@@ -16,8 +16,8 @@ class CreateProjectMembers extends Migration
         Schema::create('project_members', function (Blueprint $table) {
             $table->id();
             $table->unsignedInteger('project_id');
-          $table->unsignedInteger('user_id');
-          $table->integer('active')->default(0);
+            $table->uuid('user_id');
+            $table->integer('active')->default(0);
             $table->timestamps();
 
             $table->index(['project_id','user_id']);

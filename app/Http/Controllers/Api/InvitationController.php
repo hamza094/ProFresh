@@ -14,7 +14,7 @@ class InvitationController extends ApiController
   private $invitationService;
 
   /**
-    * Service For Invitation Feature 
+    * Service For Invitation Feature
     *
     * App\Service\InvitationService
     */
@@ -56,7 +56,7 @@ class InvitationController extends ApiController
      */
   public function accept(Project $project)
   {
-    $this->invitationService->acceptInvitation($project); 
+    $this->invitationService->acceptInvitation($project);
   }
 
    /**
@@ -66,9 +66,9 @@ class InvitationController extends ApiController
      */
   public function ignore(Project $project)
   {
-    $project->members()->detach(Auth::user());     
+    $project->members()->detach(Auth::user());
   }
-  
+
     /**
      * Cancel project invitation request by project owner.
      *
@@ -76,7 +76,7 @@ class InvitationController extends ApiController
      */
   public function cancel(Project $project,User $user)
   {
-    $this->invitationService->cancelInvitation($user,$project); 
+    $this->invitationService->cancelInvitation($user,$project);
   }
 
 }

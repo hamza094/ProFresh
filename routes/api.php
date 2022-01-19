@@ -30,8 +30,6 @@ use App\Http\Controllers\Api\
 
 Route::group(['prefix'=>'v1'], function () {
 
-Route::group(['middleware' => ['auth:sanctum']], function () {
-
 Route::get('/welcome',[WelcomeController::class,'index']);
 //Return All Users
 Route::get('/users',[UserController::class,'index']);
@@ -113,6 +111,5 @@ Route::get('/projectoverview', [ProjectController::class,'projectoverview']);
 //Dashboard Routes
 Route::get('/projectcount',[DashboardController::class,'projectcount']);
 Route::get('/userproject',[DashboardController::class,'userprojects']);
-});
 
 });

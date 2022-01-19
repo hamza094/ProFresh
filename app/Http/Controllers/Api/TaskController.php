@@ -10,7 +10,7 @@ use App\Models\Task;
 
 class TaskController extends ApiController
 {
-  
+
   public function index(Project $project)
   {
     return $project->tasks()->latest()->get();
@@ -35,7 +35,7 @@ class TaskController extends ApiController
        $task->incomplete();
       }
     }
-    
+
   public function destroy(Project $project,Task $task)
   {
     $task->delete();

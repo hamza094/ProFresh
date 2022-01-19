@@ -10,11 +10,11 @@ use Illuminate\Foundation\Validation\ValidatesRequests;
 
 
 class FeaturesController extends ApiController
-{ 
+{
   private $featureService;
 
   /**
-    * Service For Project Feature 
+    * Service For Project Feature
     * App\Service\FeatureService
     */
   public function __construct(FeatureService $featureService)
@@ -71,7 +71,7 @@ class FeaturesController extends ApiController
     public function mail(Project $project,Request $request)
     {
         $this->featureService->sendMailToMember($project,$request);
-    } 
+    }
 
 
      /**

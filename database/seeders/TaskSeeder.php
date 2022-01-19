@@ -3,9 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-
 use App\Models\Project;
-use App\Models\User;
 use App\Models\Task;
 use Illuminate\Database\Eloquent\Factories\Sequence;
 
@@ -19,11 +17,9 @@ class TaskSeeder extends Seeder
      */
     public function run()
     {
-
-      $users= User::all();
       $projects = Project::all();
 
-        $projects->each(function ($project) use ($users) {
+        $projects->each(function ($project){
             Task::factory(2)
             ->state(new Sequence(
                 ['completed' => 0],

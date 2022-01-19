@@ -15,7 +15,7 @@ class ProfileController extends ApiController
   private $profileService;
 
   /**
-    * Service For Profile Feature 
+    * Service For Profile Feature
     *
     * App\Service\ProfileService
     */
@@ -40,8 +40,8 @@ class ProfileController extends ApiController
    }else{
    $paypal='unsubscribed';
    }
- 
-   //Show paypal plan 
+
+   //Show paypal plan
    $data=$this->userService->showPaypalPlan($user);
 
    return view('profile.show',compact('user',$user,'members',
@@ -63,7 +63,7 @@ class ProfileController extends ApiController
     $user_path=$this->storeFile($request,'avatar',$user->id);
 
     $user->update(['avatar_path'=>$user_path]);
-      
+
     return response([], 204);
   }
 
@@ -79,7 +79,7 @@ class ProfileController extends ApiController
   {
     $user->update($request->validated());
 
-    $this->userService->updatePassword($user);       
+    $this->userService->updatePassword($user);
   }
 
   public function destroy(User $user)

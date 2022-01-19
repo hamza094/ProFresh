@@ -21,8 +21,8 @@ class ConversationController extends ApiController
       $conversationService = new ConversationService();
 
       if(request()->has('file')){
-      
-      $conversation=$conversationService->storeFileConversation($project,$request);  
+
+      $conversation=$conversationService->storeFileConversation($project,$request);
 
     }else{
 

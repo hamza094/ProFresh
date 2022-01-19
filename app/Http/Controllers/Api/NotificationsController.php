@@ -24,7 +24,7 @@ class NotificationsController extends ApiController
   public function destroy(User $user, $notificationId)
   {
       $notification = auth()->user()->notifications()->findOrFail($notificationId);
-      
+
       $notification->markAsRead();
 
       return json_encode(

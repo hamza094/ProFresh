@@ -13,5 +13,3 @@ class AuthenticationController extends ApiController
         return auth()->user();
     }
 }
-
-

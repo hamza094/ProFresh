@@ -18,7 +18,7 @@ class ProjectController extends ApiController
     private $projectService;
 
   /**
-    * Service For Project Feature 
+    * Service For Project Feature
     *
     * App\Service\FeatureService
     */
@@ -35,7 +35,7 @@ class ProjectController extends ApiController
 
         $project = Auth::user()->projects()->create($request->validated());
 
-        $this->projectService->createProjectGroupChat($project);     
+        $this->projectService->createProjectGroupChat($project);
 
         DB::commit();
 
@@ -58,7 +58,7 @@ class ProjectController extends ApiController
       $conversation_count=$project->group->conversations->count();
 
       return view('project.show',compact('project',$project,'score_sum',$score_sum,
-          'conversation_count',$conversation_count));          
+          'conversation_count',$conversation_count));
     }
 
     public function update(Project $project,ProjectRequest $request)
@@ -92,7 +92,7 @@ class ProjectController extends ApiController
       $project->forceDelete();
 
       $appointment->activity()->delete();
-     
+
         if(request()->expectsJson()){
             return response(['status'=>'project deleted']);
       }
@@ -118,6 +118,6 @@ class ProjectController extends ApiController
 
 
      public function overview(){
-      
+
      }
 }

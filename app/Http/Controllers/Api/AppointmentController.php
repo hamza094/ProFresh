@@ -11,9 +11,9 @@ use App\Services\AppointmentService;
 class AppointmentController extends ApiController
 {
   private $appointmentService;
-  
+
   /**
-    * Service For Appointment 
+    * Service For Appointment
     *
     * App\Service\Appointment Service
     */
@@ -29,13 +29,13 @@ class AppointmentController extends ApiController
 
   public function store(Project $project,AppointmentRequest $request)
   {
-    
+
     $appointment=$project->appointments()->create($request->validated());
 
-    $this->appointmentService->performAppointmentRelatedTasks($project,$appointment);  
+    $this->appointmentService->performAppointmentRelatedTasks($project,$appointment);
   }
 
-    public function update(Project $project,Appointment $appointment,AppointmentRequest 
+    public function update(Project $project,Appointment $appointment,AppointmentRequest
       $request)
     {
       $appointment->update($request->validated());
@@ -49,7 +49,7 @@ class AppointmentController extends ApiController
        $appointment->delete();
 
        $appointment->activity()->delete();
-       
+
        $project->recordActivity('deleted_appointment',$appointment->title);
      }
 }

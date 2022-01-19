@@ -15,7 +15,7 @@ class CreateActivitiesTable extends Migration
     {
         Schema::create('activities', function (Blueprint $table) {
            $table->id();
-           $table->unsignedInteger('user_id');
+           $table->uuid('user_id');
            $table->unsignedInteger('project_id')->nullable();
            $table->nullableMorphs('subject');
            $table->text('changes')->nullable();

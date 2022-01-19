@@ -17,7 +17,7 @@ class CreateProjectsTable extends Migration
             $table->id();
             $table->string("name");
             $table->text("about");
-            $table->integer('user_id');
+            $table->foreignUuid('user_id')->constrained()->onDelete('cascade');
             $table->integer('company_id')->nullable();
             $table->unsignedInteger('group_id')->nullable();
             $table->text('notes')->nullable();
