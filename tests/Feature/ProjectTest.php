@@ -20,7 +20,6 @@ class ProjectTest extends TestCase
      * @return void
      */
 
-    /** @test */
     public function auth_user_can_create_project()
     {
         $this->signIn();
@@ -30,7 +29,6 @@ class ProjectTest extends TestCase
           $this->withoutExceptionHandling()->assertDatabaseHas('projects',['name'=>'Json']);
     }
 
-    /** @test */
    public function a_project_requires_a_name(){
         $this->signIn();
         $project=make('App\Models\Project',[
@@ -41,7 +39,6 @@ class ProjectTest extends TestCase
 
     }
 
-     /** @test */
     public function updated_project_requires_a_name(){
         $this->signIn();
         $project=make('App\Models\Project',[
@@ -52,7 +49,6 @@ class ProjectTest extends TestCase
 
     }
 
-    /** @test */
     public function auth_user_visit_project(){
         $this->signIn();
         $project=create('App\Models\Project');
@@ -61,7 +57,6 @@ class ProjectTest extends TestCase
 
 
 
-    /** @test */
     public function authorized_user_can_update_project(){
       $user=create('App\Models\User');
        $this->signIn($user);
@@ -73,7 +68,6 @@ class ProjectTest extends TestCase
         $this->assertDatabaseHas('projects',['id'=>$project->id,'mobile'=>$mobile]);
     }
 
-    /** @test */
     public function authorized_user_can_change_project_stage(){
       $user=create('App\Models\User');
        $this->signIn($user);
@@ -85,7 +79,6 @@ class ProjectTest extends TestCase
       $this->assertDatabaseHas('projects',['id'=>$project->id,'stage'=>$stage]);
    }
 
-   /** @test */
    public function authorized_user_can_update_reason(){
      $user=create('App\Models\User');
       $this->signIn($user);
@@ -99,7 +92,6 @@ class ProjectTest extends TestCase
         $this->assertDatabaseHas('projects',['id'=>$project->id,'postponed'=>$reason]);
    }
 
-/** @test */
    public function project_owner_can_trash_project(){
      $user=create('App\Models\User');
       $this->signIn($user);
@@ -110,7 +102,6 @@ class ProjectTest extends TestCase
 $this->assertCount(1,$project->withTrashed()->get());
    }
 
-   /** @test */
       public function project_owner_can_delete_project(){
         $user=create('App\Models\User');
          $this->signIn($user);
@@ -139,9 +130,7 @@ public function project_sms_link_working(){
 }
 
 
-/**
-* @test
-*/
+
 public function user_can_download_project_export()
 {
   $this->signIn();
@@ -155,7 +144,6 @@ public function user_can_download_project_export()
     });
 }
 
-/** @test */
 public function authorize_user_can_update_note(){
   $user=create('App\Models\User');
    $this->signIn($user);
@@ -166,7 +154,6 @@ public function authorize_user_can_update_note(){
   $this->assertDatabaseHas('projects',['notes'=>$notes]);
 }
 
-        /** @test */
     public function group_deleted_on_user_deletion()
     {
       $user=create('App\Models\User');

@@ -15,7 +15,7 @@ class RecordActivityTest extends TestCase
      * @return void
      */
 
-     /** @test */
+
 public function creating_a_project()
 {
   $this->signIn();
@@ -27,7 +27,6 @@ public function creating_a_project()
     });
 }
 
-/** @test*/
  public function updating_a_project()
 {
   $this->signIn();
@@ -45,7 +44,6 @@ public function creating_a_project()
     });
 }
 
-/** @test */
 public function deleting_project_remove_all_project_related_activities()
 {
   $user=create('App\Models\User');
@@ -56,7 +54,6 @@ $this->assertCount(0,$project->activity);
 }
 
 
-/** @test */
 public function creating_a_task(){
     $this->signIn();
     $project=create('App\Models\Project',['user_id'=>auth()->id()]);
@@ -69,7 +66,6 @@ public function creating_a_task(){
      });
 }
 
-/** @test */
 public function updating_a_task(){
    $this->signIn();
    $project=create('App\Models\Project',['user_id'=>auth()->id()]);
@@ -83,7 +79,6 @@ public function updating_a_task(){
     });
 }
 
-/** @test */
 public function deleting_a_task(){
 $this->signIn();
 $project=create('App\Models\Project',['user_id'=>auth()->id()]);
@@ -93,7 +88,6 @@ $this->assertCount(3,$project->activity);
 $this->assertEquals('deleted_task',$project->activity->last()->description);
 }
 
-/** @test */
 public function creating_an_appointment(){
   $this->signIn();
   $project=create('App\Models\Project');
@@ -106,7 +100,6 @@ public function creating_an_appointment(){
       });
 }
 
-/** @test */
 public function updating_an_appointment(){
   $user=create('App\User');
    $this->signIn($user);
@@ -122,7 +115,6 @@ public function updating_an_appointment(){
    });
 }
 
-/** @test */
 public function deleting_an_appointment(){
   $this->signIn();
   $project=create('App\Models\Project');
@@ -132,7 +124,6 @@ $this->assertCount(3,$project->activity);
 $this->assertEquals('deleted_appointment',$project->activity->last()->description);
 }
 
-/** @test */
 public function invitation_sent_to_user(){
   $user=create('App\Models\User');
    $this->signIn($user);
@@ -145,7 +136,6 @@ public function invitation_sent_to_user(){
    $this->assertEquals('sent_member_project',$project->activity->last()->description);
  }
 
-/** @test */
  public function user_accept_project_invitation(){
    $this->signIn();
      $project = create('App\Models\Project');
@@ -156,7 +146,6 @@ $this->assertCount(2,$project->activity);
 $this->assertEquals('accept_member_project',$project->activity->last()->description);
 }
 
-/** @test */
   public function canceling_project_membership(){
     $user=create('App\Models\User');
     $this->signIn($user);

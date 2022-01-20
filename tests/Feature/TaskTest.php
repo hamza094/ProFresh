@@ -15,7 +15,7 @@ class TaskTest extends TestCase
      * @return void
      */
 
-     /** @test */
+
      public function task_requires_a_body(){
         $user=create('App\Models\User');
     $this->signIn($user);
@@ -25,7 +25,7 @@ class TaskTest extends TestCase
             ->assertSessionHasErrors('body');
      }
 
-     /** @test */
+
      public function a_project_can_have_a_task()
      {
        $user=create('App\Models\User');
@@ -37,8 +37,8 @@ class TaskTest extends TestCase
       //$this->get($project->path())->assertSee($task->body);
    }
 
-   /** @test */
-  /*  public function only_the_owner_can_update_tasks(){
+
+    public function only_the_owner_can_update_tasks(){
       $this->signIn();
       $project=create('App\Project');
       $task=$project->addTask('test task');
@@ -46,9 +46,9 @@ class TaskTest extends TestCase
           ->assertStatus(403);
       $this->assertDatabaseMissing('tasks',['body'=>'changed','completed'=>true]);
 
-  }*/
+  }
 
-   /** @test */
+
  public function task_marked_as_completed(){
    $user=create('App\Models\User');
     $this->signIn($user);
@@ -58,7 +58,7 @@ class TaskTest extends TestCase
      $this->assertDatabaseHas('tasks',['body'=>'changed','completed'=>true]);
  }
 
- /** @test */
+
 public function task_marked_as_incomplete(){
   $user=create('App\Models\User');
    $this->signIn($user);
@@ -69,7 +69,7 @@ public function task_marked_as_incomplete(){
  $this->assertDatabaseHas('tasks',['body'=>'changed','completed'=>false]);
 }
 
-/** @test */
+
    public function signIn_user_can_delete_task(){
       $user=create('App\Models\User');
       $this->signIn($user);

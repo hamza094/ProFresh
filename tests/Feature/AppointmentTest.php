@@ -20,7 +20,7 @@ class AppointmentTest extends TestCase
      * @return void
      */
 
-    public function setup() :void 
+    public function setup() :void
     {
         parent::setup();
         $this->user=User::factory()->create();
@@ -28,7 +28,6 @@ class AppointmentTest extends TestCase
         $this->project=Project::factory()->create([ 'user_id'=>$this->user->id]);
     }
 
-     /** @test */
     public function authorized_user_create_appointment()
     {
         $data=[
@@ -44,19 +43,17 @@ class AppointmentTest extends TestCase
         $this->assertDatabaseHas('appointments',['title'=>'Project Discussion']);
     }
 
-    /** @test */
-    /*public function an_appointment_requires_a_title()
-    {
 
+      public function an_appointment_requires_a_title()
+    {
        $appointment=Appointment::factory()->make(['title'=>null,'project_id'=>$this->project->id]);
 
        $this->withoutExceptionHandling()->post('api/project/'.$this->project->id.'/appointment',
         $appointment->toArray())
             ->assertSessionHasErrors('title');
-    }*/
+    }
 
-   /** @test */
-    public function an_appointment_can_be_updated()
+     public function an_appointment_can_be_updated()
     {
        $data=[
          'title'=>'Project Enhancement',
@@ -78,7 +75,6 @@ class AppointmentTest extends TestCase
        $this->assertDatabaseHas('appointments',['id'=>$appointment->id,'zone'=>'Asia/pacific']);
     }
 
-     /** @test */
     public function signIn_user_can_delete_appointment()
     {
         $appointment=Appointment::factory()->create(['project_id'=>$this->project->id]);

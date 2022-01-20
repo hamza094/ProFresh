@@ -18,7 +18,7 @@ class ScoreTest extends TestCase
      * @return void
      */
 
-    /** @test */
+
     public function get_sum_of_project_score_on_performing_project_related_activity()
     {
         $this->signIn();

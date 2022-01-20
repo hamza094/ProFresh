@@ -13,7 +13,7 @@ class SubscribeTest extends TestCase
 {
   use RefreshDatabase;
 
-  /** @test */
+
   public function a_signIn_user_subscribe_to_project()
   {
       $this->signIn();
@@ -22,7 +22,7 @@ class SubscribeTest extends TestCase
       $this->assertCount(1, $project->subscribers);
   }
 
-  /** @test */
+
   public function a_signIn_user_unsubscribe_to_project()
   {
       $this->signIn();

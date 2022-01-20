@@ -15,7 +15,6 @@ class GroupTest extends TestCase
      * @return void
      */
 
-    /** @test */
     public function chat_group_added_on_project_creation()
     {
          $this->signIn();
@@ -27,7 +26,6 @@ class GroupTest extends TestCase
 
     }
 
-       /** @test */
           public function project_member_add_to_chat_group(){
             $this->signIn();
             $group=create('App\Models\Group');
@@ -38,7 +36,6 @@ class GroupTest extends TestCase
             $this->assertTrue($project->group->users->contains($user));
        }
 
-      /** @test */
     public function authorized_user_participated_in_group_chat()
     {
       $user=create('App\Models\User');
@@ -50,7 +47,6 @@ class GroupTest extends TestCase
         $this->assertDatabaseHas('conversations',['message'=>'abra ka dabra']);
     }
 
-        /** @test */
     public function conversation_deleted_on_group_deletion()
     {
       $user=create('App\Models\User');

@@ -15,7 +15,6 @@ class InvitationTest extends TestCase
      * @return void
      */
 
-     /** @test */
      public function project_owner_can_invite_user(){
        $user=create('App\Models\User');
        $this->signIn($user);
@@ -27,7 +26,6 @@ class InvitationTest extends TestCase
         $this->assertTrue($project->members->contains($InvitedUser));
       }
 
-      /** @test */
         public function project_owner_can_not_reinvite(){
           $user=create('App\Models\User');
           $this->signIn($user);
@@ -42,7 +40,6 @@ class InvitationTest extends TestCase
           $this->assertCount(1,$project->members);
           }
 
-          /** @test */
           public function authorized_signIn_user_accept_project_request(){
             $this->signIn();
             $project = create('App\Models\Project');
@@ -53,7 +50,6 @@ class InvitationTest extends TestCase
        "project_id" => $project->id, "user_id" => $user->id,'active'=>1]);
        }
 
-       /** @test */
        public function authorized_user_can_ignore_project_request(){
          $user1=create('App\Models\User');
          $this->signIn($user1);
@@ -65,7 +61,6 @@ class InvitationTest extends TestCase
     "project_id" => $project->id, "user_id" => $user->id]);
     }
 
-       /** @test */
        public function project_owner_can_cancel_project_member_membership(){
           $user=create('App\Models\User');
           $this->signIn($user);

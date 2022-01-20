@@ -90,8 +90,8 @@ Route::get('/conversation',[ConversationController::class,'conversation']);
 Route::get('/users/search', [InvitationController::class,'search']);
 
 //Notifications Routes
-Route::get('/profile/{user}/notifications', [NotificationsController::class,'index']);
-Route::delete('/profile/{user}/notifications/{notification}', [NotificationsController::class,
+Route::get('/user/{user}/notifications', [NotificationsController::class,'index']);
+Route::delete('/user/{user}/notifications/{notification}', [NotificationsController::class,
 	'destroy']);
 
 //Profile Routes

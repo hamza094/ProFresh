@@ -9,11 +9,12 @@ use App\Models\ProjectScore;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\Activity;
 use Illuminate\Support\Facades\Redis;
+use Cviebrock\EloquentSluggable\Sluggable;
 use Auth;
 
 class Project extends Model
 {
-  use HasFactory, SoftDeletes, RecordActivity;
+  use HasFactory, SoftDeletes, RecordActivity, Sluggable;
 
   protected $guarded=[];
   protected $dates = ['created_at'];
@@ -21,8 +22,27 @@ class Project extends Model
 
     public function path()
     {
-        return "/api/projects/{$this->id}";
+        return "/api/v1/projects/{$this->id}";
     }
+
+    /**
+ * Return the sluggable configuration array for this model.
+ *
+ * @return array
+ */
+  public function sluggable(): array
+  {
+    return [
+        'slug' => [
+            'source' => 'name'
+        ]
+    ];
+  }
+
+  public function getRouteKeyName()
+  {
+    return 'slug';
+  }
 
     protected static function boot()
     {

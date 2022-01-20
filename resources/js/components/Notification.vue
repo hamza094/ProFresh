@@ -34,17 +34,14 @@ export default{
           return this.$store.state.currentUser.user
         }
       },
-          endpoint() {
-              return `/profile/${this.user.id}/notifications`;
-          }
       },
     methods:{
       fetchNotifications() {
-           axios.get('/profile/' + this.user.id + '/notifications')
+           axios.get('/api/v1/user/' + this.user.id + '/notifications')
              .then(response => this.notifications = response.data);
        },
             markAsRead(notification){
-              axios.delete('/profile/'+this.user.id+'/notifications/'+notification.id)
+              axios.delete('/api/v1/user/'+this.user.id+'/notifications/'+notification.id)
               .then(response => {
                   this.fetchNotifications();
                   document.location.replace(response.data.link);

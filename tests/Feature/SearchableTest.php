@@ -24,7 +24,7 @@ class SearchableTest extends TestCase
 
      /** User Searchable*/
 
-     /** @test */
+    /** @test */
      public function it_can_search_user_model_search_aspect()
      {
          User::create(['name'=>'john doe','email'=>'johna_pises@yahoo.com','password'=>'1234']);

@@ -11,14 +11,14 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 class AppointmentTest extends TestCase
 {
   use RefreshDatabase;
-  
+
     /**
      * A appointment unit test.
      *
      * @return void
      */
 
-     /** @test */
+
      public function it_belongs_to_a_project()
      {
           $this->login();

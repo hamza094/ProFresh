@@ -15,7 +15,7 @@ class NotificationsTest extends TestCase
      * @return void
      */
 
-     /** @test */
+
      public function invited_user_can_get_project_invitation_notification(){
        $user=create('App\Models\User');
         $this->signIn($user);
@@ -27,7 +27,7 @@ class NotificationsTest extends TestCase
         $this->assertCount(1,$InvitedUser->fresh()->notifications);
       }
 
-      /** @test */
+
       public function project_owner_get_accepted_project_notification(){
         $this->signIn();
           $project = create('App\Models\Project');
@@ -37,7 +37,7 @@ class NotificationsTest extends TestCase
    $this->assertCount(1,$project->owner->fresh()->notifications);
    }
 
-   /** @test */
+
   public function authorized_user_can_get_notification_when_project_update(){
      $this->signIn($user=create('App\Models\User'));
      $project=create('App\Models\Project',['user_id'=>$user->id]);
@@ -52,7 +52,7 @@ class NotificationsTest extends TestCase
      $this->assertCount(2,$thomas->fresh()->notifications);
   }
 
-  /** @test */
+
   public function authorized_can_get_notification_when_task_is_added(){
      $this->signIn($user=create('App\Models\User'));
      $project=create('App\Models\Project',['user_id'=>$user->id]);
@@ -67,7 +67,7 @@ class NotificationsTest extends TestCase
       $this->assertCount(2,$thomas->fresh()->notifications);
   }
 
-  /** @test */
+
   public function authorized_can_get_notification_when_appointment_is_added(){
      $this->signIn($user=create('App\Models\User'));
      $project=create('App\Models\Project',['user_id'=>$user->id]);
@@ -83,8 +83,8 @@ class NotificationsTest extends TestCase
         'strtdt'=>'11-20-17','strttm'=>'14:05','zone'=>'Asia/pacific','outcome'=>'Not intrested']);
       $this->assertCount(2,$thomas->fresh()->notifications);
   }
-    
-  /** @test */
+
+
   public function signIn_user_can_not_get_his_notification(){
      $this->signIn($user=create('App\Models\User'));
      $project=create('App\Models\Project',['user_id'=>$user->id]);
@@ -97,9 +97,9 @@ class NotificationsTest extends TestCase
       $this->post('/api/project/'.$project->id.'/task',['body'=>'simpson']);
       $this->assertCount(1,$thomas->fresh()->notifications);
   }
-    
 
-      /** @test */
+
+
  public function user_can_fetch_their_notifications()
  {
    $user=create('App\Models\User');
@@ -114,7 +114,7 @@ class NotificationsTest extends TestCase
      $this->assertCount(1,$response);
  }
 
- /** @test */
+
   public function a_user_can_clear_a_notification()
   {
     $user=create('App\Models\User');

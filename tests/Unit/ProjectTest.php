@@ -17,7 +17,7 @@ class ProjectTest extends TestCase
      * @return void
      */
 
-     /** @test */
+
   public function a_project_can_make_a_string_path(){
     $this->signIn();
       $project=create('App\Models\Models\Project');
@@ -26,7 +26,7 @@ class ProjectTest extends TestCase
   }
 
 
-/** @test */
+
   public function a_project_has_a_creator()
   {
     $this->signIn();
@@ -34,7 +34,7 @@ class ProjectTest extends TestCase
       $this->assertInstanceOf('App\Models\User',$project->user);
   }
 
-  /** @test */
+
   public function a_project_can_add_a_task()
   {
       $this->signIn();
@@ -43,7 +43,7 @@ class ProjectTest extends TestCase
       $this->assertCount(1,$project->tasks);
   }
 
-  /** @test */
+
  public function a_project_has_tasks()
 {
   $this->signIn();
@@ -51,7 +51,7 @@ class ProjectTest extends TestCase
     $this->assertInstanceOf('Illuminate\Database\Eloquent\Collection', $project->tasks);
 }
 
-/** @test */
+
 public function a_project_has_appointments()
 {
 $this->signIn();
@@ -59,7 +59,7 @@ $this->signIn();
   $this->assertInstanceOf('Illuminate\Database\Eloquent\Collection', $project->appointments);
 }
 
-  /** @test */
+
   public function an_project_can_be_followed_to(){
     $this->signIn();
       $project=create('App\Models\Project');
@@ -67,7 +67,7 @@ $this->signIn();
       $this->assertEquals(1,$project->subscribers()->where('user_id',$userId)->count());
   }
 
-  /** @test */
+
 public function an_event_can_be_unfollowed_from()
 {
   $this->signIn();
@@ -77,7 +77,7 @@ public function an_event_can_be_unfollowed_from()
    $this->assertCount(0, $project->subscribers);
 }
 
-/** @test */
+
   public function it_can_invites_a_user(){
     $this->signIn();
       $project = create('App\Models\Project');
