@@ -10,6 +10,9 @@ use App\Mail\ProjectMail;
 use App\Exports\ProjectsExport;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Models\User;
+use App\Models\Project;
+use Laravel\Sanctum\Sanctum;
+use Illuminate\Support\Facades\Hash;
 
 class ProjectTest extends TestCase
 {
@@ -20,6 +23,22 @@ class ProjectTest extends TestCase
      * @return void
      */
 
+     public function setUp() :void
+     {
+         parent::setUp();
+
+         // create a user
+        $user=User::factory()->create([
+             'email'=>'johndoe@example.org',
+             'password'=>Hash::make('testpassword')
+         ]);
+
+         Sanctum::actingAs(
+             $user,
+         );
+
+     }
+
     public function auth_user_can_create_project()
     {
         $this->signIn();
@@ -29,7 +48,7 @@ class ProjectTest extends TestCase
           $this->withoutExceptionHandling()->assertDatabaseHas('projects',['name'=>'Json']);
     }
 
-   public function a_project_requires_a_name(){
+    public function a_project_requires_a_name(){
         $this->signIn();
         $project=make('App\Models\Project',[
             'name'=>null
@@ -48,14 +67,12 @@ class ProjectTest extends TestCase
             ->assertSessionHasErrors('name');
 
     }
-
-    public function auth_user_visit_project(){
-        $this->signIn();
-        $project=create('App\Models\Project');
-        $this->get($project->path())->assertSee($project->id);
+    /** @test */
+    public function auth_user_can_view_project_resource(){
+        $project=Project::factory()->create();
+        $this->getJson($project->path())->assertSee($project->id)
+        ->assertStatus(200);
     }
-
-
 
     public function authorized_user_can_update_project(){
       $user=create('App\Models\User');

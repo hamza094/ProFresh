@@ -29,5 +29,5 @@ class ProjectHelper extends Controller
     $path = Storage::disk('s3')->url($filename);
     return $path;
   }
-
+  
 }

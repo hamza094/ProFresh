@@ -110,6 +110,10 @@ Route::get('/projectoverview', [ProjectController::class,'projectoverview']);
 
 //Dashboard Routes
 Route::get('/projectcount',[DashboardController::class,'projectcount']);
-Route::get('/userproject',[DashboardController::class,'userprojects']);
+Route::get('/userprojects',[DashboardController::class,'userprojects']);
 
+});
+
+Route::fallback(function() {
+    return response()->json(['message' => 'Not Found.'], 404);
 });

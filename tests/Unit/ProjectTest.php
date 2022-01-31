@@ -5,8 +5,8 @@ namespace Tests\Unit;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use App\Task;
-use App\Project;
+use App\Models\Task;
+use App\Models\Project;
 
 class ProjectTest extends TestCase
 {
@@ -17,20 +17,17 @@ class ProjectTest extends TestCase
      * @return void
      */
 
-
+  /** @test */
   public function a_project_can_make_a_string_path(){
-    $this->signIn();
-      $project=create('App\Models\Models\Project');
+      $project=Project::factory()->create();
       $this->assertEquals(
-          "/api/projects/{$project->id}",$project->path());
+          "/api/v1/projects/{$project->slug}",$project->path());
   }
 
-
-
+  /** @test */
   public function a_project_has_a_creator()
   {
-    $this->signIn();
-      $project=create('App\Models\Project');
+      $project=Project::factory()->create();
       $this->assertInstanceOf('App\Models\User',$project->user);
   }
 

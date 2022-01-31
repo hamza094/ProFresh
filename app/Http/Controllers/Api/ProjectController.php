@@ -11,11 +11,16 @@ use App\Http\Requests\ProjectRequest;
 use App\Notifications\ProjectUpdated;
 use App\Services\ProjectService;
 use App\Repository\ProjectRepository;
+use App\Http\Resources\ProjectResource;
 use Illuminate\Support\Facades\DB;
+use F9Web\ApiResponseHelpers;
+use Illuminate\Http\JsonResponse;
 
 class ProjectController extends ApiController
 {
-    private $projectService;
+  use ApiResponseHelpers;
+
+  private $projectService;
 
   /**
     * Service For Project Feature
@@ -53,12 +58,16 @@ class ProjectController extends ApiController
 
     public function show(Project $project)
     {
-      $score_sum=$project->scores()->sum('point');
+      //$score_sum=$project->scores()->sum('point');
 
-      $conversation_count=$project->group->conversations->count();
+      //$conversation_count=$project->group->conversations->count();
 
-      return view('project.show',compact('project',$project,'score_sum',$score_sum,
-          'conversation_count',$conversation_count));
+      /*return view('project.show',compact('project',$project,'score_sum',$score_sum,
+          'conversation_count',$conversation_count));*/
+
+          return new ProjectResource($project);
+
+
     }
 
     public function update(Project $project,ProjectRequest $request)
@@ -81,7 +90,7 @@ class ProjectController extends ApiController
      */
     public function destroy(Project $project)
     {
-      $this->authorize('manage',$project);
+      //$this->authorize('manage',$project);
         $project->delete();
     }
 

@@ -3,7 +3,12 @@
 namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Exception;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 use Throwable;
+
 
 class Handler extends ExceptionHandler
 {
@@ -13,7 +18,7 @@ class Handler extends ExceptionHandler
      * @var array
      */
     protected $dontReport = [
-        //
+
     ];
 
     /**
@@ -40,16 +45,31 @@ class Handler extends ExceptionHandler
     }
 
     /**
-     * Render an exception into an HTTP response.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Throwable  $exception
-     * @return \Symfony\Component\HttpFoundation\Response
-     *
-     * @throws \Throwable
-     */
-    public function render($request, Throwable $exception)
-    {
-        return parent::render($request, $exception);
+       * Register the exception handling callbacks for the application.
+       *
+       * @return void
+       */
+      public function register()
+      {
+          $this->reportable(function (Throwable $e) {
+
+          });
+
+         $this->renderable(function (NotFoundHttpException $e, $request) {
+            if($request->is('api/*')){
+              return response()->json([
+                  'message' => 'Sorry Record not found.'
+              ], 404);
+            }
+      });
+
+    /*$this->renderable(function (HttpException $e, $request) {
+      if($e->getStatuCode() == 404){
+        return response()->json([
+            'message' => 'Whoops you land on wrong area'
+        ], 404);
     }
+  });*/
+
+      }
 }

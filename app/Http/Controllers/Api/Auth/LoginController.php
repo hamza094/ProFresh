@@ -35,7 +35,7 @@ public function login(Request $request)
 
    public function logout(Request $request)
    {
-       $request->user()->tokens()->delete();
+       //$request->user()->tokens()->delete();
 
        return response()->json('User logout successfully', 200);
 

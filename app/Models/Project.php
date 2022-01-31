@@ -20,11 +20,6 @@ class Project extends Model
   protected $dates = ['created_at'];
   protected $appends = ['IsSubscribedTo'];
 
-    public function path()
-    {
-        return "/api/v1/projects/{$this->id}";
-    }
-
     /**
  * Return the sluggable configuration array for this model.
  *
@@ -42,6 +37,11 @@ class Project extends Model
   public function getRouteKeyName()
   {
     return 'slug';
+  }
+
+  public function path()
+  {
+      return "/api/v1/projects/{$this->slug}";
   }
 
     protected static function boot()
@@ -63,11 +63,6 @@ class Project extends Model
             'message'=>$message,
             'point'=>$point
       ]);
-    }
-
-    public function owner()
-    {
-      return $this->belongsTo(User::class,'user_id');
     }
 
    public function user()

@@ -52,3 +52,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 });
 
 });
+
+Route::fallback(function() {
+    return response()->json(['message' => 'Not Found.'], 404);
+});

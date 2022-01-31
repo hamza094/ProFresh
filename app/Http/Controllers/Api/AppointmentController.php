@@ -29,7 +29,6 @@ class AppointmentController extends ApiController
 
   public function store(Project $project,AppointmentRequest $request)
   {
-
     $appointment=$project->appointments()->create($request->validated());
 
     $this->appointmentService->performAppointmentRelatedTasks($project,$appointment);

@@ -10,6 +10,7 @@ import Dashboard from './components/Dashboard/Dashboard';
 import ForgotPassword from './components/Authentication/ForgotPassword';
 import ResetPassword from './components/Authentication/ResetPassword';
 import VerifyPassword from './components/Authentication/VerifyPassword';
+import Project from './components/Projects/Project';
 import Projects from './components/Projects';
 import NotFound from './components/Error';
 
@@ -76,6 +77,12 @@ let router = new Router({
             path: "/dashboard",
             component: Dashboard,
             name: "Dashboard",
+            beforeEnter: auth,
+          },
+          {
+            path: "/project/:slug",
+            component: Project,
+            name: "Project",
             beforeEnter: auth,
           },
           {

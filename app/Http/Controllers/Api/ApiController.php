@@ -15,5 +15,4 @@ use File;
 class ApiController extends Controller
 {
   use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
-
 }

@@ -9,9 +9,11 @@
     "license": "MIT",
     "require": {
         "php": "^7.4|^8.0",
+        "andreaselia/laravel-api-to-postman": "^1.10",
         "barryvdh/laravel-debugbar": "^3.5",
         "bugsnag/bugsnag-laravel": "^2.0",
         "cviebrock/eloquent-sluggable": "^8.0",
+        "f9webltd/laravel-api-response-helpers": "^1.5",
         "fideloper/proxy": "^4.2",
         "friendsofphp/php-cs-fixer": "^2.18",
         "fruitcake/laravel-cors": "^1.0",

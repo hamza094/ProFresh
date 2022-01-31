@@ -2,7 +2,7 @@
 	<div>
      <div class="page-top">Welcome To Your Dashboard</div>
      	<div class="dashboard-project m-4">
-     		<p class="dashboard-heading float-left"><b>Projects: 
+     		<p class="dashboard-heading float-left"><b>Projects:
                 <span v-if="this.active">Active Projects</span>
                 <span v-else-if="this.invite">Invited Projects</span>
                 <span v-else="this.trash">Trashed Projects</span>
@@ -17,23 +17,16 @@
      	<div class="dashboard">
      		<div class="row">
      			<div class="col-md-3" v-for="project in projects">
-                    <a v-bind:href="'/api/projects/' + project.id" class="dashboard-link" target="_blank">
+						  <router-link :to="'/project/'+project.slug" class="dashboard-link">
      				<div class="dashboard-projects mt-5">
                         <span class="float-right"><b>Active</b></span>
      					<p class="mt-3">{{project.name}}</p>
-     					<p>Project Satge:
-                        <span v-if="project.stage==0">Postponed Stage</span> 
-                        <span v-if="project.stage==1">Initial Stage</span>
-                        <span v-if="project.stage==2">Defined Stage</span>
-                        <span v-if="project.stage==3">Designing Stage</span>
-                        <span v-if="project.stage==4">Developing Stage</span>
-                        <span v-if="project.stage==5">Execution Stage</span>
-                        <span v-if="project.stage==6">Closure Stage</span>
+     					    <p>Project Satge:
+                        <span>{{project.stage}} Stage</span>
                      </p>
-     					<p>Project Score:42</p>
-     					<P>Created by:{{project.user.name}}</P>
+     					<p>Project Score: {{project.score}}</p>
      				</div>
-                </a>
+                </router-link>
      			</div>
      		</div>
      	</div>
@@ -51,8 +44,7 @@
 	</div>
 </template>
 <script>
-
-    import ProjectChart from './ProjectChart'    
+    import ProjectChart from './ProjectChart'
 
 export default{
         components: {ProjectChart},
@@ -68,22 +60,22 @@ export default{
     },
     methods:{
       actived(){
-        axios.get('/api/v1/userproject?active=true').
-            then(({data})=>(this.projects=data));
+        axios.get('/api/v1/userprojects').
+            then(({data})=>(this.projects=data.projects));
             this.active=true;
             this.invite=false;
             this.trash=false;
       },
       invited(){
-        axios.get('/api/v1/userproject?invited=true').
-            then(({data})=>(this.projects=data));
+        axios.get('/api/v1/userprojects?invited=true').
+            then(({data})=>(this.projects=data.projects));
             this.active=false;
             this.invite=true;
             this.trash=false;
       },
       trashed(){
-         axios.get('/api/v1/userproject?trashed=true').
-            then(({data})=>(this.projects=data));
+         axios.get('/api/v1/userprojects?trashed=true').
+            then(({data})=>(this.projects=data.projects));
             this.active=false;
             this.invite=false;
             this.trash=true;
