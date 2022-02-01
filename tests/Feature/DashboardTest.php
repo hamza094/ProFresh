@@ -30,7 +30,6 @@ class DashboardTest extends TestCase
          Sanctum::actingAs(
              User::first(),
          );
-
      }
 
     /** @test */
@@ -41,8 +40,10 @@ class DashboardTest extends TestCase
         ->assertStatus(200);
         $project=Project::first();
         $this->deleteJson($project->path());
-        $this->getJson('/api/v1/userprojects?trashed=true')->assertSee($project->name)
+        $response=$this->getJson('/api/v1/userprojects?abandoned=true')->assertSee($project->name)
         ->assertStatus(200);
+        $this->assertEquals(1,$response->json(['projectsCount']));
+
     }
 
    public function project_owner_can_trash_project(){

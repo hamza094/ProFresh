@@ -5,6 +5,7 @@ use App\Http\Resources\ProjectsResource;
 use Illuminate\Http\Request;
 use F9Web\ApiResponseHelpers;
 use Illuminate\Http\JsonResponse;
+use Auth;
 
 class DashboardService
 {
@@ -12,19 +13,24 @@ class DashboardService
 
   public function userProjectsFilters($request)
   {
-    $projects = ProjectsResource::collection(auth()->user()->projects()->get());
+     $userprojects=Auth::user()->projects();
+
+     $projects = $userprojects->get();
 
     if($request->filled('invited'))
     {
-      $projects = ProjectsResource::collection(auth()->user()->members);
+      $projects = Auth::user()->members;
     }
 
-    if($request->filled('trashed'))
+    if($request->filled('abandoned'))
     {
-      $projects = ProjectsResource::collection(auth()->user()->projects()->onlyTrashed()->get());
+      $projects = $userprojects->onlyTrashed()->get();
     }
 
-     return $this->respondWithSuccess(['projects'=>$projects]);
+      return $this->respondWithSuccess([
+      'projects'=>ProjectsResource::collection($projects),
+      'projectsCount'=>$projects->count()
+      ]);
   }
     }
 ?>

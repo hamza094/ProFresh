@@ -19,6 +19,7 @@ class Project extends Model
   protected $guarded=[];
   protected $dates = ['created_at'];
   protected $appends = ['IsSubscribedTo'];
+  protected $with = ['scores'];
 
     /**
  * Return the sluggable configuration array for this model.

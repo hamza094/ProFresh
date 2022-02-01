@@ -2,29 +2,35 @@
 	<div>
      <div class="page-top">Welcome To Your Dashboard</div>
      	<div class="dashboard-project m-4">
-     		<p class="dashboard-heading float-left"><b>Projects:
-                <span v-if="this.active">Active Projects</span>
-                <span v-else-if="this.invite">Invited Projects</span>
-                <span v-else="this.trash">Trashed Projects</span>
+     		<p class="dashboard-heading float-left"><b>Total
+                <span>{{projectState}} Projects:</span>
+								{{projectsCount}}
             </b></p>
      			<span class="float-right">
      			<button class="btn btn-sm btn-primary" @click.prevent="actived">Active Projects</button>
      			<button class="btn btn-sm btn-success" @click.prevent="invited">Invited Projects</button>
-                <button class="btn btn-sm btn-warning" @click.prevent="trashed">Trashed Projects</button>
+                <button class="btn btn-sm btn-danger" @click.prevent="abandoned">Abandoned Projects</button>
              	</span>
      	</div>
         <br><br>
      	<div class="dashboard">
      		<div class="row">
-     			<div class="col-md-3" v-for="project in projects">
+     			<div class="col-md-4" v-for="project in projects">
 						  <router-link :to="'/project/'+project.slug" class="dashboard-link">
      				<div class="dashboard-projects mt-5">
-                        <span class="float-right"><b>Active</b></span>
+                        <span class="float-right">
+													<b>{{projectState}}</b>
+												</span>
      					<p class="mt-3">{{project.name}}</p>
      					    <p>Project Satge:
                         <span>{{project.stage}} Stage</span>
                      </p>
-     					<p>Project Score: {{project.score}}</p>
+     					<p>Project Score:
+								<span v-if="project.score > 0">{{project.score}}</span>
+								<span v-else>No project activity detected project currently scored zero</span>
+
+							</p>
+							<p>Created At: {{project.created_at}}</p>
      				</div>
                 </router-link>
      			</div>
@@ -54,36 +60,54 @@ export default{
       projects:{},
       active:false,
       invite:false,
-      trash:false,
-      projectActive:0,
+      abandon:false,
+			projectState:"",
+      projectsCount:0,
     };
     },
     methods:{
       actived(){
-        axios.get('/api/v1/userprojects').
-            then(({data})=>(this.projects=data.projects));
-            this.active=true;
-            this.invite=false;
-            this.trash=false;
+        axios.get(this.url()).
+            then(({data})=>(this.getData(data)));
+          this.activeState();
       },
       invited(){
-        axios.get('/api/v1/userprojects?invited=true').
-            then(({data})=>(this.projects=data.projects));
-            this.active=false;
-            this.invite=true;
-            this.trash=false;
+        axios.get(this.url()+'?invited=true').
+            then(({data})=>(this.getData(data)));
+						this.invitedState();
       },
-      trashed(){
-         axios.get('/api/v1/userprojects?trashed=true').
-            then(({data})=>(this.projects=data.projects));
-            this.active=false;
-            this.invite=false;
-            this.trash=true;
+      abandoned(){
+         axios.get(this.url()+'?abandoned=true').
+            then(({data})=>(this.getData(data)));
+						this.abandonedState();
       },
+			url(){
+				return '/api/v1/userprojects';
+			},
+			getData(data){
+				this.projects=data.projects,this.projectsCount=data.projectsCount;
+			},
+			activeState(){
+				this.projectState="Active";
+				this.invite=false;
+				this.abandon=false;
+				this.active=true;
+			},
+			invitedState(){
+				this.projectState="Invited";
+				this.active=false;
+				this.abandon=false;
+				this.invite=true;
+			},
+			abandonedState(){
+				this.projectState="Abandoned";
+				this.active=false;
+				this.invite=false;
+				this.abandon=true;
+			}
     },
-    created(){
+    mounted(){
         this.actived();
     }
-
 }
 </script>
