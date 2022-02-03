@@ -43,7 +43,6 @@ class DashboardTest extends TestCase
         $response=$this->getJson('/api/v1/userprojects?abandoned=true')->assertSee($project->name)
         ->assertStatus(200);
         $this->assertEquals(1,$response->json(['projectsCount']));
-
     }
 
    public function project_owner_can_trash_project(){

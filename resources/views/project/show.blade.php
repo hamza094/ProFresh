@@ -65,12 +65,12 @@
             <div class="col-md-4 side_panel">
               @can ('access', $project)
 
-                <project-panel 
-                :project="{{json_encode($project)}}"  
-                :members="{{json_encode($project->activeMembers)}}"  
+                <project-panel
+                :project="{{json_encode($project)}}"
+                :members="{{json_encode($project->activeMembers)}}"
                 :projectgroup="{{json_encode($project->group)}}"
                 :cons="{{json_encode($conversation_count)}}"></project-panel>
-                
+
                 @endcan
             </div>
         </div>

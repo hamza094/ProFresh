@@ -15,6 +15,9 @@
         <br><br>
      	<div class="dashboard">
      		<div class="row">
+					<div v-if="message" class="m-3">
+					<h5><b>{{message}} in {{projectState}} Projects</b></h5>
+					</div>
      			<div class="col-md-4" v-for="project in projects">
 						  <router-link :to="'/project/'+project.slug" class="dashboard-link">
      				<div class="dashboard-projects mt-5">
@@ -63,6 +66,7 @@ export default{
       abandon:false,
 			projectState:"",
       projectsCount:0,
+			message:''
     };
     },
     methods:{
@@ -85,7 +89,9 @@ export default{
 				return '/api/v1/userprojects';
 			},
 			getData(data){
-				this.projects=data.projects,this.projectsCount=data.projectsCount;
+				this.projects=data.projects,
+				this.projectsCount=data.projectsCount,
+				this.message=data.message;
 			},
 			activeState(){
 				this.projectState="Active";

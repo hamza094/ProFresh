@@ -17,6 +17,8 @@ class DashboardService
 
      $projects = $userprojects->get();
 
+     $message='';
+
     if($request->filled('invited'))
     {
       $projects = Auth::user()->members;
@@ -27,9 +29,14 @@ class DashboardService
       $projects = $userprojects->onlyTrashed()->get();
     }
 
+    if($projects->count() == 0){
+       $message='Sorry No Projects Found';
+    }
+
       return $this->respondWithSuccess([
       'projects'=>ProjectsResource::collection($projects),
-      'projectsCount'=>$projects->count()
+      'projectsCount'=>$projects->count(),
+      'message'=>$message
       ]);
   }
     }
