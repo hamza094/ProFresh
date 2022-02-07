@@ -317,7 +317,7 @@ padding-left: 0px !important;
         margin-right: .4rem;
         margin-left:.4rem ;
     }
-    &-map{
+    /*&-map{
         i{
             color:$color-grey;
             margin-right: .5rem;
@@ -325,7 +325,7 @@ padding-left: 0px !important;
         a{
             text-decoration: none !important;
         }
-    }
+    }*/
 }
 
 .img_avarar input[type="file"] {
@@ -1010,7 +1010,7 @@ font-weight: bold;
   margin-top: 1.2rem !important;
 }
 
-.chat 
+.chat
 {
    list-style: none;
     margin: 0;
@@ -1115,7 +1115,7 @@ font-weight: bold;
 /* Form design */
 .form{
   border:1px solid $color-secondary;
-  border-radius: .3rem; 
+  border-radius: .3rem;
   width:80%;
   padding:.7rem;
   box-shadow: 0 0 17px rgb(0 0 0 / 30%);
@@ -1124,10 +1124,10 @@ font-weight: bold;
     font-weight: 700;
     margin:.2rem;
     color:$color-grey;
-    text-transform:capitalize; 
+    text-transform:capitalize;
   }
   &-body{
-    padding: .5rem;  
+    padding: .5rem;
   }
   &-label{
     color:$color-secondary;
@@ -1149,7 +1149,7 @@ font-weight: bold;
     background-color:$color-secondary;
     width: 100%;
     border-radius:2rem;
-    padding: .3rem; 
+    padding: .3rem;
     font-size: 1.1rem;
     letter-spacing: .2rem;
     transition: all .2s;
@@ -1171,4 +1171,3 @@ font-weight: bold;
     width:100%;
   }
 }
-

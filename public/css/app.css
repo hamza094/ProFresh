@@ -319,6 +319,18 @@
   overflow: hidden;
 }
 
+.content {
+  /*&-map{
+      i{
+          color:$color-grey;
+          margin-right: .5rem;
+      }
+      a{
+          text-decoration: none !important;
+      }
+  }*/
+}
+
 .content-name {
   font-weight: 700;
   font-size: 1.5rem;
@@ -346,15 +358,6 @@
   display: inline-block;
   margin-right: 0.4rem;
   margin-left: 0.4rem;
-}
-
-.content-map i {
-  color: #999999;
-  margin-right: 0.5rem;
-}
-
-.content-map a {
-  text-decoration: none !important;
 }
 
 .img_avarar input[type=file] {

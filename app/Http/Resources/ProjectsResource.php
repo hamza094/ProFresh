@@ -21,7 +21,7 @@ class ProjectsResource extends JsonResource
         'name'=>$this->name,
         'slug'=>$this->slug,
         'stage'=>$this->stage,
-        'score'=>ScoreResource::collection($this->scores)->sum('point'),
+        'score'=>ScoreResource::collection($this->whenLoaded('scores'))->sum('point'),
         'created_at'=>$this->created_at->diffforHumans(),
         'links'=>[
           'self'=>"/api/v1/".$this->slug,

@@ -29,7 +29,7 @@
                         </div>
                         <div class="col-md-10">
 
-                        @include('project.project_info')
+                        <!--done @include('project.project_info')-->
 
                           </div>
                    </div>

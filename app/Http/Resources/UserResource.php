@@ -22,6 +22,6 @@ class UserResource extends JsonResource
            'projects'=>ProjectResource::collection($this->whenLoaded('projects')),
            'created'=>$this->created_at->diffforHumans(),
            'updated'=>$this->updated_at->diffforHumans(),
-        ]
+        ];
     }
 }

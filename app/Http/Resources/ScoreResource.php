@@ -17,6 +17,7 @@ class ScoreResource extends JsonResource
         return [
           'message'=>$this->message,
           'point'=>$this->point,
+          'created_at'=>$this->created_at->diffforHumans()
         ];
     }
 }
