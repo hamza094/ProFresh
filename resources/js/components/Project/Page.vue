@@ -16,7 +16,8 @@
 								<div class="page-content">
 										<div class="row">
 												<div class="col-md-2">
-													<span>Score with sum and messages</span>
+	                     <Score :project='project' :points='project.score' :scores_detail='project.scores'>
+					             </Score>
 												</div>
 												<div class="col-md-10">
 													<div class="content">
@@ -83,8 +84,10 @@
 	</div>
 </template>
 <script>
+	import Score from './Score'
 
 export default{
+	  components:{Score},
     data(){
     return{
      project:[],

@@ -27,7 +27,7 @@ class ProjectResource extends JsonResource
           'scores'=>$this->when($this->scores()->exists(),
           fn()=>ScoreResource::collection($this->whenLoaded('scores'))
           ),
-          'score'=>UserResource::collection($this->whenLoaded('user')),
+          'score'=>ScoreResource::collection($this->whenLoaded('scores'))->sum('point'),
           'user'=>$this->user()->select('id','name')->get(),
           'created_at'=>$this->created_at->diffforHumans(),
           'updated_at'=>$this->updated_at->diffforHumans(),

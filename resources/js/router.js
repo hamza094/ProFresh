@@ -10,7 +10,7 @@ import Dashboard from './components/Dashboard/Dashboard';
 import ForgotPassword from './components/Authentication/ForgotPassword';
 import ResetPassword from './components/Authentication/ResetPassword';
 import VerifyPassword from './components/Authentication/VerifyPassword';
-import Project from './components/Projects/Project';
+import Project from './components/Project/Page';
 import Projects from './components/Projects';
 import NotFound from './components/Error';
 

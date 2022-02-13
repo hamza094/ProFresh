@@ -96,17 +96,17 @@ Vue.component('project-button', require('./components/ProjectButton.vue').defaul
 
 Vue.component('project-form', require('./components/ProjectForm.vue').default);
 
-Vue.component('project-feature', require('./components/ProjectFeatures.vue').default);
+Vue.component('project-scores', require('./components/Project/Score.vue').default);
 
-Vue.component('project-features', require('./components/ProjectFeature/ProjectFeature.vue').default);
+// Vue.component('project-features', require('./components/Project/Feature/FeatureSection.vue').default);
 
-Vue.component('project-stage', require('./components/Stage.vue').default);
+// Vue.component('project-stage', require('./components/Project/Stage.vue').default);
 
-Vue.component('project-panel', require('./components/ProjectPanel/Panel.vue').default);
+// Vue.component('project-panel', require('./components/Project/Panel/PanelArea.vue').default);
 
 Vue.component('notifications', require('./components/Notification.vue').default);
 
-Vue.component('profile', require('./components/Profile/Profile.vue').default);
+// Vue.component('profile', require('./components/Profile/ProfilePage.vue').default);
 
 Vue.component('navbar', require('./components/Navbar.vue').default);
 

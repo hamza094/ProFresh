@@ -14,14 +14,12 @@ class TaskTest extends TestCase
      *
      * @return void
      */
-
-
-     public function task_requires_a_body(){
-        $user=create('App\Models\User');
+  public function task_requires_a_body(){
+    $user=create('App\Models\User');
     $this->signIn($user);
     $project=create('App\Models\Project',['user_id'=>$user->id]);
-         $task=make('App\Models\Task',['body'=>null]);
-          $this->post('api/project/'.$project->id.'/task',$task->toArray())
+    $task=make('App\Models\Task',['body'=>null]);
+    $this->post('api/project/'.$project->id.'/task',$task->toArray())
             ->assertSessionHasErrors('body');
      }
 

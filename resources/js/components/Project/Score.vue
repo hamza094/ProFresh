@@ -8,8 +8,8 @@
         <div>
             <div class="score-dropdown" @click="isPop = !isPop">
                 <!-- trigger -->
-                <span v-if="scores <= 49" role="button" class="score-point score-point_cold">{{scores}}</span>
-                <span v-else role="button" class="score-point score-point_hot">{{scores}}</span>
+                <span v-if="points <= 49" role="button" class="score-point score-point_cold">{{points}}</span>
+                <span v-else role="button" class="score-point score-point_hot">{{points}}</span>
 
                 <!-- menu links -->
                 <div class="score-dropdown_item" v-show=isPop>
@@ -29,15 +29,15 @@
                               <div class="row">
                                   <div class="col-md-3">
                                       <p class="score-content_point-cold">
-                    <span v-if="scores <= 49"><span class="score-content_point-cold_point">{{scores}}</span><br><span class="score-content_point-cold_status">Cold</span></span>
-                    <span v-else><span  class="score-content_point-hot_point">{{scores}}</span><br><span class="score-content_point-hot_status">Hot</span></span></p>
+                    <span v-if="points <= 49"><span class="score-content_point-cold_point">{{points}}</span><br><span class="score-content_point-cold_status">Cold</span></span>
+                    <span v-else><span  class="score-content_point-hot_point">{{points}}</span><br><span class="score-content_point-hot_status">Hot</span></span></p>
                                   </div>
                                   <div class="col-md-9">
-                                    <div v-if="details == 0" class="">
+                                    <div v-if="scores_detail == 0" class="">
                                       <h5>The Project score hasn't added</h5>
                                     </div>
-                                      <div v-for="details in groupedDetails" class="row">
-                                  <div v-for="detail in details" class="col-md-6">
+                                      <div v-for="scores_detail in groupedDetails" class="row">
+                                  <div v-for="detail in scores_detail" class="col-md-6">
                                     <p class="project-score"><span><i class="fas fa-arrow-up"></i></span> {{detail.message}}</p>
                                   </div>
                                 </div>
@@ -57,7 +57,7 @@
 
 <script>
 export default {
-    props:['project','scores','details'],
+    props:['project','points','scores_detail'],
     data() {
         return {
             isPop:false,
@@ -72,7 +72,7 @@ export default {
     },
     computed:{
       groupedDetails() {
-       return _.chunk(this.details, 2)
+       return _.chunk(this.scores_detail, 2)
     }
     },
     methods: {

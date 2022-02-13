@@ -10,7 +10,6 @@ use App\Models\Project;
 use App\Models\Appointment;
 use App\Http\Requests\AppointmentRequest;
 
-
 class AppointmentTest extends TestCase
 {
   use RefreshDatabase;
