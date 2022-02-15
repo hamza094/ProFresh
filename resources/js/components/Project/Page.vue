@@ -91,6 +91,7 @@ export default{
     data(){
     return{
      project:[],
+		 scores:{},
 		 user:{}
     };
     },
@@ -100,6 +101,7 @@ export default{
 				 then(response=>{
 						 this.project=response.data;
 						 this.user=response.data.user[0];
+						 this.scores=this.project.scores;
 				 }).catch(error=>{
 					 console.log(error.response.data.errors);
 				 });

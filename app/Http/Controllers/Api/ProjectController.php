@@ -58,16 +58,8 @@ class ProjectController extends ApiController
 
     public function show(Project $project)
     {
-      //$score_sum=$project->scores()->sum('point');
-
-      //$conversation_count=$project->group->conversations->count();
-
-      /*return view('project.show',compact('project',$project,'score_sum',$score_sum,
-          'conversation_count',$conversation_count));*/
-
-          return new ProjectResource($project);
-
-
+       //$conversation_count=$project->group->conversations->count();
+        return new ProjectResource($project);
     }
 
     public function update(Project $project,ProjectRequest $request)

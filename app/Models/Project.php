@@ -21,6 +21,8 @@ class Project extends Model
   protected $appends = ['IsSubscribedTo'];
   protected $with = ['scores'];
 
+  
+
     /**
  * Return the sluggable configuration array for this model.
  *
