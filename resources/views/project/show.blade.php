@@ -22,8 +22,8 @@
                         <div class="col-md-2">
                           @can ('access', $project)
 
-                      <project-feature :project="{{json_encode($project)}}" :scores="{{json_encode($score_sum)}}"
-                       :details="{{json_encode($project->scores)}}"></project-feature>
+          <!-- done            <project-feature :project="{{json_encode($project)}}" :scores="{{json_encode($score_sum)}}"
+                       :details="{{json_encode($project->scores)}}"></project-feature> -->
 
                        @endcan
                         </div>
@@ -36,12 +36,12 @@
                     <hr>
                     <p class="pro-info">Project Detail</p>
 
-                    @include('project.project_details')
+                  <!-- done  @include('project.project_details') -->
 
                     <hr>
                     @can ('access', $project)
 
-                    <project-stage :project="{{$project}}"></project-stage>
+                    <!-- done <project-stage :project="{{$project}}"></project-stage> -->
 
                     <hr>
                     @endcan

@@ -19,10 +19,9 @@ class CreateProjectsTable extends Migration
             $table->string("slug");
             $table->text("about");
             $table->foreignUuid('user_id')->constrained()->onDelete('cascade');
+            $table->foreignId('stage_id')->default(1)->constrained();
             $table->unsignedInteger('group_id')->nullable();
             $table->text('notes')->nullable();
-            $table->enum('stage',['initial','define','design','develop','execute','close'])
-            ->default('initial');
             $table->string('postponed')->nullable();
             $table->softDeletes();
             $table->timestamps();

@@ -21,7 +21,7 @@ class Project extends Model
   protected $appends = ['IsSubscribedTo'];
   protected $with = ['scores'];
 
-  
+
 
     /**
  * Return the sluggable configuration array for this model.
@@ -71,6 +71,11 @@ class Project extends Model
    public function user()
    {
      return $this->belongsTo(User::class,'user_id');
+   }
+
+   public function stage()
+   {
+     return $this->belongsTo(Stage::class,'stage_id');
    }
 
    public function group()

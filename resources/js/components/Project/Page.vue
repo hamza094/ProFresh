@@ -49,7 +49,7 @@
 										</div>
 										</div>
 										<br>
-										<span>project stage </span>
+										<Stage :project='project'></Stage>
 										<br>
 										<hr>
 										<h3>RECENT ACTIVITIES</h3>
@@ -85,9 +85,10 @@
 </template>
 <script>
 	import Score from './Score'
+	import Stage from './Stage'
 
 export default{
-	  components:{Score},
+	  components:{Score,Stage},
     data(){
     return{
      project:[],

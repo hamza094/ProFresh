@@ -100,7 +100,7 @@ Vue.component('project-scores', require('./components/Project/Score.vue').defaul
 
 // Vue.component('project-features', require('./components/Project/Feature/FeatureSection.vue').default);
 
-// Vue.component('project-stage', require('./components/Project/Stage.vue').default);
+ Vue.component('project-stage', require('./components/Project/Stage.vue').default);
 
 // Vue.component('project-panel', require('./components/Project/Panel/PanelArea.vue').default);
 
