@@ -16,7 +16,8 @@
 								<div class="page-content">
 										<div class="row">
 												<div class="col-md-2">
-	                     <Score :project='project' :points='project.score' :scores_detail='project.scores'>
+	                     <Score :projectName='project.name' :start="project.created_at"
+											  :points='project.score' :scores_detail='project.scores' :stageName="stagename">
 					             </Score>
 												</div>
 												<div class="col-md-10">
@@ -93,6 +94,7 @@ export default{
     return{
      project:[],
 		 scores:{},
+		 stagename:'',
 		 user:{}
     };
     },
@@ -103,6 +105,8 @@ export default{
 						 this.project=response.data;
 						 this.user=response.data.user[0];
 						 this.scores=this.project.scores;
+						 this.stagename=this.project.stage.name;
+
 				 }).catch(error=>{
 					 console.log(error.response.data.errors);
 				 });

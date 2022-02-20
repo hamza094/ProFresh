@@ -22,7 +22,7 @@ class ProjectResource extends JsonResource
           'name'=>$this->name,
           'about'=>$this->about,
           'notes'=>$this->notes,
-          'stage'=>$this->stage,
+          'stage'=>new StageResource($this->stage),
           'postponed'=>$this->postponed,
           'scores'=>$this->when($this->scores()->exists(),
           fn()=>ScoreResource::collection($this->whenLoaded('scores'))

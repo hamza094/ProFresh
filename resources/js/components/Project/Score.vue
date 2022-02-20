@@ -2,7 +2,7 @@
     <div>
         <div class="img-avatar">
             <div class="img-avatar_name">
-                  {{(project.name || '').substring(0,1)}}
+                  {{(projectName || '').substring(0,1)}}
             </div>
             </div>
         <div>
@@ -15,8 +15,8 @@
                 <div class="score-dropdown_item" v-show=isPop>
                   <div class="score">
                       <div class="score-content">
-                          <p class="score-content_para"><i class="far fa-clock"></i>The project started {{project.created_at}}. Currently is in its
-                            <b>{{project.stage}}</b> stage
+                          <p class="score-content_para"><i class="far fa-clock"></i>The project started {{start}}. Currently is in its
+                            <b>{{stageName}}</b> stage
                           </p>
                           <div class="score-content_point">
                               <p class="score-content_point-para"><b>Top scoring factors</b></p>
@@ -52,10 +52,11 @@
 
 <script>
 export default {
-    props:['project','points','scores_detail'],
+    props:['projectName','points','stageName','scores_detail','start'],
     data() {
         return {
             isPop:false,
+            loading: false
         }
     },
     watch:{
@@ -64,6 +65,9 @@ export default {
                 document.addEventListener('click',this.emptyIfClickedOutside);
             }
         }
+    },
+    mounted(){
+      this.loading=true;
     },
     computed:{
       groupedDetails() {
