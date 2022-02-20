@@ -31,6 +31,12 @@ class ProjectTest extends TestCase
       $this->assertInstanceOf('App\Models\User',$project->user);
   }
 
+  /** @test */
+  public function project_belongs_to_stage()
+  {
+     $project=Project::factory()->create();
+     $this->assertInstanceOf('App\Models\Stage',$project->stage);
+  }
 
   public function a_project_can_add_a_task()
   {

@@ -6,6 +6,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
 use App\Http\Resources\ScoreResource;
 
 
+
 class ProjectsResource extends JsonResource
 {
     /**
@@ -20,7 +21,7 @@ class ProjectsResource extends JsonResource
         'id'=>$this->id,
         'name'=>$this->name,
         'slug'=>$this->slug,
-        'stage'=>$this->stage,
+        'stage'=>new StageResource($this->stage),
         'score'=>ScoreResource::collection($this->whenLoaded('scores'))->sum('point'),
         'created_at'=>$this->created_at->diffforHumans(),
         'links'=>[

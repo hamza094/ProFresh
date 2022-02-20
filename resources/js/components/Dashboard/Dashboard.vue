@@ -26,7 +26,7 @@
 												</span>
      					<p class="mt-3">{{project.name}}</p>
      					    <p>Project Satge:
-                        <span>{{project.stage}} Stage</span>
+                        {{project.stage.name}} Stage
                      </p>
      					<p>Project Score:
 								<span v-if="project.score > 0">{{project.score}}</span>
@@ -66,7 +66,7 @@ export default{
       abandon:false,
 			projectState:"",
       projectsCount:0,
-			message:''
+			message:'',
     };
     },
     methods:{

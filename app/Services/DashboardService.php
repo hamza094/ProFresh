@@ -13,20 +13,20 @@ class DashboardService
 
   public function userProjectsFilters($request)
   {
-     $userprojects=Auth::user()->projects();
+     $user=Auth::user();
 
-     $projects = $userprojects->get();
+     $projects=$user->projects()->get();
 
      $message='';
 
     if($request->filled('invited'))
     {
-      $projects = Auth::user()->members;
+      $projects = $user->members;
     }
 
     if($request->filled('abandoned'))
     {
-      $projects = $userprojects->onlyTrashed()->get();
+      $projects = $user->projects()->onlyTrashed()->get();
     }
 
     if($projects->count() == 0){
