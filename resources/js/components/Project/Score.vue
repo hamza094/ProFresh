@@ -15,8 +15,8 @@
                 <div class="score-dropdown_item" v-show=isPop>
                   <div class="score">
                       <div class="score-content">
-                          <p class="score-content_para"><i class="far fa-clock"></i>The project started {{start}}. Currently is in its
-                            <b>{{stageName}}</b> stage
+                          <p class="score-content_para"><i class="far fa-clock"></i>The project started {{start}}. Currently in its
+                            <b v-text="stagename()"></b> stage
                           </p>
                           <div class="score-content_point">
                               <p class="score-content_point-para"><b>Top scoring factors</b></p>
@@ -52,11 +52,11 @@
 
 <script>
 export default {
-    props:['projectName','points','stageName','scores_detail','start'],
+    props:['projectName','points','scores_detail','start','stage','completed'],
     data() {
         return {
             isPop:false,
-            loading: false
+            loading: false,
         }
     },
     watch:{
@@ -81,6 +81,9 @@ export default {
                 document.removeEventListener('click',this.emptyIfClickedOutside);
             }
         },
+        stagename(){
+        return this.currentStage(this.stage,this.completed);
+     },
     },
 }
 </script>

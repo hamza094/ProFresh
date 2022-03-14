@@ -2,56 +2,21 @@
 <div>
   <div>
     <div>
-      <p><span><b>Project stage changed:</b> {{this.project.updated_at | timeExactDate}}</span></p>
+      <p><span><b>Project Stage Last Updated:</b> {{stage_updated}}</span></p>
     </div>
   <div class="row">
-    <div class="arrow-pointer-pd" @click="initial">
-      <p class="arrow-pointer unq-bg" v-if="isSelected == 0"><span class="arrow-pointer-span">Initial Phase</span></p>
-      <p class="arrow-pointer clo-bg" v-else-if="isSelected == 6"><span class="arrow-pointer-span">Initial Phase</span></p>
-      <p class="arrow-pointer-select" v-else="isSelected > 0"><span class="arrow-pointer-span">Initial Phase</span></p>
-    </div>
-
-     <div class="arrow-pointer-pd" @click="defination">
-       <p class="arrow-pointer unq-bg" v-if="isSelected == 0"><span class="arrow-pointer-span">2. Defination</span></p>
-       <p class="arrow-pointer clo-bg" v-else-if="isSelected == 6"><span class="arrow-pointer-span">2. Defination</span></p>
-       <p class="arrow-pointer-select" v-else-if="isSelected > 1"><span class="arrow-pointer-span">2. Defination</span></p>
-       <p class="arrow-pointer" v-else><span class="arrow-pointer-span">2. Defination</span></p>
-    </div>
-
-     <div class="arrow-pointer-pd" @click="design">
-       <p class="arrow-pointer unq-bg" v-if="isSelected == 0"><span class="arrow-pointer-span">3. Designing</span></p>
-       <p class="arrow-pointer clo-bg" v-else-if="isSelected == 6"><span class="arrow-pointer-span">3. Designing</span></p>
-       <p class="arrow-pointer-select" v-else-if="isSelected > 2"><span class="arrow-pointer-span">3. Designing</span></p>
-       <p class="arrow-pointer" v-else><span class="arrow-pointer-span">3. Designing</span></p>
-    </div>
-
-     <div class="arrow-pointer-pd" @click="develop">
-       <p class="arrow-pointer unq-bg" v-if="isSelected == 0"><span class="arrow-pointer-span">4. Developing</span></p>
-       <p class="arrow-pointer clo-bg" v-else-if="isSelected == 6"><span class="arrow-pointer-span">4. Developing</span></p>
-       <p class="arrow-pointer-select" v-else-if="isSelected > 3"><span class="arrow-pointer-span">4. Developing</span></p>
-       <p class="arrow-pointer" v-else><span class="arrow-pointer-span">4. Developing</span></p>
-    </div>
-
-     <div class="arrow-pointer-pd" @click="execute">
-       <p class="arrow-pointer unq-bg" v-if="isSelected == 0"><span class="arrow-pointer-span">5. Execution</span></p>
-       <p class="arrow-pointer clo-bg" v-else-if="isSelected == 6"><span class="arrow-pointer-span">5. Execution</span></p>
-       <p class="arrow-pointer-select" v-else-if="isSelected > 4"><span class="arrow-pointer-span">5. Execution</span></p>
-       <p class="arrow-pointer" v-else><span class="arrow-pointer-span">5. Execution</span></p>
-    </div>
-
+    <div v-for="stage in stages" class="arrow-pointer-pd" @click="stageChange(stage.id)" :key="stage.id">
+       <p :class="stageCondition(stage.id)" class="arrow-pointer"><span class="arrow-pointer-span">{{stage.id}}. {{stage.name}}</span></p>
+     </div>
      <div class="stage-dropdown" @click="stagePop = !stagePop">
-       <p class="arrow-pointer arrow-pointer-unq" v-if="isSelected == 0"><span class="arrow-pointer-span">Postponed <i class="fas fa-angle-double-down"></i></span></p>
-       <p class="arrow-pointer arrow-pointer-clo" v-else-if="isSelected == 6"><span class="arrow-pointer-span">6. Closure <i class="fas fa-angle-double-down"></i></span></p>
-       <p class="arrow-pointer-select" v-else-if="isSelected > 5"><span class="arrow-pointer-span">Clo/Pos ...<i class="fas fa-angle-double-down"></i></span></p>
-       <p class="arrow-pointer" v-else><span class="arrow-pointer-span pr-2">Clo/Pos ...<i class="fas fa-angle-double-down"></i></span></p>
+       <p :class="lastStage()" class="arrow-pointer"><span class="arrow-pointer-span">{{status}} <i class="fas fa-angle-double-down"></i></span></p>
        <div class="stage-dropdown_item" v-show=stagePop>
          <ul>
-           <li class="stage-dropdown_item-content" @click="projectClosure">Closure</li>
-           <li class="stage-dropdown_item-content" @click="$modal.show('stage-reason')">Postponed</li>
+           <li v-if="!completed" class="stage-dropdown_item-content" @click="projectClose">Closure</li>
+           <li v-if="projectstage" class="stage-dropdown_item-content" @click="$modal.show('stage-reason')">Postponed</li>
          </ul>
        </div>
     </div>
-    
   </div>
 </div>
 <div>
@@ -59,7 +24,6 @@
     <div class="panel-top_content">
         <span class="panel-heading">Project Satge Postponed</span>
         <span class="panel-exit float-right" role="button" @click.prevent="$modal.hide('stage-reason')">x</span>
-
     </div>
     <hr>
       <div class="panel-top_content">
@@ -71,13 +35,11 @@
             <option value="Not intrested">Not intrested</option>
           </select>
         </div>
-
-
       </div>
       <div class="panel-bottom">
           <div class="panel-top_content float-right">
               <button class="btn panel-btn_close" @click.prevent="$modal.hide('stage-reason')">Cancel</button>
-              <button class="btn panel-btn_save" @click.prevent="postponed">Save</button>
+             <button class="btn panel-btn_save" @click.prevent="postpone">Save</button>
           </div>
       </div>
 </modal>
@@ -85,25 +47,17 @@
 </div>
 </template>
 
-
-
-
 <script>
   export default{
-    props:['project'],
+    props:['slug','projectstage','completed','stage_updated','postponed','check_stage'],
     data(){
        return{
-         initialStage:1,
-         definationStage:2,
-         designStage:3,
-         developStage:4,
-         executeStage:5,
-         closureStage:6,
-         postponedStage:0,
-         isSelected:this.project.stage,
-           stagePop:false,
-           reason:this.project.postponed
-
+         activeStage:'',
+         stagePop:false,
+         reason:'',
+         stages:{},
+         status:'',
+         stageUpdation:'',
        }
     },
     watch:{
@@ -114,96 +68,93 @@
         }
     },
     methods:{
-      initial(){
-axios.patch('/api/project/'+this.project.id+'/stage',{
-  stage:this.initialStage
-}).then(response=>{
-  this.isSelected=1;
-     this.$vToastify.success("Project Converted to Initial Successfully");
-}).catch(error=>{
-  this.isSelected=this.project.stage;
-  this.$vToastify.error("Error in Project Phase Conversion");
-});
-},
-
-defination(){
-  axios.patch('/api/project/'+this.project.id+'/stage',{
-    stage:this.definationStage
+      stageCondition(stageId){
+        if(this.projectstage){
+          if(stageId == this.projectstage.id){
+             this.activeStage="current";
+             return 'current';
+          }
+          this.activeStage="stages";
+           return 'stages';
+      }
+      if(!this.projectstage){
+        if(this.completed){
+          this.activeStage="closed";
+           return 'closed';
+        }
+        this.activeStage="postpone";
+         return 'postpone';
+      }
+      },
+      lastStage(){
+        if(!this.projectstage && this.completed){
+            this.status="Closed";
+            return "closed";
+        }
+        if(!this.projectstage && !this.completed){
+          this.status="Postponed";
+          return "postpone";
+        }
+        if(this.projectstage && !this.completed){
+          this.status="Clo/Pos..";
+          return "stages";
+        }
+      },
+  stageChange(stageId){
+    if(stageId !== this.check_stage){
+    axios.patch('/api/v1/projects/'+this.slug+'/stage',{
+    stage:stageId
   }).then(response=>{
-    this.isSelected=2;
-       this.$vToastify.success("Project Stage Converted to Defination");
+      this.eventListener(0,response.data.stage,response.data.stage_updated_at,null,response.data.stage.id);
+     this.$vToastify.success("Updating project stage...");
   }).catch(error=>{
-    this.isSelected=this.project.stage;
-    this.$vToastify.error("Error in Project Phase Conversion");
+     this.$vToastify.error("Error in Project Phase Conversion");
   });
-},
-
-design(){
-  axios.patch('/api/project/'+this.project.id+'/stage',{
-    stage:this.designStage
-  }).then(response=>{
-    this.isSelected=3;
-       this.$vToastify.success("Project Converted to Design Phase");
-  }).catch(error=>{
-    this.isSelected=this.project.stage;
-    this.$vToastify.error("Error in Project Phase Conversion");
-  });
-},
-
-develop(){
-  axios.patch('/api/project/'+this.project.id+'/stage',{
-    stage:this.developStage
-  }).then(response=>{
-    this.isSelected=4;
-       this.$vToastify.success("Project Converted to Developing Phase");
-  }).catch(error=>{
-    this.isSelected=this.project.stage;
-    this.$vToastify.error("Error in Project Phase Conversion");
-  });
-},
-
-execute(){
-  axios.patch('/api/project/'+this.project.id+'/stage',{
-    stage:this.executeStage
-  }).then(response=>{
-    this.isSelected=5;
-       this.$vToastify.success("Project Converted to Execution Stage");
-  }).catch(error=>{
-    this.isSelected=this.project.stage;
-    this.$vToastify.error("Error in Project Phase Conversion");
-  });
-},
-
-postponed(){
-  axios.patch('/api/project/'+this.project.id+'/postponed',{
-    stage:this.postponedStage,
+}
+ },
+  postpone(){
+  axios.patch('/api/v1/projects/'+this.slug+'/stage',{
+    stage:0,
     postponed:this.reason
   }).then(response=>{
-    this.isSelected = 0;
-       this.$vToastify.success("Project Postponed Successfully");
-       this.$modal.hide('stage-reason');
+    this.eventListener(0,null,response.data.stage_updated_at,this.reason,0);
+   this.$vToastify.success("Postponeding project...");
+   this.$modal.hide('stage-reason');
   }).catch(error=>{
-    this.isSelected=this.project.stage;
-    this.$vToastify.error("Error in Project Phase Conversion");
+    this.$vToastify.error("Error in Project Postpone");
   });
 },
-projectClosure(){
-  axios.patch('/api/project/'+this.project.id+'/stage',{
-    stage:this.closureStage
-  }).then(response=>{
-    this.isSelected=6;
-       this.$vToastify.success("Project Phase Conerted to Closure");
-  }).catch(error=>{
-    this.isSelected=this.project.stage;
-    this.$vToastify.error("Error in Project Phase Conversion");
-  });
+ projectClose(){
+   axios.patch('/api/v1/projects/'+this.slug+'/stage',{
+   stage:0
+ }).then(response=>{
+     this.eventListener(1,null,response.data.stage_updated_at,null,0);
+    this.$vToastify.success("Sucessfully closing project...");
+ }).catch(error=>{
+    this.$vToastify.error("Error in Project Closing");
+ });
 },
-offIfClickedOutside(event){
-    if(!event.target.closest('.stage-dropdown')){
+ loadStages(){
+    axios.get('/api/v1/stages').
+    then(response=>{
+       this.stages=response.data;
+   }).catch(error=>{
+     console.log(error.response.data.errors);
+   });
+},
+eventListener($completed,$currentStage,$stageUpdated,$reason,$checkStage){
+  this.$bus.emit('stageListners',{completed:$completed,current_stage:$currentStage,
+    stage_updated:$stageUpdated,postponed:$reason,checkStage:$checkStage});
+},
+  offIfClickedOutside(event){
+      if(!event.target.closest('.stage-dropdown')){
         this.stagePop=false;
         document.removeEventListener('click',this.offIfClickedOutside);
     }
-},
-    }
+  },
+ },
+ mounted(){
+      this.loadStages();
+    },
   }
 </script>

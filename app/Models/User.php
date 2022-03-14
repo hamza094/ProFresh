@@ -22,7 +22,7 @@ class User extends Authenticatable implements Searchable, MustVerifyEmail
 
     protected $guarded = [];
 
-    protected $appends = ['LastSeen'];
+    //protected $appends = ['LastSeen'];
 
     /**
      * The attributes that are mass assignable.

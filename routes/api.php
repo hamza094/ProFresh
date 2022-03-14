@@ -16,6 +16,7 @@ use App\Http\Controllers\Api\
   DashboardController,
   UserController,
   WelcomeController,
+  StageController,
 };
 /*
 |--------------------------------------------------------------------------
@@ -36,6 +37,9 @@ Route::get('/users',[UserController::class,'index']);
 
 Route::get('/user',[UserController::class,'user']);
 
+//Return All Stages
+Route::get('/stages',[StageController::class,'index']);
+
 //Project Api Resource Routes
 Route::apiResource('/projects', ProjectController::class);
 
@@ -48,8 +52,7 @@ Route::get('/delete',[ProjectController::class,'delete']);
 Route::get('/timeline_feeds',[ProjectController::class,'activity'])
 ->name('activities');
 
-Route::middleware(['can:access,project'])->group(function () {
-
+//Route::middleware(['can:access,project'])->group(function () {
 //Project Feature Routes
 Route::post('/mail',[FeaturesController::class,'mail']);
 Route::post('/sms',[FeaturesController::class,'sms']);
@@ -63,8 +66,7 @@ Route::apiResources([
     '/appointment' => AppointmentController::class,
     '/task' => TaskController::class,
 ]);
-
-});
+//});
 
 //Project Subscribe Route
 Route::post('/subscribe',[SubscribeController::class,'projectSubscribe']);

@@ -36,7 +36,7 @@ class DashboardTest extends TestCase
     public function user_can_view_his_projects_on_dashboard(){
         $user=User::first();
         $projects=Project::factory()->count(4)->for($user)->create();
-        $this->getJson('/api/v1/userprojects')->assertSee($projects[0]->name)
+        $this->withoutExceptionHandling()->getJson('/api/v1/userprojects')->assertSee($projects[0]->name)
         ->assertStatus(200);
         $project=Project::first();
         $this->deleteJson($project->path());

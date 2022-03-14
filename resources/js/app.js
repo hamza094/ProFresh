@@ -32,8 +32,11 @@ Vue.use(VModal)
 import moment from 'moment';
 
 import alertNotice from './mixins/alertNotice';
+import currentStage from './mixins/currentStage';
+
 
 Vue.mixin(alertNotice);
+Vue.mixin(currentStage);
 
 Vue.filter('timeExactDate',function(data){
    return  moment(data).fromNow();
@@ -109,6 +112,7 @@ Vue.component('notifications', require('./components/Notification.vue').default)
 // Vue.component('profile', require('./components/Profile/ProfilePage.vue').default);
 
 Vue.component('navbar', require('./components/Navbar.vue').default);
+
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

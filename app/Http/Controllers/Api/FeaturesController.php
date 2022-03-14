@@ -1,13 +1,12 @@
 <?php
 
 namespace App\Http\Controllers\Api;
-
+use Auth;
 use App\Models\Project;
 use Illuminate\Http\Request;
 use App\Services\FeatureService;
 use App\Notifications\ProjectUpdated;
-use Illuminate\Foundation\Validation\ValidatesRequests;
-
+use App\Http\Resources\ProjectResource;
 
 class FeaturesController extends ApiController
 {
@@ -30,43 +29,21 @@ class FeaturesController extends ApiController
      */
      public function stage(Project $project,Request $request)
      {
-        $this->validate($request, [
+       $this->validate($request, [
           'stage'=>'required',
+          'postponed'=>'sometimes|required'
       ]);
 
-      $project->update(request(['stage']));
+      $this->featureService->stageStatus($project,$request);
 
-      $this->featureService->recordStageUpdate($project);
+      //$this->featureService->recordStageUpdate($project);
 
-      $this->sendNotification($project,new ProjectUpdated($project));
+      //$this->sendNotification($project,new ProjectUpdated($project));
 
       if (request()->wantsJson()) {
-          return response($project, 201);
+          return response(new ProjectResource($project), 201);
       }
     }
-
-
-   /**
-     * Postpone Project Stage.
-     *
-     * @param  int  $project
-     * @return \Illuminate\Http\Response
-     */
-    public function postponed(Project $project,Request $request)
-    {
-      $this->validate($request, [
-          'postponed'=>'required',
-          'stage'=>'required'
-      ]);
-
-      $project->update(request(['postponed','stage']));
-
-      $this->sendNotification($project,new ProjectUpdated($project));
-
-      if (request()->wantsJson()) {
-          return response($project, 201);
-      }
-   }
 
     public function mail(Project $project,Request $request)
     {

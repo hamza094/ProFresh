@@ -9,9 +9,47 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Redis;
 use App\Mail\ProjectMail;
 use App\Helpers\ProjectHelper;
+use Carbon\Carbon;
 
 class FeatureService
 {
+   public function stageStatus($project,$request){
+     $nullStage=0;
+
+     if($request->stage == $nullStage){
+
+     $this->stageCompletedOperation($project);
+
+     if($request->has('postponed')){
+       $this->stagePostponedOperation($project,$request);
+     }
+        $project->stage()->dissociate();
+     }
+
+     if($request->stage > $nullStage){
+       $this->updateStage($project,$request);
+     }
+
+     $project->save();
+     $project->update(['stage_updated_at'=>Carbon::now()]);
+     return $project;
+   }
+
+    protected function stageCompletedOperation($project){
+      $project->update(['completed'=>true]);
+      //$project->removePostponedIfExists();
+    }
+
+    protected function stagePostponedOperation($project,$request){
+       //$project->markUncompleteIfCompleted();
+       $project->update(['postponed'=>$request->postponed]);
+    }
+
+    protected function updateStage($project,$request){
+      $project->markUncompleteIfCompleted();
+      $project->removePostponedIfExists();
+      $project->stage()->associate($request->stage);
+    }
 
   public static function sendMessage($message, $recipients)
   {
@@ -29,7 +67,7 @@ class FeatureService
 
     self::recordScoreAndActivity($project,'Excel Export',10,'export_project','default');
   }
-  
+
   public function recordStageUpdate($project)
   {
   	$redis = Redis::connection();

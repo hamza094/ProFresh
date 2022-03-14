@@ -29,8 +29,10 @@ class ProjectResource extends JsonResource
           ),
           'score'=>ScoreResource::collection($this->whenLoaded('scores'))->sum('point'),
           'user'=>$this->user()->select('id','name')->get(),
+          'completed'=>$this->completed,
           'created_at'=>$this->created_at->diffforHumans(),
           'updated_at'=>$this->updated_at->diffforHumans(),
+          'stage_updated_at'=>$this->stage_updated_at->format("F j, Y, g:i a"),
         ];
     }
 }

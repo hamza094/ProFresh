@@ -25,13 +25,10 @@
 													<b>{{projectState}}</b>
 												</span>
      					<p class="mt-3">{{project.name}}</p>
-     					    <p>Project Satge:
-                        {{project.stage.name}} Stage
-                     </p>
+     					    <p>Project Stage <span v-text="stage(project)"></span></p>
      					<p>Project Score:
 								<span v-if="project.score > 0">{{project.score}}</span>
 								<span v-else>No project activity detected project currently scored zero</span>
-
 							</p>
 							<p>Created At: {{project.created_at}}</p>
      				</div>
@@ -110,7 +107,10 @@ export default{
 				this.active=false;
 				this.invite=false;
 				this.abandon=true;
-			}
+			},
+			 stage(project){
+				 return this.currentStage(project.stage,project.completed);
+			},
     },
     mounted(){
         this.actived();

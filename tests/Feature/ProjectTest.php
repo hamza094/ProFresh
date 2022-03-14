@@ -26,7 +26,6 @@ class ProjectTest extends TestCase
      public function setUp() :void
      {
          parent::setUp();
-
          // create a user
         $user=User::factory()->create([
              'email'=>'johndoe@example.org',
@@ -36,13 +35,12 @@ class ProjectTest extends TestCase
          Sanctum::actingAs(
              $user,
          );
-
      }
 
     public function auth_user_can_create_project()
     {
         $this->signIn();
-        $response=$this->withoutExceptionHandling()->post('api/projects',
+        $response=$this->post('api/projects',
             ['name' => 'Json','email'=>'json_pisces@outlook.com',
                 'mobile'=>6785434567]);
           $this->withoutExceptionHandling()->assertDatabaseHas('projects',['name'=>'Json']);
@@ -84,30 +82,6 @@ class ProjectTest extends TestCase
        $this->withoutExceptionHandling()->patch($project->path(),['name'=>$name,'email'=>$email,'mobile'=>$mobile]);
         $this->assertDatabaseHas('projects',['id'=>$project->id,'mobile'=>$mobile]);
     }
-
-    public function authorized_user_can_change_project_stage(){
-      $user=create('App\Models\User');
-       $this->signIn($user);
-       $project=create('App\Models\Project',['user_id'=>$user->id]);
-       $stage=2;
-       $this->patch('api/project/'.$project->id.'/stage',[
-          'stage'=>$stage
-      ]);
-      $this->assertDatabaseHas('projects',['id'=>$project->id,'stage'=>$stage]);
-   }
-
-   public function authorized_user_can_update_reason(){
-     $user=create('App\Models\User');
-      $this->signIn($user);
-      $project=create('App\Models\Project',['user_id'=>$user->id]);
-       $reason="Not defined";
-       $stage=0;
-       $this->patch('api/project/'.$project->id.'/postponed',[
-         'stage'=>$stage,
-         'postponed'=>$reason
-       ]);
-        $this->assertDatabaseHas('projects',['id'=>$project->id,'postponed'=>$reason]);
-   }
 
    public function project_owner_can_trash_project(){
      $user=create('App\Models\User');
@@ -180,6 +154,4 @@ public function authorize_user_can_update_note(){
      $user->delete();
       $this->assertDatabaseMissing('groups',['id'=>$group->id]);
 }
-
-
 }

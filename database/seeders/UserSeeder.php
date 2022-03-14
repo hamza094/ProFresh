@@ -15,14 +15,10 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-      Stage::factory()->count(1)->create();
-      Stage::factory()->create(['name'=>' Defining']);
-      Stage::factory()->create(['name'=>'Designing']);
-      Stage::factory()->create(['name'=>'Developing']);
-      Stage::factory()->create(['name'=>'Execution']);
-
        User::factory()->count(15)
-      ->has(Project::factory()->count(3))->create();
+      ->has(Project::factory()->state([
+        'stage_id'=>1
+        ])->count(3))->create();
 
     }
 }

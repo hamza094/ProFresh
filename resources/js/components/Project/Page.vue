@@ -17,7 +17,8 @@
 										<div class="row">
 												<div class="col-md-2">
 	                     <Score :projectName='project.name' :start="project.created_at"
-											  :points='project.score' :scores_detail='project.scores' :stageName="stagename">
+											  :points='project.score' :scores_detail='project.scores' :stage="project.stage"
+												:completed="this.project.completed">
 					             </Score>
 												</div>
 												<div class="col-md-10">
@@ -40,7 +41,8 @@
 										<div class="row">
 												<div class="col-md-6">
 													  <p  class="crm-info"> <b>About</b>: <span> {{project.about}} </span></p>
-														<p v-if="!project.postponed" class="crm-info"> <b>Postponed reason</b>: <span> Not Defined  </span></p>
+														<p v-if="!project.postponed" class="crm-info"> <b>Postponed reason</b>: <span> The project is currently active.
+														 Please try to avoid the project being postpone without any reason </span></p>
 														<p v-else class="crm-info"> <b>Postponed reason</b>: <span> {{project.postponed}}  </span></p>
 												</div>
 												<div class="col-md-6">
@@ -50,7 +52,9 @@
 										</div>
 										</div>
 										<br>
-										<Stage :project='project'></Stage>
+										<Stage :slug="project.slug" :projectstage='project.stage' :postponed="project.postponed"
+										:completed="project.completed" :stage_updated="project.stage_updated_at" :check_stage="this.checkStage">
+									</Stage>
 										<br>
 										<hr>
 										<h3>RECENT ACTIVITIES</h3>
@@ -94,8 +98,8 @@ export default{
     return{
      project:[],
 		 scores:{},
-		 stagename:'',
-		 user:{}
+		 user:{},
+		 checkStage:0,
     };
     },
     methods:{
@@ -105,16 +109,23 @@ export default{
 						 this.project=response.data;
 						 this.user=response.data.user[0];
 						 this.scores=this.project.scores;
-						 this.stagename=this.project.stage.name;
-
+						 this.checkStage=this.project.stage.id;
 				 }).catch(error=>{
 					 console.log(error.response.data.errors);
 				 });
 			},
-
     },
     mounted(){
 			this.loadProject();
-    }
+    },
+		created(){
+			this.$bus.$on('stageListners', (data) => {
+					this.project.stage_updated_at = data.stage_updated
+					this.project.stage = data.current_stage
+					this.project.completed = data.completed
+					this.project.postponed= data.postponed
+					this.checkStage=data.checkStage
+				})
+		},
 }
 </script>

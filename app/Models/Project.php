@@ -2,24 +2,25 @@
 
 namespace App\Models;
 
-use App\Traits\RecordActivity;
+//use App\Traits\RecordActivity;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\ProjectScore;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use App\Models\Activity;
+//use App\Models\Activity;
 use Illuminate\Support\Facades\Redis;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Auth;
 
 class Project extends Model
 {
-  use HasFactory, SoftDeletes, RecordActivity, Sluggable;
+  use HasFactory, SoftDeletes, Sluggable;
 
   protected $guarded=[];
   protected $dates = ['created_at'];
   protected $appends = ['IsSubscribedTo'];
   protected $with = ['scores','stage'];
+  protected $casts = ['stage_updated_at'=>'datetime'];
 
 
 
@@ -51,7 +52,7 @@ class Project extends Model
     {
      parent::boot();
      static::deleting(function($project) {
-        $project->activity()->delete();
+        //$project->activity()->delete();
     });
     }
 
@@ -143,6 +144,14 @@ class Project extends Model
    public function activeMembers()
     {
       return $this->members()->where('active',1);
+    }
+
+    public function markUncompleteIfCompleted(){
+      $this->completed != true ?: $this->update(['completed'=>false]);
+    }
+
+    public function removePostponedIfExists(){
+      $this->postponed == null ?: $this->update(['postponed'=>null]);
     }
 
 }

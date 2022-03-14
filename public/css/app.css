@@ -500,7 +500,6 @@
 .arrow-pointer {
   width: 108px;
   height: 32px;
-  background: #BBDCFE;
   position: relative;
   text-align: center;
 }
@@ -516,7 +515,6 @@
   bottom: 0px;
   width: 0;
   height: 0;
-  border-left: 25px solid #BBDCFE;
   border-top: 16px solid transparent;
   border-bottom: 16px solid transparent;
 }
@@ -537,93 +535,39 @@
   padding-right: 1.6rem;
 }
 
-.arrow-pointer-select {
-  width: 108px;
-  height: 32px;
+.stages {
+  background: #BBDCFE;
+}
+
+.stages::before {
+  border-left: 25px solid #BBDCFE;
+}
+
+.current {
   background: #12344D;
-  position: relative;
-  text-align: center;
   color: #ffffff;
 }
 
-.arrow-pointer-select:hover {
-  cursor: pointer;
-}
-
-.arrow-pointer-select::before {
-  content: "";
-  position: absolute;
-  right: -25px;
-  bottom: 0px;
-  width: 0;
-  height: 0;
+.current::before {
   border-left: 25px solid #12344D;
-  border-top: 16px solid transparent;
-  border-bottom: 16px solid transparent;
 }
 
-.arrow-pointer-select::after {
-  content: "";
-  position: absolute;
-  left: 0px;
-  bottom: 0px;
-  width: 0;
-  height: 0;
-  border-left: 25px solid #ffffff;
-  border-top: 16px solid transparent;
-  border-bottom: 16px solid transparent;
-}
-
-.arrow-pointer-unq {
-  background: #B92D2D;
+.postpone {
+  background: #E84F51;
   color: #ffffff;
 }
 
-.arrow-pointer-unq::before {
-  border-left: 25px solid #B92D2D;
-}
-
-.arrow-pointer-unq::after {
-  border-left: 25px solid #ffffff;
-}
-
-.arrow-pointer-clo {
-  background: #196F3D;
-  color: #ffffff;
-}
-
-.arrow-pointer-clo::before {
-  border-left: 25px solid #196F3D;
-}
-
-.arrow-pointer-clo::after {
-  border-left: 25px solid #ffffff;
-}
-
-.unq-bg {
-  background: #E84F51 !important;
-  color: #ffffff !important;
-}
-
-.unq-bg::before {
+.postpone::before {
   border-left: 25px solid #E84F51 !important;
 }
 
-.unq-bg::after {
-  border-left: 25px solid #ffffff !important;
+.closed {
+  background: #27AE60;
+  color: #ffffff;
 }
 
-.clo-bg {
-  background: #27AE60 !important;
-  color: #ffffff !important;
-}
-
-.clo-bg::before {
-  border-left: 25px solid #27AE60 !important;
-}
-
-.clo-bg::after {
-  border-left: 25px solid #ffffff !important;
+.closed::before {
+  border-left: 25px solid #27AE60;
 }
 
 .padding-0 {

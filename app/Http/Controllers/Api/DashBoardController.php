@@ -25,7 +25,7 @@ class DashBoardController extends ApiController
 
     public function userprojects(Request $request)
     {
-       return  $this->dashboardService->userProjectsFilters($request);
+       return $this->dashboardService->userProjectsFilters($request);
     }
 
     public function projectcount()

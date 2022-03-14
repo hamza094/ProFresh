@@ -20,7 +20,7 @@ class ProjectTest extends TestCase
   /** @test */
   public function a_project_can_make_a_string_path(){
       $project=Project::factory()->create();
-      $this->assertEquals(
+      $this->withoutExceptionHandling()->assertEquals(
           "/api/v1/projects/{$project->slug}",$project->path());
   }
 
@@ -38,6 +38,22 @@ class ProjectTest extends TestCase
      $this->assertInstanceOf('App\Models\Stage',$project->stage);
   }
 
+  /** @test */
+  public function mark_uncomplete_if_completed()
+  {
+     $project=Project::factory()->create(['completed'=>true]);
+     $project->markUncompleteIfCompleted();
+     $this->assertFalse($project->completed);
+  }
+
+  /** @test */
+  public function remove_postponed_reason_if_exists()
+  {
+     $project=Project::factory()->create(['postponed'=>'Unable to junk']);
+     $project->removePostponedIfExists();
+     $this->assertEquals(null,$project->postponed);
+  }
+
   public function a_project_can_add_a_task()
   {
       $this->signIn();
@@ -53,15 +69,6 @@ class ProjectTest extends TestCase
     $project=create('App\Models\Project');
     $this->assertInstanceOf('Illuminate\Database\Eloquent\Collection', $project->tasks);
 }
-
-
-public function a_project_has_appointments()
-{
-$this->signIn();
-  $project=create('App\Models\Project');
-  $this->assertInstanceOf('Illuminate\Database\Eloquent\Collection', $project->appointments);
-}
-
 
   public function an_project_can_be_followed_to(){
     $this->signIn();

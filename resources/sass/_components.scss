@@ -465,7 +465,6 @@ background: transparent !important;
 .arrow-pointer{
         width: 108px;
     height: 32px;
-    background: #BBDCFE;
     position: relative;
     text-align: center;
     &:hover{
@@ -478,7 +477,6 @@ background: transparent !important;
     bottom: 0px;
     width: 0;
     height: 0;
-    border-left: 25px solid  #BBDCFE;
     border-top: 16px solid transparent;
     border-bottom: 16px solid transparent;
   }
@@ -498,88 +496,36 @@ background: transparent !important;
   }
 }
 
+.stages{
+  background: #BBDCFE;
+  &::before{
+    border-left: 25px solid  #BBDCFE;
+  }
+}
 
-.arrow-pointer-select{
-        width: 108px;
-    height: 32px;
+.current{
     background: $color-secondary;
-    position: relative;
-    text-align: center;
     color:#ffffff;
-    &:hover{
-        cursor:pointer;
-    };
   &::before{
-   content: "";
-    position: absolute;
-    right: -25px;
-    bottom: 0px;
-    width: 0;
-    height: 0;
     border-left: 25px solid  $color-secondary;
-    border-top: 16px solid transparent;
-    border-bottom: 16px solid transparent;
-  }
-  &::after{
-    content: "";
-    position: absolute;
-    left: 0px;
-    bottom: 0px;
-    width: 0;
-    height: 0;
-    border-left: 25px solid #ffffff;
-    border-top: 16px solid transparent;
-    border-bottom: 16px solid transparent;
   }
 }
 
-
-.arrow-pointer-unq{
-    background:#B92D2D;
-    color:#ffffff;
-  &::before{
-    border-left: 25px solid  #B92D2D;
-  }
-  &::after{
-    border-left: 25px solid #ffffff;
-  }
-}
-
-.arrow-pointer-clo{
-    background:#196F3D;
-    color:#ffffff;
-  &::before{
-    border-left: 25px solid  #196F3D;
-  }
-  &::after{
-    border-left: 25px solid #ffffff;
-  }
-}
-
-.unq-bg{
-background: #E84F51 !important;
-color:#ffffff !important;
-
+.postpone{
+background: #E84F51;
+color:#ffffff;
 &::before{
       border-left: 25px solid  #E84F51  !important;
 }
-&::after{
-  border-left: 25px solid #ffffff !important;
-}
 }
 
-.clo-bg{
-background: #27AE60 !important;
-color:#ffffff !important;
-
+.closed{
+background: #27AE60;
+color:#ffffff;
 &::before{
-      border-left: 25px solid  #27AE60  !important;
-}
-&::after{
-  border-left: 25px solid #ffffff !important;
+      border-left: 25px solid  #27AE60;
 }
 }
-
 
 .padding-0{
         padding-right:0 !important;
