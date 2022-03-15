@@ -14,12 +14,10 @@ use Illuminate\Http\Request;
 class ProjectRepository
 {
   public function filterProjectActivity($activities)
-  {  
+  {
     $this->filterActivityByAuthUser($activities);
-      
-    $this->filterActivityByTask($activities);
 
-    $this->filterActivityByAppointment($activities);
+    $this->filterActivityByTask($activities);
       
     $this->filterActivityByProjectSpecified($activities);
   }
@@ -35,7 +33,7 @@ class ProjectRepository
       $user = User::where('id', request('mine'))->firstOrFail();
       return $q->where('user_id', $user->id);
     });
-    }  
+    }
 
     /**
     * Filter activities by project related task.
@@ -47,20 +45,8 @@ class ProjectRepository
       return  $activities->when(request('task'), function ($q) {
       return $q->where('description', 'LIKE', '%'.'_task'.'%');
     });
-    }  
-        
-    /**
-    * Filter activities by project related appointment.
-    *
-    * @param  $activities
-    */    
-    protected function filterActivityByAppointment($activities)
-    {
-      return  $activities->when(request('appointment'), function ($q) {
-      return $q->where('description', 'LIKE', '%'.'_appointment'.'%');
-    });
-    }  
-    
+    }
+
     /**
     * Filter activities by specified to project.
     *
@@ -71,7 +57,7 @@ class ProjectRepository
       return  $activities->when(request('related'), function ($q) {
       return $q->where('description', 'LIKE', '%'.'_project'.'%');
     });
-    } 
+    }
 }
 
 ?>

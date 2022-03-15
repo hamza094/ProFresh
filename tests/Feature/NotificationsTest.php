@@ -67,24 +67,6 @@ class NotificationsTest extends TestCase
       $this->assertCount(2,$thomas->fresh()->notifications);
   }
 
-
-  public function authorized_can_get_notification_when_appointment_is_added(){
-     $this->signIn($user=create('App\Models\User'));
-     $project=create('App\Models\Project',['user_id'=>$user->id]);
-      $thomas=create('App\Models\User');
-      $this->post($project->path().'/invitations',[
-          'email'=>$thomas->email
-      ]);
-      $this->signIn($thomas);
-      $this->get('project/'.$project->id.'/member');
-      $this->signIn($user);
-      $this->post('api/project/'.$project->id.'/appointment',
-          ['title' => 'mine hella','location'=>'lhr pakistan','outcome'=>'Not Intrested',
-        'strtdt'=>'11-20-17','strttm'=>'14:05','zone'=>'Asia/pacific','outcome'=>'Not intrested']);
-      $this->assertCount(2,$thomas->fresh()->notifications);
-  }
-
-
   public function signIn_user_can_not_get_his_notification(){
      $this->signIn($user=create('App\Models\User'));
      $project=create('App\Models\Project',['user_id'=>$user->id]);

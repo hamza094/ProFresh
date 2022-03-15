@@ -73,16 +73,9 @@
 						<div class="col-md-4 side_panel">
                Project Side Panel
 							<br><br><br>
-							<ul><b>Project todos:</b>
-								<li>Project tasks</li>
-								<li>Appointment</li>
-               <li>Note</li>
-							 <li>Invitations</li>
-							 <li>Members</li>
-							 <li>Online users</li>
-							 <li>Real time chat</li>
+							<ul><b>Project Features:</b>
 							</ul>
-							<h3>All this is Coming Soon...</h3>
+							<h3>This Section is Coming Soon...</h3>
 						</div>
 				</div>
 		</div>

@@ -25,9 +25,7 @@ class ScoreTest extends TestCase
         $project=create('App\Models\Project');
         $task=$project->addTask('test task');
         $project->addScore('Task Added',10);
-        $appointment=create('App\Models\Appointment',['project_id'=>$project->id]);
-        $project->addScore('Appointment Added',10);
-        $this->assertEquals($project->scores()->sum('point'),20);
+        $this->assertEquals($project->scores()->sum('point'),10);
     }
 
 }

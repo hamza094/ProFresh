@@ -1,0 +1,10 @@
+//seeder
+$projects = Project::all();
+
+ $projects->each(function ($project){
+     Appointment::factory(2)->create([
+         'project_id' => $project->id
+     ])->each(function($appointment) use($project) {
+         $appointment->users()->attach($project->user);
+     });
+ });

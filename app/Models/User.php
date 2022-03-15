@@ -86,45 +86,43 @@ class User extends Authenticatable implements Searchable, MustVerifyEmail
            return $redis->get('last_active_' . $this->id);
     }
 
-    public function appointments(){
-      return $this->hasMany(Appointment::class);
+    public function phone()
+    {
+       return $this->hasOne(UserInfo::class);
     }
 
-    public function phone()
-   {
-       return $this->hasOne(UserInfo::class);
-   }
-
     public function getSearchResult(): SearchResult
-   {
+    {
      $url=$this->email;
       return new SearchResult($this, $this->name,$url);
-   }
+    }
 
-   public function members()
+    public function members()
     {
         return $this->belongsToMany(Project::class,'project_members')->withPivot('active')->withTimestamps()->with('owner');
     }
 
      public function groups()
-    {
+     {
         return $this->belongsToMany(Group::class)->withTimestamps();
-    }
+     }
 
     public function getlastSeenAttribute()
     {
       return  $this->lastseen();
     }
 
-   public function paypal(){
+    public function paypal()
+    {
         return $this->belongsTo('App\Paypal');
     }
 
      //add user paypal record in database
-    public function paypal_info(){
-        $this->paypal()->create([
-        'user_id'=>$this->id,
-        'name'=>'ProFresh Agreement'
+    public function paypal_info()
+    {
+       $this->paypal()->create([
+       'user_id'=>$this->id,
+       'name'=>'ProFresh Agreement'
     ]);
     }
 }

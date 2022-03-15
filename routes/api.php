@@ -4,7 +4,6 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Api\
 {
-  AppointmentController,
   ProjectController,
   TaskController,
   FeaturesController,
@@ -61,9 +60,8 @@ Route::patch('/stage',[FeaturesController::class,'stage']);
 Route::patch('/notes',[FeaturesController::class,'notes']);
 Route::patch('/postponed',[FeaturesController::class,'postponed']);
 
-//Appointment and Task Routes
+//Task Routes
 Route::apiResources([
-    '/appointment' => AppointmentController::class,
     '/task' => TaskController::class,
 ]);
 //});

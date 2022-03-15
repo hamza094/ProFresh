@@ -131,11 +131,6 @@ class Project extends Model
       return $this->members()->attach($user);
     }
 
-   public function appointments()
-   {
-     return $this->hasMany(Appointment::class);
-   }
-
     public function members()
     {
       return $this->belongsToMany(User::class,'project_members')->withPivot('active');
