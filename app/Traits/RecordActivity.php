@@ -2,6 +2,7 @@
 
 namespace App\Traits;
 use App\Models\Activity;
+use App\Models\Project;
 
 trait RecordActivity
 {

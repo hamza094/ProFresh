@@ -10,11 +10,12 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 //use App\Models\Activity;
 use Illuminate\Support\Facades\Redis;
 use Cviebrock\EloquentSluggable\Sluggable;
+use App\Traits\BelongsToUser;
 use Auth;
 
 class Project extends Model
 {
-  use HasFactory, SoftDeletes, Sluggable;
+  use HasFactory, SoftDeletes, Sluggable,BelongsToUser;
 
   protected $guarded=[];
   protected $dates = ['created_at'];
@@ -68,11 +69,6 @@ class Project extends Model
             'point'=>$point
       ]);
     }
-
-   public function user()
-   {
-     return $this->belongsTo(User::class,'user_id');
-   }
 
    public function stage()
    {
