@@ -11,7 +11,7 @@ class ProjectService
   /**
     * Create Project Group And Intilize Chat Conversation.
     *
-    * @param  int  $project 
+    * @param  int  $project
     */
   public function createProjectGroupChat($project)
   {
@@ -27,7 +27,7 @@ class ProjectService
       return $project->group()->create([
         'name'=> $project->name . " Chat Group",
         'project_id'=> $project->id
-      ]); 
+      ]);
   }
 
   protected function attachProjectOwnerToGroup($project,$group)
@@ -38,7 +38,7 @@ class ProjectService
 
       $group->users()->attach($users);
 
-      $project->update(['group_id'=>$group->id]); 
+      $project->update(['group_id'=>$group->id]);
   }
 
   protected function initilizeGroupChatting($project,$group)
@@ -48,6 +48,19 @@ class ProjectService
         'user_id'=>$project->user->id,
         ]);
   }
+
+  /*public function checkTasksLimit($project){
+   if($this->tasksReachedItsLimit($project)){
+    return response()->json(['error' => 'Project tasks reached their limit'], 400);
+  }
 }
+
+  protected function tasksReachedItsLimit($project){
+    return $project->tasks->count() == config('project.taskLimit');
+  }*/
+
+}
+
+
 
 ?>

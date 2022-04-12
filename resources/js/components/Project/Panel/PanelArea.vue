@@ -1,9 +1,5 @@
 <template>
   <div>
-
-   <ProjectTasks :project=project></ProjectTasks>
-   <hr>
-
    <ProjectAppointment :project=project :members=members></ProjectAppointment>
     <hr>
 
@@ -64,7 +60,7 @@
   <p v-for="user in  chatusers">{{user.name}} <span class="chat-circle"></span> </p>
 </div>
 
-<ProjectChat :project='project' :projectgroup='projectgroup' :cons='cons'>  
+<ProjectChat :project='project' :projectgroup='projectgroup' :cons='cons'>
 </ProjectChat>
 
 </div>

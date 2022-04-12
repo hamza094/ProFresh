@@ -20,7 +20,7 @@ class TaskSeeder extends Seeder
       $projects = Project::all();
 
         $projects->each(function ($project){
-            Task::factory(2)
+            Task::factory(4)
             ->state(new Sequence(
                 ['completed' => 0],
                 ['completed' => 1],

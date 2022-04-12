@@ -91,7 +91,7 @@ class ProjectController extends ApiController
       $this->authorize('manage',$project);
 
       $project->forceDelete();
-      
+
         if(request()->expectsJson()){
             return response(['status'=>'project deleted']);
       }

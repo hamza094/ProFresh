@@ -34,17 +34,16 @@ import moment from 'moment';
 import alertNotice from './mixins/alertNotice';
 import currentStage from './mixins/currentStage';
 
-
 Vue.mixin(alertNotice);
 Vue.mixin(currentStage);
 
-Vue.filter('timeExactDate',function(data){
+/*Vue.filter('timeExactDate',function(data){
    return  moment(data).fromNow();
 })
 
 Vue.filter('timeDate',function(data){
    return  moment(data).format("MMM Do YY");
-})
+})*/
 
 window.momenttz = require('moment-timezone');
 window.moment = require('moment');
@@ -109,10 +108,11 @@ Vue.component('project-scores', require('./components/Project/Score.vue').defaul
 
 Vue.component('notifications', require('./components/Notification.vue').default);
 
+ Vue.component('pagination', require('laravel-vue-pagination'));
+
 // Vue.component('profile', require('./components/Profile/ProfilePage.vue').default);
 
 Vue.component('navbar', require('./components/Navbar.vue').default);
-
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

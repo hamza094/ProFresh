@@ -61,10 +61,8 @@ Route::patch('/notes',[FeaturesController::class,'notes']);
 Route::patch('/postponed',[FeaturesController::class,'postponed']);
 
 //Task Routes
-Route::apiResources([
-    '/task' => TaskController::class,
-]);
-//});
+Route::patch('/task/{task}/status',[TaskController::class,'status']);
+Route::apiResource('/task',TaskController::class)->except(['index','show']);
 
 //Project Subscribe Route
 Route::post('/subscribe',[SubscribeController::class,'projectSubscribe']);

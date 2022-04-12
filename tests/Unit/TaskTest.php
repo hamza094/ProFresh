@@ -5,7 +5,8 @@ namespace Tests\Unit;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-
+use App\Models\Task;
+use App\Models\Project;
 
 class TaskTest extends TestCase
 {
@@ -16,35 +17,30 @@ class TaskTest extends TestCase
      * @return void
      */
 
-
+   /** @test */
    public function it_belongs_to_a_project()
    {
-     $this->signIn();
-       $task = create('App\Models\Task');
-       $this->assertInstanceOf('App\Models\Project', $task->project);
+      $task = Task::factory()->create();
+      $this->assertInstanceOf(Project::class, $task->project);
    }
 
+    /** @test */
+    public function it_can_be_completed()
+    {
+       $task=Task::factory()->create();
+       $this->assertFalse($task->completed);
+       $task->complete();
+       $this->assertTrue($task->fresh()->completed);
+    }
 
-public function it_can_be_completed(){
-  $this->signIn();
-    $task = create('App\Models\Task');
-    $this->assertFalse($task->completed);
-    $task->complete();
-    $this->assertTrue($task->fresh()->completed);
-    $this->assertEquals(1,$task->project->tasks->count());
-}
-
-
-public function it_can_be_Uncompleted(){
-  $this->signIn();
-  $task = create('App\Models\Task');
-        $task->complete();
-        $this->assertEquals(1,$task->project->tasks->count());
+     /** @test */
+     public function it_can_mark_uncompleted()
+     {
+        $task = Task::factory()->create(['completed'=>1]);
         $this->assertTrue($task->completed);
         $task->incomplete();
         $this->assertFalse($task->fresh()->completed);
-        //$this->assertEquals(0,$task->project->tasks->count());
-}
+    }
 
 
 }

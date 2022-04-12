@@ -72,10 +72,8 @@
 						</div>
 						<div class="col-md-4 side_panel">
                Project Side Panel
-							<br><br><br>
-							<ul><b>Project Features:</b>
-							</ul>
-							<h3>This Section is Coming Soon...</h3>
+							<br>
+							<Task :slug="project.slug" :tasks="project.tasks"></Task>
 						</div>
 				</div>
 		</div>
@@ -84,9 +82,10 @@
 <script>
 	import Score from './Score'
 	import Stage from './Stage'
+	import Task from './Panel/Task'
 
 export default{
-	  components:{Score,Stage},
+	  components:{Score,Stage,Task},
     data(){
     return{
      project:[],
@@ -103,6 +102,7 @@ export default{
 						 this.user=response.data.user[0];
 						 this.scores=this.project.scores;
 						 this.checkStage=this.project.stage.id;
+						 this.$bus.emit('projectSlug',{slug:response.data.slug});
 				 }).catch(error=>{
 					 console.log(error.response.data.errors);
 				 });
@@ -119,6 +119,12 @@ export default{
 					this.project.postponed= data.postponed
 					this.checkStage=data.checkStage
 				})
+					this.$bus.$on('taskResults', (data) => {
+							axios.get('/api/v1/projects/'+this.project.slug+'?page=' + data.page)
+			 				.then(response => {
+			 					this.project.tasks = response.data.tasks;
+			 				});
+		 				})
 		},
 }
 </script>

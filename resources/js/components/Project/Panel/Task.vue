@@ -9,47 +9,52 @@
     <div class="collapse" id="taskProject">
     <div class="card card-body">
     <div class="task-add">
-      <form class="" @submit.prevent="projectTask">
+      <form class="" @submit.prevent="add">
         <div class="form-group">
           <label for="body">Add New Task</label>
           <input type="text" class="form-control" name="body" v-model="form.body">
         </div>
   </form>
     </div>
-    <div class="task-list">
+    <div v-if="tasks" class="task-list">
       <p class="task-list_heading">Project Tasks</p>
-      <div v-for="task in tasks" :key="task.id">
+      <div v-for="(task,index) in tasks.data" :key="task.id">
         <p class="task-list_text">
           <span v-if="editing == task.id">
-            <textarea name="body" rows="1" cols="34" v-model="form.editbody"  v-text="task.body" style="resize: none;"></textarea>
-            <span class="btn btn-link btn-sm" @click="taskUpdate(task.id,task)">Update</span>
-           <span class="btn btn-link btn-sm" @click="editClose(task.id,task)">Cancel</span>
+            <textarea class="form-control" name="body" rows="1" cols="34" v-model="form.editbody"  v-text="task.body" style="resize: none;"></textarea>
+            <span class="btn btn-link btn-sm" @click="update(task.id,task)">Update</span>
+           <span class="btn btn-link btn-sm" @click="closeEditForm(task.id,task)">Cancel</span>
           </span>
           <span  v-else :class="{ 'task-list_text-body' : task.completed == true}">{{task.body}}</span>
+
           <span class="float-right">
+
           <span>
-            <input  v-if="task.completed" class="form-check-input" type="checkbox" @change="taskUncomplete(task.id,task)"  checked>
-            <input v-else class="form-check-input" type="checkbox"  name="completed" @change="taskComplete(task.id,task)">
+            <input  v-if="task.completed" class="form-check-input" type="checkbox" @change="markUncomplete(task.id,task)"  checked>
+            <input v-else class="form-check-input" type="checkbox"  name="completed" @change="markComplete(task.id,task)">
           </span>
-           <span @click="taskDelete(task.id)"><i class="far fa-trash-alt" style="color:#E74C3C"></i></span>
-          <span @click="edit(task.id,task)"><i class="far fa-edit" style="color:#2980B9"></i></span>
+
+           <span @click="remove(task.id,index)"><i class="far fa-trash-alt" style="color:#E74C3C"></i></span>
+          <span @click="openEditForm(task.id,task)"><i class="far fa-edit" style="color:#2980B9"></i></span>
+
           </span>
           <br>
-          <span class="task-list_time"><i class="far fa-clock"></i> {{task.created_at | timeExactDate}}</span>
+          <span class="task-list_time"><i class="far fa-clock"></i> {{task.created_at}}</span>
          </p>
+				 <hr>
       </div>
+			<pagination :data="tasks" @pagination-change-page="getResults"></pagination>
     </div>
   </div>
     </div>
 </div>
 </template>
 <script>
-export default {
-    props:['project'],
+  export default {
+    props:['slug','tasks'],
     data() {
       return {
-         tasks:{},
-             editing:0,
+        editing:0,
           form:{
           	body:'',
           	editbody:'',
@@ -59,82 +64,87 @@ export default {
         };
     },
     methods: {
-    	 loadTasks(){
-       axios.get('/api/project/'+this.project.id+'/task')
-               .then(({data})=>(this.tasks=data));
-      },
-
-     projectTask(){
-       axios.post('/api/project/'+this.project.id+'/task',this.form)
+		 getResults(page = 1) {
+			 this.$bus.emit('taskResults',{page:page});
+		},
+     add(){
+       axios.post('/api/v1/projects/'+this.slug+'/task',this.form)
           .then(response=>{
               this.$vToastify.success("Project Task added");
               this.form.body="";
-              this.loadTasks();
+							this.getResults();
           }).catch(error=>{
-           this.errors=error.response.data.errors;
+						this.form.body="";
+						this.taskErrors(error);
        });
     },
+		url($slug,$id){
+			return '/api/v1/projects/'+$slug+'/task/'+$id;
+		},
 
-      taskUpdate(id,task){
-      axios.patch('/api/project/'+this.project.id+'/task/'+id,{
+      update(id,task){
+      axios.put(this.url(this.slug,id),{
         body:this.form.editbody,
       }).then(response=>{
           this.$vToastify.success("Task Updated");
           this.editing=false;
           task.body=this.form.editbody;
       }).catch(error=>{
-        this.$vToastify.warning("Task Updated failed");
+        this.taskErrors(error);
       })
     },
 
-    editClose(id,task){
+    closeEditForm(id,task){
       this.editing=false;
       this.form.editbody=task.body;
     },
 
-    taskComplete(id,task){
-      axios.patch('/api/project/'+this.project.id+'/task/'+id,{
-        body:task.body,
+    markComplete(id,task){
+      axios.patch(this.url(this.slug,id)+'/status',{
         completed:true,
       }).then(response=>{
-          this.$vToastify.success("Task Completed");
-          this.loadTasks();
-
+        this.$vToastify.success("Task Completed");
+				task.completed=true;
       }).catch(error=>{
         this.$vToastify.warning("Task Status Updated failed");
       })
     },
 
-    taskUncomplete(id,task){
-      axios.patch('/api/project/'+this.project.id+'/task/'+id,{
-        body:task.body,
+    markUncomplete(id,task){
+      axios.patch(this.url(this.slug,id)+'/status',{
         completed:false,
       }).then(response=>{
           this.$vToastify.info("Task Marked Uncomplete");
-          this.loadTasks();
+					task.completed=false;
       }).catch(error=>{
         this.$vToastify.warning("Task Status Updated failed");
       })
     },
 
-    taskDelete(id){
-      axios.delete('/api/project/'+this.project.id+'/task/'+id)
+    remove(id,index){
+      axios.delete(this.url(this.slug,id))
       .then(response=>{
-          this.$vToastify.info("Project Task deleted");
-          this.loadTasks();
+				 this.getResults();
+         this.$vToastify.info("Project Task deleted");
       }).catch(error=>{
         this.$vToastify.warning("Task deletion failed");
       })
     },
 
-    edit(id,task){
+    openEditForm(id,task){
       this.editing = id;
       this.form.editbody=task.body;
     },
+    taskErrors(error){
+			if(error.response.data.errors){
+				if(error.response.data.errors.body[0]){
+					this.$vToastify.warning(error.response.data.errors.body[0]);
+				}
+			}
+			if(error.response.data.error){
+				this.$vToastify.warning(error.response.data.error);
+			}
+		},
     },
-
-    created(){
-    	this.loadTasks();
-    }
 }
-</script>	
+</script>

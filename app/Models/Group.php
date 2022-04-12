@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Traits\BelongsToProject;
 
 class Group extends Model
-{ 
-    use HasFactory;
+{
+    use HasFactory,BelongsToProject;
     protected $guarded=[];
 
      public static function boot()
@@ -21,10 +22,6 @@ class Group extends Model
     public function users(){
           return $this->belongsToMany(User::class)->withTimestamps();
       }
-
-    public function project(){
-      return $this->belongsTo(Project::class,'project_id');
-    }
 
     public function conversations(){
         return $this->hasMany(Conversation::class);

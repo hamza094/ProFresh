@@ -13,7 +13,6 @@ class SubscribeTest extends TestCase
 {
   use RefreshDatabase;
 
-
   public function a_signIn_user_subscribe_to_project()
   {
       $this->signIn();

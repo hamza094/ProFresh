@@ -7,42 +7,58 @@ use App\Http\Requests\TaskRequest;
 use Illuminate\Http\Request;
 use App\Models\Project;
 use App\Models\Task;
+use App\Http\Resources\TaskResource;
+use F9Web\ApiResponseHelpers;
+use Illuminate\Http\JsonResponse;
 
 class TaskController extends ApiController
 {
-
-  public function index(Project $project)
-  {
-    return $project->tasks()->latest()->get();
-  }
+  use ApiResponseHelpers;
 
   public function store(Project $project,TaskRequest $request)
   {
-    $project->tasks()->create($request->validated());
+    if($project->tasksReachedItsLimit()){
+      return $this->respondError('Project tasks reached their limit');
+    }
+    
+    $task=$project->tasks()->firstOrCreate($request->validated());
 
-    $this->sendNotification($project,new ProjectTask($project));
+    if(!$task->wasRecentlyCreated){
+       return $this->respondError('Project tasks already exist');
+     }
 
-    $this->recordScore($project,'Task Added',10);
+     return new TaskResource($task);
+
+    //$this->sendNotification($project,new ProjectTask($project));
+
+    //$this->recordScore($project,'Task Added',10);
   }
 
   public function update(Project $project,Task $task,TaskRequest $request)
   {
-    $task->update($request->validated());
-
-    if(request('completed')){
-       $task->complete();
-      }else{
-       $task->incomplete();
-      }
+    if($task->body == $request->body){
+      return $this->respondError("You haven't changed anything");
     }
+      $task->update($request->validated());
+      return new TaskResource($task);
+  }
 
   public function destroy(Project $project,Task $task)
   {
-    $task->delete();
+     $task->delete();
 
-    $task->activity()->delete();
+    return $this->respondNoContent(['message'=>'Task deleted successfully']);
 
-    $project->recordActivity('deleted_task',$task->body);
+    //$task->activity()->delete();
+
+    //$project->recordActivity('deleted_task',$task->body);
+  }
+
+  public function status(Project $project,Task $task)
+  {
+    request('completed') ? $task->complete() : $task->incomplete();
+
+    return new TaskResource($task);
   }
 
 }

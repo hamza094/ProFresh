@@ -20,10 +20,8 @@ class Project extends Model
   protected $guarded=[];
   protected $dates = ['created_at'];
   protected $appends = ['IsSubscribedTo'];
-  protected $with = ['scores','stage'];
+  protected $with = ['scores','stage','tasks'];
   protected $casts = ['stage_updated_at'=>'datetime'];
-
-
 
     /**
  * Return the sluggable configuration array for this model.
@@ -112,7 +110,7 @@ class Project extends Model
 
     public function tasks()
     {
-      return $this->hasMany(Task::class);
+      return $this->hasMany(Task::class)->latest();
     }
 
     public function addTask($tasks)
@@ -143,6 +141,14 @@ class Project extends Model
 
     public function removePostponedIfExists(){
       $this->postponed == null ?: $this->update(['postponed'=>null]);
+    }
+
+    /*public function tasksReachedItsLimit(){
+      return $this->tasks->count() == config('project.taskLimit');
+    }*/
+
+    public function tasksReachedItsLimit(){
+      return $this->tasks->count() == config('project.taskLimit');
     }
 
 }

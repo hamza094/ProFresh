@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class TaskRequest extends FormRequest
 {
@@ -24,7 +25,20 @@ class TaskRequest extends FormRequest
     public function rules()
     {
         return [
-        'body'=>'required'   
+          'body'=>'required|max:55'
         ];
     }
-}
+
+    /**
+     * Get the error messages for the defined validation rules.
+     *
+     * @return array
+     */
+    public function messages()
+    {
+        return [
+           'body.required' => 'Task body required.',
+           'body.max'=>'Your task is too long.'
+          ];
+     }
+  }
