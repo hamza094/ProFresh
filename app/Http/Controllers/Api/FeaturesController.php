@@ -7,9 +7,13 @@ use Illuminate\Http\Request;
 use App\Services\FeatureService;
 use App\Notifications\ProjectUpdated;
 use App\Http\Resources\ProjectResource;
+use F9Web\ApiResponseHelpers;
+use Illuminate\Http\JsonResponse;
 
 class FeaturesController extends ApiController
 {
+  use ApiResponseHelpers;
+
   private $featureService;
 
   /**
@@ -72,15 +76,23 @@ class FeaturesController extends ApiController
 
     public function notes(Project $project,Request $request)
     {
-       $this->validate($request, [
+      $this->validate($request, [
        'notes'=>'required',
       ]);
 
+      if($project->notes == $request->notes){
+        return $this->respondError("You haven't changed anything");
+      }
+
       $project->update(['notes'=>request('notes')]);
 
-      $this->sendNotification($project,new ProjectUpdated($project));
+      return $this->respondWithSuccess([
+      'notes'=>$project->notes,
+      ]);
 
-      $this->recordScore($project,'Notes Updated',10);
+      //$this->sendNotification($project,new ProjectUpdated($project));
+
+      //$this->recordScore($project,'Notes Updated',10);
     }
 
     public function export(Project $project)

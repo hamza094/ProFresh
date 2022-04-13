@@ -135,15 +135,16 @@ public function user_can_download_project_export()
     });
 }
 
-public function authorize_user_can_update_note(){
-  $user=create('App\Models\User');
-   $this->signIn($user);
-   $project=create('App\Models\Project',['user_id'=>$user->id]);
-  $this->assertDatabaseHas('projects',['notes'=>null]);
-  $notes='abra ka dabra';
-  $this->patch('api/projects/'.$project->id.'/notes',['notes'=>$notes]);
-  $this->assertDatabaseHas('projects',['notes'=>$notes]);
-}
+  /** @test */
+  public function auth_user_can_update_note()
+  {
+    $user=User::first();
+    $project=Project::factory()->create(['user_id'=>$user->id]);
+    $this->assertDatabaseHas('projects',['notes'=>null]);
+    $notes='My Project Notes';
+    $this->patchJson($project->path().'/notes',['notes'=>$notes]);
+    $this->assertDatabaseHas('projects',['notes'=>$notes]);
+ }
 
     public function group_deleted_on_user_deletion()
     {

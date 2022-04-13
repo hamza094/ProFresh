@@ -32,7 +32,7 @@ class ProjectResource extends JsonResource
           'user'=>$this->user()->select('id','name')->get(),
           'completed'=>$this->completed,
           'tasks'=>$this->when($this->tasks()->exists(),
-          fn()=>TaskResource::collection($this->whenLoaded('tasks'))->paginate(3) 
+          fn()=>TaskResource::collection($this->whenLoaded('tasks'))->paginate(3)
           ),
           'created_at'=>$this->created_at->diffforHumans(),
           'updated_at'=>$this->updated_at->diffforHumans(),

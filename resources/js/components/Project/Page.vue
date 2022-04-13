@@ -74,6 +74,8 @@
                Project Side Panel
 							<br>
 							<Task :slug="project.slug" :tasks="project.tasks"></Task>
+							<hr>
+						<PanelFeatues :slug="project.slug" :notes="project.notes"></PanelFeatues>
 						</div>
 				</div>
 		</div>
@@ -83,9 +85,11 @@
 	import Score from './Score'
 	import Stage from './Stage'
 	import Task from './Panel/Task'
+	import PanelFeatues from './Panel/Features'
+
 
 export default{
-	  components:{Score,Stage,Task},
+	  components:{Score,Stage,Task,PanelFeatues},
     data(){
     return{
      project:[],
@@ -125,6 +129,9 @@ export default{
 			 					this.project.tasks = response.data.tasks;
 			 				});
 		 				})
+						this.$bus.$on('Panel', (data) => {
+								this.project.notes = data.notes
+							})
 		},
 }
 </script>
