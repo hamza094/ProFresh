@@ -3,12 +3,12 @@
     <div class="float-right">
 
     <button class="btn btn-primary btn-sm" @click="$modal.show('edit-project')">Edit Project</button>
-    
+
     <span class="feature-dropdown" @click="featurePop = !featurePop">
 <span class="btn btn-light btn-sm"><i class="fas fa-ellipsis-v"></i></span>
 <span class="feature-dropdown_item" v-show=featurePop>
   <ul>
-    <li class="feature-dropdown_item-content" v-if="authorize('projectOwner',project)" 
+    <li class="feature-dropdown_item-content" v-if="authorize('projectOwner',project)"
     @click="forgetProject"><i class="far fa-trash-alt"></i> Forget</li>
 
     <li class="feature-dropdown_item-content" v-if="projectmembers != 0" @click="$modal.show('project-mail')"><i class="far fa-envelope"></i> Email</li>
@@ -43,14 +43,13 @@
 
 <script>
 
-  import ProjectUpdate from './ProjectUpdate'
   import ProjectSms from './ProjectSms'
   import ProjectMail from './ProjectMail'
 
 export default {
 
-  components: {ProjectUpdate,ProjectSms,ProjectMail},
- 
+  components: {ProjectSms,ProjectMail},
+
     props:['project','subscribe','members'],
     data() {
         return {

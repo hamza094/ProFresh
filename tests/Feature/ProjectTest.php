@@ -55,14 +55,14 @@ class ProjectTest extends TestCase
             ->assertSessionHasErrors('name');
 
     }
-
+     /** @test */
     public function updated_project_requires_a_name(){
-        $this->signIn();
-        $project=make('App\Models\Project',[
-            'name'=>null
-        ]);
-        $this->post('/api/projects',$project->toArray())
-            ->assertSessionHasErrors('name');
+        $user=User::first();
+        $project=Project::factory()->create(['user_id'=>$user->id]);
+        $this->patchJson($project->path(),['name'=>null])->assertStatus(422);
+
+        /*$this->withoutExceptionHandling()->postJson($project->path(),$project->toArray())
+            ->assertSessionHasErrors('name');*/
 
     }
     /** @test */
@@ -72,15 +72,19 @@ class ProjectTest extends TestCase
         ->assertStatus(200);
     }
 
-    public function authorized_user_can_update_project(){
-      $user=create('App\Models\User');
-       $this->signIn($user);
-       $project=create('App\Models\Project',['user_id'=>$user->id]);
-        $name="john santiman";
-        $email="james_picaso@outlook.com";
-        $mobile=6785434567;
-       $this->withoutExceptionHandling()->patch($project->path(),['name'=>$name,'email'=>$email,'mobile'=>$mobile]);
-        $this->assertDatabaseHas('projects',['id'=>$project->id,'mobile'=>$mobile]);
+   /** @test */
+    public function auth_user_can_update_project(){
+       $user=User::first();
+       $project=Project::factory()->create(['user_id'=>$user->id]);
+      $name="My First Project";
+       $this->withoutExceptionHandling()->patch($project->path(),['name'=>$name]);
+        $this->assertDatabaseHas('projects',['id'=>$project->id,'name'=>$name]);
+    }
+
+    /** @test */
+    public function data_with_same_request_not_be_updated(){
+      $project=Project::factory()->create(['name'=>'My Project']);
+      $this->patchJson($project->path(),['name'=>'My Project'])->assertStatus(400);
     }
 
    public function project_owner_can_trash_project(){
@@ -113,14 +117,11 @@ public function project_mail_sent(){
 
 }
 
-
 public function project_sms_link_working(){
   $this->signIn();
   $project=create('App\Models\Project');
   $this->json('POST','/api/projects/'.$project->id.'/sms')->assertStatus(401);
 }
-
-
 
 public function user_can_download_project_export()
 {

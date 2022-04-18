@@ -38,8 +38,6 @@ class ProfileTest extends TestCase
         ])->assertStatus(422);
     }
 
-
-
     public function authorize_user_may_add_avatar_to_project()
     {
       $user=create('App\Models\User');

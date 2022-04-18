@@ -33,9 +33,13 @@ import moment from 'moment';
 
 import alertNotice from './mixins/alertNotice';
 import currentStage from './mixins/currentStage';
+import projectUpdate from './project/Update';
+
 
 Vue.mixin(alertNotice);
 Vue.mixin(currentStage);
+Vue.mixin(projectUpdate);
+
 
 /*Vue.filter('timeExactDate',function(data){
    return  moment(data).fromNow();

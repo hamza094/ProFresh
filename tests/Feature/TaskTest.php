@@ -105,8 +105,8 @@ class TaskTest extends TestCase
    {
      $user=User::first();
      $project=Project::factory()->hasTasks(config('project.taskLimit'))->create(['user_id'=>$user->id]);
-     dd($this->getJson($project->path().'?page=2'));
-     dd($response->project);
+     $this->getJson($project->path().'?page=2')->assertOk();
+     //dd($response->project);
      //dd($response);
      //$this->assertCount(3,$project->tasks->data);
    }*/

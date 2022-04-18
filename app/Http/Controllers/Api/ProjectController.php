@@ -64,15 +64,26 @@ class ProjectController extends ApiController
 
     public function update(Project $project,ProjectRequest $request)
     {
-      $this->authorize('access',$project);
+      //$this->authorize('access',$project);
+      if($project->name == $request->name || $project->about == $request->about ){
+        return $this->respondError("You haven't changed anything");
+      }
 
       $project->update($request->validated());
 
-      $this->sendNotification($project,new ProjectUpdated($project));
+      if($request->name){
+        return $this->respondWithSuccess([
+          'msg'=>'Project name updated sucessfully',
+          'name'=>$project->name,
+          'slug'=>$project->slug
+        ]);
+      }
 
-      if (request()->wantsJson()) {
-            return response($project, 201);
-        }
+      return $this->respondWithSuccess(
+        ['msg'=>'Project about updated sucessfully','about'=>$project->about]
+      );
+
+      //$this->sendNotification($project,new ProjectUpdated($project));
     }
 
     /**

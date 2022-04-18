@@ -26,22 +26,17 @@ class ProjectRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'=>'required',
-            'email'=>'required',
-            'mobile'=>'required',
-            'zipcode'=>'',
-            'address'=>'string',
-            'position'=>'string',
-            'company'=>'string'
+            'name'=>'sometimes|required|max:150',
+            'about'=>'sometimes|required',
         ];
     }
 
     public function messages()
     {
         return [
-            'name.required' => 'project name required.',
-            'email.required'=>'project email required',
-            'mobile.required'=>'project mobile required'
+            'name.required' => 'Project name required.',
+            'about.required' => 'Project about required.',
+            'name.max' => 'Project name is too long.',
         ];
     }
 }
