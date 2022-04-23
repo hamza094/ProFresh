@@ -18,7 +18,7 @@ class InvitationService
     {
      $project->invite($user);
 
-     $this->performRelatedTasks($project,$user);     
+     $this->performRelatedTasks($project,$user);
    }
   }
 
@@ -39,14 +39,14 @@ class InvitationService
 
     $project->scores()->where('message',"Invitaion Accept by $user->name")->delete();
   }
-  
+
   public function memberSearch($request)
   {
     return (new Search())
      ->registerModel(User::class, ['name', 'email'])
      ->search($request->input('query'));
   }
-  
+
   protected function performRelatedTasks($project,$user)
   {
     $project->recordActivity('sent_member_project',$user->name.'/_/'.$user->id);
@@ -55,7 +55,7 @@ class InvitationService
 
     ProjectHelper::recordScore($project,'Invitaion Sent',5);
   }
-  
+
   protected function executeRelatedTasks($project,$user)
   {
     $project->recordActivity('accept_member_project',$user->name.'/_/'.$user->id);

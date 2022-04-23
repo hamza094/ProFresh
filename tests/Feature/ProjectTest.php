@@ -76,9 +76,11 @@ class ProjectTest extends TestCase
     public function auth_user_can_update_project(){
        $user=User::first();
        $project=Project::factory()->create(['user_id'=>$user->id]);
-      $name="My First Project";
-       $this->withoutExceptionHandling()->patch($project->path(),['name'=>$name]);
-        $this->assertDatabaseHas('projects',['id'=>$project->id,'name'=>$name]);
+       $name="My First Project";
+       $notes="My project first notes";
+       $this->patch($project->path(),['name'=>$name,
+       'notes'=>$notes]);
+       $this->assertDatabaseHas('projects',['id'=>$project->id,'name'=>$name]);
     }
 
     /** @test */
@@ -135,17 +137,6 @@ public function user_can_download_project_export()
          return $export->query()->get()->contains('name','John O Corner');
     });
 }
-
-  /** @test */
-  public function auth_user_can_update_note()
-  {
-    $user=User::first();
-    $project=Project::factory()->create(['user_id'=>$user->id]);
-    $this->assertDatabaseHas('projects',['notes'=>null]);
-    $notes='My Project Notes';
-    $this->patchJson($project->path().'/notes',['notes'=>$notes]);
-    $this->assertDatabaseHas('projects',['notes'=>$notes]);
- }
 
     public function group_deleted_on_user_deletion()
     {

@@ -144,11 +144,11 @@ export default{
 							name:this.projectname,
 					}).then(response=>{
              	this.updateUrl(response.data.slug);
-		          this.updateNameState(response.data.name,response.data.slug);
+		          this.updateNameState(response.data.name,response.data.slug,response.data.msg);
 					}).catch(error=>{
-						this.nameEdit = false;
-						this.projectname=this.project.name;
-             this.showError(error);
+						  this.nameEdit = false;
+						  this.projectname=this.project.name;
+              this.showError(error);
 					 });
 			},
 			updateUrl(url){
@@ -157,12 +157,12 @@ export default{
 				const nextState = { additionalInformation: 'Updated the URL with Slug' };
 					window.history.replaceState(nextState, nextTitle, nextURL)
 			},
-			updateNameState(name,slug){
+			updateNameState(name,slug,msg){
 				this.project.name=name;
 				this.project.slug=slug;
 				this.projectname=name;
 				this.nameEdit = false;
-				this.$vToastify.success(response.data.msg);
+				this.$vToastify.success(msg);
 			},
 			cancelUpdate(){
 				this.nameEdit = false;
@@ -195,15 +195,17 @@ export default{
 
 			//show error messages
 			showError(error){
-				if(error.response.data.errors){
-					if(error.response.data.errors.this.name){
+				console.log(error.response.data.errors);
+				if(error.response.data.errors && error.response.data.errors.name){
 						this.$vToastify.warning(error.response.data.errors.name[0]);
-					}
-					if(error.response.data.errors.about){
+				}
+				 if(error.response.data.errors && error.response.data.errors.about){
 						this.$vToastify.warning(error.response.data.errors.about[0]);
 					}
-				}
+				if(error.response.data.error){
 					this.$vToastify.warning(error.response.data.error);
+				}
+
 			}
     },
     mounted(){

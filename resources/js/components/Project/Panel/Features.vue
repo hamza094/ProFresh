@@ -4,10 +4,23 @@
       <div id="wrapper">
         <p><b>Add Project Note:</b></p>
     <form id="paper" method="post" @keyup.enter="ProjectNote">
-      <textarea placeholder="Write project notes" id="text" name="notes" rows="4" v-model="form.notes">{{this.notes}}</textarea>
+      <textarea placeholder="Write Project Notes" id="text" name="notes" rows="4" v-model="form.notes" v-text="this.notes"></textarea>
       <br>
   </form>
 </div>
+    </div>
+    <hr>
+
+    <div class="invite">
+      <p><b>Project Invitations:</b></p>
+       <input type="text" placeholder="Search user for invitation" class="form-control" v-model="query">
+       <div class="invite-list">
+        <ul v-if="results.length > 0 && query">
+          <li v-for="result in results.slice(0,5)" :key="result.id">
+              <div @click.prevent="">{{result.title}} ({{result.searchable.email}})</div>
+          </li>
+        </ul>
+      </div>
     </div>
 </div>
 
@@ -16,26 +29,31 @@
 <script>
 export default{
   props:['slug','notes'],
+  watch: {
+  query(after, before) {
+    this.searchUsers();
+  },
+},
   data(){
     return{
       form:{
         notes:"",
       },
+      query: null,
+      results: [],
       errors:{},
     }
   },
   methods:{
     ProjectNote(){
-      axios.patch('/api/v1/projects/'+this.slug+'/notes',{
+      axios.patch('/api/v1/projects/'+this.slug,{
         notes:this.form.notes,
       }).then(response=>{
         this.$bus.emit('Panel',{notes:response.data.notes});
         this.$vToastify.success("Notes Updated");
       }).catch(error=>{
-        if(error.response.data.errors){
-          if(error.response.data.errors.notes[0]){
+          if(error.response.data.errors && error.response.data.errors.notes[0]){
             this.$vToastify.warning(error.response.data.errors.notes[0]);
-        }
         }
         if(error.response.data.error){
   				this.$vToastify.warning(error.response.data.error);
@@ -43,6 +61,11 @@ export default{
           this.form.notes=this.notes;
       })
     },
+    searchUsers() {
+    axios.get('/api/v1/users/search', { params: { query: this.query } })
+   .then(response => this.results = response.data)
+   .catch(error => {});
+ },
   },
 }
 </script>

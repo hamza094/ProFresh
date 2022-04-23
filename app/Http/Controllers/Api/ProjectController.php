@@ -62,28 +62,29 @@ class ProjectController extends ApiController
         return new ProjectResource($project);
     }
 
-    public function update(Project $project,ProjectRequest $request)
+    public function update(Project $project,ProjectRequest $request,ProjectService $service)
     {
       //$this->authorize('access',$project);
-      if($project->name == $request->name || $project->about == $request->about ){
+
+      if($service->sameRequestAttributes($project) || $service->sameNoteRequest($project)){
         return $this->respondError("You haven't changed anything");
       }
 
       $project->update($request->validated());
 
-      if($request->name){
-        return $this->respondWithSuccess([
-          'msg'=>'Project name updated sucessfully',
-          'name'=>$project->name,
-          'slug'=>$project->slug
-        ]);
-      }
+      $requestArray=$request->input();
+
+      $key=array_key_first($requestArray);
+
+      $value=$project->$key;
 
       return $this->respondWithSuccess(
-        ['msg'=>'Project about updated sucessfully','about'=>$project->about]
+        ['msg'=>'Project '.$key.' updated sucessfully', $key=>$value,'slug'=>$project->slug]
       );
 
       //$this->sendNotification($project,new ProjectUpdated($project));
+
+      //$this->recordScore($project,'Notes Updated',10);
     }
 
     /**

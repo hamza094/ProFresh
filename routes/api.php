@@ -34,7 +34,7 @@ Route::get('/welcome',[WelcomeController::class,'index']);
 //Return All Users
 Route::get('/users',[UserController::class,'index']);
 
-Route::get('/user',[UserController::class,'user']);
+Route::get('/user',[UserController::class,'show']);
 
 //Return All Stages
 Route::get('/stages',[StageController::class,'index']);
@@ -57,7 +57,6 @@ Route::post('/mail',[FeaturesController::class,'mail']);
 Route::post('/sms',[FeaturesController::class,'sms']);
 Route::get('/export',[FeaturesController::class,'export']);
 Route::patch('/stage',[FeaturesController::class,'stage']);
-Route::patch('/notes',[FeaturesController::class,'notes']);
 Route::patch('/postponed',[FeaturesController::class,'postponed']);
 
 //Task Routes

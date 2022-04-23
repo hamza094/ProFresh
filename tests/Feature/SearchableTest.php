@@ -12,6 +12,8 @@ use Spatie\Searchable\Search;
 use Spatie\Searchable\Tests\Models\TestModel;
 use Spatie\Searchable\Tests\stubs\CustomNameSearchAspect;
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
+use Laravel\Sanctum\Sanctum;
 
 class SearchableTest extends TestCase
 {
@@ -21,6 +23,20 @@ class SearchableTest extends TestCase
      *
      * @return void
      */
+
+     public function setUp() :void
+     {
+         parent::setUp();
+         // create a user
+        $user=User::factory()->create([
+             'email'=>'johndoe@example.org',
+             'password'=>Hash::make('testpassword')
+         ]);
+
+         Sanctum::actingAs(
+             $user,
+         );
+     }
 
      /** User Searchable*/
 

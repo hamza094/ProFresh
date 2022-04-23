@@ -49,6 +49,18 @@ class ProjectService
         ]);
   }
 
+  public function sameRequestAttributes($project)
+  {
+      return $project->name == request('name')
+      || $project->about == request('about');
+  }
+
+  public function sameNoteRequest($project)
+  {
+     return request()->has('notes')
+     && $project->notes == request('notes');
+  }
+
   /*public function checkTasksLimit($project){
    if($this->tasksReachedItsLimit($project)){
     return response()->json(['error' => 'Project tasks reached their limit'], 400);

@@ -28,6 +28,7 @@ class ProjectRequest extends FormRequest
         return [
             'name'=>'sometimes|required|max:150',
             'about'=>'sometimes|required',
+            'notes'=>'sometimes|present'
         ];
     }
 

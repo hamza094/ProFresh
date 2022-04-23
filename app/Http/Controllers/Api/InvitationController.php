@@ -44,7 +44,7 @@ class InvitationController extends ApiController
      */
    public function store(Project $project,Request $request)
    {
-     $user=User::whereEmail(request('email'))->first();
+     $user=User::whereEmail($request->email)->first();
 
      $this->invitationService->sendInvitation($user,$project);
    }

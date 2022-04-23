@@ -74,27 +74,6 @@ class FeaturesController extends ApiController
       $request->mobile);
     }
 
-    public function notes(Project $project,Request $request)
-    {
-      $this->validate($request, [
-       'notes'=>'required',
-      ]);
-
-      if($project->notes == $request->notes){
-        return $this->respondError("You haven't changed anything");
-      }
-
-      $project->update(['notes'=>request('notes')]);
-
-      return $this->respondWithSuccess([
-      'notes'=>$project->notes,
-      ]);
-
-      //$this->sendNotification($project,new ProjectUpdated($project));
-
-      //$this->recordScore($project,'Notes Updated',10);
-    }
-
     public function export(Project $project)
     {
       $this->featureService->excelExport($project);

@@ -55,9 +55,4 @@ class DashboardTest extends TestCase
 $this->assertCount(1,$project->withTrashed()->get());
    }
 
-
-
-
-
-
 }
