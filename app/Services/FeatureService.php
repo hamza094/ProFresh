@@ -37,11 +37,9 @@ class FeatureService
 
     protected function stageCompletedOperation($project){
       $project->update(['completed'=>true]);
-      //$project->removePostponedIfExists();
     }
 
     protected function stagePostponedOperation($project,$request){
-       //$project->markUncompleteIfCompleted();
        $project->update(['postponed'=>$request->postponed]);
     }
 

@@ -44,9 +44,9 @@ class InvitationController extends ApiController
      */
    public function store(Project $project,Request $request)
    {
-     $user=User::whereEmail($request->email)->first();
+      $user=User::whereEmail($request->email)->first();
 
-     $this->invitationService->sendInvitation($user,$project);
+      return $this->invitationService->sendInvitation($user,$project);
    }
 
     /**
@@ -54,29 +54,29 @@ class InvitationController extends ApiController
      *
      * @param  int  $project
      */
-  public function accept(Project $project)
-  {
-    $this->invitationService->acceptInvitation($project);
-  }
+   public function accept(Project $project)
+   {
+     $this->invitationService->acceptInvitation($project);
+   }
 
    /**
      * Cancel project invitation request.
      *
      * @param  int  $project
      */
-  public function ignore(Project $project)
-  {
-    $project->members()->detach(Auth::user());
-  }
+   public function ignore(Project $project)
+   {
+      $project->members()->detach(Auth::user());
+   }
 
     /**
      * Cancel project invitation request by project owner.
      *
      * @param  int  $project
      */
-  public function cancel(Project $project,User $user)
-  {
-    $this->invitationService->cancelInvitation($user,$project);
-  }
+   public function remove(Project $project,User $user)
+   {
+     $this->invitationService->removeMember($user,$project);
+   }
 
 }

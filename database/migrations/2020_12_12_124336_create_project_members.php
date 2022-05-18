@@ -17,7 +17,7 @@ class CreateProjectMembers extends Migration
             $table->id();
             $table->unsignedInteger('project_id');
             $table->uuid('user_id');
-            $table->integer('active')->default(0);
+            $table->boolean('active')->default(0);
             $table->timestamps();
 
             $table->index(['project_id','user_id']);

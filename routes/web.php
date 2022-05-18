@@ -27,12 +27,14 @@ Route::middleware(['auth'])->group(function () {
 
 //Plan Route Prefix
 Route::group(['prefix' => 'plan'], function() {
-Route::get('/create',[SubscriptionController::class,'createPlan']);
-Route::get('/list',[SubscriptionController::class,'listPlan']);
-Route::get('/{id}',[SubscriptionController::class,'showPlan']);
-Route::get('/{id}/active',[SubscriptionController::class,'activePlan']);
-Route::post('/{id}/agreement/create',[SubscriptionController::class,'createAgreement'])->
-name('create-aggreement');
+
+Route::controller(SubscriptionController::class)->group(function(){
+Route::get('create','createPlan');
+Route::get('list','listPlan');
+Route::get('{id}','showPlan');
+Route::get('{id}/active','activePlan');
+Route::post('{id}/agreement/create','createAgreement')->name('create-aggreement');
+});
 });
 
 

@@ -94,7 +94,6 @@ class User extends Authenticatable implements Searchable, MustVerifyEmail
     public function getSearchResult(): SearchResult
     {
        $url=$this->email;
-       $null = null;
       return new SearchResult($this, $this->name, $url);
     }
 

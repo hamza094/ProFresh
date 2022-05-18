@@ -136,13 +136,11 @@
       this.form.editbody=task.body;
     },
     taskErrors(error){
-			if(error.response.data.errors){
-				if(error.response.data.errors.body[0]){
-					this.$vToastify.warning(error.response.data.errors.body[0]);
-				}
+			if(error.response.data.errors.body){
+				this.$vToastify.warning(error.response.data.errors.body[0]);
 			}
-			if(error.response.data.error){
-				this.$vToastify.warning(error.response.data.error);
+			if(error.response.data.errors.task){
+				this.$vToastify.warning(error.response.data.errors.task[0]);
 			}
 		},
     },

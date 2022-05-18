@@ -8,7 +8,6 @@ use Tests\TestCase;
 use App\Models\User;
 use App\Models\Project;
 
-
 class SubscribeTest extends TestCase
 {
   use RefreshDatabase;
@@ -20,7 +19,6 @@ class SubscribeTest extends TestCase
       $this->post($project->path().'/subscribe');
       $this->assertCount(1, $project->subscribers);
   }
-
 
   public function a_signIn_user_unsubscribe_to_project()
   {

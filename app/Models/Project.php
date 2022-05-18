@@ -132,20 +132,20 @@ class Project extends Model
 
    public function activeMembers()
     {
-      return $this->members()->where('active',1);
+      return $this->members()->where('active',true);
     }
 
     public function markUncompleteIfCompleted(){
-      $this->completed != true ?: $this->update(['completed'=>false]);
+      if($this->completed == true){
+        $this->update(['completed'=>false]);
+      }
     }
 
     public function removePostponedIfExists(){
-      $this->postponed == null ?: $this->update(['postponed'=>null]);
+      if($this->postponed != null){
+         $this->update(['postponed'=>null]);
+      }
     }
-
-    /*public function tasksReachedItsLimit(){
-      return $this->tasks->count() == config('project.taskLimit');
-    }*/
 
     public function tasksReachedItsLimit(){
       return $this->tasks->count() == config('project.taskLimit');

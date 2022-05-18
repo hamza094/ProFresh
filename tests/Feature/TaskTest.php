@@ -59,7 +59,7 @@ class TaskTest extends TestCase
      $project=Project::factory()->hasTasks(1,['body'=>'Project Task'])->create();
      $this->postJson($project->path().'/task',
          ['body' => 'Project Task'])
-         ->assertStatus(400);
+         ->assertStatus(422);
  }
 
  /** @test */
@@ -68,7 +68,7 @@ class TaskTest extends TestCase
    $project=Project::factory()->hasTasks(config('project.taskLimit'))->create();
    $this->postJson($project->path().'/task',
        ['body' => 'Project Task'])
-       ->assertStatus(400);
+       ->assertStatus(422);
 }
 
   /** @test */

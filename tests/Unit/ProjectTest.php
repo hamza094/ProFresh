@@ -6,6 +6,7 @@ use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\Models\Task;
+use App\Models\User;
 use App\Models\Project;
 
 class ProjectTest extends TestCase
@@ -86,14 +87,12 @@ class ProjectTest extends TestCase
    $this->assertCount(0, $project->subscribers);
 }
 
-  public function it_can_invites_a_user()
+  /** @test */
+  public function invitation_can_be_sent_to_a_user()
   {
-     //$this->signIn();
-     $project = create('App\Models\Project');
-     $project->invite($user=create('App\Models\User'));
+     $project = Project::factory()->create();
+     $project->invite($user=User::factory()->create());
      $this->assertTrue($project->members->contains($user));
   }
-
-
 
 }

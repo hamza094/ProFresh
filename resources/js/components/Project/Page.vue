@@ -195,7 +195,6 @@ export default{
 
 			//show error messages
 			showError(error){
-				console.log(error.response.data.errors);
 				if(error.response.data.errors && error.response.data.errors.name){
 						this.$vToastify.warning(error.response.data.errors.name[0]);
 				}

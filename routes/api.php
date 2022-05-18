@@ -31,10 +31,12 @@ use App\Http\Controllers\Api\
 Route::group(['prefix'=>'v1'], function () {
 
 Route::get('/welcome',[WelcomeController::class,'index']);
-//Return All Users
-Route::get('/users',[UserController::class,'index']);
 
-Route::get('/user',[UserController::class,'show']);
+Route::controller(UserController::class)->group(function(){
+  //Return All Users
+  Route::get('/users','index');
+  Route::get('/user','show');
+});
 
 //Return All Stages
 Route::get('/stages',[StageController::class,'index']);
@@ -53,29 +55,30 @@ Route::get('/timeline_feeds',[ProjectController::class,'activity'])
 
 //Route::middleware(['can:access,project'])->group(function () {
 //Project Feature Routes
-Route::post('/mail',[FeaturesController::class,'mail']);
-Route::post('/sms',[FeaturesController::class,'sms']);
-Route::get('/export',[FeaturesController::class,'export']);
-Route::patch('/stage',[FeaturesController::class,'stage']);
-Route::patch('/postponed',[FeaturesController::class,'postponed']);
+Route::controller(FeaturesController::class)->group(function(){
+Route::post('mail','mail');
+Route::post('sms','sms');
+Route::get('export','export');
+Route::patch('stage','stage');
+Route::patch('postponed','postponed');
+});
 
 //Task Routes
-Route::patch('/task/{task}/status',[TaskController::class,'status']);
 Route::apiResource('/task',TaskController::class)->except(['index','show']);
+Route::patch('/task/{task}/status',[TaskController::class,'status']);
 
 //Project Subscribe Route
 Route::post('/subscribe',[SubscribeController::class,'projectSubscribe']);
 Route::delete('/unsubscribe', [SubscribeController::class,'projectUnSubscribe']);
 
-//Project Invitation With Middleware Route
-Route::middleware(['can:manage,project'])->group(function () {
-Route::post('/invitations', [InvitationController::class,'store']);
-Route::get('/cancel/{user}',[InvitationController::class,'cancel']);
-});
+Route::controller(InvitationController::class)->group(function(){
+  Route::post('invitations','store');
+  Route::get('remove/{user}','remove');
+  //->middleware('can:owner,project');
 
-//Project Invitation User Side
-Route::get('/member',[InvitationController::class,'accept']);
-Route::get('/cancel',[InvitationController::class,'ignore']);
+  Route::get('/member','accept');
+  Route::get('/ignore','ignore');
+});
 
 //Group Chat Conversation Routes
 Route::post('/conversations', [ConversationController::class,'store']);
@@ -94,10 +97,8 @@ Route::delete('/user/{user}/notifications/{notification}', [NotificationsControl
 //Profile Routes
 Route::group(['prefix' => 'profile'], function() {
 
-Route::get('/user/{user}',[ProfileController::class,'show']);
-
-Route::apiResource('/user',ProfileController::class)->only('update','delete')
-->middleware('can:owner,user');
+Route::apiResource('/user',ProfileController::class)->only('show','update','delete');
+//->middleware('can:owner,user');
 
 Route::post('/{user}/avatar', [ProfileController::class,'avatar'])->name('avatar');
 Route::patch('/{user}/avatar-delete',[ProfileController::class,'avatarDelete']);

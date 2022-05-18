@@ -8,36 +8,52 @@ use Spatie\Searchable\Search;
 use App\Notifications\ProjectInvitation;
 use App\Notifications\AcceptInvitation;
 use App\Helpers\ProjectHelper;
+use F9Web\ApiResponseHelpers;
+use Illuminate\Http\JsonResponse;
 
 class InvitationService
 {
+  use ApiResponseHelpers;
 
   public function sendInvitation($user,$project)
   {
-    if (! $project->members->contains($user->id))
+    if ($project->members->contains($user->id))
     {
-     $project->invite($user);
+       return $this->respondError("Project invitation already sent to a user");
+    }
+      $project->invite($user);
 
-     $this->performRelatedTasks($project,$user);
+      return $this->respondWithSuccess([
+        'msg'=>"Project invitation sent to ".$user->name
+      ]);
+
+     //$this->performRelatedTasks($project,$user);
    }
-  }
 
   public function acceptInvitation($project)
   {
-    Auth::user()->members()->updateExistingPivot($project,['active'=>1]);
+    Auth::user()->members()->updateExistingPivot($project,['active'=>true]);
 
-    $this->executeRelatedTasks($project,Auth::user());
+    return $this->respondWithSuccess([
+      'msg'=>"You have accepted, ".$project->name." invitation"
+    ]);
 
-    $this->attachUserToGroupChat($project,Auth::user());
+    //$this->executeRelatedTasks($project,Auth::user());
+
+    //$this->attachUserToGroupChat($project,Auth::user());
   }
 
-  public function cancelInvitation($user,$project)
+  public function removeMember($user,$project)
   {
     $project->members()->detach($user);
 
-    $project->recordActivity('cancel_member_project',$user->name.'/_/'.$user->id);
+    return $this->respondWithSuccess([
+      'msg'=>"Member ".$user->name." has been removed from a project"
+    ]);
 
-    $project->scores()->where('message',"Invitaion Accept by $user->name")->delete();
+    //$project->recordActivity('cancel_member_project',$user->name.'/_/'.$user->id);
+
+    //$project->scores()->where('message',"Invitaion Accept by $user->name")->delete();
   }
 
   public function memberSearch($request)

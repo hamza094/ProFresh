@@ -17,7 +17,7 @@
        <div class="invite-list">
         <ul v-if="results.length > 0 && query">
           <li v-for="result in results.slice(0,5)" :key="result.id">
-              <div @click.prevent="">{{result.title}} ({{result.searchable.email}})</div>
+              <div @click.prevent="inviteUser(result.url)">{{result.title}} ({{result.searchable.email}})</div>
           </li>
         </ul>
       </div>
@@ -64,7 +64,22 @@ export default{
     searchUsers() {
     axios.get('/api/v1/users/search', { params: { query: this.query } })
    .then(response => this.results = response.data)
-   .catch(error => {});
+   .catch(error => {
+     this.$vToastify.warning(error.response.data.error);
+   });
+ },
+  inviteUser(user){
+      axios.post('/api/v1/projects/'+this.slug+'/invitations',{
+      email:user,
+     }).then(response=>{
+       this.query='';
+       this.results='';
+       this.$vToastify.success(response.data.msg);
+   }).catch(error=>{
+       this.query='';
+       this.results='';
+       this.$vToastify.warning(error.response.data.error);
+   })
  },
   },
 }

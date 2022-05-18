@@ -20,7 +20,7 @@ class MembersSeeder extends Seeder
 
         $projects->each(function ($project) use ($users) {
           $project->members()->attach($users->random(rand(1,4)));
-          \DB::table('project_members')->where('project_id', $project->id)->update(['active' =>1]);
+          \DB::table('project_members')->where('project_id', $project->id)->update(['active' =>true]);
         });
 
     }

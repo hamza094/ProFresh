@@ -10,6 +10,7 @@ use App\Models\Task;
 use App\Http\Resources\TaskResource;
 use F9Web\ApiResponseHelpers;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Validation\ValidationException;
 
 class TaskController extends ApiController
 {
@@ -17,14 +18,20 @@ class TaskController extends ApiController
 
   public function store(Project $project,TaskRequest $request)
   {
-    if($project->tasksReachedItsLimit()){
-      return $this->respondError('Project tasks reached their limit');
+    if($project->tasksReachedItsLimit())
+    {
+       throw ValidationException::withMessages([
+        'task'=>'Project tasks reached their limit',
+      ]);
     }
-    
+
     $task=$project->tasks()->firstOrCreate($request->validated());
 
-    if(!$task->wasRecentlyCreated){
-       return $this->respondError('Project tasks already exist');
+    if(!$task->wasRecentlyCreated)
+    {
+       throw ValidationException::withMessages([
+         'task'=>'Project tasks already exist',
+       ]);
      }
 
      return new TaskResource($task);
@@ -47,7 +54,7 @@ class TaskController extends ApiController
   {
      $task->delete();
 
-    return $this->respondNoContent(['message'=>'Task deleted successfully']);
+     return $this->respondNoContent(['message'=>'Task deleted successfully']);
 
     //$task->activity()->delete();
 

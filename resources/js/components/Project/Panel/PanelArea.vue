@@ -126,13 +126,14 @@ export default{
       axios.post('/api/projects/'+this.project.id+'/invitations',{
         email:user,
       }).then(response=>{
-        this.query='';
-        this.results='';
-          this.$vToastify.success("Project Invitation Sent");
+         this.query='';
+         this.results='';
+         this.$vToastify.success("Project Invitation Sent");
       }).catch(error=>{
-        this.query='';
-        this.results='';
-        console.log("Project Invitation Failed!");
+        this.$vToastify.warning("Project Invitation not Sent");
+        console.log(error);
+         this.query='';
+         this.results='';
       })
 
     },

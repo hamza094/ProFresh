@@ -61,16 +61,6 @@ class ProjectService
      && $project->notes == request('notes');
   }
 
-  /*public function checkTasksLimit($project){
-   if($this->tasksReachedItsLimit($project)){
-    return response()->json(['error' => 'Project tasks reached their limit'], 400);
-  }
-}
-
-  protected function tasksReachedItsLimit($project){
-    return $project->tasks->count() == config('project.taskLimit');
-  }*/
-
 }
 
 
