@@ -12,6 +12,7 @@ import ResetPassword from './components/Authentication/ResetPassword';
 import VerifyPassword from './components/Authentication/VerifyPassword';
 import Project from './components/Project/Page';
 import Projects from './components/Projects';
+import Profile from './components/Profile/ProfilePage';
 import NotFound from './components/Error';
 
 const guest = (to, from, next) => {
@@ -89,6 +90,12 @@ let router = new Router({
             path: "/projects",
             component: Projects,
             name: "Projects",
+            beforeEnter: auth,
+          },
+          {
+            path: "/user/:id/profile",
+            component: Profile,
+            name: "Profile",
             beforeEnter: auth,
           },
     ]

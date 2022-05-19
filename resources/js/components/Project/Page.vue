@@ -97,7 +97,8 @@
 							<br>
 							<Task :slug="project.slug" :tasks="project.tasks"></Task>
 							<hr>
-						<PanelFeatues :slug="project.slug" :notes="project.notes"></PanelFeatues>
+						<PanelFeatues :slug="project.slug" :notes="project.notes"
+						:members="project.members" :owner="user"></PanelFeatues>
 						</div>
 				</div>
 		</div>
@@ -227,6 +228,9 @@ export default{
 						this.$bus.$on('Panel', (data) => {
 								this.project.notes = data.notes
 							})
+						this.$bus.$on('removeMember',(data)=>{
+							  this.project.members=data.members
+						})
 		},
 }
 </script>

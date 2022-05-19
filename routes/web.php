@@ -8,7 +8,6 @@ use App\Http\Controllers\SubscriptionController;
 
 use App\Http\Controllers\Api\Auth\VerificationController;
 
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes

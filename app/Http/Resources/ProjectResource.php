@@ -30,6 +30,7 @@ class ProjectResource extends JsonResource
           ),
           'score'=>ScoreResource::collection($this->whenLoaded('scores'))->sum('point'),
           'user'=>$this->user()->select('id','name')->get(),
+          'members'=>$this->activeMembers(),
           'completed'=>$this->completed,
           'tasks'=>$this->when($this->tasks()->exists(),
           fn()=>TaskResource::collection($this->whenLoaded('tasks'))->paginate(3)

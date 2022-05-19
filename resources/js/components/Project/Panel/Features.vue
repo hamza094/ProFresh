@@ -22,13 +22,49 @@
         </ul>
       </div>
     </div>
+    <hr>
+
+    <div class="project_members">
+      <div class="task-top">
+        <p><b>Project Members</b><a data-toggle="collapse" href="#memberProject" role="button" aria-expanded="false" aria-controls="memberProject">
+          <i class="fas fa-angle-down float-right"></i></a></p>
+      </div>
+
+      <div class="collapse" id="memberProject">
+        <div class="">
+          <router-link :to="'/user/'+owner.id+'/profile'">
+            <p> <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQvsQZEtAw99ePVsNhLCexVsSKct6D13NluBQ&usqp=CAU" alt="">
+              <span>Project owner: <b>{{owner.name}}</b></span>
+            </p>
+          </router-link>
+      </div>
+      <hr>
+      <h6 class="text-center"><b>Other Members </b></h6>
+      <div v-if="!this.members">
+        <p class="text-center"><b>No other project members have been found.</b></p>
+      </div>
+        <div v-else class="row">
+        <div v-for="member in members" class="col-md-4" :key="member.pivot.user_id">
+          <div class="project_members-detail">
+               <router-link :to="'/user/'+member.pivot.user_id+'/profile'">
+                 <!-- <img :src="member.avatar_path" v-if="member.avatar_path!=null">-->
+                   <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQvsQZEtAw99ePVsNhLCexVsSKct6D13NluBQ&usqp=CAU" alt="">
+                   <p>{{member.name.substring(0,12)}}</p>
+               </router-link>
+              <a  rel="" role="button" @click.prevent="removeMember(member.pivot.user_id,member)">x</a>
+              </div>
+        </div>
+      </div>
+</div>
+    </div>
+
 </div>
 
 </template>
 
 <script>
 export default{
-  props:['slug','notes'],
+  props:['slug','notes','members','owner'],
   watch: {
   query(after, before) {
     this.searchUsers();
@@ -81,6 +117,19 @@ export default{
        this.$vToastify.warning(error.response.data.error);
    })
  },
+ removeMember(id,member){
+   var self = this;
+    this.sweetAlert('Yes, Remove Member').then((result) => {
+  if (result.value) {
+  axios.get('/api/v1/projects/'+this.slug+'/remove/'+id).then(response=>{
+      this.$bus.emit('removeMember',{members:response.data.members});
+      self.$vToastify.info(response.data.msg);
+}).catch(error=>{
+      swal.fire("Failed!","There was  an errors","warning");
+  });
+ }
+ })
+ }
   },
 }
 </script>

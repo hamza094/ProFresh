@@ -1,6 +1,7 @@
 <template>
 	<div>
-		   <div class="page-top">
+		<p>hy this is user profile Page</p>
+		   <!--<div class="page-top">
 		   	 <span>
                 <span class="page-top_heading">Profile </span>
                 <span class="page-top_arrow"> > </span>
@@ -46,11 +47,11 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <p class="crm-info"> <b>Email</b>: <span> {{user.email}} </span></p>
-                                    <p class="crm-info"> <b>Mobile</b>: 
+                                    <p class="crm-info"> <b>Mobile</b>:
                                      <span v-if="user.mobile==null"> Not Defined </span>
                                       <span> {{user.mobile}} </span>
                                     </p>
-                                    <p class="crm-info"> <b>Address</b>: 
+                                    <p class="crm-info"> <b>Address</b>:
                                       <span v-if="user.address==null"> Not Defined </span>
                                       <span v-else> {{user.address}} </span>
                                     </p>
@@ -66,12 +67,12 @@
                           </div>
           <hr>
 <ProjectInvitation :user="user" :members="members"></ProjectInvitation>
-   </div>
+</div>-->
 	</div>
 </template>
 
 <script>
-  import EditProfile from './EditProfile'
+/*  import EditProfile from './EditProfile'
   import ProfileAvatar from './ProfileAvatar'
   import ProjectInvitation from './ProjectInvitation'
 
@@ -130,6 +131,6 @@ export default{
   },
 
     }
-}	
+}	*/
 
 </script>

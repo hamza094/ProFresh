@@ -2,7 +2,6 @@
   <div>
    <ProjectAppointment :project=project :members=members></ProjectAppointment>
     <hr>
-
     <div class="project-note">
       <div id="wrapper">
         <p><b>Add Project Note:</b></p>

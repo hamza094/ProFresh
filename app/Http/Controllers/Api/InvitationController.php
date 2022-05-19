@@ -76,7 +76,7 @@ class InvitationController extends ApiController
      */
    public function remove(Project $project,User $user)
    {
-     $this->invitationService->removeMember($user,$project);
+      return $this->invitationService->removeMember($user,$project);
    }
 
 }

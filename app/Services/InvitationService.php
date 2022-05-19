@@ -45,10 +45,11 @@ class InvitationService
 
   public function removeMember($user,$project)
   {
-    $project->members()->detach($user);
+     $project->members()->detach($user);
 
     return $this->respondWithSuccess([
-      'msg'=>"Member ".$user->name." has been removed from a project"
+      'msg'=>"Member ".$user->name." has been removed from a project",
+      'members'=>$project->activeMembers(),
     ]);
 
     //$project->recordActivity('cancel_member_project',$user->name.'/_/'.$user->id);

@@ -132,7 +132,7 @@ class Project extends Model
 
    public function activeMembers()
     {
-      return $this->members()->where('active',true);
+      return $this->members()->where('active',true)->select('name')->get();
     }
 
     public function markUncompleteIfCompleted(){
