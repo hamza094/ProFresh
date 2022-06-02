@@ -70,29 +70,23 @@ class ProjectTest extends TestCase
     $this->assertInstanceOf('Illuminate\Database\Eloquent\Collection', $project->tasks);
   }
 
-   public function an_project_can_be_followed_to()
-   {
-    //$this->signIn();
-     $project=create('App\Models\Project');
-     $project->subscribe($userId=1);
-     $this->assertEquals(1,$project->subscribers()->where('user_id',$userId)->count());
-  }
-
-  public function an_event_can_be_unfollowed_from()
-  {
-   //$this->signIn();
-   $project = create('App\Models\Project');
-   $project->subscribe($userId = 1);
-   $project->unsubscribe($userId);
-   $this->assertCount(0, $project->subscribers);
-}
-
   /** @test */
   public function invitation_can_be_sent_to_a_user()
   {
      $project = Project::factory()->create();
      $project->invite($user=User::factory()->create());
      $this->assertTrue($project->members->contains($user));
+  }
+
+  /** @test */
+  public function check_project_status()
+  {
+     $project = Project::factory()
+       ->hasScores(5,[
+        'point'=>10
+      ])
+      ->create();
+      $this->assertEquals($project->currentStatus(),'hot');
   }
 
 }

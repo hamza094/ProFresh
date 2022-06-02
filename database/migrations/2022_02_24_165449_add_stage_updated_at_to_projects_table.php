@@ -14,7 +14,7 @@ class AddStageUpdatedAtToProjectsTable extends Migration
     public function up()
     {
         Schema::table('projects', function (Blueprint $table) {
-            $table->timestamp('stage_updated_at')->useCurrent();
+            $table->timestamp('stage_updated_at')->nullable();
         });
     }
 

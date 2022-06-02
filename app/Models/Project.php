@@ -19,8 +19,7 @@ class Project extends Model
 
   protected $guarded=[];
   protected $dates = ['created_at'];
-  protected $appends = ['IsSubscribedTo'];
-  protected $with = ['scores','stage','tasks'];
+  protected $with = ['tasks','scores','stage'];
   protected $casts = ['stage_updated_at'=>'datetime'];
 
     /**
@@ -61,7 +60,7 @@ class Project extends Model
 
     public function addScore($message,$point)
     {
-      return ProjectScore::create([
+      return $this->scores()->create([
             'project_id'=>$this->id,
             'message'=>$message,
             'point'=>$point
@@ -78,35 +77,11 @@ class Project extends Model
      return $this->belongsTo(Group::class,'group_id');
    }
 
-    public function subscribers()
-    {
-      return $this->hasMany(Subscribe::class);
-    }
-
-    public function getIsSubscribedToAttribute()
-    {
-      return  $this->subscribers
-              ->where('user_id', auth()->id());
-    }
-
-    public function subscribe($userId = null)
-    {
-      $this->subscribers()->create([
-        'user_id'=>$userId ?: auth()->id()
-    ]);
-    return $this;
-    }
-
-    public function unsubscribe($userId = null)
-    {
-      $this->subscribers()->where('user_id', $userId ?: auth()->id())->delete();
-    }
-
-    public function stageupdate()
+    /*public function stageupdate()
      {
        $redis = Redis::connection();
        return $redis->get('stage_update_' . $this->id);
-     }
+     }*/
 
     public function tasks()
     {
@@ -149,6 +124,14 @@ class Project extends Model
 
     public function tasksReachedItsLimit(){
       return $this->tasks->count() == config('project.taskLimit');
+    }
+
+    public function totalScore(){
+      return  $this->scores->sum('point');
+    }
+
+    public function currentStatus(){
+      return $this->totalScore() <= config('project.coldStatus') ? 'cold' : 'hot';
     }
 
 }

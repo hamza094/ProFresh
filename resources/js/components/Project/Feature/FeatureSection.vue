@@ -11,19 +11,14 @@
     <li class="feature-dropdown_item-content" v-if="authorize('projectOwner',project)"
     @click="forgetProject"><i class="far fa-trash-alt"></i> Forget</li>
 
-    <li class="feature-dropdown_item-content" v-if="projectmembers != 0" @click="$modal.show('project-mail')"><i class="far fa-envelope"></i> Email</li>
+    <!--<li class="feature-dropdown_item-content" v-if="projectmembers != 0" @click="$modal.show('project-mail')"><i class="far fa-envelope"></i> Email</li>
 
-    <li class="feature-dropdown_item-content" v-if="projectmembers != 0" @click="$modal.show('project-sms')"><i class="fas fa-mobile-alt"></i> Send SMS</li>
+    <li class="feature-dropdown_item-content" v-if="projectmembers != 0" @click="$modal.show('project-sms')"><i class="fas fa-mobile-alt"></i> Send SMS</li> !-->
+
+    <!--Send a message instead of separate SMS and email
+    <li class="feature-dropdown_item-content" v-if="projectmembers != 0" @click="$modal.show('project-message')"><i class="far fa-envelope"></i>Send Message</li>-->
 
     <a v-bind:href="'/api/projects/' + this.project.id +'/export'"> <li class="feature-dropdown_item-content" @click="projectExport"><i class="fas fa-upload"></i>Export</li></a>
-
-    <li class="feature-dropdown_item-content" @click="projectUnSubscribe" v-if="this.subscribe.length > 0"><i class="fas fa-inbox"></i> UnSubscribe</li>
-
-    <li class="feature-dropdown_item-content" @click="projectSubscribe" v-if="this.subscribe.length == 0"><i class="fas fa-inbox"></i> Subscribe</li>
-
-    <li class="feature-dropdown_item-content"><i class="fab fa-500px"></i> Add to sequence</li>
-
-    <li class="feature-dropdown_item-content"><i class="fab fa-500px"></i> Remove from sequence</li>
 
     <li class="feature-dropdown_item-content" v-if="authorize('projectOwner',project)" @click="deleteProject"><i class="far fa-trash-alt"></i> Delete</li>
   </ul>

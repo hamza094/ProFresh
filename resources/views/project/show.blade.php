@@ -12,7 +12,7 @@
             </span>
             @can ('access', $project)
 
-            <project-features :project="{{json_encode($project)}}" :subscribe="{{json_encode($project->IsSubscribedTo)}}"  :members="{{json_encode($project->activeMembers)}}" ></project-features>
+          <!--  <project-features :project="{{json_encode($project)}}" :subscribe="{{json_encode($project->IsSubscribedTo)}}"  :members="{{json_encode($project->activeMembers)}}" ></project-features> -->
 
                         @endcan
                     </div>

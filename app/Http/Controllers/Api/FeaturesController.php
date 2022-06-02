@@ -5,8 +5,10 @@ use Auth;
 use App\Models\Project;
 use Illuminate\Http\Request;
 use App\Services\FeatureService;
+use App\Http\Resources\StageResource;
 use App\Notifications\ProjectUpdated;
 use App\Http\Resources\ProjectResource;
+use App\Http\Resources\ProjectStageResource;
 use F9Web\ApiResponseHelpers;
 use Illuminate\Http\JsonResponse;
 
@@ -34,7 +36,7 @@ class FeaturesController extends ApiController
      public function stage(Project $project,Request $request)
      {
        $this->validate($request, [
-          'stage'=>'required',
+          'stage'=>'sometimes|required',
           'postponed'=>'sometimes|required'
       ]);
 
@@ -44,9 +46,13 @@ class FeaturesController extends ApiController
 
       //$this->sendNotification($project,new ProjectUpdated($project));
 
-      if (request()->wantsJson()) {
-          return response(new ProjectResource($project), 201);
-      }
+      //$filteredProject=$project->only(['slug','stage','stage_updated_at','completed','postponed']);
+
+      return $this->respondWithSuccess([
+        'msg'=>'Project '.$project->slug.' Stage Updated Successfully',
+        'project'=>new ProjectStageResource($project),
+      ]);
+
     }
 
     public function mail(Project $project,Request $request)

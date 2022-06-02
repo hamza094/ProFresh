@@ -33,16 +33,29 @@ class DashboardTest extends TestCase
      }
 
     /** @test */
-    public function user_can_view_his_projects_on_dashboard(){
-        $user=User::first();
-        $projects=Project::factory()->count(4)->for($user)->create();
-        $this->withoutExceptionHandling()->getJson('/api/v1/userprojects')->assertSee($projects[0]->name)
-        ->assertStatus(200);
+    public function user_can_view_his_projects_on_dashboard()
+    {
+        $projects=Project::factory()->count(4)->for(User::first())->create();
+
+        $response=$this->getJson('/api/v1/user/projects');
+
+        $response
+        //->assertStatus(200)
+        ->assertJson([
+            'projects'=>[0=>['name'=>$projects[0]->name]],
+           ]);
+
         $project=Project::first();
+
         $this->deleteJson($project->path());
-        $response=$this->getJson('/api/v1/userprojects?abandoned=true')->assertSee($project->name)
+
+        $response=$this->getJson('/api/v1/user/projects?abandoned=true')->assertSee($project->name)
         ->assertStatus(200);
-        $this->assertEquals(1,$response->json(['projectsCount']));
+
+        $response->assertJson([
+            'projects'=>[0=>['name'=>$project->name]],
+            'projectsCount'=>1
+           ]);
     }
 
    public function project_owner_can_trash_project(){

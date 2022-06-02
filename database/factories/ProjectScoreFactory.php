@@ -23,7 +23,7 @@ class ProjectScoreFactory extends Factory
     public function definition()
     {
         return [
-        'project_id'=>Project::factory();
+        'project_id'=>Project::factory(),
         'message' => 'hy berry',
         'point'=>'Admin'
         ];

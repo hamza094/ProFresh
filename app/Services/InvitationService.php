@@ -59,9 +59,12 @@ class InvitationService
 
   public function memberSearch($request)
   {
-    return (new Search())
-     ->registerModel(User::class, ['name', 'email'])
-     ->search($request->input('query'));
+    if($request->input('query') != null)
+    {
+      return (new Search())
+       ->registerModel(User::class, ['name', 'email'])
+       ->search($request->input('query'));
+   }
   }
 
   protected function performRelatedTasks($project,$user)

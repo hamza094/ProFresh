@@ -11,4 +11,8 @@ class Stage extends Model
     use HasFactory,BelongsToProject;
 
     protected $guarded=[];
+
+    public function projects(){
+      return $this->hasMany(Project::class);
+    }
 }

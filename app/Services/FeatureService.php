@@ -14,20 +14,21 @@ use Carbon\Carbon;
 class FeatureService
 {
    public function stageStatus($project,$request){
-     $nullStage=0;
 
-     if($request->stage == $nullStage){
+    if($this->hasRequest($request)){
 
-     $this->stageCompletedOperation($project);
+     if($request->has('completed')){
+       $this->stageCompletedOperation($project);
+     }
 
      if($request->has('postponed')){
-       $this->stagePostponedOperation($project,$request);
-     }
+        $this->stagePostponedOperation($project,$request);
+      }
         $project->stage()->dissociate();
-     }
+    }
 
-     if($request->stage > $nullStage){
-       $this->updateStage($project,$request);
+     if($request->stage > 0){
+        $this->updateStage($project,$request);
      }
 
      $project->save();
@@ -35,12 +36,19 @@ class FeatureService
      return $project;
    }
 
+     protected function hasRequest($request){
+        return $request->has('completed') || $request->has('postponed');
+     }
+
+
     protected function stageCompletedOperation($project){
       $project->update(['completed'=>true]);
+      $project->removePostponedIfExists();
     }
 
     protected function stagePostponedOperation($project,$request){
        $project->update(['postponed'=>$request->postponed]);
+       $project->markUncompleteIfCompleted();
     }
 
     protected function updateStage($project,$request){

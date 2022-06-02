@@ -7,8 +7,8 @@
 								{{projectsCount}}
             </b></p>
      			<span class="float-right">
-     			<button class="btn btn-sm btn-primary" @click.prevent="actived">Active Projects</button>
-     			<button class="btn btn-sm btn-success" @click.prevent="invited">Invited Projects</button>
+     			<button class="btn btn-sm btn-primary" @click.prevent="activated">Active Projects</button>
+     			<button class="btn btn-sm btn-success" @click.prevent="member">Projects Member</button>
                 <button class="btn btn-sm btn-danger" @click.prevent="abandoned">Abandoned Projects</button>
              	</span>
      	</div>
@@ -25,7 +25,7 @@
 													<b>{{projectState}}</b>
 												</span>
      					<p class="mt-3">{{project.name}}</p>
-     					    <p>Project Stage <span v-text="stage(project)"></span></p>
+     					    <p>Project Stage: <span v-text="stage(project)"></span></p>
      					<p>Project Score:
 								<span v-if="project.score > 0">{{project.score}}</span>
 								<span v-else>No project activity detected project currently scored zero</span>
@@ -67,15 +67,15 @@ export default{
     };
     },
     methods:{
-      actived(){
+      activated(){
         axios.get(this.url()).
             then(({data})=>(this.getData(data)));
           this.activeState();
       },
-      invited(){
-        axios.get(this.url()+'?invited=true').
+      member(){
+        axios.get(this.url()+'?member=true').
             then(({data})=>(this.getData(data)));
-						this.invitedState();
+						this.memberState();
       },
       abandoned(){
          axios.get(this.url()+'?abandoned=true').
@@ -83,7 +83,7 @@ export default{
 						this.abandonedState();
       },
 			url(){
-				return '/api/v1/userprojects';
+				return '/api/v1/user/projects';
 			},
 			getData(data){
 				this.projects=data.projects,
@@ -96,8 +96,8 @@ export default{
 				this.abandon=false;
 				this.active=true;
 			},
-			invitedState(){
-				this.projectState="Invited";
+			memberState(){
+				this.projectState="Member";
 				this.active=false;
 				this.abandon=false;
 				this.invite=true;
@@ -113,7 +113,7 @@ export default{
 			},
     },
     mounted(){
-        this.actived();
+        this.activated();
     }
 }
 </script>

@@ -8,8 +8,7 @@
         <div>
             <div class="score-dropdown" @click="isPop = !isPop">
                 <!-- trigger -->
-                <span v-if="points <= 49" role="button" class="score-point score-point_cold">{{points}}</span>
-                <span v-if="points > 49" role="button" class="score-point score-point_hot">{{points}}</span>
+                <span role="button" class="score-point" :class="'score-point_'+status">{{points}}</span>
 
                 <!-- menu links -->
                 <div class="score-dropdown_item" v-show=isPop>
@@ -23,8 +22,7 @@
                               <div class="row">
                                   <div class="col-md-3">
                                       <p class="score-content_point-cold">
-                    <span v-if="points > 49"><span  class="score-content_point-hot_point">{{points}}</span><br><span class="score-content_point-hot_status">Hot</span></span>
-                    <span v-else><span class="score-content_point-cold_point">{{points}}</span><br><span class="score-content_point-cold_status">Cold</span></span>
+                    <span><span  :class="'score-content_point-'+status+'_point'">{{points}}</span><br><span :class="'score-content_point-'+status+'_status'">{{status}}</span></span>
                   </p>
                                   </div>
                                   <div class="col-md-9">
@@ -52,7 +50,7 @@
 
 <script>
 export default {
-    props:['projectName','points','scores_detail','start','stage','completed'],
+    props:['projectName','points','scores_detail','start','stage','completed','status'],
     data() {
         return {
             isPop:false,

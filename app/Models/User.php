@@ -24,6 +24,7 @@ class User extends Authenticatable implements Searchable, MustVerifyEmail
 
     //protected $appends = ['LastSeen'];
 
+
     /**
      * The attributes that are mass assignable.
      *
@@ -81,10 +82,10 @@ class User extends Authenticatable implements Searchable, MustVerifyEmail
        return $this->hasMany(Project::class);
     }
 
-    public function lastseen() {
+    /*public function lastseen() {
            $redis = Redis::connection();
            return $redis->get('last_active_' . $this->id);
-    }
+    }*/
 
     public function phone()
     {
@@ -99,7 +100,7 @@ class User extends Authenticatable implements Searchable, MustVerifyEmail
 
     public function members()
     {
-        return $this->belongsToMany(Project::class,'project_members')->withPivot('active')->withTimestamps()->with('owner');
+        return $this->belongsToMany(Project::class,'project_members')->withPivot('active')->withTimestamps();
     }
 
      public function groups()
@@ -107,10 +108,10 @@ class User extends Authenticatable implements Searchable, MustVerifyEmail
         return $this->belongsToMany(Group::class)->withTimestamps();
      }
 
-    public function getlastSeenAttribute()
+    /*public function getlastSeenAttribute()
     {
       return  $this->lastseen();
-    }
+    }*/
 
     public function paypal()
     {

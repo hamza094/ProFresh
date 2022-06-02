@@ -67,7 +67,7 @@ class ProjectController extends ApiController
       //$this->authorize('access',$project);
 
       if($service->sameRequestAttributes($project) || $service->sameNoteRequest($project)){
-        return $this->respondError("You haven't changed anything");
+         return $this->respondError("You haven't changed anything");
       }
 
       $project->update($request->validated());
@@ -126,7 +126,6 @@ class ProjectController extends ApiController
 
       return view('project.activities.activities',compact('activities',$activities,'project',$project));
      }
-
 
      public function overview(){
 

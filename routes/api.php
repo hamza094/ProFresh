@@ -7,7 +7,6 @@ use App\Http\Controllers\Api\
   ProjectController,
   TaskController,
   FeaturesController,
-  SubscribeController,
   InvitationController,
   NotificationsController,
   ProfileController,
@@ -67,10 +66,6 @@ Route::patch('postponed','postponed');
 Route::apiResource('/task',TaskController::class)->except(['index','show']);
 Route::patch('/task/{task}/status',[TaskController::class,'status']);
 
-//Project Subscribe Route
-Route::post('/subscribe',[SubscribeController::class,'projectSubscribe']);
-Route::delete('/unsubscribe', [SubscribeController::class,'projectUnSubscribe']);
-
 Route::controller(InvitationController::class)->group(function(){
   Route::post('invitations','store');
   Route::get('remove/{user}','remove');
@@ -107,8 +102,7 @@ Route::patch('/{user}/avatar-delete',[ProfileController::class,'avatarDelete']);
 Route::get('/projectoverview', [ProjectController::class,'projectoverview']);
 
 //Dashboard Routes
-Route::get('/projectcount',[DashboardController::class,'projectcount']);
-Route::get('/userprojects',[DashboardController::class,'userprojects']);
+Route::get('/user/projects',[DashboardController::class,'userprojects']);
 
 });
 

@@ -11,23 +11,11 @@ class DashboardService
 {
   use ApiResponseHelpers;
 
-  public function userProjectsFilters($request)
+  public function getUserProjects()
   {
-     $user=Auth::user();
+     $projects=$this->getFilteredProjects(Auth::user());
 
-     $projects=$user->projects()->get();
-
-     $message='';
-
-    if($request->filled('invited'))
-    {
-      $projects = $user->members;
-    }
-
-    if($request->filled('abandoned'))
-    {
-      $projects = $user->projects()->onlyTrashed()->get();
-    }
+    $message='';
 
     if($projects->count() == 0){
        $message='Sorry No Projects Found';
@@ -39,6 +27,21 @@ class DashboardService
       'message'=>$message
       ]);
   }
+
+     private function getFilteredProjects($user)
+     {
+       if(request()->filled('member'))
+       {
+          return $user->members;
+       }
+
+       if(request()->filled('abandoned'))
+       {
+          return $user->projects()->onlyTrashed()->get();
+       }
+
+        return $user->projects()->get();
+     }
 
     }
 ?>

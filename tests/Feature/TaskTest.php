@@ -9,6 +9,8 @@ use App\Models\Project;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Laravel\Sanctum\Sanctum;
+use Illuminate\Testing\Fluent\AssertableJson;
+
 
 class TaskTest extends TestCase
 {
@@ -36,67 +38,104 @@ class TaskTest extends TestCase
     /** @test */
     public function task_requires_a_body()
     {
-       $user=User::first();
-       $project=Project::factory()->create(['user_id'=>$user->id]);
+       $project=Project::factory()->create(['user_id'=>User::first()->id]);
+
        $task=Task::factory()->make(['body'=>null]);
-       $this->post($task->path(),$task->toArray())
-          ->assertSessionHasErrors('body');
+
+       $response=$this->postJson($task->path(),$task->toArray());
+
+       $response->assertJsonMissingValidationErrors('name');
      }
 
      /** @test */
      public function auth_user_can_create_projects_task()
      {
-       $user=User::first();
-       $project=Project::factory()->create(['user_id'=>$user->id]);
+       $project=Project::factory()->create(['user_id'=>User::first()->id]);
+
        $response=$this->postJson($project->path().'/task',
            ['body' => 'My Project Task']);
+
        $this->assertDatabaseHas('tasks',['body'=>'My Project Task']);
+
+       $response->assertJson([
+           'id'=>1,
+           'body'=>'My Project Task'
+          ]);
    }
 
    /** @test */
    public function auth_user_can_not_create_same_task_twice()
    {
      $project=Project::factory()->hasTasks(1,['body'=>'Project Task'])->create();
-     $this->postJson($project->path().'/task',
+
+     $response=$this->postJson($project->path().'/task',
          ['body' => 'Project Task'])
          ->assertStatus(422);
+
+     $response->assertJsonValidationErrors('task');
  }
 
  /** @test */
  public function task_limit_per_project()
  {
    $project=Project::factory()->hasTasks(config('project.taskLimit'))->create();
-   $this->postJson($project->path().'/task',
+
+   $response=$this->postJson($project->path().'/task',
        ['body' => 'Project Task'])
        ->assertStatus(422);
+
+       $response->assertJsonValidationErrors('task');
 }
 
   /** @test */
   public function auth_user_update_project_task()
   {
-     $user=User::first();
-     $project=Project::factory()->create(['user_id'=>$user->id]);
+     $project=Project::factory()->create(['user_id'=>User::first()->id]);
+
      $task=$project->addTask('test task');
-     $this->putJson($task->path(), ['body' => 'changed']);
-     $this->assertDatabaseHas('tasks',['body'=>'changed']);
+
+     $updatedBody="Task Body Updated";
+
+     $taskUnchanged=$this->putJson($task->path(), ['body' => $task->body]);
+
+     $taskUnchanged->assertJson([
+         'error'=>"You haven't changed anything",
+        ]);
+
+     $response=$this->putJson($task->path(), ['body' => $updatedBody]);
+
+     $this->assertDatabaseHas('tasks',['body'=>$updatedBody]);
+
+     $response->assertJson([
+         'id'=>$task->id,
+         'body'=>$updatedBody
+        ]);
  }
 
  /** @test */
   public function auth_user_marked_task()
   {
-    $user=User::first();
-    $project=Project::factory()->create(['user_id'=>$user->id]);
+    $project=Project::factory()->create(['user_id'=>User::first()->id]);
+
     $task=Task::factory()->create(['project_id'=>$project->id,'completed'=>'false']);
-    $this->patchJson($task->path().'/status', ['completed' => 'true']);
+
+    $response=$this->patchJson($task->path().'/status', ['completed' => 'true']);
+
     $this->assertTrue($task->completed);
+
+    $response->assertJson([
+        'completed'=>$task->completed,
+       ]);
   }
    /** @test */
    public function auth_user_can_delete_task()
    {
-      $user=User::first();
-      $project=Project::factory()->create(['user_id'=>$user->id]);
+      $project=Project::factory()->create(['user_id'=>User::first()->id]);
+
       $task=Task::factory()->create(['project_id'=>$project->id]);
-      $this->deleteJson($task->path());
+
+      $this->deleteJson($task->path())->assertNoContent($status = 204);
+
       $this->assertDatabaseMissing('tasks',['id'=>$task->id]);
    }
 
@@ -110,5 +149,4 @@ class TaskTest extends TestCase
      //dd($response);
      //$this->assertCount(3,$project->tasks->data);
    }*/
-
 }

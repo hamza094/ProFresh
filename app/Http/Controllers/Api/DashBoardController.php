@@ -8,7 +8,7 @@ use App\Models\Project;
 use App\Services\DashboardService;
 use App\Http\Resources\ProjectsResource;
 
-class DashBoardController extends ApiController
+class DashboardController extends ApiController
 {
   private $DashboardService;
 
@@ -23,14 +23,9 @@ class DashBoardController extends ApiController
        $this->dashboardService=$dashboardService;
     }
 
-    public function userprojects(Request $request)
+    public function userprojects()
     {
-       return $this->dashboardService->userProjectsFilters($request);
+       return $this->dashboardService->getUserProjects();
     }
 
-    public function projectcount()
-    {
-       $projectcount=auth()->user()->projects->count();
-       return response()->json($projectcount);
-    }
 }

@@ -19,7 +19,7 @@ class ProjectsResource extends JsonResource
         'name'=>$this->name,
         'slug'=>$this->slug,
         'stage'=>new StageResource($this->stage),
-        'score'=>ScoreResource::collection($this->whenLoaded('scores'))->sum('point'),
+        'score'=>$this->totalScore(),
         'created_at'=>$this->created_at->diffforHumans(),
         'completed'=>$this->completed,
         'links'=>[

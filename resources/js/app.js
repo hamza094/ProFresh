@@ -104,7 +104,7 @@ Vue.component('project-form', require('./components/ProjectForm.vue').default);
 
 Vue.component('project-scores', require('./components/Project/Score.vue').default);
 
-// Vue.component('project-features', require('./components/Project/Feature/FeatureSection.vue').default);
+ //Vue.component('project-features', require('./components/Project/Feature/FeatureSection.vue').default);
 
  Vue.component('project-stage', require('./components/Project/Stage.vue').default);
 

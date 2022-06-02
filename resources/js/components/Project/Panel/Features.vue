@@ -40,8 +40,8 @@
       </div>
       <hr>
       <h6 class="text-center"><b>Other Members </b></h6>
-      <div v-if="!this.members">
-        <p class="text-center"><b>No other project members have been found.</b></p>
+      <div v-if="this.members == 0">
+        <p class="text-center"><b>No other project members have been found!</b></p>
       </div>
         <div v-else class="row">
         <div v-for="member in members" class="col-md-4" :key="member.pivot.user_id">

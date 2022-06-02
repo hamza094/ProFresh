@@ -28,7 +28,8 @@ class ProjectResource extends JsonResource
           'scores'=>$this->when($this->scores()->exists(),
           fn()=>ScoreResource::collection($this->whenLoaded('scores'))
           ),
-          'score'=>ScoreResource::collection($this->whenLoaded('scores'))->sum('point'),
+          'totalScore'=>$this->totalScore(),
+          'status'=>$this->currentStatus(),
           'user'=>$this->user()->select('id','name')->get(),
           'members'=>$this->activeMembers(),
           'completed'=>$this->completed,

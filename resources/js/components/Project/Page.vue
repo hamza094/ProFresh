@@ -17,8 +17,8 @@
 										<div class="row">
 												<div class="col-md-2">
 	                     <Score :projectName='project.name' :start="project.created_at"
-											  :points='project.score' :scores_detail='project.scores' :stage="project.stage"
-												:completed="this.project.completed">
+											  :points='project.totalScore' :scores_detail='project.scores' :stage="project.stage"
+												:completed="this.project.completed" :status="project.status">
 					             </Score>
 												</div>
 												<div class="col-md-10">
@@ -75,7 +75,7 @@
 										</div>
 										<br>
 										<Stage :slug="project.slug" :projectstage='project.stage' :postponed="project.postponed"
-										:completed="project.completed" :stage_updated="project.stage_updated_at" :check_stage="this.checkStage">
+										:completed="project.completed" :stage_updated="project.stage_updated_at" :get_stage="this.getStage">
 									</Stage>
 										<br>
 										<hr>
@@ -86,9 +86,28 @@
 											<span>project activity card</span>
 										</div>
 									 </div>
+
 									 <div class="col-md-5">
-										 <span>project special features</span>
+										 <div class="project-info">
+									 	   <div class="project-info_socre">
+									 	    <p class="project-info_score-heading">Score</p>
+									 	    <p class="project-info_score-point" :class="'project-info_score-point_'+project.status">{{project.totalScore}}</p>
+									 	  </div>
+									 	  <div class="project-info_rec">
+									 	    <span>Last Seen</span>
+									 	    <!-- <p>{{Carbon\Carbon::parse($project->user->lastseen)->diffforHumans()}}</p>-->
+									 	  </div>
+									 	  <div class="project-info_rec">
+									 	    <span>Stage Updated</span>
+									 	     <p v-text="project.stage_updated_at"></p>
+									 	  </div>
+									 	  <div class="project-info_rec">
+									 	    <span>Last modified</span>
+									 	     <p v-text="project.updated_at"></p>
+									 	  </div>
+									 	</div>
 									 </div>
+
 										</div>
 								</div>
 						</div>
@@ -117,9 +136,9 @@ export default{
      project:[],
 		 scores:{},
 		 user:{},
-		 checkStage:0,
-		 projectname:"",
+		 getStage:0,
 		 nameEdit:false,
+		 projectname:"",
 		 aboutEdit:false,
 		 projectabout:"",
     };
@@ -131,7 +150,7 @@ export default{
 						 this.project=response.data;
 						 this.user=response.data.user[0];
 						 this.scores=this.project.scores;
-						 this.checkStage=this.project.stage.id;
+						 this.getStage=this.project.stage.id;
 						 this.projectname=this.project.name;
 						 this.$bus.emit('projectSlug',{slug:response.data.slug});
 				 }).catch(error=>{
@@ -217,7 +236,7 @@ export default{
 					this.project.stage = data.current_stage
 					this.project.completed = data.completed
 					this.project.postponed= data.postponed
-					this.checkStage=data.checkStage
+					this.getStage=data.getStage
 				})
 					this.$bus.$on('taskResults', (data) => {
 							axios.get('/api/v1/projects/'+this.project.slug+'?page=' + data.page)

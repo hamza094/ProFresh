@@ -49,7 +49,7 @@
 
 <script>
   export default{
-    props:['slug','projectstage','completed','stage_updated','postponed','check_stage'],
+    props:['slug','projectstage','completed','stage_updated','postponed','get_stage'],
     data(){
        return{
          activeStage:'',
@@ -101,11 +101,12 @@
         }
       },
   stageChange(stageId){
-    if(stageId !== this.check_stage){
+    if(stageId !== this.get_stage){
     axios.patch('/api/v1/projects/'+this.slug+'/stage',{
     stage:stageId
   }).then(response=>{
-      this.eventListener(0,response.data.stage,response.data.stage_updated_at,null,response.data.stage.id);
+    let project=response.data.project;
+      this.eventListener(0,project.stage,project.stage_updated_at,null,project.stage.id);
      this.$vToastify.success("Updating project stage...");
   }).catch(error=>{
      this.$vToastify.error("Error in Project Phase Conversion");
@@ -114,10 +115,10 @@
  },
   postpone(){
   axios.patch('/api/v1/projects/'+this.slug+'/stage',{
-    stage:0,
     postponed:this.reason
   }).then(response=>{
-    this.eventListener(0,null,response.data.stage_updated_at,this.reason,0);
+    let project=response.data.project;
+    this.eventListener(0,null,project.stage_updated_at,project.reason,0);
    this.$vToastify.success("Postponeding project...");
    this.$modal.hide('stage-reason');
   }).catch(error=>{
@@ -126,9 +127,9 @@
 },
  projectClose(){
    axios.patch('/api/v1/projects/'+this.slug+'/stage',{
-   stage:0
+   completed:'true',
  }).then(response=>{
-     this.eventListener(1,null,response.data.stage_updated_at,null,0);
+     this.eventListener(1,null,response.data.project.stage_updated_at,null,0);
     this.$vToastify.success("Sucessfully closing project...");
  }).catch(error=>{
     this.$vToastify.error("Error in Project Closing");
@@ -142,9 +143,9 @@
      console.log(error.response.data.errors);
    });
 },
-eventListener($completed,$currentStage,$stageUpdated,$reason,$checkStage){
+eventListener($completed,$currentStage,$stageUpdated,$reason,$getStage){
   this.$bus.emit('stageListners',{completed:$completed,current_stage:$currentStage,
-    stage_updated:$stageUpdated,postponed:$reason,checkStage:$checkStage});
+    stage_updated:$stageUpdated,postponed:$reason,getStage:$getStage});
 },
   offIfClickedOutside(event){
       if(!event.target.closest('.stage-dropdown')){
