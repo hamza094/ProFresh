@@ -106,9 +106,14 @@ class Project extends Model
     }
 
    public function activeMembers()
-    {
-      return $this->members()->where('active',true)->select('name')->get();
-    }
+  {
+      return $this->members()->where('active',true)->get();
+  }
+
+  public function activeMembersData()
+ {
+     return $this->members()->where('active',true)->select('name')->get();
+ }
 
     public function markUncompleteIfCompleted(){
       if($this->completed == true){
@@ -132,6 +137,10 @@ class Project extends Model
 
     public function currentStatus(){
       return $this->totalScore() <= config('project.coldStatus') ? 'cold' : 'hot';
+    }
+
+    public function isOwner(){
+      return auth()->id() == $this->user->id;
     }
 
 }

@@ -4,6 +4,7 @@ namespace App\Policies;
 
 use App\Models\Project;
 use App\Models\User;
+use Illuminate\Auth\Access\Response;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class ProjectsPolicy
@@ -22,12 +23,14 @@ class ProjectsPolicy
 
     public function manage(User $user, Project $project)
     {
-        return $user->is($project->owner);
+        return $user->is($project->user);
     }
 
 
     public function access(User $user, Project $project)
     {
-        return $user->is($project->owner) || $project->activeMembers->contains($user);
+        return $user->is($project->user) || $project->activeMembers()->contains($user)
+               ? Response::allow()
+               : Response::deny("Only Project's owner and members are allowed to access this feature.");
     }
 }

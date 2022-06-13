@@ -9,7 +9,7 @@
     <div class="collapse" id="taskProject">
     <div class="card card-body">
     <div class="task-add">
-      <form class="" @submit.prevent="add">
+      <form class="" v-if="access" @submit.prevent="add">
         <div class="form-group">
           <label for="body">Add New Task</label>
           <input type="text" class="form-control" name="body" v-model="form.body">
@@ -27,7 +27,7 @@
           </span>
           <span  v-else :class="{ 'task-list_text-body' : task.completed == true}">{{task.body}}</span>
 
-          <span class="float-right">
+          <span v-if="access" class="float-right">
 
           <span>
             <input  v-if="task.completed" class="form-check-input" type="checkbox" @change="markUncomplete(task.id,task)"  checked>
@@ -51,7 +51,7 @@
 </template>
 <script>
   export default {
-    props:['slug','tasks'],
+    props:['slug','tasks','access'],
     data() {
       return {
         editing:0,

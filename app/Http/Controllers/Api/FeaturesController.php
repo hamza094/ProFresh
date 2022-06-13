@@ -46,8 +46,6 @@ class FeaturesController extends ApiController
 
       //$this->sendNotification($project,new ProjectUpdated($project));
 
-      //$filteredProject=$project->only(['slug','stage','stage_updated_at','completed','postponed']);
-
       return $this->respondWithSuccess([
         'msg'=>'Project '.$project->slug.' Stage Updated Successfully',
         'project'=>new ProjectStageResource($project),

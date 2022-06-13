@@ -46,39 +46,39 @@ Route::apiResource('/projects', ProjectController::class);
 //Project Route Prefix
 Route::group(['prefix' => 'projects/{project}'], function() {
 
-Route::get('/delete',[ProjectController::class,'delete']);
+Route::get('/delete',[ProjectController::class,'delete'])->can('manage','project');
 
 //Project Activity Feed
 Route::get('/timeline_feeds',[ProjectController::class,'activity'])
 ->name('activities');
 
-//Route::middleware(['can:access,project'])->group(function () {
+Route::middleware(['can:access,project'])->group(function () {
 //Project Feature Routes
 Route::controller(FeaturesController::class)->group(function(){
 Route::post('mail','mail');
 Route::post('sms','sms');
 Route::get('export','export');
 Route::patch('stage','stage');
-Route::patch('postponed','postponed');
 });
 
 //Task Routes
 Route::apiResource('/task',TaskController::class)->except(['index','show']);
 Route::patch('/task/{task}/status',[TaskController::class,'status']);
 
-Route::controller(InvitationController::class)->group(function(){
-  Route::post('invitations','store');
-  Route::get('remove/{user}','remove');
-  //->middleware('can:owner,project');
-
-  Route::get('/member','accept');
-  Route::get('/ignore','ignore');
-});
-
 //Group Chat Conversation Routes
 Route::post('/conversations', [ConversationController::class,'store']);
 Route::get('/conversation',[ConversationController::class,'conversation']);
 
+});
+
+Route::controller(InvitationController::class)->group(function(){
+  Route::post('invitations','store')->can('manage','project');
+  Route::get('remove/{user}','remove')->can('manage','project');
+
+
+  Route::get('/member','accept');
+  Route::get('/ignore','ignore');
+});
 });
 
 //Invitation Search Routes

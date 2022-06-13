@@ -31,11 +31,12 @@ class ProjectResource extends JsonResource
           'totalScore'=>$this->totalScore(),
           'status'=>$this->currentStatus(),
           'user'=>$this->user()->select('id','name')->get(),
-          'members'=>$this->activeMembers(),
+          'members'=>$this->activeMembersData(),
           'completed'=>$this->completed,
           'tasks'=>$this->when($this->tasks()->exists(),
           fn()=>TaskResource::collection($this->whenLoaded('tasks'))->paginate(3)
           ),
+          'isOwner'=>$this->isOwner(),
           'created_at'=>$this->created_at->diffforHumans(),
           'updated_at'=>$this->updated_at->diffforHumans(),
           'stage_updated_at'=>$this->stage_updated_at->format("F j, Y, g:i a"),

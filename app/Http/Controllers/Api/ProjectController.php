@@ -34,6 +34,7 @@ class ProjectController extends ApiController
 
     public function store(ProjectRequest $request)
     {
+
        DB::beginTransaction();
 
        try{
@@ -64,6 +65,7 @@ class ProjectController extends ApiController
 
     public function update(Project $project,ProjectRequest $request,ProjectService $service)
     {
+      $this->authorize('access', $project);
       //$this->authorize('access',$project);
 
       if($service->sameRequestAttributes($project) || $service->sameNoteRequest($project)){
@@ -94,14 +96,13 @@ class ProjectController extends ApiController
      */
     public function destroy(Project $project)
     {
+      $this->authorize('manage', $project);
       //$this->authorize('manage',$project);
         $project->delete();
     }
 
     public function delete(Project $project)
     {
-      $this->authorize('manage',$project);
-
       $project->forceDelete();
 
         if(request()->expectsJson()){

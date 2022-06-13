@@ -4,7 +4,7 @@
     <div>
       <p><span><b>Project Stage Last Updated:</b> {{stage_updated}}</span></p>
     </div>
-  <div class="row">
+  <div class="row" v-if="access">
     <div v-for="stage in stages" class="arrow-pointer-pd" @click="stageChange(stage.id)" :key="stage.id">
        <p :class="stageCondition(stage.id)" class="arrow-pointer"><span class="arrow-pointer-span">{{stage.id}}. {{stage.name}}</span></p>
      </div>
@@ -17,6 +17,9 @@
          </ul>
        </div>
     </div>
+  </div>
+  <div v-else>
+    <h5>Only project members and owners are allowed to change the project stage.</h5>
   </div>
 </div>
 <div>
@@ -49,7 +52,7 @@
 
 <script>
   export default{
-    props:['slug','projectstage','completed','stage_updated','postponed','get_stage'],
+    props:['slug','projectstage','completed','stage_updated','postponed','get_stage','access'],
     data(){
        return{
          activeStage:'',

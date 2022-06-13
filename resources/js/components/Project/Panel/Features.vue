@@ -3,15 +3,17 @@
     <div class="project-note">
       <div id="wrapper">
         <p><b>Add Project Note:</b></p>
-    <form id="paper" method="post" @keyup.enter="ProjectNote">
+    <form v-if="access" id="paper" method="post" @keyup.enter="ProjectNote">
       <textarea placeholder="Write Project Notes" id="text" name="notes" rows="4" v-model="form.notes" v-text="this.notes"></textarea>
       <br>
   </form>
+    <textarea v-if="!access" placeholder="Only project members and owners are allowed to write project notes." id="text" rows="4" v-model="form.notes" v-text="this.notes" readonly></textarea>
+    <br>
 </div>
     </div>
     <hr>
 
-    <div class="invite">
+    <div class="invite" v-if="access">
       <p><b>Project Invitations:</b></p>
        <input type="text" placeholder="Search user for invitation" class="form-control" v-model="query">
        <div class="invite-list">
@@ -51,7 +53,7 @@
                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQvsQZEtAw99ePVsNhLCexVsSKct6D13NluBQ&usqp=CAU" alt="">
                    <p>{{member.name.substring(0,12)}}</p>
                </router-link>
-              <a  rel="" role="button" @click.prevent="removeMember(member.pivot.user_id,member)">x</a>
+              <a v-if="ownerAccess"  rel="" role="button" @click.prevent="removeMember(member.pivot.user_id,member)">x</a>
               </div>
         </div>
       </div>
@@ -64,7 +66,7 @@
 
 <script>
 export default{
-  props:['slug','notes','members','owner'],
+  props:['slug','notes','members','owner','access','ownerAccess'],
   watch: {
   query(after, before) {
     this.searchUsers();

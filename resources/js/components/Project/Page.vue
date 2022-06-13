@@ -31,7 +31,7 @@
 														<button  type="button" class="btn btn-link btn-sm" @click="cancelUpdate()">Cancel</button>
 														</span>
 														<span v-else>
-															<button  type="button" class="btn btn-link btn-sm" @click="nameEdit = true">Edit</button>
+															<button v-if="accessAllowed" type="button" class="btn btn-link btn-sm" @click="nameEdit = true">Edit</button>
 														</span>
 														</p>
 													<p class="content-info">
@@ -60,7 +60,7 @@
 																<button type="button" class="btn btn-link btn-sm" @click="aboutCancel()">Cancel</button>
 															</span>
 															<span v-else>
-																<button type="button" class="btn btn-link btn-sm" @click="editAbout()">Edit</button>
+																<button v-if="accessAllowed" type="button" class="btn btn-link btn-sm" @click="editAbout()">Edit</button>
 															</span>
 														</p>
 														<p v-if="!project.postponed" class="crm-info"> <b>Postponed reason</b>: <span> The project is currently active.
@@ -75,7 +75,7 @@
 										</div>
 										<br>
 										<Stage :slug="project.slug" :projectstage='project.stage' :postponed="project.postponed"
-										:completed="project.completed" :stage_updated="project.stage_updated_at" :get_stage="this.getStage">
+										:completed="project.completed" :stage_updated="project.stage_updated_at" :get_stage="this.getStage" :access="this.accessAllowed">
 									</Stage>
 										<br>
 										<hr>
@@ -114,10 +114,10 @@
 						<div class="col-md-4 side_panel">
                Project Side Panel
 							<br>
-							<Task :slug="project.slug" :tasks="project.tasks"></Task>
+							<Task :slug="project.slug" :tasks="project.tasks" :access="this.accessAllowed"></Task>
 							<hr>
 						<PanelFeatues :slug="project.slug" :notes="project.notes"
-						:members="project.members" :owner="user"></PanelFeatues>
+						:members="project.members" :owner="user" :access="this.accessAllowed" :ownerAccess="project.isOwner"></PanelFeatues>
 						</div>
 				</div>
 		</div>
@@ -141,6 +141,9 @@ export default{
 		 projectname:"",
 		 aboutEdit:false,
 		 projectabout:"",
+		 projectMembers:[],
+		 auth:this.$store.state.currentUser.user.id,
+		 accessAllowed:false
     };
     },
     methods:{
@@ -152,12 +155,25 @@ export default{
 						 this.scores=this.project.scores;
 						 this.getStage=this.project.stage.id;
 						 this.projectname=this.project.name;
+						 this.projectMembers=this.project.members;
+						 this.checkMembersAndPermission();
 						 this.$bus.emit('projectSlug',{slug:response.data.slug});
 				 }).catch(error=>{
 					 console.log(error.response.data.errors);
 				 });
 			},
-
+      checkMembersAndPermission(){
+				var authId=this.auth;
+				var IsMember=false;
+				 this.projectMembers.forEach(function(item,index){
+					 if(item.pivot.user_id == authId){
+					    IsMember = true;
+					}
+				 });
+				 if(this.user.id == authId || IsMember == true){
+					 return this.accessAllowed = true;
+			 }
+			},
 			//Update project name methods
 			updateName(){
 					axios.patch('/api/v1/projects/'+this.project.slug,{

@@ -40,7 +40,7 @@ class DashboardTest extends TestCase
         $response=$this->getJson('/api/v1/user/projects');
 
         $response
-        //->assertStatus(200)
+        ->assertStatus(200)
         ->assertJson([
             'projects'=>[0=>['name'=>$projects[0]->name]],
            ]);

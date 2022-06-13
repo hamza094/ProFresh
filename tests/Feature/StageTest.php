@@ -32,12 +32,17 @@ class StageTest extends TestCase
       Stage::factory()->create();
       Stage::factory()->define()->create();
       Stage::factory()->design()->create();
+
+      Project::factory()->create([
+        'user_id'=>$user->id,
+        'stage_id'=>1
+      ]);
   }
 
   /** @test */
   public function auth_user_can_change_project_stage()
   {
-     $project=Project::factory()->create(['stage_id'=>1]);
+     $project=Project::first();
      $this->assertEquals('Begining',$project->stage->name);
      $response=$this->patchJson($project->path().'/stage',[
           'stage'=>2,
@@ -56,9 +61,8 @@ class StageTest extends TestCase
   /** @test */
   public function auth_user_can_postponed_stage_and_update_reason()
   {
-    $project=Project::factory()->create(['stage_id'=>1]);
-
-    $response=$this->withoutExceptionHandling()->patchJson($project->path().'/stage',[
+    $project=Project::first();
+    $response=$this->patchJson($project->path().'/stage',[
       'postponed'=>'Unable to reach'
   ]);
 
@@ -72,7 +76,7 @@ class StageTest extends TestCase
   /** @test */
   public function auth_user_can_update_stage_to_complete()
   {
-    $project=Project::factory()->create(['stage_id'=>1]);
+    $project=Project::first();
     $response=$this->patchJson($project->path().'/stage',[
       'completed'=>'true',
   ]);

@@ -34,6 +34,8 @@ class ProjectTest extends TestCase
          Sanctum::actingAs(
              $user,
          );
+
+         Project::factory()->create(['user_id'=>$user->id]);
      }
 
     public function auth_user_can_create_project()
@@ -57,7 +59,7 @@ class ProjectTest extends TestCase
      /** @test */
     public function updated_project_requires_a_name()
     {
-       $project=Project::factory()->create(['user_id'=>User::first()->id]);
+       $project=Project::first();
 
        $response=$this->patchJson($project->path(),['name'=>null])->assertStatus(422);
 
@@ -80,7 +82,7 @@ class ProjectTest extends TestCase
    /** @test */
     public function auth_user_can_update_project()
     {
-       $project=Project::factory()->create(['user_id'=>User::first()->id]);
+       $project=Project::first();
 
        $name="My First Project";
        $notes="My project first notes";
@@ -102,7 +104,7 @@ class ProjectTest extends TestCase
     /** @test */
     public function data_with_same_request_not_be_updated()
     {
-      $project=Project::factory()->create();
+      $project=Project::first();
 
       $response=$this->patchJson($project->path(),['name'=>$project->name])
       ->assertStatus(400);

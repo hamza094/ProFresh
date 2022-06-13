@@ -31,12 +31,14 @@ class InvitationTest extends TestCase
          Sanctum::actingAs(
              $user,
          );
+
+         Project::factory()->create(['user_id'=>$user->id]);
      }
 
      /** @test */
      public function project_owner_can_invite_user()
      {
-       $project=Project::factory()->create(['user_id'=>User::first()->id]);
+       $project=Project::first();
 
        $InvitedUser=User::factory()->create();
 
@@ -54,7 +56,7 @@ class InvitationTest extends TestCase
         /** @test */
         public function project_owner_can_not_reinvite_user()
         {
-           $project = Project::factory()->create();
+          $project=Project::first();
 
            $project->invite($InvitedUser=User::factory()->create());
 
@@ -69,7 +71,7 @@ class InvitationTest extends TestCase
           /** @test */
           public function auth_user_accept_project_invitation_sent_to_him()
           {
-             $project=Project::factory()->create();
+             $project=Project::first();
 
              $project->invite($invitedUser=User::factory()->create());
 
@@ -90,7 +92,7 @@ class InvitationTest extends TestCase
        /** @test */
        public function authorized_user_can_ignore_project_invitation()
        {
-         $project = Project::factory()->create(['user_id'=>User::first()->id]);
+         $project = Project::first();
 
          $project->invite($InvitedUser=User::factory()->create());
 
@@ -103,11 +105,11 @@ class InvitationTest extends TestCase
     "project_id" => $project->id, "user_id" => $InvitedUser->id]);
 
     }
-    
+
        /** @test */
        public function project_owner_can_remove_member()
        {
-          $project=Project::factory()->create(['user_id'=>User::first()->id]);
+         $project=Project::first();
 
           $project->members()->attach($memberUser=User::factory()->create());
 
