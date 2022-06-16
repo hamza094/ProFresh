@@ -1,3 +1,14 @@
+Add Score on
+stage update 3
+stage success 10
+update project 5
+create task 5,3
+invitation 3
+add member 10
+write note 5
+excel download 10
+send mail and sms 10
+
 sail DatabaseSeeder
 
 DB_CONNECTION=mysql

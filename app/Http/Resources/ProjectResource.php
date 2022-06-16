@@ -3,7 +3,6 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
-use App\Http\Resources\ScoreResource;
 use App\Http\Resources\TaskResource;
 use App\Http\Resources\UserResource;
 
@@ -25,10 +24,6 @@ class ProjectResource extends JsonResource
           'notes'=>$this->notes,
           'stage'=>new StageResource($this->stage),
           'postponed'=>$this->postponed,
-          'scores'=>$this->when($this->scores()->exists(),
-          fn()=>ScoreResource::collection($this->whenLoaded('scores'))
-          ),
-          'totalScore'=>$this->totalScore(),
           'status'=>$this->currentStatus(),
           'user'=>$this->user()->select('id','name')->get(),
           'members'=>$this->activeMembersData(),

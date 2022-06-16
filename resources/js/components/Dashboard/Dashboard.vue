@@ -26,9 +26,8 @@
 												</span>
      					<p class="mt-3">{{project.name}}</p>
      					    <p>Project Stage: <span v-text="stage(project)"></span></p>
-     					<p>Project Score:
-								<span v-if="project.score > 0">{{project.score}}</span>
-								<span v-else>No project activity detected project currently scored zero</span>
+     					<p>Project Status:
+								<span> {{project.status}}</span>
 							</p>
 							<p>Created At: {{project.created_at}}</p>
      				</div>

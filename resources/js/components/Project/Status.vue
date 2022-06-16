@@ -8,7 +8,7 @@
         <div>
             <div class="score-dropdown" @click="isPop = !isPop">
                 <!-- trigger -->
-                <span role="button" class="score-point" :class="'score-point_'+status">{{points}}</span>
+                <span role="button" class="score-point" :class="'score-point_'+status">0</span>
 
                 <!-- menu links -->
                 <div class="score-dropdown_item" v-show=isPop>
@@ -18,20 +18,17 @@
                             <b v-text="stagename()"></b> stage
                           </p>
                           <div class="score-content_point">
-                              <p class="score-content_point-para"><b>Top scoring factors</b></p>
+                              <p class="score-content_point-para"><b>Top rating factors</b></p>
                               <div class="row">
                                   <div class="col-md-3">
                                       <p class="score-content_point-cold">
-                    <span><span  :class="'score-content_point-'+status+'_point'">{{points}}</span><br><span :class="'score-content_point-'+status+'_status'">{{status}}</span></span>
+                    <span><span  :class="'score-content_point-'+status+'_point'">0</span><br><span :class="'score-content_point-'+status+'_status'">{{status}}</span></span>
                   </p>
                                   </div>
                                   <div class="col-md-9">
-                                    <div v-if="scores_detail == 0" class="">
-                                      <h5>The Project score hasn't added</h5>
-                                    </div>
-                                      <div v-for="scores_detail in groupedDetails">
-                                  <div v-for="detail in scores_detail">
-                                    <p class="project-score"><span><i class="fas fa-arrow-up"></i></span> {{detail.message}}</p>
+                                      <div>
+                                  <div>
+                                    <p class="project-score"><span><i class="fas fa-arrow-up"></i></span> This feature will be updated soon</p>
                                   </div>
                                 </div>
 
@@ -50,7 +47,7 @@
 
 <script>
 export default {
-    props:['projectName','points','scores_detail','start','stage','completed','status'],
+    props:['projectName','start','stage','completed','status'],
     data() {
         return {
             isPop:false,
@@ -66,11 +63,6 @@ export default {
     },
     mounted(){
       this.loading=true;
-    },
-    computed:{
-      groupedDetails() {
-       return _.chunk(this.scores_detail, 2)
-    },
     },
     methods: {
         emptyIfClickedOutside(event){

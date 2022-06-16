@@ -71,15 +71,7 @@ class FeatureService
   {
     return (new ProjectsExport($project))->download("project$project->id.xlsx");
 
-    self::recordScoreAndActivity($project,'Excel Export',10,'export_project','default');
-  }
-
-  public function recordStageUpdate($project)
-  {
-  	$redis = Redis::connection();
-    $key = 'stage_update_' . $project->id;
-    $value = (new \DateTime())->format("Y-m-d H:i:s");
-    $redis->set($key, $value);
+    self::recordActivity($project,'export_project','default');
   }
 
   public function sendMailToMember($project,$request)
@@ -87,13 +79,11 @@ class FeatureService
     Mail::to($request['email'])->send(
         new ProjectMail($request->subject,$request->message));
 
-  	self::recordScoreAndActivity($project,'Sent Mail',10,'mail_sent',$request->email);
+  	self::recordActivity($project,'mail_sent',$request->email);
   }
 
-  public function recordScoreAndActivity($project,$message,$count,$activity,$info)
+  public function recordActivity($project,$activity,$info)
     {
-      ProjectHelper::recordScore($project,$message,$count);
-
       $project->recordActivity($activity,$info);
     }
 }

@@ -5,7 +5,6 @@ namespace App\Models;
 //use App\Traits\RecordActivity;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\ProjectScore;
 use Illuminate\Database\Eloquent\SoftDeletes;
 //use App\Models\Activity;
 use Illuminate\Support\Facades\Redis;
@@ -19,7 +18,7 @@ class Project extends Model
 
   protected $guarded=[];
   protected $dates = ['created_at'];
-  protected $with = ['tasks','scores','stage'];
+  protected $with = ['tasks','stage'];
   protected $casts = ['stage_updated_at'=>'datetime'];
 
     /**
@@ -54,19 +53,6 @@ class Project extends Model
     });
     }
 
-    public function scores(){
-        return $this->hasMany(ProjectScore::class);
-    }
-
-    public function addScore($message,$point)
-    {
-      return $this->scores()->create([
-            'project_id'=>$this->id,
-            'message'=>$message,
-            'point'=>$point
-      ]);
-    }
-
    public function stage()
    {
      return $this->belongsTo(Stage::class,'stage_id');
@@ -76,12 +62,6 @@ class Project extends Model
    {
      return $this->belongsTo(Group::class,'group_id');
    }
-
-    /*public function stageupdate()
-     {
-       $redis = Redis::connection();
-       return $redis->get('stage_update_' . $this->id);
-     }*/
 
     public function tasks()
     {
@@ -131,16 +111,12 @@ class Project extends Model
       return $this->tasks->count() == config('project.taskLimit');
     }
 
-    public function totalScore(){
-      return  $this->scores->sum('point');
-    }
-
-    public function currentStatus(){
-      return $this->totalScore() <= config('project.coldStatus') ? 'cold' : 'hot';
-    }
-
     public function isOwner(){
       return auth()->id() == $this->user->id;
     }
+
+    public function currentStatus(){
+     return 'cold';
+   }
 
 }

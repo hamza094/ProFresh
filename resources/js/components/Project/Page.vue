@@ -16,10 +16,10 @@
 								<div class="page-content">
 										<div class="row">
 												<div class="col-md-2">
-	                     <Score :projectName='project.name' :start="project.created_at"
-											  :points='project.totalScore' :scores_detail='project.scores' :stage="project.stage"
+	                     <Status :projectName='project.name' :start="project.created_at"
+											    :stage="project.stage"
 												:completed="this.project.completed" :status="project.status">
-					             </Score>
+											</Status>
 												</div>
 												<div class="col-md-10">
 													<div class="content">
@@ -90,8 +90,8 @@
 									 <div class="col-md-5">
 										 <div class="project-info">
 									 	   <div class="project-info_socre">
-									 	    <p class="project-info_score-heading">Score</p>
-									 	    <p class="project-info_score-point" :class="'project-info_score-point_'+project.status">{{project.totalScore}}</p>
+									 	    <p class="project-info_score-heading">Status</p>
+									 	    <p class="project-info_score-point" :class="'project-info_score-point_'+project.status">0</p>
 									 	  </div>
 									 	  <div class="project-info_rec">
 									 	    <span>Last Seen</span>
@@ -124,17 +124,16 @@
 	</div>
 </template>
 <script>
-	import Score from './Score'
+	import Status from './Status'
 	import Stage from './Stage'
 	import Task from './Panel/Task'
 	import PanelFeatues from './Panel/Features'
 
 export default{
-	  components:{Score,Stage,Task,PanelFeatues},
+	  components:{Status,Stage,Task,PanelFeatues},
     data(){
     return{
      project:[],
-		 scores:{},
 		 user:{},
 		 getStage:0,
 		 nameEdit:false,
@@ -152,7 +151,6 @@ export default{
 				 then(response=>{
 						 this.project=response.data;
 						 this.user=response.data.user[0];
-						 this.scores=this.project.scores;
 						 this.getStage=this.project.stage.id;
 						 this.projectname=this.project.name;
 						 this.projectMembers=this.project.members;

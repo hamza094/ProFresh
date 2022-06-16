@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Api;
 use Auth;
 use App\Models\User;
 use App\Models\Project;
-use App\Models\ProjectScore;
 use Illuminate\Http\Request;
 use App\Http\Requests\ProjectRequest;
 use App\Notifications\ProjectUpdated;
@@ -85,8 +84,6 @@ class ProjectController extends ApiController
       );
 
       //$this->sendNotification($project,new ProjectUpdated($project));
-
-      //$this->recordScore($project,'Notes Updated',10);
     }
 
     /**

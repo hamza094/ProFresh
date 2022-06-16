@@ -42,8 +42,6 @@ class FeaturesController extends ApiController
 
       $this->featureService->stageStatus($project,$request);
 
-      //$this->featureService->recordStageUpdate($project);
-
       //$this->sendNotification($project,new ProjectUpdated($project));
 
       return $this->respondWithSuccess([
@@ -74,7 +72,7 @@ class FeaturesController extends ApiController
 
       $this->featureService->sendMessage($request->sms,$request->mobile);
 
-      $this->featureService->recordScoreAndActivity($project,'Sent Sms',10,'sms_project',
+      $this->featureService->recordActivity($project,'Sent Sms',10,'sms_project',
       $request->mobile);
     }
 

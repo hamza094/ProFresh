@@ -102,7 +102,7 @@ Vue.component('project-button', require('./components/ProjectButton.vue').defaul
 
 Vue.component('project-form', require('./components/ProjectForm.vue').default);
 
-Vue.component('project-scores', require('./components/Project/Score.vue').default);
+Vue.component('project-status', require('./components/Project/Status.vue').default);
 
  //Vue.component('project-features', require('./components/Project/Feature/FeatureSection.vue').default);
 

@@ -10,11 +10,6 @@ use File;
 class ProjectHelper extends Controller
 {
 
-  public function recordScore($project,$message,$count)
-  {
-    $project->scores()->where('message',$message)->exists() ?: $project->addScore($message,$count);
-  }
-
     /**
      * Store file in s3 storage.
      *
@@ -29,5 +24,5 @@ class ProjectHelper extends Controller
     $path = Storage::disk('s3')->url($filename);
     return $path;
   }
-  
+
 }

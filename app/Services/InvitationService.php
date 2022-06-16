@@ -53,8 +53,6 @@ class InvitationService
     ]);
 
     //$project->recordActivity('cancel_member_project',$user->name.'/_/'.$user->id);
-
-    //$project->scores()->where('message',"Invitaion Accept by $user->name")->delete();
   }
 
   public function memberSearch($request)
@@ -72,8 +70,6 @@ class InvitationService
     $project->recordActivity('sent_member_project',$user->name.'/_/'.$user->id);
 
     $user->notify(new ProjectInvitation($project));
-
-    ProjectHelper::recordScore($project,'Invitaion Sent',5);
   }
 
   protected function executeRelatedTasks($project,$user)
@@ -81,8 +77,6 @@ class InvitationService
     $project->recordActivity('accept_member_project',$user->name.'/_/'.$user->id);
 
     $project->owner->notify(new AcceptInvitation($project,$user));
-
-    $project->addScore("Invitaion Accept by $user->name",15);
   }
 
    /**

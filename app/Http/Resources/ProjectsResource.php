@@ -2,7 +2,6 @@
 
 namespace App\Http\Resources;
 use Illuminate\Http\Resources\Json\JsonResource;
-use App\Http\Resources\ScoreResource;
 
 class ProjectsResource extends JsonResource
 {
@@ -18,8 +17,8 @@ class ProjectsResource extends JsonResource
         'id'=>$this->id,
         'name'=>$this->name,
         'slug'=>$this->slug,
+        'status'=>$this->currentStatus(),
         'stage'=>new StageResource($this->stage),
-        'score'=>$this->totalScore(),
         'created_at'=>$this->created_at->diffforHumans(),
         'completed'=>$this->completed,
         'links'=>[

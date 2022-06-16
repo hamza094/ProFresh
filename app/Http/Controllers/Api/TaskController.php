@@ -37,8 +37,6 @@ class TaskController extends ApiController
      return new TaskResource($task);
 
     //$this->sendNotification($project,new ProjectTask($project));
-
-    //$this->recordScore($project,'Task Added',10);
   }
 
   public function update(Project $project,Task $task,TaskRequest $request)
