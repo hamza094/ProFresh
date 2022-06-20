@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Redis;
 use Cviebrock\EloquentSluggable\Sluggable;
 use App\Traits\BelongsToUser;
+use Carbon\Carbon;
 use Auth;
 
 class Project extends Model
@@ -117,6 +118,10 @@ class Project extends Model
 
     public function currentStatus(){
      return 'cold';
+   }
+
+   public function scopePastAbandonedLimit($query){
+      $query->where( 'deleted_at', '<', Carbon::now()->subDays(config('project.abandonedLimit')));
    }
 
 }

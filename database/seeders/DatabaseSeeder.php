@@ -4,6 +4,8 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 
+use App\Models\Project;
+
 class DatabaseSeeder extends Seeder
 {
     /**
@@ -19,7 +21,7 @@ class DatabaseSeeder extends Seeder
        //$this->call(TaskSeeder::class);
        //$this->call(GroupSeeder::class);
        //$this->call(ConversationSeeder::class);
-       //$this->call(MembersSeeder::class);
+       $this->call(MembersSeeder::class);
        //$this->call(NotificationSeeder::class);
     }
 }

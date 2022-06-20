@@ -10,7 +10,8 @@
 								<span class="page-top_arrow"> > </span>
 								<span> {{project.name}}</span>
 						</span>
-						<span class="float-right">Project features with button</span>
+						 <project-features :slug="project.slug"  :members="this.project.members">
+						 </project-features>
 										</div>
 								</div>
 								<div class="page-content">
@@ -44,6 +45,14 @@
 														  		 <a target="_blank" :href="user.id" class="btn btn-link">{{user.name}}</a>
 															</p>
 												</div>
+												<div v-if="this.project.deleted_at">
+													<div class="alert alert-danger" role="alert">
+														This project is abandoned to access project features active this project,
+														 or it will be deleted automatically after 90 days from the abandoned date.
+														 <p>Abandoned on: <b v-text="this.project.deleted_at"></b> </p>
+														 <a class="btn btn-info" @click.prevent="restore()" >Restore Project</a>
+														</div>
+											 </div>
 													</div>
 									 </div>
 										<hr>
@@ -227,6 +236,21 @@ export default{
 				this.projectabout=this.project.about;
 			},
 
+			restore(){
+				var self=this;
+			this.sweetAlert('Yes, Make live again!').then((result) => {
+			if (result.value) {
+			 axios.get('/api/v1/projects/'+this.slug+'/restore').
+			 then(response=>{
+				 this.$vToastify.success(response.data.message);
+				self.$router.push('/dashboard');
+			 }).catch(error=>{
+				 swal.fire("Failed!","There was something wrong.","warning");
+					this.showError(error);
+				});
+	    }
+		 })
+			},
 			//show error messages
 			showError(error){
 				if(error.response.data.errors && error.response.data.errors.name){

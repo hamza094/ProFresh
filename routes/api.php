@@ -41,12 +41,16 @@ Route::controller(UserController::class)->group(function(){
 Route::get('/stages',[StageController::class,'index']);
 
 //Project Api Resource Routes
-Route::apiResource('/projects', ProjectController::class);
+Route::apiResource('/projects', ProjectController::class)->except(['show']);
 
 //Project Route Prefix
 Route::group(['prefix' => 'projects/{project}'], function() {
+Route::get('/',[ProjectController::class,'show'])->withTrashed();
+
 
 Route::get('/delete',[ProjectController::class,'delete'])->can('manage','project');
+Route::get('/restore',[ProjectController::class,'restore'])->withTrashed()->can('manage','project');
+
 
 //Project Activity Feed
 Route::get('/timeline_feeds',[ProjectController::class,'activity'])

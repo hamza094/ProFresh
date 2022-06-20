@@ -12,6 +12,7 @@ use App\Models\User;
 use App\Models\Project;
 use Laravel\Sanctum\Sanctum;
 use Illuminate\Support\Facades\Hash;
+use Carbon\Carbon;
 
 class ProjectTest extends TestCase
 {
@@ -114,22 +115,42 @@ class ProjectTest extends TestCase
          ]);
     }
 
+   /** @test*/
    public function project_owner_can_trash_project(){
-     $user=create('App\Models\User');
-      $this->signIn($user);
-      $project=create('App\Models\Project',['user_id'=>$user->id]);
-      $this->assertCount(1,$project->get());
-      $this->delete($project->path());
-      $this->assertCount(0,$project->get());
-$this->assertCount(1,$project->withTrashed()->get());
+     $user=User::first();
+      $project=Project::first();
+      $this->assertCount(1,$user->projects()->get());
+      $this->deleteJson($project->path());
+      $this->assertCount(0,$user->projects()->get());
+      $this->assertCount(1,$user->projects()->withTrashed()->get());
    }
 
+   /** @test*/
+   public function project_owner_can_restore_project(){
+      $user=User::first();
+      $project=Project::factory()->create(['user_id'=>$user->id,'deleted_at'=>Carbon::now()]);
+      $this->getJson($project->path().'/restore')->assertStatus(200);
+      $project->refresh();
+      $this->assertCount(0,$user->projects()->onlyTrashed()->get());
+      $this->assertEquals($project->deleted_at,null);
+   }
+
+      /** @test */
       public function project_owner_can_delete_project(){
-        $user=create('App\Models\User');
-         $this->signIn($user);
-         $project=create('App\Models\Project',['user_id'=>$user->id]);
-         $this->get('api/projects/'.$project->id.'/delete');
+        $project= Project::first();
+        $this->getJson($project->path().'/delete');
          $this->assertDatabaseMissing('projects',['id'=>$project->id]);
+      }
+
+      /** @test */
+      public function delete_abandon_projects_after_limit_past(){
+        $user=User::first();
+        $project=Project::factory()->create(['user_id'=>$user->id,'deleted_at'=>Carbon::now()]);
+        $this->assertCount(1,$user->projects()->onlyTrashed()->get());
+        $project=Project::factory()->create(['user_id'=>$user->id,'deleted_at'=>Carbon::now()->subDays(91)]);
+        $this->assertCount(2,$user->projects()->onlyTrashed()->get());
+        $this->artisan('remove:abandon')->assertSuccessful();
+        $this->assertCount(1,$user->projects()->onlyTrashed()->get());
       }
 
 

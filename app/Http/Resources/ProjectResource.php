@@ -34,6 +34,9 @@ class ProjectResource extends JsonResource
           'isOwner'=>$this->isOwner(),
           'created_at'=>$this->created_at->diffforHumans(),
           'updated_at'=>$this->updated_at->diffforHumans(),
+          'deleted_at'=>$this->when($this->deleted_at != null,
+          fn()=>$this->deleted_at->diffforHumans()
+          ),
           'stage_updated_at'=>$this->stage_updated_at->format("F j, Y, g:i a"),
         ];
     }

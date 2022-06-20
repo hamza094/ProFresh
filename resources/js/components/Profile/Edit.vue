@@ -1,4 +1,4 @@
-f<template>
+<template>
   <modal name="edit-profile"
            height="auto" :scrollable="true" :shiftX=".98" width="38%"
             class="model-desin" :clickToClose=false>
@@ -48,7 +48,7 @@ f<template>
 
                             <div class="form-group">
                                 <label for="address" class="label-name">Address:</label>
-                                <input type="text" id="address" class="form-control" 
+                                <input type="text" id="address" class="form-control"
                                 v-model="form.address">
                                 <span class="text-danger font-italic" v-if="errors.address" v-text="errors.address[0]"></span>
                             </div>
@@ -75,7 +75,7 @@ f<template>
                     </form>
                 </div>
         </div>
-    </modal>	
+    </modal>
 </template>
 
 <script>
@@ -114,7 +114,7 @@ export default{
                address:this.form.address,
                position:this.form.position,
                password:this.form.password
-               
+
            }).then(response=>{
                this.$vToastify.success("Profile Updated Successfully");
                this.user.name=this.form.name;
@@ -131,6 +131,6 @@ export default{
         },
     }
 
-}	
+}
 
 </script>

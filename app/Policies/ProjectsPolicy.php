@@ -29,7 +29,7 @@ class ProjectsPolicy
 
     public function access(User $user, Project $project)
     {
-        return $user->is($project->user) || $project->activeMembers()->contains($user)
+        return $user->is($project->user) || $project->activeMembers()->contains($user) 
                ? Response::allow()
                : Response::deny("Only Project's owner and members are allowed to access this feature.");
     }
