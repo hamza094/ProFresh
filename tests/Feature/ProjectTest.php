@@ -153,6 +153,18 @@ class ProjectTest extends TestCase
         $this->assertCount(1,$user->projects()->onlyTrashed()->get());
       }
 
+      /** @test */
+      public function auth_user_can_export_project_file()
+      {
+        $project=Project::first();
+        Excel::fake();
+        $this->withoutExceptionHandling()->get('api/v1/projects/'.$project->slug.'/export');
+
+        Excel::assertDownloaded('Project '.$project->name.'.xls', function(ProjectsExport $export) {
+            // Assert that the correct export is downloaded.
+             return $export->query()->get()->contains('name',Project::first()->name);
+        });
+     }
 
 public function project_mail_sent(){
       $this->signIn();
@@ -168,19 +180,6 @@ public function project_sms_link_working(){
   $this->signIn();
   $project=create('App\Models\Project');
   $this->json('POST','/api/projects/'.$project->id.'/sms')->assertStatus(401);
-}
-
-public function user_can_download_project_export()
-{
-  $this->signIn();
-  $project=create('App\Models\Project',['name'=>'John O Corner']);
-    Excel::fake();
-    $this->get('api/projects/'.$project->id.'/export');
-
-    Excel::assertDownloaded('project'.$project->id.'.xlsx', function(ProjectsExport $export) {
-        // Assert that the correct export is downloaded.
-         return $export->query()->get()->contains('name','John O Corner');
-    });
 }
 
     public function group_deleted_on_user_deletion()

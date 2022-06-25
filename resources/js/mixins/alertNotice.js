@@ -1,7 +1,7 @@
 export default{
     methods:{
 
-  sweetAlert($action){
+  sweetAlert($message){
     return swal.fire({
       title: 'Are you sure?',
       text: "You can be able to revert this!",
@@ -9,20 +9,24 @@ export default{
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: $action
+      confirmButtonText: $message
     })
    },
 
-  redirectSuccess($message,$redirect){
-     swal.fire(
-       'Success!',
-        $message,
-        'success'
-        )
-        setTimeout(()=>{
-             window.location.href=$redirect;
-        },3000)
+   performAction($message,$axiosCall){
+     var self=this;
+    this.sweetAlert($message).then((result) => {
+    if (result.value) {
+     $axiosCall.
+     then(response=>{
+       this.$vToastify.success(response.data.message);
+      self.$router.push('/dashboard');
+     }).catch(error=>{
+       swal.fire("Failed!","There was something wrong.","warning");
+      });
+    }
+   })
    }
-   
+
     }
 }

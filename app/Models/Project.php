@@ -112,10 +112,6 @@ class Project extends Model
       return $this->tasks->count() == config('project.taskLimit');
     }
 
-    public function isOwner(){
-      return auth()->id() == $this->user->id;
-    }
-
     public function currentStatus(){
      return 'cold';
    }

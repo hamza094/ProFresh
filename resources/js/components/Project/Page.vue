@@ -10,7 +10,7 @@
 								<span class="page-top_arrow"> > </span>
 								<span> {{project.name}}</span>
 						</span>
-						 <project-features :slug="project.slug"  :members="this.project.members">
+						 <project-features :slug="project.slug"  :members="this.project.members" :name="this.project.name">
 						 </project-features>
 										</div>
 								</div>
@@ -48,7 +48,7 @@
 												<div v-if="this.project.deleted_at">
 													<div class="alert alert-danger" role="alert">
 														This project is abandoned to access project features active this project,
-														 or it will be deleted automatically after 90 days from the abandoned date.
+														 or it will be deleted automatically after {{this.project.days_limit}} days from the abandoned date.
 														 <p>Abandoned on: <b v-text="this.project.deleted_at"></b> </p>
 														 <a class="btn btn-info" @click.prevent="restore()" >Restore Project</a>
 														</div>
@@ -126,7 +126,7 @@
 							<Task :slug="project.slug" :tasks="project.tasks" :access="this.accessAllowed"></Task>
 							<hr>
 						<PanelFeatues :slug="project.slug" :notes="project.notes"
-						:members="project.members" :owner="user" :access="this.accessAllowed" :ownerAccess="project.isOwner"></PanelFeatues>
+						:members="project.members" :owner="user" :access="this.accessAllowed" :ownerLogin="this.ownerLogin"></PanelFeatues>
 						</div>
 				</div>
 		</div>
@@ -151,7 +151,8 @@ export default{
 		 projectabout:"",
 		 projectMembers:[],
 		 auth:this.$store.state.currentUser.user.id,
-		 accessAllowed:false
+		 accessAllowed:false,
+		 ownerLogin:false,
     };
     },
     methods:{
@@ -163,6 +164,7 @@ export default{
 						 this.getStage=this.project.stage.id;
 						 this.projectname=this.project.name;
 						 this.projectMembers=this.project.members;
+						 this.daysLimit=this.project.days_limit;
 						 this.checkMembersAndPermission();
 						 this.$bus.emit('projectSlug',{slug:response.data.slug});
 				 }).catch(error=>{
@@ -178,7 +180,10 @@ export default{
 					}
 				 });
 				 if(this.user.id == authId || IsMember == true){
-					 return this.accessAllowed = true;
+					  this.accessAllowed = true;
+			 }
+			 if(this.user.id == authId){
+				 this.ownerLogin = true;
 			 }
 			},
 			//Update project name methods
@@ -237,20 +242,12 @@ export default{
 			},
 
 			restore(){
-				var self=this;
-			this.sweetAlert('Yes, Make live again!').then((result) => {
-			if (result.value) {
-			 axios.get('/api/v1/projects/'+this.slug+'/restore').
-			 then(response=>{
-				 this.$vToastify.success(response.data.message);
-				self.$router.push('/dashboard');
-			 }).catch(error=>{
-				 swal.fire("Failed!","There was something wrong.","warning");
-					this.showError(error);
-				});
-	    }
-		 })
+			  this.performAction(
+			    'Yes, Make live again!',
+			    axios.get('/api/v1/projects/'+this.project.slug+'/restore')
+			  );
 			},
+
 			//show error messages
 			showError(error){
 				if(error.response.data.errors && error.response.data.errors.name){

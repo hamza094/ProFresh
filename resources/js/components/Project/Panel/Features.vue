@@ -53,7 +53,7 @@
                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQvsQZEtAw99ePVsNhLCexVsSKct6D13NluBQ&usqp=CAU" alt="">
                    <p>{{member.name.substring(0,12)}}</p>
                </router-link>
-              <a v-if="ownerAccess"  rel="" role="button" @click.prevent="removeMember(member.pivot.user_id,member)">x</a>
+              <a v-if="ownerLogin"  rel="" role="button" @click.prevent="removeMember(member.pivot.user_id,member)">x</a>
               </div>
         </div>
       </div>
@@ -66,7 +66,7 @@
 
 <script>
 export default{
-  props:['slug','notes','members','owner','access','ownerAccess'],
+  props:['slug','notes','members','owner','access','ownerLogin'],
   watch: {
   query(after, before) {
     this.searchUsers();

@@ -30,14 +30,14 @@ class ProjectResource extends JsonResource
           'completed'=>$this->completed,
           'tasks'=>$this->when($this->tasks()->exists(),
           fn()=>TaskResource::collection($this->whenLoaded('tasks'))->paginate(3)
-          ),
-          'isOwner'=>$this->isOwner(),
+        ),
           'created_at'=>$this->created_at->diffforHumans(),
           'updated_at'=>$this->updated_at->diffforHumans(),
           'deleted_at'=>$this->when($this->deleted_at != null,
           fn()=>$this->deleted_at->diffforHumans()
-          ),
+        ),
           'stage_updated_at'=>$this->stage_updated_at->format("F j, Y, g:i a"),
+          'days_limit'=>config('project.abandonedLimit')
         ];
     }
 }

@@ -28,6 +28,7 @@
         "animate.css": "^4.1.1",
         "chart.js": "^2.9.4",
         "emoji-mart-vue": "^2.6.6",
+        "js-file-download": "^0.4.12",
         "laravel-echo": "^1.10.0",
         "laravel-vue-pagination": "^2.3.1",
         "luxon": "^1.27.0",

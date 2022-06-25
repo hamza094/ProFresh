@@ -7,7 +7,6 @@ use App\Models\Group;
 
 class ProjectService
 {
-
   /**
     * Create Project Group And Intilize Chat Conversation.
     *

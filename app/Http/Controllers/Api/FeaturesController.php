@@ -10,6 +10,8 @@ use App\Notifications\ProjectUpdated;
 use App\Http\Resources\ProjectResource;
 use App\Http\Resources\ProjectStageResource;
 use F9Web\ApiResponseHelpers;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\ProjectsExport;
 use Illuminate\Http\JsonResponse;
 
 class FeaturesController extends ApiController
@@ -78,7 +80,8 @@ class FeaturesController extends ApiController
 
     public function export(Project $project)
     {
-      $this->featureService->excelExport($project);
+      //$this->featureService->excelExport($project);
+        return Excel::download(new ProjectsExport($project), "Project $project->name.xls");
     }
 
 }

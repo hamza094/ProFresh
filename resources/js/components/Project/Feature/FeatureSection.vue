@@ -15,8 +15,7 @@
 
     <!--Send a message instead of separate SMS and email
     <li class="feature-dropdown_item-content" v-if="projectmembers != 0" @click="$modal.show('project-message')"><i class="far fa-envelope"></i>Send Message</li>-->
-
-    <a v-bind:href="'/api/projects/' + this.slug +'/export'"> <li class="feature-dropdown_item-content" @click="projectExport"><i class="fas fa-upload"></i>Export</li></a>
+    <li class="feature-dropdown_item-content" @click="exportProject()"><i class="fas fa-upload"></i> Export</li>
 
     <li class="feature-dropdown_item-content" @click="deleteProject"><i class="fas fa-ban"></i> Delete</li>
   </ul>
@@ -33,6 +32,7 @@
 
 
 <script>
+import fileDownload from 'js-file-download';
 
   //import ProjectSms from './Sms'
   //import ProjectMail from './Mail'
@@ -41,7 +41,7 @@ export default {
 
   //components: {ProjectSms,ProjectMail},
 
-    props:['slug','members'],
+    props:['slug','members','name'],
     data() {
         return {
           projectmembers:this.members,
@@ -64,34 +64,28 @@ export default {
             }
         },
 
-        abondon(){
-          var self=this;
-        this.sweetAlert('Yes, abandon it!').then((result) => {
-        if (result.value) {
-         axios.delete('/api/v1/projects/'+this.slug).then(function(){
-           self.$router.push('/dashboard');
-         }).catch(function(){
-             swal.fire("Failed!","There was something wrong.","warning");
-         });
-     }
-       })
-     },
+      abandon(){
+          this.performAction(
+            'Yes, abandon it!',
+            axios.delete('/api/v1/projects/'+this.slug)
+          );
+      },
 
      deleteProject(){
-      var self = this;
-      this.sweetAlert('Yes, delete it!').then((result) => {
-      if (result.value) {
-      axios.get('/api/v1/projects/'+this.slug+'/delete').then(function(){
-        self.$router.push('/dashboard');
-      }).catch(function(){
-          swal.fire("Failed!","There was something wrong.","warning");
-      });
-  }
-    })
+       this.performAction(
+         'Yes, delete it!',
+         axios.get('/api/v1/projects/'+this.slug+'/delete')
+       );
   },
-
- projectExport(){
-this.$vToastify.success("Data Export Successfully");
+ exportProject(){
+   axios.get('/api/v1/projects/'+this.slug+'/export', {
+  	responseType: 'blob',
+    headers: {'Accept': 'multipart/form-data'}
+  }).then(response => {
+    fileDownload(response.data, 'Project '+this.slug+'.xls');
+      }).catch(error => {
+          console.log(error.response.data)
+      })
 },
 
   }

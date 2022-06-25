@@ -97,7 +97,7 @@ class ProjectController extends ApiController
        $project->delete();
 
        return $this->respondWithSuccess([
-         'message'=>$project->name ." junked successfully"
+         'message'=>$project->name ." abandoned successfully"
        ]);
     }
 
@@ -112,11 +112,13 @@ class ProjectController extends ApiController
 
     public function delete(Project $project)
     {
+      $name=$project->name;
+
       $project->forceDelete();
 
-        if(request()->expectsJson()){
-            return response(['status'=>'project deleted']);
-      }
+      return $this->respondWithSuccess([
+        'message'=>"Project " .$name. " deleted successfully"
+      ]);
    }
 
     /**

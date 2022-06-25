@@ -9,10 +9,13 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Redis;
 use App\Mail\ProjectMail;
 use App\Helpers\ProjectHelper;
+use F9Web\ApiResponseHelpers;
 use Carbon\Carbon;
 
 class FeatureService
 {
+  use ApiResponseHelpers;
+
    public function stageStatus($project,$request){
 
     if($this->hasRequest($request)){
@@ -69,9 +72,13 @@ class FeatureService
 
   public function excelExport($project)
   {
-    return (new ProjectsExport($project))->download("project$project->id.xlsx");
+    return  (new ProjectsExport($project))->download("Project $project->name.xlsx");
 
-    self::recordActivity($project,'export_project','default');
+    /*  return $this->respondWithSuccess([
+     'message'=>$project->name . " file exported successfully",
+   ]);*/
+
+    //self::recordActivity($project,'export_project','default');
   }
 
   public function sendMailToMember($project,$request)
