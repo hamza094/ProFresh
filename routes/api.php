@@ -59,8 +59,7 @@ Route::get('/timeline_feeds',[ProjectController::class,'activity'])
 Route::middleware(['can:access,project'])->group(function () {
 //Project Feature Routes
 Route::controller(FeaturesController::class)->group(function(){
-Route::post('mail','mail');
-Route::post('sms','sms');
+Route::post('message','message');
 Route::get('export','export');
 Route::patch('stage','stage');
 });

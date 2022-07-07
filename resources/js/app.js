@@ -41,13 +41,13 @@ Vue.mixin(currentStage);
 Vue.mixin(projectUpdate);
 
 
-/*Vue.filter('timeExactDate',function(data){
-   return  moment(data).fromNow();
+Vue.filter('time',function(data){
+   return  moment(data).format('h:mm:ss a');
 })
 
-Vue.filter('timeDate',function(data){
+Vue.filter('date',function(data){
    return  moment(data).format("MMM Do YY");
-})*/
+})
 
 window.momenttz = require('moment-timezone');
 window.moment = require('moment');

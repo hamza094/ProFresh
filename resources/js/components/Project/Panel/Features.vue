@@ -46,9 +46,9 @@
         <p class="text-center"><b>No other project members have been found!</b></p>
       </div>
         <div v-else class="row">
-        <div v-for="member in members" class="col-md-4" :key="member.pivot.user_id">
+        <div v-for="member in members" class="col-md-4" :key="member.user_id">
           <div class="project_members-detail">
-               <router-link :to="'/user/'+member.pivot.user_id+'/profile'">
+               <router-link :to="'/user/'+member.user_id+'/profile'">
                  <!-- <img :src="member.avatar_path" v-if="member.avatar_path!=null">-->
                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQvsQZEtAw99ePVsNhLCexVsSKct6D13NluBQ&usqp=CAU" alt="">
                    <p>{{member.name.substring(0,12)}}</p>

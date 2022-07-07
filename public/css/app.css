@@ -1208,6 +1208,14 @@ p {
   width: 100%;
 }
 
+.check_members {
+  height: 4rem;
+  overflow-y: scroll;
+  border: 1px solid grey;
+  padding-left: 0.5rem;
+  padding-top: 0.2rem;
+}
+
 .padding-0 {
   padding-right: 0;
 }

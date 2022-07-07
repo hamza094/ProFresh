@@ -9,9 +9,11 @@ use App\Http\Resources\StageResource;
 use App\Notifications\ProjectUpdated;
 use App\Http\Resources\ProjectResource;
 use App\Http\Resources\ProjectStageResource;
+use App\Http\Requests\MessageRequest;
 use F9Web\ApiResponseHelpers;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\ProjectsExport;
+use Illuminate\Validation\ValidationException;
 use Illuminate\Http\JsonResponse;
 
 class FeaturesController extends ApiController
@@ -82,6 +84,29 @@ class FeaturesController extends ApiController
     {
       //$this->featureService->excelExport($project);
         return Excel::download(new ProjectsExport($project), "Project $project->name.xls");
+    }
+
+    public function message(Project $project,MessageRequest $request)
+    {
+       if($request->mail == null && $request->sms == null){
+         throw ValidationException::withMessages([
+          'option'=>'Please choose any options.',
+        ]);
+       }
+
+      if($request->mail == true &&	$request->sms == false ){
+         return 'mail';
+      }
+      if($request->sms == true && $request->mail == false){
+        return 'sms';
+      }
+
+        return 'sms and mail';
+
+         /*foreach (json_decode($request->users) as $user)
+         {
+            dump($user->name);
+         }*/
     }
 
 }

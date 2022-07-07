@@ -42,7 +42,7 @@
 													 </p>
 													<p class="content-info">
 													Created By<span class="content-dot"></span>
-														  		 <a target="_blank" :href="user.id" class="btn btn-link">{{user.name}}</a>
+													<router-link :to="'/user/'+user.id+'/profile'" class="btn btn-link">{{user.name}}</router-link>
 															</p>
 												</div>
 												<div v-if="this.project.deleted_at">
@@ -175,7 +175,7 @@ export default{
 				var authId=this.auth;
 				var IsMember=false;
 				 this.projectMembers.forEach(function(item,index){
-					 if(item.pivot.user_id == authId){
+					 if(item.user_id == authId){
 					    IsMember = true;
 					}
 				 });

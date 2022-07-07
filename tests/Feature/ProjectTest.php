@@ -4,10 +4,6 @@ namespace Tests\Feature;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
-use Illuminate\Support\Facades\Mail;
-use App\Mail\ProjectMail;
-use App\Exports\ProjectsExport;
-use Maatwebsite\Excel\Facades\Excel;
 use App\Models\User;
 use App\Models\Project;
 use Laravel\Sanctum\Sanctum;
@@ -152,43 +148,4 @@ class ProjectTest extends TestCase
         $this->artisan('remove:abandon')->assertSuccessful();
         $this->assertCount(1,$user->projects()->onlyTrashed()->get());
       }
-
-      /** @test */
-      public function auth_user_can_export_project_file()
-      {
-        $project=Project::first();
-        Excel::fake();
-        $this->withoutExceptionHandling()->get('api/v1/projects/'.$project->slug.'/export');
-
-        Excel::assertDownloaded('Project '.$project->name.'.xls', function(ProjectsExport $export) {
-            // Assert that the correct export is downloaded.
-             return $export->query()->get()->contains('name',Project::first()->name);
-        });
-     }
-
-public function project_mail_sent(){
-      $this->signIn();
-      Mail::fake();
-     Mail::assertNothingSent();
-    $project=create('App\Models\Project');
-       $this->withoutExceptionHandling()->post('/api/projects/'.$project->id.'/mail');
-       Mail::assertSent(ProjectMail::class, 1);
-       $this->assertCount(2,$project->activity);
-}
-
-public function project_sms_link_working(){
-  $this->signIn();
-  $project=create('App\Models\Project');
-  $this->json('POST','/api/projects/'.$project->id.'/sms')->assertStatus(401);
-}
-
-    public function group_deleted_on_user_deletion()
-    {
-      $user=create('App\Models\User');
-       $this->signIn($user);
-        $group=create('App\Models\Group');
-     $group->users()->attach($user);
-     $user->delete();
-      $this->assertDatabaseMissing('groups',['id'=>$group->id]);
-}
 }

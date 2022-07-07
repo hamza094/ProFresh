@@ -57,4 +57,14 @@ class GroupTest extends TestCase
       $this->assertDatabaseMissing('conversations',['id'=>$conversation->id]);
 }
 
+public function group_deleted_on_user_deletion()
+{
+  $user=create('App\Models\User');
+   $this->signIn($user);
+    $group=create('App\Models\Group');
+ $group->users()->attach($user);
+ $user->delete();
+  $this->assertDatabaseMissing('groups',['id'=>$group->id]);
+}
+
 }

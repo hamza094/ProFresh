@@ -5,6 +5,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Resources\Json\JsonResource;
 use App\Http\Resources\TaskResource;
 use App\Http\Resources\UserResource;
+use Carbon\Carbon;
 
 class ProjectResource extends JsonResource
 {
@@ -36,8 +37,8 @@ class ProjectResource extends JsonResource
           'deleted_at'=>$this->when($this->deleted_at != null,
           fn()=>$this->deleted_at->diffforHumans()
         ),
-          'stage_updated_at'=>$this->stage_updated_at->format("F j, Y, g:i a"),
-          'days_limit'=>config('project.abandonedLimit')
+          //'stage_updated_at'=>$this->stage_updated_at->format("F j, Y, g:i a"),
+          'days_limit'=>config('project.abandonedLimit'),
         ];
     }
 }
