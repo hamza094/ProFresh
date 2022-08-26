@@ -69,6 +69,11 @@ class Project extends Model
       return $this->hasMany(Task::class)->latest();
     }
 
+    public function messages()
+    {
+      return $this->hasMany(Message::class);
+    }
+
     public function addTask($tasks)
     {
        return $this->tasks()->create([
@@ -118,6 +123,14 @@ class Project extends Model
 
    public function scopePastAbandonedLimit($query){
       $query->where( 'deleted_at', '<', Carbon::now()->subDays(config('project.abandonedLimit')));
+   }
+
+   public function scheduledMessages(){
+      return $this->messages()->where('delivered',false)
+      ->whereNotNull('delivered_at')
+      ->where('delivered_at','>',Carbon::now())
+      ->with('users')
+      ->get();
    }
 
 }

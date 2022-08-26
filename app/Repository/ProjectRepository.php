@@ -18,7 +18,7 @@ class ProjectRepository
     $this->filterActivityByAuthUser($activities);
 
     $this->filterActivityByTask($activities);
-      
+
     $this->filterActivityByProjectSpecified($activities);
   }
 

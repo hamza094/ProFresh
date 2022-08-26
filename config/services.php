@@ -29,13 +29,19 @@ return [
         'secret' => env('AWS_SECRET_ACCESS_KEY'),
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
-    
+
+    'vonage' => [
+      'api_key'=>env('VONAGE_KEY'),
+      'secret_key'=>env('VONAGE_SECRET'),
+      'from'=>env('VONAGE_SMS_FROM'),
+    ],
+
     'stripe' => [
         'model' => App\User::class,
         'key' => env('STRIPE_KEY'),
         'secret' => env('STRIPE_SECRET'),
     ],
-   
+
     'paypal' => [
         'id' => env('PAYPAL_ID'),
         'secret' => env('PAYPAL_SECRET'),

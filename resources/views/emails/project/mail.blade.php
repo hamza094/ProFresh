@@ -1,14 +1,13 @@
-
 @component('mail::panel')
-{{$subject}}
+<b>Subject: </b> <p> {{$subject}}</p>
 @endcomponent
 
 @component('mail::message')
-{{$message}}
 
+<p>{{$message}}</p>
 
-@component('mail::button', ['url' => ''])
-Button Text
+@component('mail::button', ['url' => $url, 'color'=>'primary'])
+From Project {{$title}}
 @endcomponent
 
 Thanks,<br>

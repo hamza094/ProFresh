@@ -44,12 +44,37 @@ class FeatureTest extends TestCase
     {
        $project=Project::first();
        Excel::fake();
-       $this->withoutExceptionHandling()->get('api/v1/projects/'.$project->slug.'/export');
+       $this->get('api/v1/projects/'.$project->slug.'/export');
 
       Excel::assertDownloaded('Project '.$project->name.'.xls', function(ProjectsExport $export) {
           // Assert that the correct export is downloaded.
            return $export->query()->get()->contains('name',Project::first()->name);
        });
+   }
+
+   /** @test */
+   public function validate_message_errors()
+   {
+     $project=Project::first();
+     $users=[];
+     $users=json_encode([User::factory()->create(),User::factory()->create()]);
+
+     $this->postJson($project->path().'/message',['message'=>null,'users'=>$users])
+     ->assertStatus(422)
+     ->assertJsonMissingValidationErrors('data.message');
+   }
+
+   /** @test */
+   public function check_message_option_select()
+   {
+     $project=Project::first();
+     $users=[];
+     $users=json_encode([User::factory()->create(),User::factory()->create()]);
+
+     $this->postJson($project->path().'/message',
+     ['message'=>'this is my post','users'=>$users,'mail'=>null,'sms'=>null])
+     ->assertStatus(422)
+     ->assertJsonValidationErrors('option');
    }
 
     public function project_mail_sent()

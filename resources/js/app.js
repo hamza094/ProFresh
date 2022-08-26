@@ -49,6 +49,10 @@ Vue.filter('date',function(data){
    return  moment(data).format("MMM Do YY");
 })
 
+Vue.filter('datetime',function(data){
+   return  moment(data).format("MMM Do YY h:mm:ss a");
+})
+
 window.momenttz = require('moment-timezone');
 window.moment = require('moment');
 

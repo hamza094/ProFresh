@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Console;
-
+use App\Models\Messages;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -24,7 +24,15 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
+       $schedule->command('schedule:message')->when(function () {
+
+       $messages=Message::messageScheduled()->get();
+
+           if($messages->count() > 0){return true;}
+       })->withoutOverlapping();
+
          $schedule->command('remove:abandon')->daily();
+         $schedule->command('queue:prune-batches --hours=48 --unfinished=72')->daily();
     }
 
     /**

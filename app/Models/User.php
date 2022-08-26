@@ -126,4 +126,9 @@ class User extends Authenticatable implements Searchable, MustVerifyEmail
        'name'=>'ProFresh Agreement'
     ]);
     }
+
+    public function messages()
+    {
+      return $this->belongsToMany(Message::class);
+    }
 }

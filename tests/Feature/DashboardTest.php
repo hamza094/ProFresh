@@ -37,7 +37,7 @@ class DashboardTest extends TestCase
     {
         $projects=Project::factory()->count(4)->for(User::first())->create();
 
-        $response=$this->getJson('/api/v1/user/projects');
+        $response=$this->withoutExceptionHandling()->getJson('/api/v1/user/projects');
 
         $response
         ->assertStatus(200)
@@ -55,17 +55,7 @@ class DashboardTest extends TestCase
         $response->assertJson([
             'projects'=>[0=>['name'=>$project->name]],
             'projectsCount'=>1
-           ]);
+          ]);
     }
-
-   public function project_owner_can_trash_project(){
-     $user=create('App\Models\User');
-      $this->signIn($user);
-      $project=create('App\Models\Project',['user_id'=>$user->id]);
-      $this->assertCount(1,$project->get());
-      $this->delete($project->path());
-      $this->assertCount(0,$project->get());
-$this->assertCount(1,$project->withTrashed()->get());
-   }
 
 }

@@ -15,6 +15,7 @@ use App\Http\Controllers\Api\
   UserController,
   WelcomeController,
   StageController,
+  MessageController,
 };
 /*
 |--------------------------------------------------------------------------
@@ -59,9 +60,15 @@ Route::get('/timeline_feeds',[ProjectController::class,'activity'])
 Route::middleware(['can:access,project'])->group(function () {
 //Project Feature Routes
 Route::controller(FeaturesController::class)->group(function(){
-Route::post('message','message');
 Route::get('export','export');
 Route::patch('stage','stage');
+});
+
+
+Route::controller(MessageController::class)->group(function(){
+  Route::post('message','message')->can('access','project');
+  Route::get('messages/scheduled','scheduled')->can('access','project');
+  Route::delete('messages/{message}/delete','delete')->can('access','project');
 });
 
 //Task Routes

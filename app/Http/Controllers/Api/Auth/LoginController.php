@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Events\UserLogin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
@@ -26,6 +27,15 @@ public function login(Request $request)
             'email' => ['The provided credentials are incorrect.'],
         ]);
     }
+
+    event(new UserLogin($user));
+
+    /*$ip = file_get_contents("http://ipecho.net/plain");
+    $url = 'http://ip-api.com/json/'.$ip;
+    $tz = file_get_contents($url);
+    $tz = json_decode($tz,true)['timezone'];
+    $user->timezone=$tz;
+    $user->save();*/
 
       return response()->json([
       'user' => $user,

@@ -2,7 +2,6 @@
 
 namespace App\Mail;
 
-use App\Models\Project;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -12,17 +11,18 @@ class ProjectMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $message;
-    public $subject;
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($message,$subject)
+    protected $project;
+    protected $message;
+
+    public function __construct($project,$message)
     {
-       $this->message = $message;
-       $this->subject = $subject;
+      $this->project=$project;
+      $this->message=$message;
     }
 
     /**
@@ -32,6 +32,11 @@ class ProjectMail extends Mailable
      */
     public function build()
     {
-        return $this->markdown('emails.project.mail');
+      return $this->markdown('emails.project.mail', [
+                   'subject'=>$this->message->subject,
+                   'message'=>$this->message->message,
+                   'title'=>$this->project->name,
+                   'url' => config('app.url').'/project/'.$this->project->slug,
+               ]);
     }
 }

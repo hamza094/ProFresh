@@ -1,8 +1,0 @@
-things in queue
-- Export
-- mail
-- SMS
-- export
-- process after delete
-- notifications
-- 

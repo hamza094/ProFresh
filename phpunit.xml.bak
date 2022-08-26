@@ -33,6 +33,6 @@
         <server name="QUEUE_CONNECTION" value="sync"/>
         <server name="SESSION_DRIVER" value="array"/>
         <env name="SCOUT_DRIVER" value="array"/>
-        
+
     </php>
 </phpunit>

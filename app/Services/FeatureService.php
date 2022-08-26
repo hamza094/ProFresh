@@ -2,14 +2,12 @@
 namespace App\Services;
 use App\Models\Project;
 use Illuminate\Http\Request;
-use Twilio\Rest\Client;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\ProjectsExport;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Redis;
-use App\Mail\ProjectMail;
 use App\Helpers\ProjectHelper;
 use F9Web\ApiResponseHelpers;
+use Illuminate\Validation\ValidationException;
 use Carbon\Carbon;
 
 class FeatureService
@@ -60,15 +58,6 @@ class FeatureService
       $project->stage()->associate($request->stage);
     }
 
-  public static function sendMessage($message, $recipients)
-  {
-    $account_sid = getenv("TWILIO_SID");
-    $auth_token = getenv("TWILIO_AUTH_TOKEN");
-    $twilio_number = getenv("TWILIO_NUMBER");
-    $client = new Client($account_sid, $auth_token);
-    $client->messages->create($recipients,
-            ['from' => $twilio_number, 'body' => $message] );
-  }
 
   public function excelExport($project)
   {
@@ -81,18 +70,11 @@ class FeatureService
     //self::recordActivity($project,'export_project','default');
   }
 
-  public function sendMailToMember($project,$request)
-  {
-    Mail::to($request['email'])->send(
-        new ProjectMail($request->subject,$request->message));
-
-  	self::recordActivity($project,'mail_sent',$request->email);
-  }
-
   public function recordActivity($project,$activity,$info)
     {
       $project->recordActivity($activity,$info);
     }
+
 }
 
 ?>

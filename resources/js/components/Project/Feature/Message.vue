@@ -59,6 +59,9 @@
   </div>
 
   <div class="panel-bottom">
+		<div class="panel-top_content float-left">
+			<ScheduleMessages :slug='slug'></ScheduleMessages>
+		</div>
       <div class="panel-top_content float-right">
 				<a class="btn btn-link" @click="$modal.show('schedule-message')"><i class="far fa-calendar-alt"></i></a>
           <button class="btn panel-btn_close" @click.prevent="modalClose">Cancel</button>
@@ -88,12 +91,12 @@
 	  <div class="panel-top_content">
 
 			<span class="form-inline "><h6> Date: </h6>
-				  <span> </span>	<datetime v-model="form.date" format="yyyy-MM-dd" ></datetime>
+				  <span> </span>	<datetime v-model="model.date" format="yyyy-MM-dd" ></datetime>
 					 <span>: Message Schedule To </span>
 				</span>
 
 <span class="form-inline"> <h6> Time: </h6>
-	  <datetime type="time" v-model="form.time" value-zone="local" zone="local"></datetime>
+	  <datetime type="time" v-model="model.time" value-zone="local" zone="local"></datetime>
 	</span>
 
 	  </div>
@@ -109,14 +112,16 @@
 	  </div>
 	    </modal>
 		</div>
-
 	</div>
 </template>
 
 <script>
 
+	import ScheduleMessages from './Schedule'
 
 export default {
+
+	components: {ScheduleMessages},
 
   props:['slug','members'],
     data() {
@@ -133,6 +138,10 @@ export default {
 							users:[],
 							scheduled_at:'',
           },
+					model:{
+						date:'',
+						time:'',
+					},
             errors:{}
         };
     },
@@ -156,24 +165,26 @@ export default {
   },
 
 	scheduled(){
-	if(!this.form.date || !this.form.time)
+	if(!this.model.date || !this.model.time)
 	{
 		 return this.$vToastify.warning('Please select date and time');
 	}
 
-	if(this.form.date < this.newDate )
+	if(this.model.date < this.newDate )
 	{
 		 return this.$vToastify.warning('Date must be greater');
 	}
 
+	   this.form.date = moment(this.model.date).format('YYYY-MM-DD'),
+	   this.form.time = moment(this.model.time).format('HH:mm:ss'),
 	   this.form.scheduled_at = this.scheduledTime();
 		 this.$modal.hide('schedule-message');
 	},
 
 	scheduledTime(){
-		return this.$options.filters.date(this.form.date) +
+		return this.$options.filters.date(this.model.date) +
 		 ' at '
-		 + this.$options.filters.time(this.form.time);
+		 + this.$options.filters.time(this.model.time);
 	},
 
 	messageButton(){

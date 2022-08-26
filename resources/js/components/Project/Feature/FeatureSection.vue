@@ -16,7 +16,6 @@
 </span>
     </span>
    <ProjectMessage :slug=slug :members=members></ProjectMessage>
-   <!--<ScheduleMessage :slug=slug :members=members></ScheduleMessage>-->
 
     </div>
 
@@ -25,8 +24,7 @@
 <script>
 import fileDownload from 'js-file-download';
 
-  import ProjectMessage from './Message'
-  //import ScheduleMessage from './Schedule'
+import ProjectMessage from './Message'
 
 export default {
 
