@@ -24,7 +24,7 @@
 <script>
 import fileDownload from 'js-file-download';
 
-import ProjectMessage from './Message'
+import ProjectMessage from './Message.vue'
 
 export default {
 
