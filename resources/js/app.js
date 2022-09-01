@@ -4,9 +4,10 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-require('./bootstrap');
+import './bootstrap';
 
-window.Vue = require('vue');
+import Vue from 'vue';
+window.Vue = Vue;
 
 import Vuex from 'vuex'
 
@@ -53,8 +54,10 @@ Vue.filter('datetime',function(data){
    return  moment(data).format("MMM Do YY h:mm:ss a");
 })
 
-window.momenttz = require('moment-timezone');
-window.moment = require('moment');
+import momenttz from 'moment-timezone';
+window.momenttz = momenttz;
+import moment from 'moment';
+window.moment = moment;
 
 import 'animate.css';
 
