@@ -20,7 +20,7 @@
         "intervention/image": "^2.5",
         "jamesmills/laravel-timezone": "^1.11",
         "laravel/cashier": "^12.8",
-        "laravel/framework": "^9.0",
+        "laravel/framework": "^9.19",
         "laravel/helpers": "^1.4",
         "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.0",
@@ -55,15 +55,17 @@
     "autoload": {
         "psr-4": {
             "App\\": "app/",
-             "Database\\Factories\\": "database/factories/",
-             "Database\\Seeders\\": "database/seeders/"
+            "Database\\Factories\\": "database/factories/",
+            "Database\\Seeders\\": "database/seeders/"
         }
     },
     "autoload-dev": {
         "psr-4": {
             "Tests\\": "tests/"
         },
-        "files":["tests/utilities/functions.php"]
+        "files": [
+            "tests/utilities/functions.php"
+        ]
     },
     "minimum-stability": "dev",
     "prefer-stable": true,
