@@ -133,10 +133,10 @@
 	</div>
 </template>
 <script>
-	import Status from './Status'
-	import Stage from './Stage'
-	import Task from './Panel/Task'
-	import PanelFeatues from './Panel/Features'
+	import Status from './Status.vue'
+	import Stage from './Stage.vue'
+	import Task from './Panel/Task.vue'
+	import PanelFeatues from './Panel/Features.vue'
 
 export default{
 	  components:{Status,Stage,Task,PanelFeatues},

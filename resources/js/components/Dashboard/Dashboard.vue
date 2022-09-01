@@ -49,7 +49,7 @@
 	</div>
 </template>
 <script>
-    import ProjectChart from './ProjectChart'
+    import ProjectChart from './ProjectChart.vue'
 
 export default{
         components: {ProjectChart},

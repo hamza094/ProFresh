@@ -117,7 +117,7 @@
 
 <script>
 
-	import ScheduleMessages from './Schedule'
+	import ScheduleMessages from './Schedule.vue'
 
 export default {
 

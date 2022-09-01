@@ -74,7 +74,7 @@
 <script>
 /*  import EditProfile from './EditProfile'
   import ProfileAvatar from './ProfileAvatar'
-  import ProjectInvitation from './ProjectInvitation'
+  import ProjectInvitation from './ProjectInvitation.vue'
 
 export default{
 	props:['user','members'],
