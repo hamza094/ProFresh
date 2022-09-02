@@ -4,7 +4,8 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-import './bootstrap';
+//import './bootstrap';
+ import '../sass/app.scss';
 
 import Vue from 'vue';
 window.Vue = Vue;
@@ -21,8 +22,6 @@ import VueBus from 'vue-bus';
 
 Vue.use(VueBus);
 
-import Vue from 'vue';
-
 import VueSlideoutPanel from 'vue2-slideout-panel';
 
 Vue.use(VueSlideoutPanel);
@@ -31,16 +30,14 @@ import VModal from 'vue-js-modal'
 Vue.use(VModal)
 
 import moment from 'moment';
+window.moment = moment;
+
 
 import alertNotice from './mixins/alertNotice';
 import currentStage from './mixins/currentStage';
-import projectUpdate from './project/Update';
-
 
 Vue.mixin(alertNotice);
 Vue.mixin(currentStage);
-Vue.mixin(projectUpdate);
-
 
 Vue.filter('time',function(data){
    return  moment(data).format('h:mm:ss a');
@@ -54,10 +51,8 @@ Vue.filter('datetime',function(data){
    return  moment(data).format("MMM Do YY h:mm:ss a");
 })
 
-import momenttz from 'moment-timezone';
-window.momenttz = momenttz;
-import moment from 'moment';
-window.moment = moment;
+import timezone from 'moment-timezone';
+window.timezone = timezone;
 
 import 'animate.css';
 
@@ -111,15 +106,15 @@ Vue.component('project-form', require('./components/ProjectForm.vue').default);
 
 Vue.component('project-status', require('./components/Project/Status.vue').default);
 
- Vue.component('project-features', require('./components/Project/Feature/FeatureSection.vue').default);
+Vue.component('project-features', require('./components/Project/Feature/FeatureSection.vue').default);
 
- Vue.component('project-stage', require('./components/Project/Stage.vue').default);
+Vue.component('project-stage', require('./components/Project/Stage.vue').default);
 
 // Vue.component('project-panel', require('./components/Project/Panel/PanelArea.vue').default);
 
 Vue.component('notifications', require('./components/Notification.vue').default);
 
- Vue.component('pagination', require('laravel-vue-pagination'));
+Vue.component('pagination', require('laravel-vue-pagination'));
 
 // Vue.component('profile', require('./components/Profile/ProfilePage.vue').default);
 

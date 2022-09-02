@@ -3,7 +3,9 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
+
                 <div class="card-header">Profresh Managment Area</div>
+
                 <div class="alert alert-success" role="alert" v-if="this.user.email_verified_at == null">
                   To access all features, please verify your account.
                   <span class="btn btn-sm btn-primary" @click="resendMail()">Resend verification mail</span>
