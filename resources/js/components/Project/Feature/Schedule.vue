@@ -32,7 +32,7 @@
 	    <tr v-for="(message,index) in messages" :key="message.id">
 	      <td>{{message.type}}</td>
 	      <td>{{message.message}}</td>
-				<td v-for="user in message.users"><span>{{user.name}}</span></td>
+				<td><span v-for="user in message.users">{{user.name}}</span></td>
 	      <td>{{message.delivered_at | datetime}}</td>
 				<td>{{message.created_at | datetime}}</td>
 				<td><a class="btn btn-danger" @click="remove(message.id,index)"><i class="fas fa-minus-circle"></i></a></td>
@@ -69,7 +69,6 @@ export default {
     },
     methods: {
 			modalShow(){
-        //this.scheduledMessages();
 				 this.$modal.show('view-schedules');
 			},
 			scheduledMessages(){
@@ -88,7 +87,7 @@ export default {
 					console.log(error.response.data.errors);
 					});
 			},
-  modalClose(){
+    modalClose(){
    this.$modal.hide('view-schedules');
  },
 },
