@@ -129,7 +129,7 @@ class Project extends Model
       return $this->messages()->where('delivered',false)
       ->whereNotNull('delivered_at')
       ->where('delivered_at','>',Carbon::now())
-      ->with('users')
+      ->with('users:name')
       ->get();
    }
 

@@ -1,9 +1,6 @@
-import * as bootstrap from 'bootstrap';
-import _ from 'lodash';
-window._ = _;
+window._ = require('lodash');
 
-import Vue from 'vue';
-window.Vue = Vue;
+window.Vue = require('vue');
 
 Vue.config.productionTip = false
 /**
@@ -41,8 +38,7 @@ try {
  * CSRF token as a header based on the value of the "XSRF" token cookie.
  */
 
-import axios from 'axios';
-window.axios = axios;
+window.axios = require('axios');
 
 axios.defaults.withCredentials = true;
 
