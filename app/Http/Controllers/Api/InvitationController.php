@@ -76,6 +76,8 @@ class InvitationController extends ApiController
      */
    public function remove(Project $project,User $user)
    {
+      /*$project->activity->whereIn('subject_id',$user->id)
+        ->map->delete();*/
       return $this->invitationService->removeMember($user,$project);
    }
 

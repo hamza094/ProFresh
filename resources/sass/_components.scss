@@ -647,18 +647,38 @@ margin-left: 1rem;
     }
     &_green{
       color:#0F703B;
+      &:hover{
+       color:#0F703B;
+       font-weight:bold;
+      }
     }
     &_purple{
       color:$color-secondary;
+      &:hover{
+       color:$color-secondary;
+       font-weight:bold;
+      }
     }
     &_primary{
       color:$color-primary;
+      &:hover{
+       color:$color-primary;
+       font-weight:bold;
+      }
     }
     &_danger{
       color:#E74C3C;
+      &:hover{
+       color:#E74C3C;
+       font-weight:bold;
+      }
     }
-    &_appoint{
-      color:#B41BBF;
+    &_member{
+      color:#40E227;
+      &:hover{
+       color:#40E227;
+       font-weight:bold;
+      }
     }
     i{
       font-size: 1.2rem;
@@ -921,8 +941,8 @@ padding-bottom: .2rem;
   letter-spacing: .5rem;
 }
 
-.activity-font{
-font-weight: bold;
+.Activityfont{
+  font-weight: bold;
 }
 
 .icon-color{

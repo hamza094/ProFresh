@@ -3,6 +3,8 @@
 namespace App\Traits;
 use App\Models\Activity;
 use App\Models\Project;
+use Illuminate\Support\Arr;
+use App\Events\ActivityLogged;
 
 trait RecordActivity
 {
@@ -19,7 +21,7 @@ trait RecordActivity
     {
         foreach (self::recordableEvents() as $event) {
             static::$event(function ($model) use ($event) {
-                $model->recordActivity($model->activityDescription($event),'default');
+                $model->recordActivity($model->activityDescription($event),'');
             });
             if ($event === 'updated') {
                 static::updating(function ($model) {
@@ -48,32 +50,42 @@ trait RecordActivity
         if (isset(static::$recordableEvents)) {
             return static::$recordableEvents;
         }
-        return ['created', 'updated'];
+        return ['created','updated','deleted'];
     }
     /**
      * Record activity for a project.
      *
      * @param string $description
      */
-    public function recordActivity($description,$detail)
+    public function recordActivity($description,$info)
     {
-        $this->activity()->create([
+      $changes=$this->activityChanges();
+
+      if($changes){
+          if((Arr::exists($changes['before'], 'stage_updated_at')) == true){
+            return 'Already exist';
+          }
+      }
+
+      $activity=$this->activities()->create([
             'user_id' => auth()->id() ?: ($this->project ?? $this)->user->id,
             'description' => $description,
             'changes' => $this->activityChanges(),
             'project_id' => class_basename($this) === 'Project' ? $this->id : $this->project_id,
-            'detail'=> $detail
+            'info'=>$info,
         ]);
+
+        ActivityLogged::dispatch($activity);
     }
     /**
      * The activity feed for the project.
      *
      * @return \Illuminate\Database\Eloquent\Relations\MorphMany
      */
-    public function activity()
+    public function activities()
     {
         if (get_class($this) === Project::class) {
-            return $this->hasMany(Activity::class)->with('user','subject')->latest();
+            return $this->hasMany(Activity::class)->with('user:id,name','subject','project')->latest();
         }
         return $this->morphMany(Activity::class, 'subject')->with('user')->latest();
     }

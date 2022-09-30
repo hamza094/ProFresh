@@ -12,3 +12,6 @@ foreach($messages as $message){
       'has_failures' => $bus->hasFailures(),
       'is_cancelled' => $bus->canceled()
    ];
+
+record activity on
+revert project

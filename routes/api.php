@@ -16,6 +16,7 @@ use App\Http\Controllers\Api\
   WelcomeController,
   StageController,
   MessageController,
+  ActivityController,
 };
 /*
 |--------------------------------------------------------------------------
@@ -53,11 +54,10 @@ Route::get('/delete',[ProjectController::class,'delete'])->can('manage','project
 Route::get('/restore',[ProjectController::class,'restore'])->withTrashed()->can('manage','project');
 
 
-//Project Activity Feed
-Route::get('/timeline_feeds',[ProjectController::class,'activity'])
-->name('activities');
-
 Route::middleware(['can:access,project'])->group(function () {
+
+Route::get('/activities',[ActivityController::class,'index']);
+
 //Project Feature Routes
 Route::controller(FeaturesController::class)->group(function(){
 Route::get('export','export');

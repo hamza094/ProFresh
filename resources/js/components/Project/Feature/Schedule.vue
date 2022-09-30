@@ -1,7 +1,6 @@
 <template>
 	<div>
    <a class="btn btn-link" @click.prevent="modalShow()"><i class="far fa-clock"></i></a>
-
 		    <modal name="view-schedules" height="auto" :scrollable="true"
 	     class="model-desin"
 	    :clickToClose=false width="75%">

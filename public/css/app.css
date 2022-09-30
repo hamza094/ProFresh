@@ -704,20 +704,45 @@
   color: #0F703B;
 }
 
+.activity-icon_green:hover {
+  color: #0F703B;
+  font-weight: bold;
+}
+
 .activity-icon_purple {
   color: #12344D;
+}
+
+.activity-icon_purple:hover {
+  color: #12344D;
+  font-weight: bold;
 }
 
 .activity-icon_primary {
   color: #FFA800;
 }
 
+.activity-icon_primary:hover {
+  color: #FFA800;
+  font-weight: bold;
+}
+
 .activity-icon_danger {
   color: #E74C3C;
 }
 
-.activity-icon_appoint {
-  color: #B41BBF;
+.activity-icon_danger:hover {
+  color: #E74C3C;
+  font-weight: bold;
+}
+
+.activity-icon_member {
+  color: #40E227;
+}
+
+.activity-icon_member:hover {
+  color: #40E227;
+  font-weight: bold;
 }
 
 .activity-icon i {
@@ -997,7 +1022,7 @@ p {
   letter-spacing: 0.5rem;
 }
 
-.activity-font {
+.Activityfont {
   font-weight: bold;
 }
 

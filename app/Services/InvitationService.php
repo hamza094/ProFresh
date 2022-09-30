@@ -23,22 +23,23 @@ class InvitationService
     }
       $project->invite($user);
 
+      $this->performRelatedTasks($project,$user);
+
       return $this->respondWithSuccess([
         'msg'=>"Project invitation sent to ".$user->name
       ]);
 
-     //$this->performRelatedTasks($project,$user);
    }
 
   public function acceptInvitation($project)
   {
     Auth::user()->members()->updateExistingPivot($project,['active'=>true]);
 
+    $this->executeRelatedTasks($project,Auth::user());
+
     return $this->respondWithSuccess([
       'msg'=>"You have accepted, ".$project->name." invitation"
     ]);
-
-    //$this->executeRelatedTasks($project,Auth::user());
 
     //$this->attachUserToGroupChat($project,Auth::user());
   }
@@ -47,12 +48,13 @@ class InvitationService
   {
      $project->members()->detach($user);
 
-    return $this->respondWithSuccess([
+     $project->recordActivity('remove_project_member',$user->name.'/_/'.$user->id);
+
+     return $this->respondWithSuccess([
       'msg'=>"Member ".$user->name." has been removed from a project",
       'members'=>$project->activeMembers(),
     ]);
 
-    //$project->recordActivity('cancel_member_project',$user->name.'/_/'.$user->id);
   }
 
   public function memberSearch($request)
@@ -67,16 +69,16 @@ class InvitationService
 
   protected function performRelatedTasks($project,$user)
   {
-    $project->recordActivity('sent_member_project',$user->name.'/_/'.$user->id);
+    $project->recordActivity('sent_invitation_member',$user->name.'/_/'.$user->id);
 
     $user->notify(new ProjectInvitation($project));
   }
 
   protected function executeRelatedTasks($project,$user)
   {
-    $project->recordActivity('accept_member_project',$user->name.'/_/'.$user->id);
+    $project->recordActivity('accept_invitation_member',$user->name.'/_/'.$user->id);
 
-    $project->owner->notify(new AcceptInvitation($project,$user));
+    //$project->owner->notify(new AcceptInvitation($project,$user));
   }
 
    /**

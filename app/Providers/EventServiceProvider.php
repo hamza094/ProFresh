@@ -24,6 +24,8 @@ class EventServiceProvider extends ServiceProvider
       UserLogin::class => [
         SaveUserTimezone::class,
     ],
+     'App\Events\ActivityLogged' => [],
+
   /*    Verified::class => [
       'App\Listeners\LogVerifiedUser',
     ],*/

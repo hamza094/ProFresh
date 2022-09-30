@@ -4,6 +4,7 @@ namespace App\Repository;
 use App\Models\User;
 use App\Models\Project;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 
   /**
    * Filter project activities.
@@ -13,26 +14,41 @@ use Illuminate\Http\Request;
 
 class ProjectRepository
 {
-  public function filterProjectActivity($activities)
+  public function filterProjectByActivity(Collection $activities)
   {
-    $this->filterActivityByAuthUser($activities);
 
-    $this->filterActivityByTask($activities);
+    if(request()->has('specifics'))
+    {
+       return $this->filterActivityByProjectSpecified($activities);
+    }
 
-    $this->filterActivityByProjectSpecified($activities);
+    if(request()->has('tasks'))
+    {
+       return $this->filterActivityByTasks($activities);
+    }
+
+    if(request()->has('members'))
+    {
+        return $this->filterActivityByMembers($activities);
+    }
+
+     if(request()->has('mine'))
+    {
+        return  $this->filterActivityByAuthUser($activities);
+    }
+
   }
 
    /**
-    * Filter activities by signIn user.
+    * Filter activities by auth user.
     *
     * @param  $activities
     */
     protected function filterActivityByAuthUser($activities)
     {
-      return  $activities->when(request('mine'), function ($q) {
       $user = User::where('id', request('mine'))->firstOrFail();
-      return $q->where('user_id', $user->id);
-    });
+      
+      return $activities->where('user_id',$user->id);
     }
 
     /**
@@ -40,11 +56,11 @@ class ProjectRepository
     *
     * @param  $activities
     */
-    protected function filterActivityByTask($activities)
+    protected function filterActivityByTasks($activities)
     {
-      return  $activities->when(request('task'), function ($q) {
-      return $q->where('description', 'LIKE', '%'.'_task'.'%');
-    });
+      return $activities->filter(function ($query){
+        return false !== stripos($query['description'], '_task');
+      });
     }
 
     /**
@@ -54,9 +70,21 @@ class ProjectRepository
     */
     protected function filterActivityByProjectSpecified($activities)
     {
-      return  $activities->when(request('related'), function ($q) {
-      return $q->where('description', 'LIKE', '%'.'_project'.'%');
-    });
+      return $activities->filter(function ($query){
+        return false !== stripos($query['description'], '_project');
+      });
+    }
+
+    /**
+    * Filter activities by project members.
+    *
+    * @param  $activities
+    */
+    protected function filterActivityByMembers($activities)
+    {
+      return $activities->filter(function ($query){
+        return false !== stripos($query['description'], '_member');
+      });
     }
 }
 

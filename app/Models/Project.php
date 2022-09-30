@@ -2,11 +2,10 @@
 
 namespace App\Models;
 
-//use App\Traits\RecordActivity;
+use App\Traits\RecordActivity;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-//use App\Models\Activity;
 use Illuminate\Support\Facades\Redis;
 use Cviebrock\EloquentSluggable\Sluggable;
 use App\Traits\BelongsToUser;
@@ -15,12 +14,13 @@ use Auth;
 
 class Project extends Model
 {
-  use HasFactory, SoftDeletes, Sluggable,BelongsToUser;
+  use RecordActivity, HasFactory, SoftDeletes, Sluggable,BelongsToUser;
 
   protected $guarded=[];
   protected $dates = ['created_at'];
   protected $with = ['tasks','stage'];
   protected $casts = ['stage_updated_at'=>'datetime'];
+  protected static $recordableEvents = ['created','updated','deleted','restored'];
 
     /**
  * Return the sluggable configuration array for this model.
@@ -46,13 +46,13 @@ class Project extends Model
       return "/api/v1/projects/{$this->slug}";
   }
 
-    protected static function boot()
-    {
-     parent::boot();
-     static::deleting(function($project) {
-        //$project->activity()->delete();
-    });
-    }
+   protected static function boot()
+   {
+    parent::boot();
+    static::forceDeleted(function($project) {
+       $project->activities()->delete();
+   });
+   }
 
    public function stage()
    {

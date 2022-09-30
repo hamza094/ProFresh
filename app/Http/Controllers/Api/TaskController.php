@@ -50,7 +50,9 @@ class TaskController extends ApiController
 
   public function destroy(Project $project,Task $task)
   {
-     $task->delete();
+     $task->activities()->delete();
+
+     $task->delete();  
 
      return $this->respondNoContent(['message'=>'Task deleted successfully']);
 

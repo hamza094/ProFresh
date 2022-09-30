@@ -20,7 +20,7 @@ class CreateActivitiesTable extends Migration
            $table->nullableMorphs('subject');
            $table->text('changes')->nullable();
            $table->string('description');
-           $table->string('detail')->nullable();
+           $table->string('info')->nullable();
            $table->timestamps();
         });
     }

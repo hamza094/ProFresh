@@ -1,7 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Broadcast;
-use App\Group;
+use App\Models\Group;
+use App\Model\Project;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,11 +15,20 @@ use App\Group;
 |
 */
 
+/*Broadcast::channel('activity.{id}', function ($user, $id) {
+    return (int) $user->id === (int) $id;
+});*/
+
 Broadcast::channel('App.User.{id}', function ($user, $id) {
     return (int) $user->id === (int) $id;
 });
 
-Broadcast::channel('groups.{group}', function ($user, Group $group) {
+Broadcast::channel('activity', function ($user) {
+  return true;
+    //return $user->is($project->user) || $project->activeMembers()->contains($user);
+});
+
+/*Broadcast::channel('groups.{group}', function ($user, Group $group) {
     return $group->hasUser($user->id);
 });
 
@@ -28,4 +38,4 @@ Broadcast::channel('chat', function ($user) {
 
 Broadcast::channel('chater', function ($user) {
     return $user;
-});
+});*/

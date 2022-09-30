@@ -45,6 +45,9 @@ class MessageController extends Controller
   }
 
   public function delete(Project $project,Message $message){
+
+      $message->activities()->delete();
+
       $message->delete();
 
      return $this->respondNoContent([

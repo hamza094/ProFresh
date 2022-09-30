@@ -112,33 +112,13 @@ class ProjectController extends ApiController
 
     public function delete(Project $project)
     {
-      $name=$project->name;
-
       $project->forceDelete();
 
       return $this->respondWithSuccess([
-        'message'=>"Project " .$name. " deleted successfully"
+        'message'=>"Project deleted successfully"
       ]);
    }
-
-    /**
-     * Filter project related activities.
-     *
-     * @param  int  $project
-    */
-    public function activity(Project $project)
-    {
-      $activities=$project->activity();
-
-      $repository=new ProjectRepository();
-
-      $repository->filterProjectActivity($activities);
-
-      $activities = $activities->paginate(10);
-
-      return view('project.activities.activities',compact('activities',$activities,'project',$project));
-     }
-
+   
      public function overview(){
 
      }

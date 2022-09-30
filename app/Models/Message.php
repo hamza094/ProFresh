@@ -2,17 +2,20 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
+use App\Traits\RecordActivity;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Carbon\Carbon;
 
 class Message extends Model
 {
-    use HasFactory;
+    use RecordActivity,HasFactory;
 
     protected $casts = ['delivered_at'=>'datetime'];
 
     protected $guarded=[];
+
+    protected static $recordableEvents = ['created'];
 
     public function project()
     {

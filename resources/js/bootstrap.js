@@ -69,7 +69,15 @@ window.axios.defaults.headers.common['X-CSRF-TOKEN'] = window.Laravel.csrfToken;
 
  window.Echo = new Echo({
      broadcaster: 'pusher',
-     key: '85e8d32be1a16583e7d6',
-     cluster: 'ap2',
-    encrypted: true
+     key: process.env.MIX_PUSHER_APP_KEY,
+     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
+     encrypted: true,
+     forceTLS: false,
+     authEndpoint: 'http://127.0.0.1:8000/api/broadcasting/auth',
+     auth: {
+      headers: {
+        Accept: 'application/json',
+        Authorization: JSON.parse(localStorage.getItem("token"))
+      },
+     }
  });

@@ -5,6 +5,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Resources\Json\JsonResource;
 use App\Http\Resources\TaskResource;
 use App\Http\Resources\UserResource;
+use App\Http\Resources\ActivityResource;
 use Carbon\Carbon;
 
 class ProjectResource extends JsonResource
@@ -39,6 +40,7 @@ class ProjectResource extends JsonResource
         ),
           //'stage_updated_at'=>$this->stage_updated_at->format("F j, Y, g:i a"),
           'days_limit'=>config('project.abandonedLimit'),
+          'activities'=>ActivityResource::collection($this->activities)->take(5),
         ];
     }
 }

@@ -11,6 +11,8 @@ import ForgotPassword from './components/Authentication/ForgotPassword';
 import ResetPassword from './components/Authentication/ResetPassword';
 import VerifyPassword from './components/Authentication/VerifyPassword';
 import Project from './components/Project/Page';
+import Google from './components/Google';
+import Activities from './components/Project/Activities';
 import Projects from './components/Projects';
 import Profile from './components/Profile/ProfilePage';
 import NotFound from './components/Error';
@@ -43,6 +45,12 @@ let router = new Router({
             path: '/home',
             component: Home,
             name: "Home",
+            beforeEnter: auth,
+        },
+        {
+            path: '/google',
+            component: Google,
+            name: "Google",
             beforeEnter: auth,
         },
         {
@@ -84,6 +92,13 @@ let router = new Router({
             path: "/project/:slug",
             component: Project,
             name: "Project",
+            beforeEnter: auth,
+          },
+          {
+            path: "/project/:name/:slug/activities",
+            component: Activities,
+            name: "Activities",
+            props: true, 
             beforeEnter: auth,
           },
           {

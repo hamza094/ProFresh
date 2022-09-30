@@ -141,10 +141,13 @@ class ProjectTest extends TestCase
       /** @test */
       public function delete_abandon_projects_after_limit_past(){
         $user=User::first();
+
         $project=Project::factory()->create(['user_id'=>$user->id,'deleted_at'=>Carbon::now()]);
         $this->assertCount(1,$user->projects()->onlyTrashed()->get());
+
         $project=Project::factory()->create(['user_id'=>$user->id,'deleted_at'=>Carbon::now()->subDays(91)]);
         $this->assertCount(2,$user->projects()->onlyTrashed()->get());
+
         $this->artisan('remove:abandon')->assertSuccessful();
         $this->assertCount(1,$user->projects()->onlyTrashed()->get());
       }

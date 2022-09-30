@@ -118,9 +118,11 @@ class TaskTest extends TestCase
   {
     $project=Project::first();
 
-    $task=Task::factory()->create(['project_id'=>$project->id,'completed'=>'false']);
+    $task=Task::factory()->create(['project_id'=>$project->id,'completed'=>false]);
 
-    $response=$this->patchJson($task->path().'/status', ['completed' => 'true']);
+    $response=$this->patchJson($task->path().'/status', ['completed' =>true]);
+
+    $task->refresh();
 
     $this->assertTrue($task->completed);
 
@@ -135,7 +137,7 @@ class TaskTest extends TestCase
 
       $task=Task::factory()->create(['project_id'=>$project->id]);
 
-      $this->deleteJson($task->path())->assertNoContent($status = 204);
+      $this->withoutExceptionHandling()->deleteJson($task->path())->assertNoContent($status = 204);
 
       $this->assertDatabaseMissing('tasks',['id'=>$task->id]);
    }
