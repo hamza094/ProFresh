@@ -98,7 +98,7 @@ class User extends Authenticatable implements Searchable, MustVerifyEmail
       return new SearchResult($this, $this->name, $url);
     }
 
-    public function members()
+    public function affiliateProjects()
     {
         return $this->belongsToMany(Project::class,'project_members')->withPivot('active')->withTimestamps();
     }

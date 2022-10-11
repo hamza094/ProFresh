@@ -14,7 +14,7 @@ class InvitationTest extends TestCase
 {
    use RefreshDatabase;
     /**
-     * A basic feature test example.
+     * Invitation test.
      *
      * @return void
      */
@@ -54,19 +54,22 @@ class InvitationTest extends TestCase
       }
 
         /** @test */
-        public function project_owner_can_not_reinvite_user()
-        {
-          $project=Project::first();
+    public function project_owner_can_not_reinvite_user_and_himself()
+    {
+       $project=Project::first();
 
-           $project->invite($InvitedUser=User::factory()->create());
+        $project->invite($InvitedUser=User::factory()->create());
 
-           $response=$this->postJson($project->path().'/invitations',[
-              'email'=>$InvitedUser->email])->assertStatus(400);
+        $response=$this->postJson($project->path().'/invitations',[
+              'email'=>$InvitedUser->email])->assertStatus(422);
 
-            $response->assertJson([
-                'error'=>"Project invitation already sent to a user",
-               ]);
-          }
+        $response->assertJsonValidationErrors('invitation');
+
+        $response=$this->postJson($project->path().'/invitations',[
+              'email'=>$project->user->email])->assertStatus(422);
+
+        $response->assertJsonValidationErrors('invitation');
+    }
 
           /** @test */
           public function auth_user_accept_project_invitation_sent_to_him()
@@ -79,7 +82,8 @@ class InvitationTest extends TestCase
                 $invitedUser,
             );
 
-            $response=$this->getJson($project->path().'/member')->assertStatus(200);
+            $response=$this->getJson($project->path().
+                '/accept-invitation')->assertStatus(200);
 
             $this->assertDatabaseHas('project_members', [
           "project_id" => $project->id, "user_id" =>$invitedUser->id,'active'=>true]);

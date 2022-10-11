@@ -19,7 +19,7 @@
 					<h5><b>{{message}} in {{projectState}} Projects</b></h5>
 					</div>
      			<div class="col-md-4" v-for="project in projects">
-						  <router-link :to="'/project/'+project.slug" class="dashboard-link">
+						  <router-link :to="'/projects/'+project.slug" class="dashboard-link">
      				<div class="dashboard-projects mt-5">
                         <span class="float-right">
 													<b>{{projectState}}</b>

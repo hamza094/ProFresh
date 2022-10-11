@@ -7,9 +7,11 @@ use Illuminate\Http\Request;
 use Spatie\Searchable\Search;
 use App\Notifications\ProjectInvitation;
 use App\Notifications\AcceptInvitation;
+use Illuminate\Support\Facades\DB;
 use App\Helpers\ProjectHelper;
 use F9Web\ApiResponseHelpers;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Validation\ValidationException;
 
 class InvitationService
 {
@@ -17,13 +19,26 @@ class InvitationService
 
   public function sendInvitation($user,$project)
   {
-    if ($project->members->contains($user->id))
-    {
-       return $this->respondError("Project invitation already sent to a user");
-    }
+     $this->validateInvitation($project,$user);
+
+      DB::beginTransaction();
+
+     try{
+
       $project->invite($user);
 
-      $this->performRelatedTasks($project,$user);
+      $this->recordActivity($project,$user,'sent_invitation_member');
+
+      $user->notify(new ProjectInvitation($project));
+
+      DB::commit();
+
+    }catch(\Exception $ex){
+
+      DB::rollBack();
+
+      throw $ex;
+    }
 
       return $this->respondWithSuccess([
         'msg'=>"Project invitation sent to ".$user->name
@@ -33,9 +48,26 @@ class InvitationService
 
   public function acceptInvitation($project)
   {
-    Auth::user()->members()->updateExistingPivot($project,['active'=>true]);
+    $user=Auth::user();
 
-    $this->executeRelatedTasks($project,Auth::user());
+    DB::beginTransaction();
+
+    try{
+
+    $user->affiliateProjects()->updateExistingPivot($project,['active'=>true]);
+
+    $this->recordActivity($project,$user,'accept_invitation_member');
+
+    $project->user->notify(new AcceptInvitation($project,$user->toArray()));
+
+     DB::commit();
+
+    }catch(\Exception $ex){
+
+      DB::rollBack();
+
+      throw $ex;
+    }
 
     return $this->respondWithSuccess([
       'msg'=>"You have accepted, ".$project->name." invitation"
@@ -48,7 +80,7 @@ class InvitationService
   {
      $project->members()->detach($user);
 
-     $project->recordActivity('remove_project_member',$user->name.'/_/'.$user->id);
+     $this->recordActivity($project,$user,'remove_project_member');
 
      return $this->respondWithSuccess([
       'msg'=>"Member ".$user->name." has been removed from a project",
@@ -67,18 +99,9 @@ class InvitationService
    }
   }
 
-  protected function performRelatedTasks($project,$user)
+  protected function recordActivity($project,$user,$msg)
   {
-    $project->recordActivity('sent_invitation_member',$user->name.'/_/'.$user->id);
-
-    $user->notify(new ProjectInvitation($project));
-  }
-
-  protected function executeRelatedTasks($project,$user)
-  {
-    $project->recordActivity('accept_invitation_member',$user->name.'/_/'.$user->id);
-
-    //$project->owner->notify(new AcceptInvitation($project,$user));
+    $project->recordActivity($msg,$user->name.'/_/'.$user->id);
   }
 
    /**
@@ -86,15 +109,31 @@ class InvitationService
      *
      * @param  int  $project, $int user
      */
-  protected function attachUserToGroupChat($project,$user)
+  /*protected function attachUserToGroupChat($project,$user)
   {
     $users=[];
 
     array_push($users,$user->id);
 
     $project->group->users()->attach($users);
-  }
+  }*/
 
+   protected function validateInvitation($project,$user)
+   {
+     if ($project->members->contains($user->id))
+     {
+      throw ValidationException::withMessages([
+        'invitation'=>'Project invitation already sent to a user.',
+      ]);
+     }
+
+     if ($user->id == $project->user->id)
+     {
+      throw ValidationException::withMessages([
+      'invitation'=>"Can't send an invitation to the project owner.",
+      ]);
+     }
+   } 
 }
 
 ?>

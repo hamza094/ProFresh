@@ -32,7 +32,7 @@ class DashboardService
      {
        if(request()->filled('member'))
        {
-          return $user->members;
+          return $user->affiliateProjects;
        }
 
        if(request()->filled('abandoned'))

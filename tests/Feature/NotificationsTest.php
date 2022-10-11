@@ -4,113 +4,142 @@ namespace Tests\Feature;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Laravel\Sanctum\Sanctum;
+use App\Models\User;
 use Tests\TestCase;
 
 class NotificationsTest extends TestCase
 {
   use RefreshDatabase;
     /**
-     * A basic feature test example.
+     * A notification feature test.
      *
      * @return void
      */
 
 
-     public function invited_user_can_get_project_invitation_notification(){
-       $user=create('App\Models\User');
-        $this->signIn($user);
-        $project=create('App\Models\Project',['user_id'=>$user->id]);
-         $InvitedUser=create('App\Models\User');
-         $this->post($project->path().'/invitations',[
-             'email'=>$InvitedUser->email
-         ]);
-        $this->assertCount(1,$InvitedUser->fresh()->notifications);
+     /** @test */
+     public function invited_user_can_get_project_invitation()
+     {
+       $project=projectSetup();
+
+       $user=User::factory()->create();
+
+       $this->send_invitation_to_user($project,$user);
+
+       $this->assertCount(1,$user->fresh()->notifications);
       }
 
 
-      public function project_owner_get_accepted_project_notification(){
-        $this->signIn();
-          $project = create('App\Models\Project');
-          $project->invite($user=create('App\Models\User'));
-        $this->signIn($user);
-         $this->get('project/'.$project->id.'/member');
-   $this->assertCount(1,$project->owner->fresh()->notifications);
+    /** @test */ 
+    public function project_owner_get_notified_by_member()
+    {
+      $project=projectSetup();
+
+      $project->invite($user=User::factory()->create());
+
+      Sanctum::actingAs($user,);
+
+      $this->get($project->path().'/accept-invitation');
+
+      $this->assertCount(1,$project->user->fresh()->notifications);
    }
 
 
-  public function authorized_user_can_get_notification_when_project_update(){
-     $this->signIn($user=create('App\Models\User'));
-     $project=create('App\Models\Project',['user_id'=>$user->id]);
-      $thomas=create('App\Models\User');
-      $this->post($project->path().'/invitations',[
-          'email'=>$thomas->email
-      ]);
-      $this->signIn($thomas);
-      $this->get('project/'.$project->id.'/member');
-      $this->signIn($user);
-     $this->patch($project->path(),['name'=>'john santiman','email'=>'james_picaso@outlook.com','mobile'=>'6785434567']);
-     $this->assertCount(2,$thomas->fresh()->notifications);
+  /** @test */
+  public function auth_user_notified_on_project_update()
+  {
+    $project=projectSetup();
+
+    $user=User::factory()->create();
+
+    $this->add_user_to_become_project_member($project,$user);
+
+    $this->patchJson($project->path(),['notes'=>'Project notes updated.']);
+
+    $this->assertCount(1,$user->fresh()->notifications);
+
+    $notification=$user->fresh()->notifications[0];
+
+    $this->assertEquals("App\Notifications\ProjectUpdated",$notification->type);
+
+    $this->assertEquals($user->id,$notification->notifiable_id);
+  } 
+
+
+  /** @test */
+  public function project_member_notified_when_task_added()
+  {
+    $project=projectSetup();
+
+    $user=User::factory()->create();
+ 
+    $this->add_user_to_become_project_member($project,$user);
+
+    $this->postJson($project->path().'/task',['body'=>'new task added']);
+
+    $this->assertCount(1,$user->fresh()->notifications);
+
+    $notification=$user->fresh()->notifications[0];
+
+    $this->assertEquals("App\Notifications\ProjectTask",$notification->type);
+
+    $this->assertEquals($user->id,$notification->notifiable_id);
   }
 
 
-  public function authorized_can_get_notification_when_task_is_added(){
-     $this->signIn($user=create('App\Models\User'));
-     $project=create('App\Models\Project',['user_id'=>$user->id]);
-      $thomas=create('App\Models\User');
-      $this->post($project->path().'/invitations',[
-          'email'=>$thomas->email
-      ]);
-      $this->signIn($thomas);
-      $this->get('project/'.$project->id.'/member');
-      $this->signIn($user);
-      $this->post('/api/project/'.$project->id.'/task',['body'=>'simpson']);
-      $this->assertCount(2,$thomas->fresh()->notifications);
-  }
+  /** @test */
+  public function auth_user_can_fetch_their_notifications()
+  {
+    $project=projectSetup();
 
-  public function signIn_user_can_not_get_his_notification(){
-     $this->signIn($user=create('App\Models\User'));
-     $project=create('App\Models\Project',['user_id'=>$user->id]);
-      $thomas=create('App\Models\User');
-      $this->post($project->path().'/invitations',[
-          'email'=>$thomas->email
-      ]);
-      $this->signIn($thomas);
-      $this->get('project/'.$project->id.'/member');
-      $this->post('/api/project/'.$project->id.'/task',['body'=>'simpson']);
-      $this->assertCount(1,$thomas->fresh()->notifications);
-  }
+    $user=User::factory()->create();
 
+    $this->send_invitation_to_user($project,$user);
 
+    Sanctum::actingAs($user,);
 
- public function user_can_fetch_their_notifications()
- {
-   $user=create('App\Models\User');
-    $this->signIn($user);
-    $project=create('App\Models\Project',['user_id'=>$user->id]);
-     $InvitedUser=create('App\Models\User');
-     $this->post($project->path().'/invitations',[
-         'email'=>$InvitedUser->email
-     ]);
-     $this->signIn($InvitedUser);
-     $response=$this->withoutExceptionHandling()->getJson("/profile/{$InvitedUser->id}/notifications")->json();
-     $this->assertCount(1,$response);
+    $response=$this->getJson("/api/v1/user/{$user->id}/notifications");
+
+    $this->assertCount(1,$response->json());
  }
 
 
+  /** @test */
   public function a_user_can_clear_a_notification()
   {
-    $user=create('App\Models\User');
-     $this->signIn($user);
-     $project=create('App\Models\Project',['user_id'=>$user->id]);
-      $InvitedUser=create('App\Models\User');
-      $this->post($project->path().'/invitations',[
-          'email'=>$InvitedUser->email
-      ]);
-      $this->signIn($InvitedUser);
-      $this->assertCount(1,$InvitedUser->unreadNotifications);
-      $notificationId=$InvitedUser->unreadNotifications->first()->id;
-      $this->delete("/profile/{$InvitedUser->id}/notifications/{$notificationId}");
-      $this->assertCount(0,$InvitedUser->fresh()->unreadNotifications);
-  }
+     $project=projectSetup();
 
+     $user=User::factory()->create();
+
+     $this->send_invitation_to_user($project,$user);
+
+     Sanctum::actingAs($user,);
+
+     $this->assertCount(1,$user->unreadNotifications);
+
+     $notificationId=$user->unreadNotifications->first()->id;
+
+     $response=$this->deleteJson("/api/v1/user/{$user->id}/notifications/{$notificationId}");
+
+     $this->assertCount(0,$user->fresh()->unreadNotifications);
+   }
+
+   protected function send_invitation_to_user($project,$user)
+   {
+      $this->postJson($project->path().'/invitations',[
+          'email'=>$user->email
+      ]);
+   }
+
+
+   protected function add_user_to_become_project_member($project,$user)
+   {
+     $project->members()->attach($user);
+
+     \DB::table('project_members')
+     ->where('project_id', $project->id)
+     ->where('user_id', $user->id)
+     ->update(['active' =>true]);
+   }
 }

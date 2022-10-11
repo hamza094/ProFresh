@@ -44,7 +44,7 @@ export default{
 	methods:{
 
   becomeMember(id){
-         axios.get('/project/'+id+'/member',{
+         axios.get('/project/'+id+'/accept-invitation',{
            }).then(response=>{
               this.$vToastify.success("You have accepted the project invitation");
              setTimeout(()=>{

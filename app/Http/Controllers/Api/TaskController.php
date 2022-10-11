@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Notifications\ProjectTask;
 use App\Http\Requests\TaskRequest;
 use Illuminate\Http\Request;
 use App\Models\Project;
 use App\Models\Task;
+use App\Helpers\SendNotification;
 use App\Http\Resources\TaskResource;
 use F9Web\ApiResponseHelpers;
 use Illuminate\Http\JsonResponse;
@@ -15,6 +15,13 @@ use Illuminate\Validation\ValidationException;
 class TaskController extends ApiController
 {
   use ApiResponseHelpers;
+
+  private $notification;
+
+  public function __construct(SendNotification $notification)
+  {
+    $this->notification=$notification;
+  }
 
   public function store(Project $project,TaskRequest $request)
   {
@@ -34,9 +41,9 @@ class TaskController extends ApiController
        ]);
      }
 
-     return new TaskResource($task);
+    $this->notification->send($project);
 
-    //$this->sendNotification($project,new ProjectTask($project));
+     return new TaskResource($task);
   }
 
   public function update(Project $project,Task $task,TaskRequest $request)

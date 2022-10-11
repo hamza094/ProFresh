@@ -13,14 +13,18 @@ class ProjectUpdated extends Notification implements ShouldBroadcast
     use Queueable;
 
     protected $project;
+    protected $user;
+
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct($project)
+    public function __construct($project,$user)
     {
         $this->project=$project;
+        $this->user=$user;
+
     }
 
     /**
@@ -45,7 +49,7 @@ class ProjectUpdated extends Notification implements ShouldBroadcast
     {
         return [
           'message'=>'Updated project '. $this->project->name,
-          'notifier' =>auth()->user(),
+          'notifier' =>$this->user,
           'link'=>$this->project->path()
         ];
     }
@@ -54,7 +58,7 @@ class ProjectUpdated extends Notification implements ShouldBroadcast
    {
     return new BroadcastMessage([
       'message'=>'Updated project '. $this->project->name,
-      'notifier' =>auth()->user(),
+      'notifier' =>$this->user,
       'link'=>$this->project->path()
     ]);
   }

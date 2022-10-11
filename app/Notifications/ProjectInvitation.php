@@ -46,22 +46,19 @@ class ProjectInvitation extends Notification implements ShouldBroadcast
     public function toArray($notifiable)
     {
         return [
-          'message'=>'Sent you a member invitation for project '. $this->project->name,
+          'message'=>'Sent you a project '. $this->project->name.' invitation',
           'notifier' =>$this->project->user,
           'link'=>$this->project->path()
         ];
     }
 
     public function toBroadcast($notifiable)
-{
-    return new BroadcastMessage([
-      'message'=>'Sent you a member invitation for project '. $this->project->name,
-      'notifier' =>$this->project->user,
-      'link'=>$this->project->path()
+    {
+      return new BroadcastMessage([
+       'message'=>'Sent you a project '. $this->project->name.' invitation',
+       'notifier' =>$this->project->user,
+       'link'=>$this->project->path()
     ]);
-}
-
-
-
+   }
 
 }

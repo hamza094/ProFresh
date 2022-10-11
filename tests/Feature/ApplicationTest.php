@@ -50,7 +50,7 @@ class ApplicationTest extends TestCase
              $user,
          );
 
-         $this->getJson($project->path().'/member')->assertStatus(200);
+         $this->getJson($project->path().'/accept-invitation')->assertStatus(200);
 
          $this->postJson($project->path().'/task',
           ['body' => 'My Project Task Updated'])->assertStatus(201);

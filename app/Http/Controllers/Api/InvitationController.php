@@ -18,7 +18,7 @@ class InvitationController extends ApiController
     *
     * App\Service\InvitationService
     */
-    public function __construct(InvitationService $invitationService)
+  public function __construct(InvitationService $invitationService)
   {
     $this->invitationService=$invitationService;
   }

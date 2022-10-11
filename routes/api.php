@@ -82,9 +82,9 @@ Route::get('/conversation',[ConversationController::class,'conversation']);
 });
 
 Route::controller(InvitationController::class)->group(function(){
-  Route::post('invitations','store')->can('manage','project');
+  Route::post('invitations','store')->name('send.invitation')->can('manage','project');
   Route::get('remove/{user}','remove')->can('manage','project');
-  Route::get('/member','accept');
+  Route::get('/accept-invitation','accept')->name('accept.invitation');
   Route::get('/ignore','ignore');
 });
 });

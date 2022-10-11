@@ -147,7 +147,7 @@ public function invitation_sent_to_user(){
          $user,
      );
 
-    $this->getJson($project->path().'/member');
+    $this->getJson($project->path().'/accept-invitation');
     $this->assertEquals('accept_invitation_member',$project->activities->last()->description);
 }
 

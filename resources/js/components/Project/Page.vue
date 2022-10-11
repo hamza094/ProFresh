@@ -264,7 +264,6 @@ export default{
 					this.project.activities.unshift(e);
 				});
 		 }
-
     },
 		created(){
 			this.loadProject();

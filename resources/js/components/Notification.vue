@@ -1,16 +1,21 @@
 <template>
    <div>
         <li class="dropdown  mr-5">
+
             <a href="#"  data-toggle="dropdown" class="notification">
                <i class="far fa-bell notification-icon"></i>
                <span v-if="notifications.length" class="notification-count">{{notifications.length}}</span>
             </a>
             <ul class="dropdown-menu  dropdown-menu-right rt">
                 <li v-for="notification in notifications" :key="notification.id" v-if="notifications.length">
-    <a class="dropdown-item" :href="notification.data.link"  @click.prevent="markAsRead(notification)">
-   <span><b>{{notification.data.notifier.name}}</b> {{getPostBody(notification)}}</span>
-    </a>
-</li>
+
+            <router-link :to="(notification.data.link).slice(7)" class="dropdown-item">
+                <span @click="markAsRead(notification)">
+                <b>{{notification.data.notifier.name}}</b> {{getPostBody(notification)}}
+                </span>  
+            </router-link>
+
+         </li>
               <li v-if="!notifications.length" class="mt-2 mr-4 ml-4">No new notifications</li>
             </ul>
         </li>
@@ -40,28 +45,30 @@ export default{
            axios.get('/api/v1/user/' + this.user.id + '/notifications')
              .then(response => this.notifications = response.data);
        },
-            markAsRead(notification){
-              axios.delete('/api/v1/user/'+this.user.id+'/notifications/'+notification.id)
-              .then(response => {
-                  this.fetchNotifications();
-                  document.location.replace(response.data.link);
-              });
+        markAsRead(notification)
+        {
+          axios.delete('/api/v1/user/'+this.user.id+'/notifications/'+notification.id).then(response => {
+                this.notifications.splice(notification, 1);
+            });
           },
-        listenNotifications(){
-            Echo.private('App.User.' + this.user.id)
-                          .notification( notification => {
-                          this.$vToastify.success("You have one new notification");
-                          this.fetchNotifications();
-                 });
-                    },
+        listenNotifications()
+        {
+          Echo.private('App.Models.User.'+this.user.id)
+              .notification( notification => {
+                this.$vToastify.success("You have one new notification");
+                this.fetchNotifications();
+          });
+        },
 
-    getPostBody (notification) {
-    let body = this.stripTags(notification.data.message);
+        getPostBody(notification)
+        {
+          let body = this.stripTags(notification.data.message);
+          return body.length > 40 ? body.substring(0, 40) + '...' : body;
+        },
 
-    return body.length > 40 ? body.substring(0, 40) + '...' : body;
-    },
-       stripTags (text) {
-            return text.replace(/(<([^>]+)>)/ig, '');
+        stripTags(text)
+        {
+         return text.replace(/(<([^>]+)>)/ig, '');
         }
     }
 

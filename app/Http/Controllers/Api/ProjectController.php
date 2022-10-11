@@ -7,7 +7,7 @@ use App\Models\User;
 use App\Models\Project;
 use Illuminate\Http\Request;
 use App\Http\Requests\ProjectRequest;
-use App\Notifications\ProjectUpdated;
+use App\Helpers\SendNotification;
 use App\Services\ProjectService;
 use App\Repository\ProjectRepository;
 use App\Http\Resources\ProjectResource;
@@ -19,16 +19,16 @@ class ProjectController extends ApiController
 {
   use ApiResponseHelpers;
 
-  private $projectService;
+  private $notification;
 
   /**
     * Service For Project Feature
     *
     * App\Service\FeatureService
     */
-  public function __construct(ProjectService $projectService)
+  public function __construct(SendNotification $notification)
   {
-    $this->projectService=$projectService;
+    $this->notification=$notification;
   }
 
     public function store(ProjectRequest $request)
@@ -62,7 +62,7 @@ class ProjectController extends ApiController
        return new ProjectResource($project);
     }
 
-    public function update(Project $project,ProjectRequest $request,ProjectService $service)
+    public function update(Project $project,ProjectRequest $request,ProjectService $service,SendNotification $notification)
     {
       $this->authorize('access', $project);
 
@@ -78,11 +78,11 @@ class ProjectController extends ApiController
 
       $value=$project->$key;
 
+      $this->notification->send($project);
+
       return $this->respondWithSuccess(
         ['msg'=>'Project '.$key.' updated sucessfully', $key=>$value,'slug'=>$project->slug]
       );
-
-      //$this->sendNotification($project,new ProjectUpdated($project));
     }
 
     /*
