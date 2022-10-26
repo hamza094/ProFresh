@@ -62,10 +62,6 @@ class TaskController extends ApiController
      $task->delete();  
 
      return $this->respondNoContent(['message'=>'Task deleted successfully']);
-
-    //$task->activity()->delete();
-
-    //$project->recordActivity('deleted_task',$task->body);
   }
 
   public function status(Project $project,Task $task)

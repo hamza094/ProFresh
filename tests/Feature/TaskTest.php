@@ -3,44 +3,19 @@
 namespace Tests\Feature;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use App\Traits\ProjectSetup;
+use App\Models\Project;
 use Tests\TestCase;
 use App\Models\Task;
-use App\Models\Project;
-use App\Models\User;
-use Illuminate\Support\Facades\Hash;
-use Laravel\Sanctum\Sanctum;
-use Illuminate\Testing\Fluent\AssertableJson;
 
 class TaskTest extends TestCase
 {
-  use RefreshDatabase;
-    /**
-     * A basic feature test example.
-     *
-     * @return void
-     */
+  use RefreshDatabase,ProjectSetup;
 
-     public function setUp() :void
-     {
-         parent::setUp();
-         // create a user
-         $user=User::factory()->create([
-             'email'=>'johndoe@example.org',
-             'password'=>Hash::make('testpassword')
-         ]);
-
-         Sanctum::actingAs(
-            $user,
-         );
-
-         Project::factory()->create(['user_id'=>$user->id]);
-     }
 
     /** @test */
     public function task_requires_a_body()
     {
-       $project=Project::first();
-
        $task=Task::factory()->make(['body'=>null]);
 
        $response=$this->postJson($task->path(),$task->toArray());
@@ -49,11 +24,9 @@ class TaskTest extends TestCase
      }
 
      /** @test */
-     public function auth_user_can_create_projects_task()
+     public function allowed_user_can_create_projects_task()
      {
-       $project=Project::first();
-
-       $response=$this->postJson($project->path().'/task',
+       $response=$this->postJson($this->project->path().'/task',
            ['body' => 'My Project Task']);
 
        $this->assertDatabaseHas('tasks',['body'=>'My Project Task']);
@@ -65,35 +38,34 @@ class TaskTest extends TestCase
    }
 
    /** @test */
-   public function auth_user_can_not_create_same_task_twice()
+   public function allowed_user_can_not_create_same_task_twice()
    {
-     $project=Project::factory(['user_id'=>User::first()->id])->hasTasks(1,['body'=>'Project Task'])->create();
+     $this->project->tasks()->create(['body'=>'Project Task']);
 
-     $response=$this->postJson($project->path().'/task',
+     $response=$this->postJson($this->project->path().'/task',
          ['body' => 'Project Task'])
-         ->assertStatus(422);
+         ->assertUnprocessable();
 
      $response->assertJsonValidationErrors('task');
  }
 
- /** @test */
- public function task_limit_per_project()
- {
-   $project=Project::factory(['user_id'=>User::first()->id])->hasTasks(config('project.taskLimit'))->create();
+   /** @test */
+   public function task_limit_per_project()
+   {
+     Task::factory()->count(config('project.taskLimit'))
+     ->for($this->project)->create();
 
-   $response=$this->postJson($project->path().'/task',
+     $response=$this->postJson($this->project->path().'/task',
        ['body' => 'Project Task'])
-       ->assertStatus(422);
+       ->assertUnprocessable();
 
-       $response->assertJsonValidationErrors('task');
+    $response->assertJsonValidationErrors('task');
 }
 
   /** @test */
-  public function auth_user_update_project_task()
+  public function allowed_user_can_update_project_task()
   {
-     $project=Project::first();
-
-     $task=$project->addTask('test task');
+     $task=$this->project->addTask('test task');
 
      $updatedBody="Task Body Updated";
 
@@ -113,43 +85,49 @@ class TaskTest extends TestCase
         ]);
  }
 
- /** @test */
-  public function auth_user_marked_task()
-  {
-    $project=Project::first();
+   /** @test */
+   public function allowed_user_can_marked_task()
+   {
+     $task=$task=Task::factory()->for($this->project)
+           ->create(['completed'=>false]);
 
-    $task=Task::factory()->create(['project_id'=>$project->id,'completed'=>false]);
+     $response=$this->patchJson($task->path().'/status', ['completed' =>true]);
 
-    $response=$this->patchJson($task->path().'/status', ['completed' =>true]);
+     $task->refresh();
 
-    $task->refresh();
+     $this->assertTrue($task->completed);
 
-    $this->assertTrue($task->completed);
-
-    $response->assertJson([
+     $response->assertJson([
         'completed'=>$task->completed,
        ]);
-  }
+    }
+
    /** @test */
-   public function auth_user_can_delete_task()
+   public function allowed_user_can_delete_task()
    {
-      $project=Project::first();
+     $task=Task::factory()->for($this->project)->create();
 
-      $task=Task::factory()->create(['project_id'=>$project->id]);
+      $this->deleteJson($task->path())
+      ->assertNoContent($status = 204);
 
-      $this->withoutExceptionHandling()->deleteJson($task->path())->assertNoContent($status = 204);
-
-      $this->assertDatabaseMissing('tasks',['id'=>$task->id]);
+     $this->assertModelMissing($task);
    }
 
    /** @test */
-   /*public function it_can_generate_paginated_links()
+   public function it_can_generate_paginated_links()
    {
-     $user=User::first();
-     $project=Project::factory()->hasTasks(config('project.taskLimit'))->create(['user_id'=>$user->id]);
-     $this->getJson($project->path().'?page=2')->assertOk();
-     //dd($response->project);
-     //dd($response);
-     //$this->assertCount(3,$project->tasks->data);
-   }*/
+     $project=Project::factory()->for($this->user)
+     ->hasTasks(config('project.taskLimit'))->create();
+
+     $response=$this->getJson($project->path().'?page=2')
+     ->assertOk();
+
+     $getResponse=$response->json()['tasks'];
+
+     $this->assertEquals($getResponse['meta']['current_page'],2);
+
+     $this->assertEquals($getResponse['data'][0]['id'],4);
+
+     $this->assertEquals(count(collect($getResponse['data'])),3);
+   }
 }

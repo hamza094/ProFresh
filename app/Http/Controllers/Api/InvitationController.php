@@ -56,7 +56,7 @@ class InvitationController extends ApiController
      */
    public function accept(Project $project)
    {
-     $this->invitationService->acceptInvitation($project);
+     return $this->invitationService->acceptInvitation($project);
    }
 
    /**

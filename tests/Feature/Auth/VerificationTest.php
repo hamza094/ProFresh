@@ -76,7 +76,7 @@ class VerificationTest extends TestCase
      Notification::fake();
 
      $this->postJson('/api/v1/email/resend/'.$user->id, ['email' => $user->email])
-         ->assertStatus(422)
+         ->assertUnprocessable()
          ->assertJsonFragment(['errors' => ['email' => ['verification.already_verified']]]);
 
      Notification::assertNotSentTo($user, VerifyEmail::class);

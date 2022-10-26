@@ -6,34 +6,12 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 use App\Models\User;
 use App\Models\Project;
-use Laravel\Sanctum\Sanctum;
-use Illuminate\Support\Facades\Hash;
+use App\Traits\ProjectSetup;
 use Carbon\Carbon;
 
 class ProjectTest extends TestCase
 {
-    use RefreshDatabase;
-    /**
-     * A basic feature test example.
-     *
-     * @return void
-     */
-
-     public function setUp() :void
-     {
-         parent::setUp();
-         // create a user
-        $user=User::factory()->create([
-             'email'=>'johndoe@example.org',
-             'password'=>Hash::make('testpassword')
-         ]);
-
-         Sanctum::actingAs(
-             $user,
-         );
-
-         Project::factory()->create(['user_id'=>$user->id]);
-     }
+    use RefreshDatabase,ProjectSetup;
 
     public function auth_user_can_create_project()
     {
@@ -56,55 +34,50 @@ class ProjectTest extends TestCase
      /** @test */
     public function updated_project_requires_a_name()
     {
-       $project=Project::first();
+      $response=$this->patchJson($this->project->path(),
+        ['name'=>null])->assertUnprocessable();
 
-       $response=$this->patchJson($project->path(),['name'=>null])->assertStatus(422);
-
-       $response->assertJsonMissingValidationErrors('project.name');
+      $response->assertJsonMissingValidationErrors('project.name');
     }
 
     /** @test */
     public function auth_user_can_get_project_resource()
     {
-        $project=Project::factory()->create();
+      $response=$this->getJson($this->project->path())
+      ->assertOk();
 
-        $response=$this->getJson($project->path())->assertStatus(200);
-
-        $response->assertJson([
-            'id'=>$project->id,
-            'name'=>$project->name,
-           ]);
+      $response->assertJson([
+            'id'=>$this->project->id,
+            'name'=>$this->project->name,
+        ]);
     }
 
    /** @test */
-    public function auth_user_can_update_project()
+    public function allowed_user_can_update_project()
     {
-       $project=Project::first();
+      $name="My First Project";
+      $notes="My project first notes";
 
-       $name="My First Project";
-       $notes="My project first notes";
+      $response=$this->patchJson($this->project->path(),
+        ['name'=>$name,'notes'=>$notes]);
 
-       $response=$this->patchJson($project->path(),['name'=>$name,
-       'notes'=>$notes]);
+       $this->assertDatabaseHas('projects',['id'=>$this->project->id,
+        'name'=>$name]);
 
-       $this->assertDatabaseHas('projects',['id'=>$project->id,'name'=>$name]);
-
-       $project->refresh();
+       $this->project->refresh();
 
        $response->assertJson([
            'msg'=>'Project name updated sucessfully',
-           'name'=>$project->name,
-           'slug'=>$project->slug
-          ]);
+           'name'=>$this->project->name,
+           'slug'=>$this->project->slug
+        ]);
     }
 
     /** @test */
     public function data_with_same_request_not_be_updated()
     {
-      $project=Project::first();
-
-      $response=$this->patchJson($project->path(),['name'=>$project->name])
-      ->assertStatus(400);
+      $response=$this->patchJson($this->project->path(),
+        ['name'=>$this->project->name])->assertStatus(400);
 
       $response->assertJson([
           'error'=>"You haven't changed anything",
@@ -112,43 +85,57 @@ class ProjectTest extends TestCase
     }
 
    /** @test*/
-   public function project_owner_can_trash_project(){
-     $user=User::first();
-      $project=Project::first();
-      $this->assertCount(1,$user->projects()->get());
-      $this->deleteJson($project->path());
-      $this->assertCount(0,$user->projects()->get());
-      $this->assertCount(1,$user->projects()->withTrashed()->get());
+   public function project_owner_can_get_abandoned_project()
+   {
+     $this->assertCount(1,$this->user->projects()->get());
+
+     $this->deleteJson($this->project->path());
+
+     $this->assertCount(0,$this->user->projects()->get());
+
+     $this->assertSoftDeleted($this->project);
    }
 
    /** @test*/
-   public function project_owner_can_restore_project(){
-      $user=User::first();
-      $project=Project::factory()->create(['user_id'=>$user->id,'deleted_at'=>Carbon::now()]);
-      $this->getJson($project->path().'/restore')->assertStatus(200);
-      $project->refresh();
-      $this->assertCount(0,$user->projects()->onlyTrashed()->get());
-      $this->assertEquals($project->deleted_at,null);
+   public function project_owner_can_restore_project()
+   {
+     $this->project->touch('deleted_at');
+
+      $this->getJson($this->project->path().'/restore')->assertOk();
+
+      $this->project->refresh();
+
+      $this->assertNotSoftDeleted($this->project);
+
+      $this->assertEquals($this->project->deleted_at,null);
    }
 
       /** @test */
-      public function project_owner_can_delete_project(){
-        $project= Project::first();
-        $this->getJson($project->path().'/delete');
-         $this->assertDatabaseMissing('projects',['id'=>$project->id]);
+      public function project_owner_can_delete_project()
+      {
+        $this->getJson($this->project->path().'/delete');
+
+        $this->assertModelMissing($this->project);
       }
 
       /** @test */
-      public function delete_abandon_projects_after_limit_past(){
-        $user=User::first();
+      public function delete_abandon_projects_after_limit_past()
+      {
+        $this->project->touch('deleted_at');
 
-        $project=Project::factory()->create(['user_id'=>$user->id,'deleted_at'=>Carbon::now()]);
-        $this->assertCount(1,$user->projects()->onlyTrashed()->get());
+        $this->assertCount(1,$this->user->projects()
+            ->onlyTrashed()->get());
 
-        $project=Project::factory()->create(['user_id'=>$user->id,'deleted_at'=>Carbon::now()->subDays(91)]);
-        $this->assertCount(2,$user->projects()->onlyTrashed()->get());
+        $project=Project::factory()
+        ->for($this->user)
+        ->create(['deleted_at'=>Carbon::now()->subDays(91)]);
+
+        $this->assertCount(2,$this->user->projects()
+            ->onlyTrashed()->get());
 
         $this->artisan('remove:abandon')->assertSuccessful();
-        $this->assertCount(1,$user->projects()->onlyTrashed()->get());
+
+        $this->assertCount(1,$this->user->projects()
+            ->onlyTrashed()->get());
       }
 }

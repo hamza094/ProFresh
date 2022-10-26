@@ -5,48 +5,27 @@ namespace Tests\Feature;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Laravel\Sanctum\Sanctum;
-use Illuminate\Support\Facades\Hash;
+use App\Traits\ProjectSetup;
 use App\Models\User;
-use App\Models\Project;
 use Tests\TestCase;
 
 class InvitationTest extends TestCase
 {
-   use RefreshDatabase;
-    /**
-     * Invitation test.
-     *
-     * @return void
-     */
-
-     public function setUp() :void
-     {
-         parent::setUp();
-         // create a user
-        $user=User::factory()->create([
-             'email'=>'johndoe@example.org',
-             'password'=>Hash::make('testpassword')
-         ]);
-
-         Sanctum::actingAs(
-             $user,
-         );
-
-         Project::factory()->create(['user_id'=>$user->id]);
-     }
+   use RefreshDatabase,ProjectSetup;
 
      /** @test */
      public function project_owner_can_invite_user()
      {
-       $project=Project::first();
+        $InvitedUser=User::factory()->create();
 
-       $InvitedUser=User::factory()->create();
-
-       $response=$this->postJson($project->path().'/invitations',[
+        $response=$this->postJson($this->project->path().
+         '/invitations',
+        [
           'email'=>$InvitedUser->email
-        ])->assertStatus(200);
+        ])->assertOk();
 
-        $this->assertTrue($project->members->contains($InvitedUser));
+        $this->assertTrue($this->project->members->contains(
+            $InvitedUser));
 
         $response->assertJson([
           'msg'=>"Project invitation sent to ".$InvitedUser->name,
@@ -56,76 +35,72 @@ class InvitationTest extends TestCase
         /** @test */
     public function project_owner_can_not_reinvite_user_and_himself()
     {
-       $project=Project::first();
+      $this->project->invite($InvitedUser=User::factory()->create());
 
-        $project->invite($InvitedUser=User::factory()->create());
-
-        $response=$this->postJson($project->path().'/invitations',[
-              'email'=>$InvitedUser->email])->assertStatus(422);
+      $response=$this->postJson($this->project->path().'/invitations',[
+            'email'=>$InvitedUser->email
+          ])->assertUnprocessable();
 
         $response->assertJsonValidationErrors('invitation');
 
-        $response=$this->postJson($project->path().'/invitations',[
-              'email'=>$project->user->email])->assertStatus(422);
+        $response=$this->postJson($this->project->path().
+            '/invitations',
+            ['email'=>$this->project->user->email])
+        ->assertUnprocessable();
 
         $response->assertJsonValidationErrors('invitation');
     }
 
-          /** @test */
-          public function auth_user_accept_project_invitation_sent_to_him()
-          {
-             $project=Project::first();
+    /** @test */
+    public function auth_user_accept_project_invitation_sent_to_him()
+    {
+      $this->project->invite($invitedUser=User::factory()->create());
 
-             $project->invite($invitedUser=User::factory()->create());
+        Sanctum::actingAs($invitedUser,);
 
-             Sanctum::actingAs(
-                $invitedUser,
-            );
+        $response=$this->getJson($this->project->path().
+            '/accept-invitation')->assertOk();
 
-            $response=$this->getJson($project->path().
-                '/accept-invitation')->assertStatus(200);
+            $this->assertDatabaseHas('project_members', 
+            ["project_id" => $this->project->id, "user_id" =>
+              $invitedUser->id,'active'=>true]);
 
-            $this->assertDatabaseHas('project_members', [
-          "project_id" => $project->id, "user_id" =>$invitedUser->id,'active'=>true]);
 
-          /*$response->assertJson([
-              'msg'=>"You have accepted, ".$project->name." invitation",
-            ]);*/
+          $response->assertJson([
+              'msg'=>"You have accepted, ".$this->project->name." invitation",
+            ]);
        }
 
        /** @test */
        public function authorized_user_can_ignore_project_invitation()
        {
-         $project = Project::first();
+         $this->project->invite($InvitedUser=User::factory()->create());
 
-         $project->invite($InvitedUser=User::factory()->create());
+        Sanctum::actingAs($InvitedUser,);
 
-         Sanctum::actingAs(
-             $InvitedUser,
-         );
-         $this->getJson($project->path().'/ignore')->assertStatus(200);
+         $this->getJson($this->project->path().'/ignore')
+         ->assertOk();
 
-         $this->assertDatabaseMissing('project_members', [
-    "project_id" => $project->id, "user_id" => $InvitedUser->id]);
-
-    }
+         $this->assertDatabaseMissing('project_members', 
+            ["project_id" => $this->project->id, "user_id" => 
+              $InvitedUser->id]);
+         }
 
        /** @test */
        public function project_owner_can_remove_member()
        {
-         $project=Project::first();
+          $this->project->members()->attach($memberUser=
+            User::factory()->create());
 
-          $project->members()->attach($memberUser=User::factory()->create());
+          $response=$this->getJson($this->project->path().'/remove/'.$memberUser->id)->assertOk();
 
-          $response=$this->getJson($project->path().'/remove/'.$memberUser->id)
-          ->assertStatus(200);
+          $this->assertDatabaseMissing('project_members', 
+            ["project_id" => $this->project->id, "user_id" => 
+            $memberUser->id]);
 
-          $this->assertDatabaseMissing('project_members', [
-       "project_id" => $project->id, "user_id" => $memberUser->id]);
-
-       $response->assertJson([
-           'msg'=>"Member ".$memberUser->name." has been removed from a project",
-          ]);
+         $response->assertJson([
+            'msg'=>"Member ".$memberUser->name." has been removed from a project",
+           ]);
     }
 
 }

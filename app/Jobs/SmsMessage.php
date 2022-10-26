@@ -4,7 +4,7 @@ namespace App\Jobs;
 
 use App\Models\Project;
 use App\Models\Message;
-use App\Services\VonageService;
+use App\Services\SendSmsService;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 use App\Http\Requests\MessageRequest;
@@ -44,8 +44,8 @@ class SmsMessage implements ShouldQueue
      *
      * @return void
      */
-    public function handle(VonageService $vonage)
+    public function handle(SendSmsService $service)
     {
-      $vonage->send($this->project,$this->message);
+      $service->send($this->project,$this->message);
     }
 }
