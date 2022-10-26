@@ -2,7 +2,7 @@
 namespace App\Services;
 use Illuminate\Http\Request;
 
-class VonageService
+class SendSmsService 
 {
   private $client;
   private $basic;

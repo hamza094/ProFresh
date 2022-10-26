@@ -1,17 +1,2 @@
-$messages=Message::all();
-foreach($messages as $message){
-
-  $bus = Bus::findBatch(
-   $message->batch_id
-   );
-
-     $btches= [
-      'message'=>$message->id,
-      'progress' => $bus->progress().'%',
-      'remaining_jobs' => $bus->pendingJobs,
-      'has_failures' => $bus->hasFailures(),
-      'is_cancelled' => $bus->canceled()
-   ];
-
-record activity on
-revert project
+- app\Models\Group.php:
+- macro

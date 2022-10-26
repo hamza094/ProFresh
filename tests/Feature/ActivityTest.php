@@ -4,31 +4,25 @@ namespace Tests\Feature;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use App\Traits\ProjectSetup;
 use Tests\TestCase;
 
 class ActivityTest extends TestCase
 {
-    use RefreshDatabase;
-    /**
-     * A basic feature test example.
-     *
-     * @return void
-     */
+    use RefreshDatabase,ProjectSetup;
 
     /** @test */
     public function view_activity_by_filters()
     {
-       $project=projectSetup();
-
-       $task=$project->addTask('test task');
+      $task=$this->project->addTask('test task');
         
-       $this->filterByProjectSpecified($project,$task);
+      $this->filterByProjectSpecified($this->project,$task);
 
-       $this->filterByTasks($project,$task);
+      $this->filterByTasks($this->project,$task);
 
-       $this->filterByAuthUser($project);
+      $this->filterByAuthUser($this->project);
 
-       $this->noActivitiesExistsError($project);
+      $this->noActivitiesExistsError($this->project);
     }
 
     protected function filterByProjectSpecified($project,$task)
@@ -66,6 +60,5 @@ class ActivityTest extends TestCase
 
       $this->assertEquals($response->json(),'No related activities found');
     }
-
 
 }

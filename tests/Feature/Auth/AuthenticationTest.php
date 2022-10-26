@@ -12,11 +12,6 @@ use App\Models\User;
 class AuthenticationTest extends TestCase
 {
     use RefreshDatabase;
-    /**
-     * A basic feature test example.
-     *
-     * @return void
-     */
 
     public function setUp() :void
     {
@@ -53,7 +48,7 @@ class AuthenticationTest extends TestCase
             'password' => 'testpassword',
         ]);
 
-        $response->assertStatus(200)
+        $response->assertOk()
             ->assertJsonStructure(['user', 'access_token']);
     }
 
@@ -65,7 +60,7 @@ class AuthenticationTest extends TestCase
             'password' => 'testpassword'
         ]);
 
-        $response->assertStatus(422)
+        $response->assertUnprocessable()
             ->assertJsonValidationErrors(['email']);
     }
 
@@ -77,7 +72,7 @@ class AuthenticationTest extends TestCase
         );
 
         $response = $this->postJson(route('auth.logout'), []);
-        $response->assertStatus(200);
+        $response->assertOk();
     }
 
     /** @test */
@@ -90,7 +85,7 @@ class AuthenticationTest extends TestCase
            'email'=>'johndoe@example.org',
             'password' => $password,
             'password_confirmation' =>  $password,
-        ])->assertStatus(422)
+        ])->assertUnprocessable()
         ->assertJsonValidationErrors(['email']);
    }
 }

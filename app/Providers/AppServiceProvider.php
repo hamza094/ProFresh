@@ -6,6 +6,8 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Resources\Json\JsonResource;
+use App\Interfaces\SendSmsInterface;
+use App\Services\SendSmsService;
 use Illuminate\Support\Collection;
 use App\Services\PaginationService;
 
@@ -19,6 +21,11 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
        JsonResource::withoutWrapping();
+
+       $this->app->bind(
+          SendSmsInterface::class,
+          SendSmsService::class
+         );
     }
 
 

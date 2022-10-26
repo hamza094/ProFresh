@@ -20,7 +20,7 @@ class NotificationSeeder extends Seeder
       $users= User::all();
       $projects = Project::all();
 
-      $projects->each(function ($project) use ($users) {
+      $projects->each(function ($project){
 
         $project->tasks()->each(function ($task) use ($project) {
 

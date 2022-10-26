@@ -10,6 +10,8 @@ use App\Notifications\ProjectTask;
 class SendNotification 
 {
 
+  private $notification;
+
   public function send($project)
   {
   	  $this->sendNotificationToMember($project);
@@ -17,7 +19,7 @@ class SendNotification
       $this->sendNotificationToProjectOwner($project);
   }
 
-  protected function sendNotificationToMember($project)
+  protected function sendNotificationToMember($project) : void
   {
      foreach($project->activeMembers() as $member){
 
@@ -29,7 +31,7 @@ class SendNotification
     }
   }
 
-  protected function sendNotificationToProjectOwner($project)
+  protected function sendNotificationToProjectOwner($project):void
   {
     if(auth()->id() != $project->user->id)
     {
@@ -37,15 +39,17 @@ class SendNotification
     }
   }
 
-    protected function getNotification($project){
-
-       if(Route::currentRouteName() == 'projects.update'){
+    protected function getNotification($project)
+    {
+      if(Route::currentRouteName() == 'projects.update')
+      {
         return new ProjectUpdated($project,auth()->user()->toArray());
-       }
+      }
 
-       if(Route::currentRouteName() == 'task.store'){
+      if(Route::currentRouteName() == 'task.store')
+      {
         return new ProjectTask($project,auth()->user()->toArray());
-       }
+      }
     }
   }
 
