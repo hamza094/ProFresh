@@ -33,27 +33,25 @@
       </div>
 
       <div class="collapse" id="memberProject">
-        <div class="">
-          <router-link :to="'/user/'+owner.id+'/profile'">
-            <p> <img :src="owner.avatar_path" alt="">
-              <span>Project owner: <b>{{owner.name}}</b></span>
-            </p>
-          </router-link>
-      </div>
-      <hr>
-      <h6 class="text-center"><b>Other Members </b></h6>
-      <div v-if="this.members == 0">
-        <p class="text-center"><b>No other project members have been found!</b></p>
-      </div>
-        <div v-else class="row">
+
+        <div class="row">
         <div v-for="member in members" :key="member.user_id">
           <div class="project_members-detail">
                <router-link :to="'/user/'+member.user_id+'/profile'">
                  <!-- <img :src="member.avatar_path" v-if="member.avatar_path!=null">-->
                    <img :src="member.avatar_path" alt="">
-                   <p>{{member.username}}</p>
+                   <p>
+                    <span v-if="member.id == owner.id" 
+                    class="badge badge-success">project owner
+                    </span>
+                    <br>
+                    <span>{{member.name}}</span>
+                    <br>
+                    <span>({{member.username}})</span>
+                   </p>
+                   <p></p>
                </router-link>
-              <a v-if="ownerLogin"  rel="" role="button" @click.prevent="removeMember(member.pivot.user_id,member)">x</a>
+              <a v-if="ownerLogin && member.id !== owner.id"  rel="" role="button" @click.prevent="removeMember(member.pivot.user_id,member)">x</a>
               </div>
         </div>
       </div>

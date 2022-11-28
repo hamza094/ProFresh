@@ -117,7 +117,7 @@ class Project extends Model
 
   public function activeMembersData()
  {
-     return $this->members()->wherePivot('active',true)->select('email','avatar_path','username','user_id')->get()->makeHidden('pivot');
+     return $this->members()->wherePivot('active',true)->select('email','avatar_path','name','username','user_id')->get()->makeHidden('pivot');
  }
 
     public function markUncompleteIfCompleted(){

@@ -46,8 +46,8 @@
 		<label for="to" class="label-name mt-2">To: Select Project Member</label>
 		<div class="check_members">
 		<div class="form-check" v-for="(user,index) in  this.members" :key="user.user_id">
-	<input class="form-check-input" type="checkbox" v-model="form.users" :value="user" id="checkUsers">
-	<label class="form-check-label" for="checkUsers">
+	<input v-if="user.id !== auth.id" class="form-check-input" type="checkbox" v-model="form.users" :value="user" id="checkUsers">
+	<label v-if="user.id !== auth.id" class="form-check-label" for="checkUsers">
 		{{user.name}} ({{user.email}})
 	</label>
 </div>
@@ -126,7 +126,9 @@ export default {
   props:['slug','members'],
     data() {
         return {
-					newDate:moment().add(1, 'days').format("YYYY-MM-DD"),
+           auth:this.$store.state.currentUser.user,
+
+			newDate:moment().add(1, 'days').format("YYYY-MM-DD"),
            buttonMessage:'Send',
           form:{
 						  date:'',

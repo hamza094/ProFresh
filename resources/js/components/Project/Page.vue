@@ -130,7 +130,7 @@
             </div>
 			<hr>
 			<Chat :slug="project.slug" 
-			:conversations="project.conversations" :users="this.users"></Chat>
+			:conversations="project.conversations" :users="project.members"></Chat>
 		</div>
 	</div>
 </div>
@@ -172,7 +172,7 @@ export default{
 						 this.getStage=this.project.stage.id;
 						 this.projectname=this.project.name;
 						 this.daysLimit=this.project.days_limit;
-             this.members.push(this.auth);
+             this.members.unshift(this.auth);
 						 this.checkMembersAndPermission();
 						 this.$bus.emit('projectSlug',{slug:response.data.slug});
 				 }).catch(error=>{

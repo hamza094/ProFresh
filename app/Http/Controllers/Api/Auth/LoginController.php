@@ -8,6 +8,7 @@ use App\Events\UserLogin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
+use App\Http\Resources\CurrentUserResource;
 use App\Http\Controllers\Api\ApiController;
 
 class LoginController extends ApiController
@@ -30,15 +31,8 @@ public function login(Request $request)
 
     event(new UserLogin($user));
 
-    /*$ip = file_get_contents("http://ipecho.net/plain");
-    $url = 'http://ip-api.com/json/'.$ip;
-    $tz = file_get_contents($url);
-    $tz = json_decode($tz,true)['timezone'];
-    $user->timezone=$tz;
-    $user->save();*/
-
-      return response()->json([
-      'user' => $user,
+    return response()->json([
+      'user' => new CurrentUserResource($user),
       'access_token' => $user->createToken('access')->plainTextToken
     ], 200);
 }
