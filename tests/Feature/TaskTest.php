@@ -107,8 +107,7 @@ class TaskTest extends TestCase
    {
      $task=Task::factory()->for($this->project)->create();
 
-      $this->deleteJson($task->path())
-      ->assertNoContent();
+      $this->deleteJson($task->path())->assertNoContent();
 
      $this->assertModelMissing($task);
    }

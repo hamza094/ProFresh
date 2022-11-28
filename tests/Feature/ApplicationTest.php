@@ -54,6 +54,7 @@ class ApplicationTest extends TestCase
        $this->getJson($this->project->path().'/export');
 
        Excel::assertDownloaded('Project '.$this->project->name.'.xls', function(ProjectsExport $export) {
+
           // Assert that the correct export is downloaded.
            return $export->query()->get()->contains('name',Project::first()->name);
        });

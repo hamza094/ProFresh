@@ -32,9 +32,10 @@ class InvitationTest extends TestCase
          ]);
       }
 
-    /** @test */
-  public function project_owner_wont_reinvite_user_and_self()
-  {
+
+        /** @test */
+    public function project_owner_can_not_reinvite_user_and_himself()
+    {
       $this->project->invite($InvitedUser=User::factory()->create());
 
       $response=$this->postJson($this->project->path().'/invitations',[
