@@ -26,7 +26,6 @@ class UserInfoFactory extends Factory
         return [
           'user_id'=>User::factory(),
           'mobile'=>$this->faker->phoneNumber,
-          'avatar_path'=>'https://source.unsplash.com/random',
           'company'=>$this->faker->company,
           'position'=>$this->faker->jobTitle,
           'address'=>$this->faker->address,

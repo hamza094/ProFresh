@@ -72,8 +72,6 @@ class InvitationService
     return $this->respondWithSuccess([
       'msg'=>"You have accepted, ".$project->name." invitation"
     ]);
-
-    //$this->attachUserToGroupChat($project,Auth::user());
   }
 
   public function removeMember($user,$project)
@@ -103,20 +101,6 @@ class InvitationService
   {
     $project->recordActivity($msg,$user->name.'/_/'.$user->id);
   }
-
-   /**
-     * Attach User to chat group after accepting project invitation.
-     *
-     * @param  int  $project, $int user
-     */
-  /*protected function attachUserToGroupChat($project,$user)
-  {
-    $users=[];
-
-    array_push($users,$user->id);
-
-    $project->group->users()->attach($users);
-  }*/
 
    protected function validateInvitation($project,$user)
    {

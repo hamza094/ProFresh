@@ -13,7 +13,7 @@ class MessageUser extends Migration
      */
     public function up()
     {
-      Schema::create('message_user', function (Blueprint $table) {
+      Schema::create('message_user', function (Blueprint $table){
         $table->id();
         $table->unsignedInteger('message_id');
         $table->uuid('user_id');

@@ -4,7 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Conversation;
 use App\Models\User;
-use App\Models\Group;
+use App\Models\Project;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class ConversationFactory extends Factory
@@ -26,7 +26,7 @@ class ConversationFactory extends Factory
         return [
         'message'=> $this->faker->sentence,
         'user_id'=>User::factory(),
-        'group_id'=>Group::factory(),
+        'project_id'=>Project::factory(),
         ];
     }
 }

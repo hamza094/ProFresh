@@ -106,15 +106,13 @@ Vue.component('project-form', require('./components/ProjectForm.vue').default);
 
 Vue.component('project-status', require('./components/Project/Status.vue').default);
 
- Vue.component('project-features', require('./components/Project/Feature/FeatureSection.vue').default);
+Vue.component('project-features', require('./components/Project/Feature/FeatureSection.vue').default);
 
- Vue.component('project-stage', require('./components/Project/Stage.vue').default);
-
-// Vue.component('project-panel', require('./components/Project/Panel/PanelArea.vue').default);
+Vue.component('project-stage', require('./components/Project/Stage.vue').default);
 
 Vue.component('notifications', require('./components/Notification.vue').default);
 
- Vue.component('pagination', require('laravel-vue-pagination'));
+Vue.component('pagination', require('laravel-vue-pagination'));
 
 // Vue.component('profile', require('./components/Profile/ProfilePage.vue').default);
 

@@ -35,3 +35,4 @@ class ProjectMailableTest extends TestCase
        ->assertSeeInHtml($project->name);
      }
 }
+

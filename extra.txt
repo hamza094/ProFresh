@@ -1,2 +1,0 @@
-- app\Models\Group.php:
-- macro

@@ -66,16 +66,16 @@ Route::patch('stage','stage');
 
 
 Route::controller(MessageController::class)->group(function(){
-  Route::post('message','message')->can('access','project');
-  Route::get('messages/scheduled','scheduled')->can('access','project');
-  Route::delete('messages/{message}/delete','delete')->can('access','project');
+  Route::post('message','message');
+  Route::get('messages/scheduled','scheduled');
+  Route::delete('messages/{message}/delete','delete');
 });
 
 //Task Routes
 Route::apiResource('/task',TaskController::class)->except(['index','show']);
 Route::patch('/task/{task}/status',[TaskController::class,'status']);
 
-//Group Chat Conversation Routes
+//Chat Conversation Routes
 Route::post('/conversations', [ConversationController::class,'store']);
 Route::get('/conversation',[ConversationController::class,'conversation']);
 

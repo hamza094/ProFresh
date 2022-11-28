@@ -35,7 +35,7 @@
       <div class="collapse" id="memberProject">
         <div class="">
           <router-link :to="'/user/'+owner.id+'/profile'">
-            <p> <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQvsQZEtAw99ePVsNhLCexVsSKct6D13NluBQ&usqp=CAU" alt="">
+            <p> <img :src="owner.avatar_path" alt="">
               <span>Project owner: <b>{{owner.name}}</b></span>
             </p>
           </router-link>
@@ -46,12 +46,12 @@
         <p class="text-center"><b>No other project members have been found!</b></p>
       </div>
         <div v-else class="row">
-        <div v-for="member in members" class="col-md-4" :key="member.user_id">
+        <div v-for="member in members" :key="member.user_id">
           <div class="project_members-detail">
                <router-link :to="'/user/'+member.user_id+'/profile'">
                  <!-- <img :src="member.avatar_path" v-if="member.avatar_path!=null">-->
-                   <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQvsQZEtAw99ePVsNhLCexVsSKct6D13NluBQ&usqp=CAU" alt="">
-                   <p>{{member.name.substring(0,12)}}</p>
+                   <img :src="member.avatar_path" alt="">
+                   <p>{{member.username}}</p>
                </router-link>
               <a v-if="ownerLogin"  rel="" role="button" @click.prevent="removeMember(member.pivot.user_id,member)">x</a>
               </div>
@@ -59,7 +59,6 @@
       </div>
 </div>
     </div>
-
 </div>
 
 </template>

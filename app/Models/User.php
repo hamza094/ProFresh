@@ -18,9 +18,11 @@ use App\Traits\HasUuid;
 
 class User extends Authenticatable implements Searchable, MustVerifyEmail
 {
-    use HasFactory, Notifiable, Billable, HasApiTokens, HasUuid;
+    use HasFactory, Notifiable, Billable, HasApiTokens, HasUuid, \HighIdeas\UsersOnline\Traits\UsersOnlineTrait;
+    
 
     protected $guarded = [];
+
 
     //protected $appends = ['LastSeen'];
 
@@ -35,7 +37,6 @@ class User extends Authenticatable implements Searchable, MustVerifyEmail
     {
         parent::boot();
         static::deleting(function ($user) {
-            $user->groups->each->delete();
             $user->projects->each->forceDelete();
 
         });
@@ -87,7 +88,12 @@ class User extends Authenticatable implements Searchable, MustVerifyEmail
            return $redis->get('last_active_' . $this->id);
     }*/
 
-    public function phone()
+    public function conversations()
+    {
+      return $this->hasMany(Conversation::class);
+    }
+
+    public function info()
     {
        return $this->hasOne(UserInfo::class);
     }
@@ -102,11 +108,6 @@ class User extends Authenticatable implements Searchable, MustVerifyEmail
     {
         return $this->belongsToMany(Project::class,'project_members')->withPivot('active')->withTimestamps();
     }
-
-     public function groups()
-     {
-        return $this->belongsToMany(Group::class)->withTimestamps();
-     }
 
     /*public function getlastSeenAttribute()
     {

@@ -20,7 +20,7 @@ class ApplicationTest extends TestCase
      /** @test */
     public function only_allowed_users_access_different_application_features()
     {
-      $this->postJson($this->project->path().'/task',
+       $this->postJson($this->project->path().'/task',
           ['body' => 'My Project Task'])->assertCreated();
 
           $this->project->invite($user=User::factory()->create());
@@ -53,7 +53,7 @@ class ApplicationTest extends TestCase
        Excel::fake();
        $this->getJson($this->project->path().'/export');
 
-      Excel::assertDownloaded('Project '.$this->project->name.'.xls', function(ProjectsExport $export) {
+       Excel::assertDownloaded('Project '.$this->project->name.'.xls', function(ProjectsExport $export) {
           // Assert that the correct export is downloaded.
            return $export->query()->get()->contains('name',Project::first()->name);
        });

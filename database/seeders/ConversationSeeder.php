@@ -18,8 +18,8 @@ class ConversationSeeder extends Seeder
       $projects = Project::all();
 
         $projects->each(function ($project){
-            Conversation::factory(1)->create([
-                'group_id' => $project->group->id,
+            Conversation::factory(3)->for($project)
+            ->create([
                 'user_id'=>$project->user->id,
             ]);
         });

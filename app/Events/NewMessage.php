@@ -3,6 +3,8 @@
 namespace App\Events;
 
 use App\Models\Conversation;
+use App\Models\Project;
+use App\Http\Resources\ConversationResource;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
@@ -32,21 +34,15 @@ class NewMessage implements ShouldBroadcast
      *
      * @return \Illuminate\Broadcasting\Channel|array
      */
+
     public function broadcastOn()
     {
-        return new PrivateChannel('groups.' . $this->conversation->group->id);
+      return new Channel('conversations');
     }
 
-     public function broadcastWith()
+    public function broadcastWith()
     {
-        return [
-            'message' => $this->conversation->message,
-            'file' => $this->conversation->file,
-            'user' => [
-                'id' => $this->conversation->user->id,
-                'name' => $this->conversation->user->name,
-
-            ]
-        ];
+      return (new ConversationResource($this->conversation))
+              ->resolve();
     }
 }

@@ -2,7 +2,9 @@
 
 use Illuminate\Support\Facades\Broadcast;
 use App\Models\Group;
-use App\Model\Project;
+use App\Models\Project;
+use App\Models\User;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -28,14 +30,14 @@ Broadcast::channel('activity', function ($user) {
     //return $user->is($project->user) || $project->activeMembers()->contains($user);
 });
 
-/*Broadcast::channel('groups.{group}', function ($user, Group $group) {
-    return $group->hasUser($user->id);
+Broadcast::channel('conversations', function () {
+    return true;
 });
 
 Broadcast::channel('chat', function ($user) {
   return Auth::check();
 });
 
-Broadcast::channel('chater', function ($user) {
+Broadcast::channel('chatroom', function ($user) {
     return $user;
-});*/
+});

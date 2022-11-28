@@ -27,7 +27,7 @@
     "dependencies": {
         "animate.css": "^4.1.1",
         "chart.js": "^2.9.4",
-        "emoji-mart-vue": "^2.6.6",
+        "emoji-mart-vue-fast": "^11.2.0",
         "js-file-download": "^0.4.12",
         "laravel-echo": "^1.10.0",
         "laravel-vue-pagination": "^2.3.1",
@@ -42,6 +42,7 @@
         "vue-datetime": "^1.0.0-beta.14",
         "vue-image-crop-upload": "^2.5.0",
         "vue-js-modal": "^2.0.0-rc.6",
+        "vue-mention": "^1.1.0",
         "vue-router": "^3.5.1",
         "vue-toastify": "^1.8.0",
         "vue-upload-component": "^2.8.22",

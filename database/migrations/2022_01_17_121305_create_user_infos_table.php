@@ -17,7 +17,6 @@ class CreateUserInfosTable extends Migration
             $table->id();
             $table->foreignUuid('user_id')->constrained()->onDelete('cascade');
             $table->string("mobile",64)->nullable();
-            $table->string('avatar_path')->nullable();
             $table->string("company")->nullable();
             $table->string('position')->nullable();
             $table->string("address")->nullable();

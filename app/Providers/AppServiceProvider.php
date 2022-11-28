@@ -37,6 +37,8 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Model::preventLazyLoading(! app()->isProduction());
+        //Model::shouldBeStrict(! app()->isProduction());
+
 
         /**
          * Paginate a standard Laravel Collection.

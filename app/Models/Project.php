@@ -8,17 +8,17 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Redis;
 use Cviebrock\EloquentSluggable\Sluggable;
-use App\Traits\BelongsToUser;
+//use App\Traits\BelongsToUser;
 use Carbon\Carbon;
 use Auth;
 
 class Project extends Model
 {
-  use RecordActivity, HasFactory, SoftDeletes, Sluggable,BelongsToUser;
+  use RecordActivity, HasFactory, SoftDeletes, Sluggable;//BelongsToUser;
 
   protected $guarded=[];
   protected $dates = ['created_at'];
-  protected $with = ['tasks','stage'];
+  protected $with = ['tasks','stage','user'];
   protected $casts = ['stage_updated_at'=>'datetime'];
   protected static $recordableEvents = ['created','updated','deleted','restored'];
 
@@ -46,6 +46,10 @@ class Project extends Model
       return "/api/v1/projects/{$this->slug}";
   }
 
+   public function user(){
+       return $this->belongsTo(User::class);
+   }
+
    protected static function boot()
    {
     parent::boot();
@@ -57,11 +61,6 @@ class Project extends Model
    public function stage()
    {
      return $this->belongsTo(Stage::class,'stage_id');
-   }
-
-   public function group()
-   {
-     return $this->belongsTo(Group::class,'group_id');
    }
 
     public function tasks()
@@ -91,19 +90,39 @@ class Project extends Model
       return $this->belongsToMany(User::class,'project_members')->withPivot('active');
     }
 
-   public function activeMembers()
-  {
-      return $this->members()->where('active',true)->get();
-  }
+    public function activeMembers()
+   {
+     return $this->members()->wherePivot('active',true)->get();
+   }
+
+    /*public function users()
+    {
+      return $this->belongsToMany(User::class)
+                    ->withTimestamps();
+    }*/
+
+    public function conversations()
+    {
+      return $this->hasMany(Conversation::class);
+    }
+
+    public function hasUser($user_id)
+    {
+       foreach ($this->users as $user) {
+           if($user->id == $user_id) {
+               return true;
+           }
+       }
+    }
 
   public function activeMembersData()
  {
-     return $this->members()->where('active',true)->select('name','email','user_id')->get()->makeHidden('pivot');
+     return $this->members()->wherePivot('active',true)->select('email','avatar_path','username','user_id')->get()->makeHidden('pivot');
  }
 
     public function markUncompleteIfCompleted(){
       if($this->completed == true){
-        $this->update(['completed'=>false]);
+        $this->update(['stage_id'=>0,'completed'=>false]);
       }
     }
 

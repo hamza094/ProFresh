@@ -6,6 +6,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
 use App\Http\Resources\TaskResource;
 use App\Http\Resources\UserResource;
 use App\Http\Resources\ActivityResource;
+use App\Http\Resources\ConversationResource;
 use Carbon\Carbon;
 
 class ProjectResource extends JsonResource
@@ -27,17 +28,20 @@ class ProjectResource extends JsonResource
           'stage'=>new StageResource($this->stage),
           'postponed'=>$this->postponed,
           'status'=>$this->currentStatus(),
-          'user'=>$this->user()->select('id','name')->get(),
+          'user'=>$this->user()->select('id','name','avatar_path')->get(),
           'members'=>$this->activeMembersData(),
           'completed'=>$this->completed,
+
           'tasks'=>$this->when($this->tasks()->exists(),
-          fn()=>TaskResource::collection($this->whenLoaded('tasks'))->paginate(3)
-        ),
+          fn()=>TaskResource::collection($this->whenLoaded('tasks'))->paginate(3)),
+
+          'conversations'=>ConversationResource::collection($this->conversations)->take(50),
+
           'created_at'=>$this->created_at->diffforHumans(),
           'updated_at'=>$this->updated_at->diffforHumans(),
+
           'deleted_at'=>$this->when($this->deleted_at != null,
-          fn()=>$this->deleted_at->diffforHumans()
-        ),
+          fn()=>$this->deleted_at->diffforHumans()),
           //'stage_updated_at'=>$this->stage_updated_at->format("F j, Y, g:i a"),
           'days_limit'=>config('project.abandonedLimit'),
           'activities'=>ActivityResource::collection($this->activities)->take(5),

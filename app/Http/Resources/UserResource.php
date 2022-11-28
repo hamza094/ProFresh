@@ -17,9 +17,10 @@ class UserResource extends JsonResource
     {
         return [
            'id'=>$this->id,
-           'name'=>$this->name,
-           'email'=>$this->email,
-           'projects'=>ProjectResource::collection($this->whenLoaded('projects')),
+           'message'=>$this->message,
+           'file'=>$this->file,
+           'user'=>$this->user->
+                   select('id','name','avatar')->get(),
            'created'=>$this->created_at->diffforHumans(),
            'updated'=>$this->updated_at->diffforHumans(),
         ];

@@ -4,35 +4,27 @@ use App\Models\Project;
 use App\Models\Conversation;
 use Illuminate\Http\Request;
 use App\Models\User;
-use App\Helpers\ProjectHelper; 
+use App\Services\FileService;
+ 
 
 class ConversationService 
 {
-
   public function storeFileConversation($project,$request)
   {
-    $this->validate($request, [
-            'file'=>'required'
-        ]);
+    $fileService=new FileService;
+    
+    $file=$fileService->store($request,'file',auth()->id());
 
-    $value = ProjectHelper::storeFile($request,'file',auth()->id());
-
-    return $this->createConversation($project,'file',$value);
+     return $project->conversations()->create([
+        'file' => $file,
+        'user_id' => auth()->id(),
+      ]);
   }
  
   public function storeStaticConversation($project,$request)
   {
-    $this->validate($request, [
-      'message'=>'required'
-    ]);
-
-   return $this->createConversation($project,'message',request('message'));
-  }
-
-  public function createConversation($project,$name,$value)
-  {
-    return $project->group->conversations()->create([
-        $name => $value,
+    return $project->conversations()->create([
+        'message' => $request->message,
         'user_id' => auth()->id(),
       ]);
   }

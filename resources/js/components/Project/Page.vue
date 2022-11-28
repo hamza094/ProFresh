@@ -123,6 +123,14 @@
 			<hr>
 			<PanelFeatues :slug="project.slug" :notes="project.notes"
 			:members="project.members" :owner="user" :access="this.accessAllowed" :ownerLogin="this.ownerLogin"></PanelFeatues>
+			<hr>
+			<div>
+            <p><b>Online Users For Chat</b></p>
+            <p v-for="user in  chatusers">{{user.name}} <span class="chat-circle"></span> </p>
+            </div>
+			<hr>
+			<Chat :slug="project.slug" 
+			:conversations="project.conversations" :users="this.users"></Chat>
 		</div>
 	</div>
 </div>
@@ -134,9 +142,10 @@
 	import Task from './Panel/Task.vue'
 	import PanelFeatues from './Panel/Features.vue'
 	import RecentActivities from './RecentActivities.vue'
+    import Chat from './Panel/Chat.vue'
 
 export default{
-	  components:{Status,Stage,Task,PanelFeatues,RecentActivities},
+	  components:{Status,Stage,Task,PanelFeatues,RecentActivities,Chat},
     data(){
     return{
      project:[],
@@ -146,8 +155,9 @@ export default{
 		 projectname:"",
 		 aboutEdit:false,
 		 projectabout:"",
-		 projectMembers:[],
-		 auth:this.$store.state.currentUser.user.id,
+		 auth:this.$store.state.currentUser.user,
+		 members:[],
+     chatusers:[],
 		 accessAllowed:false,
 		 ownerLogin:false,
     };
@@ -157,11 +167,12 @@ export default{
 				 axios.get('/api/v1/projects/'+this.$route.params.slug).
 				 then(response=>{
 						 this.project=response.data;
+						 this.members=this.project.members; 
 						 this.user=response.data.user[0];
 						 this.getStage=this.project.stage.id;
 						 this.projectname=this.project.name;
-						 this.projectMembers=this.project.members;
 						 this.daysLimit=this.project.days_limit;
+             this.members.push(this.auth);
 						 this.checkMembersAndPermission();
 						 this.$bus.emit('projectSlug',{slug:response.data.slug});
 				 }).catch(error=>{
@@ -169,9 +180,9 @@ export default{
 				 });
 			},
       checkMembersAndPermission(){
-				var authId=this.auth;
+				var authId=this.auth.id;
 				var IsMember=false;
-				 this.projectMembers.forEach(function(item,index){
+				 this.members.forEach(function(item,index){
 					 if(item.user_id == authId){
 					    IsMember = true;
 					}
@@ -258,16 +269,38 @@ export default{
 				}
 
 			},
-			listenForActivity() {
-			  Echo.channel('activity')
-				 .listen('ActivityLogged', (e) => {
-					this.project.activities.unshift(e);
-				});
-		 }
-    },
+	listen(){
+      Echo.join('chatroom').
+        here((members)=>{
+          this.chatusers=members;
+        }).
+        joining((auth) => {
+          this.chatusers.push(auth);
+          this.$vToastify.info(auth.name+' '+'joined project conversation');
+        })
+        .leaving((auth) => {
+          this.chatusers.splice(this.chatusers.indexOf(auth),1);
+          this.$vToastify.info(auth.name+' '+'leave project conversation');
+    })
+  },
+	listenForActivity() {
+	  Echo.channel('activity')
+	    .listen('ActivityLogged', (e) => {
+		  this.project.activities.unshift(e);
+		});
+		},
+		listenForNewMessage() {
+          Echo.channel('conversations')
+              .listen('NewMessage', (e) => {
+                this.project.conversations.push(e);
+            });
+        },
+        },
 		created(){
+			this.listen();
 			this.loadProject();
 			this.listenForActivity();
+			this.listenForNewMessage();
 			this.$bus.$on('stageListners', (data) => {
 					this.project.stage_updated_at = data.stage_updated
 					this.project.stage = data.current_stage

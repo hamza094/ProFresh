@@ -1,156 +1,180 @@
 <template>
 
 <div>
+
 <div class="card chat-card">
-    <div class="card-header text-white bg-primary" id="accordion">
 
-      <span><i class="fas fa-comment-alt"></i> {{ projectgroup.name }} with {{cons_count}} messages</span> 
+<div class="card-header text-white bg-primary" id="accordion">
 
-    <a type="button" class="btn btn-default btn-xs float-right" data-toggle="collapse" :href="'#collapseOne-' + projectgroup.id">
-        <i class="fas fa-angle-down"></i>
+  <span>
+    <i class="fas fa-comment-alt"></i>
+     Group chat  
+     <span v-if="conversations" class="badge badge-secondary">
+     {{conversations.length}}
+   </span> messages
+   </span> 
+
+    <a type="button" class="btn btn-default btn-xs float-right" data-toggle="collapse" :href="'#collapseOne-' + slug">
+     <i class="fas fa-angle-down"></i>
     </a>     
-        </div>
+    </div>
 
-            <div class="collapse" :id="'collapseOne-' + projectgroup.id">
-              <div class="card-body chat-panel">
+  <div class="collapse" :id="'collapseOne-' + slug">
+    <div class="card-body chat-panel">
 
-               <ul class="chat">
-                        <li v-for="conversation in conversations">
-                            <div class="chat-body clearfix">
-                                <div class="header">
-                                    <img :src="conversation.user.avatar_path" alt="User Avatar" class="chat-user_image" v-if="conversation.user.avatar_path!=null" />
+      <!-- Start of Chat Message -->
 
-                                     <img v-else src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQvsQZEtAw99ePVsNhLCexVsSKct6D13NluBQ&usqp=CAU" alt="" class="chat-user_image">
-                                    <strong class="primary-font">{{ conversation.user.name }}</strong>
-                                </div>
+      <ul class="chat">
+      <li v-for="conversation in conversations">
+      <div class="chat-body clearfix">
+      <div class="header">
 
-                                <p v-if="conversation.message" class="mt-2">
-                                   <span class="chat-message"> {{ conversation.message }} </span>
-                                   <br>
-                                <span class="float-right chat-time"><i>{{conversation.created_at | timeExactDate}}</i></span>
-                                </p>
+      <router-link :to="'/user/'+conversation.user[0].name +'/profile'">
+        <img :src="conversation.user[0].avatar_path" alt="User Avatar" class="chat-user_image"/>
+      </router-link>
 
-                                 <p v-if="conversation.file" class="mt-2">
-                                    <span v-if="conversation.file.includes('.png') || conversation.file.includes('.jpeg') || conversation.file.includes('.jpg') || conversation.file.includes('.gif')"><img
-                                    :src="conversation.file" class="chat-image" alt=""></span>
-                                    <span v-else><a :href="conversation.file" target="_blank" >{{conversation.file}}</a></span>
-                                    <br>
-                                <span class="float-right chat-time"><i><b>{{conversation.created_at | timeExactDate}}</b></i></span>
-                                </p>
-                            </div>
-                        </li>
-                           <span v-show="typing" class="help-block" style="font-style: italic;">
-                            @{{ user.name }} is typing...
-                        </span>
-                    </ul>
-              </div>
-              <div class="card-footer gioj">
-          <div class="chat-floating">
-          <picker v-if="emoStatus" set="emojione" @select="onInput" title="Pick your emoji…" />
-           </div>
-               <div class="input-group">
-                        <input id="btn-input" type="text" class="form-control input-sm" placeholder="Type your message here..." v-model="message" @keyup.enter="store()"
-                        @keydown="isTyping"  autofocus />
-
-                        <span class="input-group-btn">
-                            <i class="far fa-grin chat-emotion" @click="chatEmotion()"></i>
-
-      <file-upload 
-      v-bind:post-action="'/api/project/'+this.project.id+'/conversations'"
-    ref="upload"
-    @input-file="$refs.upload.active = true"
-    :headers="{'X-CSRF-TOKEN': this.token}">
-  <button class="btn btn-primary btn-sm"> <i class="fas fa-upload"></i> </button>
-  </file-upload>
-
-<button class="btn btn-primary btn-sm" id="btn-chat" @click.prevent="store()">
-  Send</button>        
-</span>
-</div>
-</div>
-</div>
-</div>
+      <strong class="primary-font">
+      {{ conversation.user[0].name }}</strong>
 
     </div>
+
+        <p v-if="conversation.message" class="mt-2">
+          <span class="chat-message">
+           {{ conversation.message }}
+         </span>
+        </p>
+
+        <p v-if="conversation.file" class="mt-2">
+          <span v-if="conversation.file.includes('.PNG') || conversation.file.includes('.JPEG') || conversation.file.includes('.JPG')"><img
+          :src="conversation.file" class="chat-image" alt=""></span>
+
+          <span v-else>
+            <a :href="conversation.file" target="_blank" >{{conversation.file}}</a>
+          </span>
+        </p>
+
+        <br>
+          <span class="float-right chat-time">
+            <i>{{conversation.created_at}}</i>
+          </span>
+
+          </div>
+          </li>
+          <span v-show="typing" class="help-block" style="font-style: italic;">
+                @{{ user.name }} is typing...
+          </span>
+          </ul>
+
+          <!-- Next Section -->
+
+            </div>
+
+            <div class="card-footer gioj">
+          <div class="chat-floating">
+
+        <Picker :data="emojiIndex" v-if="emojiModal" set="twitter" @select="showEmoji" title="Pick your emoji…"
+        :style="{ position: 'absolute', bottom: '27px' }"/>
+
+           </div>
+            <div class="input-group">
+              <input id="btn-input" type="text" class="form-control input-sm" placeholder="Type your message here..." v-model="message" @keyup.enter="store()" @keydown="isTyping"  autofocus />
+
+              <span class="input-group-btn">
+
+              <i class="far fa-grin chat-emotion" @click="chatEmotion()"></i>
+
+
+
+  <button class="btn btn-primary btn-sm" id="btn-chat" @click.prevent="store()">
+  Send</button>       
+   </span>
+   </div>
+        <input type="file" name="file" ref="file" class="inputfile btn btn-sm mt-2" value="upload file" @change="fileUpload()" accept="image/jpeg,image/png,application/pdf" />
+   </div>
+   </div>
+   </div>
+
+</div>
 </template>
 
 <script>
 
-import { Picker } from 'emoji-mart-vue'
+import data from "emoji-mart-vue-fast/data/all.json";
+import "emoji-mart-vue-fast/css/emoji-mart.css";
+import { Picker, EmojiIndex } from "emoji-mart-vue-fast";
+
+let emojiIndex = new EmojiIndex(data);
 
 export default {
   components:{Picker},
-    props:['project','projectgroup','cons'],
+    props:['conversations','slug','users'],
     data() {
       return {
-     group_id:this.projectgroup.id,
-      conversations: {},
+      emojiIndex: emojiIndex,
       message: '',
-      user:window.App.user,
-      token:window.App.csrfToken,
+      user:this.$store.state.currentUser.user,
       typing: false,
-      typing: false,
-      emoStatus:false,
-      cons_count:this.cons
+      emojiModal:false,
+      file:'',
     };
     },
 
   methods: {
-   onInput(e){
-        if(!e){
+     showEmoji(emoji) {
+       if(!emoji){
           return false;
         }
         if(!this.message){
-          this.message=e.native;
+          this.message=emoji.native;
         }else{
-          this.message=this.message + e.native;
+          this.message=this.message + emoji.native;
         }
-      },
+    },
+
+  fileUpload(){
+    this.file=this.$refs.file.files[0];
+
+    let formData = new FormData()
+    formData.append("file", this.file);
+
+    this.$vToastify.info('Be patient file uploading');
+
+    axios.post('/api/v1/projects/'+this.slug+'/conversations',formData).then(response=>{
+          this.$vToastify.success("File Uploaded");
+
+      }).catch(function (error) {
+        this.$vToastify.warning("Error! Try Again");
+      })
+    },
 
   store() {
-    axios.post('/api/project/'+this.project.id+'/conversations', {message: this.message})
+    axios.post('/api/v1/projects/'+this.slug+'/conversations', {message: this.message})
     .then((response) => {
     this.message = '';
-    this.cons_count++;
-    this.getConversation();
     }).catch(error=>{
       this.$vToastify.warning("Error! Try Again");
     });
     },
 
-  getConversation(){
-      axios.get('/api/project/'+this.project.id+'/conversation')
-                  .then(({data})=>(this.conversations=data)); 
-    },
-
-    listenForNewMessage() {
-    Echo.private('groups.' + this.projectgroup.id)
-      .listen('NewMessage', (e) => {
-        this.conversations.push(e);
-
-      });
-  },
-
   isTyping() {
   let channel = Echo.private('chat');
 
+  let _this = this;
+
   setTimeout(function() {
     channel.whisper('typing', {
-      user: window.App.user,
+      user:_this.$store.state.currentUser.user,
         typing: true
     });
   }, 300);
   },
 
   chatEmotion(){
-    this.emoStatus= !this.emoStatus;
+    this.emojiModal= !this.emojiModal;
   },
   },
 
     created(){
-    this.getConversation();
-    this.listenForNewMessage();
-
     let _this = this;
 
   Echo.private('chat')

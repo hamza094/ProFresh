@@ -34,22 +34,21 @@ class ProjectController extends ApiController
     public function store(ProjectRequest $request)
     {
 
-       DB::beginTransaction();
+       //DB::beginTransaction();
 
-       try{
+       //try{
 
-        $project = Auth::user()->projects()->create($request->validated());
+      $project = Auth::user()->projects()
+                  ->create($request->validated());
 
-        $this->projectService->createProjectGroupChat($project);
+        //DB::commit();
 
-        DB::commit();
+       //}catch(\Exception $ex){
 
-       }catch(\Exception $ex){
+        //DB::rollBack();
 
-        DB::rollBack();
-
-        throw $ex;
-       }
+        //throw $ex;
+       //}
 
        if(request()->wantsJson()){
         return['message'=>$project->path()];
