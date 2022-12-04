@@ -5,7 +5,7 @@ use App\Models\Conversation;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Services\FileService;
- 
+use App\Notifications\UserMentioned;
 
 class ConversationService 
 {
@@ -27,6 +27,20 @@ class ConversationService
         'message' => $request->message,
         'user_id' => auth()->id(),
       ]);
+  }
+
+  public function userMentioned($conversation,$project)
+  {
+    if($conversation->message !== null)
+    {
+      User::whereIn('username', $conversation->mentionedUsers
+        ())->get()
+           ->filter(function($user){
+              return $user->id !== auth()->user()->id;})
+           ->each(function ($user) use ($project) {
+            $user->notify(new UserMentioned(auth()->user()->toArray(),$project));
+      });
+    }
   }
 }
 

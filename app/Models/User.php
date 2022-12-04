@@ -18,9 +18,8 @@ use App\Traits\HasUuid;
 
 class User extends Authenticatable implements Searchable, MustVerifyEmail
 {
-    use HasFactory, Notifiable, Billable, HasApiTokens, HasUuid, \HighIdeas\UsersOnline\Traits\UsersOnlineTrait;
+    use HasFactory, Notifiable, Billable, HasApiTokens, HasUuid;
     
-
     protected $guarded = [];
 
 

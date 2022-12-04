@@ -22,6 +22,10 @@ Vue.use(VueBus);
 
 import Vue from 'vue';
 
+import VTooltip from 'v-tooltip'
+
+Vue.use(VTooltip)
+
 import VueSlideoutPanel from 'vue2-slideout-panel';
 
 Vue.use(VueSlideoutPanel);
@@ -30,6 +34,8 @@ import VModal from 'vue-js-modal'
 Vue.use(VModal)
 
 import moment from 'moment';
+
+import "emoji-mart-vue-fast/css/emoji-mart.css";
 
 import alertNotice from './mixins/alertNotice';
 import currentStage from './mixins/currentStage';

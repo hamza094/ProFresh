@@ -59,11 +59,7 @@ class NotificationsTest extends TestCase
     $this->assertEquals("App\Notifications\ProjectUpdated",$notification->type);
 
     $this->assertEquals($user->id,$notification->notifiable_id);
-
-
-  } 
-
-
+   } 
 
   /** @test */
   public function project_member_notified_when_task_added()
@@ -82,6 +78,26 @@ class NotificationsTest extends TestCase
 
     $this->assertEquals($user->id,$notification->notifiable_id);
   }
+
+  /** @test */
+  public function mentioned_user_in_a_chat_are_notified()
+  {
+    $user=User::factory(['username'=>'thanos844'])
+          ->create();
+ 
+    $this->add_user_to_become_project_member($this->project,$user);
+
+      $response=$this->postJson($this->project->path().'/conversations',['message'=>'random chat conversation with @thanos844',
+        'user_id' => $user->id]);
+
+        $this->assertCount(1,$user->notifications);
+
+    $notification=$user->notifications[0];
+
+    $this->assertEquals("App\Notifications\UserMentioned",$notification->type);
+
+    $this->assertEquals($user->id,$notification->notifiable_id);
+    }
 
 
   /** @test */

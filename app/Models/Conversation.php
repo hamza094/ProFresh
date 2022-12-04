@@ -22,4 +22,22 @@ class Conversation extends Model
     public function user(){
        return $this->belongsTo(User::class);
    }
+
+    public function mentionedUsers()
+    {
+      preg_match_all('/@([\w\-]+)/', $this->message, $matches);
+
+      return $matches[1];
+    }
+
+    public function setMessageAttribute($message)
+    {
+      $this->attributes['message'] = preg_replace(
+            '/@([\w\-]+)/',
+             '<a href="/user/$1/profile" target="_blank">$0</a>',
+            $message
+      );
+    }
 }
+
+

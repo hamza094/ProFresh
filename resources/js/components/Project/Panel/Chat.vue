@@ -2,7 +2,7 @@
 
 <div>
 
-<div class="card chat-card">
+<div class="card chat-card mb-5">
 
 <div class="card-header text-white bg-primary" id="accordion">
 
@@ -25,7 +25,7 @@
       <!-- Start of Chat Message -->
 
       <ul class="chat">
-      <li v-for="conversation in conversations">
+      <li v-for="conversation in conversations" :key="conversation.id">
       <div class="chat-body clearfix">
       <div class="header">
 
@@ -39,8 +39,7 @@
     </div>
 
         <p v-if="conversation.message" class="mt-2">
-          <span class="chat-message">
-           {{ conversation.message }}
+          <span class="chat-message" v-html="conversation.message">
          </span>
         </p>
 
@@ -57,7 +56,6 @@
           <span class="float-right chat-time">
             <i>{{conversation.created_at}}</i>
           </span>
-
           </div>
           </li>
           <span v-show="typing" class="help-block" style="font-style: italic;">
@@ -75,38 +73,65 @@
         <Picker :data="emojiIndex" v-if="emojiModal" set="twitter" @select="showEmoji" title="Pick your emoji…"
         :style="{ position: 'absolute', bottom: '27px' }"/>
 
-           </div>
-            <div class="input-group">
-              <input id="btn-input" type="text" class="form-control input-sm" placeholder="Type your message here..." v-model="message" @keyup.enter="store()" @keydown="isTyping"  autofocus />
+    </div>
 
-              <span class="input-group-btn">
+       <Mentionable :keys="['@']" :items="items" offset="6"
+        insert-space @open="onOpen" @apply="onApply">
 
-              <i class="far fa-grin chat-emotion" @click="chatEmotion()"></i>
+        <textarea class="form-control mb-2" placeholder="Type your message here..." v-model="message" autofocus
+        @keydown="isTyping" row="3">
+        </textarea>
 
+    <template #no-result>
+      <div class="dim">
+        No result
+      </div>
+    </template>
 
+    <template #item-@="{ item }">
+      <div class="user">
+         <img :src="item.avatar_path" alt="User Avatar" class="mention-user"/> 
+         <span class="dim">
+          {{ item.name }}
+        </span> 
+        <span class="dim">
+          ({{ item.username }})
+        </span>
+      </div>
+    </template>
 
-  <button class="btn btn-primary btn-sm" id="btn-chat" @click.prevent="store()">
-  Send</button>       
+  </Mentionable>
+     <p> <span class="input-group-btn">
+          <i class="far fa-grin chat-emotion" @click="chatEmotion()"></i>
+
+    <button class="btn btn-primary btn-sm" id="btn-chat" @click.prevent="store()">Send</button>       
    </span>
-   </div>
-        <input type="file" name="file" ref="file" class="inputfile btn btn-sm mt-2" value="upload file" @change="fileUpload()" accept="image/jpeg,image/png,application/pdf" />
-   </div>
+       <input type="file" name="file" ref="file" class="inputfile btn btn-sm mt-2" value="upload file" @change="fileUpload()" accept="image/jpeg,image/png,application/pdf"/></p>
    </div>
    </div>
-
+   </div>
 </div>
 </template>
+<style>
+.mention-item {
+  padding: 4px 10px;
+  border-radius: 4px;
+}
 
+.mention-selected {
+  background: rgb(192, 250, 153);
+}
+</style>
 <script>
 
 import data from "emoji-mart-vue-fast/data/all.json";
-import "emoji-mart-vue-fast/css/emoji-mart.css";
+import { Mentionable } from 'vue-mention'
 import { Picker, EmojiIndex } from "emoji-mart-vue-fast";
 
 let emojiIndex = new EmojiIndex(data);
 
 export default {
-  components:{Picker},
+  components:{Picker,Mentionable},
     props:['conversations','slug','users'],
     data() {
       return {
@@ -116,10 +141,20 @@ export default {
       typing: false,
       emojiModal:false,
       file:'',
+      items: [],
     };
     },
 
   methods: {
+    async   onOpen (key) {
+      this.items = key === '@' ? this.users : '';
+    },
+
+     async onApply (item, key) {
+       this.message=this.message+'@'+item.username;
+        this.message=this.message.replace('@undefined','');
+       
+    },
      showEmoji(emoji) {
        if(!emoji){
           return false;

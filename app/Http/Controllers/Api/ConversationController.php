@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use Illuminate\Http\Request;
 use App\Events\NewMessage;
 use App\Models\Project;
+use App\Models\User;
 use App\Http\Requests\ConversationRequest;
 use App\Services\ConversationService;
 
@@ -20,15 +21,17 @@ class ConversationController extends ApiController
                           ConversationRequest $request)
     {
       $conversationService = new ConversationService();
+      
+      if($request->has('file'))
+      {
+        $conversation=$conversationService->     storeFileConversation($project,$request);
+ 
+      }else{
+        $conversation=$conversationService->storeStaticConversation($project,$request);
+      }    
 
-      if($request->has('file')){
+       NewMessage::dispatch($conversation);
 
-      $conversation=$conversationService->storeFileConversation($project,$request);
-
-    }else{
-      $conversation=$conversationService->storeStaticConversation($project,$request);
-    }    
-
-      NewMessage::dispatch($conversation);
+       $conversationService->userMentioned($conversation,$project);
     }
 }
