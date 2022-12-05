@@ -76,9 +76,7 @@ Route::apiResource('/task',TaskController::class)->except(['index','show']);
 Route::patch('/task/{task}/status',[TaskController::class,'status']);
 
 //Chat Conversation Routes
-Route::post('/conversations', [ConversationController::class,'store']);
-Route::get('/conversation',[ConversationController::class,'conversation']);
-
+Route::apiResource('/conversations',ConversationController::class)->only(['store','destroy']);
 });
 
 Route::controller(InvitationController::class)->group(function(){

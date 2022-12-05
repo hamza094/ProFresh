@@ -196,7 +196,7 @@ export default{
 			},
 			//Update project name methods
 			updateName(){
-					axios.patch('/api/v1/projects/'+this.project.slug,{
+				axios.patch('/api/v1/projects/'+this.project.slug,{
 							name:this.projectname,
 					}).then(response=>{
              	this.updateUrl(response.data.slug);
@@ -295,12 +295,23 @@ export default{
                 this.project.conversations.push(e);
             });
         },
+    listenToDeleteConversation(){
+      Echo.channel('deleteConversation')
+        .listen('DeleteConversation', (e) => {
+          this.project.conversations.forEach(item=>{
+                 if(item.id == e.id){
+                 	this.project.conversations.splice(item,1);
+                 }
+            });
+      });
+    },    
         },
 		created(){
 			this.listen();
 			this.loadProject();
 			this.listenForActivity();
 			this.listenForNewMessage();
+			this.listenToDeleteConversation();
 			this.$bus.$on('stageListners', (data) => {
 					this.project.stage_updated_at = data.stage_updated
 					this.project.stage = data.current_stage

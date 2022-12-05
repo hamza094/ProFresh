@@ -5,8 +5,8 @@ namespace Tests\Feature;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use App\Traits\ProjectSetup;
-use App\Models\Group;
 use App\Models\User;
+use App\Models\Conversation;
 use Laravel\Sanctum\Sanctum;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
@@ -46,6 +46,16 @@ class ConversationTest extends TestCase
         'user_id' => $this->user->id])->assertOk();
 
       /*Storage::disk('s3')->assertExists('/storage/'.$file->hashName());*/
+    }
+
+    /** @test */
+    public function allowed_user_can_delete_conversation()
+    {
+      $conversation=Conversation::factory()->create();
+
+      $response=$this->withoutExceptionHandling()->deleteJson($this->project->path().'/conversations/'.$conversation->id);
+
+      $this->assertModelMissing($conversation);
     }
 
 

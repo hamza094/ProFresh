@@ -56,6 +56,9 @@
           <span class="float-right chat-time">
             <i>{{conversation.created_at}}</i>
           </span>
+
+          <button v-if="conversation.user[0].id == user.id" class="btn btn-link btn-sm" @click.prevent="deleteConversation(conversation.id)">Delete</button>
+
           </div>
           </li>
           <span v-show="typing" class="help-block" style="font-style: italic;">
@@ -190,6 +193,16 @@ export default {
       this.$vToastify.warning("Error! Try Again");
     });
     },
+    
+    deleteConversation(id){
+      axios.delete('/api/v1/projects/'+this.slug+'/conversations/'+id)
+      .then(response=>{
+         this.$vToastify.info("conversation deleted");
+      }).catch(error=>{
+        this.$vToastify.warning("Task deletion failed");
+      })
+    },
+
 
   isTyping() {
   let channel = Echo.private('chat');

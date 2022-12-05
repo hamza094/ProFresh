@@ -34,6 +34,10 @@ Broadcast::channel('conversations', function () {
     return true;
 });
 
+Broadcast::channel('deleteConversation', function () {
+    return true;
+});
+
 Broadcast::channel('chat', function ($user) {
   return Auth::check();
 });
