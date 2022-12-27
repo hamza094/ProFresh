@@ -35,19 +35,23 @@ class ConversationController extends ApiController
         $conversation=$conversationService->storeStaticConversation($project,$request);
       }    
 
-       NewMessage::dispatch($conversation);
+       NewMessage::dispatch($conversation,$project);
 
        $conversationService->userMentioned($conversation,$project);
 
-       return $this->respondSuccess(['message'=>'New conversation added to. '.$project->name]);
+       return $this->respondWithSuccess(['message'=>'New conversation added to. '.$project->name]);
     }
 
     public function destroy(Project $project,Conversation $conversation)
     {
-      DeleteConversation::dispatch($conversation);
+      if(auth()->id() !== $conversation->user->id){
+        return $this->respondForbidden("Not allowed to perform action");
+      }
+
+      DeleteConversation::dispatch($conversation,$project);
 
       $conversation->delete();
 
-      return $this->respondNoContent(['message'=>'Conversation deleted successfully from '.$project->name]);
+      return $this->respondNoContent();
     }
 }

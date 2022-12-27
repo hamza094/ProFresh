@@ -1054,6 +1054,10 @@ p {
   font-weight: 700;
 }
 
+.notify-link a:hover {
+  text-decoration: none !important;
+}
+
 .rt {
   right: -2rem !important;
   margin-top: 1.2rem !important;
@@ -1074,6 +1078,8 @@ p {
 .chat-panel {
   overflow-y: scroll;
   height: 350px;
+  display: flex;
+  flex-direction: column-reverse;
 }
 
 .chat ::-webkit-scrollbar-track {
@@ -1237,6 +1243,12 @@ p {
   border: 1px solid grey;
   padding-left: 0.5rem;
   padding-top: 0.2rem;
+}
+
+.emojiModal {
+  position: absolute;
+  bottom: 170px;
+  z-index: 2;
 }
 
 .padding-0 {

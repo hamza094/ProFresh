@@ -25,7 +25,7 @@ class ConversationRequest extends FormRequest
     {
         return [
             'message'=>'sometimes|required',
-            'file'=>'sometimes|required|file',
+            'file'=>'sometimes|required|file|max:999',
         ];
     }
 }

@@ -39,10 +39,12 @@ import "emoji-mart-vue-fast/css/emoji-mart.css";
 
 import alertNotice from './mixins/alertNotice';
 import currentStage from './mixins/currentStage';
+import conversation from './mixins/conversation';
 
 
 Vue.mixin(alertNotice);
 Vue.mixin(currentStage);
+Vue.mixin(conversation);
 
 
 Vue.filter('time',function(data){
@@ -94,6 +96,26 @@ Settings.defaultLocale = 'en'
 
 const VueUploadComponent = require('vue-upload-component')
 Vue.component('file-upload', VueUploadComponent)
+
+import VueProgressBar from 'vue-progressbar'
+
+const options = {
+  color: '#bffaf3',
+  failedColor: '#874b4b',
+  thickness: '7px',
+  transition: {
+    opacity: '0.6s',
+        speed: '3s',
+    opacity: '0.6s',
+    termination: 1800
+  },
+  autoRevert: true,
+  location: 'top',
+  inverse: false
+}
+
+Vue.use(VueProgressBar, options)
+
 
 /**
  * The following block of code may be used to automatically register your

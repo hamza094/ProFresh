@@ -972,6 +972,16 @@ padding-bottom: .2rem;
   }
 }
 
+.notify-link{
+    a{
+        &:hover{
+            text-decoration: none !important;
+        }
+
+
+    }
+}
+
 .rt{
   right: -2rem !important;
   margin-top: 1.2rem !important;
@@ -992,6 +1002,8 @@ padding-bottom: .2rem;
     &-panel{
      overflow-y: scroll;
     height: 350px;
+    display: flex;
+    flex-direction: column-reverse;
     }
 
   ::-webkit-scrollbar-track{
@@ -1143,5 +1155,11 @@ padding-bottom: .2rem;
   border:1px solid grey;
   padding-left: .5rem;
   padding-top: .2rem;
+}
+
+.emojiModal{
+    position: absolute;
+    bottom: 170px;
+    z-index: 2;
 }
 

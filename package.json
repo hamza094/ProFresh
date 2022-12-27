@@ -44,6 +44,7 @@
         "vue-image-crop-upload": "^2.5.0",
         "vue-js-modal": "^2.0.0-rc.6",
         "vue-mention": "^1.1.0",
+        "vue-progressbar": "^0.7.5",
         "vue-router": "^3.5.1",
         "vue-toastify": "^1.8.0",
         "vue-upload-component": "^2.8.22",

@@ -4,7 +4,6 @@ namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use Illuminate\Notifications\Messages\BroadcastMessage;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
@@ -47,7 +46,7 @@ class UserMentioned extends Notification implements ShouldBroadcast
     public function toArray($notifiable)
     {
         return [
-          'message'=>'You are mentioned in '. $this->project->name.' '.'group chat',
+          'message'=>'mentioned you in '. $this->project->name.' '.'group chat',
           'notifier' =>$this->user,
           'link'=>$this->project->path()
         ];
@@ -56,7 +55,7 @@ class UserMentioned extends Notification implements ShouldBroadcast
     public function toBroadcast($notifiable)
     {
       return new BroadcastMessage([
-        'message'=>'You are mentioned in '. 
+        'message'=>'mentioned you in '.  
                     $this->project->name.' '.'group chat',
          'notifier' =>$this->user,
         'link'=>$this->project->path()

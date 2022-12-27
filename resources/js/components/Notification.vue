@@ -6,13 +6,13 @@
                <i class="far fa-bell notification-icon"></i>
                <span v-if="notifications.length" class="notification-count">{{notifications.length}}</span>
             </a>
-            <ul class="dropdown-menu  dropdown-menu-right rt">
+            <ul class="dropdown-menu notify-link  dropdown-menu-right rt">
                 <li v-for="notification in notifications" :key="notification.id" v-if="notifications.length">
 
-            <router-link :to="(notification.data.link).slice(7)" class="dropdown-item">
-                <span @click="markAsRead(notification)">
+            <router-link :to="(notification.data.link).slice(7)" >
+                <a class="dropdown-item" @click="markAsRead(notification)">
                 <b>{{notification.data.notifier.name}}</b> {{getPostBody(notification)}}
-                </span>  
+                </a>  
             </router-link>
 
          </li>

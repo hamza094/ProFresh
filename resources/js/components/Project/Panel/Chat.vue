@@ -22,10 +22,10 @@
   <div class="collapse" :id="'collapseOne-' + slug">
     <div class="card-body chat-panel">
 
-      <!-- Start of Chat Message -->
+      <!-- Chat Message -->
 
       <ul class="chat">
-      <li v-for="conversation in conversations" :key="conversation.id">
+      <li v-for="(conversation,index) in conversations" :key="index">
       <div class="chat-body clearfix">
       <div class="header">
 
@@ -37,14 +37,13 @@
       {{ conversation.user[0].name }}</strong>
 
     </div>
-
         <p v-if="conversation.message" class="mt-2">
           <span class="chat-message" v-html="conversation.message">
          </span>
         </p>
 
         <p v-if="conversation.file" class="mt-2">
-          <span v-if="conversation.file.includes('.PNG') || conversation.file.includes('.JPEG') || conversation.file.includes('.JPG')"><img
+          <span v-if="conversation.file.includes('.png' || '.jpeg' || '.jpg')"><img
           :src="conversation.file" class="chat-image" alt=""></span>
 
           <span v-else>
@@ -57,32 +56,38 @@
             <i>{{conversation.created_at}}</i>
           </span>
 
-          <button v-if="conversation.user[0].id == user.id" class="btn btn-link btn-sm" @click.prevent="deleteConversation(conversation.id)">Delete</button>
+          <button v-if="auth.id == conversation.user[0].id" class="btn btn-link btn-sm" @click.prevent="deleteConversation(conversation.id,index)">Delete</button>
+
+          <button v-else class="btn btn-link btn-sm disabled">Delete</button>
 
           </div>
           </li>
-          <span v-show="typing" class="help-block" style="font-style: italic;">
-                @{{ user.name }} is typing...
+          <span v-if="typing" class="help-block" style="font-style: italic;">
+              💬  @{{ user.name }} is typing...
+          </span>
+          <span v-else class="help-block" style="font-style: italic;">
+                💬
           </span>
           </ul>
 
-          <!-- Next Section -->
+          <!-- Chat Footer -->
 
             </div>
 
             <div class="card-footer gioj">
+              
           <div class="chat-floating">
-
         <Picker :data="emojiIndex" v-if="emojiModal" set="twitter" @select="showEmoji" title="Pick your emoji…"
-        :style="{ position: 'absolute', bottom: '27px' }"/>
-
+        class="emojiModal" :showPreview="false"/>
     </div>
+
+      <!-- Chat with mentionable user functionality -->   
 
        <Mentionable :keys="['@']" :items="items" offset="6"
         insert-space @open="onOpen" @apply="onApply">
 
-        <textarea class="form-control mb-2" placeholder="Type your message here..." v-model="message" autofocus
-        @keydown="isTyping" row="3">
+        <textarea class="form-control mb-2" placeholder="Type your message here..." v-model="message" autofocus @keypress.enter.exact.prevent="send()"
+        @keydown="isTyping" row="1">
         </textarea>
 
     <template #no-result>
@@ -102,17 +107,19 @@
         </span>
       </div>
     </template>
-
   </Mentionable>
+
      <p> <span class="input-group-btn">
           <i class="far fa-grin chat-emotion" @click="chatEmotion()"></i>
 
-    <button class="btn btn-primary btn-sm" id="btn-chat" @click.prevent="store()">Send</button>       
+    <button class="btn btn-primary btn-sm" id="btn-chat" @click.prevent="send()">Send</button>
+
    </span>
        <input type="file" name="file" ref="file" class="inputfile btn btn-sm mt-2" value="upload file" @change="fileUpload()" accept="image/jpeg,image/png,application/pdf"/></p>
    </div>
    </div>
    </div>
+    <vue-progress-bar></vue-progress-bar>
 </div>
 </template>
 <style>
@@ -135,14 +142,14 @@ let emojiIndex = new EmojiIndex(data);
 
 export default {
   components:{Picker,Mentionable},
-    props:['conversations','slug','users'],
+    props:['conversations','slug','users','auth'],
     data() {
       return {
       emojiIndex: emojiIndex,
       message: '',
-      user:this.$store.state.currentUser.user,
       typing: false,
       emojiModal:false,
+      user:this.auth,
       file:'',
       items: [],
     };
@@ -174,45 +181,48 @@ export default {
 
     let formData = new FormData()
     formData.append("file", this.file);
-
+    this.$Progress.start();
     this.$vToastify.info('Be patient file uploading');
 
     axios.post('/api/v1/projects/'+this.slug+'/conversations',formData).then(response=>{
-          this.$vToastify.success("File Uploaded");
+        this.$Progress.finish();
+        this.$vToastify.success("File Uploaded");
 
-      }).catch(function (error) {
-        this.$vToastify.warning("Error! Try Again");
+      }).catch(error=> {
+        this.$vToastify.error("Failed to upload a file.");
+        this.$Progress.fail();
       })
     },
 
-  store() {
+  send() {
+    if(this.message.length !== 0){
     axios.post('/api/v1/projects/'+this.slug+'/conversations', {message: this.message})
     .then((response) => {
-    this.message = '';
+      this.message = '';
     }).catch(error=>{
       this.$vToastify.warning("Error! Try Again");
     });
+  }
     },
     
-    deleteConversation(id){
+    deleteConversation(id,index){
       axios.delete('/api/v1/projects/'+this.slug+'/conversations/'+id)
       .then(response=>{
-         this.$vToastify.info("conversation deleted");
+         this.$vToastify.info("Wait a sec..");
       }).catch(error=>{
         this.$vToastify.warning("Task deletion failed");
       })
     },
 
-
   isTyping() {
-  let channel = Echo.private('chat');
+  let channel = Echo.private('typing.'+this.getProjectSlug());
 
   let _this = this;
 
   setTimeout(function() {
-    channel.whisper('typing', {
+    channel.whisper('typing-indicator', {
       user:_this.$store.state.currentUser.user,
-        typing: true
+        typing: true,
     });
   }, 300);
   },
@@ -225,8 +235,8 @@ export default {
     created(){
     let _this = this;
 
-  Echo.private('chat')
-    .listenForWhisper('typing', (e) => {
+  Echo.private('typing.'+this.getProjectSlug())
+    .listenForWhisper('typing-indicator', (e) => {
       this.user = e.user;
       this.typing = e.typing;
 
@@ -235,6 +245,7 @@ export default {
         _this.typing = false
       }, 900);
     });
+
   },
 }
 </script> 

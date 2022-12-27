@@ -130,7 +130,7 @@
             </div>
 			<hr>
 			<Chat :slug="project.slug" 
-			:conversations="project.conversations" :users="project.members"></Chat>
+			:conversations="project.conversations" :users="project.members" :auth="this.auth"></Chat>
 		</div>
 	</div>
 </div>
@@ -157,9 +157,11 @@ export default{
 		 projectabout:"",
 		 auth:this.$store.state.currentUser.user,
 		 members:[],
+		 conversations:[],
      chatusers:[],
 		 accessAllowed:false,
 		 ownerLogin:false,
+		 path:'',
     };
     },
     methods:{
@@ -172,7 +174,7 @@ export default{
 						 this.getStage=this.project.stage.id;
 						 this.projectname=this.project.name;
 						 this.daysLimit=this.project.days_limit;
-             this.members.unshift(this.auth);
+             this.members.unshift(this.project.user[0]);
 						 this.checkMembersAndPermission();
 						 this.$bus.emit('projectSlug',{slug:response.data.slug});
 				 }).catch(error=>{
@@ -269,20 +271,6 @@ export default{
 				}
 
 			},
-	listen(){
-      Echo.join('chatroom').
-        here((members)=>{
-          this.chatusers=members;
-        }).
-        joining((auth) => {
-          this.chatusers.push(auth);
-          this.$vToastify.info(auth.name+' '+'joined project conversation');
-        })
-        .leaving((auth) => {
-          this.chatusers.splice(this.chatusers.indexOf(auth),1);
-          this.$vToastify.info(auth.name+' '+'leave project conversation');
-    })
-  },
 	listenForActivity() {
 	  Echo.channel('activity')
 	    .listen('ActivityLogged', (e) => {
@@ -290,28 +278,22 @@ export default{
 		});
 		},
 		listenForNewMessage() {
-          Echo.channel('conversations')
+          Echo.private('conversations.'+this.getProjectSlug())
               .listen('NewMessage', (e) => {
                 this.project.conversations.push(e);
             });
         },
+
     listenToDeleteConversation(){
-      Echo.channel('deleteConversation')
+      Echo.private('deleteConversation.'+this.getProjectSlug())
         .listen('DeleteConversation', (e) => {
-          this.project.conversations.forEach(item=>{
-                 if(item.id == e.id){
-                 	this.project.conversations.splice(item,1);
-                 }
-            });
+        this.project.conversations.splice(this.project.conversations.indexOf(e),1);
+        this.$vToastify.success("conversation deleted");       
       });
     },    
-        },
-		created(){
-			this.listen();
+    },
+    		created(){
 			this.loadProject();
-			this.listenForActivity();
-			this.listenForNewMessage();
-			this.listenToDeleteConversation();
 			this.$bus.$on('stageListners', (data) => {
 					this.project.stage_updated_at = data.stage_updated
 					this.project.stage = data.current_stage
@@ -334,5 +316,28 @@ export default{
 							  this.project.members=data.members
 						})
 		},
+    mounted(){
+      this.listenForNewMessage();
+			this.listenToDeleteConversation();
+						//this.listenForActivity();
+
+      this.path=this.getProjectSlug();
+      
+      Echo.join('chatroom.'+this.getProjectSlug()).
+        here((members)=>{
+          this.chatusers=members;
+        }).
+        joining((auth) => {
+          this.chatusers.push(auth);
+          this.$vToastify.info(auth.name+' '+'joined project conversation');
+        })
+        .leaving((auth) => {
+          this.chatusers.splice(this.chatusers.indexOf(auth),1);
+          this.$vToastify.info(auth.name+' '+'leave project conversation');
+    })
+    },
+    beforeDestroy(){
+      Echo.leave('chatroom.'+this.path);
+  },
 }
 </script>

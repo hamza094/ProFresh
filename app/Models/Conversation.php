@@ -12,7 +12,7 @@ class Conversation extends Model
 
 	protected $guarded=[];
 
-    protected $with=['user'];
+    protected $with=['user','project'];
 
     public function project()
     {

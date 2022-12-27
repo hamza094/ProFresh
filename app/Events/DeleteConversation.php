@@ -18,15 +18,18 @@ class DeleteConversation implements ShouldBroadcast
     use Dispatchable, InteractsWithSockets;// SerializesModels;
 
     public $conversation;
+    public $project;
+
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct(Conversation $conversation)
+    public function __construct(Conversation $conversation,Project $project)
     {
        $this->conversation = $conversation;
+       $this->project = $project;
     }
 
     /**
@@ -36,7 +39,7 @@ class DeleteConversation implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-      return new Channel('deleteConversation');
+      return new PrivateChannel('deleteConversation.'.$this->project->slug);
     }
 
     public function broadcastWith()

@@ -26,6 +26,8 @@ class ConversationResource extends JsonResource
         'user'=>$this->user()->select('name','id','avatar_path')->get(),
 
         'created_at'=>$this->created_at->format("F j, Y, g:i a"),
+
+        'project_id'=>$this->project->id,
      ]; 
     }
 }

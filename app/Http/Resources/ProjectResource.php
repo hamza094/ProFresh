@@ -28,7 +28,7 @@ class ProjectResource extends JsonResource
           'stage'=>new StageResource($this->stage),
           'postponed'=>$this->postponed,
           'status'=>$this->currentStatus(),
-          'user'=>$this->user()->select('id','name','avatar_path')->get(),
+          'user'=>$this->user()->select('id','name','avatar_path','username')->get(),
           'members'=>$this->activeMembersData(),
           'completed'=>$this->completed,
 

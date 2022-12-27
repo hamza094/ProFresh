@@ -34,12 +34,12 @@ class ConversationService
     if($conversation->message !== null)
     {
       User::whereIn('username', $conversation->mentionedUsers
-        ())->get()
-           ->filter(function($user){
-              return $user->id !== auth()->user()->id;})
-           ->each(function ($user) use ($project) {
+        ())->get()->filter(function($user){
+              return $user->id !== auth()->user()->id;
+            })->each(function ($user) use ($project) {
             $user->notify(new UserMentioned(auth()->user()->toArray(),$project));
       });
+
     }
   }
 }

@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Broadcast;
-use App\Models\Group;
 use App\Models\Project;
 use App\Models\User;
 
@@ -26,22 +25,45 @@ Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
 });
 
 Broadcast::channel('activity', function ($user) {
-  return true;
-    //return $user->is($project->user) || $project->activeMembers()->contains($user);
+      return true;
 });
 
-Broadcast::channel('conversations', function () {
-    return true;
+Broadcast::channel('conversations.{slug}', function ($user,$slug) {
+
+    $project=Project::with('user')->where('slug',$slug)
+             ->firstOrFail();
+
+    if($user->can('access',$project)){
+        return true;
+    }
 });
 
-Broadcast::channel('deleteConversation', function () {
-    return true;
+Broadcast::channel('deleteConversation.{slug}', function ($user,$slug) {
+    $project=Project::with('user')->where('slug',$slug)
+             ->firstOrFail();
+
+    if($user->can('access',$project)){
+        return true;
+    }
 });
 
-Broadcast::channel('chat', function ($user) {
-  return Auth::check();
+
+Broadcast::channel('typing.{slug}', function ($user,$slug){
+
+    $project=Project::with('user')->where('slug',$slug)
+             ->firstOrFail();
+
+    if($user->can('access',$project)){
+        return true;
+    }
 });
 
-Broadcast::channel('chatroom', function ($user) {
-    return $user;
+Broadcast::channel('chatroom.{slug}', function ($user,$slug){
+
+    $project=Project::with('user')->where('slug',$slug)
+             ->firstOrFail();
+
+    if($user->can('access',$project)){
+        return $user;
+    }
 });
