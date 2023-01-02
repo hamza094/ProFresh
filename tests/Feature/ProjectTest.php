@@ -13,24 +13,66 @@ class ProjectTest extends TestCase
 {
     use RefreshDatabase,ProjectSetup;
 
+    /** @test */
     public function auth_user_can_create_project()
     {
-        $this->signIn();
-        $response=$this->post('api/projects',
-            ['name' => 'Json','email'=>'json_pisces@outlook.com',
-                'mobile'=>6785434567]);
-          $this->withoutExceptionHandling()->assertDatabaseHas('projects',['name'=>'Json']);
+        $response=$this->postJson('api/v1/projects',
+           [
+            'name' => 'My Project name',
+            'about'=>'about this project',
+            'stage_id'=>1,
+       ]);
+
+       $this->assertDatabaseHas('projects',['name'=>'My Project name']);
     }
 
-    public function a_project_requires_a_name(){
-        $this->signIn();
-        $project=make('App\Models\Project',[
-            'name'=>null
-        ]);
-        $this->post('/api/projects',$project->toArray())
-            ->assertSessionHasErrors('name');
+    /** @test */
+    public function tasks_can_be_added_when_new_project_created()
+    {
+       $attributes=Project::factory()->raw([
+        'user_id'=>auth()->id()
+       ]);
 
+       $attributes['tasks']=[
+           ['body'=>'task 1'],
+           ['body'=>'task 2']
+        ];
+
+       $response=$this->postJson('api/v1/projects',$attributes);
+
+       $project=Project::where('slug','=',$response['slug'])
+                ->firstOrFail();
+
+       $this->assertCount(2,$project->tasks);
     }
+
+    /** @test */
+    public function project_requires_a_name()
+    {
+      $project=Project::factory()->make(['name'=>null]);
+
+      $response=$this->postJson('/api/v1/projects',$project->toArray());
+
+      $response->assertJsonValidationErrors('name');
+    }
+
+    /** @test */
+    public function tasks_validated_on_creating_a_new_project()
+    {
+       $response = $this->postJson('/api/v1/projects', [
+        'name'=>'project name',
+        'about'=>'about this project',
+        'stage_id'=>1,
+         'tasks' => [
+             ['body' => str_repeat('a', 56)],
+             ['body' => ''],
+         ],
+       ]);
+
+        $response->assertJsonValidationErrors('tasks.0.body');
+        $response->assertJsonValidationErrors('tasks.1.body');
+    }
+
      /** @test */
     public function updated_project_requires_a_name()
     {

@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Api;
 
 use Auth;
+use Illuminate\Support\Arr;
 use App\Models\User;
 use App\Models\Project;
 use Illuminate\Http\Request;
 use App\Http\Requests\ProjectRequest;
+use App\Http\Requests\ProjectStoreRequest;
 use App\Helpers\SendNotification;
 use App\Services\ProjectService;
 use App\Repository\ProjectRepository;
@@ -31,28 +33,31 @@ class ProjectController extends ApiController
     $this->notification=$notification;
   }
 
-    public function store(ProjectRequest $request)
-    {
+    public function store(ProjectStoreRequest $request,ProjectService $service): JsonResponse
+     {
 
-       //DB::beginTransaction();
+      DB::beginTransaction();
 
-       //try{
+      try{
 
       $project = Auth::user()->projects()
                   ->create($request->validated());
+         
+      $service->addTasksToProject($project,$request->tasks);
 
-        //DB::commit();
+      DB::commit();
 
-       //}catch(\Exception $ex){
+      }catch(\Exception $ex){
 
-        //DB::rollBack();
+      DB::rollBack();
 
-        //throw $ex;
-       //}
+      throw $ex;
+      }
 
-       if(request()->wantsJson()){
-        return['message'=>$project->path()];
-    }
+      return $this->respondWithSuccess([
+        'path'=>$project->path(),
+        'slug'=>$project->slug
+      ]);
 }
 
     public function show(Project $project)
@@ -79,9 +84,11 @@ class ProjectController extends ApiController
 
       $this->notification->send($project);
 
-      return $this->respondWithSuccess(
-        ['msg'=>'Project '.$key.' updated sucessfully', $key=>$value,'slug'=>$project->slug]
-      );
+      return $this->respondWithSuccess([
+        'msg'=>'Project '.$key.' updated sucessfully',
+         $key=>$value,
+        'slug'=>$project->slug
+      ]);
     }
 
     /*

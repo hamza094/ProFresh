@@ -4,8 +4,11 @@
 
             <div class="col-md-1 panel-left">
                 <div class="panel">
+
                     <a href="/"><img src="/img/profresh.png" class="main-img" alt=""></a>
+
                     <div v-if="loggedIn === true">
+
                     <router-link to="/dashboard" class="panel-list_item">
                         <p><span class="icon">
                                 <i class="icon-logo far fa-calendar"></i>
@@ -33,6 +36,7 @@
 
                 <nav class="navbar navbar-expand-md navbar-light bg-white">
                     <router-link class="navbar-brand" to='/home'><b>Profresh</b></router-link>
+                    
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>

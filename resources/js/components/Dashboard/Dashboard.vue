@@ -15,22 +15,25 @@
         <br><br>
      	<div class="dashboard">
      		<div class="row">
-					<div v-if="message" class="m-3">
-					<h5><b>{{message}} in {{projectState}} Projects</b></h5>
-					</div>
+				<div v-if="message" class="m-3">
+				<h5>
+				<b>{{message}} in {{projectState}} Projects</b>
+			    </h5>
+				</div>
      			<div class="col-md-4" v-for="project in projects">
-						  <router-link :to="'/projects/'+project.slug" class="dashboard-link">
-     				<div class="dashboard-projects mt-5">
-                        <span class="float-right">
-													<b>{{projectState}}</b>
-												</span>
-     					<p class="mt-3">{{project.name}}</p>
-     					    <p>Project Stage: <span v-text="stage(project)"></span></p>
-     					<p>Project Status:
-								<span> {{project.status}}</span>
-							</p>
-							<p>Created At: {{project.created_at}}</p>
-     				</div>
+					<router-link :to="'/projects/'+project.slug" class="dashboard-link">
+     			<div class="dashboard-projects mt-5">
+                    <span class="float-right">
+					<b>{{projectState}}</b>
+					</span>
+     			<p class="mt-3">{{project.name}}</p>
+     			<p>Project Stage: <span v-text="stage(project)">
+     			</span></p>
+     			<p>Project Status:
+				    <span> {{project.status}}</span>
+				</p>
+				<p>Created At: {{project.created_at}}</p>
+     		</div>
                 </router-link>
      			</div>
      		</div>

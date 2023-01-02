@@ -4,7 +4,6 @@
 </a>
 </template>
 
-
 <script>
     export default {
         data() {
@@ -17,7 +16,7 @@
                 const panel1Handle = this.$showPanel({
                     component: 'project-form',
                     openOn: 'right',
-                    width:500,
+                    width:540,
                     disableBgClick:true,
                     keepAlive:true,
                     props: {

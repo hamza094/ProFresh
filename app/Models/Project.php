@@ -80,6 +80,11 @@ class Project extends Model
        ]);
     }
 
+    public function addTasks($tasks)
+    {
+      return $this->tasks()->createMany($tasks);   
+    }
+
     public function invite(User $user)
     {
       return $this->members()->attach($user);

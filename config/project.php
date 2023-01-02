@@ -1,6 +1,6 @@
 <?php
 
 return [
-      'taskLimit' => '7',
+      'taskLimit' => '8',
       'abandonedLimit'=>'90',
 ];
