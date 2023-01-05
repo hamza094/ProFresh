@@ -87,7 +87,8 @@ class ProjectController extends ApiController
       return $this->respondWithSuccess([
         'msg'=>'Project '.$key.' updated sucessfully',
          $key=>$value,
-        'slug'=>$project->slug
+        'slug'=>$project->slug,
+        'score'=>$project->score()
       ]);
     }
 
@@ -125,7 +126,7 @@ class ProjectController extends ApiController
       ]);
    }
    
-     public function overview(){
+    public function overview(){
 
      }
 }

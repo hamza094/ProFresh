@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Traits\RecordActivity;
+use App\Enums\ScoreValue;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -92,7 +93,8 @@ class Project extends Model
 
     public function members()
     {
-      return $this->belongsToMany(User::class,'project_members')->withPivot('active');
+      return $this->belongsToMany(User::class,'project_members')
+             ->withPivot('active');
     }
 
     public function activeMembers()
@@ -111,29 +113,26 @@ class Project extends Model
       return $this->hasMany(Conversation::class);
     }
 
-    public function hasUser($user_id)
-    {
-       foreach ($this->users as $user) {
-           if($user->id == $user_id) {
-               return true;
-           }
-       }
-    }
 
   public function activeMembersData()
- {
-     return $this->members()->wherePivot('active',true)->select('email','avatar_path','name','username','user_id')->get()->makeHidden('pivot');
- }
+  {
+    return $this
+       ->members()
+       ->wherePivot('active',true)
+       ->select('email','avatar_path','name','username','user_id')->get()
+       ->makeHidden('pivot');
+  }
 
     public function markUncompleteIfCompleted(){
-      if($this->completed == true){
+      if($this->completed){
         $this->update(['stage_id'=>0,'completed'=>false]);
       }
     }
 
-    public function removePostponedIfExists(){
-      if($this->postponed != null){
-         $this->update(['postponed'=>null]);
+    public function removePostponedIfExists()
+    {
+      if (!is_null($this->postponed)) {
+        $this->update(['postponed' => null]);
       }
     }
 
@@ -141,16 +140,30 @@ class Project extends Model
       return $this->tasks->count() == config('project.taskLimit');
     }
 
-    public function currentStatus(){
-     return 'cold';
-   }
+    public function score()
+    {
+      $tasks = $this->tasks()->count() * ScoreValue::Task;
+
+      $notes = $this->notes !== null ? ScoreValue::Note : 0;
+
+      $members = $this->activeMembers()->count() * ScoreValue::Members;
+
+      return $tasks + $notes + $members;     
+    }
+
+    public function status()
+    {
+      return $this->score() >= 21 ? 'hot' : 'cold';
+    }
 
    public function scopePastAbandonedLimit($query){
       $query->where( 'deleted_at', '<', Carbon::now()->subDays(config('project.abandonedLimit')));
    }
 
    public function scheduledMessages(){
-      return $this->messages()->where('delivered',false)
+      return $this
+      ->messages()
+      ->where('delivered',false)
       ->whereNotNull('delivered_at')
       ->where('delivered_at','>',Carbon::now())
       ->with('users:name')

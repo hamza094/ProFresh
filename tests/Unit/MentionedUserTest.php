@@ -13,7 +13,6 @@ class MentionedUserTest extends TestCase
 {
     use RefreshDatabase;
 
-
     /** @test */
     public function it_wraps_mentioned_usernames_in_the_body_within_anchor_tag()
     {

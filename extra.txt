@@ -1,1 +1,24 @@
+Rating factors
+- on task =  
+- on progect members 
+- project note 
+- activities count 
+- stage id status 
 
+public function score(){
+	$score=0;
+
+	$tasks=$project->tasks->count;
+	$score=$score + $tasks*2;
+
+	same for project members
+
+	count if project note exists
+
+	activities count
+
+	return score;
+}
+
+
+table 

@@ -27,11 +27,10 @@ class ProjectResource extends JsonResource
           'notes'=>$this->notes,
           'stage'=>new StageResource($this->stage),
           'postponed'=>$this->postponed,
-          'status'=>$this->currentStatus(),
           'user'=>$this->user()->select('id','name','avatar_path','username')->get(),
           'members'=>$this->activeMembersData(),
           'completed'=>$this->completed,
-
+          'score'=>$this->score(),
           'tasks'=>$this->when($this->tasks()->exists(),
           fn()=>TaskResource::collection($this->whenLoaded('tasks'))->paginate(3)),
 
@@ -42,7 +41,7 @@ class ProjectResource extends JsonResource
 
           'deleted_at'=>$this->when($this->deleted_at != null,
           fn()=>$this->deleted_at->diffforHumans()),
-          //'stage_updated_at'=>$this->stage_updated_at->format("F j, Y, g:i a"),
+          'stage_updated_at'=>$this->stage_updated_at->format("F j, Y, g:i a"),
           'days_limit'=>config('project.abandonedLimit'),
           'activities'=>ActivityResource::collection($this->activities)->take(5),
         ];

@@ -73,6 +73,7 @@
               this.$vToastify.success("Project Task added");
               this.form.body="";
 							this.getResults();
+              this.$bus.emit('addScore');
           }).catch(error=>{
 						this.form.body="";
 						this.taskErrors(error);
@@ -126,6 +127,7 @@
       .then(response=>{
 				 this.getResults();
          this.$vToastify.info("Project Task deleted");
+           this.$bus.emit('reduceScore');
       }).catch(error=>{
         this.$vToastify.warning("Task deletion failed");
       })

@@ -8,7 +8,7 @@
         <div>
             <div class="score-dropdown" @click="isPop = !isPop">
                 <!-- trigger -->
-                <span role="button" class="score-point" :class="'score-point_'+status">0</span>
+                <span role="button" class="score-point" :class="'score-point_'+status">{{score}}</span>
 
                 <!-- menu links -->
                 <div class="score-dropdown_item" v-show=isPop>
@@ -22,13 +22,16 @@
                               <div class="row">
                                   <div class="col-md-3">
                                       <p class="score-content_point-cold">
-                    <span><span  :class="'score-content_point-'+status+'_point'">0</span><br><span :class="'score-content_point-'+status+'_status'">{{status}}</span></span>
+                    <span><span  :class="'score-content_point-'+status+'_point'">{{score}}</span><br><span :class="'score-content_point-'+status+'_status'">{{status}}</span></span>
                   </p>
                                   </div>
                                   <div class="col-md-9">
                                       <div>
                                   <div>
-                                    <p class="project-score"><span><i class="fas fa-arrow-up"></i></span> This feature will be updated soon</p>
+                                    <p class="project-score"><span><i class="fas fa-arrow-up"></i></span> Score counts on the new task added.</p>
+                                     <p class="project-score"><span><i class="fas fa-arrow-up"></i></span> Score counts if project notes are available.
+                                     </p>
+                                      <p class="project-score"><span><i class="fas fa-arrow-up"></i></span>Score counts when a new member joins a project.</p>
                                   </div>
                                 </div>
 
@@ -47,7 +50,7 @@
 
 <script>
 export default {
-    props:['projectName','start','stage','completed','status'],
+    props:['projectName','start','stage','completed','status','score'],
     data() {
         return {
             isPop:false,

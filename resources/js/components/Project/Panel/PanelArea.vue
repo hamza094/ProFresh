@@ -5,7 +5,7 @@
     <div class="project-note">
       <div id="wrapper">
         <p><b>Add Project Note:</b></p>
-    <form id="paper" method="post" @keyup.enter="leadNote">
+    <form id="paper" method="post" @keyup.enter.prevent="projectNote">
       <textarea placeholder="Write project notes" id="text" name="notes" rows="4" v-model="form.notes"></textarea>
       <br>
   </form>
@@ -110,11 +110,12 @@ export default{
                  .then(({data})=>(this.users=data));
         },
 
-    leadNote(){
+    projectNote(){
       axios.patch('/api/projects/'+this.project.id+'/notes',{
         notes:this.form.notes,
       }).then(response=>{
-          this.$vToastify.success("Notes Updated");
+          //this.$vToastify.success("Notes Updated");
+          console.log(response);
       }).catch(error=>{
         this.$vToastify.warning("Notes Updatation failed");
         this.form.notes=this.project.notes

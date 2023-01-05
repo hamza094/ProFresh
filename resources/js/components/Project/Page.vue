@@ -18,7 +18,7 @@
 						<div class="row">
 							<div class="col-md-2">
 								<Status :projectName='project.name' :start="project.created_at" :stage="project.stage"
-								:completed="this.project.completed" :status="project.status">
+								:completed="this.project.completed" :status="this.status" :score="this.project.score">
 							</Status>
 						</div>
 						<div class="col-md-10">
@@ -96,11 +96,7 @@
 						<div class="project-info">
 							<div class="project-info_socre">
 								<p class="project-info_score-heading">Status</p>
-								<p class="project-info_score-point" :class="'project-info_score-point_'+project.status">0</p>
-							</div>
-							<div class="project-info_rec">
-								<span>Last Seen</span>
-								<!-- <p>{{Carbon\Carbon::parse($project->user->lastseen)->diffforHumans()}}</p>-->
+								<p class="project-info_score-point" :class="'project-info_score-point_'+this.status">{{this.project.score}}</p>
 							</div>
 							<div class="project-info_rec">
 								<span>Stage Updated</span>
@@ -162,6 +158,7 @@ export default{
 		 accessAllowed:false,
 		 ownerLogin:false,
 		 path:'',
+		 status:'cold',
     };
     },
     methods:{
@@ -269,8 +266,8 @@ export default{
 				if(error.response.data.error){
 					this.$vToastify.warning(error.response.data.error);
 				}
-
 			},
+
 	listenForActivity() {
 	  Echo.channel('activity')
 	    .listen('ActivityLogged', (e) => {
@@ -292,7 +289,7 @@ export default{
       });
     },    
     },
-    		created(){
+    	created(){
 			this.loadProject();
 			this.$bus.$on('stageListners', (data) => {
 					this.project.stage_updated_at = data.stage_updated
@@ -306,15 +303,28 @@ export default{
 			 				.then(response => {
 			 					this.project.tasks = response.data.tasks;
 			 					this.project.activities = response.data.activities;
-
 			 				});
-		 				})
+		 				});
+
 						this.$bus.$on('Panel', (data) => {
-								this.project.notes = data.notes
-							})
+								this.project.notes = data.notes;
+							});
+
 						this.$bus.$on('removeMember',(data)=>{
-							  this.project.members=data.members
-						})
+							this.project.members=data.members;
+						});
+
+						this.$bus.$on('addScore', () => {
+								this.project.score +=2;
+						});
+
+						this.$bus.$on('reduceScore', () => {
+								this.project.score -=2;
+						});
+
+            this.$bus.$on('score', (data) => {
+								this.project.score = data.score;
+						});  						
 		},
     mounted(){
       this.listenForNewMessage();

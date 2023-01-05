@@ -5,8 +5,7 @@ use Illuminate\Http\Request;
 use App\Models\Conversation;
 
 class ProjectService
-{
-  
+{ 
   public function sameRequestAttributes($project)
   {
       return $project->name == request('name')
@@ -30,7 +29,6 @@ class ProjectService
 
     $project->addTasks($filteredTasks);
     }
-
   }
 
    private function getFilteredProjects($tasks)

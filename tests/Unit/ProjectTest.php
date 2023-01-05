@@ -79,6 +79,22 @@ class ProjectTest extends TestCase
   }
 
   /** @test */
+  public function get_project_score_and_status()
+  {
+    $project = Project::factory()->create();
+
+    Task::factory()->for($project)->count(4)->create();
+
+    $project->notes = "Some notes";
+
+    $this->userBecomeMember($project);
+
+    $this->assertEquals(14, $project->score());
+
+    $this->assertEquals('cold', $project->status());
+  }
+
+  /** @test */
   /*public function check_project_status()
   {
      $project = Project::factory()
@@ -88,5 +104,15 @@ class ProjectTest extends TestCase
       ->create();
       $this->assertEquals($project->currentStatus(),'hot');
   }*/
+
+     protected function userBecomeMember($project)
+   {
+     $project->members()->attach($user=User::factory()->create());
+
+     \DB::table('project_members')
+     ->where('project_id', $project->id)
+     ->where('user_id', $user->id)
+     ->update(['active' =>true]);
+   }
 
 }

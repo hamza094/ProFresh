@@ -3,7 +3,8 @@
     <div class="project-note">
       <div id="wrapper">
         <p><b>Add Project Note:</b></p>
-    <form v-if="access" id="paper" method="post" @keyup.enter="ProjectNote">
+
+    <form v-if="access" id="paper" method="post"@keyup.enter.prevent="ProjectNote">
       <textarea placeholder="Write Project Notes" id="text" name="notes" rows="4" v-model="form.notes" v-text="this.notes"></textarea>
       <br>
   </form>
@@ -86,6 +87,8 @@ export default{
       }).then(response=>{
         this.$bus.emit('Panel',{notes:response.data.notes});
         this.$vToastify.success("Notes Updated");
+        this.$bus.emit('score',{score:response.data.score});
+        console.log(response.data.score);
       }).catch(error=>{
           if(error.response.data.errors && error.response.data.errors.notes[0]){
             this.$vToastify.warning(error.response.data.errors.notes[0]);

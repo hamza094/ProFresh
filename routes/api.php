@@ -49,7 +49,6 @@ Route::apiResource('/projects', ProjectController::class)->except(['show']);
 Route::group(['prefix' => 'projects/{project}'], function() {
 Route::get('/',[ProjectController::class,'show'])->withTrashed();
 
-
 Route::get('/delete',[ProjectController::class,'delete'])->can('manage','project');
 Route::get('/restore',[ProjectController::class,'restore'])->withTrashed()->can('manage','project');
 
