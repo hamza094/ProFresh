@@ -5,11 +5,10 @@ namespace App\Models;
 use App\Traits\RecordActivity;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Traits\BelongsToProject;
 
 class Task extends Model
 {
-  use RecordActivity, HasFactory,BelongsToProject;
+  use RecordActivity, HasFactory;
 
   protected $guarded=[];
 
@@ -33,5 +32,9 @@ class Task extends Model
     {
       $this->update(['completed'=>false]);
     }
+
+    public function project(){
+      return $this->belongsTo(Project::class);
+   }
 
 }

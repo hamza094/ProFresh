@@ -18,8 +18,9 @@ class TaskResource extends JsonResource
          'id'=>$this->id,
          'body'=>$this->body,
          'completed'=>$this->completed,
-         'created_at'=>$this->created_at->format("F j, Y, g:i a"),
-         'updated_at'=>$this->updated_at->format("F j, Y, g:i a"),
+         'created_at'=>$this->created_at->format(config('app.date_formats.exact')),
+         
+         'updated_at'=>$this->updated_at->format(config('app.date_formats.exact')),
        ];
     }
 }

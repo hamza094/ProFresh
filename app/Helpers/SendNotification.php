@@ -21,7 +21,7 @@ class SendNotification
 
   protected function sendNotificationToMember($project) : void
   {
-     foreach($project->activeMembers() as $member){
+     foreach($project->activeMembers as $member){
 
       if(auth()->id() != $member->id)
       {

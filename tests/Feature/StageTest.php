@@ -82,7 +82,7 @@ class StageTest extends TestCase
   /** @test */
   public function allowed_user_can_update_stage_to_complete()
   {
-     $response=$this->patchJson($this->project->path().'/stage',[
+     $response=$this->withoutExceptionHandling()->patchJson($this->project->path().'/stage',[
       'completed'=>'true',
      ]);
 

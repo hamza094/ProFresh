@@ -28,9 +28,10 @@ class Message extends Model
     }
 
     public function scopeMessageScheduled($query){
-       $query->where('delivered',false)
-       ->whereNotNull('delivered_at')
-       ->where('delivered_at','<=',Carbon::now());
+       $query
+           ->where('delivered',false)
+           ->whereNotNull('delivered_at')
+           ->where('delivered_at','<=',Carbon::now());
     }
 
 }

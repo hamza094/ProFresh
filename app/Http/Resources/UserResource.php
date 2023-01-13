@@ -3,7 +3,6 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
-use App\Http\Resources\ProjectResource;
 
 class UserResource extends JsonResource
 {
@@ -16,13 +15,12 @@ class UserResource extends JsonResource
     public function toArray($request)
     {
         return [
-           'id'=>$this->id,
-           'message'=>$this->message,
-           'file'=>$this->file,
-           'user'=>$this->user->
-                   select('id','name','avatar')->get(),
-           'created'=>$this->created_at->diffforHumans(),
-           'updated'=>$this->updated_at->diffforHumans(),
+          'id'=>$this->id,
+          'name'=>$this->name,
+          'username'=>$this->username,
+          'avatar_path'=>$this->avatar_path,
+          'email'=>$this->email,
+          'email_verified_at'=>$this->email_verified_at,
         ];
     }
 }

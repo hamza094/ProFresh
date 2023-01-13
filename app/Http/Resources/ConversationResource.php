@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use App\Http\Resources\UserResource;
 
 class ConversationResource extends JsonResource
 {
@@ -17,17 +18,16 @@ class ConversationResource extends JsonResource
       return [
         'id'=>$this->id,
 
-        'message'=>$this->when($this->message != null,
-                 fn()=>$this->message),
+        'message'=>$this->when(!empty($this->message),
+                   fn()=>$this->message),
 
-        'file'=>$this->when($this->file != null,
+        'file'=>$this->when(!empty($this->file),
                   fn()=>$this->file),
 
-        'user'=>$this->user()->select('name','id','avatar_path')->get(),
+        'user'=>new UserResource($this->whenLoaded('user')),
 
-        'created_at'=>$this->created_at->format("F j, Y, g:i a"),
-
-        'project_id'=>$this->project->id,
+        'created_at'=>$this->created_at
+                ->format(config('app.date_formats.exact')),
      ]; 
     }
 }

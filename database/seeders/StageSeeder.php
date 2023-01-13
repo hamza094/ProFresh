@@ -15,10 +15,13 @@ class StageSeeder extends Seeder
      */
     public function run()
     {
-      Stage::factory()->count(1)->create();
-      Stage::factory()->count(1)->define()->create();
-      Stage::factory()->count(1)->design()->create();
-      Stage::factory()->count(1)->develop()->create();
-      Stage::factory()->count(1)->execution()->create();
+      $stages = ['define', 'design', 'develop', 'execution'];
+
+      $stageFactory = Stage::factory()->count(1);
+      $stageFactory->create(); 
+
+      foreach ($stages as $stage) {
+        $stageFactory->$stage()->create();
+      }
     }
 }

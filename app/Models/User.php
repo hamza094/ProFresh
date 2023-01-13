@@ -14,11 +14,11 @@ use Laravel\Cashier\Billable;
 use Laravel\Sanctum\HasApiTokens;
 use App\Jobs\QueuedVerifyEmailJob;
 use App\Jobs\QueuedPasswordResetJob;
-use App\Traits\HasUuid;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 
 class User extends Authenticatable implements Searchable, MustVerifyEmail
 {
-    use HasFactory, Notifiable, Billable, HasApiTokens, HasUuid;
+    use HasFactory, Notifiable, Billable, HasApiTokens,HasUuids;
     
     protected $guarded = [];
 
@@ -103,9 +103,20 @@ class User extends Authenticatable implements Searchable, MustVerifyEmail
       return new SearchResult($this, $this->name, $url);
     }
 
+    public function members()
+    {
+        return $this
+            ->belongsToMany(Project::class,'project_members')
+            ->wherePivot('active',false)
+            ->withTimestamps();
+    }
+
     public function affiliateProjects()
     {
-        return $this->belongsToMany(Project::class,'project_members')->withPivot('active')->withTimestamps();
+        return $this
+            ->belongsToMany(Project::class,'project_members')
+            ->wherePivot('active',false)
+            ->withTimestamps();
     }
 
     /*public function getlastSeenAttribute()
@@ -119,13 +130,13 @@ class User extends Authenticatable implements Searchable, MustVerifyEmail
     }
 
      //add user paypal record in database
-    public function paypal_info()
+    /*public function paypal_info()
     {
        $this->paypal()->create([
        'user_id'=>$this->id,
        'name'=>'ProFresh Agreement'
     ]);
-    }
+    }*/
 
     public function messages()
     {

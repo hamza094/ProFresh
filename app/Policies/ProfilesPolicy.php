@@ -22,6 +22,6 @@ class ProfilesPolicy
 
      public function owner(User $user)
     {
-        return $user->id == auth()->user()->id;
+       return $user->is(auth()->user());
     }
 }

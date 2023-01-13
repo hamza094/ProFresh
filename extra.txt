@@ -21,4 +21,13 @@ public function score(){
 }
 
 
+ ->select('email','avatar_path','name','username','user_id')
+              ->get()
+             ->makeHidden('pivot');
+
+
 table 
+
+    if ($this->getMethod() == 'POST') {
+        $rules += ['strtdt' => 'required'];
+    }

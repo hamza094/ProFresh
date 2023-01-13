@@ -36,6 +36,6 @@ class UserTest extends TestCase
     public function auth_user_see_all_users()
     {
         $user = User::factory()->create();
-        $this->getJson('/api/v1/users')->assertSee($user->name);
+        $this->withoutExceptionHandling()->getJson('/api/v1/users')->assertSee($user->name);
     }
 }

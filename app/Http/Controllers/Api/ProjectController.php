@@ -33,37 +33,38 @@ class ProjectController extends ApiController
     $this->notification=$notification;
   }
 
-    public function store(ProjectStoreRequest $request,ProjectService $service): JsonResponse
-     {
+  public function store(ProjectStoreRequest $request,ProjectService $service): JsonResponse
+  {
 
-      DB::beginTransaction();
+    DB::beginTransaction();
 
-      try{
+    try{
 
-      $project = Auth::user()->projects()
+    $project = Auth::user()->projects()
                   ->create($request->validated());
          
-      $service->addTasksToProject($project,$request->tasks);
+    $service->addTasksToProject($project,$request->tasks);
 
-      DB::commit();
+    DB::commit();
 
-      }catch(\Exception $ex){
+    }catch(\Exception $ex){
 
-      DB::rollBack();
+    DB::rollBack();
 
-      throw $ex;
-      }
+    throw $ex;
+    }
 
-      return $this->respondWithSuccess([
-        'path'=>$project->path(),
-        'slug'=>$project->slug
-      ]);
-}
+    return $this->respondWithSuccess([
+      'path'=>$project->path(),
+      'slug'=>$project->slug
+    ]);
+  }
 
     public function show(Project $project)
     {
-       //$conversation_count=$project->group->conversations->count();
-       return new ProjectResource($project);
+      $project->load(['tasks','conversations.user']);
+
+      return new ProjectResource($project);
     }
 
     public function update(Project $project,ProjectRequest $request,ProjectService $service,SendNotification $notification)

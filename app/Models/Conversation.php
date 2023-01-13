@@ -4,15 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-//use App\Traits\BelongsToUser;
 
 class Conversation extends Model
 {
-    use HasFactory;//,BelongsToUser;
+    use HasFactory;
 
 	protected $guarded=[];
-
-    protected $with=['user','project'];
 
     public function project()
     {

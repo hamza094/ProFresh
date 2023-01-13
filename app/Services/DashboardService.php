@@ -13,18 +13,13 @@ class DashboardService
 
   public function getUserProjects()
   {
-     $projects=$this->getFilteredProjects(Auth::user());
+     $projects=$this->getFilteredProjects(Auth::user())
+                    ->load('stage');
 
-    $message='';
-
-    if($projects->count() == 0){
-       $message='Sorry No Projects Found';
-    }
-
-      return $this->respondWithSuccess([
+     return $this->respondWithSuccess([
       'projects'=>ProjectsResource::collection($projects),
       'projectsCount'=>$projects->count(),
-      'message'=>$message
+       'message' => $projects->isEmpty() ? 'Sorry No Projects Found' : '',
       ]);
   }
 

@@ -17,8 +17,7 @@ class NotificationSeeder extends Seeder
      */
     public function run()
     {
-      $users= User::all();
-      $projects = Project::all();
+      $projects = Project::with('tasks','members')->get();
 
       $projects->each(function ($project){
 

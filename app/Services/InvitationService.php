@@ -54,7 +54,7 @@ class InvitationService
 
     try{
 
-    $user->affiliateProjects()->updateExistingPivot($project,['active'=>true]);
+    $user->members()->updateExistingPivot($project,['active'=>true]);
 
     $this->recordActivity($project,$user,'accept_invitation_member');
 

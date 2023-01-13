@@ -232,4 +232,13 @@ return [
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
     ],
 
+    'project'=>[
+      'taskLimit' => '8',
+      'abandonedLimit'=>'90',
+    ],
+
+   'date_formats' => [
+       'exact'=>'F j, Y, g:i a',
+   ]
 ];
+

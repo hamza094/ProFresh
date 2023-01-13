@@ -18,10 +18,12 @@ class MembersSeeder extends Seeder
         $users= User::all();
         $projects = Project::all();
 
-        $projects->each(function ($project) use ($users) {
-          $project->members()->attach($users->random(rand(1,4)));
-          \DB::table('project_members')->where('project_id', $project->id)->update(['active' =>true]);
-        });
+          foreach ($projects as $project) {
 
+          $project->members()->attach($users->random(rand(1,4)));
+
+          \DB::table('project_members')->where('project_id', $project->id)->update(['active' =>true]);
+
+        };
     }
 }

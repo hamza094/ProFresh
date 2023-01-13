@@ -9,17 +9,15 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Redis;
 use Cviebrock\EloquentSluggable\Sluggable;
-//use App\Traits\BelongsToUser;
 use Carbon\Carbon;
 use Auth;
 
 class Project extends Model
 {
-  use RecordActivity, HasFactory, SoftDeletes, Sluggable;//BelongsToUser;
+  use RecordActivity, HasFactory, SoftDeletes, Sluggable;
 
   protected $guarded=[];
   protected $dates = ['created_at'];
-  protected $with = ['tasks','stage','user'];
   protected $casts = ['stage_updated_at'=>'datetime'];
   protected static $recordableEvents = ['created','updated','deleted','restored'];
 
@@ -61,7 +59,7 @@ class Project extends Model
 
    public function stage()
    {
-     return $this->belongsTo(Stage::class,'stage_id');
+     return $this->belongsTo(Stage::class);
    }
 
     public function tasks()
@@ -94,34 +92,20 @@ class Project extends Model
     public function members()
     {
       return $this->belongsToMany(User::class,'project_members')
-             ->withPivot('active');
+                  ->withPivot('active');
     }
 
     public function activeMembers()
-   {
-     return $this->members()->wherePivot('active',true)->get();
-   }
-
-    /*public function users()
     {
-      return $this->belongsToMany(User::class)
-                    ->withTimestamps();
-    }*/
+      return $this
+            ->members()
+            ->wherePivot('active',true);
+    }
 
     public function conversations()
     {
       return $this->hasMany(Conversation::class);
     }
-
-
-  public function activeMembersData()
-  {
-    return $this
-       ->members()
-       ->wherePivot('active',true)
-       ->select('email','avatar_path','name','username','user_id')->get()
-       ->makeHidden('pivot');
-  }
 
     public function markUncompleteIfCompleted(){
       if($this->completed){
@@ -137,18 +121,19 @@ class Project extends Model
     }
 
     public function tasksReachedItsLimit(){
-      return $this->tasks->count() == config('project.taskLimit');
+      return $this->tasks->count() == config('app.project.taskLimit');
     }
 
     public function score()
     {
-      $tasks = $this->tasks()->count() * ScoreValue::Task;
+      /*$tasks = $this->tasks()->count() * ScoreValue::Task;
 
       $notes = $this->notes !== null ? ScoreValue::Note : 0;
 
       $members = $this->activeMembers()->count() * ScoreValue::Members;
 
-      return $tasks + $notes + $members;     
+      return $tasks + $notes + $members;*/
+      return 0;     
     }
 
     public function status()
@@ -156,8 +141,12 @@ class Project extends Model
       return $this->score() >= 21 ? 'hot' : 'cold';
     }
 
-   public function scopePastAbandonedLimit($query){
-      $query->where( 'deleted_at', '<', Carbon::now()->subDays(config('project.abandonedLimit')));
+   public function scopePastAbandonedLimit($query)
+   {
+     $abandonedLimit = config('app.project.abandonedLimit');
+
+      $query->where( 'deleted_at', '<', Carbon::now()
+             ->subDays($abandonedLimit));
    }
 
    public function scheduledMessages(){
