@@ -16,27 +16,18 @@ class ProjectRepository
 {
   public function filterProjectByActivity(Collection $activities)
   {
+    $filters = [
+      'specifics' => 'filterActivityByProjectSpecified',
+      'tasks' => 'filterActivityByTasks',
+      'members' => 'filterActivityByMembers',
+      'mine' => 'filterActivityByAuthUser',
+    ];
 
-    if(request()->has('specifics'))
-    {
-       return $this->filterActivityByProjectSpecified($activities);
+    foreach ($filters as $key => $filter) {
+        if (request()->has($key)) {
+            return $this->$filter($activities);
+        }
     }
-
-    if(request()->has('tasks'))
-    {
-       return $this->filterActivityByTasks($activities);
-    }
-
-    if(request()->has('members'))
-    {
-        return $this->filterActivityByMembers($activities);
-    }
-
-     if(request()->has('mine'))
-    {
-        return  $this->filterActivityByAuthUser($activities);
-    }
-
   }
 
    /**
@@ -45,10 +36,8 @@ class ProjectRepository
     * @param  $activities
     */
     protected function filterActivityByAuthUser($activities)
-    {
-      $user = User::where('id', request('mine'))->firstOrFail();
-      
-      return $activities->where('user_id',$user->id);
+    { 
+      return $activities->where('user_id',request('mine'));
     }
 
     /**
@@ -58,9 +47,7 @@ class ProjectRepository
     */
     protected function filterActivityByTasks($activities)
     {
-      return $activities->filter(function ($query){
-        return false !== stripos($query['description'], '_task');
-      });
+      return $activities->filter(fn($activity) => strpos($activity['description'], '_task') !== false);
     }
 
     /**
@@ -70,9 +57,7 @@ class ProjectRepository
     */
     protected function filterActivityByProjectSpecified($activities)
     {
-      return $activities->filter(function ($query){
-        return false !== stripos($query['description'], '_project');
-      });
+      return $activities->filter(fn($activity) => strpos($activity['description'], '_project') !== false);
     }
 
     /**
@@ -82,9 +67,7 @@ class ProjectRepository
     */
     protected function filterActivityByMembers($activities)
     {
-      return $activities->filter(function ($query){
-        return false !== stripos($query['description'], '_member');
-      });
+      return $activities->filter(fn($activity) => strpos($activity['description'], '_member') !== false);
     }
 }
 

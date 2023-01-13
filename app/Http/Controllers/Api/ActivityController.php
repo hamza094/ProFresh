@@ -19,13 +19,14 @@ class ActivityController extends Controller
   {
      $activities = $project->activities;
 
-      if(request()->hasAny(['tasks', 'mine', 'specifics','members']))
+      if(request()->only(['tasks', 'mine', 'specifics','members']))
       {
         $activities = $repository->filterProjectByActivity($activities);
       }
 
+
     if($activities->isEmpty()){
-       return response()->json('No related activities found');
+       return response()->json(['message'=>'No related activities found']);
     }
       
     return ActivityResource::collection($activities)->paginate(10);

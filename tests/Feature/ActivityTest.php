@@ -15,25 +15,21 @@ class ActivityTest extends TestCase
     public function view_activity_by_filters()
     {
       $task=$this->project->addTask('test task');
-        
       $this->filterByProjectSpecified($this->project,$task);
-
       $this->filterByTasks($this->project,$task);
-
       $this->filterByAuthUser($this->project);
-
       $this->noActivitiesExistsError($this->project);
     }
 
     protected function filterByProjectSpecified($project,$task)
     {
       $response=$this->getJson($project->path().'/activities')
-       ->assertJsonCount(2,['data'])
-       ->assertOk();
+                      ->assertOk();
 
-      $this->assertEquals($response->json()['data'][0]['description'],'Project created');
-
-      $this->assertEquals($response->json()['data'][1]['description'],'Task '.$task->body. ' added');
+      $data = $response->json()['data'];
+      $this->assertCount(2,$data);
+      $this->assertEquals($data[0]['description'],'Project created');
+      $this->assertEquals($data[1]['description'],'Task '.$task->body. ' added');
     }
 
     protected function filterByTasks($project,$task)
@@ -58,7 +54,7 @@ class ActivityTest extends TestCase
       $response=$this->getJson($project->path().'/activities?members=1')
       ->assertOk(); 
 
-      $this->assertEquals($response->json(),'No related activities found');
+      $this->assertEquals($response->json(),['message'=>'No related activities found']);
     }
 
 }
