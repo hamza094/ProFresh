@@ -18,11 +18,9 @@ class ConversationResource extends JsonResource
       return [
         'id'=>$this->id,
 
-        'message'=>$this->when(!empty($this->message),
-                   fn()=>$this->message),
+        'message'=>$this->whenNotNull($this->message),
 
-        'file'=>$this->when(!empty($this->file),
-                  fn()=>$this->file),
+        'file'=>$this->whenNotNull($this->file),
 
         'user'=>new UserResource($this->whenLoaded('user')),
 

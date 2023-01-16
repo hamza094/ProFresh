@@ -21,20 +21,16 @@ class MessageController extends Controller
   {
      $message->checkOptionSelect($request);
 
-     $users=array();
+     $users = collect($request->users)->filter(function($user) {
+    return !empty($user['user_id']);
+      })->pluck('user_id');
 
-      foreach($request->users as $user)
-      {
-       if (!empty($user['user_id'])){
-         $users[]=$user['user_id'];
-       }
-      }
        return $message->send($project,$users);
   }
 
   public function scheduled(Project $project){
 
-    if($project->scheduledMessages()->count() == 0){
+    if($project->scheduledMessages()->isEmpty()){
 
       return $this->respondNoContent([
         'message'=>'No project schedule messages found'

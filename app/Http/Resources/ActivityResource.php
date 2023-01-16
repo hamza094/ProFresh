@@ -49,15 +49,20 @@ class ActivityResource extends JsonResource
 
   protected function created_task()
   {
-      return 'Task'.' '.Str::limit($this->subject->body,17,'..').' '.'added';
+    return 'Task'.' '.Str::limit($this->subject->body,17,'..').' '.'added';
   }
 
   protected function updated_task()
   {
-    if(key($this->changes['after']) == 'completed'){
-      return 'Task'.' '.Str::limit($this->subject->body,17,'..').' '.'status updated';
+    $task = $this->subject;
+    $updatedKey = key($this->changes['after']);
+    $taskName = Str::limit($task->body, 17, '..');
+
+    if ($updatedKey === 'completed') {
+        return "Task '$taskName' status updated";
     }
-      return 'Task'.' '.Str::limit($this->subject->body,17,'..').' '.'body updated';
+
+    return "Task '$taskName' body updated";
   }
 
   protected function deleted_task()
@@ -67,15 +72,14 @@ class ActivityResource extends JsonResource
 
   protected function created_message()
   {
-    if($this->subject->delivered_at == null){
-      return 'Message'.' '.Str::limit($this->subject->message,17,'..').' '.'scheduled';
-    }
-      return 'Message'.' '.Str::limit($this->subject->message,17,'..').' '.'sent';
+    $status = $this->subject->delivered_at == null ? 'scheduled' : 'sent';
+
+    return 'Message ' . Str::limit($this->subject->message, 17, '..') . ' ' . $status;
   }
 
   protected function sent_invitation_member()
   {
-      return 'Project invitation sent to'.' '.$this->info;
+    return 'Project invitation sent to'.' '.$this->info;
   }
 
   protected function accept_invitation_member()
@@ -85,6 +89,6 @@ class ActivityResource extends JsonResource
 
   protected function remove_project_member()
   {
-     return 'Project member'.' '.$this->info.' '.' removed';
+    return 'Project member'.' '.$this->info.' '.' removed';
   }
 }

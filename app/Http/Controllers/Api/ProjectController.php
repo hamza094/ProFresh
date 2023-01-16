@@ -79,15 +79,15 @@ class ProjectController extends ApiController
 
       $requestArray=$request->input();
 
-      $key=array_key_first($requestArray);
+      $changedAttribute=array_key_first($requestArray);
 
-      $value=$project->$key;
+      $value=$project->$changedAttribute;
 
       $this->notification->send($project);
 
       return $this->respondWithSuccess([
-        'msg'=>'Project '.$key.' updated sucessfully',
-         $key=>$value,
+        'msg'=>'Project '.$changedAttribute.' updated sucessfully',
+         $changedAttribute=>$value,
         'slug'=>$project->slug,
         'score'=>$project->score()
       ]);

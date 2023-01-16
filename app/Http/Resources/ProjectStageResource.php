@@ -21,10 +21,8 @@ class ProjectStageResource extends JsonResource
         $this->mergeWhen($this->completed, [
           'completed' => $this->completed,
       ]),
-      $this->mergeWhen($this->postponed != null, [
-        'postponed'=>$this->postponed,
-    ]),
-        'stage_updated_at'=>$this->stage_updated_at->format(config('app.date_formats.exact')),
+      'postponed'=>$this->whenNotNull($this->postponed),
+      'stage_updated_at'=>$this->stage_updated_at->format(config('app.date_formats.exact')),
       ];
     }
 }

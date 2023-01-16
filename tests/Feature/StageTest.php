@@ -44,12 +44,13 @@ class StageTest extends TestCase
   public function allowed_user_can_change_project_stage()
   {
     $this->assertEquals('Begining',$this->project->stage->name);
+    $new_stage = 2;
 
     $response=$this->patchJson($this->project->path().'/stage',[
-          'stage'=>2,
+          'stage'=>$new_stage,
       ]);
 
-      $this->assertDatabaseHas('projects',['id'=>$this->project->id,'stage_id'=>2]);
+      $this->assertDatabaseHas('projects',['id'=>$this->project->id,'stage_id'=>$new_stage]);
 
       $this->project->refresh();
 
@@ -58,25 +59,25 @@ class StageTest extends TestCase
           'stage'=>['name'=>$this->project->stage->name,
                    'id'=>$this->project->stage->id],
           'stage_updated_at'=>$this->project->stage_updated_at
-                              ->format("F j, Y, g:i a")]
+                    ->format(config('app.date_formats.exact'))]
        ]);
  }
 
   /** @test */
   public function allowed_user_can_postponed_stage_and_update_reason()
   {
+    $postponed='Unable to reach';
     $response=$this->patchJson($this->project->path().'/stage',[
-      'postponed'=>'Unable to reach'
+      'postponed'=>$postponed,
       ]);
 
-    $this->assertDatabaseHas('projects',['id'=>$this->project->id,'postponed'=>'Unable to reach','stage_id'=>null]);
+    $this->assertDatabaseHas('projects',['id'=>$this->project->id,'postponed'=>$postponed,'stage_id'=>null]);
 
      $this->project->refresh();
 
      $response->assertJson([
        'project'=>['postponed'=>$this->project->postponed]
    ]);
-
   }
 
   /** @test */

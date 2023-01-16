@@ -10,6 +10,7 @@ use App\Notifications\ProjectUpdated;
 use App\Http\Resources\ProjectResource;
 use App\Http\Resources\ProjectStageResource;
 use F9Web\ApiResponseHelpers;
+use App\Http\Requests\StageRequest;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\ProjectsExport;
 use Illuminate\Http\JsonResponse;
@@ -35,14 +36,9 @@ class FeaturesController extends ApiController
      * @param  int  $project
      * @return \Illuminate\Http\Response
      */
-     public function stage(Project $project,Request $request)
+     public function stage(Project $project,StageRequest $request)
      {
-       $this->validate($request, [
-          'stage'=>'sometimes|required',
-          'postponed'=>'sometimes|required'
-      ]);
-
-      $this->featureService->stageStatus($project,$request);
+       $this->featureService->stageStatus($project,$request);
 
       //$this->sendNotification($project,new ProjectUpdated($project));
 
