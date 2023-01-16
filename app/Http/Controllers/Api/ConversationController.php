@@ -27,14 +27,8 @@ class ConversationController extends ApiController
     {
       $conversationService = new ConversationService();
       
-      if($request->has('file'))
-      {
-        $conversation=$conversationService->     storeFileConversation($project,$request);
- 
-      }else{
-        $conversation=$conversationService->storeStaticConversation($project,$request);
-      }    
-
+      $conversation=$conversationService->storeConversation($request,$project);
+          
        NewMessage::dispatch($conversation,$project);
 
        $conversationService->userMentioned($conversation,$project);

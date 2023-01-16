@@ -14,7 +14,7 @@ use Illuminate\Support\Collection;
 
 class ProjectRepository
 {
-  public function filterProjectByActivity(Collection $activities)
+  public function filterProjectByActivity(Collection $activities): Collection
   {
     $filters = [
       'specifics' => 'filterActivityByProjectSpecified',

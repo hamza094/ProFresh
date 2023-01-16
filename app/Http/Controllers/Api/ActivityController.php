@@ -29,7 +29,7 @@ class ActivityController extends Controller
        return response()->json(['message'=>'No related activities found']);
     }
       
-    return ActivityResource::collection($activities)->paginate(10);
+    return ActivityResource::collection($activities)->paginate(config('app.project.filters'));
    }
 
   }

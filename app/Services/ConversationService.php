@@ -9,7 +9,15 @@ use App\Notifications\UserMentioned;
 
 class ConversationService 
 {
-  public function storeFileConversation($project,$request)
+
+  public function storeConversation($request,Project $project){
+
+    return $request->has('file')  
+    ? $this->storeFileConversation($project,$request)
+    : $this->storeStaticConversation($project,$request);
+  }
+    
+  private function storeFileConversation($project,$request)
   {
     $fileService=new FileService;
     
@@ -21,7 +29,7 @@ class ConversationService
       ]);
   }
  
-  public function storeStaticConversation($project,$request)
+  private function storeStaticConversation($project,$request)
   {
     return $project->conversations()->create([
         'message' => $request->message,
@@ -29,18 +37,17 @@ class ConversationService
       ]);
   }
 
-  public function userMentioned($conversation,$project)
+  public function userMentioned($conversation,$project): void
   {
-    if($conversation->message !== null)
-    {
-      User::whereIn('username', $conversation->mentionedUsers
-        ())->get()->filter(function($user){
-              return $user->id !== auth()->user()->id;
-            })->each(function ($user) use ($project) {
-            $user->notify(new UserMentioned(auth()->user()->toArray(),$project));
-      });
-
+     if($conversation->message === null) {
+        return;
     }
+
+    $mentionedUsers = User::whereIn('username', $conversation->mentionedUsers())
+        ->where('id', '!=', auth()->user()->id)
+        ->get();
+
+    $mentionedUsers->each(fn($user) => $user->notify(new UserMentioned(auth()->user()->toArray(), $project)));
   }
 }
 

@@ -19,11 +19,13 @@ class ConversationTest extends TestCase
     /** @test */
     public function allowed_user_participates_in_project_chat()
     {
-      $response=$this->postJson($this->project->path().'/conversations',['message'=>'random chat conversation',
+      $message='random chat conversation';
+
+      $response=$this->postJson($this->project->path().'/conversations',['message'=>$message,
         'user_id' => $this->user->id]);
 
         $this->assertDatabaseHas('conversations',[
-          'message'=>'random chat conversation']);
+          'message'=>$message]);
     }
 
     /** @test */

@@ -235,6 +235,7 @@ return [
     'project'=>[
       'taskLimit' => '8',
       'abandonedLimit'=>'90',
+      'filters'=>'10',
     ],
 
    'date_formats' => [
