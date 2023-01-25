@@ -71,15 +71,15 @@ class ProjectController extends ApiController
     {
       $this->authorize('access', $project);
 
-      if($service->sameRequestAttributes($project) || $service->sameNoteRequest($project)){
-         return $this->respondError("You haven't changed anything");
+      if($service->requestAttributesUnchanged($project)){
+
+        return $this
+            ->respondError("You haven't changed anything");
       }
 
       $project->update($request->validated());
 
-      $requestArray=$request->input();
-
-      $changedAttribute=array_key_first($requestArray);
+      $changedAttribute=$service->getChangedAttribute($request);
 
       $value=$project->$changedAttribute;
 
@@ -127,7 +127,4 @@ class ProjectController extends ApiController
       ]);
    }
    
-    public function overview(){
-
-     }
 }

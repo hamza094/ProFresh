@@ -48,7 +48,7 @@ class ResetPasswordTest extends TestCase
        'email' => $user->email,
        'password' => 'password',
        'password_confirmation' => 'password'
-    ]);
+    ])->assertStatus(302);
 
       $this->assertTrue(Hash::check('password', $user->fresh()->password));
 }

@@ -6,21 +6,35 @@ use App\Models\Conversation;
 
 class ProjectService
 { 
-  public function sameRequestAttributes($project)
-  {
-      return $project->name == request('name')
-      || $project->about == request('about');
+
+  public function requestAttributesUnchanged(Project $project)
+  { 
+    return $this->sameRequestAttributes($project) 
+    || $this->sameNoteRequest($project);
   }
 
-  public function sameNoteRequest($project)
+  private function sameRequestAttributes(Project $project)
+  {
+      return $project->name === request('name')
+      || $project->about === request('about');
+  }
+
+  private function sameNoteRequest(Project $project)
   {
      return request()->has('notes')
-     && $project->notes == request('notes');
+     && $project->notes === request('notes');
+  }
+
+  public function getChangedAttribute($request)
+  {
+    $requestArray=$request->validated();
+
+    return array_key_first($requestArray);
   }
 
   public function addTasksToProject($project,$tasks): void
   {
-    $filteredTasks = $this->getFilteredProjects($tasks);
+    $filteredTasks = $this->getFilteredTasks($tasks);
 
     if($filteredTasks){
      request()->validate([
@@ -31,7 +45,7 @@ class ProjectService
     }
   }
 
-   private function getFilteredProjects($tasks)
+   private function getFilteredTasks($tasks)
    {
      return collect($tasks)->filter(function ($value, $key) {
          return !empty($value['body']);

@@ -28,13 +28,11 @@ class AuthenticationTest extends TestCase
     /** @test */
     public function register_new_user()
     {
-        $password = Hash::make('password');
-
-        $response=$this->postJson(route('auth.register'),
+       $response=$this->postJson(route('auth.register'),
             ['name' => 'Elvis William',
             'email'=>'mihupocob@mailinator.com',
-             'password' => $password,
-             'password_confirmation' =>  $password,
+             'password' => 'password',
+             'password_confirmation' =>  'password',
          ])->assertCreated();
 
           $this->assertDatabaseHas('users',['email'=>'mihupocob@mailinator.com']);
@@ -78,13 +76,11 @@ class AuthenticationTest extends TestCase
     /** @test */
    public function registration_with_existing_email_not_allowed()
    {
-      $password = Hash::make('password');
-
-       $response=$this->postJson(route('auth.register'),
+      $response=$this->postJson(route('auth.register'),
            ['name' => 'Elvis William',
            'email'=>'johndoe@example.org',
-            'password' => $password,
-            'password_confirmation' =>  $password,
+            'password' => 'password',
+            'password_confirmation' =>  'password',
         ])->assertUnprocessable()
         ->assertJsonValidationErrors(['email']);
    }

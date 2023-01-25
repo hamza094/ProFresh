@@ -89,7 +89,10 @@ class InvitationService
 
   public function memberSearch($request)
   {
-    if($request->input('query') != null)
+
+    $query = $request->input('query');
+    
+    if($query)
     {
       return (new Search())
        ->registerModel(User::class, ['name', 'email'])
@@ -111,7 +114,7 @@ class InvitationService
       ]);
      }
 
-     if ($user->id == $project->user->id)
+     if ($user->id === $project->user->id)
      {
       throw ValidationException::withMessages([
       'invitation'=>"Can't send an invitation to the project owner.",

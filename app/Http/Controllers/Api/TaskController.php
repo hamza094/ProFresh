@@ -49,8 +49,9 @@ class TaskController extends ApiController
   public function update(Project $project,Task $task,TaskRequest $request)
   {
     if($task->body == $request->body){
-      return $this->respondError("You haven't changed anything");
+       return $this->respondError("You haven't changed anything");
     }
+
       $task->update($request->validated());
       return new TaskResource($task);
   }
@@ -66,7 +67,7 @@ class TaskController extends ApiController
 
   public function status(Project $project,Task $task)
   {
-    request('completed') ? $task->complete() : $task->incomplete();
+     request('completed') ? $task->complete() : $task->incomplete();
 
     return new TaskResource($task);
   }

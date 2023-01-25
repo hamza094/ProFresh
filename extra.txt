@@ -31,3 +31,20 @@ table
     if ($this->getMethod() == 'POST') {
         $rules += ['strtdt' => 'required'];
     }
+
+    - record activity test
+    - send notification.php 
+    - dashboard.vue
+    - activities.vue
+    - stage.vue
+    - page
+    - query optimize
+--------------------------    
+    - api versioning
+    - api responsible
+    - profile page
+    - socialite
+    - payment
+    - final refactoring and ui fix
+    - deploy
+    

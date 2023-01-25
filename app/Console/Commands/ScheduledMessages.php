@@ -40,7 +40,7 @@ class ScheduledMessages extends Command
      */
     public function handle(MessageService $service)
     {
-      $messages=Message::messageScheduled()->get();
+      $messages=Message::messageScheduled()->with('project','users')->get();
 
       foreach($messages as $message)
       {

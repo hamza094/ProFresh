@@ -21,19 +21,18 @@ class SendNotification
 
   protected function sendNotificationToMember($project) : void
   {
-     foreach($project->activeMembers as $member){
-
-      if(auth()->id() != $member->id)
-      {
-        $member->notify($this->getNotification($project));
-      }
-
-    }
+    collect($project->activeMembers)
+        ->reject(function ($member) {
+            return auth()->id() == $member->id;
+        })
+        ->each(function ($member) use ($project) {
+            $member->notify($this->getNotification($project));
+        });
   }
 
   protected function sendNotificationToProjectOwner($project):void
   {
-    if(auth()->id() != $project->user->id)
+    if(auth()->id() !== $project->user->id)
     {
       $project->user->notify($this->getNotification($project));
     }
@@ -41,12 +40,14 @@ class SendNotification
 
     protected function getNotification($project)
     {
-      if(Route::currentRouteName() == 'projects.update')
+      $routeName = Route::currentRouteName();
+      
+      if($routeName == 'projects.update')
       {
         return new ProjectUpdated($project,auth()->user()->toArray());
       }
 
-      if(Route::currentRouteName() == 'task.store')
+      if($routeName == 'task.store')
       {
         return new ProjectTask($project,auth()->user()->toArray());
       }

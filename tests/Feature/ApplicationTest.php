@@ -18,31 +18,26 @@ class ApplicationTest extends TestCase
   use RefreshDatabase,ProjectSetup;
 
      /** @test */
-    public function only_allowed_users_access_different_application_features()
-    {
+   public function only_allowed_users_can_access_project_features
+     (){
        $this->postJson($this->project->path().'/task',
           ['body' => 'My Project Task'])->assertCreated();
 
           $this->project->invite($user=User::factory()->create());
 
-          Sanctum::actingAs(
-             $user,
-         );
+         Sanctum::actingAs($user);
 
-         $this->getJson($this->project->path().'/accept-invitation')
-         ->assertOk();
+         $this->getJson($this->project->path().'/accept-invitation')->assertOk();
 
          $this->postJson($this->project->path().'/task',
           ['body' => 'My Project Task Updated'])->assertCreated();
 
-          Sanctum::actingAs(
-             User::factory()->create(),
-         );
+         Sanctum::actingAs(User::factory()->create());
 
          $response=$this->postJson($this->project->path().'/task',
-          ['body' => 'My Project Task Updated'])->assertForbidden();
-
-          $response->assertJson([
+            ['body' => 'My Project Task Updated'])
+            ->assertForbidden()
+            ->assertJson([
               'message'=>"Only Project's owner and members are allowed to access this feature.",
             ]);
     }
@@ -56,7 +51,7 @@ class ApplicationTest extends TestCase
        Excel::assertDownloaded('Project '.$this->project->name.'.xls', function(ProjectsExport $export) {
 
           // Assert that the correct export is downloaded.
-           return $export->query()->get()->contains('name',Project::first()->name);
+           return $export->query()->get()->contains('name',$this->project->name);
        });
     }
 }

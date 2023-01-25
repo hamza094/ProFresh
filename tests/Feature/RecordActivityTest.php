@@ -28,24 +28,18 @@ class RecordActivityTest extends TestCase
    public function updating_a_project()
    {
      $initialName = $this->project->name;
-     $initialSlug=$this->project->slug;
+     $initialSlug = $this->project->slug;
 
-     $this->project->update(['name'=>'changed name']);
+    $this->project->update(['name'=>'changed name']);
 
-     $slug=$this->project->slug;
+    $this->assertCount(2, $this->project->activities);
+    $activity = $this->project->activities->last();
 
-     $this->assertCount(2,$this->project->activities);
-
-     tap($this->project->activities->last(), function ($activity) use ($initialName,$initialSlug,$slug) {
-
-        $this->assertEquals('updated_project',$activity->description);
-          $expected = [
-            'before' => ['name' => $initialName,'slug'=>$initialSlug],
-            'after' =>  ['name' => 'changed name','slug'=>$slug]
-        ];
-
-        $this->assertEquals($expected, $activity->changes);
-    });
+    $this->assertEquals('updated_project', $activity->description);
+    $this->assertEquals([
+        'before' => ['name' => $initialName, 'slug' => $initialSlug],
+        'after' =>  ['name' => 'changed name', 'slug' => $this->project->slug]
+    ], $activity->changes);
 }
 
   /** @test */
@@ -72,38 +66,32 @@ class RecordActivityTest extends TestCase
    /** @test */
    public function record_on_creating_task()
    {
-      $task=$this->project->addTask('test task');
+    $task = $this->project->addTask('test task');
 
-      $this->assertCount(2,$this->project->activities);
+    $this->assertCount(2, $this->project->activities);
+    $activity = $this->project->activities->last();
 
-      tap($this->project->activities->last(), function ($activity) {
-
-          $this->assertEquals('created_task', $activity->description);
-          $this->assertInstanceOf(Task::class, $activity->subject);
-          $this->assertEquals('test task',$activity->subject->body);
-
-      });
+    $this->assertEquals('created_task', $activity->description);
+    $this->assertInstanceOf(Task::class, $activity->subject);
+    $this->assertEquals('test task', $activity->subject->body);
   }
 
    /** @test */
    public function record_on_updating_task()
    {
      $task=$this->project->addTask('test task');
-
      $body=$task->body;
 
      $this->putJson($task->path(), ['body' => 'changed']);
 
-   tap($this->project->activities->last(), function ($activity) use ($body) {
+     $activity = $this->project->activities->last();
+     $this->assertEquals('updated_task',$activity->description);
 
-      $this->assertEquals('updated_task',$activity->description);
-        $expected = [
+     $this->assertEquals([
           'before' => ['body' => $body,'completed'=>false],
           'after' =>  ['body' => 'changed']
-      ];
-      $this->assertEquals($expected, $activity->changes);
-  });
-}
+      ], $activity->changes);
+  }
 
    /** @test */
    public function record_on_task_deletion()
@@ -125,9 +113,7 @@ class RecordActivityTest extends TestCase
       $this->deleteJson($task->path());
 
        tap($this->project->activities->last(), function ($activity) {
-
         $this->assertEquals('deleted_task', $activity->description);
-        
       });       
    }
 

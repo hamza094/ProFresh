@@ -6,6 +6,7 @@ use DB;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use App\Models\Message;
+use Illuminate\Support\Facades\Queue;
 use App\Traits\ProjectSetup;
 use Carbon\Carbon;
 use Tests\TestCase;
@@ -42,8 +43,17 @@ class MessageTest extends TestCase
      }
 
      /** @test */
-     public function check_schedule_command_working(){
-           $this->artisan('schedule:message')->assertSuccessful();
+     public function check_schedule_command_working()
+     {
+       $messages=Message::factory()->for($this->project)
+       ->count(3)
+       ->create(['delivered_at'=>Carbon::yesterday()]);
+
+       $this->assertCount(3, Message::messageScheduled()->get());
+
+       $this->artisan('schedule:message')->assertok();
+
+       $this->assertCount(0, $this->project->scheduledMessages());
      }
 
      /** @test */
@@ -55,7 +65,8 @@ class MessageTest extends TestCase
        $response=$this->getJson($this->project->path().
         '/messages/scheduled')->assertok();
 
-       $this->assertEquals($this->project->scheduledMessages()->count(),$this->project->messages->count());
+       $this->assertEquals($this->project->scheduledMessages()
+            ->count(),$this->project->messages->count());
      }
 
      /** @test */

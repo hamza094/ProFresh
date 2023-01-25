@@ -5,6 +5,12 @@ namespace Tests\Feature;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Laravel\Sanctum\Sanctum;
+use App\Notifications\ProjectInvitation;
+use App\Notifications\AcceptInvitation;
+use App\Notifications\ProjectUpdated;
+use App\Notifications\ProjectTask;
+use App\Notifications\UserMentioned;
+use Illuminate\Support\Facades\Notification;
 use App\Traits\ProjectSetup;
 use App\Models\User;
 use Tests\TestCase;
@@ -18,100 +24,95 @@ class NotificationsTest extends TestCase
      * @return void
      */
 
-
      /** @test */
      public function invited_user_can_get_project_invitation()
      {
+       Notification::fake();
+
        $user=User::factory()->create();
 
-       $this->send_invitation_to_user($this->project,$user);
+       $this->sendInvitationToUser($this->project,$user);
 
-       $this->assertCount(1,$user->notifications);
+       Notification::assertSentTo($user, ProjectInvitation::class);
       }
 
 
     /** @test */ 
     public function project_owner_get_notified_by_member()
     {
+      Notification::fake();
+
       $this->project->invite($user=User::factory()->create());
 
       Sanctum::actingAs($user,);
 
-      $this->get($this->project->path().'/accept-invitation');
+      $this->getJson($this->project->path().'/accept-invitation');
 
-      $this->assertCount(1,$this->project->user->notifications);
+      Notification::assertSentTo($this->project->user, AcceptInvitation::class);
    }
 
 
   /** @test */
   public function allowed_user_notified_on_project_update()
   {
+    Notification::fake();
+
     $user=User::factory()->create();
 
-    $this->add_user_to_become_project_member($this->project,$user);
+    $this->addMember($this->project,$user);
 
     $this->patchJson($this->project->path(),['notes'=>'Project notes updated.']);
 
-    $this->assertCount(1,$user->notifications);
-
-    $notification=$user->notifications[0];
-
-    $this->assertEquals("App\Notifications\ProjectUpdated",$notification->type);
-
-    $this->assertEquals($user->id,$notification->notifiable_id);
+    Notification::assertSentTo($user, ProjectUpdated::class);
    } 
 
   /** @test */
   public function project_member_notified_when_task_added()
   {
+    Notification::fake();
+
     $user=User::factory()->create();
  
-    $this->add_user_to_become_project_member($this->project,$user);
+    $this->addMember($this->project,$user);
 
     $this->postJson($this->project->path().'/task',['body'=>'new task added']);
 
-    $this->assertCount(1,$user->notifications);
-
-    $notification=$user->notifications[0];
-
-    $this->assertEquals("App\Notifications\ProjectTask",$notification->type);
-
-    $this->assertEquals($user->id,$notification->notifiable_id);
+    Notification::assertSentTo($user, ProjectTask::class);    
   }
 
   /** @test */
   public function mentioned_user_in_a_chat_are_notified()
   {
+    Notification::fake();
+
     $user=User::factory(['username'=>'thanos844'])
           ->create();
  
-    $this->add_user_to_become_project_member($this->project,$user);
+      $this->addMember($this->project,$user);
+
+      $owner=$this->project->user;
 
       $response=$this->postJson($this->project->path().'/conversations',['message'=>'random chat conversation with @thanos844',
         'user_id' => $user->id]);
 
-        $this->assertCount(1,$user->notifications);
-
-    $notification=$user->notifications[0];
-
-    $this->assertEquals("App\Notifications\UserMentioned",$notification->type);
-
-    $this->assertEquals($user->id,$notification->notifiable_id);
+      Notification::assertSentTo($user, UserMentioned::class);
     }
 
 
   /** @test */
-  public function user_wont_get_his_perform_function()
+  public function user_should_not_receive_task_notification_when_adding_a_task()
   {
+    Notification::fake();
+
     $user=User::factory()->create();
 
-    $this->add_user_to_become_project_member($this->project,$user);
+    $this->addMember($this->project,$user);
 
     Sanctum::actingAs($user);
      
     $this->postJson($this->project->path().'/task',['body'=>'another new task added']);
 
-    $this->assertCount(0,$user->fresh()->notifications);
+    Notification::assertNotSentTo($user, ProjectTask::class);
   }
 
 
@@ -120,13 +121,15 @@ class NotificationsTest extends TestCase
   {
     $user=User::factory()->create();
 
-    $this->send_invitation_to_user($this->project,$user);
+    $this->sendInvitationToUser($this->project,$user);
 
     Sanctum::actingAs($user,);
 
     $response=$this->getJson("/api/v1/user/{$user->id}/notifications");
 
     $this->assertCount(1,$response->json());
+
+    // can't fetch other use notifications
  }
 
 
@@ -135,9 +138,9 @@ class NotificationsTest extends TestCase
   {
      $user=User::factory()->create();
 
-     $this->send_invitation_to_user($this->project,$user);
+     $this->sendInvitationToUser($this->project,$user);
 
-     Sanctum::actingAs($user,);
+     Sanctum::actingAs($user);
 
      $this->assertCount(1,$user->unreadNotifications);
 
@@ -148,21 +151,17 @@ class NotificationsTest extends TestCase
      $this->assertCount(0,$user->fresh()->unreadNotifications);
    }
 
-   protected function send_invitation_to_user($project,$user)
+   protected function sendInvitationToUser($project,$user)
    {
       $this->postJson($this->project->path().'/invitations',[
           'email'=>$user->email
       ]);
    }
 
-
-   protected function add_user_to_become_project_member($project,$user)
+   protected function addMember($project,$user)
    {
-     $this->project->members()->attach($user);
-
-     \DB::table('project_members')
-     ->where('project_id', $this->project->id)
-     ->where('user_id', $user->id)
-     ->update(['active' =>true]);
+     $this->project
+          ->members()
+           ->attach($user, ['active' => true]);
    }
 }

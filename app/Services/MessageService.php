@@ -16,7 +16,7 @@ class MessageService
 
   public function checkOptionSelect($request)
   {
-    if($request->mail == null && $request->sms == null){
+    if(!$request->mail  && !$request->sms){
       throw ValidationException::withMessages([
        'option'=>'Please choose any options.',
      ]);
@@ -25,30 +25,22 @@ class MessageService
 
   public function send($project,$users)
   {
+    $response = '';
 
-    if(request()->boolean('mail'))
-      {
-        $type='mail';
+    $types = ['mail', 'sms'];
+    
+    $send_or_schedule = request()->filled('date') ? 'Scheduled' : 'Sent';
 
-        $message = $this->messageCreate($project,$type,$users);
-
-        $this->sendOrScheduledMessage($project,$message);
-      }
-
-      if(request()->boolean('sms'))
-      {
-        $type='sms';
-
-        $message = $this->messageCreate($project,$type,$users);
-
-       $this->sendOrScheduledMessage($project,$message);
+    foreach ($types as $type) {
+        if (request()->boolean($type)) {
+            $message = $this->messageCreate($project, $type, $users);
+            $this->sendOrScheduledMessage($project, $message);
+        }
     }
 
-    request()->filled('date') ?
-    $response="Message Scheduled Successfully" :
-    $response="You'll notify when the process is complete.";
+    $response = "Messages {$send_or_schedule} Successfully";
 
-     return response()->json(['msg' => $response], 200);
+    return response()->json(['msg' => $response], 200);
   }
 
   public function messageCreate($project,$type,$users)
