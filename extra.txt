@@ -32,8 +32,6 @@ table
         $rules += ['strtdt' => 'required'];
     }
 
-    - record activity test
-    - send notification.php 
     - dashboard.vue
     - activities.vue
     - stage.vue

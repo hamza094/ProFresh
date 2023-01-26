@@ -7,9 +7,12 @@
 								{{projectsCount}}
             </b></p>
      			<span class="float-right">
-     			<button class="btn btn-sm btn-primary" @click.prevent="activated">Active Projects</button>
-     			<button class="btn btn-sm btn-success" @click.prevent="member">Projects Member</button>
-                <button class="btn btn-sm btn-danger" @click.prevent="abandoned">Abandoned Projects</button>
+
+     			<button class="btn btn-sm btn-primary" @click.prevent="activeProjects">Active Projects</button>
+
+     			<button class="btn btn-sm btn-success" @click.prevent="memberProjects">Projects Member</button>
+
+                <button class="btn btn-sm btn-danger" @click.prevent="abandonedProjects">Abandoned Projects</button>
              	</span>
      	</div>
         <br><br>
@@ -20,6 +23,7 @@
 				<b>{{message}} in {{projectState}} Projects</b>
 			    </h5>
 				</div>
+
      			<div class="col-md-4" v-for="project in projects">
 					<router-link :to="'/projects/'+project.slug" class="dashboard-link">
      			<div class="dashboard-projects mt-5">
@@ -36,6 +40,7 @@
      		</div>
                 </router-link>
      			</div>
+     			
      		</div>
      	</div>
         <div class="dashboard-project_info m-4">
@@ -59,30 +64,27 @@ export default{
 
     data(){
     return{
-      projects:{},
-      active:false,
-      invite:false,
-      abandon:false,
-			projectState:"",
-      projectsCount:0,
-			message:'',
+	    projects: {},
+        projectState: "",
+        projectsCount: 0,
+        message: '',		
     };
     },
     methods:{
-      activated(){
+      activeProjects(){
         axios.get(this.url()).
             then(({data})=>(this.getData(data)));
-          this.activeState();
+            this.projectState = "Active";
       },
-      member(){
+      memberProjects(){
         axios.get(this.url()+'?member=true').
             then(({data})=>(this.getData(data)));
-						this.memberState();
+	        this.projectState = "Member";
       },
-      abandoned(){
+      abandonedProjects(){
          axios.get(this.url()+'?abandoned=true').
             then(({data})=>(this.getData(data)));
-						this.abandonedState();
+			this.projectState="Abandoned";
       },
 			url(){
 				return '/api/v1/user/projects';
@@ -92,30 +94,12 @@ export default{
 				this.projectsCount=data.projectsCount,
 				this.message=data.message;
 			},
-			activeState(){
-				this.projectState="Active";
-				this.invite=false;
-				this.abandon=false;
-				this.active=true;
-			},
-			memberState(){
-				this.projectState="Member";
-				this.active=false;
-				this.abandon=false;
-				this.invite=true;
-			},
-			abandonedState(){
-				this.projectState="Abandoned";
-				this.active=false;
-				this.invite=false;
-				this.abandon=true;
-			},
 			 stage(project){
-				 return this.currentStage(project.stage,project.completed);
+			   return this.currentStage(project.stage,project.completed);
 			},
     },
     mounted(){
-        this.activated();
+        this.activeProjects();
     }
 }
 </script>
