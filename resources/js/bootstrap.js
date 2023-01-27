@@ -9,7 +9,7 @@ Vue.config.productionTip = false
  * code may be modified to fit the specific needs of your application.
  */
 
- let authorizations=require('./authorizations');
+ /*let authorizations=require('./authorizations');
 
  Vue.prototype.authorize = function (...params) {
      if (! window.App.signedIn) return false;
@@ -19,7 +19,7 @@ Vue.config.productionTip = false
      }
 
      return params[0](window.App.user);
- };
+ };*/
 
  Vue.prototype.signedIn = window.App.signedIn;
 

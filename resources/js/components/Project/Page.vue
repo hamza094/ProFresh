@@ -138,7 +138,9 @@
 	import Task from './Panel/Task.vue'
 	import PanelFeatues from './Panel/Features.vue'
 	import RecentActivities from './RecentActivities.vue'
-    import Chat from './Panel/Chat.vue'
+  import Chat from './Panel/Chat.vue'
+  import { permission } from '../../auth'
+
 
 export default{
 	  components:{Status,Stage,Task,PanelFeatues,RecentActivities,Chat},
@@ -166,33 +168,23 @@ export default{
 				 axios.get('/api/v1/projects/'+this.$route.params.slug).
 				 then(response=>{
 						 this.project=response.data;
-						 this.members=this.project.members; 
+						 this.members=this.project.members;
 						 this.user=response.data.user[0];
+						 this.checkPermission(); 
 						 this.getStage=this.project.stage.id;
 						 this.projectname=this.project.name;
 						 this.daysLimit=this.project.days_limit;
              this.members.unshift(this.project.user[0]);
-						 this.checkMembersAndPermission();
 						 this.$bus.emit('projectSlug',{slug:response.data.slug});
 				 }).catch(error=>{
 					 console.log(error.response.data.errors);
 				 });
 			},
-      checkMembersAndPermission(){
-				var authId=this.auth.id;
-				var IsMember=false;
-				 this.members.forEach(function(item,index){
-					 if(item.user_id == authId){
-					    IsMember = true;
-					}
-				 });
-				 if(this.user.id == authId || IsMember == true){
-					  this.accessAllowed = true;
-			 }
-			 if(this.user.id == authId){
-				 this.ownerLogin = true;
-			 }
-			},
+      checkPermission(){
+			  const {accessAllowed, ownerLogin} = permission(this.auth, this.members, this.user);
+        this.accessAllowed = accessAllowed;
+        this.ownerLogin = ownerLogin;
+	},
 			//Update project name methods
 			updateName(){
 				axios.patch('/api/v1/projects/'+this.project.slug,{
@@ -256,17 +248,16 @@ export default{
 			},
 
 			//show error messages
-			showError(error){
-				if(error.response.data.errors && error.response.data.errors.name){
-						this.$vToastify.warning(error.response.data.errors.name[0]);
-				}
-				 if(error.response.data.errors && error.response.data.errors.about){
-						this.$vToastify.warning(error.response.data.errors.about[0]);
-					}
-				if(error.response.data.error){
-					this.$vToastify.warning(error.response.data.error);
-				}
-			},
+		showError(err){
+     const { data: { errors, error } } = err.response;
+     if (errors) {
+      Object.keys(errors).forEach(field => {
+        this.$vToastify.warning(errors[field][0]);
+      });
+    } else if (error) {
+     this.$vToastify.warning(error);
+  }
+},
 
 	listenForActivity() {
 	  Echo.channel('activity')
@@ -287,44 +278,47 @@ export default{
         this.project.conversations.splice(this.project.conversations.indexOf(e),1);
         this.$vToastify.success("conversation deleted");       
       });
-    },    
+    },
+    updateStage(data) {
+    this.project.stage_updated_at = data.stage_updated
+    this.project.stage = data.current_stage
+    this.project.completed = data.completed
+    this.project.postponed= data.postponed
+    this.getStage=data.getStage
+  },  
+    updateTasks(data) {
+    axios.get(`/api/v1/projects/${this.project.slug}?page=${data.page}`)
+    .then(response => {
+      this.project.tasks = response.data.tasks;
+      this.project.activities = response.data.activities;
+    });
+  },  
     },
     	created(){
 			this.loadProject();
-			this.$bus.$on('stageListners', (data) => {
-					this.project.stage_updated_at = data.stage_updated
-					this.project.stage = data.current_stage
-					this.project.completed = data.completed
-					this.project.postponed= data.postponed
-					this.getStage=data.getStage
-				})
-					this.$bus.$on('taskResults', (data) => {
-							axios.get('/api/v1/projects/'+this.project.slug+'?page=' + data.page)
-			 				.then(response => {
-			 					this.project.tasks = response.data.tasks;
-			 					this.project.activities = response.data.activities;
-			 				});
-		 				});
+			this.$bus.$on('stageListners', this.updateStage);
+      this.$bus.$on('taskResults', this.updateTasks);
 
-						this.$bus.$on('Panel', (data) => {
-								this.project.notes = data.notes;
-							});
 
-						this.$bus.$on('removeMember',(data)=>{
-							this.project.members=data.members;
-						});
+			this.$bus.$on('Panel', (data) => {
+				this.project.notes = data.notes;
+			});
 
-						this.$bus.$on('addScore', () => {
-								this.project.score +=2;
-						});
+			this.$bus.$on('removeMember',(data)=>{
+				this.project.members=data.members;
+			});
 
-						this.$bus.$on('reduceScore', () => {
-								this.project.score -=2;
-						});
+			this.$bus.$on('addScore', () => {
+					this.project.score +=2;
+			});
 
-            this.$bus.$on('score', (data) => {
-								this.project.score = data.score;
-						});  						
+			this.$bus.$on('reduceScore', () => {
+				this.project.score -=2;
+			});
+
+      this.$bus.$on('score', (data) => {
+				this.project.score = data.score;
+			});  						
 		},
     mounted(){
       this.listenForNewMessage();
