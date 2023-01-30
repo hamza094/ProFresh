@@ -166,14 +166,9 @@ export default {
        
     },
      showEmoji(emoji) {
-       if(!emoji){
-          return false;
-        }
-        if(!this.message){
-          this.message=emoji.native;
-        }else{
-          this.message=this.message + emoji.native;
-        }
+      if(!emoji) return false;
+      this.message = !this.message ? emoji.native :
+       this.message + emoji.native;
     },
 
   fileUpload(){

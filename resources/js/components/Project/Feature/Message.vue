@@ -125,74 +125,75 @@ export default {
 
   props:['slug','members'],
     data() {
-        return {
-           auth:this.$store.state.currentUser.user,
-
-			newDate:moment().add(1, 'days').format("YYYY-MM-DD"),
-           buttonMessage:'Send',
-          form:{
-						  date:'',
-						  time:'',
-              message:'',
-              subject:'',
-							mail:'',
-							sms:'',
-							users:[],
-							scheduled_at:'',
+      return {
+        auth:this.$store.state.currentUser.user,
+        newDate:moment().add(1, 'days').format("YYYY-MM-DD"),
+        buttonMessage:'Send',
+        form:{
+		    date:'',
+		    time:'',
+            message:'',
+            subject:'',
+			mail:'',
+			sms:'',
+			users:[],
+		    scheduled_at:'',
           },
-					model:{
-						date:'',
-						time:'',
-					},
-            errors:{}
+		model:{
+			date:'',
+			time:'',
+			},
+        errors:{}
         };
     },
     methods: {
      sendMessage(){
       axios.post('/api/v1/projects/'+this.slug+'/message',{
         mail:this.form.mail,
-				sms:this.form.sms,
+		sms:this.form.sms,
         subject:this.form.subject,
         message:this.form.message,
-				users:JSON.stringify(this.form.users),
-				date:this.form.date,
-				time:this.form.time
+		users:JSON.stringify(this.form.users),
+		date:this.form.date,
+		time:this.form.time
     }).then(response=>{
         this.$vToastify.success("Message Sent Successfully");
-				this.modalClose();
+		this.modalClose();
     }).catch(error=>{
-         this.errors=error.response.data.errors;
-				 this.$vToastify.warning("Failed To Send Message");
+        this.errors=error.response.data.errors;
+		this.$vToastify.warning("Failed To Send Message");
      });
   },
 
 	scheduled(){
-	if(!this.model.date || !this.model.time)
-	{
-		 return this.$vToastify.warning('Please select date and time');
-	}
+	 this.validateScheduled();
 
-	if(this.model.date < this.newDate )
-	{
-		 return this.$vToastify.warning('Date must be greater');
-	}
-
-	   this.form.date = moment(this.model.date).format('YYYY-MM-DD'),
-	   this.form.time = moment(this.model.time).format('HH:mm:ss'),
-	   this.form.scheduled_at = this.scheduledTime();
-		 this.$modal.hide('schedule-message');
+	 this.form.date = moment(this.model.date).format('YYYY-MM-DD'),
+	 this.form.time = moment(this.model.time).format('HH:mm:ss'),
+	 this.form.scheduled_at = this.scheduledTime();
+     this.$modal.hide('schedule-message');
 	},
 
+	validateScheduled(){
+      if (!this.model.date || !this.model.time) {
+     return this.$vToastify.warning('Please select date and time');
+     }
+
+  if (this.model.date < this.newDate) {
+    return this.$vToastify.warning('Date must be greater');
+   }
+ },
+
 	scheduledTime(){
-		return this.$options.filters.date(this.model.date) +
-		 ' at '
-		 + this.$options.filters.time(this.model.time);
+	 const date = this.$options.filters.date(this.model.date);
+     const time = this.$options.filters.time(this.model.time);
+       return `${date} at ${time}`;
 	},
 
 	messageButton(){
-		if(this.form.date && this.form.time){
-			return "Schedule";
-		}
+	 if(this.form.date && this.form.time){
+		return "Schedule";
+	}
 		return "Send";
 	},
 

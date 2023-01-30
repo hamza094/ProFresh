@@ -46,3 +46,4 @@ table
     - final refactoring and ui fix
     - deploy
     
+// Vue.component('profile', require('./components/Profile/ProfilePage.vue').default);

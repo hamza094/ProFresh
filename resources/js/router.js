@@ -17,20 +17,20 @@ import Profile from './components/Profile/ProfilePage';
 import NotFound from './components/Error';
 
 const guest = (to, from, next) => {
-  if (!JSON.parse(localStorage.getItem("token"))) {
-    return next()
-  } else {
-    return next('/home')
+  const token = localStorage.getItem("token");
+  if (!token) {
+   return next();
   }
-}
+   return next('/home');
+ };
+
 const auth = (to, from, next) => {
-  // Solve a bug where user isn't yet loaded but the app runs
-  if (JSON.parse(localStorage.getItem("token"))) {
-    return next()
-  } else {
-    return next('/login')
+  const token = localStorage.getItem("token");
+  if (token) {
+    return next();
   }
-}
+    return next('/login');
+ }
 
 let router = new Router({
     mode: 'history',

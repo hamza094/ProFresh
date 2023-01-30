@@ -13,14 +13,14 @@
             </div>
             </div>-->
 
-            <div class="img-avatar" v-else>
+            <!--<div class="img-avatar" v-else>
             <div class="img-avatar_name" v-if="user.avatar_path==null">
                 {{user.name.substring(0,1)}}
             </div>
                 <div v-else>
                     <img :src="avatar_path" alt="" class="main-profile-img"/>
                 </div>
-            </div>
+            </div>-->
             
             	  <modal name="avatar-file" height="auto">
             <div class="p-3 bg-white shadow rounded-lg img_avarar">
