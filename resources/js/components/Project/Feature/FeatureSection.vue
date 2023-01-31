@@ -8,7 +8,9 @@
   <ul>
     <li class="feature-dropdown_item-content"
     @click="abandon()"><i class="fas fa-eye-slash"></i> Abandon</li>
+
     <li class="feature-dropdown_item-content"  @click="$modal.show('project-message')"><i class="far fa-envelope"></i>Send Mail or Sms</li>
+
     <li class="feature-dropdown_item-content" @click="exportProject()"><i class="fas fa-upload"></i> Export</li>
 
     <li class="feature-dropdown_item-content" @click="deleteProject"><i class="fas fa-ban"></i> Delete</li>
@@ -23,7 +25,6 @@
 
 <script>
 import fileDownload from 'js-file-download';
-
 import ProjectMessage from './Message.vue'
 
 export default {

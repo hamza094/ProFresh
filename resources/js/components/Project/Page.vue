@@ -299,7 +299,6 @@ export default{
 			this.$bus.$on('stageListners', this.updateStage);
       this.$bus.$on('taskResults', this.updateTasks);
 
-
 			this.$bus.$on('Panel', (data) => {
 				this.project.notes = data.notes;
 			});

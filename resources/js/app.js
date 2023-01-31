@@ -25,8 +25,6 @@ import VueToastify from "vue-toastify";
 import { Datetime } from 'vue-datetime';
 // You need a specific loader for CSS files
 import 'vue-datetime/dist/vue-datetime.css';
-import { Settings } from 'luxon'
-
 
 Vue.use(Vuex);
 Vue.use(VueBus);
@@ -50,7 +48,6 @@ Vue.mixin(alertNotice);
 Vue.mixin(currentStage);
 Vue.mixin(conversation);
 
-
 Vue.filter('time',function(data){
    return  moment(data).format('h:mm:ss a');
 })
@@ -63,6 +60,8 @@ Vue.filter('datetime',function(data){
    return  moment(data).format("MMM Do YY h:mm:ss a");
 })
 
+import { Settings } from 'luxon'
+Settings.defaultLocale = 'en'
 
 Vue.use(VueToastify, {
     position:"bottom-left",
@@ -73,12 +72,8 @@ Vue.use(VueToastify, {
     canPause:false
 });
 
-
-//set to display dates for English language
-Settings.defaultLocale = 'en'
-
-
 import VueProgressBar from 'vue-progressbar'
+
 const options = {
   color: '#bffaf3',
   failedColor: '#874b4b',
@@ -101,7 +96,6 @@ const components = [    ['project-button', './components/ProjectButton.vue'],
   ['project-features', './components/Project/Feature/FeatureSection.vue'],
   ['project-stage', './components/Project/Stage.vue'],
   ['notifications', './components/Notification.vue'],
-  ['pagination', 'laravel-vue-pagination'],
   ['profile', './components/Profile/ProfilePge.vue'],
   ['navbar', './components/Navbar.vue'],
 ];
@@ -110,6 +104,7 @@ components.forEach(([name, path]) => {
   Vue.component(name, () => import(`${path}`).then(m => m.default))
 });
 
+Vue.component('pagination', require('laravel-vue-pagination'));
 
 const app = new Vue({
     el: '#app',

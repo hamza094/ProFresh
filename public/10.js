@@ -1,465 +1,197 @@
 (window["webpackJsonp"] = window["webpackJsonp"] || []).push([[10],{
 
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Dashboard/ProjectChart.vue?vue&type=script&lang=js&":
-/*!*********************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Dashboard/ProjectChart.vue?vue&type=script&lang=js& ***!
-  \*********************************************************************************************************************************************************************************/
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Project/Feature/Schedule.vue?vue&type=script&lang=js&":
+/*!***********************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Project/Feature/Schedule.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************************************************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var vue_chartjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-chartjs */ "./node_modules/vue-chartjs/es/index.js");
-
 /* harmony default export */ __webpack_exports__["default"] = ({
-  "extends": vue_chartjs__WEBPACK_IMPORTED_MODULE_0__["Bar"],
+  props: ['slug'],
   data: function data() {
     return {
-      chartdata: {
-        labels: ['Active', 'Invited', 'Trash'],
-        datasets: [{
-          label: 'Project created by month',
-          backgroundColor: '#12344D',
-          data: [4, 3, 2]
-        }]
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        scales: {
-          yAxes: [{
-            ticks: {
-              beginAtZero: true
-            }
-          }]
-        }
-      }
+      messages: [],
+      form: {},
+      errors: {}
     };
   },
-  mounted: function mounted() {
-    this.renderChart(this.chartdata, this.options);
-  }
-});
-
-/***/ }),
-
-/***/ "./node_modules/vue-chartjs/es/BaseCharts.js":
-/*!***************************************************!*\
-  !*** ./node_modules/vue-chartjs/es/BaseCharts.js ***!
-  \***************************************************/
-/*! exports provided: generateChart, Bar, HorizontalBar, Doughnut, Line, Pie, PolarArea, Radar, Bubble, Scatter, default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "generateChart", function() { return generateChart; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Bar", function() { return Bar; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "HorizontalBar", function() { return HorizontalBar; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Doughnut", function() { return Doughnut; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Line", function() { return Line; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Pie", function() { return Pie; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "PolarArea", function() { return PolarArea; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Radar", function() { return Radar; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Bubble", function() { return Bubble; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Scatter", function() { return Scatter; });
-/* harmony import */ var chart_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! chart.js */ "./node_modules/chart.js/dist/Chart.js");
-/* harmony import */ var chart_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(chart_js__WEBPACK_IMPORTED_MODULE_0__);
-
-function generateChart(chartId, chartType) {
-  return {
-    render: function render(createElement) {
-      return createElement('div', {
-        style: this.styles,
-        class: this.cssClasses
-      }, [createElement('canvas', {
-        attrs: {
-          id: this.chartId,
-          width: this.width,
-          height: this.height
-        },
-        ref: 'canvas'
-      })]);
+  methods: {
+    modalShow: function modalShow() {
+      this.$modal.show('view-schedules');
     },
-    props: {
-      chartId: {
-        default: chartId,
-        type: String
-      },
-      width: {
-        default: 400,
-        type: Number
-      },
-      height: {
-        default: 400,
-        type: Number
-      },
-      cssClasses: {
-        type: String,
-        default: ''
-      },
-      styles: {
-        type: Object
-      },
-      plugins: {
-        type: Array,
-        default: function _default() {
-          return [];
-        }
-      }
-    },
-    data: function data() {
-      return {
-        _chart: null,
-        _plugins: this.plugins
-      };
-    },
-    methods: {
-      addPlugin: function addPlugin(plugin) {
-        this.$data._plugins.push(plugin);
-      },
-      generateLegend: function generateLegend() {
-        if (this.$data._chart) {
-          return this.$data._chart.generateLegend();
-        }
-      },
-      renderChart: function renderChart(data, options) {
-        if (this.$data._chart) this.$data._chart.destroy();
-        if (!this.$refs.canvas) throw new Error('Please remove the <template></template> tags from your chart component. See https://vue-chartjs.org/guide/#vue-single-file-components');
-        this.$data._chart = new chart_js__WEBPACK_IMPORTED_MODULE_0___default.a(this.$refs.canvas.getContext('2d'), {
-          type: chartType,
-          data: data,
-          options: options,
-          plugins: this.$data._plugins
-        });
-      }
-    },
-    beforeDestroy: function beforeDestroy() {
-      if (this.$data._chart) {
-        this.$data._chart.destroy();
-      }
-    }
-  };
-}
-var Bar = generateChart('bar-chart', 'bar');
-var HorizontalBar = generateChart('horizontalbar-chart', 'horizontalBar');
-var Doughnut = generateChart('doughnut-chart', 'doughnut');
-var Line = generateChart('line-chart', 'line');
-var Pie = generateChart('pie-chart', 'pie');
-var PolarArea = generateChart('polar-chart', 'polarArea');
-var Radar = generateChart('radar-chart', 'radar');
-var Bubble = generateChart('bubble-chart', 'bubble');
-var Scatter = generateChart('scatter-chart', 'scatter');
-/* harmony default export */ __webpack_exports__["default"] = ({
-  Bar: Bar,
-  HorizontalBar: HorizontalBar,
-  Doughnut: Doughnut,
-  Line: Line,
-  Pie: Pie,
-  PolarArea: PolarArea,
-  Radar: Radar,
-  Bubble: Bubble,
-  Scatter: Scatter
-});
-
-/***/ }),
-
-/***/ "./node_modules/vue-chartjs/es/index.js":
-/*!**********************************************!*\
-  !*** ./node_modules/vue-chartjs/es/index.js ***!
-  \**********************************************/
-/*! exports provided: default, VueCharts, Bar, HorizontalBar, Doughnut, Line, Pie, PolarArea, Radar, Bubble, Scatter, mixins, generateChart */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "VueCharts", function() { return VueCharts; });
-/* harmony import */ var _mixins_index_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./mixins/index.js */ "./node_modules/vue-chartjs/es/mixins/index.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "mixins", function() { return _mixins_index_js__WEBPACK_IMPORTED_MODULE_0__["default"]; });
-
-/* harmony import */ var _BaseCharts__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./BaseCharts */ "./node_modules/vue-chartjs/es/BaseCharts.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Bar", function() { return _BaseCharts__WEBPACK_IMPORTED_MODULE_1__["Bar"]; });
-
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "HorizontalBar", function() { return _BaseCharts__WEBPACK_IMPORTED_MODULE_1__["HorizontalBar"]; });
-
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Doughnut", function() { return _BaseCharts__WEBPACK_IMPORTED_MODULE_1__["Doughnut"]; });
-
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Line", function() { return _BaseCharts__WEBPACK_IMPORTED_MODULE_1__["Line"]; });
-
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Pie", function() { return _BaseCharts__WEBPACK_IMPORTED_MODULE_1__["Pie"]; });
-
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "PolarArea", function() { return _BaseCharts__WEBPACK_IMPORTED_MODULE_1__["PolarArea"]; });
-
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Radar", function() { return _BaseCharts__WEBPACK_IMPORTED_MODULE_1__["Radar"]; });
-
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Bubble", function() { return _BaseCharts__WEBPACK_IMPORTED_MODULE_1__["Bubble"]; });
-
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Scatter", function() { return _BaseCharts__WEBPACK_IMPORTED_MODULE_1__["Scatter"]; });
-
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "generateChart", function() { return _BaseCharts__WEBPACK_IMPORTED_MODULE_1__["generateChart"]; });
-
-
-
-var VueCharts = {
-  Bar: _BaseCharts__WEBPACK_IMPORTED_MODULE_1__["Bar"],
-  HorizontalBar: _BaseCharts__WEBPACK_IMPORTED_MODULE_1__["HorizontalBar"],
-  Doughnut: _BaseCharts__WEBPACK_IMPORTED_MODULE_1__["Doughnut"],
-  Line: _BaseCharts__WEBPACK_IMPORTED_MODULE_1__["Line"],
-  Pie: _BaseCharts__WEBPACK_IMPORTED_MODULE_1__["Pie"],
-  PolarArea: _BaseCharts__WEBPACK_IMPORTED_MODULE_1__["PolarArea"],
-  Radar: _BaseCharts__WEBPACK_IMPORTED_MODULE_1__["Radar"],
-  Bubble: _BaseCharts__WEBPACK_IMPORTED_MODULE_1__["Bubble"],
-  Scatter: _BaseCharts__WEBPACK_IMPORTED_MODULE_1__["Scatter"],
-  mixins: _mixins_index_js__WEBPACK_IMPORTED_MODULE_0__["default"],
-  generateChart: _BaseCharts__WEBPACK_IMPORTED_MODULE_1__["generateChart"],
-  render: function render() {
-    return console.error('[vue-chartjs]: This is not a vue component. It is the whole object containing all vue components. Please import the named export or access the components over the dot notation. For more info visit https://vue-chartjs.org/#/home?id=quick-start');
-  }
-};
-/* harmony default export */ __webpack_exports__["default"] = (VueCharts);
-
-
-/***/ }),
-
-/***/ "./node_modules/vue-chartjs/es/mixins/index.js":
-/*!*****************************************************!*\
-  !*** ./node_modules/vue-chartjs/es/mixins/index.js ***!
-  \*****************************************************/
-/*! exports provided: reactiveData, reactiveProp, default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "reactiveData", function() { return reactiveData; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "reactiveProp", function() { return reactiveProp; });
-function dataHandler(newData, oldData) {
-  if (oldData) {
-    var chart = this.$data._chart;
-    var newDatasetLabels = newData.datasets.map(function (dataset) {
-      return dataset.label;
-    });
-    var oldDatasetLabels = oldData.datasets.map(function (dataset) {
-      return dataset.label;
-    });
-    var oldLabels = JSON.stringify(oldDatasetLabels);
-    var newLabels = JSON.stringify(newDatasetLabels);
-
-    if (newLabels === oldLabels && oldData.datasets.length === newData.datasets.length) {
-      newData.datasets.forEach(function (dataset, i) {
-        var oldDatasetKeys = Object.keys(oldData.datasets[i]);
-        var newDatasetKeys = Object.keys(dataset);
-        var deletionKeys = oldDatasetKeys.filter(function (key) {
-          return key !== '_meta' && newDatasetKeys.indexOf(key) === -1;
-        });
-        deletionKeys.forEach(function (deletionKey) {
-          delete chart.data.datasets[i][deletionKey];
-        });
-
-        for (var attribute in dataset) {
-          if (dataset.hasOwnProperty(attribute)) {
-            chart.data.datasets[i][attribute] = dataset[attribute];
-          }
-        }
+    scheduledMessages: function scheduledMessages() {
+      var _this = this;
+      axios.get('/api/v1/projects/' + this.slug + '/messages/scheduled').then(function (response) {
+        _this.messages = response.data;
+      })["catch"](function (error) {
+        console.log(error.response.data.errors);
       });
-
-      if (newData.hasOwnProperty('labels')) {
-        chart.data.labels = newData.labels;
-        this.$emit('labels:update');
-      }
-
-      if (newData.hasOwnProperty('xLabels')) {
-        chart.data.xLabels = newData.xLabels;
-        this.$emit('xlabels:update');
-      }
-
-      if (newData.hasOwnProperty('yLabels')) {
-        chart.data.yLabels = newData.yLabels;
-        this.$emit('ylabels:update');
-      }
-
-      chart.update();
-      this.$emit('chart:update');
-    } else {
-      if (chart) {
-        chart.destroy();
-        this.$emit('chart:destroy');
-      }
-
-      this.renderChart(this.chartData, this.options);
-      this.$emit('chart:render');
-    }
-  } else {
-    if (this.$data._chart) {
-      this.$data._chart.destroy();
-
-      this.$emit('chart:destroy');
-    }
-
-    this.renderChart(this.chartData, this.options);
-    this.$emit('chart:render');
-  }
-}
-
-var reactiveData = {
-  data: function data() {
-    return {
-      chartData: null
-    };
-  },
-  watch: {
-    'chartData': dataHandler
-  }
-};
-var reactiveProp = {
-  props: {
-    chartData: {
-      type: Object,
-      required: true,
-      default: function _default() {}
+    },
+    remove: function remove(id, index) {
+      var _this2 = this;
+      axios["delete"]('/api/v1/projects/' + this.slug + '/messages/' + id + '/delete').then(function (response) {
+        _this2.scheduledMessages();
+      })["catch"](function (error) {
+        console.log(error.response.data.errors);
+      });
+    },
+    modalClose: function modalClose() {
+      this.$modal.hide('view-schedules');
     }
   },
-  watch: {
-    'chartData': dataHandler
+  created: function created() {
+    this.scheduledMessages();
   }
-};
-/* harmony default export */ __webpack_exports__["default"] = ({
-  reactiveData: reactiveData,
-  reactiveProp: reactiveProp
 });
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js":
-/*!********************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/runtime/componentNormalizer.js ***!
-  \********************************************************************/
-/*! exports provided: default */
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Project/Feature/Schedule.vue?vue&type=template&id=83b4c31e&":
+/*!*********************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib/loaders/templateLoader.js??ref--6!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Project/Feature/Schedule.vue?vue&type=template&id=83b4c31e& ***!
+  \*********************************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return normalizeComponent; });
-/* globals __VUE_SSR_CONTEXT__ */
-
-// IMPORTANT: Do NOT use ES2015 features in this file (except for modules).
-// This module is a runtime utility for cleaner component module output and will
-// be included in the final webpack user bundle.
-
-function normalizeComponent(
-  scriptExports,
-  render,
-  staticRenderFns,
-  functionalTemplate,
-  injectStyles,
-  scopeId,
-  moduleIdentifier /* server only */,
-  shadowMode /* vue-cli only */
-) {
-  // Vue.extend constructor export interop
-  var options =
-    typeof scriptExports === 'function' ? scriptExports.options : scriptExports
-
-  // render functions
-  if (render) {
-    options.render = render
-    options.staticRenderFns = staticRenderFns
-    options._compiled = true
-  }
-
-  // functional template
-  if (functionalTemplate) {
-    options.functional = true
-  }
-
-  // scopedId
-  if (scopeId) {
-    options._scopeId = 'data-v-' + scopeId
-  }
-
-  var hook
-  if (moduleIdentifier) {
-    // server build
-    hook = function (context) {
-      // 2.3 injection
-      context =
-        context || // cached call
-        (this.$vnode && this.$vnode.ssrContext) || // stateful
-        (this.parent && this.parent.$vnode && this.parent.$vnode.ssrContext) // functional
-      // 2.2 with runInNewContext: true
-      if (!context && typeof __VUE_SSR_CONTEXT__ !== 'undefined') {
-        context = __VUE_SSR_CONTEXT__
-      }
-      // inject component styles
-      if (injectStyles) {
-        injectStyles.call(this, context)
-      }
-      // register component module identifier for async chunk inferrence
-      if (context && context._registeredComponents) {
-        context._registeredComponents.add(moduleIdentifier)
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function render() {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", [_c("a", {
+    staticClass: "btn btn-link",
+    on: {
+      click: function click($event) {
+        $event.preventDefault();
+        return _vm.modalShow();
       }
     }
-    // used by ssr in case component is cached and beforeCreate
-    // never gets called
-    options._ssrRegister = hook
-  } else if (injectStyles) {
-    hook = shadowMode
-      ? function () {
-          injectStyles.call(
-            this,
-            (options.functional ? this.parent : this).$root.$options.shadowRoot
-          )
+  }, [_c("i", {
+    staticClass: "far fa-clock"
+  })]), _vm._v(" "), _c("modal", {
+    staticClass: "model-desin",
+    attrs: {
+      name: "view-schedules",
+      height: "auto",
+      scrollable: true,
+      clickToClose: false,
+      width: "75%"
+    }
+  }, [_c("div", {
+    staticClass: "edit-border-top p-3"
+  }, [_c("div", {
+    staticClass: "edit-border-bottom"
+  }, [_c("div", {
+    staticClass: "panel-top_content"
+  }, [_c("span", {
+    staticClass: "panel-heading"
+  }, [_vm._v("Scheduled messages")]), _vm._v(" "), _c("span", {
+    staticClass: "panel-exit float-right",
+    attrs: {
+      role: "button"
+    },
+    on: {
+      click: function click($event) {
+        $event.preventDefault();
+        return _vm.modalClose.apply(null, arguments);
+      }
+    }
+  }, [_vm._v("x")])])]), _vm._v(" "), _c("div", {
+    staticClass: "panel-top_content"
+  }, [_vm.messages == 0 ? _c("h2", [_vm._v("Sorry no scheduled messages found")]) : _c("table", {
+    staticClass: "table table-bordered"
+  }, [_c("thead", [_c("tr", [_c("th", {
+    attrs: {
+      scope: "col"
+    }
+  }, [_vm._v("Type")]), _vm._v(" "), _c("th", {
+    attrs: {
+      scope: "col"
+    }
+  }, [_vm._v("Message")]), _vm._v(" "), _c("th", {
+    attrs: {
+      scope: "col"
+    }
+  }, [_vm._v("To")]), _vm._v(" "), _c("th", {
+    attrs: {
+      scope: "col"
+    }
+  }, [_vm._v("Scheduled At")]), _vm._v(" "), _c("th", {
+    attrs: {
+      scope: "col"
+    }
+  }, [_vm._v("Created At")]), _vm._v(" "), _c("th", {
+    attrs: {
+      scope: "col"
+    }
+  }, [_vm._v("Delete")])])]), _vm._v(" "), _c("tbody", _vm._l(_vm.messages, function (message, index) {
+    return _c("tr", {
+      key: message.id
+    }, [_c("td", [_vm._v(_vm._s(message.type))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(message.message))]), _vm._v(" "), _c("td", _vm._l(message.users, function (user) {
+      return _c("span", [_c("router-link", {
+        staticClass: "btn btn-link",
+        attrs: {
+          to: "/user/" + user.pivot.id + "/profile"
         }
-      : injectStyles
-  }
-
-  if (hook) {
-    if (options.functional) {
-      // for template-only hot-reload because in that case the render fn doesn't
-      // go through the normalizer
-      options._injectStyles = hook
-      // register for functional component in vue file
-      var originalRender = options.render
-      options.render = function renderWithStyleInjection(h, context) {
-        hook.call(context)
-        return originalRender(h, context)
+      }, [_vm._v("\n\t\t\t\t\t" + _vm._s(user.name) + "\n\t\t\t\t")]), _c("br")], 1);
+    }), 0), _vm._v(" "), _c("td", [_vm._v(_vm._s(_vm._f("datetime")(message.delivered_at)))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(_vm._f("datetime")(message.created_at)))]), _vm._v(" "), _c("td", [_c("a", {
+      staticClass: "btn btn-danger",
+      on: {
+        click: function click($event) {
+          return _vm.remove(message.id, index);
+        }
       }
-    } else {
-      // inject component registration as beforeCreate hook
-      var existing = options.beforeCreate
-      options.beforeCreate = existing ? [].concat(existing, hook) : [hook]
+    }, [_c("i", {
+      staticClass: "fas fa-minus-circle"
+    })])])]);
+  }), 0)])]), _vm._v(" "), _c("div", {
+    staticClass: "panel-bottom"
+  }, [_c("div", {
+    staticClass: "panel-top_content float-right"
+  }, [_c("button", {
+    staticClass: "btn panel-btn_close",
+    on: {
+      click: function click($event) {
+        $event.preventDefault();
+        return _vm.modalClose.apply(null, arguments);
+      }
     }
-  }
-
-  return {
-    exports: scriptExports,
-    options: options
-  }
-}
+  }, [_vm._v("Cancel")])])])])])], 1);
+};
+var staticRenderFns = [];
+render._withStripped = true;
 
 
 /***/ }),
 
-/***/ "./resources/js/components/Dashboard/ProjectChart.vue":
-/*!************************************************************!*\
-  !*** ./resources/js/components/Dashboard/ProjectChart.vue ***!
-  \************************************************************/
+/***/ "./resources/js/components/Project/Feature/Schedule.vue":
+/*!**************************************************************!*\
+  !*** ./resources/js/components/Project/Feature/Schedule.vue ***!
+  \**************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _ProjectChart_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ProjectChart.vue?vue&type=script&lang=js& */ "./resources/js/components/Dashboard/ProjectChart.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
-var render, staticRenderFns
+/* harmony import */ var _Schedule_vue_vue_type_template_id_83b4c31e___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Schedule.vue?vue&type=template&id=83b4c31e& */ "./resources/js/components/Project/Feature/Schedule.vue?vue&type=template&id=83b4c31e&");
+/* harmony import */ var _Schedule_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Schedule.vue?vue&type=script&lang=js& */ "./resources/js/components/Project/Feature/Schedule.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
 
 
 
 
 /* normalize component */
 
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__["default"])(
-  _ProjectChart_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"],
-  render,
-  staticRenderFns,
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _Schedule_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _Schedule_vue_vue_type_template_id_83b4c31e___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _Schedule_vue_vue_type_template_id_83b4c31e___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
   false,
   null,
   null,
@@ -469,22 +201,40 @@ var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_
 
 /* hot reload */
 if (false) { var api; }
-component.options.__file = "resources/js/components/Dashboard/ProjectChart.vue"
+component.options.__file = "resources/js/components/Project/Feature/Schedule.vue"
 /* harmony default export */ __webpack_exports__["default"] = (component.exports);
 
 /***/ }),
 
-/***/ "./resources/js/components/Dashboard/ProjectChart.vue?vue&type=script&lang=js&":
-/*!*************************************************************************************!*\
-  !*** ./resources/js/components/Dashboard/ProjectChart.vue?vue&type=script&lang=js& ***!
-  \*************************************************************************************/
+/***/ "./resources/js/components/Project/Feature/Schedule.vue?vue&type=script&lang=js&":
+/*!***************************************************************************************!*\
+  !*** ./resources/js/components/Project/Feature/Schedule.vue?vue&type=script&lang=js& ***!
+  \***************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ProjectChart_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./ProjectChart.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Dashboard/ProjectChart.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ProjectChart_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Schedule_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./Schedule.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Project/Feature/Schedule.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Schedule_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/Project/Feature/Schedule.vue?vue&type=template&id=83b4c31e&":
+/*!*********************************************************************************************!*\
+  !*** ./resources/js/components/Project/Feature/Schedule.vue?vue&type=template&id=83b4c31e& ***!
+  \*********************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_Schedule_vue_vue_type_template_id_83b4c31e___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??ref--6!../../../../../node_modules/vue-loader/lib??vue-loader-options!./Schedule.vue?vue&type=template&id=83b4c31e& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Project/Feature/Schedule.vue?vue&type=template&id=83b4c31e&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_Schedule_vue_vue_type_template_id_83b4c31e___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_Schedule_vue_vue_type_template_id_83b4c31e___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
 
 /***/ })
 
