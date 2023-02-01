@@ -17,6 +17,7 @@ import "emoji-mart-vue-fast/css/emoji-mart.css";
 import alertNotice from './mixins/alertNotice';
 import currentStage from './mixins/currentStage';
 import conversation from './mixins/conversation';
+import activitiesDesign from './mixins/activitiesDesign';
 import Chart from 'chart.js';
 import 'animate.css';
 import "cropperjs/dist/cropper.css"
@@ -47,6 +48,7 @@ import store from "./store";
 Vue.mixin(alertNotice);
 Vue.mixin(currentStage);
 Vue.mixin(conversation);
+Vue.mixin(activitiesDesign);
 
 Vue.filter('time',function(data){
    return  moment(data).format('h:mm:ss a');
