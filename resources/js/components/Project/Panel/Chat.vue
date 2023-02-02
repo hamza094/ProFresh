@@ -29,12 +29,12 @@
       <div class="chat-body clearfix">
       <div class="header">
 
-      <router-link :to="'/user/'+conversation.user[0].name +'/profile'">
-        <img :src="conversation.user[0].avatar_path" alt="User Avatar" class="chat-user_image"/>
+      <router-link :to="'/user/'+conversation.user.name +'/profile'">
+        <img :src="conversation.user.avatar_path" alt="User Avatar" class="chat-user_image"/>
       </router-link>
 
       <strong class="primary-font">
-      {{ conversation.user[0].name }}</strong>
+      {{ conversation.user.name }}</strong>
 
     </div>
         <p v-if="conversation.message" class="mt-2">
@@ -56,7 +56,7 @@
             <i>{{conversation.created_at}}</i>
           </span>
 
-          <button v-if="auth.id == conversation.user[0].id" class="btn btn-link btn-sm" @click.prevent="deleteConversation(conversation.id,index)">Delete</button>
+          <button v-if="auth.id == conversation.user.id" class="btn btn-link btn-sm" @click.prevent="deleteConversation(conversation.id,index)">Delete</button>
 
           <button v-else class="btn btn-link btn-sm disabled">Delete</button>
 

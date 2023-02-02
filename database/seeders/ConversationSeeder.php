@@ -15,7 +15,7 @@ class ConversationSeeder extends Seeder
      */
     public function run()
     {
-      $projects = Project::all();
+      $projects = Project::with('user')->get();
 
         $projects->each(function ($project){
             Conversation::factory(3)->for($project)

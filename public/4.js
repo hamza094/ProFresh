@@ -48,7 +48,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     getPostBody: function getPostBody(notification) {
       var body = this.stripTags(notification.data.message);
-      return body.length > 40 ? body.substring(0, 40) + '...' : body;
+      return body.slice(0, 40) + (body.length > 40 ? '...' : '');
     },
     stripTags: function stripTags(text) {
       return text.replace(/(<([^>]+)>)/ig, '');

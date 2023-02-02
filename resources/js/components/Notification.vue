@@ -62,8 +62,8 @@ export default{
 
         getPostBody(notification)
         {
-          let body = this.stripTags(notification.data.message);
-          return body.length > 40 ? body.substring(0, 40) + '...' : body;
+         let body = this.stripTags(notification.data.message);
+         return body.slice(0, 40) + (body.length > 40 ? '...' : '');
         },
 
         stripTags(text)
