@@ -71,15 +71,13 @@
         }
     },
     methods:{
-      stageCondition(stageId){
+      stageCondition(stageId) {
         if(this.projectstage){
-          if(stageId == this.projectstage.id){
-             this.activeStage="current";
-             return 'current';
-          }
-          this.activeStage="stages";
-           return 'stages';
+        const activeStage = stageId === this.projectstage.id ? 'current' : 'stages';
+         this.activeStage = activeStage;
+         return activeStage;
       }
+
       if(!this.projectstage){
         if(this.completed){
           this.activeStage="closed";
@@ -88,7 +86,9 @@
         this.activeStage="postpone";
          return 'postpone';
       }
-      },
+
+  },
+
       lastStage(){
         if(!this.projectstage && this.completed){
             this.status="Closed";
@@ -103,41 +103,44 @@
           return "stages";
         }
       },
-  stageChange(stageId){
-    if(stageId !== this.get_stage){
-    axios.patch('/api/v1/projects/'+this.slug+'/stage',{
-    stage:stageId
-  }).then(response=>{
-    let project=response.data.project;
-      this.eventListener(0,project.stage,project.stage_updated_at,null,project.stage.id);
-     this.$vToastify.success("Updating project stage...");
-  }).catch(error=>{
-     this.$vToastify.error("Error in Project Phase Conversion");
-  });
-}
- },
-  postpone(){
-  axios.patch('/api/v1/projects/'+this.slug+'/stage',{
-    postponed:this.reason
-  }).then(response=>{
-    let project=response.data.project;
-    this.eventListener(0,null,project.stage_updated_at,project.reason,0);
-   this.$vToastify.success("Postponeding project...");
+
+  updateProject(data) {
+  axios.patch('/api/v1/projects/' + this.slug + '/stage', data)
+    .then(response => {
+      const project = response.data.project;
+
+      let eventData = {
+        completed: data.completed || 0,
+        current_stage: project.stage || null,
+        stage_updated: project.stage_updated_at,
+        postponed: project.postponed || null,
+        getStage: project.stage ? project.stage.id : 0
+      };
+      this.eventListener(eventData);
+      this.$vToastify.success("Successfully update");
+    })
+    .catch(error => {
+      this.$vToastify.error("Error in Project Phase Conversion");
+    });
+},  
+
+  stageChange(stageId) {
+  if (stageId === this.get_stage) {
+    return this.$vToastify.error("Stage already selected");
+  }
+
+  this.updateProject({ stage: stageId });
+},
+      
+ postpone() {
+   this.updateProject({ postponed: this.reason });
    this.$modal.hide('stage-reason');
-  }).catch(error=>{
-    this.$vToastify.error("Error in Project Postpone");
-  });
 },
- projectClose(){
-   axios.patch('/api/v1/projects/'+this.slug+'/stage',{
-   completed:'true',
- }).then(response=>{
-     this.eventListener(1,null,response.data.project.stage_updated_at,null,0);
-    this.$vToastify.success("Sucessfully closing project...");
- }).catch(error=>{
-    this.$vToastify.error("Error in Project Closing");
- });
+
+ projectClose() {
+  this.updateProject({ completed: 'true' });  
 },
+
  loadStages(){
     axios.get('/api/v1/stages').
     then(response=>{
@@ -146,10 +149,11 @@
      console.log(error.response.data.errors);
    });
 },
-eventListener($completed,$currentStage,$stageUpdated,$reason,$getStage){
-  this.$bus.emit('stageListners',{completed:$completed,current_stage:$currentStage,
-    stage_updated:$stageUpdated,postponed:$reason,getStage:$getStage});
+
+eventListener(data){
+  this.$bus.emit('stageListners',data);
 },
+
   offIfClickedOutside(event){
       if(!event.target.closest('.stage-dropdown')){
         this.stagePop=false;

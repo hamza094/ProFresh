@@ -47,13 +47,13 @@
                         <!-- Right Side Of Navbar -->
                         <ul class="navbar-nav ml-auto">
                             <!-- Authentication Links -->
-                            <li class="nav-item" v-if="loggedIn !== true">
+                            <li class="nav-item" v-if="!loggedIn">
                                 <router-link class="nav-link" to='/login'>Sign In</router-link>
                             </li>
-                            <li class="nav-item" v-if="loggedIn !== true">
+                            <li class="nav-item" v-if="!loggedIn">
                                 <router-link class="nav-link" to='/register'>Sign Up</router-link>
                             </li>
-                             <notifications  class="mr-3" v-if="loggedIn === true"></notifications>
+                             <notifications  class="mr-3" v-if="loggedIn"></notifications>
                         </ul>
                     </div>
                 </nav>

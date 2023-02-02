@@ -28,26 +28,16 @@
 
     },
     methods:{
-      activityIcon(description){
-        if(description.startsWith("Task")){
-         return 'fas fa-tasks';
-       }
-       if(description.startsWith("Project invitation") || description.startsWith("Project member")){
-          return 'fas fa-user';
-       }
-       return 'fab fa-pagelines';
-     },
-     activityColor(description){
-       if(description.startsWith("Task")){
-         return 'activity-icon_primary';
-       }
-       if(description.startsWith("Project invitation") || description.startsWith("Project member")){
-          return 'activity-icon_green';
-       }
-       return 'activity-icon_purple';
-     }
+
+      // Fetch activities design from mixin
+      activityIcon(description) {
+        return this.getIcon(description);
+      },
+
+      activityColor(description) {
+        return this.getColor(description);
+      },
+
  },
- mounted(){
-    },
   }
 </script>

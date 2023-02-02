@@ -45,6 +45,7 @@
                      </div>
                      <div class="card-body activity-search">
                        <ul>
+
                          <li>
                             <a href="" class="activity-icon_secondary" 
                            :class="{Activityfont:status == 'all'}"
@@ -56,16 +57,19 @@
                             :class="{Activityfont:status == 'my'}"
                              @click.prevent="myActivities"><i class="fas fa-user activity-icon_purple mr-3"></i> My Activities</a>
                         </li>
+
                          <li>
                             <a href="" class="activity-icon_green" 
                             :class="{Activityfont:status == 'project'}"
                              @click.prevent="projectActivities"><i class="far fa-star activity-icon_green mr-3"></i> Project Activities</a>
                         </li>
+
                          <li>
                             <a href="" class="activity-icon_primary"
                             :class="{Activityfont:status == 'task'}" 
                              @click.prevent="taskActivities()"><i class="fas fa-tasks activity-icon_primary mr-3"></i> Task Activities</a>
                         </li>
+
                         <li>
                             <a href="" class="activity-icon_danger"
                             :class="{Activityfont:status == 'member'}" 
@@ -73,6 +77,7 @@
                             <i class="fas fa-tasks activity-icon_danger mr-3"></i> Member Activities</a>
                         </li>
                        </ul>
+                       
                      </div>
                     </div>
                     <div class="mt-4">
@@ -92,84 +97,67 @@ export default{
     return{
       	activities:{},
         status:'all',
-        auth:'3ade7132-9cc4-4e03-972b-6e4170ec3663',
-        //this.$store.state.currentUser.user.id,
-        current:''
-
+        auth:this.$store.state.currentUser.user,
+        current:'',
     };
     },
     methods:{
+    // Fetch activities design from mixin
+    activityIcon(description) {
+        return this.getIcon(description);
+    },
+    
+    activityColor(description) {
+      return this.getColor(description);
+    },
+
+    async getData(suffix){
+     await axios.get(`/api/v1/projects/${this.$route.params.slug}/activities${suffix}`).then(response=>{
+                 this.activities=response.data;
+            }).catch(error=>{
+               console.log(error.response.data.errors);
+            });
+    },
+
 	getActivities(){
-		  axios.get('/api/v1/projects/'+this.$route.params.slug
-			  +'/activities').then(response=>{
-			     this.activities=response.data;
-			}).catch(error=>{
-			   console.log(error.response.data.errors);
-		    });
-            this.current='All Project Activities';
-		},
-	   activityIcon(description){
-        if(description.startsWith("Task")){
-         return 'fas fa-tasks';
-       }
-       if(description.startsWith("Project invitation") || description.startsWith("Project member")){
-          return 'fas fa-user';
-       }
-       return 'fab fa-pagelines';
-     },
-     activityColor(description){
-       if(description.startsWith("Task")){
-         return 'activity-icon_primary';
-       }
-       if(description.startsWith("Project invitation") || description.startsWith("Project member")){
-          return 'activity-icon_green';
-       }
-       return 'activity-icon_purple';
-     },
-     getResults(page=1){
-       axios.get('/api/v1/projects/'+this.$route.params.slug
-	     +'/activities?page='+ page).then(response => {
-		  this.activities=response.data;
-	   });
-     },
-     allActivities(){
+	   this.getData('');
+       this.current = 'All Project Activities';
+	},
+
+    getResults(page = 1) {
+       this.getData(`?page=${page}`);
+    },
+
+    allActivities(){
        this.status = "all";
        this.getActivities();
-     },
+    },
+
      myActivities(){
-        this.status = "my";
-         axios.get('/api/v1/projects/'+this.$route.params.slug
-         +'/activities?mine='+this.auth).then(response => {
-          this.activities=response.data;
-          this.current='My Project Activities';
-       });
+       this.status = "my";
+       this.getData(`?mine=${this.auth.id}`);
+       this.current = 'My Project Activities';
      },
+
      projectActivities(){
         this.status = "project";
-         axios.get('/api/v1/projects/'+this.$route.params.slug
-         +'/activities?specifics=1').then(response => {
-           this.activities=response.data;
-           this.current='Project Specified Activities';
-       });
+        this.getData('?specifics=1');
+        this.current = 'Project Specified Activities';
      },
+
      taskActivities(){
         this.status = "task";
-        axios.get('/api/v1/projects/'+this.$route.params.slug
-         +'/activities?tasks=1').then(response => {
-          this.activities=response.data;
-          this.current='Project Tasks Activities';
-       });
-
+        this.getData('?tasks=1');
+        this.current = 'Project Tasks Activities';
      },
+
      memberActivities(){
-        this.status = "member";
-         axios.get('/api/v1/projects/'+this.$route.params.slug
-         +'/activities?members=1').then(response => {
-          this.activities=response.data;
-          this.current='Project Members Activities';
-       });
+       this.status = "member";
+       this.getData('?members=1');
+       this.current = 'Project Members Activities';
      }
     },
+
 	created(){
        this.getActivities();
 	},

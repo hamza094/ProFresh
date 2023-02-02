@@ -138,12 +138,20 @@
       this.form.editbody=task.body;
     },
     taskErrors(error){
-			if(error.response.data.errors.body){
-				this.$vToastify.warning(error.response.data.errors.body[0]);
-			}
-			if(error.response.data.errors.task){
-				this.$vToastify.warning(error.response.data.errors.task[0]);
-			}
+		if (!error.response) {
+    this.$vToastify.warning("An error occurred.");
+    return;
+  }
+  let errors = error.response.data.errors;
+  if (errors) {
+    for (let key in errors) {
+      if (errors.hasOwnProperty(key)) {
+        this.$vToastify.warning(errors[key][0]);
+      }
+    }
+  } else {
+    this.$vToastify.warning("An error occurred.");
+  }
 		},
     },
 }

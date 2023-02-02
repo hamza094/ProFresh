@@ -29,7 +29,7 @@ public function login(Request $request)
         ]);
     }
 
-    event(new UserLogin($user));
+    //event(new UserLogin($user));
 
     return response()->json([
       'user' => new UserResource($user),

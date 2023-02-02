@@ -99,7 +99,7 @@ class Project extends Model
     {
       return $this
             ->members()
-            ->wherePivot('active',true);
+            ->wherePivot('active',true)->get();
     }
 
     public function conversations()
