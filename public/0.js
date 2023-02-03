@@ -367,7 +367,7 @@ var render = function render() {
     staticClass: "check_members"
   }, _vm._l(this.members, function (user, index) {
     return _c("div", {
-      key: user.user_id,
+      key: user.id,
       staticClass: "form-check"
     }, [user.id !== _vm.auth.id ? _c("input", {
       directives: [{

@@ -36,7 +36,7 @@
       <div class="collapse" id="memberProject">
 
         <div class="row">
-        <div v-for="member in members" :key="member.user_id">
+        <div v-for="member in members" :key="member.id">
           <div class="project_members-detail">
                <router-link :to="'/user/'+member.username+'/profile'">
                  <!-- <img :src="member.avatar_path" v-if="member.avatar_path!=null">-->
@@ -52,7 +52,7 @@
                    </p>
                    <p></p>
                </router-link>
-              <a v-if="ownerLogin && member.id !== owner.id"  rel="" role="button" @click.prevent="removeMember(member.pivot.user_id,member)">x</a>
+              <a v-if="ownerLogin && member.id !== owner.id"  rel="" role="button" @click.prevent="removeMember(member.id,member)">x</a>
               </div>
         </div>
       </div>

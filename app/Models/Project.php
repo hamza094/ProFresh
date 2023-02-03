@@ -99,7 +99,7 @@ class Project extends Model
     {
       return $this
             ->members()
-            ->wherePivot('active',true)->get();
+            ->wherePivot('active',true);
     }
 
     public function conversations()
@@ -124,21 +124,19 @@ class Project extends Model
       return $this->tasks->count() == config('app.project.taskLimit');
     }
 
-    public function score()
-    {
-      /*$tasks = $this->tasks()->count() * ScoreValue::Task;
-
-      $notes = $this->notes !== null ? ScoreValue::Note : 0;
-
-      $members = $this->activeMembers()->count() * ScoreValue::Members;
-
-      return $tasks + $notes + $members;*/
-      return 0;     
-    }
+   public function score()
+   {
+     return array_sum([
+        $this->tasks()->count() * ScoreValue::Task,
+        $this->notes !== null ? ScoreValue::Note : 0,
+        $this->activeMembers()->count() * ScoreValue::Members
+    ]);
+  }
 
     public function status()
     {
-      return $this->score() >= 21 ? 'hot' : 'cold';
+      return $this->score() >= ScoreValue::Hot_Score 
+             ? 'hot' : 'cold';
     }
 
    public function scopePastAbandonedLimit($query)

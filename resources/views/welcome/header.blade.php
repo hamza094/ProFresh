@@ -17,15 +17,6 @@
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
 
-    <script>
-  window.App={!! json_encode([
-              'csrfToken'=>csrf_token(),
-              'user'=>Auth::user(),
-              'signedIn'=>Auth::check()
-              ]) !!};
-  </script>
-
-
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
 

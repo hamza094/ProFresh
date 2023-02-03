@@ -7,10 +7,10 @@ use Illuminate\Http\Request;
 use App\Models\Project;
 use App\Models\Task;
 use App\Helpers\SendNotification;
+use App\Services\TaskService;
 use App\Http\Resources\TaskResource;
 use F9Web\ApiResponseHelpers;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Validation\ValidationException;
 
 class TaskController extends ApiController
 {
@@ -23,36 +23,29 @@ class TaskController extends ApiController
     $this->notification=$notification;
   }
 
-  public function store(Project $project,TaskRequest $request)
+  public function store(Project $project,TaskRequest $request,TaskService $taskService)
   {
-    if($project->tasksReachedItsLimit())
-    {
-       throw ValidationException::withMessages([
-        'task'=>'Project tasks reached their limit',
-      ]);
-    }
+    $taskService->checkLimits($project);
 
     $task=$project->tasks()->firstOrCreate($request->validated());
 
-    if(!$task->wasRecentlyCreated)
-    {
-       throw ValidationException::withMessages([
-         'task'=>'Project tasks already exist',
-       ]);
-     }
+    $taskService->checkRecentlyCreated($task);
 
     $this->notification->send($project);
 
-     return new TaskResource($task);
+    return new TaskResource($task);
   }
 
-  public function update(Project $project,Task $task,TaskRequest $request)
+  public function update(Project $project,Task $task,TaskRequest $request,TaskService $taskService)
   {
-    if($task->body == $request->body){
-       return $this->respondError("You haven't changed anything");
-    }
+      $validatedData = $request->validated();
 
-      $task->update($request->validated());
+      if ($task->body === $validatedData['body']) {
+        return $this->respondError("You haven't changed anything");
+      }
+      
+      $task->update($validatedData);
+
       return new TaskResource($task);
   }
 

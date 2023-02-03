@@ -45,7 +45,7 @@
 	<div class="form-group">
 		<label for="to" class="label-name mt-2">To: Select Project Member</label>
 		<div class="check_members">
-		<div class="form-check" v-for="(user,index) in  this.members" :key="user.user_id">
+		<div class="form-check" v-for="(user,index) in  this.members" :key="user.id">
 	<input v-if="user.id !== auth.id" class="form-check-input" type="checkbox" v-model="form.users" :value="user" id="checkUsers">
 	<label v-if="user.id !== auth.id" class="form-check-label" for="checkUsers">
 		{{user.name}} ({{user.email}})
