@@ -107,19 +107,15 @@ class InvitationService
 
    protected function validateInvitation($project,$user)
    {
-     if ($project->members->contains($user->id))
-     {
-      throw ValidationException::withMessages([
-        'invitation'=>'Project invitation already sent to a user.',
-      ]);
-     }
+     throw_if($project->members->contains($user->id),
+       ValidationException::withMessages([
+        'invitation'=>'Project invitation already sent to a user.'
+      ]));
 
-     if ($user->id === $project->user->id)
-     {
-      throw ValidationException::withMessages([
-      'invitation'=>"Can't send an invitation to the project owner.",
-      ]);
-     }
+     throw_if($user->id === $project->user->id,
+      ValidationException::withMessages([
+      'invitation'=>"Can't send an invitation to the project owner."
+      ]));
    } 
 }
 
