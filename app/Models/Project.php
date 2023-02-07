@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use App\Traits\RecordActivity;
-use App\Enums\ScoreValue;
+use App\Actions\ScoreAction;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -126,17 +126,16 @@ class Project extends Model
 
    public function score()
    {
-     return array_sum([
-        $this->tasks()->count() * ScoreValue::Task,
-        $this->notes !== null ? ScoreValue::Note : 0,
-        $this->activeMembers()->count() * ScoreValue::Members
-    ]);
-  }
+     $scoreAction = new ScoreAction($this);
+
+     return $scoreAction->calculateTotal(); 
+   }
 
     public function status()
     {
-      return $this->score() >= ScoreValue::Hot_Score 
-             ? 'hot' : 'cold';
+      $scoreAction = new ScoreAction($this);
+
+      return $scoreAction->getStatus(); 
     }
 
    public function scopePastAbandonedLimit($query)

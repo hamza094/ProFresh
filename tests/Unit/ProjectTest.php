@@ -5,6 +5,8 @@ namespace Tests\Unit;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use App\Enums\ScoreValue;
+use App\Actions\ScoreAction;
 use App\Models\Task;
 use App\Models\User;
 use App\Models\Project;
@@ -79,40 +81,47 @@ class ProjectTest extends TestCase
   }
 
   /** @test */
-  public function get_project_score_and_status()
+  public function get_project_total_score()
   {
     $project = Project::factory()->create();
 
-    /*Task::factory()->for($project)->count(4)->create();
+    Task::factory()->for($project)->count(4)->create();
 
     $project->notes = "Some notes";
 
-    $this->userBecomeMember($project);*/
+    $user=User::factory()->create();
 
-    $this->assertEquals(0, $project->score());
+    $this->addMember($project,$user);
 
-    //$this->assertEquals('cold', $project->status());
+     $action = new ScoreAction($project);
+
+     $totalScore = $action->calculateTotal();
+
+    $expectedScore = (4 * ScoreValue::Task) + ScoreValue::Note + (1 * ScoreValue::Members);
+
+    $this->assertEquals($expectedScore, $totalScore);
   }
 
   /** @test */
-  /*public function check_project_status()
+  public function check_project_status()
   {
-     $project = Project::factory()
-       ->hasScores(5,[
-        'point'=>10
-      ])
-      ->create();
-      $this->assertEquals($project->currentStatus(),'hot');
-  }*/
+    $project = Project::factory()->create();
 
-     protected function userBecomeMember($project)
-   {
-     $project->members()->attach($user=User::factory()->create());
+    Task::factory()->for($project)->count(4)->create();
 
-     \DB::table('project_members')
-     ->where('project_id', $project->id)
-     ->where('user_id', $user->id)
-     ->update(['active' =>true]);
+    $this->assertEquals($project->status(),'cold');
+
+    Task::factory()->for($project)->count(7)->create();
+
+    $this->assertEquals($project->status(),'hot');
+
+  }
+
+    protected function addMember($project,$user)
+    {
+      $project
+      ->members()
+      ->attach($user, ['active' => true]);
    }
 
 }
