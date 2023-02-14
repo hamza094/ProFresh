@@ -14,20 +14,25 @@ use Illuminate\Support\Collection;
 
 class ProjectRepository
 {
-  public function filterProjectByActivity(Collection $activities): Collection
+
+  public function filterActivities(Collection $activities)
   {
-    $filters = [
-      'specifics' => 'filterActivityByProjectSpecified',
-      'tasks' => 'filterActivityByTasks',
-      'members' => 'filterActivityByMembers',
-      'mine' => 'filterActivityByAuthUser',
+      $filters = [
+        'specifics' => 'filterActivityByProjectSpecified',
+        'tasks' => 'filterActivityByTasks',
+        'members' => 'filterActivityByMembers',
+        'mine' => 'filterActivityByAuthUser',
     ];
 
-    foreach ($filters as $key => $filter) {
-        if (request()->has($key)) {
-            return $this->$filter($activities);
-        }
+    $filter = request()->only(array_keys($filters));
+    $filter = key($filter);
+
+    if (!empty($filter) && array_key_exists($filter, $filters)) {
+        $method = $filters[$filter];
+        $activities = $this->$method($activities);
     }
+
+    return $activities;
   }
 
    /**

@@ -32,9 +32,10 @@ class TaskTest extends TestCase
        $this->assertDatabaseHas('tasks',['body'=>'My Project Task']);
 
        $response->assertJson([
+           "task"=>[      
            'id'=>1,
            'body'=>'My Project Task'
-          ]);
+          ]]);
    }
 
    /** @test */
@@ -80,9 +81,10 @@ class TaskTest extends TestCase
      $this->assertDatabaseHas('tasks',['body'=>$updatedBody]);
 
      $response->assertJson([
+       "task"=>[      
          'id'=>$task->id,
-         'body'=>$updatedBody
-        ]);
+         'body'=>$updatedBody]
+       ]);
  }
 
    /** @test */
@@ -98,7 +100,7 @@ class TaskTest extends TestCase
      $this->assertTrue($task->completed);
 
      $response->assertJson([
-        'completed'=>$task->completed,
+       "task"=>['completed'=>$task->completed]
        ]);
     }
 

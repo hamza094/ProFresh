@@ -15,8 +15,7 @@ class ActivityResource extends JsonResource
     public function toArray($request)
     {
         return [
-          'description'=>call_user_func_array([$this, $this->description],
-           [$this]),
+          'description' => $this->{$this->description}(),
           'time' => $this->created_at->diffForHumans(),
           'user'=>$this->user,
         ];

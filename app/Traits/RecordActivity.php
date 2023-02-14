@@ -62,7 +62,7 @@ trait RecordActivity
       $changes=$this->activityChanges();
 
       if($changes){
-          if((Arr::exists($changes['before'], 'stage_updated_at')) == true){
+          if((Arr::exists($changes['before'], 'stage_updated_at'))){
             return 'Already exist';
           }
       }
@@ -84,8 +84,8 @@ trait RecordActivity
      */
     public function activities()
     {
-        if (get_class($this) === Project::class) {
-            return $this->hasMany(Activity::class)->with('user:id,name','subject','project')->latest();
+        if ($this instanceof Project) {
+            return $this->hasMany(Activity::class)->with('user:id,name','subject')->latest();
         }
         return $this->morphMany(Activity::class, 'subject')->with('user')->latest();
     }

@@ -109,7 +109,7 @@ class ProjectTest extends TestCase
        $this->project->refresh();
 
        $response->assertJson([
-           'msg'=>'Project name updated sucessfully',
+           'message'=>'Project name updated sucessfully',
            'name'=>$this->project->name,
            'slug'=>$this->project->slug
         ]);

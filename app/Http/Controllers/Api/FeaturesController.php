@@ -43,7 +43,7 @@ class FeaturesController extends ApiController
       //$this->sendNotification($project,new ProjectUpdated($project));
 
       return $this->respondWithSuccess([
-        'msg'=>'Project '.$project->slug.' Stage Updated Successfully',
+        'message'=>'Project '.$project->slug.' Stage Updated Successfully',
         'project'=>new ProjectStageResource($project),
       ]);
 

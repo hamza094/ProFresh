@@ -28,7 +28,7 @@ class ProjectResource extends JsonResource
           'stage'=>new StageResource($this->stage),
           'postponed'=>$this->postponed,
 
-          'user'=>$this->user()->select('id','name','avatar_path','username','email')->get(),
+          'user'=>$this->user()->select('id','name','avatar_path','username','email')->first(),
           
           'members'=>MembersResource::collection($this->activeMembers()->get()),
 
@@ -50,7 +50,7 @@ class ProjectResource extends JsonResource
 
           'days_limit'=>config('app.project.abandonedLimit'),
 
-          'activities'=>ActivityResource::collection($this->activities)->take(5),
+          'activities'=>ActivityResource::collection($this->getLimitedActivities()),
         ];
     }
 }

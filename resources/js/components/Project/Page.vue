@@ -160,21 +160,27 @@ export default{
 		 accessAllowed:false,
 		 ownerLogin:false,
 		 path:'',
-		 status:'cold',
+		 score:'',
     };
     },
+    computed: {
+    status() {
+      return this.score > 21 ? 'hot' : 'cold'
+    }
+  },
     methods:{
 			loadProject(){
 				 axios.get('/api/v1/projects/'+this.$route.params.slug).
 				 then(response=>{
 						 this.project=response.data;
 						 this.members=this.project.members;
-						 this.user=response.data.user[0];
+						 this.user=this.project.user;
 						 this.checkPermission(); 
 						 this.getStage=this.project.stage.id;
 						 this.projectname=this.project.name;
 						 this.daysLimit=this.project.days_limit;
-             this.members.unshift(this.project.user[0]);
+						 this.score=this.project.score;
+             this.members.unshift(this.project.user);
 						 this.$bus.emit('projectSlug',{slug:response.data.slug});
 				 }).catch(error=>{
 					 console.log(error.response.data.errors);
@@ -191,7 +197,7 @@ export default{
 							name:this.projectname,
 					}).then(response=>{
              	this.updateUrl(response.data.slug);
-		          this.updateNameState(response.data.name,response.data.slug,response.data.msg);
+		          this.updateNameState(response.data.name,response.data.slug,response.data.message);
 					}).catch(error=>{
 						  this.nameEdit = false;
 						  this.projectname=this.project.name;
@@ -224,7 +230,7 @@ export default{
 							this.project.about=response.data.about;
 							this.projectabout=response.data.about;
 							this.aboutEdit = false;
-							this.$vToastify.success(response.data.msg);
+							this.$vToastify.success(response.data.messge);
 					}).catch(error=>{
 						this.aboutEdit = false;
 						this.projectabout=this.project.about;

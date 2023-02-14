@@ -112,7 +112,7 @@ export default{
      }).then(response=>{
        this.query='';
        this.results='';
-       this.$vToastify.success(response.data.msg);
+       this.$vToastify.success(response.data.message);
    }).catch(error=>{
        this.query='';
        this.results='';
@@ -125,7 +125,7 @@ export default{
   if (result.value) {
   axios.get('/api/v1/projects/'+this.slug+'/remove/'+id).then(response=>{
       this.$bus.emit('removeMember',{members:response.data.members});
-      self.$vToastify.info(response.data.msg);
+      self.$vToastify.info(response.data.message);
 }).catch(error=>{
       swal.fire("Failed!","There was  an errors","warning");
   });

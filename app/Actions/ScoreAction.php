@@ -16,7 +16,7 @@ class ScoreAction
     $this->project = $project;
   }
 
-  public function calculateTotal()
+  public function calculateTotal(): int
   {  
     return array_sum([
       $this->taskScore(),
@@ -25,26 +25,20 @@ class ScoreAction
     ]);
   }
    
-  private function taskScore()
+   private function taskScore(): int
   {
-    return $this->project->tasks()->count() * ScoreValue::Task;
+    return $this->project->tasks_count * ScoreValue::Task;
   }
 
-  private function notesScore()
+  private function notesScore(): int
   {
     return $this->project->notes !== null ? ScoreValue::Note : 0;
   }
 
-  private function membersScore()
+  private function membersScore(): int
   {
     return $this->project
-          ->activeMembers()->count() * ScoreValue::Members;
-  }
-
-  public function getStatus()
-  {
-    return $this->calculateTotal() >= ScoreValue::Hot_Score 
-             ? 'hot' : 'cold';
+          ->active_members_count * ScoreValue::Members;
   }
 
 }

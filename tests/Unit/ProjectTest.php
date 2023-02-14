@@ -93,13 +93,9 @@ class ProjectTest extends TestCase
 
     $this->addMember($project,$user);
 
-     $action = new ScoreAction($project);
-
-     $totalScore = $action->calculateTotal();
-
     $expectedScore = (4 * ScoreValue::Task) + ScoreValue::Note + (1 * ScoreValue::Members);
 
-    $this->assertEquals($expectedScore, $totalScore);
+    $this->assertEquals($expectedScore, $project->score());
   }
 
   /** @test */
@@ -109,12 +105,13 @@ class ProjectTest extends TestCase
 
     Task::factory()->for($project)->count(4)->create();
 
-    $this->assertEquals($project->status(),'cold');
+    $this->assertEquals($project->status,'cold');
 
     Task::factory()->for($project)->count(7)->create();
 
-    $this->assertEquals($project->status(),'hot');
+    $this->assertEquals(22, $project->score());
 
+    $this->assertEquals($project->status,'hot');
   }
 
     protected function addMember($project,$user)

@@ -2,6 +2,8 @@
 namespace App\Services;
 use App\Models\Project;
 use Illuminate\Http\Request;
+use App\Actions\NotificationAction;
+use App\Notifications\ProjectUpdated;
 use App\Models\Conversation;
 
 class ProjectService
@@ -51,6 +53,14 @@ class ProjectService
          return !empty($value['body']);
     });      
   }
+
+    public function sendNotification($project)
+   {
+     $user = auth()->user()->toArray();
+
+     NotificationAction::send(
+           new ProjectUpdated($project,$user),$project);
+   }
 }
 
 
