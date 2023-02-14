@@ -5,8 +5,8 @@ namespace App\Http\Controllers\Api;
 use App\Http\Requests\TaskRequest;
 use Illuminate\Http\Request;
 use App\Models\Project;
+use App\Notifications\ProjectTask;
 use App\Models\Task;
-use App\Helpers\SendNotification;
 use App\Services\TaskService;
 use App\Http\Resources\TaskResource;
 use F9Web\ApiResponseHelpers;
@@ -16,13 +16,6 @@ class TaskController extends ApiController
 {
   use ApiResponseHelpers;
 
-  private $notification;
-
-  public function __construct(SendNotification $notification)
-  {
-    $this->notification=$notification;
-  }
-
   public function store(Project $project,TaskRequest $request,TaskService $taskService)
   {
     $taskService->checkLimits($project);
@@ -31,9 +24,12 @@ class TaskController extends ApiController
 
     $taskService->checkRecentlyCreated($task);
 
-    $this->notification->send($project);
+    $taskService->sendNotification($project);    
 
-    return new TaskResource($task);
+    return $this->respondCreated([
+      'message'=>'Task Created Successfully',
+      'task'=>new TaskResource($task),
+    ]);
   }
 
   public function update(Project $project,Task $task,TaskRequest $request,TaskService $taskService)
@@ -46,7 +42,10 @@ class TaskController extends ApiController
       
       $task->update($validatedData);
 
-      return new TaskResource($task);
+      return $this->respondWithSuccess([
+      'message'=>'Task Updated Successfully',
+      'task'=>new TaskResource($task),
+    ]);
   }
 
   public function destroy(Project $project,Task $task)
@@ -62,7 +61,10 @@ class TaskController extends ApiController
   {
      request('completed') ? $task->complete() : $task->incomplete();
 
-    return new TaskResource($task);
+      return $this->respondWithSuccess([
+      'message'=>'Task Status Successfully',
+      'task'=>new TaskResource($task),
+    ]);
   }
 
 }

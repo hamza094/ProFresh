@@ -28,7 +28,7 @@ class InvitationTest extends TestCase
             $InvitedUser));
 
         $response->assertJson([
-          'msg'=>"Project invitation sent to ".$InvitedUser->name,
+          'message'=>"Project invitation sent to ".$InvitedUser->name,
          ]);
       }
 
@@ -68,7 +68,7 @@ class InvitationTest extends TestCase
 
 
           $response->assertJson([
-              'msg'=>"You have accepted, ".$this->project->name." invitation",
+              'message'=>"You have accepted, ".$this->project->name." invitation",
             ]);
        }
 
@@ -100,7 +100,7 @@ class InvitationTest extends TestCase
             $memberUser->id]);
 
          $response->assertJson([
-            'msg'=>"Member ".$memberUser->name." has been removed from a project",
+            'message'=>"Member ".$memberUser->name." has been removed from a project",
            ]);
     }
 

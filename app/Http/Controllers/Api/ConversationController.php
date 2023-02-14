@@ -33,7 +33,10 @@ class ConversationController extends ApiController
 
        $conversationService->userMentioned($conversation,$project);
 
-       return $this->respondWithSuccess(['message'=>'New conversation added to. '.$project->name]);
+       return $this->respondWithSuccess([
+        'message'=>'New conversation added to. '.$project->name,
+        'path'=>$project->path()
+      ]);
     }
 
     public function destroy(Project $project,Conversation $conversation)

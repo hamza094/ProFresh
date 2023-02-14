@@ -41,7 +41,7 @@ class InvitationService
     }
 
       return $this->respondWithSuccess([
-        'msg'=>"Project invitation sent to ".$user->name
+        'message'=>"Project invitation sent to ".$user->name
       ]);
 
    }
@@ -70,7 +70,7 @@ class InvitationService
     }
 
     return $this->respondWithSuccess([
-      'msg'=>"You have accepted, ".$project->name." invitation"
+      'message'=>"You have accepted, ".$project->name." invitation"
     ]);
   }
 
@@ -81,7 +81,7 @@ class InvitationService
      $this->recordActivity($project,$user,'remove_project_member');
 
      return $this->respondWithSuccess([
-      'msg'=>"Member ".$user->name." has been removed from a project",
+      'message'=>"Member ".$user->name." has been removed from a project",
       'members'=>$project->activeMembers(),
     ]);
 

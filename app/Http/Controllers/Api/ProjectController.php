@@ -9,7 +9,6 @@ use App\Models\Project;
 use Illuminate\Http\Request;
 use App\Http\Requests\ProjectRequest;
 use App\Http\Requests\ProjectStoreRequest;
-use App\Helpers\SendNotification;
 use App\Services\ProjectService;
 use App\Repository\ProjectRepository;
 use App\Http\Resources\ProjectResource;
@@ -20,18 +19,6 @@ use Illuminate\Http\JsonResponse;
 class ProjectController extends ApiController
 {
   use ApiResponseHelpers;
-
-  private $notification;
-
-  /**
-    * Service For Project Feature
-    *
-    * App\Service\FeatureService
-    */
-  public function __construct(SendNotification $notification)
-  {
-    $this->notification=$notification;
-  }
 
   public function store(ProjectStoreRequest $request,ProjectService $service): JsonResponse
   {
@@ -54,7 +41,8 @@ class ProjectController extends ApiController
     throw $ex;
     }
 
-    return $this->respondWithSuccess([
+    return $this->respondCreated([
+      'message'=>'Project Created Successfully',
       'path'=>$project->path(),
       'slug'=>$project->slug
     ]);
@@ -67,7 +55,7 @@ class ProjectController extends ApiController
       return new ProjectResource($project);
     }
 
-    public function update(Project $project,ProjectRequest $request,ProjectService $service,SendNotification $notification)
+    public function update(Project $project,ProjectRequest $request,ProjectService $service)
     {
       $this->authorize('access', $project);
 
@@ -81,13 +69,11 @@ class ProjectController extends ApiController
 
       $changedAttribute=$service->getChangedAttribute($request);
 
-      $value=$project->$changedAttribute;
-
-      $this->notification->send($project);
+      $service->sendNotification($project);
 
       return $this->respondWithSuccess([
-        'msg'=>'Project '.$changedAttribute.' updated sucessfully',
-         $changedAttribute=>$value,
+        'message'=>'Project '.$changedAttribute.' updated sucessfully',
+         $changedAttribute=>$project->{$changedAttribute},
         'slug'=>$project->slug,
         'score'=>$project->score()
       ]);

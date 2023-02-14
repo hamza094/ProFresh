@@ -17,13 +17,7 @@ class ActivityController extends Controller
 
   public function index(Project $project,ProjectRepository $repository)
   {
-     $activities = $project->activities;
-
-      if(request()->only(['tasks', 'mine', 'specifics','members']))
-      {
-        $activities = $repository->filterProjectByActivity($activities);
-      }
-
+    $activities = $repository->filterActivities($project->activities(false));
 
     if($activities->isEmpty()){
        return response()->json(['message'=>'No related activities found']);
@@ -31,6 +25,5 @@ class ActivityController extends Controller
       
     return ActivityResource::collection($activities)->paginate(config('app.project.filters'));
    }
-
   }
 

@@ -62,7 +62,7 @@ trait RecordActivity
       $changes=$this->activityChanges();
 
       if($changes){
-          if((Arr::exists($changes['before'], 'stage_updated_at')) == true){
+          if((Arr::exists($changes['before'], 'stage_updated_at'))){
             return 'Already exist';
           }
       }
@@ -82,13 +82,20 @@ trait RecordActivity
      *
      * @return \Illuminate\Database\Eloquent\Relations\MorphMany
      */
-    public function activities()
+    public function activities($limit = true)
     {
-        if (get_class($this) === Project::class) {
-            return $this->hasMany(Activity::class)->with('user:id,name','subject','project')->latest();
-        }
-        return $this->morphMany(Activity::class, 'subject')->with('user')->latest();
+     if (get_class($this) === Project::class) {
+        $query = $this->hasMany(Activity::class)->with('user:id,name','subject')->latest();
+    } else {
+        $query = $this->morphMany(Activity::class, 'subject')->latest();
     }
+
+    if ($limit) {
+        $query->limit(5);
+    }
+
+    return $query->get();
+}
     /**
      * Fetch the changes to the model.
      *

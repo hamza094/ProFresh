@@ -13,7 +13,8 @@ class NotificationsController extends ApiController
      *
      */
   public function index(){
-    return auth()->user()->unreadNotifications;
+    
+    return Auth::user()->notifications()->whereNull('read_at')->latest()->take(5)->get();
   }
 
   /**

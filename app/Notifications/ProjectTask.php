@@ -13,7 +13,6 @@ class ProjectTask extends Notification implements ShouldBroadcast
     use Queueable;
 
     protected $project;
-    protected $user;
     /**
      * Create a new notification instance.
      *

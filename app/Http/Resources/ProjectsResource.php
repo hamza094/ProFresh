@@ -17,7 +17,7 @@ class ProjectsResource extends JsonResource
         'id'=>$this->id,
         'name'=>$this->name,
         'slug'=>$this->slug,
-        'status'=>$this->status(),
+        'status'=>$this->status,
         'stage'=>new StageResource($this->stage),
         'created_at'=>$this->created_at->diffforHumans(),
         'completed'=>$this->completed,

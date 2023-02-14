@@ -31,7 +31,7 @@ class Message extends Model
        $query
            ->where('delivered',false)
            ->whereNotNull('delivered_at')
-           ->where('delivered_at','<=',Carbon::now());
+           ->whereDate('delivered_at','<=',Carbon::now());
     }
 
 }

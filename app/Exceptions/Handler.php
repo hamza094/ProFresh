@@ -63,13 +63,20 @@ class Handler extends ExceptionHandler
             }
       });
 
-    /*$this->renderable(function (HttpException $e, $request) {
-      if($e->getStatuCode() == 404){
-        return response()->json([
-            'message' => 'Whoops you land on wrong area'
-        ], 404);
-    }
-  });*/
+       $this->renderable(function (HttpException $e, $request) {
+  if ($request->is('api/*')) {
+    return response()->json([
+      'message' => $e->getMessage(),
+    ], $e->getStatusCode());
+  }
+});
 
+$this->renderable(function (MethodNotAllowedHttpException $e, $request) {
+  if ($request->is('api/*')) {
+    return response()->json([
+      'message' => 'The HTTP method used for the request is not allowed.',
+    ], 405);
+  }
+});  
       }
 }

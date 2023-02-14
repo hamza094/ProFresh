@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Redis;
 use Cviebrock\EloquentSluggable\Sluggable;
+use App\Enums\ScoreValue;
 use Carbon\Carbon;
 use Auth;
 
@@ -18,7 +19,8 @@ class Project extends Model
 
   protected $guarded=[];
   protected $dates = ['created_at'];
-  protected $casts = ['stage_updated_at'=>'datetime'];
+  protected $casts = ['stage_updated_at'=>'datetime',
+                          'delivered_at'=>'datetime'];
   protected static $recordableEvents = ['created','updated','deleted','restored'];
 
     /**
@@ -26,6 +28,8 @@ class Project extends Model
  *
  * @return array
  */
+  public static $status = "cold";
+  
   public function sluggable(): array
   {
     return [
@@ -124,18 +128,25 @@ class Project extends Model
       return $this->tasks->count() == config('app.project.taskLimit');
     }
 
-   public function score()
-   {
-     $scoreAction = new ScoreAction($this);
-
-     return $scoreAction->calculateTotal(); 
-   }
-
-    public function status()
+    public function score()
     {
+      $this->loadCount(['tasks', 'activeMembers']);
       $scoreAction = new ScoreAction($this);
+      $total = $scoreAction->calculateTotal();
+      $this->updateStatus($total);
+      return $total;
+    }
 
-      return $scoreAction->getStatus(); 
+    public function updateStatus($total)
+    {
+     if ($total >= ScoreValue::Hot_Score) {
+        static::$status = "hot";
+      }
+    }
+
+    public function getStatusAttribute()
+    {
+      return static::$status;
     }
 
    public function scopePastAbandonedLimit($query)
@@ -151,7 +162,7 @@ class Project extends Model
       ->messages()
       ->where('delivered',false)
       ->whereNotNull('delivered_at')
-      ->where('delivered_at','>',Carbon::now())
+      ->whereDate('delivered_at','>',Carbon::now())
       ->with('users:name')
       ->get();
    }

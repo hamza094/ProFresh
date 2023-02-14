@@ -13,30 +13,29 @@ class DashboardService
 
   public function getUserProjects()
   {
-     $projects=$this->getFilteredProjects(Auth::user())
-                    ->load('stage');
+     $user = Auth::user();
 
+     $projects = $this->filterProjects($user)->get();
+                    
      return $this->respondWithSuccess([
-      'projects'=>ProjectsResource::collection($projects),
+      'projects'=>ProjectsResource::collection($projects->load('stage')),
       'projectsCount'=>$projects->count(),
        'message' => $projects->isEmpty() ? 'Sorry No Projects Found' : '',
       ]);
   }
 
-     private function getFilteredProjects($user)
+     private function filterProjects($user)
      {
-       if(request()->filled('member'))
-       {
-          return $user->affiliateProjects;
-       }
+       switch (true) {
+         case request()->filled('member'):
+            return $user->affiliateProjects;
 
-       if(request()->filled('abandoned'))
-       {
-          return $user->projects()->onlyTrashed()->get();
-       }
+         case request()->filled('abandoned'):
+            return $user->projects()->onlyTrashed();
 
-        return $user->projects()->get();
+         default:
+            return $user->projects();
+      }
      }
-
     }
 ?>

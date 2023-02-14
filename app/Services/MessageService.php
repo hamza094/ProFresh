@@ -7,6 +7,7 @@ use App\Models\Project;
 use Illuminate\Http\Request;
 use App\Helpers\ProjectHelper;
 use F9Web\ApiResponseHelpers;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Bus;
 use Illuminate\Validation\ValidationException;
 
@@ -23,7 +24,7 @@ class MessageService
     }
   }
 
-  public function send($project,$users)
+  public function send(Project $project,Collection $users)
   {
     $response = '';
 
@@ -40,10 +41,10 @@ class MessageService
 
     $response = "Messages {$send_or_schedule} Successfully";
 
-    return response()->json(['msg' => $response], 200);
+    return response()->json(['message' => $response], 200);
   }
 
-  public function messageCreate($project,$type,$users)
+  public function messageCreate(Project $project,string $type,Collection $users): Message
   {
     $message=Message::create([
       'project_id'=>$project->id,
@@ -68,7 +69,7 @@ class MessageService
     $this->sendNow($project,$message);
   }
 
-  public function sendNow($project,$message)
+  public function sendNow(Project $project,Message $message): void
   {
      $message->type == 'mail' ? $job='\App\Jobs\MailMessage':
      $job='\App\Jobs\SmsMessage';
@@ -93,12 +94,12 @@ class MessageService
      ]);
   }
 
-  public function scheduledMessage($message)
+  public function scheduledMessage(Message $message): void
   {
     $this->saveMessageDateAndTime($message);
   }
 
-  private function saveMessageDateAndTime($message)
+  private function saveMessageDateAndTime(Message $message)
   {
     $datetime=new \DateTime(request()->date.' ' .request()->time);
 
