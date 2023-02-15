@@ -82,7 +82,7 @@ trait RecordActivity
      *
      * @return \Illuminate\Database\Eloquent\Relations\MorphMany
      */
-    public function activities()
+    public function activities($limit = true)
     {
         if ($this instanceof Project) {
             return $this->hasMany(Activity::class)->with('user:id,name','subject')->latest();
