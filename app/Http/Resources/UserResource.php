@@ -3,6 +3,8 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use App\Http\Resources\UserInfoResource;
+use App\Http\Resources\ProjectInvitaionResource;
 
 class UserResource extends JsonResource
 {
@@ -14,13 +16,24 @@ class UserResource extends JsonResource
      */
     public function toArray($request)
     {
-        return [
-          'id'=>$this->id,
-          'name'=>$this->name,
-          'username'=>$this->username,
-          'avatar_path'=>$this->avatar_path,
-          'email'=>$this->email,
-          'email_verified_at'=>$this->email_verified_at,
+      return [
+        'id' => $this->id,
+        'name' => $this->name,
+        'username' => $this->username,
+        'avatar_path' => $this->avatar_path,
+        'timezone' => $this->timezone,
+        'email' => $this->email,
+
+        'verified' => $this->when($this->id == auth()->id(), function () {
+                return $this->email_verified_at->diffForHumans();
+        }),
+
+        'info' => new UserInfoResource($this->info),
+
+        'invited_projects' =>ProjectInvitaionResource::collection($this->whenLoaded('members')),
+
+        'created_at'=>$this->created_at->diffForHumans(),
+        'updated_at'=>$this->updated_at->diffForHumans()
         ];
     }
 }

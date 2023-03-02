@@ -18,7 +18,7 @@ class DashboardTest extends TestCase
        $projects=Project::factory()->count(3)->for($this->user)
                  ->create();
 
-       $response=$this->getJson('/api/v1/user/projects');
+       $response=$this->withoutExceptionHandling()->getJson('/api/v1/user/projects');
 
        $response
         ->assertOk()

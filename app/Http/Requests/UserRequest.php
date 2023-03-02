@@ -1,8 +1,8 @@
 <?php
 
 namespace App\Http\Requests;
-
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rules\Password;
 
 class UserRequest extends FormRequest
 {
@@ -23,16 +23,24 @@ class UserRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-        'name' => 'required',
-        'email' => 'required',
-        'mobile' => '',
-        'company' => '',
-        'bio' => '',
-        'address' => '',
-        'position' => '',
-        'avatar_path'=>'',
-        'password'=>'sometimes|required'
+      return [
+       'name' => 'required',
+       'email' => 'required',
+       'username'=> 'required|alpha_dash:ascii',
+       'mobile' => 'nullable',
+       'company' => 'nullable',
+       'bio' => 'nullable|max:1500',
+       'address' => 'nullable|max:150',
+       'position' => 'nullable',
+       'current_password'=>['nullable','sometimes','current_password','required_with:password'],
+       'password'=>['nullable','sometimes','required_with:current_password',Password::min(8)->mixedCase()->numbers()->symbols()]
+        ];
+    }
+
+     public function messages()
+    {
+      return [
+         'current_password.current_password' => 'The given password does not match to current password.',
         ];
     }
 }

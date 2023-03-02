@@ -15,7 +15,7 @@ class DashboardService
   {
      $user = Auth::user();
 
-     $projects = $this->filterProjects($user)->get();
+     $projects = $this->filterProjects($user);
                     
      return $this->respondWithSuccess([
       'projects'=>ProjectsResource::collection($projects->load('stage')),
@@ -28,13 +28,13 @@ class DashboardService
      {
        switch (true) {
          case request()->filled('member'):
-            return $user->affiliateProjects;
+            return $user->members(true)->get();
 
          case request()->filled('abandoned'):
-            return $user->projects()->onlyTrashed();
+            return $user->projects()->onlyTrashed()->get();
 
          default:
-            return $user->projects();
+            return $user->projects()->get();
       }
      }
     }

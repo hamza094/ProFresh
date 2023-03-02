@@ -1,136 +1,152 @@
 <template>
   <modal name="edit-profile"
-           height="auto" :scrollable="true" :shiftX=".98" width="38%"
-            class="model-desin" :clickToClose=false>
-        <div class="edit-border-top p-3 animate__animated animate__slideInRight">
-            <div class="edit-border-bottom">
-                <div class="panel-top_content">
-                    <span class="panel-heading">Edit Profile {{user.name}}</span>
-                    <span class="panel-exit float-right" role="button" @click.prevent="modalClose">x</span>
-                </div>
-            </div>
-            <div class="panel-form">
-                    <form action="" @submit.prevent="updateProfile">
-                        <div class="panel-top_content">
+        height="auto" :scrollable="true" :shiftX=".98" width="38%" class="model-desin" :clickToClose=false>
+    <div class="edit-border-top p-3 animate__animated animate__slideInRight">
+    <div class="edit-border-bottom">
+    <div class="panel-top_content">
+    <span class="panel-heading">Edit Profile {{user.name}}</span>
+    <span class="panel-exit float-right" role="button" @click.prevent="modalClose">x</span>
+    </div>
+    </div>
+    <div class="panel-form">
+    <form action="" @submit.prevent="updateProfile">
+    <div class="panel-top_content">
 
-                            <div class="form-group">
-                                <label for="lastname" class="label-name">Name:</label>
-                                <input type="text" id="lastname" class="form-control"  name="name"
-                                v-model="form.name">
-                                <span class="text-danger font-italic" v-if="errors.name" v-text="errors.name[0]"></span>
-                            </div>
+      <form-input label="Name:" v-model="form.name" :error="errors.name" id="name"/>
 
-                            <div class="form-group">
-                                <label for="email" class="label-name">Email:</label>
-                                <input type="text" id="email" class="form-control" name="email" v-model="form.email">
-                                <span class="text-danger font-italic" v-if="errors.email" v-text="errors.email[0]"></span>
+      <form-input label="Username:" v-model="form.username" :error="errors.username" id="username"/>
 
-                            </div>
+      <form-input label="Email:" v-model="form.email" :error="errors.email" id="email"/>
 
-                            <div class="form-group">
-                                <label for="company" class="label-name">Company:</label>
-                                <input type="text" id="company" class="form-control" name="company"
-                                v-model="form.company">
-                                <span class="text-danger font-italic" v-if="errors.company" v-text="errors.company[0]"></span>
-                            </div>
+      <form-input label="Company:" v-model="form.company" :error="errors.company" id="company"/>
 
-                            <div class="form-group">
-                                <label for="mobile" class="label-name">Mobile:</label>
-                                <input type="text" id="mobile" class="form-control" name="mobile"  v-model="form.mobile">
-                                <span class="text-danger font-italic" v-if="errors.mobile" v-text="errors.mobile[0]"></span>
-                            </div>
+      <form-input label="Mobile:" v-model="form.mobile" :error="errors.mobile" id="mobile"/>
 
-                            <div class="form-group">
-                                <label for="position" class="label-name">Position:</label>
-                                <input type="text" id="position" class="form-control" v-model="form.position">
-                                <span class="text-danger font-italic" v-if="errors.position" v-text="errors.position[0]"></span>
-                            </div>
+      <form-input label="Position:" v-model="form.position" :error="errors.position" id="position"/>
 
-                            <div class="form-group">
-                                <label for="address" class="label-name">Address:</label>
-                                <input type="text" id="address" class="form-control"
-                                v-model="form.address">
-                                <span class="text-danger font-italic" v-if="errors.address" v-text="errors.address[0]"></span>
-                            </div>
+      <form-input label="Address:" v-model="form.address" :error="errors.address" id="address"/>
 
-                            <div class="form-group">
-                                <label for="status" class="label-name">Password:</label>
-                                <input type="password" id="password" class="form-control" name="password" v-model="form.password">
-                                <span class="text-danger font-italic" v-if="errors.password" v-text="errors.password[0]"></span>
-                            </div>
+      <div class="form-group">
+        <label for="bio" class="label-name">Your Bio:</label>
+        <textarea type="text" v-model="form.bio" id="bio" name="bio" class="form-control">{{user.bio}}</textarea>
+        <span class="text-danger font-italic" v-if="errors.bio" v-text="errors.bio[0]"></span>
+        </div>
+        <hr>
+        <h3>Update Password:</h3>
 
-                              <div class="form-group">
-                                <label for="bio" class="label-name">Your Bio:</label>
-                                <textarea type="text" v-model="form.bio" id="bio" name="bio" class="form-control">{{user.bio}}</textarea>
-                                <span class="text-danger font-italic" v-if="errors.bio" v-text="errors.bio[0]"></span>
-                            </div>
+        <span v-html="showIcon(showCurrentPassword)" v-on:click="toggleShowCurrentPassword" class="eye-icon float-right"></span>
 
-                        </div>
-                        <div class="panel-bottom">
-                            <div class="panel-top_content float-right">
-                                <button class="btn panel-btn_close" @click.prevent="modalClose">Cancel</button>
-                                <button class="btn panel-btn_save">Update</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
+        <form-input label="Current Password:" v-model="form.current_password" :error="errors.current_password" v-bind:type="currentPasswordFieldType" id="current_password"/>
+
+        <span v-html="showIcon(showPassword)" v-on:click="toggleShowPassword" class="eye-icon float-right"></span>
+
+        <form-input label="New Password:" v-model="form.password" :error="errors.password" type="password" id="password" v-bind:type="passwordFieldType"/>       
+        </div>
+
+        <div class="panel-bottom">
+        <div class="panel-top_content float-right">
+        <button class="btn panel-btn_close" @click.prevent="modalClose">Cancel</button>
+        <button class="btn panel-btn_save">Update</button>
+        </div>
+        </div>
+
+        </form>
+        </div>
         </div>
     </modal>
 </template>
 
 <script>
+import FormInput from '../FormInput.vue'
 
 export default{
+
+  components: {
+    FormInput,
+  },
+
 	props:['user'],
 	data(){
 		return{
+      showCurrentPassword: false,
+      showPassword: false,
 			owner:this.user,
             errors:{},
            form:{
               name:this.user.name,
+              username:this.user.username,
               email:this.user.email,
-              company:this.user.company,
-              mobile:this.user.mobile,
-              position:this.user.position,
-              address:this.user.address,
-              password:this.user.password,
-              bio:this.user.bio,
+              company:this.user.info.company,
+              mobile:this.user.info.mobile,
+              position:this.user.info.position,
+              address:this.user.info.address,
+              current_password:'',
+              password:'',
+              bio:this.user.info.bio,
           },
 		};
 	},
+  computed:{
+    currentPasswordFieldType() {
+      return this.showCurrentPassword ? 'text' : 'password';
+    },
+    passwordFieldType() {
+      return this.showPassword ? 'text' : 'password';
+    },
+   showIcon: function() {
+    return function(show) {
+      return show ? '&#x1F441;' : '&#x1F576;';
+    }
+  },
+  },
 	methods:{
         modalClose(){
         	this.$modal.hide('edit-profile');
-            this.errors='';
+          this.resetForm();
         },
 
-        updateProfile(){
-           axios.patch('/api/profile/user/'+this.user.id,{
-               name:this.form.name,
-               email:this.form.email,
-               company:this.form.company,
-               mobile:this.form.mobile,
-               bio:this.form.bio,
-               address:this.form.address,
-               position:this.form.position,
-               password:this.form.password
+      toggleShowCurrentPassword() {
+      this.showCurrentPassword = !this.showCurrentPassword;
+      },
 
-           }).then(response=>{
+      toggleShowPassword() {
+      this.showPassword = !this.showPassword;
+      },
+
+      updateProfile(){
+        axios.patch(`/api/v1/users/${this.user.id}`,this.form)
+             .then(response=>{
                this.$vToastify.success("Profile Updated Successfully");
-               this.user.name=this.form.name;
-               this.user.email=this.form.email;
-               this.user.company=this.form.company;
-               this.user.mobile=this.form.mobile;
-               this.user.bio=this.form.bio;
-               this.user.address=this.form.address;
-               this.user.position=this.form.position;
-               this.$modal.hide('edit-profile');
+                this.$bus.emit('UpdateUser',{user:response.data.user});
+               this.modalClose();
            }).catch(error=>{
-                console.log(error.response.data.errors);
+                this.errors=error.response.data.errors;
             });
         },
-    }
-
+      resetForm() {
+      this.form = {
+        name: this.user.name,
+        username: this.user.username,
+        email: this.user.email,
+        company: this.user.info.company,
+        mobile: this.user.info.mobile,
+        position: this.user.info.position,
+        address: this.user.info.address,
+        current_password: '',
+        password: '',
+        bio: this.user.info.bio,
+      };
+      this.errors = {};
+    },
+    },
 }
 
 </script>
+
+
+<style>
+.eye-icon {
+  cursor: pointer;
+  margin-left: 10px;
+}
+</style>

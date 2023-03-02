@@ -25,7 +25,7 @@ class UserInfoFactory extends Factory
     {
         return [
           'user_id'=>User::factory(),
-          'mobile'=>$this->faker->phoneNumber,
+          'mobile'=>$this->faker->e164PhoneNumber,
           'company'=>$this->faker->company,
           'position'=>$this->faker->jobTitle,
           'address'=>$this->faker->address,

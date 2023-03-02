@@ -31,7 +31,7 @@ class ProfileController extends ApiController
      */
   public function show(User $user)
   {
-   $members=$user->members;
+   /*$members=$user->members;
 
    //Get user paypal subscription status
    if(Paypal::where('user_id',$user->id)->exists())
@@ -45,7 +45,7 @@ class ProfileController extends ApiController
    $data=$this->userService->showPaypalPlan($user);
 
    return view('profile.show',compact('user',$user,'members',
-     $members,'paypal',$paypal))->with($data);
+     $members,'paypal',$paypal))->with($data);*/
   }
 
     /**
@@ -75,20 +75,4 @@ class ProfileController extends ApiController
     }
   }
 
-  public function update(UserRequest $request,User $user)
-  {
-    $user->update($request->validated());
-
-    $this->userService->updatePassword($user);
-  }
-
-  public function destroy(User $user)
-  {
-    $user->delete();
-
-    if(request()->expectsJson())
-    {
-      return response(['status'=>'profile deleted']);
-    }
-  }
 }

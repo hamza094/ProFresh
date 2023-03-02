@@ -1,23 +1,27 @@
 <template>
 	<div>
-		<p>hy this is user profile Page</p>
-		   <!--<div class="page-top">
-		   	 <span>
-                <span class="page-top_heading">Profile </span>
-                <span class="page-top_arrow"> > </span>
-                <span> {{user.name}}</span>
-            </span>
-            <div class="float-right" v-if="authorize('profileOwner',user)">
+	<div class="page-top">
+	<span>
+    <span class="page-top_heading">Profile </span>
+    <span class="page-top_arrow"> > </span>
+    <span> {{user.name}}</span>
+    </span>
+    <div v-if="owner" class="float-right">
     <button class="btn btn-primary btn-sm" @click="$modal.show('edit-profile')">Edit Profile
     </button>
+
     <span class="feature-dropdown" @click="profilePop = !profilePop">
-<span class="btn btn-light btn-sm"><i class="fas fa-cog"></i></span>
-<span class="feature-dropdown_item" v-show=profilePop>
-  <ul>
-    <li v-if="user.avatar_path!==null" class="feature-dropdown_item-content" @click="deleteAvatar"><i class="far fa-user-circle"></i> Remove Avatar</li>
+
+    <span class="btn btn-light btn-sm"><i class="fas fa-cog"></i></span>
+
+    <span class="feature-dropdown_item" v-show=profilePop>
+    <ul>
+    <li v-if="user.avatar_path" class="feature-dropdown_item-content" @click="deleteAvatar"><i class="far fa-user-circle"></i> Remove Avatar</li>
 
     <li class="feature-dropdown_item-content" @click.prevent="deleteProfile()"><i class="far fa-trash-alt"></i>Delete Profile</li>
+
   </ul>
+
 </span>
     </span>
 </div>
@@ -27,62 +31,74 @@
 
 	<div class="page-content">
 	<div class="row">
+
 	<ProfileAvatar :user="user"></ProfileAvatar>
 
-               <div class="col-md-10">
-                            <div class="content">
-                                <p class="content-name">{{user.name}}</p>
-                                <p class="content-info">
-                                <span v-if="user.company==null">Not Defined</span>
-                                  <span v-else>{{user.company}}</span>
-                                  <span class="content-dot"></span>
-                                  <span v-if="user.position==null">Not Defined</span>
-                                  <span v-else>{{user.position}}</span>
-                                </p>
-                            </div>
-                          </div>
+  <div class="col-md-10">
+  <div class="content">
+    <p class="content-name">{{user.name}}</p>
+    <p class="content-info">
+      <template v-if="user.info.company || user.info.position">
+        <span v-if="user.info.company">{{ user.info.company }}</span>
+        <span class="content-dot" v-if="user.info.company && user.info.position"></span>
+        <span v-if="user.info.position">{{ user.info.position }}</span>
+      </template>
+      <span v-else>Not Defined</span>
+    </p>
+  </div>
+</div>
+
+    </div>
+     <hr>
+    <p class="pro-info">Profile Detail</p>
+    <div class="row">
+      <div class="col-md-6">
+
+      <p class="crm-info"> <b>Email</b>: 
+        <span> {{user.email}} </span>
+      </p>
+
+       <p class="crm-info"> <b>Mobile</b>:<span>
+       {{ user.info.mobile ? user.info.mobile : 'Not Defined' }}</span></p>
+
+        <p class="crm-info"> <b>Address</b>:<span>
+        {{ user.info.address ? user.info.address : 'Not Defined' }}</span></p>
+
+        <p class="crm-info"> <b>Created At</b>: <span> {{user.created_at}} </span></p>
+
+        <p class="crm-info"> <b>Updated At</b>: <span> {{user.updated_at}} </span></p>
+
+        <p class="crm-info"> <b>Last Seen</b>: <span> {{user.updated_at}} </span></p>
+      </div>
+
+        <div class="col-md-6">
+        <p class="crm-info"> <b>Bio</b>:<span>{{ user.info.bio ? user.info.bio : "Donec in odio eget risus placerat molestie. Etiam augue turpis, tristique nec accumsan a, vehicula vitae quam. Sed imperdiet vulputate mi in molestie. Sed lacus quam, suscipit ut velit et, commodo sagittis leo."}}</span>
+        </p>
         </div>
-<hr>
-           <p class="pro-info">Profile Detail</p>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <p class="crm-info"> <b>Email</b>: <span> {{user.email}} </span></p>
-                                    <p class="crm-info"> <b>Mobile</b>:
-                                     <span v-if="user.mobile==null"> Not Defined </span>
-                                      <span> {{user.mobile}} </span>
-                                    </p>
-                                    <p class="crm-info"> <b>Address</b>:
-                                      <span v-if="user.address==null"> Not Defined </span>
-                                      <span v-else> {{user.address}} </span>
-                                    </p>
-                                    <p class="crm-info"> <b>Created At</b>: <span> {{user.created_at | timeDate}} </span></p>
-                                    <p class="crm-info"> <b>Updated At</b>: <span> {{user.updated_at | timeDate}} </span></p>
-                                    <p class="crm-info"> <b>Last Seen</b>: <span> {{user.updated_at | timeExactDate}} </span></p>
-                                </div>
-                                <div class="col-md-6">
-                              <p class="crm-info"> <b>Bio</b>:<span v-if="user.bio==null">"Donec in odio eget risus placerat molestie. Etiam augue turpis, tristique nec accumsan a, vehicula vitae quam. Sed imperdiet vulputate mi in molestie. Sed lacus quam, suscipit ut velit et, commodo sagittis leo. Nunc tristique odio nec justo tempor maximus. Praesent id nisl nulla. Quisque vestibulum massa felis, in pellentesque justo varius ut. Donec nibh massa, viverra quis convallis in, dictum sed metus. Aliquam ut ullamcorper tortor. Pellentesque sagittis dolor turpis, eu dictum risus lacinia ut"</span>
-                                <span v-else>"{{user.bio}}"</span>
-                              </p>
-                            </div>
-                          </div>
-          <hr>
-<ProjectInvitation :user="user" :members="members"></ProjectInvitation>
-</div>-->
+      </div>
+  <hr>
+<ProjectInvitation :user="user" :projects="invitations"></ProjectInvitation>
+</div>
 	</div>
 </template>
 
 <script>
-/*  import EditProfile from './EditProfile'
-  import ProfileAvatar from './ProfileAvatar'
+  import EditProfile from './Edit'
+  import ProfileAvatar from './Avatar'
   import ProjectInvitation from './ProjectInvitation.vue'
+  import { permission } from '../../auth'
+
 
 export default{
-	props:['user','members'],
-	components: {EditProfile,ProfileAvatar,ProjectInvitation},
+  components: {EditProfile,ProfileAvatar,ProjectInvitation},
 	data(){
 		return{
-            avatar_path:this.user.avatar_path,
-            profilePop:false,
+      user:{},
+      auth:this.$store.state.currentUser.user.id,
+      invitations:[],
+      owner:false,
+      //avatar_path:this.user.avatar_path,
+      profilePop:false,
 		};
 	},
 
@@ -95,8 +111,24 @@ export default{
     },
 
 	methods:{
+        loadUser(){
+         axios.get('/api/v1/users/'+this.$route.params.id).
+         then(response=>{
+            this.user=response.data.user;
+            this.invitations=response.data.user.invited_projects;
+             this.checkPermission(this.user.id); 
+         }).catch(error=>{
+           console.log(error.response.data.errors);
+         });
+      },
+      checkPermission(user){
+        if(user == this.auth){
+         return this.owner = true;
+        }
+        return this.owner = false;
+      },
 
-        closeIfClickedOutside(event){
+      closeIfClickedOutside(event){
             if(!event.target.closest('.feature-dropdown')){
                 this.profilePop=false;
                 document.removeEventListener('click',this.closeIfClickedOutside);
@@ -130,7 +162,13 @@ export default{
     })
   },
 
-    }
-}	*/
+    },
+    created(){
+     this.loadUser();
+     this.$bus.$on('UpdateUser', (data) => {
+        this.user = data.user;
+      });
+    },
+}	
 
 </script>

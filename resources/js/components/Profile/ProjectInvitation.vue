@@ -2,28 +2,31 @@
 	<div>
 	              <p class="pro-info">Project Invitations</p>
               
-              <div v-if="authorize('profileOwner',user)">
+    <!-- Only Profile owner access this area-->
+              
+<div>
 
-<div class="row" v-if="this.members != 0">
+<div class="row" v-if="this.projects !== 0">
 
-<div class="col-md-5 ml-3" v-for="member in this.members">
+<div class="col-md-5 ml-3" v-for="project in this.projects">
 
-  <div class="card" v-if="member.pivot.active == 0" :id="'project-'+member.id">
+  <div class="card" :id="'project-'+project.id">
 
-     <p class="mt-3">Project Name: <a v-bind:href="'/api/projects/'+member.id" target="_blank"><b>{{member.name}}</b></a>
+     <p class="mt-3">Project Name: <a v-bind:href="project.slug" target="_blank"><b>{{project.name}}</b></a>
      </p>
-     <p>Owner Name: <a v-bind:href="'/user/'+member.id+'/profile'" target="_blank"><b>{{member.owner.name}}</b></a>
+     <p>Owner Name: <a v-bind:href="project.user.id" target="_blank"><b>{{project.user.name}}</b></a>
      </p>
-        <p>Invitation Received On: <b>{{member.pivot.created_at | timeDate}}</b></p>
+     <p>Invitation Received On: <b>
+     {{project.invitation_sent_at}}</b></p>
 
   <p class="text-center">
-  <button class="btn btn-primary btn-sm" @click.prevent="becomeMember(member.id)">Become Member
+  <button class="btn btn-primary btn-sm" @click.prevent="becomeMember(project.id)">Become Member
   </button>
-<button class="btn btn-danger btn-sm" @click.prevent="rejectInvitation(member.id)">Ignore Invitation</button>
+<button class="btn btn-danger btn-sm" @click.prevent="rejectInvitation(project.id)">Ignore Invitation</button>
 </p>
    <div class="card-footer">
    <p>
-    <span class="float-right">Created_at: <b>{{member.created_at | timeExactDate}}</b></span>
+    <span class="float-right">Created_at: <b>{{project.created_at}}</b></span>
 </p>
     </div>
 </div>
@@ -39,7 +42,7 @@
 <script>
 
 export default{
-	props:['user','members'],
+	props:['user','projects'],
 
 	methods:{
 

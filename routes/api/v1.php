@@ -27,12 +27,6 @@ Route::group(['prefix'=>'v1'], function () {
 
 Route::get('/welcome',[WelcomeController::class,'index']);
 
-Route::controller(UserController::class)->group(function(){
-  //Return All Users
-  Route::get('/users','index');
-  Route::get('/user','show');
-});
-
 //Return All Stages
 Route::get('/stages',[StageController::class,'index']);
 
@@ -88,20 +82,16 @@ Route::get('/user/{user}/notifications', [NotificationsController::class,'index'
 Route::delete('/user/{user}/notifications/{notification}', [NotificationsController::class,
 	'destroy']);
 
-//Profile Routes
-Route::group(['prefix' => 'profile'], function() {
-
-Route::apiResource('/user',ProfileController::class)->only('show','update','delete');
-//->middleware('can:owner,user');
-
-Route::post('/{user}/avatar', [ProfileController::class,'avatar'])->name('avatar');
-Route::patch('/{user}/avatar-delete',[ProfileController::class,'avatarDelete']);
-});
-
 Route::get('/projectoverview', [ProjectController::class,'projectoverview']);
 
 //Dashboard Routes
 Route::get('/user/projects',[DashboardController::class,'userprojects']);
+
+
+Route::apiResource('/users',UserController::class);
+
+/*Route::post('/{user}/avatar', [ProfileController::class,'avatar'])->name('avatar');
+Route::patch('/{user}/avatar-delete',[ProfileController::class,'avatarDelete']);*/
 
 });
 

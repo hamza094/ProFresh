@@ -38,7 +38,7 @@
         <div class="row">
         <div v-for="member in members" :key="member.id">
           <div class="project_members-detail">
-               <router-link :to="'/user/'+member.username+'/profile'">
+               <router-link :to="'/user/'+member.id+'/profile'">
                  <!-- <img :src="member.avatar_path" v-if="member.avatar_path!=null">-->
                    <img :src="member.avatar_path" alt="">
                    <p>

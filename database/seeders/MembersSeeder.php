@@ -15,15 +15,11 @@ class MembersSeeder extends Seeder
      */
     public function run()
     {
-        $users= User::all();
-        $projects = Project::all();
+      $userIds = User::pluck('id');
 
-          foreach ($projects as $project) {
-
-          $project->members()->attach($users->random(rand(1,4)));
-
-          \DB::table('project_members')->where('project_id', $project->id)->update(['active' =>true]);
-
-        };
+      Project::with('members')->chunk(50, function ($projects) use ($userIds) {
+        foreach ($projects as $project) {
+        $project->members()->attach($userIds->random(rand(1,4)));
+      }});
     }
 }

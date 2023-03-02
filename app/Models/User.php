@@ -74,7 +74,7 @@ class User extends Authenticatable implements Searchable, MustVerifyEmail
 
     public function path()
     {
-        return "/users/{$this->id}/profile";
+        return "/api/v1/users/{$this->id}";
     }
 
     public function projects()
@@ -103,20 +103,12 @@ class User extends Authenticatable implements Searchable, MustVerifyEmail
       return new SearchResult($this, $this->name, $url);
     }
 
-    public function members()
-    {
-        return $this
-            ->belongsToMany(Project::class,'project_members')
-            ->wherePivot('active',false)
-            ->withTimestamps();
-    }
-
-    public function affiliateProjects()
-    {
-        return $this
-            ->belongsToMany(Project::class,'project_members')
-            ->wherePivot('active',false)
-            ->withTimestamps();
+   public function members($active = false)
+   {
+    return $this->belongsToMany(Project::class, 'project_members')
+        ->withTimestamps()
+        ->wherePivot('active', $active)
+        ->withTimestamps();
     }
 
     /*public function getlastSeenAttribute()
@@ -124,10 +116,10 @@ class User extends Authenticatable implements Searchable, MustVerifyEmail
       return  $this->lastseen();
     }*/
 
-    public function paypal()
+    /*public function paypal()
     {
         return $this->belongsTo('App\Paypal');
-    }
+    }*/
 
      //add user paypal record in database
     /*public function paypal_info()

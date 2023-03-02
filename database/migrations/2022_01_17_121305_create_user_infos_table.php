@@ -16,7 +16,7 @@ class CreateUserInfosTable extends Migration
         Schema::create('user_infos', function (Blueprint $table) {
             $table->id();
             $table->foreignUuid('user_id')->constrained()->onDelete('cascade');
-            $table->string("mobile",64)->nullable();
+            $table->bigInteger("mobile")->unsigned()->nullable();
             $table->string("company")->nullable();
             $table->string('position')->nullable();
             $table->string("address")->nullable();

@@ -11,6 +11,8 @@ class UserInfo extends Model
 
     protected $guarded=[];
 
+    protected $touches = ['user'];
+
     public function user(){
        return $this->belongsTo(User::class);
    }

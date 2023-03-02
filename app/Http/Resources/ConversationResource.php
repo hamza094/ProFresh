@@ -3,7 +3,7 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
-use App\Http\Resources\UserResource;
+use App\Http\Resources\PersonResource;
 
 class ConversationResource extends JsonResource
 {
@@ -22,7 +22,7 @@ class ConversationResource extends JsonResource
 
         'file'=>$this->whenNotNull($this->file),
 
-        'user'=>new UserResource($this->whenLoaded('user')),
+        'user'=>new PersonResource($this->whenLoaded('user')),
 
         'created_at'=>$this->created_at
                 ->format(config('app.date_formats.exact')),
