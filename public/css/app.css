@@ -1251,6 +1251,10 @@ p {
   z-index: 2;
 }
 
+.invitation {
+  margin: 0.8rem;
+}
+
 .padding-0 {
   padding-right: 0;
 }

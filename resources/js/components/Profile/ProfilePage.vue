@@ -77,7 +77,9 @@
         </div>
       </div>
   <hr>
-<ProjectInvitation :user="user" :projects="invitations"></ProjectInvitation>
+<div v-if="owner">  
+<ProjectInvitation :projects="invitations"></ProjectInvitation>
+</div>
 </div>
 	</div>
 </template>
@@ -167,6 +169,11 @@ export default{
      this.loadUser();
      this.$bus.$on('UpdateUser', (data) => {
         this.user = data.user;
+      });
+     this.$bus.$on('invitation', (data) => {
+      const id= data.project.id;
+    const index = this.invitations.findIndex(project => project.id === id);
+    this.invitations.splice(index, 1);
       });
     },
 }	

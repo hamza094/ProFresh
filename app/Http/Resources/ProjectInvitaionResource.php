@@ -16,8 +16,10 @@ class ProjectInvitaionResource extends JsonResource
     public function toArray($request)
     {
         return [
+        'id'=>$this->id,    
         'name'=>$this->name,
         'status'=>$this->status,
+        'slug'=>$this->slug,
         'invitation_sent_at'=>$this->pivot->created_at->format(config('app.date_formats.exact')),
         'user'=>new MembersResource($this->whenLoaded('user')),
         'created_at'=>$this->created_at->diffforHumans(),

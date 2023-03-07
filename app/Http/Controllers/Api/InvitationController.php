@@ -6,7 +6,9 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Spatie\Searchable\Search;
 use App\Models\Project;
+use Illuminate\Http\JsonResponse;
 use App\Services\InvitationService;
+use App\Http\Resources\ProjectsResource;
 use Auth;
 
 class InvitationController extends ApiController
@@ -29,7 +31,7 @@ class InvitationController extends ApiController
      * @param  int  $project
      * @return \Illuminate\Http\Request
      */
-  public function search(Request $request)
+  public function search(Request $request): JsonResponse
   {
     $results = $this->invitationService->memberSearch($request);
 
@@ -64,9 +66,14 @@ class InvitationController extends ApiController
      *
      * @param  int  $project
      */
-   public function ignore(Project $project)
+   public function ignore(Project $project): JsonResponse
    {
       $project->members()->detach(Auth::user());
+
+      return response()->json([
+        'message'=>'You have rejected the project request to join',
+        'project'=>new ProjectsResource($project)
+      ]);
    }
 
     /**
@@ -76,9 +83,8 @@ class InvitationController extends ApiController
      */
    public function remove(Project $project,User $user)
    {
-      /*$project->activity->whereIn('subject_id',$user->id)
-        ->map->delete();*/
-      return $this->invitationService->removeMember($user,$project);
+     return $this->invitationService
+                 ->removeMember($user,$project);
    }
 
 }

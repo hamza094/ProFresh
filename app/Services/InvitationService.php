@@ -7,8 +7,12 @@ use Illuminate\Http\Request;
 use Spatie\Searchable\Search;
 use App\Notifications\ProjectInvitation;
 use App\Notifications\AcceptInvitation;
+use App\Http\Resources\ProjectInvitaionResource;
+use App\Http\Resources\ProjectsResource;
+use App\Http\Resources\MembersResource;
 use Illuminate\Support\Facades\DB;
 use App\Helpers\ProjectHelper;
+use Illuminate\Support\Collection;
 use F9Web\ApiResponseHelpers;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Validation\ValidationException;
@@ -17,13 +21,13 @@ class InvitationService
 {
   use ApiResponseHelpers;
 
-  public function sendInvitation($user,$project)
+  public function sendInvitation($user,$project): JsonResponse
   {
-     $this->validateInvitation($project,$user);
+    try{
+
+      $this->validateInvitation($project,$user);
 
       DB::beginTransaction();
-
-     try{
 
       $project->invite($user);
 
@@ -33,26 +37,26 @@ class InvitationService
 
       DB::commit();
 
+      return $this->respondWithSuccess([
+        'message'=>"Project invitation sent to ".$user->name,
+        'project'=>new ProjectsResource($project)
+      ]);
+
     }catch(\Exception $ex){
 
       DB::rollBack();
 
       throw $ex;
     }
-
-      return $this->respondWithSuccess([
-        'message'=>"Project invitation sent to ".$user->name
-      ]);
-
    }
 
-  public function acceptInvitation($project)
+  public function acceptInvitation(Project $project): JsonResponse
   {
+    try{
+
     $user=Auth::user();
 
-    DB::beginTransaction();
-
-    try{
+    DB::beginTransaction();  
 
     $user->members()->updateExistingPivot($project,['active'=>true]);
 
@@ -62,42 +66,49 @@ class InvitationService
 
      DB::commit();
 
+    return $this->respondWithSuccess([
+      'message'=>"You have accepted Project invitation",
+      'project'=>new ProjectsResource($project)
+    ]);
+
     }catch(\Exception $ex){
 
       DB::rollBack();
 
       throw $ex;
     }
+  }
+
+  public function removeMember($user,$project): JsonResponse
+  {
+    DB::transaction(function () use ($project, $user) {
+
+    $project->activities->whereIn('subject_id', $user->id)
+            ->each->delete();
+
+    $project->members()->detach($user);
+
+    $this->recordActivity($project,$user,'remove_project_member');
+
+  });
 
     return $this->respondWithSuccess([
-      'message'=>"You have accepted, ".$project->name." invitation"
+      'message'=>"Member {$user->name} has been removed from the project",
+      'user'=>new MembersResource($user),
     ]);
   }
 
-  public function removeMember($user,$project)
+  public function memberSearch($request): Collection
   {
-     $project->members()->detach($user);
-
-     $this->recordActivity($project,$user,'remove_project_member');
-
-     return $this->respondWithSuccess([
-      'message'=>"Member ".$user->name." has been removed from a project",
-      'members'=>$project->activeMembers(),
-    ]);
-
-  }
-
-  public function memberSearch($request)
-  {
-
     $query = $request->input('query');
-    
-    if($query)
-    {
-      return (new Search())
-       ->registerModel(User::class, ['name', 'email'])
-       ->search($request->input('query'));
-   }
+
+    if (!$query) {
+        return collect();
+    } 
+
+    return (new Search())
+      ->registerModel(User::class, ['name', 'email'])
+      ->search($query);
   }
 
   protected function recordActivity($project,$user,$msg)
@@ -105,18 +116,22 @@ class InvitationService
     $project->recordActivity($msg,$user->name.'/_/'.$user->id);
   }
 
-   protected function validateInvitation($project,$user)
+   protected function validateInvitation($project,$user): void
    {
-     throw_if($project->members->contains($user->id),
+     throw_if(
+       $project->members->contains($user->id),
        ValidationException::withMessages([
         'invitation'=>'Project invitation already sent to a user.'
-      ]));
+      ])
+    );
 
-     throw_if($user->id === $project->user->id,
+     throw_if(
+      $user->is($project->user),
       ValidationException::withMessages([
-      'invitation'=>"Can't send an invitation to the project owner."
-      ]));
-   } 
+        'invitation'=>"Can't send an invitation to the project owner."
+      ])
+    );
+  } 
 }
 
 ?>

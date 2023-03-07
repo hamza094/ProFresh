@@ -10,24 +10,24 @@
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['user', 'projects'],
+  props: ['projects'],
   methods: {
-    becomeMember: function becomeMember(id) {
+    becomeMember: function becomeMember(slug) {
       var _this = this;
-      axios.get('/project/' + id + '/accept-invitation', {}).then(function (response) {
-        _this.$vToastify.success("You have accepted the project invitation");
-        setTimeout(function () {
-          window.location.href = '/api/projects/' + id;
-        }, 3000);
+      axios.get('/api/v1/projects/' + slug + '/accept-invitation', {}).then(function (response) {
+        _this.$vToastify.success(response.data.message);
+        _this.$bus.emit('acceptInvitation', {
+          project: response.data.project
+        });
       })["catch"](function (error) {
+        console.log(error);
         _this.$vToastify.warning("Error! Try Again");
       });
     },
-    rejectInvitation: function rejectInvitation(id) {
+    rejectInvitation: function rejectInvitation(slug) {
       var _this2 = this;
-      axios.get('/project/' + id + '/cancel', {}).then(function (response) {
+      axios.get('/api/v1/projects/' + slug + '/cancel', {}).then(function (response) {
         _this2.$vToastify.info("The project request has rejected");
-        $("#project-" + id).fadeOut(300);
       })["catch"](function (error) {
         _this2.$vToastify.warning("Error! Try Again");
       });
@@ -53,52 +53,48 @@ var render = function render() {
     _c = _vm._self._c;
   return _c("div", [_c("p", {
     staticClass: "pro-info"
-  }, [_vm._v("Project Invitations")]), _vm._v(" "), _c("div", [this.projects !== 0 ? _c("div", {
+  }, [_vm._v("Project Invitations")]), _vm._v(" "), this.projects ? _c("div", {
     staticClass: "row"
   }, _vm._l(this.projects, function (project) {
     return _c("div", {
-      staticClass: "col-md-5 ml-3"
+      staticClass: "col-md-5"
     }, [_c("div", {
-      staticClass: "card",
+      staticClass: "card invitation border-secondary"
+    }, [_c("div", {
+      staticClass: "card-header text-center"
+    }, [_vm._v("\n        Project Name: \n        "), _c("router-link", {
       attrs: {
-        id: "project-" + project.id
+        to: "/projects/" + project.slug
       }
-    }, [_c("p", {
-      staticClass: "mt-3"
-    }, [_vm._v("Project Name: "), _c("a", {
+    }, [_vm._v(_vm._s(project.name))])], 1), _vm._v(" "), _c("div", {
+      staticClass: "card-body mt-1 text-center"
+    }, [_c("p", [_vm._v("Owner Name: \n    "), _c("router-link", {
       attrs: {
-        href: project.slug,
+        to: "/user/" + project.user.id + "/profile",
         target: "_blank"
       }
-    }, [_c("b", [_vm._v(_vm._s(project.name))])])]), _vm._v(" "), _c("p", [_vm._v("Owner Name: "), _c("a", {
-      attrs: {
-        href: project.user.id,
-        target: "_blank"
-      }
-    }, [_c("b", [_vm._v(_vm._s(project.user.name))])])]), _vm._v(" "), _c("p", [_vm._v("Invitation Received On: "), _c("b", [_vm._v("\n     " + _vm._s(project.invitation_sent_at))])]), _vm._v(" "), _c("p", {
+    }, [_vm._v(_vm._s(project.user.name))])], 1), _vm._v(" "), _c("p", {
       staticClass: "text-center"
     }, [_c("button", {
       staticClass: "btn btn-primary btn-sm",
       on: {
         click: function click($event) {
           $event.preventDefault();
-          return _vm.becomeMember(project.id);
+          return _vm.becomeMember(project.slug);
         }
       }
-    }, [_vm._v("Become Member\n  ")]), _vm._v(" "), _c("button", {
+    }, [_vm._v("Become Member")]), _vm._v(" "), _c("button", {
       staticClass: "btn btn-danger btn-sm",
       on: {
         click: function click($event) {
           $event.preventDefault();
-          return _vm.rejectInvitation(project.id);
+          return _vm.rejectInvitation(project.slug);
         }
       }
-    }, [_vm._v("Ignore Invitation")])]), _vm._v(" "), _c("div", {
+    }, [_vm._v("Ignore Invitation")])])]), _vm._v(" "), _c("div", {
       staticClass: "card-footer"
-    }, [_c("p", [_c("span", {
-      staticClass: "float-right"
-    }, [_vm._v("Created_at: "), _c("b", [_vm._v(_vm._s(project.created_at))])])])])])]);
-  }), 0) : _c("div", [_c("h3", [_vm._v("No project Invitation found")])])])]);
+    }, [_c("p", [_vm._v(" 📨\n    Invitation Received On:: "), _c("b", [_vm._v(_vm._s(project.invitation_sent_at))])])])])]);
+  }), 0) : _c("div", [_c("h3", [_vm._v("No project Invitation found")])])]);
 };
 var staticRenderFns = [];
 render._withStripped = true;

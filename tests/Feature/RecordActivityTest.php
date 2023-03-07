@@ -172,6 +172,6 @@ class RecordActivityTest extends TestCase
       $this->assertCount(3,$this->project->activities);
 
       $this->assertEquals('created_message',$this->project->activities->last()->description);
-  }
+  }     
 
 }

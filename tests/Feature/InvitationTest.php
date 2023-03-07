@@ -22,86 +22,93 @@ class InvitationTest extends TestCase
          '/invitations',
         [
           'email'=>$InvitedUser->email
-        ])->assertOk();
+        ])->assertOk()
+          ->assertJson([
+          'message'=>"Project invitation sent to {$InvitedUser->name}",
+         ]);
 
         $this->assertTrue($this->project->members->contains(
             $InvitedUser));
-
-        $response->assertJson([
-          'message'=>"Project invitation sent to ".$InvitedUser->name,
-         ]);
       }
 
-
-        /** @test */
+    /** @test */
     public function project_owner_can_not_reinvite_user_and_himself()
     {
-      $this->project->invite($InvitedUser=User::factory()->create());
+      $invitedUser = User::factory()->create();
+      $this->project->invite($invitedUser);
 
       $response=$this->postJson($this->project->path().'/invitations',[
-            'email'=>$InvitedUser->email
-          ])->assertUnprocessable();
-
-        $response->assertJsonValidationErrors('invitation');
+            'email'=>$invitedUser->email
+          ])->assertUnprocessable()
+            ->assertJsonValidationErrors('invitation');
 
         $response=$this->postJson($this->project->path().
             '/invitations',
             ['email'=>$this->project->user->email])
-        ->assertUnprocessable();
-
-        $response->assertJsonValidationErrors('invitation');
+        ->assertUnprocessable()
+        ->assertJsonValidationErrors('invitation');
     }
 
     /** @test */
     public function auth_user_accept_project_invitation_sent_to_him()
     {
-      $this->project->invite($invitedUser=User::factory()->create());
+      $invitedUser = User::factory()->create();
+      $this->project->invite($invitedUser);
 
-        Sanctum::actingAs($invitedUser,);
+      Sanctum::actingAs($invitedUser);
 
-        $response=$this->getJson($this->project->path().
-            '/accept-invitation')->assertOk();
+      $response=$this->getJson($this->project->path().
+          '/accept-invitation')
+          ->assertOk()
+          ->assertJson([
+              'message'=>"You have accepted Project invitation",
+              'project'=>['id'=>$this->project->id]
+          ]);
 
-            $this->assertDatabaseHas('project_members', 
-            ["project_id" => $this->project->id, "user_id" =>
-              $invitedUser->id,'active'=>true]);
-
-
-          $response->assertJson([
-              'message'=>"You have accepted, ".$this->project->name." invitation",
-            ]);
-       }
-
-       /** @test */
-       public function authorized_user_can_ignore_project_invitation()
-       {
-         $this->project->invite($InvitedUser=User::factory()->create());
-
-        Sanctum::actingAs($InvitedUser,);
-
-         $this->getJson($this->project->path().'/ignore')
-         ->assertOk();
-
-         $this->assertDatabaseMissing('project_members', 
-            ["project_id" => $this->project->id, "user_id" => 
-              $InvitedUser->id]);
-         }
+      $this->assertDatabaseHas('project_members', [
+        "project_id" => $this->project->id, 
+        "user_id" =>$invitedUser->id,
+        'active'=>true
+        ]);
+      }
 
        /** @test */
-       public function project_owner_can_remove_member()
-       {
-          $this->project->members()->attach($memberUser=
-            User::factory()->create());
+      public function authorized_user_can_ignore_project_invitation()
+      {
+        $invitedUser = User::factory()->create();
+        $this->project->invite($invitedUser);
 
-          $response=$this->getJson($this->project->path().'/remove/'.$memberUser->id)->assertOk();
+        Sanctum::actingAs($invitedUser);
 
-          $this->assertDatabaseMissing('project_members', 
-            ["project_id" => $this->project->id, "user_id" => 
-            $memberUser->id]);
+        $this->getJson($this->project->path().'/ignore')
+         ->assertOk()
+         ->assertJson([
+            'message'=>"You have rejected the project request to join",
+            'project'=>['id'=>$this->project->id]
+          ]);
 
-         $response->assertJson([
-            'message'=>"Member ".$memberUser->name." has been removed from a project",
-           ]);
-    }
+        $this->assertDatabaseMissing('project_members', [
+          "project_id" => $this->project->id,
+           "user_id" =>$invitedUser->id
+        ]);
+      }
+
+      /** @test */
+      public function project_owner_can_remove_member()
+      {
+        $memberUser=User::factory()->create();
+        $this->project->members()->attach($memberUser);
+
+          $response=$this->getJson($this->project->path().'/remove/'.$memberUser->id)
+            ->assertOk()
+            ->assertJson([
+            'message'=>"Member {$memberUser->name} has been removed from the project",
+          ]);
+
+          $this->assertDatabaseMissing('project_members', [
+            "project_id" => $this->project->id,
+            "user_id" => $memberUser->id
+        ]);
+      }
 
 }
