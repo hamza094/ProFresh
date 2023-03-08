@@ -29,13 +29,13 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     fetchNotifications: function fetchNotifications() {
       var _this = this;
-      axios.get('/api/v1/user/' + this.user.id + '/notifications').then(function (response) {
+      axios.get('/api/v1/users/' + this.user.id + '/notifications').then(function (response) {
         return _this.notifications = response.data;
       });
     },
     markAsRead: function markAsRead(notification) {
       var _this2 = this;
-      axios["delete"]('/api/v1/user/' + this.user.id + '/notifications/' + notification.id).then(function (response) {
+      axios["delete"]('/api/v1/users/' + this.user.id + '/notifications/' + notification.id).then(function (response) {
         _this2.notifications.splice(notification, 1);
       });
     },

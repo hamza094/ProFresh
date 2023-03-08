@@ -125,7 +125,7 @@ class NotificationsTest extends TestCase
 
     Sanctum::actingAs($user,);
 
-    $response=$this->getJson("/api/v1/user/{$user->id}/notifications");
+    $response=$this->getJson("/api/v1/users/{$user->id}/notifications");
 
     $this->assertCount(1,$response->json());
 
@@ -146,7 +146,7 @@ class NotificationsTest extends TestCase
 
      $notificationId=$user->unreadNotifications->first()->id;
 
-     $response=$this->deleteJson("/api/v1/user/{$user->id}/notifications/{$notificationId}");
+     $response=$this->deleteJson("/api/v1/users/{$user->id}/notifications/{$notificationId}");
 
      $this->assertCount(0,$user->fresh()->unreadNotifications);
    }

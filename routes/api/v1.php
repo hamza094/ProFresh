@@ -9,7 +9,7 @@ use App\Http\Controllers\Api\
   FeaturesController,
   InvitationController,
   NotificationsController,
-  ProfileController,
+  AvatarController,
   ConversationController,
   DashboardController,
   UserController,
@@ -74,25 +74,23 @@ Route::controller(InvitationController::class)->group(function(){
 });
 });
 
-//Invitation Search Routes
-Route::get('/users/search', [InvitationController::class,'search']);
+Route::apiResource('/users',UserController::class);
 
-//Notifications Routes
-Route::get('/user/{user}/notifications', [NotificationsController::class,'index']);
-Route::delete('/user/{user}/notifications/{notification}', [NotificationsController::class,
-	'destroy']);
-
-Route::get('/projectoverview', [ProjectController::class,'projectoverview']);
+Route::get('users/search', [InvitationController::class,'search']);
 
 //Dashboard Routes
 Route::get('/user/projects',[DashboardController::class,'userprojects']);
 
+Route::group(['prefix' => 'users/{user}'], function() {
 
-Route::apiResource('/users',UserController::class);
+Route::get('/notifications', [NotificationsController::class,'index']);
 
-/*Route::post('/{user}/avatar', [ProfileController::class,'avatar'])->name('avatar');
-Route::patch('/{user}/avatar-delete',[ProfileController::class,'avatarDelete']);*/
+Route::delete('/notifications/{notification}', [NotificationsController::class,'destroy']);
 
+Route::patch('/avatar_remove',[AvatarController::class,'avatarDelete']);
+
+Route::post('/avatar', [AvatarController::class,'avatar'])->name('avatar');
+});
 });
 
 ?>

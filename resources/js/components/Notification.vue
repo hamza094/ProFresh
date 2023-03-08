@@ -42,12 +42,12 @@ export default{
       },
     methods:{
       fetchNotifications() {
-           axios.get('/api/v1/user/' + this.user.id + '/notifications')
+           axios.get('/api/v1/users/' + this.user.id + '/notifications')
              .then(response => this.notifications = response.data);
        },
         markAsRead(notification)
         {
-          axios.delete('/api/v1/user/'+this.user.id+'/notifications/'+notification.id).then(response => {
+          axios.delete('/api/v1/users/'+this.user.id+'/notifications/'+notification.id).then(response => {
                 this.notifications.splice(notification, 1);
             });
           },

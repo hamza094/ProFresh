@@ -58,6 +58,8 @@ class InvitationController extends ApiController
      */
    public function accept(Project $project)
    {
+      $this->authorize('owner', auth()->user());
+
      return $this->invitationService->acceptInvitation($project);
    }
 
@@ -68,7 +70,11 @@ class InvitationController extends ApiController
      */
    public function ignore(Project $project): JsonResponse
    {
-      $project->members()->detach(Auth::user());
+     $user = Auth::user();
+
+      $this->authorize('owner', $user);
+
+      $project->members()->detach($user);
 
       return response()->json([
         'message'=>'You have rejected the project request to join',
