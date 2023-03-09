@@ -16,7 +16,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
       axios.get('/api/v1/projects/' + slug + '/accept-invitation', {}).then(function (response) {
         _this.$vToastify.success(response.data.message);
-        _this.$bus.emit('acceptInvitation', {
+        _this.$bus.emit('invitation', {
           project: response.data.project
         });
       })["catch"](function (error) {
@@ -26,8 +26,11 @@ __webpack_require__.r(__webpack_exports__);
     },
     rejectInvitation: function rejectInvitation(slug) {
       var _this2 = this;
-      axios.get('/api/v1/projects/' + slug + '/cancel', {}).then(function (response) {
-        _this2.$vToastify.info("The project request has rejected");
+      axios.get('/api/v1/projects/' + slug + '/ignore', {}).then(function (response) {
+        _this2.$vToastify.info(response.data.message);
+        _this2.$bus.emit('invitation', {
+          project: response.data.project
+        });
       })["catch"](function (error) {
         _this2.$vToastify.warning("Error! Try Again");
       });

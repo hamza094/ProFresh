@@ -20,13 +20,13 @@ class UserResource extends JsonResource
         'id' => $this->id,
         'name' => $this->name,
         'username' => $this->username,
-        'avatar_path' => $this->avatar_path,
+        'avatar' => $this->when($this->avatar,
+                                fn()=>$this->avatar_path),
         'timezone' => $this->timezone,
         'email' => $this->email,
 
-        'verified' => $this->when($this->id == auth()->id(), function () {
-                return $this->email_verified_at->diffForHumans();
-        }),
+        'verified' => $this->when($this->id == auth()->id(), 
+          fn()=> $this->email_verified_at->diffForHumans()),
 
         'info' => new UserInfoResource($this->info),
 

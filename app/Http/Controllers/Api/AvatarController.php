@@ -5,12 +5,14 @@ namespace App\Http\Controllers\Api;
 use Illuminate\Http\Request;
 use App\Models\Project;
 use App\Models\User;
-use Auth;
+use F9Web\ApiResponseHelpers;
+use Illuminate\Http\JsonResponse;
 use App\Services\UserService;
 use App\Http\Requests\UserRequest;
 
 class AvatarController extends ApiController
 {
+    use ApiResponseHelpers;
   /**
     * Store user avatar.
     *
@@ -30,12 +32,17 @@ class AvatarController extends ApiController
     return response([], 204);
   }
 
-  public function avatarDelete(User $user)
+  public function removeAvatar(User $user): JsonResponse
   {
-    if($user->avatar_path!==null)
-    {
-      $user->update(['avatar_path'=>null]);
+    $this->authorize('owner', $user);
+
+    if (!$user->avatar) {
+        return $this->respondError('User does not have an avatar');
     }
+      
+      $user->update(['avatar_path' => null]);
+
+      return $this->respondWithSuccess(['message'=>'User avatar has been removed']);
   }
 
 }

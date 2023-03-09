@@ -30,7 +30,7 @@
       <div class="header">
 
       <router-link :to="'/user/'+conversation.user.name +'/profile'">
-        <img :src="conversation.user.avatar_path" alt="User Avatar" class="chat-user_image"/>
+        <img v-if="conversation.user.avatar" :src="conversation.user.avatar" alt="User Avatar" class="chat-user_image"/>
       </router-link>
 
       <strong class="primary-font">

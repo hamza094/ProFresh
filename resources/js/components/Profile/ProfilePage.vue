@@ -16,7 +16,7 @@
 
     <span class="feature-dropdown_item" v-show=profilePop>
     <ul>
-    <li v-if="user.avatar_path" class="feature-dropdown_item-content" @click="deleteAvatar"><i class="far fa-user-circle"></i> Remove Avatar</li>
+    <li v-if="user.avatar" class="feature-dropdown_item-content" @click="deleteAvatar"><i class="far fa-user-circle"></i> Remove Avatar</li>
 
     <li class="feature-dropdown_item-content" @click.prevent="deleteProfile()"><i class="far fa-trash-alt"></i>Delete Profile</li>
 
@@ -137,16 +137,18 @@ export default{
             }
         },
 
-      deleteAvatar(){
+    deleteAvatar(){
       var self = this;
       this.sweetAlert('Yes, delete it!').then((result) => {
       if (result.value) {
-      axios.patch('/api/user/'+this.user.id+'/avatar-delete').then(function(){
-       self.redirectSuccess('Project avatar has been deleted',
-        '/api/profile/user/'+this.user.id);
-      }).catch(function(){
-          swal.fire("Failed!","There was something wrong.","warning");
-      });
+      axios.patch('/api/v1/users/'+this.user.id+'/avatar_remove')
+      .then(response=>{
+        console.log(response);
+        self.$vToastify.info(response.data.message);
+        self.user.avatar=null;
+          }).catch(error=>{
+            swal.fire("Failed!","There was something wrong.","warning");
+          });
   }
     })
   },

@@ -3,7 +3,7 @@
 
         <!-- Add condition so only allowed owner update --> 
 	   	<div class="img-avatar" @click="$modal.show('avatar-file')">
-            <div class="img-avatar_name" v-if="user.avatar_path==null">
+            <div class="img-avatar_name" v-if="!user.avatar">
                 {{user.name.substring(0,1)}}
             </div>
                 <div v-else>
@@ -55,7 +55,7 @@ export default{
 		return{
 			imageSrc: "",
             croppedImageSrc: "",
-            avatar_path:this.user.avatar_path,
+            avatar_path:this.user.avatar,
 		};
 	},
 	methods:{

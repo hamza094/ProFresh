@@ -63,7 +63,8 @@ Route::apiResource('/task',TaskController::class)->except(['index','show']);
 Route::patch('/task/{task}/status',[TaskController::class,'status']);
 
 //Chat Conversation Routes
-Route::apiResource('/conversations',ConversationController::class)->only(['store','destroy']);
+Route::apiResource('/conversations',ConversationController::class)
+                 ->only(['store','destroy']);
 });
 
 Route::controller(InvitationController::class)->group(function(){
@@ -87,7 +88,7 @@ Route::get('/notifications', [NotificationsController::class,'index']);
 
 Route::delete('/notifications/{notification}', [NotificationsController::class,'destroy']);
 
-Route::patch('/avatar_remove',[AvatarController::class,'avatarDelete']);
+Route::patch('/avatar_remove',[AvatarController::class,'removeAvatar']);
 
 Route::post('/avatar', [AvatarController::class,'avatar'])->name('avatar');
 });

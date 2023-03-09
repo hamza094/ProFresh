@@ -130,6 +130,11 @@ class User extends Authenticatable implements Searchable, MustVerifyEmail
     ]);
     }*/
 
+    public function getAvatarAttribute()
+    {
+        return $this->avatar_path ?: false;
+    }
+
     public function messages()
     {
       return $this->belongsToMany(Message::class);

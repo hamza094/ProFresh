@@ -21,7 +21,7 @@ __webpack_require__.r(__webpack_exports__);
     return {
       imageSrc: "",
       croppedImageSrc: "",
-      avatar_path: this.user.avatar_path
+      avatar_path: this.user.avatar
     };
   },
   methods: {
@@ -99,7 +99,7 @@ var render = function render() {
         return _vm.$modal.show("avatar-file");
       }
     }
-  }, [_vm.user.avatar_path == null ? _c("div", {
+  }, [!_vm.user.avatar ? _c("div", {
     staticClass: "img-avatar_name"
   }, [_vm._v("\n                " + _vm._s(_vm.user.name.substring(0, 1)) + "\n            ")]) : _c("div", [_c("img", {
     staticClass: "main-profile-img",
