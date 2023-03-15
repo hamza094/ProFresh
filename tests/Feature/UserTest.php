@@ -4,11 +4,9 @@ namespace Tests\Feature;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Hash;
 use App\Mail\PasswordUpdate;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Http\UploadedFile;
 use App\Services\UserService;
 use App\Traits\ProjectSetup;
 use Laravel\Sanctum\Sanctum;

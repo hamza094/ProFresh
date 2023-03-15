@@ -7,29 +7,32 @@ use App\Models\Project;
 use App\Models\User;
 use F9Web\ApiResponseHelpers;
 use Illuminate\Http\JsonResponse;
-use App\Services\UserService;
+use App\Services\FileService;
 use App\Http\Requests\UserRequest;
+use App\Enums\FileType;
 
 class AvatarController extends ApiController
 {
-    use ApiResponseHelpers;
-  /**
-    * Store user avatar.
-    *
-    * @param  int  $user
-    *
-    * @param  \Illuminate\Http\Request  $request
-  */
-  public function avatar(User $user, Request $request,UserService $service)
-  {
-    $this->validate(request(), [
-      'avatar'=>['required', 'image']]);
+  use ApiResponseHelpers;
 
-    $user_path=$this->storeFile($request,'avatar',$user->id);
+  public function avatar(User $user, Request $request,FileService $service)
+  {
+    $this->authorize('owner', $user);
+
+    $this->validate(request(), [
+    'avatar'=>[
+        'required', 'image','mimes:jpeg,png,jpg'
+      ]]);
+
+    $user_path=$service->store($user->id,'avatar',FileType::AVATAR);
 
     $user->update(['avatar_path'=>$user_path]);
 
-    return response([], 204);
+    return $this->respondWithSuccess([
+      'message'=>'Avatar Updated Successfully',
+      'avatar'=>$user->avatar_path,
+      'path'=>$user->path(),
+    ]);
   }
 
   public function removeAvatar(User $user): JsonResponse

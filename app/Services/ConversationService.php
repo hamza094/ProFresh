@@ -4,6 +4,7 @@ use App\Models\Project;
 use App\Models\Conversation;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Enums\FileType;
 use App\Services\FileService;
 use App\Notifications\UserMentioned;
 
@@ -13,15 +14,15 @@ class ConversationService
   public function storeConversation($request,Project $project){
 
     return $request->has('file')  
-    ? $this->storeFileConversation($project,$request)
+    ? $this->storeFileConversation($project)
     : $this->storeStaticConversation($project,$request);
   }
     
-  private function storeFileConversation($project,$request)
+  private function storeFileConversation($project)
   {
     $fileService=new FileService;
     
-    $file=$fileService->store($request,'file',auth()->id());
+    $file=$fileService->store($project->id,'file',FileType::CONVERSATION);
 
      return $project->conversations()->create([
         'file' => $file,

@@ -4,6 +4,8 @@ namespace Tests\Feature;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Hash;
 use Laravel\Sanctum\Sanctum;
 use App\Models\User;
@@ -28,33 +30,33 @@ class UserAvatarTest extends TestCase
          ); 
     }
     
-    /*public function avatar_can_be_added_by_profile_owner()
-    {
-      $this->json('POST','api/user/1/avatar')
-        ->assertStatus(401);
-    }
-
+    
+    /** @test */
     public function a_valid_avatar_must_be_provided(){
-      $user=create('App\Models\User');
-       $this->signIn($user);
-        $this->json('POST','api/user/'.$user->id.'/avatar',[
-            'avatar'=>'not-an-image'
-        ])->assertStatus(422);
+      $user=User::first();
+
+       $this->postJson(route('user.avatar', ['user' => $user->id]),['avatar' => 'not-an-image'])->assertUnprocessable();
     }
 
+    /** @test */
     public function authorize_user_may_add_avatar_to_project()
     {
-      $user=create('App\Models\User');
-       $this->signIn($user);
-        Storage::fake('s3');
-        $this->json('POST','api/user/'.$user->id.'/avatar',[
-            'avatar_path'=>$file=UploadedFile::fake()->image('avatar.jpg')
-        ]);
+      $user=User::first();
 
-        Storage::disk('s3')->assertExists('avatars/'.$file->hashName());
+        Storage::fake('s3');
+
+        $file=UploadedFile::fake()->image('avatar.jpg');
+
+        $response=$this->withoutExceptionHandling()->postJson('api/v1/users/'.$user->id.'/avatar',[
+            'avatar'=>$file,
+        ])->assertSuccessful();
+
+        $uploadedFile='avatars/'.$user->id.'_'.$file->hashName();
+
+        Storage::disk('s3')->assertExists($uploadedFile);
     }
 
-    public function a_user_can_determine_their_avatar_path()
+    /*public function a_user_can_determine_their_avatar_path()
     {
       $user=create('App\Models\User');
        $this->signIn($user);

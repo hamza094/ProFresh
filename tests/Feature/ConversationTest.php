@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use App\Traits\ProjectSetup;
+use App\Services\FileService;
 use App\Models\User;
 use App\Models\Conversation;
 use Laravel\Sanctum\Sanctum;
@@ -47,7 +48,9 @@ class ConversationTest extends TestCase
       $response=$this->postJson($this->project->path().'/conversations',['file'=>$file,
         'user_id' => $this->user->id])->assertOk();
 
-      /*Storage::disk('s3')->assertExists('/storage/'.$file->hashName());*/
+      $uploadedFile='conversations/'.$this->project->id.'_'.$file->hashName();
+
+      Storage::disk('s3')->assertExists($uploadedFile);
     }
 
     /** @test */

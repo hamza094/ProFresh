@@ -90,7 +90,8 @@ Route::delete('/notifications/{notification}', [NotificationsController::class,'
 
 Route::patch('/avatar_remove',[AvatarController::class,'removeAvatar']);
 
-Route::post('/avatar', [AvatarController::class,'avatar'])->name('avatar');
+Route::post('/avatar', [AvatarController::class,'avatar'])
+       ->name('user.avatar');
 });
 });
 
