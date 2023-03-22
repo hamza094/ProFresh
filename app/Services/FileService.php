@@ -8,6 +8,7 @@ use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
+use Spatie\ImageOptimizer\OptimizerChainFactory;
 
 class FileService
 {
@@ -25,15 +26,21 @@ public function store($id, string $fileInputName, string $fileType): string
     $folderName = $this->getFolderName($fileType);
     $fileName = $this->getGeneratedFileName($id, $file);
 
+    // optimize the image before uploading it
+    $optimizerChain = OptimizerChainFactory::create();
+    $optimizerChain->optimize($file->path());
+
+    $s3Disk = Storage::disk('s3');
+
     try {
-        $path = Storage::disk('s3')->putFileAs($folderName, $file, $fileName, 'public');
+        $path = $s3Disk->putFileAs($folderName, $file, $fileName, 'public');
     } catch (\Exception $e) {
         throw ValidationException::withMessages([
                 'file' => 'Error uploading file',
             ]);
     }
 
-    return Storage::disk('s3')->url($path);
+    return $s3Disk->url($path);
  }
 
    private static function getFolderName(string $fileType): string

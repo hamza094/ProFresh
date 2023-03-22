@@ -56,14 +56,6 @@ class UserAvatarTest extends TestCase
         Storage::disk('s3')->assertExists($uploadedFile);
     }
 
-    /*public function a_user_can_determine_their_avatar_path()
-    {
-      $user=create('App\Models\User');
-       $this->signIn($user);
-        $user->avatar_path='http://localhost/storage/avatars/me.jpg';
-        $this->assertEquals(asset('storage/avatars/me.jpg'),$user->avatar_path);
-    }*/
-
     /** @test */
     public function profile_owner_can_delete_his_avatar()
     {

@@ -32,7 +32,7 @@
 	<div class="page-content">
 	<div class="row">
 
-	<ProfileAvatar :user="user"></ProfileAvatar>
+	<UserAvatar :user="user"></UserAvatar>
 
   <div class="col-md-10">
   <div class="content">
@@ -86,13 +86,13 @@
 
 <script>
   import EditProfile from './Edit'
-  import ProfileAvatar from './Avatar'
+  import UserAvatar from './Avatar'
   import ProjectInvitation from './ProjectInvitation.vue'
   import { permission } from '../../auth'
 
 
 export default{
-  components: {EditProfile,ProfileAvatar,ProjectInvitation},
+  components: {EditProfile,UserAvatar,ProjectInvitation},
 	data(){
 		return{
       user:{},
@@ -171,6 +171,9 @@ export default{
      this.loadUser();
      this.$bus.$on('UpdateUser', (data) => {
         this.user = data.user;
+      });
+     this.$bus.$on('userAvatar', (data) => {
+        this.user.avatar = data.avatar;
       });
      this.$bus.$on('invitation', (data) => {
       const id= data.project.id;

@@ -18,7 +18,7 @@ class MembersResource extends JsonResource
           'id'=>$this->id,
           'name'=>$this->name,
           'username'=>$this->username,
-           'avatar' => $this->when($this->avatar,
+           'avatar_path' => $this->when($this->avatar,
                                 fn()=>$this->avatar_path),
           'email'=>$this->email,
         ];
