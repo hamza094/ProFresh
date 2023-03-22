@@ -59,13 +59,33 @@ class UserAvatarTest extends TestCase
     /** @test */
     public function profile_owner_can_delete_his_avatar()
     {
-      $user=User::first();
-      
-      $this->patchJson('api/v1/users/'.$user->id.'/avatar_remove');
+        Storage::fake('s3');
 
-      $this->assertDatabaseHas('users',['avatar_path'=>null]);
+       $user=User::first();
 
-      $response=$this->patchJson('api/v1/users/'.$user->id.'/avatar_remove')->assertStatus(400);
+       $file=UploadedFile::fake()->image('avatar.jpg');
+
+        $user->update([
+          'avatar_path' => $file
+        ]);
+
+        $response=$this->patchJson('api/v1/users/'.$user->id.'/avatar_remove');
+
+        $response
+        ->assertJson([
+            'message' => 'User avatar has been removed',
+        ])->assertStatus(200);
+
+        $this->assertNull($user->fresh()->avatar_path);
+
+        Storage::disk('s3')->assertMissing($file);
+
+        $response=$this->patchJson('api/v1/users/'.$user->id.'/avatar_remove');
+
+        $response
+        ->assertJson([
+            'error' => 'User does not have an avatar',
+        ])->assertStatus(400);
     }
 
 }

@@ -9,6 +9,8 @@ use F9Web\ApiResponseHelpers;
 use Illuminate\Http\JsonResponse;
 use App\Services\FileService;
 use App\Http\Requests\UserRequest;
+use Illuminate\Support\Facades\Storage;
+use Aws\S3\Exception\S3Exception;
 use App\Enums\FileType;
 
 class AvatarController extends ApiController
@@ -35,17 +37,23 @@ class AvatarController extends ApiController
     ]);
   }
 
-  public function removeAvatar(User $user): JsonResponse
+  public function removeAvatar(User $user,FileService $service): JsonResponse
   {
     $this->authorize('owner', $user);
 
     if (!$user->avatar) {
-        return $this->respondError('User does not have an avatar');
+       return $this->respondError('User does not have an avatar');
     }
-      
-      $user->update(['avatar_path' => null]);
 
-      return $this->respondWithSuccess(['message'=>'User avatar has been removed']);
+    try {
+     
+    $service->deleteFile($user);
+
+    return $this->respondWithSuccess(['message'=>'User avatar has been removed']);
+
+    } catch (S3Exception $e) {
+       return $this->respondError($e->getMessage());
+    }
   }
 
 }

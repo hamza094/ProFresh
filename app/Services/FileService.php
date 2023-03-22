@@ -5,8 +5,10 @@ use File;
 use App\Enums\FileType;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Spatie\ImageOptimizer\OptimizerChainFactory;
 
@@ -55,6 +57,19 @@ public function store($id, string $fileInputName, string $fileType): string
    private function getGeneratedFileName($id, UploadedFile $file): string
     {
         return $id . '_' . $file->hashName();
+    }
+
+    public function deleteFile($user){
+
+     DB::transaction(function () use ($user) {
+
+     $filePath=Str::after($user->avatar,'.com/');
+
+     Storage::disk('s3')->delete($filePath);
+
+     $user->update(['avatar_path' => null]);
+     });
+
     }
 
 }

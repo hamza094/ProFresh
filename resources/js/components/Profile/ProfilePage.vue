@@ -143,7 +143,6 @@ export default{
       if (result.value) {
       axios.patch('/api/v1/users/'+this.user.id+'/avatar_remove')
       .then(response=>{
-        console.log(response);
         self.$vToastify.info(response.data.message);
         self.user.avatar=null;
           }).catch(error=>{
