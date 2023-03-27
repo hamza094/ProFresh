@@ -6,7 +6,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
 use App\Http\Resources\TaskResource;
 use App\Http\Resources\ActivityResource;
 use App\Http\Resources\ConversationResource;
-use App\Http\Resources\MembersResource;
+use App\Http\Resources\UsersResource;
 use Carbon\Carbon;
 
 class ProjectResource extends JsonResource
@@ -30,7 +30,7 @@ class ProjectResource extends JsonResource
 
           'user'=>$this->user()->select('id','name','avatar_path','username','email')->first(),
           
-          'members'=>MembersResource::collection($this->activeMembers()->get()),
+          'members'=>UsersResource::collection($this->activeMembers()->get()),
 
           'completed'=>$this->completed,
           'score'=>$this->score(),

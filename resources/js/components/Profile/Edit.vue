@@ -73,19 +73,32 @@ export default{
 			owner:this.user,
             errors:{},
            form:{
-              name:this.user.name,
-              username:this.user.username,
-              email:this.user.email,
-              company:this.user.info.company,
-              mobile:this.user.info.mobile,
-              position:this.user.info.position,
-              address:this.user.info.address,
+              name:'',
+              username:'',
+              email:'',
+              company:'',
+              mobile:'',
+              position:'',
+              address:'',
               current_password:'',
               password:'',
-              bio:this.user.info.bio,
+              bio:'',
           },
+          originalData:{}
 		};
 	},
+  mounted(){
+   this.form.name = this.user.name
+    this.form.username = this.user.username
+    this.form.email = this.user.email
+    this.form.company = this.user.info.company
+    this.form.mobile = this.user.info.mobile
+    this.form.position = this.user.info.position
+    this.form.address = this.user.info.address
+    this.form.bio = this.user.info.bio
+
+    this.originalData = _.cloneDeep(this.form)
+  },
   computed:{
     currentPasswordFieldType() {
       return this.showCurrentPassword ? 'text' : 'password';
@@ -114,6 +127,11 @@ export default{
       },
 
       updateProfile(){
+         if (_.isEqual(this.form, this.originalData)) {
+          this.$vToastify.info("Form has not changed");
+        return
+      }
+
         axios.patch(`/api/v1/users/${this.user.id}`,this.form)
              .then(response=>{
                this.$vToastify.success("Profile Updated Successfully");

@@ -32,7 +32,7 @@
 	<div class="page-content">
 	<div class="row">
 
-	<UserAvatar :user="user"></UserAvatar>
+	<UserAvatar :userId="user.id" :avatar="userAvatar" :name="user.name"></UserAvatar>
 
   <div class="col-md-10">
   <div class="content">
@@ -99,7 +99,7 @@ export default{
       auth:this.$store.state.currentUser.user.id,
       invitations:[],
       owner:false,
-      //avatar_path:this.user.avatar_path,
+      userAvatar:'',
       profilePop:false,
 		};
 	},
@@ -117,6 +117,7 @@ export default{
          axios.get('/api/v1/users/'+this.$route.params.id).
          then(response=>{
             this.user=response.data.user;
+            this.userAvatar=this.user.avatar;
             this.invitations=response.data.user.invited_projects;
              this.checkPermission(this.user.id); 
          }).catch(error=>{
@@ -138,17 +139,26 @@ export default{
         },
 
     deleteAvatar(){
-      var self = this;
       this.sweetAlert('Yes, delete it!').then((result) => {
       if (result.value) {
+      this.$vToastify.loader("Please Wait Removing Avatar");
+
       axios.patch('/api/v1/users/'+this.user.id+'/avatar_remove')
-      .then(response=>{
-        self.$vToastify.info(response.data.message);
-        self.user.avatar=null;
-          }).catch(error=>{
+
+      .then((response) => {
+        this.$vToastify.info(response.data.message);
+        this.user.avatar=null;
+        this.userAvatar=null;
+        })
+
+        .catch((error) => {
             swal.fire("Failed!","There was something wrong.","warning");
-          });
-  }
+          })
+
+        .finally(() => {
+          this.$vToastify.stopLoader();
+        });
+      }
     })
   },
 
@@ -172,7 +182,9 @@ export default{
         this.user = data.user;
       });
      this.$bus.$on('userAvatar', (data) => {
+        console.log(data.avatar);
         this.user.avatar = data.avatar;
+        this.userAvatar = data.avatar;
       });
      this.$bus.$on('invitation', (data) => {
       const id= data.project.id;

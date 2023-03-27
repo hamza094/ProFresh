@@ -23,7 +23,8 @@ class UserController extends ApiController
 
     public function show(User $user)
     {
-      $user->load('members.user');
+      $user->loadMissing('members.user');
+
       return  $this->respondWithSuccess([
         'message'=>"User Data",
         'user'=>new UserResource($user)

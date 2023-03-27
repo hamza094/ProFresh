@@ -98,7 +98,7 @@
 
     <template #item-@="{ item }">
       <div class="user">
-         <img :src="item.avatar_path" alt="User Avatar" class="mention-user"/> 
+         <img :src="item.avatar" alt="User Avatar" class="mention-user"/> 
          <span class="dim">
           {{ item.name }}
         </span> 

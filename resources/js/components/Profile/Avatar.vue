@@ -1,11 +1,11 @@
 <template>
     <div class="col-md-2">
         <div class="img-avatar" @click="showAvatarModal">
-            <div class="img-avatar_name" v-if="!user.avatar">
-                {{ user.name.substring(0, 1) }}
+            <div class="img-avatar_name" v-if="!this.avatar">
+                {{ this.name.substring(0, 1) }}
             </div>
             <div v-else>
-                <img :src="user.avatar" alt="" class="main-profile-img" />
+                <img :src="this.avatar" alt="" class="main-profile-img" />
             </div>
             <div class="img-avatar_overlay">
                 <div class="img-avatar_overlay-text">Update</div>
@@ -65,7 +65,7 @@
 import VueCropper from "vue-cropperjs";
 
 export default {
-    props: ["user"],
+    props: ["userId","name","avatar"],
     components: { VueCropper },
 
     data() {
@@ -80,7 +80,7 @@ export default {
         },
         closeAvatarModal(){
           this.$modal.hide("avatar-file");
-          this.imageSrc = this.user.avatar;
+          this.imageSrc = this.avatar;
           this.croppedImageSrc = "";
         },
         setImage(e) {
@@ -138,7 +138,7 @@ export default {
             let formData = new FormData();
             formData.append("avatar", blob);
 
-            axios.post("/api/v1/users/"+this.user.id+"/avatar", formData)
+            axios.post("/api/v1/users/"+this.userId+"/avatar", formData)
               .then((response) => {
                 this.$bus.emit('userAvatar',{avatar:response.data.avatar});
                 this.closeAvatarModal();

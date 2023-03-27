@@ -9,7 +9,7 @@ use App\Notifications\ProjectInvitation;
 use App\Notifications\AcceptInvitation;
 use App\Http\Resources\ProjectInvitaionResource;
 use App\Http\Resources\ProjectsResource;
-use App\Http\Resources\MembersResource;
+use App\Http\Resources\UsersResource;
 use Illuminate\Support\Facades\DB;
 use App\Helpers\ProjectHelper;
 use Illuminate\Support\Collection;
@@ -94,7 +94,7 @@ class InvitationService
 
     return $this->respondWithSuccess([
       'message'=>"Member {$user->name} has been removed from the project",
-      'user'=>new MembersResource($user),
+      'user'=>new UsersResource($user),
     ]);
   }
 

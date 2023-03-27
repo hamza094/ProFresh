@@ -14,14 +14,18 @@ class UserService
 {
 
   public function updateUser(User $user, array $data): void
-  {
+  {    
     $userKeys = ['name', 'email', 'username'];
 
     $password = $data['password'] ?? null;
+
     unset($data['password'], $data['current_password']);
 
-    tap($user)->update(Arr::only($data, $userKeys))
-             ->info()?->update(Arr::except($data, $userKeys));
+    $user->update(Arr::only($data, $userKeys));
+
+     if ($user->info) {
+       $user->info->update(Arr::except($data, $userKeys));
+    }
 
     if ($password) {
       $this->updatePassword($user, $password);

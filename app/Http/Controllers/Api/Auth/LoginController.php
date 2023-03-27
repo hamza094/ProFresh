@@ -8,7 +8,7 @@ use App\Events\UserLogin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
-use App\Http\Resources\PersonResource;
+use App\Http\Resources\UsersResource;
 use App\Http\Controllers\Api\ApiController;
 
 class LoginController extends ApiController
@@ -32,7 +32,7 @@ public function login(Request $request)
     //event(new UserLogin($user));
 
     return response()->json([
-      'user' => new PersonResource($user),
+      'user' => new UsersResource($user),
       'access_token' => $user->createToken('access')->plainTextToken
     ], 200);
 }

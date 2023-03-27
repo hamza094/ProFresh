@@ -3,7 +3,7 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
-use App\Http\Resources\MembersResource;
+use App\Http\Resources\UsersResource;
 
 class ProjectInvitaionResource extends JsonResource
 {
@@ -21,7 +21,7 @@ class ProjectInvitaionResource extends JsonResource
         'status'=>$this->status,
         'slug'=>$this->slug,
         'invitation_sent_at'=>$this->pivot->created_at->format(config('app.date_formats.exact')),
-        'user'=>new MembersResource($this->whenLoaded('user')),
+        'user'=>new UsersResource($this->whenLoaded('user')),
         'created_at'=>$this->created_at->diffforHumans(),
         'path'=>$this->path(),
         ];

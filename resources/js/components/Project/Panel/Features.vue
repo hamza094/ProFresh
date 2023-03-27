@@ -39,7 +39,7 @@
         <div v-for="member in members" :key="member.id">
           <div class="project_members-detail">
                <router-link :to="'/user/'+member.id+'/profile'">
-                   <img v-if="member.avatar_path" :src="member.avatar_path" alt="">
+                   <img v-if="member.avatar" :src="member.avatar" alt="">
                    <p>
                     <span v-if="member.id == owner.id" 
                     class="badge badge-success">project owner
