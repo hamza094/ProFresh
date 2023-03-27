@@ -15,7 +15,7 @@
     <span class="btn btn-light btn-sm"><i class="fas fa-cog"></i></span>
 
     <span class="feature-dropdown_item" v-show=profilePop>
-    <ul>
+    <ul v-if="owner">
     <li v-if="user.avatar" class="feature-dropdown_item-content" @click="deleteAvatar"><i class="far fa-user-circle"></i> Remove Avatar</li>
 
     <li class="feature-dropdown_item-content" @click.prevent="deleteProfile()"><i class="far fa-trash-alt"></i>Delete Profile</li>
@@ -144,17 +144,14 @@ export default{
       this.$vToastify.loader("Please Wait Removing Avatar");
 
       axios.patch('/api/v1/users/'+this.user.id+'/avatar_remove')
-
       .then((response) => {
         this.$vToastify.info(response.data.message);
         this.user.avatar=null;
         this.userAvatar=null;
         })
-
         .catch((error) => {
             swal.fire("Failed!","There was something wrong.","warning");
-          })
-
+        })
         .finally(() => {
           this.$vToastify.stopLoader();
         });
@@ -163,13 +160,16 @@ export default{
   },
 
     deleteProfile(){
-      var self = this;
       this.sweetAlert('Yes, delete it!').then((result) => {
       if (result.value) {
-      axios.delete('/api/profile/user'+this.user.id).then(function(){
-      self.redirectSuccess('Profile deleted successfully','/');
-      }).catch(function(){
-          swal.fire("Failed!","There was something wrong.","warning");
+      axios.delete('/api/v1/users/'+this.user.id)
+      .then((response) =>{
+        this.$vToastify.success(response.data.message);
+        this.$store.dispatch('currentUser/deleteUser');
+      })
+      .catch((error) =>{
+          swal.fire("Failed!","There was something wrong.",
+                    "warning");
       });
   }
     })

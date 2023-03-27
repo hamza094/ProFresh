@@ -45,11 +45,12 @@ class UserController extends ApiController
 
   public function destroy(User $user)
   {
+    $this->authorize('owner', $user);
+
     $user->delete();
 
-    if(request()->expectsJson())
-    {
-      return response(['status'=>'profile deleted']);
-    }
+     return $this->respondWithSuccess([
+        'message'=>'User Data Deleted Sucessfully',
+      ]);
   }
 }

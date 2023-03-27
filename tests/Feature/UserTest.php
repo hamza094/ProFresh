@@ -96,14 +96,15 @@ class UserTest extends TestCase
       $mailable->assertSeeInHtml($time);
     }
 
-    /*public function profile_owner_can_delete_his_profile(){
-        $user=create('App\Models\User');
-         $this->signIn($user);
-         $project=create('App\Models\Project',['user_id'=>$user->id]);
-         $this->delete('api/profile/user/'.$user->id);
-         $this->assertDatabaseMissing('users',['id'=>$user->id]);
-         $this->assertDatabaseMissing('projects',['id'=>$project->id]);
-    }*/
+    /** @test */
+    public function user_can_delete_his_profile()
+    {
+      $this->deleteJson('api/v1/users/'.$this->user->id);
+
+      $this->assertModelMissing($this->user);
+
+      $this->assertModelMissing($this->project);
+    }
 
   public function dataProvider(): array
   {

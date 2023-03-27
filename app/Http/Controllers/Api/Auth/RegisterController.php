@@ -47,10 +47,6 @@ class RegisterController extends ApiController
 
         event(new Registered($user));
 
-        $user->update(['avatar_path'=>
-          "https://eu.ui-avatars.com/api/?name=".$user->name
-      ]);
-
         $user->save();
 
         if($user){

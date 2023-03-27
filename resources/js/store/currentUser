@@ -42,7 +42,14 @@ logoutUser({commit,state}){
    }).catch(error=>{
      this.errors=error.response.data.errors;
 });
-}
+},
+
+deleteUser({commit,state}){
+    localStorage.removeItem('token');
+    commit('setUser',null);
+    commit('loggedIn',false);
+    router.push('/home');
+},
 
 };
 const mutations = {
