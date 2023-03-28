@@ -2,9 +2,7 @@
 
     <div class="float-right">
 
-    <span class="feature-dropdown" @click="featurePop = !featurePop">
-<span class="btn btn-light btn-sm"><i class="fas fa-ellipsis-v"></i></span>
-<span class="feature-dropdown_item" v-show=featurePop>
+  <FeatureDropdown :featurePop="this.featurePop">
   <ul>
     <li class="feature-dropdown_item-content"
     @click="abandon()"><i class="fas fa-eye-slash"></i> Abandon</li>
@@ -15,8 +13,8 @@
 
     <li class="feature-dropdown_item-content" @click="deleteProject"><i class="fas fa-ban"></i> Delete</li>
   </ul>
-</span>
-    </span>
+  </FeatureDropdown>
+
    <ProjectMessage :slug=slug :members=members></ProjectMessage>
 
     </div>
@@ -25,11 +23,13 @@
 
 <script>
 import fileDownload from 'js-file-download';
-import ProjectMessage from './Message.vue'
+import ProjectMessage from './Message.vue';
+import FeatureDropdown from '../../FeatureDropdown.vue';
+
 
 export default {
 
-  components: {ProjectMessage},
+  components: {ProjectMessage,FeatureDropdown},
 
     props:['slug','members','name'],
     data() {
@@ -40,20 +40,13 @@ export default {
         };
     },
     watch:{
-        stagePop(featurePop){
-            if(featurePop){
-                document.addEventListener('click',this.zeroIfClickedOutside);
-            }
-        }
-    },
+      stagePop(featurePop) {
+    if (featurePop) {
+      document.addEventListener('click', (event) => this.$options.methods.handleClickOutside.call(this, event, '.feature-dropdown', this.featurePop));
+    }
+  }
+  },
     methods: {
-        zeroIfClickedOutside(event){
-            if(!event.target.closest('.feature-dropdown')){
-                this.featurePop=false;
-                document.removeEventListener('click',this.zeroIfClickedOutside);
-            }
-        },
-
       abandon(){
           this.performAction(
             'Yes, abandon it!',

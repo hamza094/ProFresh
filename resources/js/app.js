@@ -16,6 +16,7 @@ import moment from 'moment';
 import "emoji-mart-vue-fast/css/emoji-mart.css";
 import alertNotice from './mixins/alertNotice';
 import currentStage from './mixins/currentStage';
+import popup from './mixins/popup';
 import conversation from './mixins/conversation';
 import activitiesDesign from './mixins/activitiesDesign';
 import Chart from 'chart.js';

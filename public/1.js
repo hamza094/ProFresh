@@ -12,11 +12,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var js_file_download__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! js-file-download */ "./node_modules/js-file-download/file-download.js");
 /* harmony import */ var js_file_download__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(js_file_download__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _Message_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Message.vue */ "./resources/js/components/Project/Feature/Message.vue");
+/* harmony import */ var _FeatureDropdown_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../FeatureDropdown.vue */ "./resources/js/components/FeatureDropdown.vue");
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
-    ProjectMessage: _Message_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
+    ProjectMessage: _Message_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
+    FeatureDropdown: _FeatureDropdown_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
   },
   props: ['slug', 'members', 'name'],
   data: function data() {
@@ -28,18 +31,15 @@ __webpack_require__.r(__webpack_exports__);
   },
   watch: {
     stagePop: function stagePop(featurePop) {
+      var _this = this;
       if (featurePop) {
-        document.addEventListener('click', this.zeroIfClickedOutside);
+        document.addEventListener('click', function (event) {
+          return _this.$options.methods.handleClickOutside.call(_this, event, '.feature-dropdown', _this.featurePop);
+        });
       }
     }
   },
   methods: {
-    zeroIfClickedOutside: function zeroIfClickedOutside(event) {
-      if (!event.target.closest('.feature-dropdown')) {
-        this.featurePop = false;
-        document.removeEventListener('click', this.zeroIfClickedOutside);
-      }
-    },
     abandon: function abandon() {
       this.performAction('Yes, abandon it!', axios["delete"]('/api/v1/projects/' + this.slug));
     },
@@ -47,14 +47,14 @@ __webpack_require__.r(__webpack_exports__);
       this.performAction('Yes, delete it!', axios.get('/api/v1/projects/' + this.slug + '/delete'));
     },
     exportProject: function exportProject() {
-      var _this = this;
+      var _this2 = this;
       axios.get('/api/v1/projects/' + this.slug + '/export', {
         responseType: 'blob',
         headers: {
           'Accept': 'multipart/form-data'
         }
       }).then(function (response) {
-        js_file_download__WEBPACK_IMPORTED_MODULE_0___default()(response.data, 'Project ' + _this.slug + '.xls');
+        js_file_download__WEBPACK_IMPORTED_MODULE_0___default()(response.data, 'Project ' + _this2.slug + '.xls');
       })["catch"](function (error) {
         console.log(error.response.data);
       });
@@ -80,21 +80,10 @@ var render = function render() {
     _c = _vm._self._c;
   return _c("div", {
     staticClass: "float-right"
-  }, [_c("span", {
-    staticClass: "feature-dropdown",
-    on: {
-      click: function click($event) {
-        _vm.featurePop = !_vm.featurePop;
-      }
+  }, [_c("FeatureDropdown", {
+    attrs: {
+      featurePop: this.featurePop
     }
-  }, [_vm._m(0), _vm._v(" "), _c("span", {
-    directives: [{
-      name: "show",
-      rawName: "v-show",
-      value: _vm.featurePop,
-      expression: "featurePop"
-    }],
-    staticClass: "feature-dropdown_item"
   }, [_c("ul", [_c("li", {
     staticClass: "feature-dropdown_item-content",
     on: {
@@ -129,22 +118,14 @@ var render = function render() {
     }
   }, [_c("i", {
     staticClass: "fas fa-ban"
-  }), _vm._v(" Delete")])])])]), _vm._v(" "), _c("ProjectMessage", {
+  }), _vm._v(" Delete")])])]), _vm._v(" "), _c("ProjectMessage", {
     attrs: {
       slug: _vm.slug,
       members: _vm.members
     }
   })], 1);
 };
-var staticRenderFns = [function () {
-  var _vm = this,
-    _c = _vm._self._c;
-  return _c("span", {
-    staticClass: "btn btn-light btn-sm"
-  }, [_c("i", {
-    staticClass: "fas fa-ellipsis-v"
-  })]);
-}];
+var staticRenderFns = [];
 render._withStripped = true;
 
 

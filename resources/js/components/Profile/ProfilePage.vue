@@ -10,20 +10,14 @@
     <button class="btn btn-primary btn-sm" @click="$modal.show('edit-profile')">Edit Profile
     </button>
 
-    <span class="feature-dropdown" @click="profilePop = !profilePop">
-
-    <span class="btn btn-light btn-sm"><i class="fas fa-cog"></i></span>
-
-    <span class="feature-dropdown_item" v-show=profilePop>
+  <FeatureDropdown :featurePop="this.featurePop">
     <ul v-if="owner">
     <li v-if="user.avatar" class="feature-dropdown_item-content" @click="deleteAvatar"><i class="far fa-user-circle"></i> Remove Avatar</li>
 
     <li class="feature-dropdown_item-content" @click.prevent="deleteProfile()"><i class="far fa-trash-alt"></i>Delete Profile</li>
-
   </ul>
+</FeatureDropdown>
 
-</span>
-    </span>
 </div>
 		   </div>
 
@@ -88,11 +82,12 @@
   import EditProfile from './Edit'
   import UserAvatar from './Avatar'
   import ProjectInvitation from './ProjectInvitation.vue'
+  import FeatureDropdown from '../FeatureDropdown.vue';
   import { permission } from '../../auth'
 
 
 export default{
-  components: {EditProfile,UserAvatar,ProjectInvitation},
+  components: {EditProfile,UserAvatar,ProjectInvitation,FeatureDropdown},
 	data(){
 		return{
       user:{},
@@ -100,15 +95,13 @@ export default{
       invitations:[],
       owner:false,
       userAvatar:'',
-      profilePop:false,
+      featurePop:false,
 		};
 	},
 
 	watch:{
-        userPop(profilePop){
-            if(profilePop){
-                document.addEventListener('click',this.closeIfClickedOutside);
-            }
+        userPop(featurePop){
+           document.addEventListener('click', (event) => this.$options.methods.handleClickOutside.call(this, event, '.feature-dropdown', this.featurePop));
         }
     },
 
@@ -130,14 +123,6 @@ export default{
         }
         return this.owner = false;
       },
-
-      closeIfClickedOutside(event){
-            if(!event.target.closest('.feature-dropdown')){
-                this.profilePop=false;
-                document.removeEventListener('click',this.closeIfClickedOutside);
-            }
-        },
-
     deleteAvatar(){
       this.sweetAlert('Yes, delete it!').then((result) => {
       if (result.value) {

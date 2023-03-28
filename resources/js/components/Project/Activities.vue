@@ -9,7 +9,7 @@
       <span>
       <span class="page-top_heading">Projects </span>
       <span class="page-top_arrow"> > </span>
-       <span> <router-link :to="'/project/'+this.$route.params.slug" 
+       <span> <router-link :to="'/projects/'+this.$route.params.slug" 
     	class="dashboard-link">{{this.$route.params.name}}</router-link>
        </span>
        <span class="page-top_arrow"> > </span>

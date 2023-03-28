@@ -33,6 +33,11 @@ class ActivityResource extends JsonResource
       return 'Project stage updated';
     }
 
+    if(key($this->changes['after']) == 'deleted_at')
+    {
+      return 'Projet back alive';
+    }
+
       return 'Project'.' '.key($this->changes['after']).' '.'updated';
   }
 
