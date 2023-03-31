@@ -289,8 +289,8 @@ export default{
     this.project.stage_updated_at = data.stage_updated
     this.project.stage = data.current_stage
     this.project.completed = data.completed
-    this.project.postponed= data.postponed
-    this.getStage=data.getStage
+    this.project.postponed = data.postponed
+    this.getStage = data.getStage
   },  
     updateTasks(data) {
     axios.get(`/api/v1/projects/${this.project.slug}?page=${data.page}`)

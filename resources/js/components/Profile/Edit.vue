@@ -58,6 +58,7 @@
 
 <script>
 import FormInput from '../FormInput.vue'
+import { mapMutations } from 'vuex';
 
 export default{
 
@@ -113,6 +114,7 @@ export default{
   },
   },
 	methods:{
+    ...mapMutations('profile',['updateUser']),
         modalClose(){
         	this.$modal.hide('edit-profile');
           this.resetForm();
@@ -135,7 +137,7 @@ export default{
         axios.patch(`/api/v1/users/${this.user.id}`,this.form)
              .then(response=>{
                this.$vToastify.success("Profile Updated Successfully");
-                this.$bus.emit('UpdateUser',{user:response.data.user});
+               this.updateUser(response.data.user);
                this.modalClose();
            }).catch(error=>{
                 this.errors=error.response.data.errors;

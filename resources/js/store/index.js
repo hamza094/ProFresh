@@ -3,6 +3,8 @@ import Vuex from 'vuex'
 
 import createPersistedState from 'vuex-persistedstate'
 import currentUser from "./currentUser"
+import profile from "./profile"
+
 
 Vue.use(Vuex)
 
@@ -12,6 +14,7 @@ export default new Vuex.Store({
     createPersistedState()
   ],
   modules:{
-     currentUser
+     currentUser,
+     profile
   }
 })

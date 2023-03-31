@@ -33,7 +33,7 @@ class UserRequest extends FormRequest
        'address' => 'nullable|max:150',
        'position' => 'nullable',
        'current_password'=>['nullable','sometimes','current_password','required_with:password'],
-       'password'=>['nullable','sometimes','required_with:current_password',Password::min(8)->mixedCase()->numbers()->symbols()]
+       'password'=>['nullable','sometimes','required_with:current_password',Password::min(8)->mixedCase()->numbers()]
         ];
     }
 

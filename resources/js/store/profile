@@ -1,0 +1,28 @@
+const state = {
+  user: {},
+  userAvatar: null,
+  invitations: []
+};
+
+  const mutations= {
+    updateUser(state, user) {
+      state.user = user;
+    },
+    updateUserAvatar(state, avatar) {
+      state.userAvatar = avatar;
+    },
+    updateInvitations(state, projectId) {
+      const index = state.invitations.findIndex(project => project.id === projectId);
+      if (index !== -1) {
+        state.invitations.splice(index, 1);
+      }
+    }
+  };
+
+  export default{
+  namespaced: true,
+  state,
+  //getters,
+  //actions,
+  mutations
+}

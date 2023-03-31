@@ -83,18 +83,16 @@
   import UserAvatar from './Avatar'
   import ProjectInvitation from './ProjectInvitation.vue'
   import FeatureDropdown from '../FeatureDropdown.vue';
-  import { permission } from '../../auth'
+  import { permission } from '../../auth';
+  import { mapState, mapMutations } from 'vuex';
 
 
 export default{
   components: {EditProfile,UserAvatar,ProjectInvitation,FeatureDropdown},
 	data(){
 		return{
-      user:{},
       auth:this.$store.state.currentUser.user.id,
-      invitations:[],
       owner:false,
-      userAvatar:'',
       featurePop:false,
 		};
 	},
@@ -104,24 +102,25 @@ export default{
            document.addEventListener('click', (event) => this.$options.methods.handleClickOutside.call(this, event, '.feature-dropdown', this.featurePop));
         }
     },
+    created(){
+     this.loadUser();
+    },
 
 	methods:{
+    ...mapMutations('profile',['updateUser', 'updateUserAvatar',
+      'updateInvitations']),
+   
         loadUser(){
          axios.get('/api/v1/users/'+this.$route.params.id).
          then(response=>{
-            this.user=response.data.user;
-            this.userAvatar=this.user.avatar;
-            this.invitations=response.data.user.invited_projects;
-             this.checkPermission(this.user.id); 
+          const user = response.data.user;
+          this.updateUser(user);
+          this.updateUserAvatar(user.avatar);
+          this.updateInvitations(user.invited_projects);  
+          this.owner = (this.user.id === this.auth);
          }).catch(error=>{
            console.log(error.response.data.errors);
          });
-      },
-      checkPermission(user){
-        if(user == this.auth){
-         return this.owner = true;
-        }
-        return this.owner = false;
       },
     deleteAvatar(){
       this.sweetAlert('Yes, delete it!').then((result) => {
@@ -161,22 +160,10 @@ export default{
   },
 
     },
-    created(){
-     this.loadUser();
-     this.$bus.$on('UpdateUser', (data) => {
-        this.user = data.user;
-      });
-     this.$bus.$on('userAvatar', (data) => {
-        console.log(data.avatar);
-        this.user.avatar = data.avatar;
-        this.userAvatar = data.avatar;
-      });
-     this.$bus.$on('invitation', (data) => {
-      const id= data.project.id;
-    const index = this.invitations.findIndex(project => project.id === id);
-    this.invitations.splice(index, 1);
-      });
-    },
+
+    computed: {
+    ...mapState('profile',['user', 'userAvatar', 'invitations'])
+  },
 }	
 
 </script>

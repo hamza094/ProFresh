@@ -63,6 +63,7 @@
 
 <script>
 import VueCropper from "vue-cropperjs";
+import { mapMutations } from 'vuex';
 
 export default {
     props: ["userId","name","avatar"],
@@ -75,6 +76,7 @@ export default {
         };
     },
     methods: {
+    ...mapMutations('profile',['updateUserAvatar']),
         showAvatarModal() {
             this.$modal.show("avatar-file");
         },
@@ -140,7 +142,7 @@ export default {
 
             axios.post("/api/v1/users/"+this.userId+"/avatar", formData)
               .then((response) => {
-                this.$bus.emit('userAvatar',{avatar:response.data.avatar});
+                this.updateUserAvatar(response.data.avatar);
                 this.closeAvatarModal();
                 this.$vToastify.success("Avatar Updated Successfully");
                 })

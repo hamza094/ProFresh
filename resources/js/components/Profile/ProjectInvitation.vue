@@ -39,17 +39,19 @@
 </template>
 
 <script>
+import { mapMutations } from 'vuex';
 
 export default{
 	props:['projects'],
 
 	methods:{
+      ...mapMutations('profile',['updateInvitations']),
 
   becomeMember(slug){
          axios.get('/api/v1/projects/'+slug+'/accept-invitation',{
            }).then(response=>{
               this.$vToastify.success(response.data.message);
-             this.$bus.emit('invitation',{project:response.data.project});
+             this.updateInvitations(response.data.project.id);
            }).catch(error=>{
             console.log(error);
                 this.$vToastify.warning("Error! Try Again");
@@ -60,7 +62,7 @@ export default{
        axios.get('/api/v1/projects/'+slug+'/ignore',{
            }).then(response=>{
           this.$vToastify.info(response.data.message);
-          this.$bus.emit('invitation',{project:response.data.project});
+          this.updateInvitations(response.data.project.id);
            }).catch(error=>{
                 this.$vToastify.warning("Error! Try Again");
             });
