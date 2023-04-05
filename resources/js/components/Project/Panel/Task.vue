@@ -50,10 +50,13 @@
 </div>
 </template>
 <script>
+  import { mapMutations, mapActions } from 'vuex';
+
   export default {
     props:['slug','tasks','access'],
     data() {
       return {
+        task_score:2,
         editing:0,
           form:{
           	body:'',
@@ -64,16 +67,22 @@
         };
     },
     methods: {
+      ...mapMutations('project',['addScore','reduceScore']),
+      ...mapActions('project',['loadTasks']),
+
 		 getResults(page = 1) {
-			 this.$bus.emit('taskResults',{page:page});
-		},
+      this.loadTasks({
+        slug: this.slug,
+        page: page
+      });
+    },
      add(){
        axios.post('/api/v1/projects/'+this.slug+'/task',this.form)
           .then(response=>{
               this.$vToastify.success("Project Task added");
               this.form.body="";
 							this.getResults();
-              this.$bus.emit('addScore');
+              this.addScore(this.task_score);
           }).catch(error=>{
 						this.form.body="";
 						this.taskErrors(error);
@@ -127,7 +136,7 @@
       .then(response=>{
 				 this.getResults();
          this.$vToastify.info("Project Task deleted");
-           this.$bus.emit('reduceScore');
+         this.reduceScore(this.task_score);
       }).catch(error=>{
         this.$vToastify.warning("Task deletion failed");
       })

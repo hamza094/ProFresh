@@ -31,7 +31,7 @@
 										<button  type="button" class="btn btn-link btn-sm" @click="cancelUpdate()">Cancel</button>
 									</span>
 									<span v-else>
-										<button v-if="accessAllowed" type="button" class="btn btn-link btn-sm" @click="nameEdit = true">Edit</button>
+										<button v-if="permission.access" type="button" class="btn btn-link btn-sm" @click="nameEdit = true">Edit</button>
 									</span>
 								</p>
 								<p class="content-info">
@@ -68,7 +68,7 @@
 									<button type="button" class="btn btn-link btn-sm" @click="aboutCancel()">Cancel</button>
 								</span>
 								<span v-else>
-									<button v-if="accessAllowed" type="button" class="btn btn-link btn-sm" @click="editAbout()">Edit</button>
+									<button v-if="permission.access" type="button" class="btn btn-link btn-sm" @click="editAbout()">Edit</button>
 								</span>
 							</p>
 							<p v-if="!project.postponed" class="crm-info"> <b>Postponed reason</b>: <span> The project is currently active.
@@ -83,7 +83,7 @@
 					</div>
 					<br>
 					<Stage :slug="project.slug" :projectstage='project.stage' :postponed="project.postponed"
-					:completed="project.completed" :stage_updated="project.stage_updated_at" :get_stage="this.getStage" :access="this.accessAllowed">
+					:completed="project.completed" :stage_updated="project.stage_updated_at" :get_stage="this.getStage" :access="permission.access">
 				</Stage>
 				<br>
 				<hr>
@@ -115,10 +115,10 @@
 		<div class="col-md-4 side_panel">
 			Project Side Panel
 			<br>
-			<Task :slug="project.slug" :tasks="project.tasks" :access="this.accessAllowed"></Task>
+			<Task :slug="project.slug" :tasks="project.tasks" :access="permission.access"></Task>
 			<hr>
 			<PanelFeatues :slug="project.slug" :notes="project.notes"
-			:members="project.members" :owner="user" :access="this.accessAllowed" :ownerLogin="this.ownerLogin"></PanelFeatues>
+			:members="project.members" :owner="user" :access="permission.access" :ownerLogin="permission.owner"></PanelFeatues>
 			<hr>
 			<div>
             <p><b>Online Users For Chat</b></p>
@@ -140,94 +140,103 @@
 	import RecentActivities from './RecentActivities.vue'
   import Chat from './Panel/Chat.vue'
   import { permission } from '../../auth'
-
+  import { mapState, mapMutations, mapActions } from 'vuex';
 
 export default{
-	  components:{Status,Stage,Task,PanelFeatues,RecentActivities,Chat},
-    data(){
+	  components:{
+	  	Status,
+	  	Stage,
+	  	Task,
+	  	PanelFeatues,
+	  	RecentActivities,
+	  	Chat
+	  },
+
+    data(){	
     return{
-     project:[],
-		 user:{},
-		 getStage:0,
 		 nameEdit:false,
-		 projectname:"",
 		 aboutEdit:false,
-		 projectabout:"",
+		 projectname:'',
+		 projectabout:'',
 		 auth:this.$store.state.currentUser.user,
-		 members:[],
 		 conversations:[],
      chatusers:[],
-		 accessAllowed:false,
-		 ownerLogin:false,
+     Hot_Score: 21,
 		 path:'',
-		 score:'',
+		 members:'',
     };
     },
+
+    created(){
+    	const slug = this.$route.params.slug;
+      this.loadProject(slug)
+      .then(() => {
+      this.projectname = this.project.name;
+      this.projectabout = this.project.about;
+      this.members = this.project.members;
+      //this.checkPermission();
+    })
+    .catch(error => {
+      console.log(error.response.data.errors);
+    });
+    },
+
     computed: {
+    	...mapState('project',['project','user','getStage']),
+
+    permission() {
+      const {access, owner} = permission(this.auth, this.project.members, this.project.user);
+
+      return {access, owner};
+   },
+
     status() {
-      return this.score > 21 ? 'hot' : 'cold'
-    }
+      return this.project.score > this.Hot_Score ? 'hot' : 'cold'
+    },
   },
+
     methods:{
-			loadProject(){
-				 axios.get('/api/v1/projects/'+this.$route.params.slug).
-				 then(response=>{
-						 this.project=response.data;
-						 this.members=this.project.members;
-						 this.user=this.project.user;
-						 this.checkPermission(); 
-						 this.getStage=this.project.stage.id;
-						 this.projectname=this.project.name;
-						 this.daysLimit=this.project.days_limit;
-						 this.score=this.project.score;
-             this.members.unshift(this.project.user);
-						 this.$bus.emit('projectSlug',{slug:response.data.slug});
-				 }).catch(error=>{
-					 console.log(error.response.data.errors);
-				 });
-			},
-      checkPermission(){
-			  const {accessAllowed, ownerLogin} = permission(this.auth, this.members, this.user);
-        this.accessAllowed = accessAllowed;
-        this.ownerLogin = ownerLogin;
-	},
-			//Update project name methods
+    ...mapActions('project',['loadProject']),
+    ...mapMutations('project',['nameUpdate','aboutUpdate']),
+
 			updateName(){
-				axios.patch('/api/v1/projects/'+this.project.slug,{
+				axios.patch(`/api/v1/projects/${this.project.slug}`,{
 							name:this.projectname,
 					}).then(response=>{
+						this.updateNameState(response.data.name,response.data.slug,response.data.message);
              	this.updateUrl(response.data.slug);
-		          this.updateNameState(response.data.name,response.data.slug,response.data.message);
 					}).catch(error=>{
 						  this.nameEdit = false;
 						  this.projectname=this.project.name;
               this.showError(error);
 					 });
 			},
+
 			updateUrl(url){
-				const nextURL = 'http://127.0.0.1:8000/project/'+url;
-				const nextTitle = 'Project new url';
-				const nextState = { additionalInformation: 'Updated the URL with Slug' };
-					window.history.replaceState(nextState, nextTitle, nextURL)
+				 window.history.replaceState(
+          {additionalInformation: 'Updated the URL with Slug'},
+          'Updated Project URL',
+          `http://127.0.0.1:8000/projects/${url}`
+          );
 			},
+
 			updateNameState(name,slug,msg){
-				this.project.name=name;
-				this.project.slug=slug;
+				this.nameUpdate(name,slug);
 				this.projectname=name;
 				this.nameEdit = false;
 				this.$vToastify.success(msg);
 			},
+
 			cancelUpdate(){
 				this.nameEdit = false;
 				this.projectname = this.project.name;
 			},
 
-			//update project about methods
 			updateAbout(){
-					axios.patch('/api/v1/projects/'+this.project.slug,{
+					axios.patch(`/api/v1/projects/${this.project.slug}`,{
 							about:this.projectabout,
 					}).then(response=>{
-							this.project.about=response.data.about;
+						  this.aboutUpdate(response.data.about);
 							this.projectabout=response.data.about;
 							this.aboutEdit = false;
 							this.$vToastify.success(response.data.messge);
@@ -237,10 +246,12 @@ export default{
 						 this.showError(error);
 					 });
 			},
+
 			editAbout(){
 				this.aboutEdit=true;
 				this.projectabout=this.project.about;
 			},
+
 			aboutCancel(){
 				this.aboutEdit=false;
 				this.projectabout=this.project.about;
@@ -249,102 +260,67 @@ export default{
 			restore(){
 			  this.performAction(
 			    'Yes, Make live again!',
-			    axios.get('/api/v1/projects/'+this.project.slug+'/restore')
-			  );
+			    axios.get(`/api/v1/projects/${this.project.slug}/restore`));
 			},
 
 			//show error messages
-		showError(err){
-     const { data: { errors, error } } = err.response;
-     if (errors) {
-      Object.keys(errors).forEach(field => {
-        this.$vToastify.warning(errors[field][0]);
+		  showError(err){
+        const { data: { errors, error } } = err.response;
+        if (errors) {
+        Object.keys(errors).forEach(field => {
+         this.$vToastify.warning(errors[field][0]);
       });
-    } else if (error) {
-     this.$vToastify.warning(error);
-  }
-},
+      } else if (error) {
+        this.$vToastify.warning(error);
+      }
+    },
 
-	listenForActivity() {
-	  Echo.channel('activity')
-	    .listen('ActivityLogged', (e) => {
-		  this.project.activities.unshift(e);
-		});
+	  listenForActivity() {
+	    Echo.channel('activity')
+	      .listen('ActivityLogged', (e) => {
+		      this.project.activities.unshift(e);
+		  });
 		},
+
 		listenForNewMessage() {
-          Echo.private('conversations.'+this.getProjectSlug())
-              .listen('NewMessage', (e) => {
-                this.project.conversations.push(e);
-            });
-        },
+      Echo.private(`conversations.${this.getProjectSlug()}`)
+        .listen('NewMessage', (e) => {
+          this.project.conversations.push(e);
+      });
+    },
 
     listenToDeleteConversation(){
-      Echo.private('deleteConversation.'+this.getProjectSlug())
+      Echo.private(`deleteConversation.${this.getProjectSlug()}`)
         .listen('DeleteConversation', (e) => {
         this.project.conversations.splice(this.project.conversations.indexOf(e),1);
         this.$vToastify.success("conversation deleted");       
       });
     },
-    updateStage(data) {
-    this.project.stage_updated_at = data.stage_updated
-    this.project.stage = data.current_stage
-    this.project.completed = data.completed
-    this.project.postponed = data.postponed
-    this.getStage = data.getStage
-  },  
-    updateTasks(data) {
-    axios.get(`/api/v1/projects/${this.project.slug}?page=${data.page}`)
-    .then(response => {
-      this.project.tasks = response.data.tasks;
-      this.project.activities = response.data.activities;
-    });
-  },  
-    },
-    	created(){
-			this.loadProject();
-			this.$bus.$on('stageListners', this.updateStage);
-      this.$bus.$on('taskResults', this.updateTasks);
 
-			this.$bus.$on('Panel', (data) => {
-				this.project.notes = data.notes;
-			});
+    connectToEcho(){
+      Echo.join(`chatroom.${this.getProjectSlug()}`)
+        .here(members => {
+          this.chatusers = members;
+        })
+         .joining(auth => {
+          this.chatusers.push(auth);
+          this.$vToastify.info(`${auth.name} joined project conversation`);
+        })
+         .leaving(auth => {
+          this.chatusers.splice(this.chatusers.indexOf(auth), 1);
+          this.$vToastify.info(`${auth.name} leave project conversation`);
+        });
+      }
+  },
 
-			this.$bus.$on('removeMember',(data)=>{
-				this.project.members=data.members;
-			});
-
-			this.$bus.$on('addScore', () => {
-					this.project.score +=2;
-			});
-
-			this.$bus.$on('reduceScore', () => {
-				this.project.score -=2;
-			});
-
-      this.$bus.$on('score', (data) => {
-				this.project.score = data.score;
-			});  						
-		},
     mounted(){
       this.listenForNewMessage();
 			this.listenToDeleteConversation();
-						//this.listenForActivity();
-
+			this.listenForActivity();
       this.path=this.getProjectSlug();
-      
-      Echo.join('chatroom.'+this.getProjectSlug()).
-        here((members)=>{
-          this.chatusers=members;
-        }).
-        joining((auth) => {
-          this.chatusers.push(auth);
-          this.$vToastify.info(auth.name+' '+'joined project conversation');
-        })
-        .leaving((auth) => {
-          this.chatusers.splice(this.chatusers.indexOf(auth),1);
-          this.$vToastify.info(auth.name+' '+'leave project conversation');
-    })
+      this.connectToEcho();
     },
+
     beforeDestroy(){
       Echo.leave('chatroom.'+this.path);
   },

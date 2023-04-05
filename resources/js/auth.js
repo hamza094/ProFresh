@@ -1,14 +1,14 @@
 export function permission(auth, members, user) {
   var authId = auth.id;
+  var access = false;
+  var owner = false;
   var member = members.find(member => member.id === authId);
-  var accessAllowed = false;
-  var ownerLogin = false;
   if (member || user.id === authId) {
-    accessAllowed = true;
+    access = true;
   }
 
   if (user.id === authId) {
-    ownerLogin = true;
+    owner = true;
   }
-  return {accessAllowed, ownerLogin}
+  return {access, owner}
 }

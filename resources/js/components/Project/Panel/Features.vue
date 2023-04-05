@@ -62,6 +62,8 @@
 </template>
 
 <script>
+import { mapMutations } from 'vuex';
+
 export default{
   props:['slug','notes','members','owner','access','ownerLogin'],
   watch: {
@@ -80,13 +82,15 @@ export default{
     }
   },
   methods:{
+        ...mapMutations('project',['noteScore','updateScore','detachMember']),
+
     ProjectNote(){
       axios.patch('/api/v1/projects/'+this.slug,{
         notes:this.form.notes,
       }).then(response=>{
-        this.$bus.emit('Panel',{notes:response.data.notes});
+        this.updateNotes(response.data.notes);
         this.$vToastify.success("Notes Updated");
-        this.$bus.emit('score',{score:response.data.score});
+        this.noteScore(response.data.score);
         console.log(response.data.score);
       }).catch(error=>{
           if(error.response.data.errors && error.response.data.errors.notes[0]){
@@ -123,7 +127,7 @@ export default{
     this.sweetAlert('Yes, Remove Member').then((result) => {
   if (result.value) {
   axios.get('/api/v1/projects/'+this.slug+'/remove/'+id).then(response=>{
-      this.$bus.emit('removeMember',{members:response.data.members});
+      this.detachMember(memberId);
       self.$vToastify.info(response.data.message);
 }).catch(error=>{
       swal.fire("Failed!","There was  an errors","warning");

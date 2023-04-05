@@ -51,6 +51,8 @@
 </template>
 
 <script>
+  import { mapMutations } from 'vuex';
+
   export default{
     props:['slug','projectstage','completed','stage_updated','postponed','get_stage','access'],
     data(){
@@ -71,6 +73,8 @@
         }
     },
     methods:{
+      ...mapMutations('project',['updateStage']),
+
       stageCondition(stageId) {
         if(this.projectstage){
         const activeStage = stageId === this.projectstage.id ? 'current' : 'stages';
@@ -151,7 +155,7 @@
 },
 
 eventListener(data){
-  this.$bus.emit('stageListners',data);
+  this.updateStage(data);
 },
 
   offIfClickedOutside(event){

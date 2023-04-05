@@ -1,0 +1,82 @@
+const state = {
+  project:[],
+  user:{},
+  getStage:0,
+};
+
+
+const mutations = {
+    setProject(state, project) {
+      state.project = project
+      state.user = project.user
+      state.getStage = project.stage.id
+      state.members.unshift(project.user)
+    },
+    nameUpdate(state,name,slug){
+      state.project.name = name
+      state.project.slug = slug
+    },
+    aboutUpdate(state,about){
+      state.project.about = about
+    },
+    updateNotes(state,notes){
+      state.project.notes = notes
+    },
+    detachMember(state,memberId){
+      const index = state.project.members.findIndex(member => member.id === memberId);
+      if (index !== -1) {
+        state.project.members.splice(index, 1);
+      }
+    },
+    addScore(state,score){
+      state.project.score += score       
+    },
+    reduceScore(state,score){
+      state.project.score -= score
+    },
+    noteScore(state,score){
+      state.project.score = score
+    },
+    updateStage(state,data){
+    state.project.stage_updated_at = data.stage_updated
+    state.project.stage = data.current_stage
+    state.project.completed = data.completed
+    state.project.postponed= data.postponed
+    state.getStage=data.getStage
+    },
+    updateTasks(state,data){
+     state.project.tasks = data.tasks;
+     state.project.activities = data.activities;
+    }
+
+};
+
+const actions = {
+   loadProject({ commit }, slug) {
+      return axios.get(`/api/v1/projects/${slug}`)
+        .then(response => {
+        commit('setProject', response.data);
+        this.$bus.emit('projectSlug',{slug:response.data.slug});
+        })
+        .catch(error => {
+          //console.log(error.response.data.errors);
+        })
+      },
+      loadTasks({commit},{slug,page}){
+       return axios.get(`/api/v1/projects/${slug}?page=
+        ${page}`)
+        .then(response => {
+        commit('updateTasks', response.data);
+        })
+        .catch(error => {
+           console.log(error.response.data.errors);
+        })
+      },
+};
+
+export default{
+  namespaced: true,
+  state,
+  mutations,
+  actions,
+}
