@@ -35,5 +35,14 @@ class FileUploadTest extends TestCase
 
         $this->fileService->store($id, 'missing_file', $this->fileType);
     }
+
+       /** @test */
+     public function get_json_redirect()
+    {
+        $response = $this->getJson('/api/v1/link');
+        
+        $response->assertStatus(200)
+            ->assertJson('get this link');
+    }
    
 }

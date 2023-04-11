@@ -76,7 +76,7 @@
    <!--<section class="footer">
      <footer class="page-footer font-small blue">
 
-  <div class="footer-copyright text-center py-3 ft-p">© 2021 Copyright:
+  <div class="footer-copyright text-center py-3 ft-p">© 2023 Copyright:
     <a href="http://localhost:8000/"> Profresh.com</a>
   </div>
 

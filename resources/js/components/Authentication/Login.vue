@@ -50,6 +50,11 @@
                         </div>
                     </form>
                 </div>
+                <div class="">
+                <button class="btn btn-outline-dark" @click="loginWithProvider('github')">
+                    <i class="fab fa-github fa-lg"></i> Github
+                </button>
+            </div>
             </div>
         </div>
     </div>
@@ -57,6 +62,7 @@
 </template>
 
 <script>
+  import { mapState, mapMutations, mapActions } from 'vuex';
 
 export default {
 	data(){
@@ -77,10 +83,51 @@ export default {
   },
 
 	methods:{
+    ...mapActions('currentUser',['createUserToken']),
+    ...mapMutations('currentUser',['setUser','loggedIn']),
+
     login(){
       this.$store.dispatch('currentUser/loginUser',this.user);
-    }
-    }
+    },
+      loginWithProvider(provider){
+      axios.get(`api/v1/auth/redirect/${provider}`)
+        .then(response => {
+            console.log(response);
+            //console.log(response.config.url);
+           //window.location.href = 'login/github';
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    },
+      /*handleOAuthResponse(provider) {
+      axios.get(`api/v1/auth/callback/${provider}`)
+        .then(response => {
+          this.setUser(response.data.user);
+          this.loggedIn('true');
+          router.push('/home');
+          this.createUserToken(response);
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    }*/
+    },
+     mounted() {
+  if (window.location.pathname.includes('/auth/callback/github')){
+    axios.get(`api/v1/auth/callback/github`)
+      .then(response => {
+        this.$store.commit('currentUser/setUser', response.data.user);
+        this.$store.commit('currentUser/loggedIn', true);
+        this.createUserToken(response);
+        router.push('/home');
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  }
+}
+
 }
 
 </script>
