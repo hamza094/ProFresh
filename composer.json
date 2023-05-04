@@ -8,7 +8,7 @@
     ],
     "license": "MIT",
     "require": {
-        "php": "^7.4|^8.0",
+        "php": "^7.4|^8.1.17",
         "andreaselia/laravel-api-to-postman": "^1.10",
         "barryvdh/laravel-debugbar": "^3.5",
         "bugsnag/bugsnag-laravel": "^2.0",

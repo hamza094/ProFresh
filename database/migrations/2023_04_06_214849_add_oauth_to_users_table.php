@@ -16,7 +16,7 @@ class AddOAuthToUsersTable extends Migration
         Schema::table('users', function (Blueprint $table) {
             $table->string('oauth_id')->nullable();
             $table->string('oauth_provider')->nullable();
-            $table->string('oauth_token')->nullable();
+            $table->string('oauth_token',500)->nullable();
             $table->string('oauth_refresh_token')->nullable();
         });
     }

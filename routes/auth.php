@@ -6,8 +6,7 @@ use App\Http\Controllers\Api\Auth\{
   RegisterController,
   LoginController,
   ResetPasswordController,
-  VerificationController,
-  OAuthController
+  VerificationController
 };
 /*
 |--------------------------------------------------------------------------

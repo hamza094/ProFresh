@@ -6,6 +6,7 @@ Vue.use(Router);
 import Home from './components/Home';
 import Register from './components/Authentication/Register';
 import Login from './components/Authentication/Login';
+import OAuth from './components/Authentication/OAuth';
 import Dashboard from './components/Dashboard/Dashboard';
 import ForgotPassword from './components/Authentication/ForgotPassword';
 import ResetPassword from './components/Authentication/ResetPassword';
@@ -39,6 +40,12 @@ let router = new Router({
         {
             path: '*',
             component: NotFound
+        },
+        {
+           path: '/auth/callback/:provider',
+           component: OAuth,
+           name: "OAuth",
+           beforeEnter: guest,
         },
         {
             path: '/home',

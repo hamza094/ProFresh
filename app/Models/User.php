@@ -48,7 +48,9 @@ class User extends Authenticatable implements Searchable, MustVerifyEmail
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token','oauth_token',
+        'password',
+        'remember_token',
+        'oauth_token',
         'oauth_refresh_token',
     ];
 
@@ -59,7 +61,7 @@ class User extends Authenticatable implements Searchable, MustVerifyEmail
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
-        //'oauth_provider' => OAuthProvider::class,
+        'oauth_provider' => OAuthProvider::class,
         'oauth_token' => 'encrypted',
         'oauth_refresh_token' => 'encrypted',
     ];

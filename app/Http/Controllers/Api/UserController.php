@@ -53,11 +53,4 @@ class UserController extends ApiController
         'message'=>'User Data Deleted Sucessfully',
       ]);
   }
-
-  public function getData()
-    {
-     
-       dd('ApiResponseHelpers');
-       return response()->json(['authorizationUrl' => 'hello']);
-    }
 }

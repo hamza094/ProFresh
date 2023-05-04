@@ -2,10 +2,11 @@
 
 namespace App\Enums;
  
-class OAuthProvider
+enum OAuthProvider: string
 {
-    public const Twitter = 'twitter';
-    public const GitHub = 'github';
+    case Twitter = 'twitter';
+ 
+    case GitHub = 'github';
  
     public function driver(): string
     {
