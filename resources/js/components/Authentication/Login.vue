@@ -54,6 +54,9 @@
                 <button class="btn btn-outline-dark" @click="loginWithProvider('github')">
                     <i class="fab fa-github fa-lg"></i> Github
                 </button>
+                 <button class="btn btn-outline-dark" @click="loginWithProvider('google')">
+                    <i class="fab fa-google" aria-hidden="true"></i> Google
+                </button>
             </div>
             </div>
         </div>

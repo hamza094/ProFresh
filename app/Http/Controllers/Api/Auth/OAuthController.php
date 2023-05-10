@@ -37,7 +37,7 @@ class OAuthController extends ApiController
             'name' => $oAuthUser->getName(),
             'email' => $oAuthUser->getEmail(),
             'password' => Hash::make(Str::random(50)),
-            'username' => $oAuthUser->nickname,
+            'username' => $oAuthUser->nickname ?? $oAuthUser->getNickname(),
             'email_verified_at' => Carbon::now(),
             'avatar_path' => $oAuthUser->getAvatar(),
             'oauth_token' => $oAuthUser->token,

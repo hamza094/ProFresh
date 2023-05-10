@@ -39,6 +39,8 @@ class OAuthTest extends TestCase
             'name' => 'Test User',
             'email' => 'test@example.com',
             'token' => 'access-token',
+            'nickname'=> 'jinx004',
+            'avatar' => 'https://example.com/avatar.jpg',
             'refreshToken' => 'refresh-token',
         ]);
 
@@ -53,13 +55,15 @@ class OAuthTest extends TestCase
         $this->assertDatabaseHas('users', [
             'name' => 'Test User',
             'email' => 'test@example.com',
+            'username' => 'jinx004',
+            'avatar_path' => 'https://example.com/avatar.jpg',
             'oauth_id' => '123',
             'oauth_provider' => OAuthProvider::GitHub,
         ]);
 
         $user = User::where('email', 'test@example.com')->first();
 
-         $this->assertEquals('access-token', $user->oauth_token);
+        $this->assertEquals('access-token', $user->oauth_token);
         $this->assertEquals('refresh-token', $user->oauth_refresh_token);
     }
 
@@ -78,7 +82,6 @@ class OAuthTest extends TestCase
             $mock->shouldReceive('redirect')
                 ->andReturn(redirect('https://url-to-provider'));
         }
-
     }
 
 }
