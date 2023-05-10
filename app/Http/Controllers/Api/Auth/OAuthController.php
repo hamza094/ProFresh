@@ -7,6 +7,7 @@ use Carbon\Carbon;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Hash;
 use App\Events\UserLogin;
 use Illuminate\Support\Str;
@@ -16,7 +17,7 @@ use App\Http\Controllers\Api\ApiController;
 
 class OAuthController extends ApiController
 {
-    public function redirect(OAuthProvider $provider)
+    public function redirect(OAuthProvider $provider): JsonResponse
     {
         $url = Socialite::driver($provider->driver())
                ->stateless()->redirect()->getTargetUrl();
@@ -25,7 +26,7 @@ class OAuthController extends ApiController
     }
 
 
-    public function callback(OAuthProvider $provider)
+    public function callback(OAuthProvider $provider): JsonResponse
     {
       $oAuthUser = Socialite::driver($provider->driver())
                    ->stateless()->user();
