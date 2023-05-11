@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Redis;
 use Spatie\Searchable\Searchable;
 use Spatie\Searchable\SearchResult;
 use Laravel\Cashier\Billable;
+use App\Enums\OAuthProvider;
 use Laravel\Sanctum\HasApiTokens;
 use App\Jobs\QueuedVerifyEmailJob;
 use App\Jobs\QueuedPasswordResetJob;
@@ -21,7 +22,6 @@ class User extends Authenticatable implements Searchable, MustVerifyEmail
     use HasFactory, Notifiable, Billable, HasApiTokens,HasUuids;
     
     protected $guarded = [];
-
 
     //protected $appends = ['LastSeen'];
 
@@ -48,7 +48,10 @@ class User extends Authenticatable implements Searchable, MustVerifyEmail
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password',
+        'remember_token',
+        'oauth_token',
+        'oauth_refresh_token',
     ];
 
     /**
@@ -58,6 +61,9 @@ class User extends Authenticatable implements Searchable, MustVerifyEmail
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'oauth_provider' => OAuthProvider::class,
+        'oauth_token' => 'encrypted',
+        'oauth_refresh_token' => 'encrypted',
     ];
 
     public function sendEmailVerificationNotification()

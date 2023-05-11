@@ -35,5 +35,4 @@ class FileUploadTest extends TestCase
 
         $this->fileService->store($id, 'missing_file', $this->fileType);
     }
-   
 }

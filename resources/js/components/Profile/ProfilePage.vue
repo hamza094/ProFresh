@@ -31,7 +31,7 @@
   <div class="col-md-10">
   <div class="content">
     <p class="content-name">{{user.name}}</p>
-    <p class="content-info">
+    <p class="content-info" v-if="user.info">
       <template v-if="user.info.company || user.info.position">
         <span v-if="user.info.company">{{ user.info.company }}</span>
         <span class="content-dot" v-if="user.info.company && user.info.position"></span>
@@ -52,10 +52,10 @@
         <span> {{user.email}} </span>
       </p>
 
-       <p class="crm-info"> <b>Mobile</b>:<span>
+       <p class="crm-info" v-if="user.info"> <b>Mobile</b>:<span>
        {{ user.info.mobile ? user.info.mobile : 'Not Defined' }}</span></p>
 
-        <p class="crm-info"> <b>Address</b>:<span>
+        <p class="crm-info" v-if="user.info"> <b>Address</b>:<span>
         {{ user.info.address ? user.info.address : 'Not Defined' }}</span></p>
 
         <p class="crm-info"> <b>Created At</b>: <span> {{user.created_at}} </span></p>
@@ -66,7 +66,7 @@
       </div>
 
         <div class="col-md-6">
-        <p class="crm-info"> <b>Bio</b>:<span>{{ user.info.bio ? user.info.bio : "Donec in odio eget risus placerat molestie. Etiam augue turpis, tristique nec accumsan a, vehicula vitae quam. Sed imperdiet vulputate mi in molestie. Sed lacus quam, suscipit ut velit et, commodo sagittis leo."}}</span>
+        <p class="crm-info" v-if="user.info"> <b>Bio</b>:<span>{{ user.info.bio ? user.info.bio : "Donec in odio eget risus placerat molestie. Etiam augue turpis, tristique nec accumsan a, vehicula vitae quam. Sed imperdiet vulputate mi in molestie. Sed lacus quam, suscipit ut velit et, commodo sagittis leo."}}</span>
         </p>
         </div>
       </div>
