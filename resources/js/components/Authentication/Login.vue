@@ -50,6 +50,14 @@
                         </div>
                     </form>
                 </div>
+                <div class="">
+                <button class="btn btn-outline-dark" @click="loginWithProvider('github')">
+                    <i class="fab fa-github fa-lg"></i> Github
+                </button>
+                 <button class="btn btn-outline-dark" @click="loginWithProvider('google')">
+                    <i class="fab fa-google" aria-hidden="true"></i> Google
+                </button>
+            </div>
             </div>
         </div>
     </div>
@@ -57,6 +65,7 @@
 </template>
 
 <script>
+  import { mapState, mapMutations, mapActions } from 'vuex';
 
 export default {
 	data(){
@@ -77,10 +86,22 @@ export default {
   },
 
 	methods:{
+    ...mapActions('currentUser',['createUserToken']),
+    ...mapMutations('currentUser',['setUser','loggedIn']),
+
     login(){
       this.$store.dispatch('currentUser/loginUser',this.user);
-    }
-    }
+    },
+      loginWithProvider(provider){
+      axios.get(`api/v1/auth/redirect/${provider}`)
+        .then(response => {
+           window.location.href = response.data.redirect_url;
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    },
+    },
 }
 
 </script>

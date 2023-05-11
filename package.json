@@ -25,6 +25,7 @@
         "vue2-slideout-panel": "^2.13.0"
     },
     "dependencies": {
+        "@saeris/vue-spinners": "^1.0.8",
         "animate.css": "^4.1.1",
         "chart.js": "^2.9.4",
         "emoji-mart-vue-fast": "^11.2.0",

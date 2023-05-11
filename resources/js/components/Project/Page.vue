@@ -174,7 +174,6 @@ export default{
       this.projectname = this.project.name;
       this.projectabout = this.project.about;
       this.members = this.project.members;
-      //this.checkPermission();
     })
     .catch(error => {
       console.log(error.response.data.errors);

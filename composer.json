@@ -8,7 +8,7 @@
     ],
     "license": "MIT",
     "require": {
-        "php": "^7.4|^8.0",
+        "php": "^7.4|^8.1.17",
         "andreaselia/laravel-api-to-postman": "^1.10",
         "barryvdh/laravel-debugbar": "^3.5",
         "bugsnag/bugsnag-laravel": "^2.0",
@@ -23,6 +23,7 @@
         "laravel/framework": "^9.19",
         "laravel/helpers": "^1.4",
         "laravel/sanctum": "^2.11",
+        "laravel/socialite": "^5.6",
         "laravel/tinker": "^2.0",
         "league/flysystem-aws-s3-v3": "^3.0",
         "maatwebsite/excel": "^3.1",

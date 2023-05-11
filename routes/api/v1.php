@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\Api\Auth\OAuthController;
+
 use App\Http\Controllers\Api\
 {
   ProjectController,
@@ -24,6 +26,13 @@ use App\Http\Controllers\Api\
 |--------------------------------------------------------------------------*/
 
 Route::group(['prefix'=>'v1'], function () {
+
+Route::controller(OAuthController::class)->group(function () {
+    Route::get('/auth/redirect/{provider}', 'redirect')->name('oauth.redirect');
+    Route::get('/auth/callback/{provider}', 'callback')->name('oauth.callback');
+});  
+
+Route::middleware(['auth:sanctum'])->group(function () {  
 
 Route::get('/welcome',[WelcomeController::class,'index']);
 
@@ -92,6 +101,7 @@ Route::patch('/avatar_remove',[AvatarController::class,'removeAvatar']);
 
 Route::post('/avatar', [AvatarController::class,'avatar'])
        ->name('user.avatar');
+});
 });
 });
 

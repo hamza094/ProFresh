@@ -39,6 +39,10 @@ Vue.component('datetime', Datetime);
 const VueUploadComponent = require('vue-upload-component')
 Vue.component('file-upload', VueUploadComponent)
 
+import { VueSpinners } from '@saeris/vue-spinners'
+
+Vue.use(VueSpinners)
+
 window.momenttz = require('moment-timezone');
 window.moment = require('moment');
 window.swal=swal;
