@@ -32,29 +32,43 @@ class OAuthTest extends TestCase
     }
 
     /** @test */
-    public function test_OAuth_callback()
+    public function give_old_user_if_its_present()
     {
-        $this->mockSocialite('github', [
-            'id' => '123',
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-            'token' => 'access-token',
-            'nickname'=> 'jinx004',
-            'avatar' => 'https://example.com/avatar.jpg',
-            'refreshToken' => 'refresh-token',
+        $user=User::factory(['email' => 'test@example.com'])->create();
+
+        $this->performOAuthCallback();
+
+        $response=$this->get(route('oauth.callback', ['provider' => 'github']))->assertSuccessful();
+        
+        $this->assertDatabaseHas('users', [
+            'name' => $user->name,
+            'username' => $user->username,
+            'avatar_path' => $user->avatar_path,
+            'oauth_id' => '123',
+            'oauth_provider' => OAuthProvider::GitHub,
         ]);
 
-        $response=$this->withoutExceptionHandling()->
-                         getJson('/api/v1/auth/callback/github')
-                        ->assertSuccessful()
+        $user = User::where('email', 'test@example.com')->first();
+
+        $this->assertEquals('access-token', $user->oauth_token);
+        $this->assertEquals('refresh-token', $user->oauth_refresh_token);
+    }
+
+
+    /** @test */
+    public function test_OAuth_callback()
+    {
+        $this->performOAuthCallback();
+
+        $response=$this->get(route('oauth.callback', ['provider' => 'github']))->assertSuccessful()
                         ->assertJsonStructure([
                          'user' => ['id','name','email'],
-                         'access_token'
+                         'access_token',
+                         'message'
                         ]);
         
         $this->assertDatabaseHas('users', [
             'name' => 'Test User',
-            'email' => 'test@example.com',
             'username' => 'jinx004',
             'avatar_path' => 'https://example.com/avatar.jpg',
             'oauth_id' => '123',
@@ -67,7 +81,23 @@ class OAuthTest extends TestCase
         $this->assertEquals('refresh-token', $user->oauth_refresh_token);
     }
 
-     protected function mockSocialite($provider, $user = null)
+    /**
+      * Perform the OAuth callback for testing.
+    */
+    private function performOAuthCallback()
+    {
+      $this->mockSocialite('github', [
+         'id' => '123',
+         'name' => 'Test User',
+         'email' => 'test@example.com',
+         'token' => 'access-token',
+         'nickname' => 'jinx004',
+         'avatar' => 'https://example.com/avatar.jpg',
+         'refreshToken' => 'refresh-token',
+      ]); 
+    }
+
+    protected function mockSocialite($provider, $user = null)
     {
         $mock = Socialite::shouldReceive('stateless')
             ->andReturn(m::self())

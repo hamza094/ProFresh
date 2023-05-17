@@ -26,7 +26,7 @@ export default {
     ...mapMutations('currentUser',['setUser','loggedIn']),
 
     socialLogin(){
-      /*if (window.location.pathname.includes('/auth/callback/')) {
+      if (window.location.pathname.includes('/auth/callback/')) {
       const provider = window.location.pathname.split('/').pop();
       const code = this.$route.query.code;
    // extract provider from URL
@@ -36,13 +36,13 @@ export default {
       this.$store.commit('currentUser/loggedIn', true);
       this.$store.dispatch('currentUser/createUserToken',response);
       this.$router.push('/home');
+      this.$vToastify.success('You have successfully logged in to the site');    
     })
     .catch(error => {
-      console.error(error);
+        this.$vToastify.warning(error.response.data.error);    
     });
-   }*/
+   }
     },
-    
   },
   mounted() {
       this.socialLogin();

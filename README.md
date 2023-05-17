@@ -14,10 +14,10 @@ ProFresh is a simple and easy-to-use project management tool that helps you crea
 - 💬 Project Real-Time Group Chat with Image and Emoji Attachment.
 - ☁️ Amazon S3 Storage.
 - 📢 Real-Time Notifications
-- 👤 User Profile (Currently in Development).
+- 👤 User Profile .
 - 📈 Project Dashboard (Need Adjustments).
 - 💳 Stripe and Paypal Subscriptions (Not Implemented Yet).
-- 🔑 Social Login (Not Implemented Yet)..
+- 🔑 Social Login.
 
 🔥 Demo Links
 - Real-time project group chat feature (https://twitter.com/h_ik04/status/1603334048213893121)
