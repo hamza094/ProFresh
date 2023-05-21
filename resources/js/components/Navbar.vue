@@ -25,6 +25,13 @@
 
                     <project-button></project-button>
 
+                    <router-link to="/subscriptions" class="panel-list_item">
+                        <p><span class="icon">
+                            <i class="icon-logo far fa-credit-card"></i>
+                            <span class="icon-name">Subsctiption</span>
+                        </span></p>
+                    </router-link>
+
                     <a href="" @click.prevent="signOut()" class="panel-list_item">
                         <p><span class="icon"><i class="icon-logo fas fa-sign-out-alt"></i><span class="icon-name">Logout</span></span></p>
                     </a>

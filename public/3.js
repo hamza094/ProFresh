@@ -70,7 +70,18 @@ var render = function render() {
     staticClass: "icon-logo fab fa-product-hunt"
   }), _vm._v(" "), _c("span", {
     staticClass: "icon-name"
-  }, [_vm._v("Projects")])])])]), _vm._v(" "), _c("project-button"), _vm._v(" "), _c("a", {
+  }, [_vm._v("Projects")])])])]), _vm._v(" "), _c("project-button"), _vm._v(" "), _c("router-link", {
+    staticClass: "panel-list_item",
+    attrs: {
+      to: "/subscriptions"
+    }
+  }, [_c("p", [_c("span", {
+    staticClass: "icon"
+  }, [_c("i", {
+    staticClass: "icon-logo far fa-credit-card"
+  }), _vm._v(" "), _c("span", {
+    staticClass: "icon-name"
+  }, [_vm._v("Subsctiption")])])])]), _vm._v(" "), _c("a", {
     staticClass: "panel-list_item",
     attrs: {
       href: ""

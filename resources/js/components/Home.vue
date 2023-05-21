@@ -11,6 +11,7 @@
                   <span class="btn btn-sm btn-primary" @click="resendMail()">Resend verification mail</span>
                   </div>
                  <p class="mt-3"><b>Welcome To ProFresh Project Managment App</b></p>
+                 
                 </div>
                 <div class="card-body">
                 </div>
