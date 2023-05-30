@@ -48,11 +48,10 @@ return [
         'redirect' => env('GOOGLE_OAUTH_CALLBACK_URL'),
     ],
 
-    'stripe' => [
-        'model' => App\User::class,
-        'key' => env('STRIPE_KEY'),
-        'secret' => env('STRIPE_SECRET'),
-    ],
+    'paddle' => [
+      'monthly' => env('Monthly_Plan'),
+      'yearly' => env('Yearly_Plan') 
+     ]
 
     'paypal' => [
         'id' => env('PAYPAL_ID'),

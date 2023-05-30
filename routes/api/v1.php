@@ -19,6 +19,8 @@ use App\Http\Controllers\Api\
   StageController,
   MessageController,
   ActivityController,
+  SubscriptionController,
+
 };
 /*
 |--------------------------------------------------------------------------
@@ -102,6 +104,10 @@ Route::patch('/avatar_remove',[AvatarController::class,'removeAvatar']);
 Route::post('/avatar', [AvatarController::class,'avatar'])
        ->name('user.avatar');
 });
+
+Route::get('/user/subscribe', [SubscriptionController::class,'subscribe'])
+       ->name('user.subscribe');       
+
 });
 });
 

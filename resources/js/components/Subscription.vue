@@ -8,7 +8,7 @@
     <div class="card-body">
       <h5 class="card-title">Monthly Subscription</h5>
       <p class="card-text">$ 10 </p>
-      <button class="btn btn-sm btn-primary">Subscribe</button>
+      <button class="btn btn-sm btn-primary" @click="subscribe()">Subscribe</button>
     </div>
         </div>
     </div>
@@ -34,6 +34,16 @@
     };
     },
         methods:{
+            subscribe(){
+              axios.get('/api/v1/user/subscribe').
+                then(response=>{
+                //console.log(response);
+                window.open(response.data.paylink, '_blank');
+
+                  }).catch(error=>{
+                 console.log(error);
+               });
+            }
     },
         
     }

@@ -6,6 +6,8 @@ use App\Http\Controllers\HomeController;
 
 use App\Http\Controllers\SubscriptionController;
 
+//use App\Http\Controllers\PaddleWebhookController;
+
 use App\Http\Controllers\Api\Auth\VerificationController;
 
 /*
@@ -21,6 +23,9 @@ use App\Http\Controllers\Api\Auth\VerificationController;
 Route::get('/', function () {
     return view('welcome.home');
 });
+
+//Route::post('/webhooks/paddle', 'PaddleWebhookController@handle');
+
 
 Route::middleware(['auth'])->group(function () {
 
