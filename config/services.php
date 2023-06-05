@@ -50,8 +50,8 @@ return [
 
     'paddle' => [
       'monthly' => env('Monthly_Plan'),
-      'yearly' => env('Yearly_Plan') 
-     ]
+      'yearly' => env('Yearly_Plan'), 
+     ],
 
     'paypal' => [
         'id' => env('PAYPAL_ID'),

@@ -105,8 +105,9 @@ Route::post('/avatar', [AvatarController::class,'avatar'])
        ->name('user.avatar');
 });
 
-Route::get('/user/subscribe', [SubscriptionController::class,'subscribe'])
-       ->name('user.subscribe');       
+Route::get('/user/subscribe', [SubscriptionController::class,'subscribe'])->name('user.subscribe');   
+
+ Route::get('user/subscriptions', [SubscriptionController::class,'subscriptions'])->name('user.subscription');           
 
 });
 });

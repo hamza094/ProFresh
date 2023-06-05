@@ -14,21 +14,25 @@
                  
                 </div>
                 <div class="card-body">
+                
                 </div>
             </div>
         </div>
     </div>
 </template>
 <script>
+    import { mapState, mapMutations, mapActions } from 'vuex';
 export default{
-    computed:{
+    computed:{   
+        ...mapState('subscribeUser',['subscription']),
       user:{
         get(){
           return this.$store.state.currentUser.user
         }
       }
-    },
+  },
     methods:{
+        ...mapActions('subscribeUser',['userSubscription']),
        resendMail(){
            axios.post('/api/v1/email/resend/'+this.user.id,{
            }).then(response=>{
@@ -37,6 +41,6 @@ export default{
              this.$vToastify.warning("Error! Please try again");
            })
          }
-    }
+    },
 }
 </script>

@@ -122,20 +122,6 @@ class User extends Authenticatable implements Searchable, MustVerifyEmail
       return  $this->lastseen();
     }*/
 
-    /*public function paypal()
-    {
-        return $this->belongsTo('App\Paypal');
-    }*/
-
-     //add user paypal record in database
-    /*public function paypal_info()
-    {
-       $this->paypal()->create([
-       'user_id'=>$this->id,
-       'name'=>'ProFresh Agreement'
-    ]);
-    }*/
-
     public function getAvatarAttribute()
     {
         return $this->avatar_path ?: false;
@@ -144,5 +130,24 @@ class User extends Authenticatable implements Searchable, MustVerifyEmail
     public function messages()
     {
       return $this->belongsToMany(Message::class);
+    }
+
+    public function isSubscribed()
+    {
+      return $this->subscribed('monthly') || 
+             $this->subscribed('yearly');
+    }
+
+    public function subscribedPlan()
+    {
+      if ($this->subscribed('monthly')) {
+        return 'monthly';
+    }
+
+    if ($this->subscribed('yearly')) {
+        return 'yearly';
+    }
+
+    return '';
     }
 }

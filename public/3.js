@@ -9,19 +9,28 @@
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
+function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
+
 /* harmony default export */ __webpack_exports__["default"] = ({
-  computed: {
+  computed: _objectSpread(_objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])('currentUser', ['user'])), Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])('subscribeUser', ['subscription'])), {}, {
     loggedIn: {
       get: function get() {
         return this.$store.state.currentUser.loggedIn;
       }
     }
-  },
-  methods: {
+  }),
+  methods: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])('subscribeUser', ['userLogout'])), {}, {
     signOut: function signOut() {
       this.$store.dispatch('currentUser/logoutUser');
+      this.userLogout();
     }
-  }
+  })
 });
 
 /***/ }),
@@ -48,7 +57,7 @@ var render = function render() {
     staticClass: "col-md-1 panel-left"
   }, [_c("div", {
     staticClass: "panel"
-  }, [_vm._m(0), _vm._v(" "), _vm.loggedIn === true ? _c("div", [_c("router-link", {
+  }, [_vm._m(0), _vm._v(" "), _vm.loggedIn ? _c("div", [_c("router-link", {
     staticClass: "panel-list_item",
     attrs: {
       to: "/dashboard"
@@ -126,7 +135,16 @@ var render = function render() {
     }
   }, [_vm._v("Sign Up")])], 1) : _vm._e(), _vm._v(" "), _vm.loggedIn ? _c("notifications", {
     staticClass: "mr-3"
-  }) : _vm._e()], 1)])], 1), _vm._v(" "), _c("router-view")], 1)])]);
+  }) : _vm._e()], 1)])], 1), _vm._v(" "), _vm.loggedIn && this.subscription ? _c("div", [!this.subscription.subscribed ? _c("div", {
+    staticClass: "alert alert-dark mt-2",
+    attrs: {
+      role: "alert"
+    }
+  }, [_c("b", [_vm._v("  Upgrade your experience now!\n        "), _c("router-link", {
+    attrs: {
+      to: "/subscriptions"
+    }
+  }, [_c("span", [_vm._v("Subscribe")])]), _vm._v(" now to unlock all features. ")], 1)]) : _vm._e()]) : _vm._e(), _vm._v(" "), _c("router-view")], 1)])]);
 };
 var staticRenderFns = [function () {
   var _vm = this,

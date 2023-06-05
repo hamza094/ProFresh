@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 
 import createPersistedState from 'vuex-persistedstate'
 import currentUser from "./currentUser"
+import subscribeUser from "./subscribeUser"
 import profile from "./profile"
 import project from "./project"
 
@@ -14,6 +15,7 @@ export default new Vuex.Store({
   ],
   modules:{
      currentUser,
+     subscribeUser,
      profile,
      project,
   }

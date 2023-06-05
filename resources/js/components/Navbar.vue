@@ -7,7 +7,7 @@
 
                     <a href="/"><img src="/img/profresh.png" class="main-img" alt=""></a>
 
-                    <div v-if="loggedIn === true">
+                    <div v-if="loggedIn">
 
                     <router-link to="/dashboard" class="panel-list_item">
                         <p><span class="icon">
@@ -64,6 +64,12 @@
                         </ul>
                     </div>
                 </nav>
+                <div v-if="loggedIn && this.subscription">
+            <div v-if="!this.subscription.subscribed" class="alert alert-dark mt-2" role="alert">
+              <b>  Upgrade your experience now!
+            <router-link to="/subscriptions"><span>Subscribe</span></router-link> now to unlock all features. </b>
+        </div>
+    </div>
 
                 <router-view>
                 </router-view>
@@ -73,19 +79,25 @@
     </div>
 </template>
 <script>
+   import { mapState, mapMutations, mapActions } from 'vuex';
+   
 export default {
     computed:{
+     ...mapState('currentUser',['user']),
+    ...mapState('subscribeUser',['subscription']),
       loggedIn:{
         get(){
           return this.$store.state.currentUser.loggedIn
         }
-      }
+      },
     },
     methods: {
+      ...mapActions('subscribeUser',['userLogout']),
      signOut(){
        this.$store.dispatch('currentUser/logoutUser');
+       this.userLogout();
     },
-    }
+    },
 }
 
 </script>

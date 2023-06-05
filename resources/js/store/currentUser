@@ -18,6 +18,9 @@ const actions = {
       commit('loggedIn',true);
 
       router.push('/home');
+      
+      dispatch('subscribeUser/userSubscription', null, { root: true });
+
       commit('setErrors','');
 
      }).catch(error=>{

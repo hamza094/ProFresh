@@ -23,7 +23,7 @@ class UsersResource extends JsonResource
                         fn()=>$this->avatar_path),
           $this->mergeWhen($this->email_verified_at, [
           'verified' => true,
-      ]),
+      ]), 
         ];
     }
 }
