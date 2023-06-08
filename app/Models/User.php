@@ -140,14 +140,19 @@ class User extends Authenticatable implements Searchable, MustVerifyEmail
 
     public function subscribedPlan()
     {
-      if ($this->subscribed('monthly')) {
-        return 'monthly';
+      return collect(['monthly', 'yearly'])
+        ->first(function ($plan) {
+            return $this->subscribed($plan);
+        }, '');
     }
 
-    if ($this->subscribed('yearly')) {
-        return 'yearly';
-    }
-
-    return '';
+    public function hasGracePeriod()
+    {
+     return
+      (
+        $this->subscribed('monthly')
+         && $this->subscription('monthly')->onGracePeriod())
+        ||
+        ($this->subscribed('yearly') && $this->subscription('yearly')->onGracePeriod());
     }
 }

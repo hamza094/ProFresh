@@ -17,11 +17,10 @@ class SubscriptionResource extends JsonResource
         return [
         $this->mergeWhen($this->isSubscribed(), [
           'subscribed' => true,
-      ]),
-        $this->mergeWhen($this->isSubscribed(), [
           'plan' => $this->subscribedPlan(),
       ]),
-        'receipts' => $this->receipts,
-        ];
+      'grace_period' => $this->when($this->hasGracePeriod(), true),
+      'receipts' => $this->receipts,
+      ];
     }
 }

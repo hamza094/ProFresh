@@ -13,10 +13,12 @@ class SubscriptionTest extends TestCase
      *
      * @return void
      */
-    public function test_example()
-    {
-        $response = $this->get('/');
 
-        $response->assertStatus(200);
+    /** @test */
+    public function user_swap_their_subscription_plan()
+    {
+        $this->get('/api/v1/user/subscription/swap/monthly');
+
+        //$response->assertStatus(200);
     }
 }

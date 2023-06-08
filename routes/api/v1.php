@@ -107,7 +107,11 @@ Route::post('/avatar', [AvatarController::class,'avatar'])
 
 Route::get('/user/subscribe', [SubscriptionController::class,'subscribe'])->name('user.subscribe');   
 
- Route::get('user/subscriptions', [SubscriptionController::class,'subscriptions'])->name('user.subscription');           
+ Route::get('user/subscriptions', [SubscriptionController::class,'subscriptions'])->name('user.subscription');
+
+Route::get('user/subscription/swap/{plan}', [SubscriptionController::class,'swap'])->name('subscription.swap');
+
+Route::get('user/subscription/{plan}/cancel', [SubscriptionController::class,'cancel'])->name('subscription.cancel');               
 
 });
 });
