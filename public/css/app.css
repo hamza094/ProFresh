@@ -1255,6 +1255,23 @@ p {
   margin: 0.8rem;
 }
 
+/* Subscription Component */
+
+.subscription_heading {
+  font-weight: bold;
+  font-size: 1.6rem;
+  letter-spacing: 0.2rem;
+}
+
+.subscription_value {
+  font-weight: bold;
+  font-size: 1.8rem;
+}
+
+button.gnuIjg {
+  display: none !important;
+}
+
 .padding-0 {
   padding-right: 0;
 }

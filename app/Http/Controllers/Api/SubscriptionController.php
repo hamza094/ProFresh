@@ -23,10 +23,13 @@ class SubscriptionController extends Controller
         });
     }
 
-    public function subscribe(Request $request){
-       $payLink=$this->user->newSubscription('monthly', $premium = config('services.paddle.monthly'))->create();
+    public function subscribe($plan)
+    {       
+      $payLink=$this->user->newSubscription($plan, $premium = config('services.paddle.'.$plan))
+      ->returnTo('http://localhost:8000/subscriptions')
+      ->create();
 
-              return response()->json([
+        return response()->json([
             'paylink' => $payLink,
         ]);
     }

@@ -1,13 +1,12 @@
 <template>
 <div>
-        <div class="page-top">Your Subscription</div>
+        <div class="page-top">Your Membership</div>
         <div class="container">
             <div v-if="subscription.subscribed" class="m-5 text-center">
       <h3>
           You are currently subscribed to our {{subscription.plan}} plan
       </h3>
 
-      
         <div v-if="this.subscription.grace_period" class="alert alert-primary" role="alert">
             <i class="fas fa-exclamation-circle"></i> Alert: Your subscription has been canceled, and you are currently in the grace period. Please note that during this time, you still have access to all subscription benefits.
         </div>
@@ -28,21 +27,29 @@
         <div class="col-md-6">
     <div class="card text-center">
     <div class="card-body">
-      <h5 class="card-title">Monthly Subscription</h5>
-      <p class="card-text">$ 10 </p>
-      <button class="btn btn-sm btn-primary" @click="subscribe()">Subscribe</button>
+    <p class="card-title subscription_heading">Monthly Subscription</p>
+      <p class="card-text"><span class="subscription_value">$10
+      </span> / <span>monthly</span>
+      </p>
+      <button class="btn btn-block btn-primary" @click="subscribe('monthly')"  :disabled="isIframeOpen || isOpeningIframe">Subscribe</button>
     </div>
         </div>
     </div>
         <div class="col-md-6">
         <div class="card text-center">
     <div class="card-body">
-      <h5 class="card-title">Yearly Subscription</h5>
-      <p class="card-text">$ 100</p>
-      <button class="btn btn-sm btn-primary">Subscribe</button>
+      <p class="card-title subscription_heading">Yearly Subscription</p>
+      <p class="card-text">
+     <span class="subscription_value">$100</span> / <span>yearly</span>
+  </p>
+      <button class="btn btn-block btn-primary" @click="subscribe('yearly')"  :disabled="isIframeOpen || isOpeningIframe">Subscribe</button>
     </div>
         </div>
         </div>
+       <div v-if="isIframeOpen" class="iframe-container">
+    <button @click="closeIframe" class="close-button">Close</button>
+    <iframe :src="iframeSrc" class="iframe"></iframe>
+  </div>
     </div>
 
     <div class="row" v-if="subscription?.receipts?.length > 0">
@@ -78,20 +85,45 @@
         
     data(){
     return{
+    isIframeOpen: false,
+    isOpeningIframe: false,
+    iframeSrc: ''
     };
     },
-        methods:{
-        ...mapMutations('subscribeUser',['setSubscription']),
-            subscribe(){
-              axios.get('/api/v1/user/subscribe').
-                then(response=>{
-                //console.log(response);
-                window.open(response.data.paylink, '_blank');
+    mounted() {
+     axios.get('api/v1/user/subscriptions')
+     .then(response => {
+        this.setSubscription(response.data.subscription); 
+      })
+      .catch(error => {
+        console.error(error);
+      });
+    },
 
-                  }).catch(error=>{
-                 console.log(error);
-               });
-            },
+    methods:{
+        ...mapMutations('subscribeUser',['setSubscription']),
+
+    closeIframe() {
+      this.isIframeOpen = false;
+    },              
+
+    subscribe(plan){
+    if (this.isIframeOpen || this.isOpeningIframe) {
+        return; 
+      }
+      this.isOpeningIframe = true;
+
+      axios.get(`/api/v1/user/subscribe/${plan}`)
+        .then(response => {
+          this.iframeSrc = response.data.paylink;
+          this.isIframeOpen = true;
+          this.isOpeningIframe = false;
+        })
+        .catch(error => {
+          console.error(error);
+          this.isOpeningIframe = false;
+        });
+     },
         swap(plan)
         {
           this.sweetAlert('Switch to '+ plan +' plan').then((result) => {
@@ -119,7 +151,8 @@
         });
         }
         });
-        }
+        },
+
     },
     computed:{
         ...mapState('subscribeUser',['subscription']),
@@ -128,3 +161,31 @@
     }
     
 </script>
+
+<style scoped>
+.iframe-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: 5px;
+  z-index: 99999;
+}
+
+.iframe {
+  width: 100%;
+  height: 100%;
+}
+</style>
