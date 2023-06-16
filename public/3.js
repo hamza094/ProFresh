@@ -19,10 +19,14 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   computed: _objectSpread(_objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])('currentUser', ['user'])), Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])('subscribeUser', ['subscription'])), {}, {
-    loggedIn: {
-      get: function get() {
-        return this.$store.state.currentUser.loggedIn;
-      }
+    loggedIn: function loggedIn() {
+      return this.$store.state.currentUser.loggedIn;
+    },
+    showAlertNotice: function showAlertNotice() {
+      return this.loggedIn && this.subscriptionLoaded && !this.subscription.subscribed;
+    },
+    subscriptionLoaded: function subscriptionLoaded() {
+      return Object.keys(this.subscription).length !== 0;
     }
   }),
   methods: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])('subscribeUser', ['userLogout'])), {}, {
@@ -82,6 +86,17 @@ var render = function render() {
   }, [_vm._v("Projects")])])])]), _vm._v(" "), _c("project-button"), _vm._v(" "), _c("router-link", {
     staticClass: "panel-list_item",
     attrs: {
+      to: "/user/".concat(this.user.id, "/profile")
+    }
+  }, [_c("p", [_c("span", {
+    staticClass: "icon"
+  }, [_c("i", {
+    staticClass: "icon-logo fas fa-user-circle"
+  }), _vm._v(" "), _c("span", {
+    staticClass: "icon-name"
+  }, [_vm._v("Profile")])])])]), _vm._v(" "), _c("router-link", {
+    staticClass: "panel-list_item",
+    attrs: {
       to: "/subscriptions"
     }
   }, [_c("p", [_c("span", {
@@ -135,7 +150,7 @@ var render = function render() {
     }
   }, [_vm._v("Sign Up")])], 1) : _vm._e(), _vm._v(" "), _vm.loggedIn ? _c("notifications", {
     staticClass: "mr-3"
-  }) : _vm._e()], 1)])], 1), _vm._v(" "), _vm.loggedIn && this.subscription ? _c("div", [!this.subscription.subscribed ? _c("div", {
+  }) : _vm._e()], 1)])], 1), _vm._v(" "), _vm.loggedIn && _vm.showAlertNotice ? _c("div", {
     staticClass: "alert alert-dark mt-2",
     attrs: {
       role: "alert"
@@ -144,7 +159,7 @@ var render = function render() {
     attrs: {
       to: "/subscriptions"
     }
-  }, [_c("span", [_vm._v("Subscribe")])]), _vm._v(" now to unlock all features. ")], 1)]) : _vm._e()]) : _vm._e(), _vm._v(" "), _c("router-view")], 1)])]);
+  }, [_c("span", [_vm._v("Subscribe")])]), _vm._v(" now to unlock all features. ")], 1)]) : _vm._e(), _vm._v(" "), _c("router-view")], 1)])]);
 };
 var staticRenderFns = [function () {
   var _vm = this,

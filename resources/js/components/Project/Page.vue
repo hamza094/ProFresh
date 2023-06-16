@@ -121,9 +121,11 @@
 			:members="project.members" :owner="user" :access="permission.access" :ownerLogin="permission.owner"></PanelFeatues>
 			<hr>
 			<div>
+      							
             <p><b>Online Users For Chat</b></p>
             <p v-for="user in  chatusers">{{user.name}} <span class="chat-circle"></span> </p>
             </div>
+
 			<hr>
 			<Chat :slug="project.slug" 
 			:conversations="project.conversations" :users="project.members" :auth="this.auth"></Chat>
@@ -149,7 +151,7 @@ export default{
 	  	Task,
 	  	PanelFeatues,
 	  	RecentActivities,
-	  	Chat
+	  	Chat,
 	  },
 
     data(){	

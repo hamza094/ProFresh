@@ -12,3 +12,4 @@ export function permission(auth, members, user) {
   }
   return {access, owner}
 }
+

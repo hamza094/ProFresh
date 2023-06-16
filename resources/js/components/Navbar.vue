@@ -25,6 +25,13 @@
 
                     <project-button></project-button>
 
+                    <router-link :to="`/user/${this.user.id}/profile`" class="panel-list_item">
+                        <p><span class="icon">
+                            <i class="icon-logo  fas fa-user-circle"></i>
+                            <span class="icon-name">Profile</span>
+                        </span></p>
+                    </router-link>
+
                     <router-link to="/subscriptions" class="panel-list_item">
                         <p><span class="icon">
                             <i class="icon-logo far fa-credit-card"></i>
@@ -64,16 +71,12 @@
                         </ul>
                     </div>
                 </nav>
-                <div v-if="loggedIn && this.subscription">
-            <div v-if="!this.subscription.subscribed" class="alert alert-dark mt-2" role="alert">
+            <div v-if="loggedIn && showAlertNotice" class="alert alert-dark mt-2" role="alert">
               <b>  Upgrade your experience now!
             <router-link to="/subscriptions"><span>Subscribe</span></router-link> now to unlock all features. </b>
         </div>
-    </div>
-
-                <router-view>
-                </router-view>
-
+            <router-view>
+            </router-view>
             </div>
         </div>
     </div>
@@ -85,11 +88,15 @@ export default {
     computed:{
      ...mapState('currentUser',['user']),
     ...mapState('subscribeUser',['subscription']),
-      loggedIn:{
-        get(){
-          return this.$store.state.currentUser.loggedIn
-        }
+      loggedIn(){
+        return this.$store.state.currentUser.loggedIn
       },
+     showAlertNotice() {
+    return this.loggedIn && this.subscriptionLoaded && !this.subscription.subscribed;
+  },
+  subscriptionLoaded() {
+    return Object.keys(this.subscription).length !== 0;
+  },
     },
     methods: {
       ...mapActions('subscribeUser',['userLogout']),
