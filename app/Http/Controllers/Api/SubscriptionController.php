@@ -45,7 +45,7 @@ class SubscriptionController extends Controller
     {
       $currentPlan=$this->user->subscribedPlan();
 
-      $this->user->subscription($currentPlan)->swap($premium = config('services.paddle.'.$plan));
+      $this->user->subscription($currentPlan)->swap(config('services.paddle.'.$plan));
 
        return $this->respondWithSuccess([
         'message'=>'Your subscription has been successfully updated to the ' .$plan. ' plan',
@@ -62,5 +62,7 @@ class SubscriptionController extends Controller
         'subscription' => new SubscriptionResource($this->user),
       ]);
     }
+
+    
 }
 
