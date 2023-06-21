@@ -35,7 +35,7 @@ class OAuthController extends ApiController
 
         $user = $action->createUpdateUser($oAuthUser,$provider); 
 
-    //event(new UserLogin($user));
+        event(new UserLogin($user));
 
     return response()->json([
         'user' => new UsersResource($user),
