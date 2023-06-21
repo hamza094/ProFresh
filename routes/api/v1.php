@@ -119,14 +119,14 @@ Route::get('subscribe/{plan}','subscribe')
  Route::get('subscriptions','subscriptions')
       ->name('user.subscription');
 
-//Route::middleware(['subscription'])->group(function () {
+Route::middleware(['subscription'])->group(function () {
 
 Route::get('subscription/swap/{plan}','swap')
     ->name('subscription.swap');
 
 Route::get('subscription/{plan}/cancel','cancel')
     ->name('subscription.cancel');  
-//});
+});
 
 });             
 });

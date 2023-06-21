@@ -13,19 +13,9 @@ class SubscriptionController extends Controller
 {
     use ApiResponseHelpers;
 
-     protected $user;
-
-    public function __construct()
-    {
-        $this->middleware(function ($request, $next) {
-            $this->user = auth()->user();
-            return $next($request);
-        });
-    }
-
     public function subscribe($plan)
     {       
-      $payLink=$this->user->newSubscription($plan, $premium = config('services.paddle.'.$plan))
+      $payLink=auth()->user()->newSubscription($plan,config('services.paddle.'.$plan))
       ->returnTo('http://localhost:8000/subscriptions')
       ->create();
 
@@ -37,30 +27,38 @@ class SubscriptionController extends Controller
     public function subscriptions()
     {
       return response()->json([
-      'subscription' => new SubscriptionResource($this->user),
+      'subscription' => new SubscriptionResource(auth()->user()),
     ], 200);
     }
 
     public function swap($plan)
     {
-      $currentPlan=$this->user->subscribedPlan();
+      try{
+      $currentPlan=auth()->user()->subscribedPlan();
 
-      $this->user->subscription($currentPlan)->swap(config('services.paddle.'.$plan));
+      auth()->user()->subscription($currentPlan)->swap(config('services.paddle.'.$plan));
 
        return $this->respondWithSuccess([
         'message'=>'Your subscription has been successfully updated to the ' .$plan. ' plan',
-        'subscription' => new SubscriptionResource($this->user),
+        'subscription' => new SubscriptionResource(auth()->user()),
       ]);
+     } catch(\Exception $e){
+        $this->respondError($e->getMessage());
+     }
     }
 
     public function cancel($plan)
     {   
-      $this->user->subscription($plan)->cancel();
+      try{
+      auth()->user()->subscription($plan)->cancel();
 
        return $this->respondWithSuccess([
         'message' => 'Your subscription has been canceled successfully.',
-        'subscription' => new SubscriptionResource($this->user),
+        'subscription' => new SubscriptionResource(auth()->user()),
       ]);
+     } catch(\Exception $e){
+        $this->respondError($e->getMessage());
+     }
     }
 
     

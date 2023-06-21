@@ -133,7 +133,7 @@
             this.setSubscription(response.data.subscription); 
             this.$vToastify.success(response.data.message);
           }).catch(error=>{
-            swal.fire("Failed!","There was  an errors","warning");
+        swal.fire("Failed!", error.response.data.message, "warning");
         });
         }
         });
@@ -147,7 +147,7 @@
             this.setSubscription(response.data.subscription); 
             this.$vToastify.info(response.data.message);
           }).catch(error=>{
-            swal.fire("Failed!","There was  an errors","warning");
+        swal.fire("Failed!", error.response.data.message, "warning");
         });
         }
         });
