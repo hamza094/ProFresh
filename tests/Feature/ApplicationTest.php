@@ -20,7 +20,7 @@ class ApplicationTest extends TestCase
      /** @test */
    public function only_allowed_users_can_access_project_features
      (){
-       $this->postJson($this->project->path().'/task',
+       $this->withoutExceptionHandling()->postJson($this->project->path().'/task',
           ['body' => 'My Project Task'])->assertCreated();
 
           $this->project->invite($user=User::factory()->create());

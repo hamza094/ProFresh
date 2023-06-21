@@ -12,7 +12,7 @@
             <span class="panel-exit float-right" role="button" @click.prevent="modalClose">x</span>
         </div>
     </div>
-
+        <SubscriptionCheck>
         <div class="panel-form">
 <form class="" @submit.prevent="sendMessage()">
   <div class="panel-top_content">
@@ -70,6 +70,7 @@
   </div>
 </form>
         </div>
+    </SubscriptionCheck>    
   </div>
     </modal>
 
@@ -118,10 +119,10 @@
 <script>
 
 	import ScheduleMessages from './Schedule.vue'
+    import SubscriptionCheck from '../../SubscriptionChecker.vue';
 
 export default {
-
-	components: {ScheduleMessages},
+	components: {ScheduleMessages,SubscriptionCheck},
 
   props:['slug','members'],
     data() {

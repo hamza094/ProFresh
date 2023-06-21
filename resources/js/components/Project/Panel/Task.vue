@@ -7,6 +7,7 @@
 
   <!--Task -->
     <div class="collapse" id="taskProject">
+      <SubscriptionCheck>
     <div class="card card-body">
     <div class="task-add">
       <form class="" v-if="access" @submit.prevent="add">
@@ -46,13 +47,16 @@
 			<pagination :data="tasks" @pagination-change-page="getResults"></pagination>
     </div>
   </div>
+</SubscriptionCheck>
     </div>
 </div>
 </template>
 <script>
   import { mapMutations, mapActions } from 'vuex';
+  import SubscriptionCheck from '../../SubscriptionChecker.vue';
 
   export default {
+    components:{SubscriptionCheck},
     props:['slug','tasks','access'],
     data() {
       return {
