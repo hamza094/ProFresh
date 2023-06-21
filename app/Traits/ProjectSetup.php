@@ -26,5 +26,10 @@ trait ProjectSetup
 
    $this->project = Project::factory()->for($this->user)->create();
 
+   $middlewaresToRemove = [
+            \App\Http\Middleware\CheckSubscription::class,
+        ];
+
+   $this->withoutMiddleware($middlewaresToRemove);
    }
 }

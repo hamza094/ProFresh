@@ -10,10 +10,13 @@
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Schedule_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Schedule.vue */ "./resources/js/components/Project/Feature/Schedule.vue");
+/* harmony import */ var _SubscriptionChecker_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../SubscriptionChecker.vue */ "./resources/js/components/SubscriptionChecker.vue");
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
-    ScheduleMessages: _Schedule_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
+    ScheduleMessages: _Schedule_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
+    SubscriptionCheck: _SubscriptionChecker_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
   props: ['slug', 'members'],
   data: function data() {
@@ -197,7 +200,7 @@ var render = function render() {
         return _vm.modalClose.apply(null, arguments);
       }
     }
-  }, [_vm._v("x")])])]), _vm._v(" "), _c("div", {
+  }, [_vm._v("x")])])]), _vm._v(" "), _c("SubscriptionCheck", [_c("div", {
     staticClass: "panel-form"
   }, [_c("form", {
     on: {
@@ -447,7 +450,7 @@ var render = function render() {
     attrs: {
       type: "submit"
     }
-  }, [_vm._v(_vm._s(this.messageButton()))])])])])])])]), _vm._v(" "), _c("div", [_c("modal", {
+  }, [_vm._v(_vm._s(this.messageButton()))])])])])])])], 1)]), _vm._v(" "), _c("div", [_c("modal", {
     staticClass: "model-desin",
     attrs: {
       name: "schedule-message",

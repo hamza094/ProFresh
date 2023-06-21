@@ -19,6 +19,8 @@ use App\Http\Controllers\Api\
   StageController,
   MessageController,
   ActivityController,
+  SubscriptionController,
+
 };
 /*
 |--------------------------------------------------------------------------
@@ -56,7 +58,7 @@ Route::get('/activities',[ActivityController::class,'index']);
 
 //Project Feature Routes
 Route::controller(FeaturesController::class)->group(function(){
-Route::get('export','export');
+Route::get('export','export')->middleware('subscription');
 Route::patch('stage','stage');
 });
 
@@ -65,15 +67,19 @@ Route::controller(MessageController::class)->group(function(){
   Route::post('message','message');
   Route::get('messages/scheduled','scheduled');
   Route::delete('messages/{message}/delete','delete');
-});
+})->middleware('subscription');
 
 //Task Routes
-Route::apiResource('/task',TaskController::class)->except(['index','show']);
-Route::patch('/task/{task}/status',[TaskController::class,'status']);
+Route::apiResource('/task',TaskController::class)
+->except(['index','show'])
+->middleware('subscription');
+
+Route::patch('/task/{task}/status',[TaskController::class,'status'])->middleware('subscription');
 
 //Chat Conversation Routes
 Route::apiResource('/conversations',ConversationController::class)
-                 ->only(['store','destroy']);
+        ->only(['store','destroy'])
+        ->middleware('subscription');
 });
 
 Route::controller(InvitationController::class)->group(function(){
@@ -102,6 +108,27 @@ Route::patch('/avatar_remove',[AvatarController::class,'removeAvatar']);
 Route::post('/avatar', [AvatarController::class,'avatar'])
        ->name('user.avatar');
 });
+
+Route::controller(SubscriptionController::class)
+->prefix('user')
+->group(function () {
+
+Route::get('subscribe/{plan}','subscribe')
+      ->name('user.subscribe');   
+
+ Route::get('subscriptions','subscriptions')
+      ->name('user.subscription');
+
+Route::middleware(['subscription'])->group(function () {
+
+Route::get('subscription/swap/{plan}','swap')
+    ->name('subscription.swap');
+
+Route::get('subscription/{plan}/cancel','cancel')
+    ->name('subscription.cancel');  
+});
+
+});             
 });
 });
 

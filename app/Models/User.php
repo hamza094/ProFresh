@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Support\Facades\Redis;
 use Spatie\Searchable\Searchable;
 use Spatie\Searchable\SearchResult;
-use Laravel\Cashier\Billable;
+use Laravel\Paddle\Billable;
 use App\Enums\OAuthProvider;
 use Laravel\Sanctum\HasApiTokens;
 use App\Jobs\QueuedVerifyEmailJob;
@@ -122,20 +122,6 @@ class User extends Authenticatable implements Searchable, MustVerifyEmail
       return  $this->lastseen();
     }*/
 
-    /*public function paypal()
-    {
-        return $this->belongsTo('App\Paypal');
-    }*/
-
-     //add user paypal record in database
-    /*public function paypal_info()
-    {
-       $this->paypal()->create([
-       'user_id'=>$this->id,
-       'name'=>'ProFresh Agreement'
-    ]);
-    }*/
-
     public function getAvatarAttribute()
     {
         return $this->avatar_path ?: false;
@@ -144,5 +130,29 @@ class User extends Authenticatable implements Searchable, MustVerifyEmail
     public function messages()
     {
       return $this->belongsToMany(Message::class);
+    }
+
+    public function isSubscribed()
+    {
+      return $this->subscribed('monthly') || 
+             $this->subscribed('yearly');
+    }
+
+    public function subscribedPlan()
+    {
+      return collect(['monthly', 'yearly'])
+        ->first(function ($plan) {
+            return $this->subscribed($plan);
+        }, '');
+    }
+
+    public function hasGracePeriod()
+    {
+     return
+      (
+        $this->subscribed('monthly')
+         && $this->subscription('monthly')->onGracePeriod())
+        ||
+        ($this->subscribed('yearly') && $this->subscription('yearly')->onGracePeriod());
     }
 }

@@ -2,8 +2,10 @@
 
 <div>
 
-<div class="card chat-card mb-5">
+ <p><b><i>Start Group chat with project Members</i></b></p>
 
+      <SubscriptionCheck>
+<div class="card chat-card mb-5">
 <div class="card-header text-white bg-primary" id="accordion">
 
   <span>
@@ -119,6 +121,7 @@
    </div>
    </div>
    </div>
+         </SubscriptionCheck>
     <vue-progress-bar></vue-progress-bar>
 </div>
 </template>
@@ -137,11 +140,12 @@
 import data from "emoji-mart-vue-fast/data/all.json";
 import { Mentionable } from 'vue-mention'
 import { Picker, EmojiIndex } from "emoji-mart-vue-fast";
+import SubscriptionCheck from '../../SubscriptionChecker.vue';
 
 let emojiIndex = new EmojiIndex(data);
 
 export default {
-  components:{Picker,Mentionable},
+  components:{Picker,Mentionable,SubscriptionCheck},
     props:['conversations','slug','users','auth'],
     data() {
       return {

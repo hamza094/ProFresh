@@ -22,6 +22,9 @@ Route::get('/', function () {
     return view('welcome.home');
 });
 
+//Route::post('/webhooks/paddle', 'PaddleWebhookController@handle');
+
+
 Route::middleware(['auth'])->group(function () {
 
 //Plan Route Prefix

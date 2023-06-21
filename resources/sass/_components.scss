@@ -1166,3 +1166,21 @@ padding-bottom: .2rem;
 .invitation{
     margin: .8rem;
 }
+
+/* Subscription Component */
+
+.subscription{
+    &_heading{
+      font-weight: bold;
+      font-size: 1.6rem;
+      letter-spacing: .2rem;
+    }
+    &_value{
+      font-weight: bold;
+      font-size: 1.8rem;
+    }
+}
+
+button.gnuIjg {
+  display: none !important;
+}
