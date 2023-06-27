@@ -186,7 +186,7 @@ export default{
     	...mapState('project',['project','user','getStage']),
 
     permission() {
-      const {access, owner} = permission(this.auth, this.project.members, this.project.user);
+      const {access, owner} = permission(this.auth.id, this.project.members, this.user.id);
 
       return {access, owner};
    },
