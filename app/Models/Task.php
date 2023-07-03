@@ -37,4 +37,14 @@ class Task extends Model
       return $this->belongsTo(Project::class);
    }
 
+   public function assign()
+   {
+     return $this->belongsToMany(User::class);
+   }
+
+    public function status()
+    {
+      return $this->belongsTo(TaskStatus::class);
+    }
+
 }

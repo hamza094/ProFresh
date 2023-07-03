@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Resources;
-
+use App\Http\Resources\TaskStatusResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class TaskResource extends JsonResource
@@ -16,11 +16,12 @@ class TaskResource extends JsonResource
     {
        return [
          'id'=>$this->id,
-         'body'=>$this->body,
-         'completed'=>$this->completed,
-         
+         'title'=>$this->title,
+         'body'=>$this->description,
+         'status'=>new TaskStatusResource($this->status),
+         'due_date'=>$this->due_date,
          'created_at'=>$this->created_at->format(config('app.date_formats.exact')),
-         
+
          'updated_at'=>$this->updated_at->format(config('app.date_formats.exact')),
        ];
     }

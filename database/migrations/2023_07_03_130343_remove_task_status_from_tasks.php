@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class RemoveColumnsFromTasks extends Migration
+class RemoveTaskStatusFromTasks extends Migration
 {
     /**
      * Run the migrations.
@@ -14,7 +14,7 @@ class RemoveColumnsFromTasks extends Migration
     public function up()
     {
         Schema::table('tasks', function (Blueprint $table) {
-          $table->dropColumn(['completed', 'body']);
+           $table->dropColumn('task_status_id');
         });
     }
 

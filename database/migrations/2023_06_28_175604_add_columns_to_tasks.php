@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddColumnsToTasksTable extends Migration
+class AddColumnsToTasks extends Migration
 {
     /**
      * Run the migrations.
@@ -14,9 +14,11 @@ class AddColumnsToTasksTable extends Migration
     public function up()
     {
         Schema::table('tasks', function (Blueprint $table) {
-          $table->string('task_title');
-          $table->text('task_description');
-          $table->foreignId('task_status_id')->default(1)->constrained('task_statuses');
+          //$table->string('task_title');
+          //$table->text('task_description');
+          //$table->date('due_at')->nullable();
+          /*$table->foreignId('status_id')->default(1)
+                ->constrained('statuses');*/
         });
     }
 

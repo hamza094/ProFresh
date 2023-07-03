@@ -11,6 +11,8 @@ class TaskStatus extends Model
 
     protected $guarded=[];
 
+    protected $table = 'statuses';
+
     public function tasks()
     {
         return $this->hasMany(Task::class);
