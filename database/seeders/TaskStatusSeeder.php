@@ -14,7 +14,7 @@ class TaskStatusSeeder extends Seeder
      */
     public function run()
     {
-        //TaskStatus::factory()->count(1)->create(); 
+        TaskStatus::factory()->count(1)->create(); 
         TaskStatus::factory()->started()->create();
         TaskStatus::factory()->progress()->create();
         TaskStatus::factory()->completed()->create();

@@ -964,6 +964,23 @@ p {
   cursor: pointer;
 }
 
+.task-card_style {
+  width: 18rem;
+  margin-bottom: 1rem;
+}
+
+.task-card_body {
+  padding: 0.5rem 1rem 1rem 1rem !important;
+  font-size: 1rem;
+}
+
+.task-card_border {
+  border: 0.3rem solid;
+  width: 25%;
+  margin: 0.5rem 0 0 0.5rem;
+  border-radius: 0.5rem;
+}
+
 .project-appointment {
   margin-top: 0.5rem;
 }

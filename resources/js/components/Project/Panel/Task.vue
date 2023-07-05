@@ -12,21 +12,21 @@
     <div class="task-add">
       <form class="" v-if="access" @submit.prevent="add">
         <div class="form-group">
-          <label for="body">Add New Task</label>
+          <label for="body"><i>Create a New Task</i></label>
           <input type="text" class="form-control" name="body" v-model="form.body">
         </div>
   </form>
     </div>
     <div v-if="tasks" class="task-list">
       <p class="task-list_heading">Project Tasks</p>
-      <div v-for="(task,index) in tasks.data" :key="task.id">
+      <!--<div v-for="(task,index) in tasks.data" :key="task.id">
         <p class="task-list_text">
           <span v-if="editing == task.id">
             <textarea class="form-control" name="body" rows="1" cols="34" v-model="form.editbody"  v-text="task.body" style="resize: none;"></textarea>
             <span class="btn btn-link btn-sm" @click="update(task.id,task)">Update</span>
            <span class="btn btn-link btn-sm" @click="closeEditForm(task.id,task)">Cancel</span>
           </span>
-          <span  v-else :class="{ 'task-list_text-body' : task.completed == true}">{{task.body}}</span>
+          <span  v-else :class="{ 'task-list_text-body' : task.completed == true}">{{task.title}}</span>
 
           <span v-if="access" class="float-right">
 
@@ -43,7 +43,19 @@
           <span class="task-list_time"><i class="far fa-clock"></i> {{task.created_at}}</span>
          </p>
 				 <hr>
-      </div>
+      </div>-->
+
+       <div v-for="(task,index) in tasks.data" :key="task.id">
+         <div class="card task-card_style">
+          <div v-if="task.status" class="task-card_border" :style="{ 
+            borderColor: task.status.color 
+        }"></div>
+          <div class="card-body task-card_body">
+            <span>{{task.title}}</span>
+          </div>
+        </div>
+      </div> 
+
 			<pagination :data="tasks" @pagination-change-page="getResults"></pagination>
     </div>
   </div>
@@ -60,6 +72,7 @@
     props:['slug','tasks','access'],
     data() {
       return {
+        taskColor:'red',
         task_score:2,
         editing:0,
           form:{
@@ -169,3 +182,4 @@
     },
 }
 </script>
+

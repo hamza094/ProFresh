@@ -881,6 +881,22 @@ i{
   cursor: pointer;
 }
   }
+  &-card{
+    &_style{
+    width: 18rem;
+    margin-bottom: 1rem;  
+    }
+    &_body{
+        padding: .5rem 1rem 1rem 1rem !important;
+        font-size: 1rem;
+    }
+    &_border{
+      border: 0.3rem solid;
+      width: 25%;
+      margin: .5rem 0 0 .5rem;
+      border-radius: 0.5rem;
+    }
+  }
 }
 
 .project-appointment{
