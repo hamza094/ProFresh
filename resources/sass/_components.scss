@@ -884,7 +884,8 @@ i{
   &-card{
     &_style{
     width: 18rem;
-    margin-bottom: 1rem;  
+    margin-bottom: 1rem;
+    cursor: pointer;  
     }
     &_body{
         padding: .5rem 1rem 1rem 1rem !important;
@@ -895,6 +896,18 @@ i{
       width: 25%;
       margin: .5rem 0 0 .5rem;
       border-radius: 0.5rem;
+    }
+  }
+  &-modal{
+    &_title{
+      font-size: 1.5rem;
+    }
+    &_close{
+     font-size: 1.5rem;
+     margin-top: -1rem;
+    }
+    &_content{
+        padding: .5rem;
     }
   }
 }

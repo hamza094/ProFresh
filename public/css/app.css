@@ -967,6 +967,7 @@ p {
 .task-card_style {
   width: 18rem;
   margin-bottom: 1rem;
+  cursor: pointer;
 }
 
 .task-card_body {
@@ -979,6 +980,19 @@ p {
   width: 25%;
   margin: 0.5rem 0 0 0.5rem;
   border-radius: 0.5rem;
+}
+
+.task-modal_title {
+  font-size: 1.5rem;
+}
+
+.task-modal_close {
+  font-size: 1.5rem;
+  margin-top: -1rem;
+}
+
+.task-modal_content {
+  padding: 0.5rem;
 }
 
 .project-appointment {

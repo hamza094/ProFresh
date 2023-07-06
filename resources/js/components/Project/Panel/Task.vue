@@ -1,7 +1,7 @@
 <template>
 	<div class="task">
   <div class="task-top">
-    <span><b>Tasks</b> <a data-toggle="collapse" href="#taskProject" role="button" aria-expanded="false" aria-controls="taskProject">
+    <span><i class="fas fa-tasks"></i> <b>Tasks</b> <a data-toggle="collapse" href="#taskProject" role="button" aria-expanded="false" aria-controls="taskProject">
       <i class="fas fa-angle-down float-right"></i></a></span>
   </div>
 
@@ -18,7 +18,7 @@
   </form>
     </div>
     <div v-if="tasks" class="task-list">
-      <p class="task-list_heading">Project Tasks</p>
+      <p class="task-list_heading"> Project Tasks</p>
       <!--<div v-for="(task,index) in tasks.data" :key="task.id">
         <p class="task-list_text">
           <span v-if="editing == task.id">
@@ -46,7 +46,7 @@
       </div>-->
 
        <div v-for="(task,index) in tasks.data" :key="task.id">
-         <div class="card task-card_style">
+         <div class="card task-card_style" @click="$modal.show('task-modal')">
           <div v-if="task.status" class="task-card_border" :style="{ 
             borderColor: task.status.color 
         }"></div>
@@ -54,8 +54,8 @@
             <span>{{task.title}}</span>
           </div>
         </div>
+         <TaskModal :task='task' :slug='slug'></TaskModal>
       </div> 
-
 			<pagination :data="tasks" @pagination-change-page="getResults"></pagination>
     </div>
   </div>
@@ -64,11 +64,12 @@
 </div>
 </template>
 <script>
+  import TaskModal from './Modal.vue';
   import { mapMutations, mapActions } from 'vuex';
   import SubscriptionCheck from '../../SubscriptionChecker.vue';
 
   export default {
-    components:{SubscriptionCheck},
+    components:{SubscriptionCheck,TaskModal},
     props:['slug','tasks','access'],
     data() {
       return {

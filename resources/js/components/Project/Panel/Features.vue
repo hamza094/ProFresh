@@ -4,7 +4,7 @@
       <div id="wrapper">
         <p><b>Add Project Note:</b></p>
 <SubscriptionCheck>
-    <form v-if="access" id="paper" method="post"@keyup.enter.prevent="ProjectNote">
+    <form v-if="access" id="paper" method="post" @keyup.enter.prevent="ProjectNote">
       <textarea placeholder="Write Project Notes" id="text" name="notes" rows="4" v-model="form.notes" v-text="this.notes"></textarea>
       <br>
   </form>
