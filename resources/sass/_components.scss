@@ -910,6 +910,43 @@ i{
         padding: .5rem;
     }
   }
+  &-option{
+    &_labels{
+      list-style-type: none;
+      margin-bottom: 1.5rem;
+      &-component{
+        cursor: pointer;
+        color: white;
+        padding: .2rem;
+        text-align: center;
+        border-radius: .2rem;
+      }
+    }
+  &_features{
+      list-style-type: none;
+      li{
+        &:not(:last-child){
+            margin-bottom: .5rem;
+        }
+
+      }
+  }
+}
+&-member{
+     display: inline-block;
+  background-color:$color-secondary;
+  color: white;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  text-align: center;
+  line-height: 30px;
+}
+}
+
+.title-form{
+  width: 50% !important;
+  display: inherit !important;
 }
 
 .project-appointment{
@@ -1213,3 +1250,18 @@ padding-bottom: .2rem;
 button.gnuIjg {
   display: none !important;
 }
+
+  .member-dropdown{
+        &_item{
+            padding: .5rem;
+            position: fixed;
+            border-radius: .2rem;
+            box-shadow: 0 0 10px rgba(0,0,0,.2);
+            z-index:2000 !important;
+            background-color: $color-white;
+            width:18rem;
+            height:auto;
+            overflow: hidden;
+            border:1px solid $color-light-grey;
+        }
+    }

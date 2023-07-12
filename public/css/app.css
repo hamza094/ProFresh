@@ -995,6 +995,43 @@ p {
   padding: 0.5rem;
 }
 
+.task-option_labels {
+  list-style-type: none;
+  margin-bottom: 1.5rem;
+}
+
+.task-option_labels-component {
+  cursor: pointer;
+  color: white;
+  padding: 0.2rem;
+  text-align: center;
+  border-radius: 0.2rem;
+}
+
+.task-option_features {
+  list-style-type: none;
+}
+
+.task-option_features li:not(:last-child) {
+  margin-bottom: 0.5rem;
+}
+
+.task-member {
+  display: inline-block;
+  background-color: #12344D;
+  color: white;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  text-align: center;
+  line-height: 30px;
+}
+
+.title-form {
+  width: 50% !important;
+  display: inherit !important;
+}
+
 .project-appointment {
   margin-top: 0.5rem;
 }
@@ -1301,6 +1338,19 @@ p {
 
 button.gnuIjg {
   display: none !important;
+}
+
+.member-dropdown_item {
+  padding: 0.5rem;
+  position: fixed;
+  border-radius: 0.2rem;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  z-index: 2000 !important;
+  background-color: #FFFFFF;
+  width: 18rem;
+  height: auto;
+  overflow: hidden;
+  border: 1px solid #e5e5ee;
 }
 
 .padding-0 {

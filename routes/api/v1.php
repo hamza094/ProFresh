@@ -20,6 +20,7 @@ use App\Http\Controllers\Api\
   MessageController,
   ActivityController,
   SubscriptionController,
+  TaskStatusController,
 
 };
 /*
@@ -71,8 +72,8 @@ Route::controller(MessageController::class)->group(function(){
 
 //Task Routes
 Route::apiResource('/task',TaskController::class)
-->except(['index','show'])
-->middleware('subscription');
+->except(['index','show']);
+//->middleware('subscription');
 
 Route::patch('/task/{task}/status',[TaskController::class,'status'])->middleware('subscription');
 
@@ -128,7 +129,10 @@ Route::get('subscription/{plan}/cancel','cancel')
     ->name('subscription.cancel');  
 });
 
-});             
+});
+
+Route::get('task/statuses',TaskStatusController::class)
+           ->name('task.status');             
 });
 });
 

@@ -16,8 +16,9 @@ class TaskResource extends JsonResource
     {
        return [
          'id'=>$this->id,
-         'title'=>$this->task_title,
-         'description'=>$this->task_description,
+         'title'=>$this->title,
+         'description'=>$this->description,
+         'status_id'=>$this->status_id,
          'status'=>new TaskStatusResource($this->status),
          'due_date'=>$this->due_date,
          'created_at'=>$this->created_at->format(config('app.date_formats.exact')),

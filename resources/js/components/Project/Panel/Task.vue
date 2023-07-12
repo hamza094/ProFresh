@@ -7,13 +7,13 @@
 
   <!--Task -->
     <div class="collapse" id="taskProject">
-      <SubscriptionCheck>
+     <!-- <SubscriptionCheck> -->
     <div class="card card-body">
     <div class="task-add">
       <form class="" v-if="access" @submit.prevent="add">
         <div class="form-group">
           <label for="body"><i>Create a New Task</i></label>
-          <input type="text" class="form-control" name="body" v-model="form.body">
+          <input type="text" class="form-control" name="title" v-model="form.title">
         </div>
   </form>
     </div>
@@ -66,21 +66,17 @@
 <script>
   import TaskModal from './Modal.vue';
   import { mapMutations, mapActions } from 'vuex';
-  import SubscriptionCheck from '../../SubscriptionChecker.vue';
+  //import SubscriptionCheck from '../../SubscriptionChecker.vue';
 
   export default {
-    components:{SubscriptionCheck,TaskModal},
+    components:{TaskModal},
     props:['slug','tasks','access'],
     data() {
       return {
-        taskColor:'red',
         task_score:2,
-        editing:0,
-          form:{
-          	body:'',
-          	editbody:'',
-          	completed:'',
-          },
+        form:{
+          title:'',
+        },
             errors:{}
         };
     },
@@ -98,11 +94,11 @@
        axios.post('/api/v1/projects/'+this.slug+'/task',this.form)
           .then(response=>{
               this.$vToastify.success("Project Task added");
-              this.form.body="";
+              this.form.title="";
 							this.getResults();
               this.addScore(this.task_score);
           }).catch(error=>{
-						this.form.body="";
+						this.form.title="";
 						this.taskErrors(error);
        });
     },
@@ -110,24 +106,7 @@
 			return '/api/v1/projects/'+$slug+'/task/'+$id;
 		},
 
-      update(id,task){
-      axios.put(this.url(this.slug,id),{
-        body:this.form.editbody,
-      }).then(response=>{
-          this.$vToastify.success("Task Updated");
-          this.editing=false;
-          task.body=this.form.editbody;
-      }).catch(error=>{
-        this.taskErrors(error);
-      })
-    },
-
-    closeEditForm(id,task){
-      this.editing=false;
-      this.form.editbody=task.body;
-    },
-
-    markComplete(id,task){
+    /*markComplete(id,task){
       axios.patch(this.url(this.slug,id)+'/status',{
         completed:true,
       }).then(response=>{
@@ -147,7 +126,7 @@
       }).catch(error=>{
         this.$vToastify.warning("Task Status Updated failed");
       })
-    },
+    },*/
 
     remove(id,index){
       axios.delete(this.url(this.slug,id))
@@ -160,10 +139,6 @@
       })
     },
 
-    openEditForm(id,task){
-      this.editing = id;
-      this.form.editbody=task.body;
-    },
     taskErrors(error){
 		if (!error.response) {
     this.$vToastify.warning("An error occurred.");

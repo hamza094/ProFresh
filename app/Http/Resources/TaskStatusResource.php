@@ -15,6 +15,7 @@ class TaskStatusResource extends JsonResource
     public function toArray($request)
     {
         return [
+            'id'=>$this->id,
             'label'=>$this->label,
             'color'=>$this->color
         ];

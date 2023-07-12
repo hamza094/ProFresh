@@ -12,7 +12,9 @@
 export default {
   computed: {
     isSubscribed() {
-      return this.$store.state.subscribeUser.subscription.subscribed;
+      //return this.$store.state.subscribeUser.subscription.subscribed;
+            return true;
+
     },
   },
 };

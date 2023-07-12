@@ -24,8 +24,9 @@ class TaskFactory extends Factory
     {
         return [
         'project_id'=>Project::factory(),
-        'body' => $this->faker->sentence($nbWords = 6, $variableNbWords = true),
-        'completed'=>false
+        'title'=>$this->faker->catchPhrase,
+        'description'=>$this->faker->text($maxNbChars = 250),
+        'status_id'=>1,
         ];
     }
 }
