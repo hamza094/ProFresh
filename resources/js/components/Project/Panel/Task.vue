@@ -19,34 +19,8 @@
     </div>
     <div v-if="tasks" class="task-list">
       <p class="task-list_heading"> Project Tasks</p>
-      <!--<div v-for="(task,index) in tasks.data" :key="task.id">
-        <p class="task-list_text">
-          <span v-if="editing == task.id">
-            <textarea class="form-control" name="body" rows="1" cols="34" v-model="form.editbody"  v-text="task.body" style="resize: none;"></textarea>
-            <span class="btn btn-link btn-sm" @click="update(task.id,task)">Update</span>
-           <span class="btn btn-link btn-sm" @click="closeEditForm(task.id,task)">Cancel</span>
-          </span>
-          <span  v-else :class="{ 'task-list_text-body' : task.completed == true}">{{task.title}}</span>
-
-          <span v-if="access" class="float-right">
-
-          <span>
-            <input  v-if="task.completed" class="form-check-input" type="checkbox" @change="markUncomplete(task.id,task)"  checked>
-            <input v-else class="form-check-input" type="checkbox"  name="completed" @change="markComplete(task.id,task)">
-          </span>
-
-           <span @click="remove(task.id,index)"><i class="far fa-trash-alt" style="color:#E74C3C"></i></span>
-          <span @click="openEditForm(task.id,task)"><i class="far fa-edit" style="color:#2980B9"></i></span>
-
-          </span>
-          <br>
-          <span class="task-list_time"><i class="far fa-clock"></i> {{task.created_at}}</span>
-         </p>
-				 <hr>
-      </div>-->
-
        <div v-for="(task,index) in tasks.data" :key="task.id">
-         <div class="card task-card_style" @click="$modal.show('task-modal')">
+         <div class="card task-card_style" @click="openModal(task)">
           <div v-if="task.status" class="task-card_border" :style="{ 
             borderColor: task.status.color 
         }"></div>
@@ -54,8 +28,13 @@
             <span>{{task.title}}</span>
           </div>
         </div>
-         <TaskModal :task='task' :slug='slug'></TaskModal>
       </div> 
+       <modal name="task-modal" height="auto" :scrollable="true"
+      width="65%" class="model-desin" :clickToClose=false >
+      <div v-if="selectedTask">
+        <TaskModal :task="selectedTask" :slug="slug"></TaskModal>
+      </div>
+    </modal>
 			<pagination :data="tasks" @pagination-change-page="getResults"></pagination>
     </div>
   </div>
@@ -74,6 +53,7 @@
     data() {
       return {
         task_score:2,
+        selectedTask: null,
         form:{
           title:'',
         },
@@ -90,6 +70,10 @@
         page: page
       });
     },
+     openModal(task) {
+      this.selectedTask = task;
+      this.$modal.show('task-modal');
+    },
      add(){
        axios.post('/api/v1/projects/'+this.slug+'/task',this.form)
           .then(response=>{
@@ -105,28 +89,6 @@
 		url($slug,$id){
 			return '/api/v1/projects/'+$slug+'/task/'+$id;
 		},
-
-    /*markComplete(id,task){
-      axios.patch(this.url(this.slug,id)+'/status',{
-        completed:true,
-      }).then(response=>{
-        this.$vToastify.success("Task Completed");
-				task.completed=true;
-      }).catch(error=>{
-        this.$vToastify.warning("Task Status Updated failed");
-      })
-    },
-
-    markUncomplete(id,task){
-      axios.patch(this.url(this.slug,id)+'/status',{
-        completed:false,
-      }).then(response=>{
-          this.$vToastify.info("Task Marked Uncomplete");
-					task.completed=false;
-      }).catch(error=>{
-        this.$vToastify.warning("Task Status Updated failed");
-      })
-    },*/
 
     remove(id,index){
       axios.delete(this.url(this.slug,id))

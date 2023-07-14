@@ -22,8 +22,6 @@ class TaskController extends ApiController
 
     $task=$project->tasks()->firstOrCreate($request->validated());
 
-    $taskService->checkRecentlyCreated($task);
-
     $taskService->sendNotification($project);    
 
     return $this->respondCreated([

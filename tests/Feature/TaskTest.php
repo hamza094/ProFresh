@@ -5,6 +5,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use App\Traits\ProjectSetup;
 use App\Models\Project;
+use App\Models\TaskStatus;
 use Tests\TestCase;
 use App\Models\Task;
 
@@ -14,53 +15,62 @@ class TaskTest extends TestCase
 
 
     /** @test */
-    public function task_requires_a_body()
+    public function task_requires_a_title()
     {
-       $task=Task::factory()->make(['body'=>null]);
+       $task=Task::factory()->make(['title'=>null,'project_id'=>$this->project->id]);
 
        $response=$this->postJson($task->path(),$task->toArray());
 
-       $response->assertJsonMissingValidationErrors('name');
+       $response->assertJsonValidationErrors('title');
      }
 
      /** @test */
      public function allowed_user_can_create_projects_task()
      {
-       $response=$this->postJson($this->project->path().'/task',
-           ['body' => 'My Project Task']);
+        $status=TaskStatus::factory()->create();
 
-       $this->assertDatabaseHas('tasks',['body'=>'My Project Task']);
+       $response=$this->withoutExceptionHandling()->postJson($this->project->path().'/task',['title' => 'My Project Task','status_id'=>$status->id]);
+
+       $this->assertDatabaseHas('tasks',['title'=>'My Project Task']);
 
        $response->assertJson([
            "task"=>[      
            'id'=>1,
-           'body'=>'My Project Task'
+           'title'=>'My Project Task'
           ]]);
    }
 
    /** @test */
-   public function allowed_user_can_not_create_same_task_twice()
+   public function duplicate_project_task_can_not_be_created()
    {
-     $this->project->tasks()->create(['body'=>'Project Task']);
+      $status=TaskStatus::factory()->create();
+
+     $this->project->tasks()->create(['title'=>'Project Task']);
 
      $response=$this->postJson($this->project->path().'/task',
-         ['body' => 'Project Task'])
-         ->assertUnprocessable();
+        ['title' => 'Project Task'])
+        ->assertUnprocessable()
+        ->assertJsonFragment([
+      'errors' => ['title' => ['Task with same title already exists.']]]);
 
-     $response->assertJsonValidationErrors('task');
+      $project2=Project::factory()->for($this->user)->create();
+
+      $response=$this->postJson($project2->path().'/task',
+         ['title' => 'Project Task'])->assertCreated();   
  }
 
    /** @test */
    public function task_limit_per_project()
    {
+      $status=TaskStatus::factory()->create();
+
      Task::factory()->count(config('app.project.taskLimit'))
      ->for($this->project)->create();
 
      $response=$this->postJson($this->project->path().'/task',
-       ['body' => 'Project Task'])
-       ->assertUnprocessable();
-
-    $response->assertJsonValidationErrors('task');
+       ['title' => 'Project Task'])
+       ->assertUnprocessable()
+      ->assertJsonValidationErrors('task');
 }
 
   /** @test */

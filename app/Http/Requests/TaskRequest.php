@@ -24,9 +24,13 @@ class TaskRequest extends FormRequest
      */
     public function rules()
     {
+        $project = $this->route('project');
+
         return [
-          'body'=>'required|max:55'
-        ];
+        'title' => ['required','max:55',
+        'unique:tasks,title,NULL,id,project_id,' . $project->id
+      ],
+      ];
     }
 
     /**
@@ -37,8 +41,9 @@ class TaskRequest extends FormRequest
     public function messages()
     {
         return [
-           'body.required' => 'Task body required.',
-           'body.max'=>'Your task is too long.'
+           'title.required' => 'Task title required.',
+           'title.max'=>'Your task title is too long.',
+           'title.unique'=>'Task with same title already exists.'
           ];
      }
   }

@@ -79,7 +79,7 @@ class Project extends Model
     public function addTask($tasks)
     {
        return $this->tasks()->create([
-         'body'=> $tasks
+         'title'=> $tasks
        ]);
     }
 

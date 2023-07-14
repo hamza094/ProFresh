@@ -14,7 +14,14 @@ class Task extends Model
 
   protected $touches=['project'];
 
-  protected $casts=['completed'=>'boolean'];
+  protected static function booted()
+  {
+    static::creating(function ($task) {
+        if (!$task->status_id) {
+            $task->status_id = 1; // Assign the default status ID here
+        }
+    });
+  }
 
   //protected static $recordableEvents = ['created','updated'];
 
@@ -23,18 +30,8 @@ class Task extends Model
       return "/api/v1/projects/{$this->project->slug}/task/{$this->id}";
     }
 
-    public function complete()
-    {
-      $this->update(['completed'=>true]);
-    }
-
-    public function incomplete()
-    {
-      $this->update(['completed'=>false]);
-    }
-
     public function project(){
-      return $this->belongsTo(Project::class);
+      return $this->belongsTo(Project::class,'project_id');
    }
 
    public function assign()

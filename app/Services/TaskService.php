@@ -15,17 +15,8 @@ class TaskService
       );
   }
 
-  public function checkRecentlyCreated($task)
-  {
-    throw_unless($task->wasRecentlyCreated,
-       ValidationException::withMessages(
-        ['task'=>'Project tasks already exist'])
-     );
-     
-  }
-
   public function perventDuplication($validatedData){
-      if ($task->body === $validatedData['body']) {
+      if ($task->title === $validatedData['title']) {
         return $this->respondError("You haven't changed anything");
     }
   }

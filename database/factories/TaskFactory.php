@@ -23,8 +23,8 @@ class TaskFactory extends Factory
     public function definition()
     {
         return [
-        'project_id'=>Project::factory(),
         'title'=>$this->faker->catchPhrase,
+        'project_id'=>Project::factory(),
         'description'=>$this->faker->text($maxNbChars = 250),
         'status_id'=>1,
         ];

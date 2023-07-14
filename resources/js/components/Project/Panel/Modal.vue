@@ -1,8 +1,4 @@
 <template>
-	<div>
-		<!-- Task Modal-->
-	 <modal name="task-modal" height="auto" :scrollable="true" 
-	    width="65%" class="model-desin" :clickToClose=false >
 
     <div class="edit-border-top p-3 task-modal">
     <div class="edit-border-bottom">
@@ -120,10 +116,6 @@
           	</div>
           </div>
         </div>
-  </div>
-    </modal>
-
-
 	</div>
 </template>
 

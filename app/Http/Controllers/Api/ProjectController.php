@@ -50,7 +50,7 @@ class ProjectController extends ApiController
 
     public function show(Project $project)
     {
-      $project->load(['tasks','conversations.user']);
+      $project->load(['tasks.status','conversations.user']);
 
       return new ProjectResource($project);
     }
