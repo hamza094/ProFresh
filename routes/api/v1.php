@@ -21,7 +21,7 @@ use App\Http\Controllers\Api\
   ActivityController,
   SubscriptionController,
   TaskStatusController,
-
+  TaskFeaturesController
 };
 /*
 |--------------------------------------------------------------------------
@@ -70,12 +70,15 @@ Route::controller(MessageController::class)->group(function(){
   Route::delete('messages/{message}/delete','delete');
 })->middleware('subscription');
 
+
 //Task Routes
 Route::apiResource('/task',TaskController::class)
 ->except(['index','show']);
 //->middleware('subscription');
 
-Route::patch('/task/{task}/status',[TaskController::class,'status'])->middleware('subscription');
+Route::patch('/task/{task}/members',[TaskFeaturesController::class,'members'])->name('task.members');
+//->middleware('subscription');
+
 
 //Chat Conversation Routes
 Route::apiResource('/conversations',ConversationController::class)

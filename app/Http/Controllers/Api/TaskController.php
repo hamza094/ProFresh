@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Requests\TaskRequest;
+use App\Http\Requests\TaskUpdate;
 use Illuminate\Http\Request;
 use App\Models\Project;
 use App\Notifications\ProjectTask;
@@ -30,14 +31,14 @@ class TaskController extends ApiController
     ]);
   }
 
-  public function update(Project $project,Task $task,TaskRequest $request,TaskService $taskService)
-  {
-      $validatedData = $request->validated();
+  public function update(Project $project,Task $task,TaskUpdate $request,TaskService $taskService): JsonResponse
+  {   
+     $validatedData = $request->validated();
 
-      if ($task->body === $validatedData['body']) {
-        return $this->respondError("You haven't changed anything");
-      }
-      
+    if (isset($validatedData['status_id'])) {
+        $taskService->updateStatus($task,$validatedData['status_id']);
+    }
+
       $task->update($validatedData);
 
       return $this->respondWithSuccess([
@@ -53,16 +54,6 @@ class TaskController extends ApiController
      $task->delete();  
 
      return $this->respondNoContent(['message'=>'Task deleted successfully']);
-  }
-
-  public function status(Project $project,Task $task)
-  {
-     request('completed') ? $task->complete() : $task->incomplete();
-
-      return $this->respondWithSuccess([
-      'message'=>'Task Status Successfully',
-      'task'=>new TaskResource($task),
-    ]);
   }
 
 }

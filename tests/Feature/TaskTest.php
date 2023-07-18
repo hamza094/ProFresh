@@ -6,13 +6,14 @@ use Illuminate\Foundation\Testing\WithFaker;
 use App\Traits\ProjectSetup;
 use App\Models\Project;
 use App\Models\TaskStatus;
+use App\Models\User;
 use Tests\TestCase;
+use Carbon\Carbon;
 use App\Models\Task;
 
 class TaskTest extends TestCase
 {
   use RefreshDatabase,ProjectSetup;
-
 
     /** @test */
     public function task_requires_a_title()
@@ -76,42 +77,62 @@ class TaskTest extends TestCase
   /** @test */
   public function allowed_user_can_update_project_task()
   {
+     $status=TaskStatus::factory()->create();
+
      $task=$this->project->addTask('test task');
 
-     $updatedBody="Task Body Updated";
+     $updatedTitle="Task title updated";
 
-     $taskUnchanged=$this->putJson($task->path(), ['body' => $task->body]);
+     /*$this->putJson($task->path(), ['title' => $task->title])->assertUnprocessable();*/
+      $status2=TaskStatus::factory()->create();
 
-     $taskUnchanged->assertJson([
-         'error'=>"You haven't changed anything",
-        ]);
+     $response=$this->putJson($task->path(), [
+      'title' => $updatedTitle,
+      'description'=>'This is random project description',
+      'due_at'=>'2023-07-18T14:53:23.664508Z',
+      'status_id'=>$status2->id
+    ])
+     ->assertJson(["task"=>['id'=>$task->id,'title'=>$updatedTitle]]);
 
-     $response=$this->putJson($task->path(), ['body' => $updatedBody]);
-
-     $this->assertDatabaseHas('tasks',['body'=>$updatedBody]);
-
-     $response->assertJson([
-       "task"=>[      
-         'id'=>$task->id,
-         'body'=>$updatedBody]
-       ]);
- }
-
-   /** @test */
-   public function allowed_user_can_marked_task()
-   {
-     $task=$task=Task::factory()->for($this->project)
-           ->create(['completed'=>false]);
-
-     $response=$this->patchJson($task->path().'/status', ['completed' =>true]);
+     $this->assertDatabaseHas('tasks',[
+      'title'=>$updatedTitle,
+      'description'=>'This is random project description',
+      'due_at'=>'2023-07-18T14:53:23.664508Z',
+    ]);
 
      $task->refresh();
 
-     $this->assertTrue($task->completed);
+    $this->assertEquals($task->status->id,$status2->id);
 
-     $response->assertJson([
-       "task"=>['completed'=>$task->completed]
-       ]);
+ }
+
+   /** @test */
+   public function members_attach_to_task()
+   {
+      $status=TaskStatus::factory()->create();
+
+      $task=$this->project->addTask('test task');
+
+      $user = $this->user;
+      $members = [$user->toArray()];
+
+      $response = $this->withoutExceptionHandling()->patchJson(route('task.members', [
+            'project' => $this->project->slug,
+            'task' => $task->id,
+        ]), ['members' => $members]);   
+
+       $response->assertSuccessful()
+            ->assertJson([
+                'message' => 'Task assigned to member Successfully',
+            ]);
+
+                    $this->assertCount(1, $user->notifications);
+
+
+        $this->assertDatabaseHas('task_user', [
+            'task_id' => $task->id,
+            'user_id' => $user->id,
+        ]);
     }
 
    /** @test */

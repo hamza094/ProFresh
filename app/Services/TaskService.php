@@ -2,6 +2,7 @@
 namespace App\Services;
 use Illuminate\Http\Request;
 use App\Actions\NotificationAction;
+use App\Models\TaskStatus;
 use App\Notifications\ProjectTask;
 use Illuminate\Validation\ValidationException;
 
@@ -15,11 +16,11 @@ class TaskService
       );
   }
 
-  public function perventDuplication($validatedData){
-      if ($task->title === $validatedData['title']) {
-        return $this->respondError("You haven't changed anything");
-    }
+  public function updateStatus($task,$statusId): void{
+        $status = TaskStatus::findOrFail($statusId);
+        $task->status()->associate($status);
   }
+
 
   public function sendNotification($project)
   {

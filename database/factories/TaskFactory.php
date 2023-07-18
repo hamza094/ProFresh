@@ -4,6 +4,8 @@ namespace Database\Factories;
 
 use App\Models\Task;
 use App\Models\Project;
+use App\Models\TaskStatus;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class TaskFactory extends Factory
@@ -26,7 +28,8 @@ class TaskFactory extends Factory
         'title'=>$this->faker->catchPhrase,
         'project_id'=>Project::factory(),
         'description'=>$this->faker->text($maxNbChars = 250),
-        'status_id'=>1,
+        'status_id'=>TaskStatus::factory(),
+        'due_at'=>Carbon::now()
         ];
     }
 }
