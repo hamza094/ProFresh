@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
-
+use Carbon\Carbon;
 
 class TaskUpdate extends FormRequest
 {
@@ -16,6 +16,20 @@ class TaskUpdate extends FormRequest
     public function authorize()
     {
         return true;
+    }
+
+      protected function prepareForValidation()
+    {
+        $dueAt = $this->input('due_at');
+
+        if ($dueAt) {
+
+            $parsedDueAt = Carbon::parse($dueAt);
+
+            $this->merge([
+                'due_at' => $parsedDueAt,
+            ]);
+        }
     }
 
     /**
@@ -37,7 +51,8 @@ class TaskUpdate extends FormRequest
         }),
         ],
             'description' => 'sometimes|max:350',
-            'due_at' => 'sometimes|date',
+            'due_at' => 'sometimes|date|required_with:notified',
+            'notified'=>'sometimes',
             'status_id'=>'required|sometimes'
         ];
     }

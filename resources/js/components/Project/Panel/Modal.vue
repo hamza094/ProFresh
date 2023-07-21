@@ -4,8 +4,7 @@
     <div class="edit-border-bottom">
         <div class="task-modal_content">
          <span v-if="editing == task.id">
-
-            <input class="title-form form-control" name="title" v-model="form.editTitle" v-text="task.title">
+            <input class="title-form form-control" name="title" v-model="form.title" v-text="task.title">
 
             <span class="btn btn-link btn-sm" @click="updateTitle(task.id,task)">Update</span>
 
@@ -16,6 +15,7 @@
 
             <span class="task-modal_close float-right" role="button" @click.prevent="modalClose">x</span>
         </div>
+        <span class="text-danger font-italic" v-if="errors.title" v-text="errors.title[0]"></span>
     </div>
         <div class="panel-form mt-2">
           <div class="row">
@@ -31,20 +31,20 @@
           					<span class="task-member">S</span> 
           					</p>
 
-          				<p v-if="this.dateTime"><small><b>Task due: </b> </small> {{this.dateTime | datetime}}</p>
+          				<p v-if="task.due_at"><small><b>Task due: </b> </small> {{task.due_at | datetime}}</p>
 
-          				<p v-if="this.due"><small><b>Notified: </b> </small>{{this.due}} </p>
+          				<p v-if="task.notified"><small><b>Notified: </b> </small>{{task.notified}} </p>
 
-          				<p v-if="this.dateTime"><small><b>Days Left: </b> </small>{{this.remainingMessage}} </p>          				
+          				<p v-if="task.due_at"><small><b>Days Left: </b>{{this.remainingMessage}}  </small> </p>          				
           			<!--</p>-->
           		</div>
           		<div class="task-description">
-          			 <h4>Descriprion</h4>
+          			 <p class="task-description_container"><span class="task-description_heading">Description:</span><span class="text-danger font-italic" v-if="errors.description" v-text="errors.description"></span></p>
 
                      <div v-if="edit == task.id">
 
-                <vue-editor name="discription" 
-                v-model="form.editDescription" :editorToolbar="customToolbar"></vue-editor>
+                <vue-editor name="description" 
+                v-model="form.description" :editorToolbar="customToolbar"></vue-editor>
 
 
             <span class="btn btn-link btn-sm" @click="updateDescription(task.id,task)">Update</span>
@@ -53,7 +53,7 @@
           </span>
       </div>
             <div v-else>
-            	<p @click="openDescriptionForm(task.id,task)">{{task.description}}</p>
+            	<p class="task-description_content" @click="openDescriptionForm(task.id,task)" v-html="task.description"></p>
             </div>	
 
           		</div>
@@ -88,16 +88,19 @@
           				</button>
           				<div class="member-dropdown_item" v-show=datePop>
                         <span>Due Date:
-                        <datetime type="datetime" v-model="dateTime" value-zone="local" zone="local" :min-datetime="modifiedDate"></datetime>
+                        <datetime type="datetime" v-model="form.due_at" value-zone="local" zone="local" :min-datetime="modifiedDate"></datetime>
                         </span>
-                        <select class="custom-select mr-sm-2" v-model="due">
+                        <select class="custom-select mr-sm-2" v-model="form.notified">
                          <option selected>Choose...</option>
                           <option value="1 Day Before">1 Day Before</option>
                           <option value="2 Hours Before">2 Hours Before</option>
                           <option value="15 Minutes Before">15 Minutes Before</option><option value="5 Minutes Before">5 Minutes Before</option>
                           <option value="At The Time">At The Time</option>
                          </select>
-                        <button class="btn btn-sm btn-primary float-right mt-2" @click.prevent="taskDue()">Set</button>
+                         <div class="float-right mt-2">
+                          <button class="btn btn-sm btn-secondary" @click.prevent="cancelDue()">Cancel</button>
+                          <button class="btn btn-sm btn-primary" @click.prevent="taskDue(task.id,task)">Set</button>
+                         </div>
                        </div>
           			</li>	
           			<li>
@@ -135,13 +138,12 @@ export default {
         memberPop:false,
         datePop:false,
         statuses:'',
-        dateTime:'',
         due:'',
         form:{
           title:'',
-          editTitle:'',
-          discription:'',
-          editDescription:'',
+          description:'',
+          due_at:'',
+          notified:'',
         },
 		model:{},
         errors:{},
@@ -161,6 +163,7 @@ export default {
     return modifiedDate.toISOString();
   },
   remainingMessage(){
+    if(this.task.due_at !== null){
   	  const duration = this.calculateDuration();
       const timeRemaining = this.calculateTimeRemaining(duration);
 
@@ -173,10 +176,11 @@ export default {
       return message;
 
   }
+}
 },
   methods: {
   	 calculateDuration() {
-      return moment.duration(moment(this.dateTime).diff(moment(this.currentDate)));
+      return moment.duration(moment(this.task.due_at).diff(moment(this.currentDate)));
     },
     calculateTimeRemaining(duration) {
       return Math.floor(duration.asMinutes());
@@ -191,8 +195,29 @@ export default {
         }
       }
     },
-    taskDue(){
-     this.datePop=false;
+    taskDue(id,task){
+     /*if(this.form.due_at == task.due_at){
+  this.$vToastify.warning("Update not allowed. No changes were made.");
+  return;
+}*/
+
+      axios.put(`/api/v1/projects/${this.slug}/task/${id}`,{
+        due_at:this.form.due_at,
+        notified:this.form.notified,
+      }).then(response=>{
+          this.$vToastify.success(response.data.message);
+          task.due_at=this.form.due_at;
+          task.notified=this.form.notified;
+          this.cancelDue();
+      }).catch(error=>{
+          this.errors = error.response.data.errors;
+      })
+    },
+    cancelDue(){
+      this.datePop=false;
+      this.form.notified='';
+      this.form.due_at='';
+      this.errors='';      
     },
   modalClose(){
    this.$modal.hide('task-modal');
@@ -201,47 +226,58 @@ export default {
 	 };
  },
  updateTitle(id,task){
-      axios.put(this.url(this.slug,id),{
-        title:this.form.editTitle,
+
+if(this.form.title == task.title){
+  this.$vToastify.warning("Update not allowed. No changes were made.");
+  return;
+}
+      axios.put(`/api/v1/projects/${this.slug}/task/${id}`,{
+        title:this.form.title,
       }).then(response=>{
-          this.$vToastify.success("Task Updated");
+          this.$vToastify.success(response.data.message);
           this.editing=false;
-          task.title=this.form.editTitle;
+          task.title=this.form.title;
+          this.errors='';
       }).catch(error=>{
-        //this.taskErrors(error);
+          this.errors = error.response.data.errors;
       })
     },
 
     closeTitleForm(id,task){
       this.editing=false;
-      this.form.editTitle=task.title;
+      this.form.title=task.title;
+      this.errors='';
     },
 
     openTitleForm(id,task){
       this.editing = id;
-      this.form.editTitle=task.title;
+      this.form.title=task.title;
     },
 
     updateDescription(id,task){
-      axios.put(this.url(this.slug,id),{
-        description:this.form.editDescription,
+      if(this.form.description == task.description){
+  this.$vToastify.warning("Update not allowed. No changes were made.");
+  return;
+}
+      axios.put(`/api/v1/projects/${this.slug}/task/${id}`,{
+        description:this.form.description,
       }).then(response=>{
-          this.$vToastify.success("Task description Updated");
+          this.$vToastify.success(response.data.message);
           this.edit=false;
-          task.description=this.form.editDescription;
+          task.description=this.form.description;
       }).catch(error=>{
-        //this.taskErrors(error);
+          this.errors = error.response.data.errors;
       })
     },
 
     closeDescriptionForm(id,task){
       this.edit=false;
-      this.form.editDescription=task.description;
+      this.form.description=task.description;
     },
 
     openDescriptionForm(id,task){
       this.edit = id;
-      this.form.editDescription=task.description;
+      this.form.description=task.description;
     },
 
     assignMember(){
@@ -250,6 +286,7 @@ export default {
     dueDate(){
     	console.log('due date');
     },
+
     inActive(){
     	console.log('in active');
     },

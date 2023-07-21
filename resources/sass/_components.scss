@@ -942,6 +942,22 @@ i{
   text-align: center;
   line-height: 30px;
 }
+&-description{
+    &_container{
+        margin-bottom: .6rem;
+    }
+    margin-top: 2rem;
+    &_heading{
+      font-weight: 600;
+      font-size: 1rem;
+      text-transform: uppercase;
+      letter-spacing: .2rem;
+    }
+    &_content{
+      font-size: 1rem;
+    }
+
+}
 }
 
 .title-form{

@@ -28,8 +28,7 @@ class TaskFactory extends Factory
         'title'=>$this->faker->catchPhrase,
         'project_id'=>Project::factory(),
         'description'=>$this->faker->text($maxNbChars = 250),
-        'status_id'=>TaskStatus::factory(),
-        'due_at'=>Carbon::now()
+        'status_id'=>1
         ];
     }
 }

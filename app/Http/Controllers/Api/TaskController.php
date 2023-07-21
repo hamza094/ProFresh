@@ -33,18 +33,25 @@ class TaskController extends ApiController
 
   public function update(Project $project,Task $task,TaskUpdate $request,TaskService $taskService): JsonResponse
   {   
-     $validatedData = $request->validated();
+    try {
 
-    if (isset($validatedData['status_id'])) {
-        $taskService->updateStatus($task,$validatedData['status_id']);
-    }
+    $taskService->updateStatus($task, $request->validated('status_id'));
 
-      $task->update($validatedData);
+    $task->update($request->validated());
 
-      return $this->respondWithSuccess([
-      'message'=>'Task Updated Successfully',
-      'task'=>new TaskResource($task),
+    $keys = array_keys($request->validated());
+
+    $updatedMessage = 'Task ' . implode(', ', $keys);
+
+    return $this->respondWithSuccess([
+        'message' => $updatedMessage . ' Updated Successfully',
+        'task' => new TaskResource($task),
     ]);
+
+    } catch (\Exception $e) {
+    return $this->respondError($e->getMessage());
+   }
+
   }
 
   public function destroy(Project $project,Task $task)

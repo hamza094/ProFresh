@@ -1027,6 +1027,25 @@ p {
   line-height: 30px;
 }
 
+.task-description {
+  margin-top: 2rem;
+}
+
+.task-description_container {
+  margin-bottom: 0.6rem;
+}
+
+.task-description_heading {
+  font-weight: 600;
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2rem;
+}
+
+.task-description_content {
+  font-size: 1rem;
+}
+
 .title-form {
   width: 50% !important;
   display: inherit !important;

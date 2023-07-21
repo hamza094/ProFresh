@@ -17,8 +17,10 @@ class TaskService
   }
 
   public function updateStatus($task,$statusId): void{
+    if (isset($statusId)) {
         $status = TaskStatus::findOrFail($statusId);
         $task->status()->associate($status);
+    }
   }
 
 

@@ -101,7 +101,7 @@
       })
     },
 
-    taskErrors(error){
+    /*taskErrors(error){
 		if (!error.response) {
     this.$vToastify.warning("An error occurred.");
     return;
@@ -116,7 +116,7 @@
   } else {
     this.$vToastify.warning("An error occurred.");
   }
-		},
+		},*/
     },
 }
 </script>

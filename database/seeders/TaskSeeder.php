@@ -19,12 +19,7 @@ class TaskSeeder extends Seeder
       $projects = Project::all();
 
         $projects->each(function ($project){
-            Task::factory()
-           /* ->state(new Sequence(
-                ['completed' => 0],
-                ['completed' => 1],
-              ))*/
-              ->create(['project_id'=>$project->id]);
+            Task::factory()->count(2)->create(['project_id'=>$project->id]);
         });
     }
 }

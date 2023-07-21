@@ -20,7 +20,8 @@ class TaskResource extends JsonResource
          'description'=>$this->description,
          'status_id'=>$this->status_id,
          'status'=>new TaskStatusResource($this->whenLoaded('status')),
-         'due_date'=>$this->due_date,
+         'due_at'=>$this->due_at,
+         'notified'=>$this->notified,
          'created_at'=>$this->created_at->format(config('app.date_formats.exact')),
 
          'updated_at'=>$this->updated_at->format(config('app.date_formats.exact')),

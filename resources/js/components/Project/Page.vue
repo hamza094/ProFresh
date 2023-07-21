@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div v-if="this.show">
 		<div class="container-fluid ">
 			<div class="row">
 				<div class="col-md-8 page pd-r">
@@ -133,6 +133,12 @@
 	</div>
 </div>
 </div>
+<!--<div v-else class="text-center mt-5">
+    <h3>Thank you for your patience. The page is loading, and we're almost there!</h3>
+    <div class="d-flex mt-3 justify-content-center align-items-center">
+      <ring-loader :color=this.color :size="100" />
+    </div>
+  </div>-->
 </template>
 <script>
 	import Status from './Status.vue'
@@ -156,6 +162,7 @@ export default{
 
     data(){	
     return{
+     color:'#301934', 
 		 nameEdit:false,
 		 aboutEdit:false,
 		 projectname:'',
@@ -166,6 +173,7 @@ export default{
      Hot_Score: 21,
 		 path:'',
 		 members:'',
+		 show:false
     };
     },
 
@@ -173,6 +181,7 @@ export default{
     	const slug = this.$route.params.slug;
       this.loadProject(slug)
       .then(() => {
+      	this.show=true;
       this.projectname = this.project.name;
       this.projectabout = this.project.about;
       this.members = this.project.members;
