@@ -2,8 +2,12 @@
 
     <div class="edit-border-top p-3 task-modal">
     <div class="edit-border-bottom">
+        <!-- Task Title Section -->
         <div class="task-modal_content">
+
+          <!-- Edit Mode -->
          <span v-if="editing == task.id">
+
             <input class="title-form form-control" name="title" v-model="form.title" v-text="task.title">
 
             <span class="btn btn-link btn-sm" @click="updateTitle(task.id,task)">Update</span>
@@ -11,20 +15,26 @@
            <span class="btn btn-link btn-sm" @click="closeTitleForm(task.id,task)">Cancel</span>
           </span>
 
+            <!-- View Mode -->
            <span v-else class="task-modal_title" @click="openTitleForm(task.id,task)">{{task.title}}</span>
 
             <span class="task-modal_close float-right" role="button" @click.prevent="modalClose">x</span>
         </div>
+
+          <!-- Display error message for title -->
         <span class="text-danger font-italic" v-if="errors.title" v-text="errors.title[0]"></span>
     </div>
+
+        <!-- Task Details Section -->
         <div class="panel-form mt-2">
           <div class="row">
           	<div class="col-md-8">
+
+              <!-- Task Features Section -->
           		<div class="task-feature">
-          			<!--<p>-->
           				<p>
           					<small><b>Label</b> </small>:
-          					<span class="task-option_labels-component" @click="changeStatus(status)" :style="{backgroundColor: task.status.color}">{{task.status.label}}</span>
+          					<span class="task-option_labels-component" :style="{backgroundColor: task.status.color}">{{task.status.label}}</span>
           					<small class="ml-2"><b>Members:</b></small>
           					<span class="task-member">M</span>
           					<span class="task-member">A</span> 
@@ -35,14 +45,18 @@
 
           				<p v-if="task.notified"><small><b>Notified: </b> </small>{{task.notified}} </p>
 
-          				<p v-if="task.due_at"><small><b>Days Left: </b>{{this.remainingMessage}}  </small> </p>          				
-          			<!--</p>-->
-          		</div>
+          				<p v-if="task.due_at"><small><b>Days Left: </b>{{this.remainingTime}}  </small> </p>
+
+                </div>
+
           		<div class="task-description">
-          			 <p class="task-description_container"><span class="task-description_heading">Description:</span><span class="text-danger font-italic" v-if="errors.description" v-text="errors.description"></span></p>
+          			 <p class="task-description_container">
+                  <span class="task-description_heading">Description:</span>
+                  <span class="text-danger font-italic" v-if="errors.description" v-text="errors.description"></span>
+                </p>
 
-                     <div v-if="edit == task.id">
-
+                <div v-if="edit == task.id">
+              <!-- Vue editor for editing the description -->
                 <vue-editor name="description" 
                 v-model="form.description" :editorToolbar="customToolbar"></vue-editor>
 
@@ -55,41 +69,57 @@
             <div v-else>
             	<p class="task-description_content" @click="openDescriptionForm(task.id,task)" v-html="task.description"></p>
             </div>	
-
           		</div>
           	</div>
+
           	<div class="col-md-4">
           		<div class="task-option">
+                <!-- Change Label section -->
           			<span class="text-center ml-4"><b>Options</b></span>
           			<h5 class="text-center">Change Label</h5>
           			<ul class="task-option_labels">
+
+                <!-- Task status labels -->
           			<li v-for="status in statuses" :key="status.id">
-                     <p class="task-option_labels-component" @click="changeStatus(status)" :style="{backgroundColor: status.color}">{{status.label}}
+                     <p class="task-option_labels-component" @click="changeStatus(status.id,task,task.id)" :style="{backgroundColor: status.color}">{{status.label}}
                      <span  v-if="task.status_id == status.id">
                        <i class="fas fa-check-circle" style="color: #2a971c;"></i>
                      </span>
                      </p>
           			</li>
+
           			</ul>
           			<ul class="task-option_features">
           				<li>
+                  <!-- Members dropdown -->
           				<button class="btn btn-sm btn-outline-primary btn-block member-dropdown" @click.prevent="memberPop = !memberPop">
           					<i class="fas fa-user-alt pr-1"></i> <b>Members</b>
           				</button>
+
+                  <!-- Assign members section -->
           				<div class="member-dropdown_item" v-show=memberPop>
-                        <p class="text-center m-1"><small><b>Assign Task To Member</b></small></p>
-                        <input type="" placeholder="Search Members" class="form-control m-2" name="member">
-                        <button class="btn btn-sm btn-primary float-right">Assign</button>
-                       </div>
+                    <p class="text-center m-1"><small><b>Assign Task To Member</b></small></p>
+
+                    <input type="text" placeholder="Search Members" class="form-control" name="member">
+
+                    <button class=" mt-2 btn btn-sm btn-primary float-right">Assign</button>
+                  </div>
+
           			</li>
+
+                <!-- Due Date section -->
           			<li>
           				<button class="btn btn-sm btn btn-sm btn-outline-success btn-block" @click.prevent="datePop = !datePop">
           				  <i class="fas fa-clock pr-1"></i><b>Due Date</b>
           				</button>
           				<div class="member-dropdown_item" v-show=datePop>
                         <span>Due Date:
+
+                    <!-- Date picker for setting due date -->
                         <datetime type="datetime" v-model="form.due_at" value-zone="local" zone="local" :min-datetime="modifiedDate"></datetime>
                         </span>
+
+                        <!-- Notification select dropdown -->
                         <select class="custom-select mr-sm-2" v-model="form.notified">
                          <option selected>Choose...</option>
                           <option value="1 Day Before">1 Day Before</option>
@@ -97,8 +127,10 @@
                           <option value="15 Minutes Before">15 Minutes Before</option><option value="5 Minutes Before">5 Minutes Before</option>
                           <option value="At The Time">At The Time</option>
                          </select>
+
                          <div class="float-right mt-2">
                           <button class="btn btn-sm btn-secondary" @click.prevent="cancelDue()">Cancel</button>
+
                           <button class="btn btn-sm btn-primary" @click.prevent="taskDue(task.id,task)">Set</button>
                          </div>
                        </div>
@@ -124,6 +156,7 @@
 
 <script>
 import { VueEditor } from "vue2-editor";
+import { calculateRemainingTime } from '../../../utils/TaskUtils';
 
 export default {
 	components: {VueEditor},
@@ -144,8 +177,9 @@ export default {
           description:'',
           due_at:'',
           notified:'',
+          status_id:''
         },
-		model:{},
+		    model:{},
         errors:{},
         customToolbar: [
         ["bold", "italic", "underline"],
@@ -162,86 +196,73 @@ export default {
     const modifiedDate = new Date(this.currentDate.getTime() + 30 * 60000);
     return modifiedDate.toISOString();
   },
-  remainingMessage(){
-    if(this.task.due_at !== null){
-  	  const duration = this.calculateDuration();
-      const timeRemaining = this.calculateTimeRemaining(duration);
-
-      if (timeRemaining <= 0) {
-        return 'Due date passed';
-      }
-
-      const message = this.formatRemainingTime(duration);
-
-      return message;
-
-  }
-}
+  remainingTime(){
+    return calculateRemainingTime(this.task, this.currentDate);
+},
 },
   methods: {
-  	 calculateDuration() {
-      return moment.duration(moment(this.task.due_at).diff(moment(this.currentDate)));
-    },
-    calculateTimeRemaining(duration) {
-      return Math.floor(duration.asMinutes());
-    },
-     formatRemainingTime(duration) {
-      const units = ['day', 'hour', 'minute'];
-      const values = [duration.days(), duration.hours(), duration.minutes()];
+ updateTitle(id, task) {
+    this.updateTask(
+      id,task,{ title: this.form.title },
+      () => {
+        this.editing = false;
+        this.errors = '';
+      });
+  },
 
-      for (let i = 0; i < units.length; i++) {
-        if (values[i] > 0) {
-          return `${values[i]} ${units[i]}(s) remaining`;
+  updateDescription(id,task){
+    this.updateTask(
+      id,task,{ description: this.form.description},
+      () => {
+        this.edit=false; 
+        this.errors = '';
+      });
+  },
+
+   changeStatus(statusId,task,id){
+    this.updateTask(
+      id,task,{ status_id:statusId},
+      () => {
+        this.edit=false; 
+        this.errors = '';
+      });
+    },
+
+    taskDue(id,task){
+        this.updateTask(
+      id,task,{ due_at:this.form.due_at,
+        notified:this.form.notified,},
+      () => {
+        this.cancelDue();
+      });
+    },
+
+updateTask(id, task, data,additionalCallback) {
+  if (this.areObjectsEqual(data, task)) {
+      this.$vToastify.warning("Update not allowed. No changes were made.");
+      return;
+  }
+
+  axios.put(`/api/v1/projects/${this.slug}/task/${id}`, data)
+    .then(response => {
+      this.$vToastify.success(response.data.message);
+       for (const key in response.data.task) {
+        if (data.hasOwnProperty(key)) {
+          task[key] = response.data.task[key];
         }
       }
-    },
-    taskDue(id,task){
-     /*if(this.form.due_at == task.due_at){
-  this.$vToastify.warning("Update not allowed. No changes were made.");
-  return;
-}*/
+      if (additionalCallback && typeof additionalCallback === 'function') {
+        additionalCallback(response.data);
+      }
+    })
+    .catch(error => {
+      this.errors = error.response.data.errors;
+    });
+},
 
-      axios.put(`/api/v1/projects/${this.slug}/task/${id}`,{
-        due_at:this.form.due_at,
-        notified:this.form.notified,
-      }).then(response=>{
-          this.$vToastify.success(response.data.message);
-          task.due_at=this.form.due_at;
-          task.notified=this.form.notified;
-          this.cancelDue();
-      }).catch(error=>{
-          this.errors = error.response.data.errors;
-      })
-    },
-    cancelDue(){
-      this.datePop=false;
-      this.form.notified='';
-      this.form.due_at='';
-      this.errors='';      
-    },
-  modalClose(){
-   this.$modal.hide('task-modal');
-   this.errors='';
-	 this.form={
-	 };
- },
- updateTitle(id,task){
-
-if(this.form.title == task.title){
-  this.$vToastify.warning("Update not allowed. No changes were made.");
-  return;
-}
-      axios.put(`/api/v1/projects/${this.slug}/task/${id}`,{
-        title:this.form.title,
-      }).then(response=>{
-          this.$vToastify.success(response.data.message);
-          this.editing=false;
-          task.title=this.form.title;
-          this.errors='';
-      }).catch(error=>{
-          this.errors = error.response.data.errors;
-      })
-    },
+ areObjectsEqual(obj1, obj2) {
+    return Object.keys(obj1).every(key => obj1[key] === obj2[key]);
+  },
 
     closeTitleForm(id,task){
       this.editing=false;
@@ -254,21 +275,6 @@ if(this.form.title == task.title){
       this.form.title=task.title;
     },
 
-    updateDescription(id,task){
-      if(this.form.description == task.description){
-  this.$vToastify.warning("Update not allowed. No changes were made.");
-  return;
-}
-      axios.put(`/api/v1/projects/${this.slug}/task/${id}`,{
-        description:this.form.description,
-      }).then(response=>{
-          this.$vToastify.success(response.data.message);
-          this.edit=false;
-          task.description=this.form.description;
-      }).catch(error=>{
-          this.errors = error.response.data.errors;
-      })
-    },
 
     closeDescriptionForm(id,task){
       this.edit=false;
@@ -280,11 +286,22 @@ if(this.form.title == task.title){
       this.form.description=task.description;
     },
 
+  cancelDue(){
+      this.datePop=false;
+      this.form.notified='';
+      this.form.due_at='';
+      this.errors='';      
+    },
+
+  modalClose(){
+   this.$modal.hide('task-modal');
+   this.errors='';
+   this.form={
+   };
+ },
+
     assignMember(){
     	console.log('assign Member');
-    },
-    dueDate(){
-    	console.log('due date');
     },
 
     inActive(){
@@ -292,9 +309,6 @@ if(this.form.title == task.title){
     },
     trash(){
     	console.log('delete');
-    },
-    changeStatus(status){
-    	console.log(status.label);
     },
     },
     mounted(){	 
