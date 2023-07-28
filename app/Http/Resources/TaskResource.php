@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 use App\Http\Resources\TaskStatusResource;
+use App\Http\Resources\UsersResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class TaskResource extends JsonResource
@@ -20,6 +21,7 @@ class TaskResource extends JsonResource
          'description'=>$this->description,
          'status_id'=>$this->status_id,
          'status'=>new TaskStatusResource($this->whenLoaded('status')),
+        'members'=>UsersResource::collection($this->whenLoaded('assignee')),
          'due_at'=>$this->due_at,
          'notified'=>$this->notified,
          'created_at'=>$this->created_at->format(config('app.date_formats.exact')),

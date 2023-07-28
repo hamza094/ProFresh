@@ -77,6 +77,11 @@ Route::apiResource('/task',TaskController::class)
 //->middleware('subscription');
 
 Route::patch('/task/{task}/members',[TaskFeaturesController::class,'members'])->name('task.members');
+
+Route::patch('/task/{task}/unassign',[TaskFeaturesController::class,'unassign']);
+
+Route::get('/member/search', [TaskFeaturesController::class,'search']);
+
 //->middleware('subscription');
 
 

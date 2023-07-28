@@ -36,9 +36,13 @@
           					<small><b>Label</b> </small>:
           					<span class="task-option_labels-component" :style="{backgroundColor: task.status.color}">{{task.status.label}}</span>
           					<small class="ml-2"><b>Members:</b></small>
-          					<span class="task-member">M</span>
-          					<span class="task-member">A</span> 
-          					<span class="task-member">S</span> 
+                  
+                      <span v-for="member in task.members" class="task-member-container" :key="member.id">
+                    <router-link :to="`/user/${member.id}/profile`" class="task-member mr-1" target="_blank">{{ member.name.charAt(0) }}</router-link>
+                    <span class="task-member-username">{{ member.username }}
+      <span class="unassign-cross" @click="unassignMember(task.id,member.id)">&times;</span>
+                    </span>
+                    </span>
           					</p>
 
           				<p v-if="task.due_at"><small><b>Task due: </b> </small> {{task.due_at | datetime}}</p>
@@ -100,9 +104,32 @@
           				<div class="member-dropdown_item" v-show=memberPop>
                     <p class="text-center m-1"><small><b>Assign Task To Member</b></small></p>
 
-                    <input type="text" placeholder="Search Members" class="form-control" name="member">
+                     <input type="text" placeholder="Search Members" class="form-control" v-model="form.search" name="member" autocomplete="off">
 
-                    <button class=" mt-2 btn btn-sm btn-primary float-right">Assign</button>
+                       <div v-if="hasError('members')">
+    <span class="text-danger font-italic" v-for="error in getErrors('members')" :key="error">*{{ error }}</span>
+  </div>
+
+  <div v-if="hasError('members.0')">
+    <span class="text-danger font-italic" v-for="error in getErrors('members.0')" :key="error">*{{ error }}</span>
+  </div>
+
+                <div class="member-list" v-if="searchResults.length > 0 && form.search">        
+                <div v-for="member in searchResults" :key="member.id"
+               class="member-list_items">
+              <div @click.prevent="addMember(member,member.id)">{{member.name}} ({{member.username}})
+              </div>
+              </div> 
+               </div>
+
+                  <button class=" mt-2 btn btn-sm btn-primary float-right" @click="assignMembers(task.id)">Assign</button>
+
+                    <div v-if="taskMembers.length > 0" class="mt-3" style="height:70px;width:150px; overflow-y:scroll;">
+
+                      <div v-for="member in taskMembers">
+                        <span>{{member.username}} <span @click.prevent="removeMember(member,member.id)"><i class="fas fa-minus-circle"></i></span> </span>
+                      </div>
+                    </div>
                   </div>
 
           			</li>
@@ -157,6 +184,7 @@
 <script>
 import { VueEditor } from "vue2-editor";
 import { calculateRemainingTime } from '../../../utils/TaskUtils';
+import { debounce } from 'lodash';
 
 export default {
 	components: {VueEditor},
@@ -171,14 +199,18 @@ export default {
         memberPop:false,
         datePop:false,
         statuses:'',
+        isEditable: false,
         due:'',
         form:{
           title:'',
           description:'',
           due_at:'',
           notified:'',
-          status_id:''
+          status_id:'',
+          search:'',
         },
+        searchResults:"",
+        taskMembers: [], 
 		    model:{},
         errors:{},
         customToolbar: [
@@ -190,6 +222,11 @@ export default {
         ['link', 'unlink'],
       ]
         };
+    },
+    watch:{
+      'form.search': debounce(function(newSearch) {
+      this.performSearch(newSearch);
+    }, 500),
     },
     computed: {
   modifiedDate() {
@@ -300,8 +337,64 @@ updateTask(id, task, data,additionalCallback) {
    };
  },
 
-    assignMember(){
-    	console.log('assign Member');
+  performSearch(searchTerm) {
+    axios.get(`/api/v1/projects/${this.slug}/member/search`, {
+        params: { search: this.form.search}
+    })
+    .then(response => {
+        this.searchResults=response.data;
+    })
+    .catch(error => {
+        console.log(error);
+    });
+},
+addMember(member,id){
+  this.taskMembers.push(member);
+  this.searchResults=[];
+  this.form.search='';
+},
+removeMember(member,id){
+  this.taskMembers = this.taskMembers.filter((m) => m !== member);
+},
+
+    assignMembers(taskId){
+      if(this.taskMembers.length == 0 ){
+        return this.$vToastify.info('no member is selected to assign task')
+      }
+      const memberIds = this.taskMembers.map(member => member.id);
+
+        axios.patch(`/api/v1/projects/${this.slug}/task/${taskId}/members`,{
+              members:memberIds,
+          }).then(response=>{
+            this.taskMembers=[];
+            this.task.members=response.data.taskMembers;
+            this.errors='';
+            this.$vToastify.success(response.data.message);
+          }).catch(error=>{
+             if (error.response.status === 422) {
+            this.errors = error.response.data.errors;
+            }
+          });
+    },
+    unassignMember(taskId,memberId){
+
+      axios.patch(`/api/v1/projects/${this.slug}/task/${taskId}/unassign`,{
+              member:memberId,
+          }).then(response=>{
+            this.task.members=response.data.members;
+            this.$vToastify.success(response.data.message);
+          }).catch(error=>{
+            console.log(error);
+          });
+    },
+      hasError(key) {
+      return this.errors.hasOwnProperty(key);
+    },
+    getErrors(key) {
+      if (this.hasError(key)) {
+        return this.errors[key];
+      }
+      return [];
     },
 
     inActive(){

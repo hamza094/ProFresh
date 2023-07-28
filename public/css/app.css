@@ -1025,6 +1025,24 @@ p {
   height: 30px;
   text-align: center;
   line-height: 30px;
+  text-decoration: none;
+}
+
+.task-member:hover {
+  text-decoration: none;
+  color: white;
+}
+
+.task-member-container {
+  display: inline-block;
+  text-align: center;
+  margin-right: 10px;
+  /* Adjust the margin as needed */
+}
+
+.task-member-username {
+  font-size: 14px;
+  color: #333;
 }
 
 .task-description {
@@ -1077,6 +1095,21 @@ p {
   margin-bottom: 0.8rem;
 }
 
+.unassign-cross {
+  position: relative;
+  top: -8px;
+  right: 4px;
+  font-size: 1rem;
+  color: red;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.task-member-username:hover .unassign-cross {
+  opacity: 1;
+}
+
 .invite-list {
   position: relative;
 }
@@ -1087,7 +1120,7 @@ p {
   border: 1px solid #12344D;
   border-radius: 4px;
   padding-left: 0;
-  background-color: white;
+  background-color: #D3D3D3;
   width: 100%;
 }
 
@@ -1100,6 +1133,24 @@ p {
 
 .invite li:hover {
   background-color: #e5e5ee;
+}
+
+.member-list {
+  position: relative;
+  text-align: center;
+  background-color: #eee;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+  padding: 0.4rem 0 0.4rem 0;
+}
+
+.member-list_items {
+  cursor: pointer;
+  transition: background-color 0.1s ease;
+}
+
+.member-list_items:hover {
+  background-color: #4682B4;
+  color: white;
 }
 
 .pro-info {

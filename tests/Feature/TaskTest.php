@@ -126,12 +126,38 @@ class TaskTest extends TestCase
                 'message' => 'Task assigned to member Successfully',
             ]);
 
-                    $this->assertCount(1, $user->notifications);
-
+        $this->assertCount(1, $user->notifications);
 
         $this->assertDatabaseHas('task_user', [
             'task_id' => $task->id,
             'user_id' => $user->id,
+        ]);
+    }
+
+        /** @test */
+    public function it_unassigns_a_member_from_the_task()
+    {
+        $status=TaskStatus::factory()->create();
+
+        $task=$this->project->addTask('test task');
+
+        $task->assignee()->attach($this->user);
+
+        // Make a request to unassign the user from the task
+        $response = $this->patchJson("/api/v1/projects/{$this->project->id}/tasks/{$task->id}/unassign", [
+            'member' => $this->user->id,
+        ]);
+
+        $response->assertSuccessful();
+
+        $this->assertDatabaseMissing('task_user', [
+            'task_id' => $task->id,
+            'user_id' => $user->id,
+        ]);
+
+        // Assert that the response contains the success message
+        $response->assertJson([
+            'message' => 'Task member Unassigned',
         ]);
     }
 
