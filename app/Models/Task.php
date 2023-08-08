@@ -3,16 +3,19 @@
 namespace App\Models;
 
 use App\Traits\RecordActivity;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Task extends Model
 {
-  use RecordActivity, HasFactory;
+  use RecordActivity, SoftDeletes, HasFactory;
 
   protected $guarded=[];
 
   protected $touches=['project'];
+
+  protected $deletedAt = 'archived_at';
 
   protected static function booted()
   {
@@ -42,6 +45,11 @@ class Task extends Model
     public function status()
     {
       return $this->belongsTo(TaskStatus::class,'status_id');
+    }
+
+    public function scopeArchived($query)
+    {
+        return $query->onlyTrashed()->with('status')->get();
     }
 
 }

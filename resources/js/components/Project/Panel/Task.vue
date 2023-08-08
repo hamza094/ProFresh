@@ -18,8 +18,15 @@
   </form>
     </div>
     <div v-if="tasks" class="task-list">
-      <p class="task-list_heading"> Project Tasks</p>
-       <div v-for="(task,index) in tasks.data" :key="task.id">
+      <p class="task-list_heading"> Project Tasks
+        <span class="float-right">
+          <a v-on:click.prevent="archiveTasks" class="panel-list_item">
+          <i class="fas fa-tasks"></i>
+         </a>
+    </span>
+  </p> 
+      <div  v-if="tasks.length > 0">
+       <div v-for="(task,index) in tasks" :key="task.id">
          <div class="card task-card_style" @click="openModal(task)">
           <div v-if="task.status" class="task-card_border" :style="{ 
             borderColor: task.status.color 
@@ -28,14 +35,18 @@
             <span>{{task.title}}</span>
           </div>
         </div>
+      </div>
       </div> 
+      <div v-else>
+          <p>Sorry, no tasks found.</p>
+      </div>
        <modal name="task-modal" height="auto" :scrollable="true"
-      width="65%" class="model-desin" :clickToClose=false >
+      width="65%" class="model-desin" :clickToClose=false @modal-closed="closeModal">
       <div v-if="selectedTask">
-        <TaskModal :task="selectedTask" :slug="slug"></TaskModal>
+        <TaskModal :task="selectedTask" :slug="slug" :state="state"></TaskModal @modal-closed="closeModal">
       </div>
     </modal>
-			<pagination :data="tasks" @pagination-change-page="getResults"></pagination>
+			<!--<pagination :data="tasks" @pagination-change-page="getResults"></pagination>-->
     </div>
   </div>
 </SubscriptionCheck>
@@ -53,6 +64,7 @@
     data() {
       return {
         task_score:2,
+        state:'active',
         selectedTask: null,
         form:{
           title:'',
@@ -61,15 +73,31 @@
         };
     },
     methods: {
-      ...mapMutations('project',['addScore','reduceScore']),
+      ...mapMutations('project',['addScore','reduceScore','setTasks']),
       ...mapActions('project',['loadTasks']),
 
-		 getResults(page = 1) {
+		 /*getResults(page = 1) {
       this.loadTasks({
         slug: this.slug,
         page: page
       });
-    },
+    },*/
+      archiveTasks() {
+        const panel1Handle = this.$showPanel({
+          component: 'archive-tasks',
+          openOn: 'right',
+          width:440,
+          disableBgClick:true,
+          keepAlive:true,
+          props: {
+            slug: this.slug, 
+          }
+          })
+          panel1Handle.promise
+            .then(result => {
+
+            });
+          },
      openModal(task) {
       this.selectedTask = task;
       this.$modal.show('task-modal');
@@ -79,44 +107,21 @@
           .then(response=>{
               this.$vToastify.success("Project Task added");
               this.form.title="";
-							this.getResults();
+							//this.getResults();
               this.addScore(this.task_score);
           }).catch(error=>{
 						this.form.title="";
 						this.taskErrors(error);
        });
     },
+      closeModal() {
+    this.selectedTask = null;
+  },
+
 		url($slug,$id){
 			return '/api/v1/projects/'+$slug+'/task/'+$id;
 		},
 
-    remove(id,index){
-      axios.delete(this.url(this.slug,id))
-      .then(response=>{
-				 this.getResults();
-         this.$vToastify.info("Project Task deleted");
-         this.reduceScore(this.task_score);
-      }).catch(error=>{
-        this.$vToastify.warning("Task deletion failed");
-      })
-    },
-
-    /*taskErrors(error){
-		if (!error.response) {
-    this.$vToastify.warning("An error occurred.");
-    return;
-  }
-  let errors = error.response.data.errors;
-  if (errors) {
-    for (let key in errors) {
-      if (errors.hasOwnProperty(key)) {
-        this.$vToastify.warning(errors[key][0]);
-      }
-    }
-  } else {
-    this.$vToastify.warning("An error occurred.");
-  }
-		},*/
     },
 }
 </script>

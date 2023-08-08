@@ -21,6 +21,7 @@ class CreateTasksTable extends Migration
             $table->dateTime('due_at')->nullable();
             $table->string('notified')->nullable();
             $table->foreignId('status_id')->nullable()->constrained();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

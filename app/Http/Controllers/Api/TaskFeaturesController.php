@@ -57,6 +57,19 @@ class TaskFeaturesController extends Controller
     ]);
     }
 
+    public function archive(Project $project,Task $task){
+
+        $task->delete();
+
+        $task->activities()->update(['is_hidden' => true]);
+
+         return $this->respondWithSuccess([
+        'message' => 'Project task archived successfully',
+        'members' => UsersResource::collection($project->tasks),
+    ]);
+
+    }
+
     public function search(Project $project,Request $request)
     {
        $searchTerm = $request->input('search');

@@ -85,9 +85,20 @@ trait RecordActivity
     public function activities($limit = true)
     {
         if ($this instanceof Project) {
-            return $this->hasMany(Activity::class)->with('user:id,name','subject')->latest();
+            return $this->hasMany(Activity::class)
+            ->where(function ($query) {
+                $query->where('is_hidden', false)
+                      ->orWhereNull('is_hidden');
+            })
+            ->with('user:id,name','subject')
+            ->latest();
         }
-        return $this->morphMany(Activity::class, 'subject')->with('user')->latest();
+        return $this->morphMany(Activity::class, 'subject')
+        ->where(function ($query) {
+            $query->where('is_hidden', false)->orWhereNull('is_hidden');
+        })
+        ->with('user')
+        ->latest();
     }
     /**
      * Fetch the changes to the model.

@@ -1,11 +1,10 @@
 <template>
-
     <div class="edit-border-top p-3 task-modal">
     <div class="edit-border-bottom">
-        <!-- Task Title Section -->
+        
         <div class="task-modal_content">
 
-          <!-- Edit Mode -->
+          
          <span v-if="editing == task.id">
 
             <input class="title-form form-control" name="title" v-model="form.title" v-text="task.title">
@@ -15,22 +14,24 @@
            <span class="btn btn-link btn-sm" @click="closeTitleForm(task.id,task)">Cancel</span>
           </span>
 
-            <!-- View Mode -->
+            
            <span v-else class="task-modal_title" @click="openTitleForm(task.id,task)">{{task.title}}</span>
 
             <span class="task-modal_close float-right" role="button" @click.prevent="modalClose">x</span>
         </div>
 
-          <!-- Display error message for title -->
+          
         <span class="text-danger font-italic" v-if="errors.title" v-text="errors.title[0]"></span>
     </div>
 
-        <!-- Task Details Section -->
+        <div v-if="state == 'archived'" class="alert alert-warning" role="alert">
+Please note that this task is currently archived. Currently, you can only delete or unarchive this task.
+</div>
         <div class="panel-form mt-2">
           <div class="row">
           	<div class="col-md-8">
 
-              <!-- Task Features Section -->
+              
           		<div class="task-feature">
           				<p>
           					<small><b>Label</b> </small>:
@@ -60,7 +61,7 @@
                 </p>
 
                 <div v-if="edit == task.id">
-              <!-- Vue editor for editing the description -->
+              
                 <vue-editor name="description" 
                 v-model="form.description" :editorToolbar="customToolbar"></vue-editor>
 
@@ -78,12 +79,12 @@
 
           	<div class="col-md-4">
           		<div class="task-option">
-                <!-- Change Label section -->
+              
           			<span class="text-center ml-4"><b>Options</b></span>
           			<h5 class="text-center">Change Label</h5>
           			<ul class="task-option_labels">
 
-                <!-- Task status labels -->
+              
           			<li v-for="status in statuses" :key="status.id">
                      <p class="task-option_labels-component" @click="changeStatus(status.id,task,task.id)" :style="{backgroundColor: status.color}">{{status.label}}
                      <span  v-if="task.status_id == status.id">
@@ -95,12 +96,12 @@
           			</ul>
           			<ul class="task-option_features">
           				<li>
-                  <!-- Members dropdown -->
+                  
           				<button class="btn btn-sm btn-outline-primary btn-block member-dropdown" @click.prevent="memberPop = !memberPop">
           					<i class="fas fa-user-alt pr-1"></i> <b>Members</b>
           				</button>
 
-                  <!-- Assign members section -->
+                
           				<div class="member-dropdown_item" v-show=memberPop>
                     <p class="text-center m-1"><small><b>Assign Task To Member</b></small></p>
 
@@ -134,7 +135,7 @@
 
           			</li>
 
-                <!-- Due Date section -->
+                
           			<li>
           				<button class="btn btn-sm btn btn-sm btn-outline-success btn-block" @click.prevent="datePop = !datePop">
           				  <i class="fas fa-clock pr-1"></i><b>Due Date</b>
@@ -142,11 +143,11 @@
           				<div class="member-dropdown_item" v-show=datePop>
                         <span>Due Date:
 
-                    <!-- Date picker for setting due date -->
+                    
                         <datetime type="datetime" v-model="form.due_at" value-zone="local" zone="local" :min-datetime="modifiedDate"></datetime>
                         </span>
 
-                        <!-- Notification select dropdown -->
+                      
                         <select class="custom-select mr-sm-2" v-model="form.notified">
                          <option selected>Choose...</option>
                           <option value="1 Day Before">1 Day Before</option>
@@ -163,8 +164,8 @@
                        </div>
           			</li>	
           			<li>
-          				<button class="btn btn-sm btn btn-sm btn-outline-info btn-block" @click.prevent="inActive()">
-          				  <i class="fas fa-ban pr-1"></i><b>	Inactive</b>
+          				<button class="btn btn-sm btn btn-sm btn-outline-info btn-block" @click.prevent="archive(task.id)">
+          				  <i class="fas fa-ban pr-1"></i><b>Archive</b>
           				</button>
           			</li>
           			<li>	
@@ -178,18 +179,18 @@
           	</div>
           </div>
         </div>
-	</div>
+	</div> 
 </template>
 
 <script>
-import { VueEditor } from "vue2-editor";
+ import { VueEditor } from "vue2-editor";
 import { calculateRemainingTime } from '../../../utils/TaskUtils';
 import { debounce } from 'lodash';
 
 export default {
 	components: {VueEditor},
 
-  props:['task','slug'],
+  props:['task','slug','state'],
     data() {
       return {
         editing:0,
@@ -332,9 +333,11 @@ updateTask(id, task, data,additionalCallback) {
 
   modalClose(){
    this.$modal.hide('task-modal');
+   this.$modal.hide('archive-task-modal');
    this.errors='';
    this.form={
    };
+   this.$emit('modal-closed');
  },
 
   performSearch(searchTerm) {
@@ -377,7 +380,6 @@ removeMember(member,id){
           });
     },
     unassignMember(taskId,memberId){
-
       axios.patch(`/api/v1/projects/${this.slug}/task/${taskId}/unassign`,{
               member:memberId,
           }).then(response=>{
@@ -397,8 +399,14 @@ removeMember(member,id){
       return [];
     },
 
-    inActive(){
-    	console.log('in active');
+    archive(taskId){
+    	axios.delete(`/api/v1/projects/${this.slug}/tasks/${taskId}/archive`)
+          .then(response=>{
+            //this.tasks=response.data.members;
+            this.$vToastify.success(response.data.message);
+          }).catch(error=>{
+            console.log(error);
+          });
     },
     trash(){
     	console.log('delete');
@@ -412,5 +420,5 @@ removeMember(member,id){
 
     	});
     }
-}
+} 
 </script>

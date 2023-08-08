@@ -17,6 +17,25 @@ class TaskController extends ApiController
 {
   use ApiResponseHelpers;
 
+  public function index(Project $project,Request $request)
+  {
+     $iconType = $request->query('request');
+     $isArchived = $iconType === 'archived';
+
+    $tasks = $isArchived ? $project->tasks()->archived() : $project->tasks()->with('status')->get();
+
+    $message = $isArchived ? 'Project Archived Tasks' : 'Project Active Tasks';
+
+    if ($tasks->isEmpty()) {
+        $message = 'Sorry, no tasks found.';
+    }
+
+    return $this->respondWithSuccess([
+        'message' => $message,
+        'tasks' => TaskResource::collection($tasks),
+    ]);
+  }
+
   public function store(Project $project,TaskRequest $request,TaskService $taskService)
   {
     $taskService->checkLimits($project);
@@ -58,7 +77,7 @@ class TaskController extends ApiController
   {
      $task->activities()->delete();
 
-     $task->delete();  
+     $task->forceDelete();  
 
      return $this->respondNoContent(['message'=>'Task deleted successfully']);
   }

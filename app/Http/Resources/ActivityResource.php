@@ -71,7 +71,7 @@ class ActivityResource extends JsonResource
 
   protected function deleted_task()
   {
-    return 'Task deleted from the project';
+    return 'Task archived from the project';
   }
 
   protected function created_message()

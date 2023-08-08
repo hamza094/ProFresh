@@ -32,6 +32,10 @@ class ProjectRepository
         $activities = $this->$method($activities);
     }
 
+     $activities = $activities->reject(function ($activity) {
+        return $activity['hidden'] === true;
+    });
+
     return $activities;
   }
 

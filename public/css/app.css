@@ -1423,6 +1423,10 @@ button.gnuIjg {
   border: 1px solid #e5e5ee;
 }
 
+.vm--container {
+  z-index: 0 !important;
+}
+
 .padding-0 {
   padding-right: 0;
 }

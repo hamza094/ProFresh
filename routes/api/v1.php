@@ -73,12 +73,14 @@ Route::controller(MessageController::class)->group(function(){
 
 //Task Routes
 Route::apiResource('/task',TaskController::class)
-->except(['index','show']);
+->except(['show']);
 //->middleware('subscription');
 
 Route::patch('/task/{task}/members',[TaskFeaturesController::class,'members'])->name('task.members');
 
 Route::patch('/task/{task}/unassign',[TaskFeaturesController::class,'unassign']);
+
+Route::delete('/tasks/{task}/archive',[TaskFeaturesController::class,'archive']);
 
 Route::get('/member/search', [TaskFeaturesController::class,'search']);
 

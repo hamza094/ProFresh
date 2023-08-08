@@ -161,9 +161,23 @@ class TaskTest extends TestCase
         ]);
     }
 
+    /** @test */
+   public function allowed_user_can_archive_task()
+   {
+        $status=TaskStatus::factory()->create();
+
+     $task=Task::factory()->for($this->project)->create();
+
+       $response = $this->withoutExceptionHandling()->deleteJson("/api/v1/projects/{$this->project->slug}/tasks/{$task->id}/archive");
+
+        $this->assertSoftDeleted($task);
+   }
+
    /** @test */
    public function allowed_user_can_delete_task()
    {
+     $status=TaskStatus::factory()->create();
+
      $task=Task::factory()->for($this->project)->create();
 
       $this->withoutExceptionHandling()->deleteJson($task->path())->assertNoContent();
