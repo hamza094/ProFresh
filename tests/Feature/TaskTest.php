@@ -162,7 +162,7 @@ class TaskTest extends TestCase
     }
 
     /** @test */
-   public function allowed_user_can_archive_task()
+   public function allowed_user_can_archive_and_unarchive_task()
    {
         $status=TaskStatus::factory()->create();
 
@@ -171,6 +171,16 @@ class TaskTest extends TestCase
        $response = $this->withoutExceptionHandling()->deleteJson("/api/v1/projects/{$this->project->slug}/tasks/{$task->id}/archive");
 
         $this->assertSoftDeleted($task);
+
+           $task->activities()->update(['is_hidden' => false]);
+
+       $response = $this->getJson("/api/v1/projects/{$this->project->slug}/tasks/{$task->id}/unarchive");
+
+      $task->refresh();
+
+      $this->assertNotSoftDeleted($task);
+
+      $this->assertEquals($task->deleted_at,null);
    }
 
    /** @test */

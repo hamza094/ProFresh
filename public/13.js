@@ -1,297 +1,40 @@
 (window["webpackJsonp"] = window["webpackJsonp"] || []).push([[13],{
 
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Project/Panel/Task.vue?vue&type=script&lang=js&":
-/*!*****************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Project/Panel/Task.vue?vue&type=script&lang=js& ***!
-  \*****************************************************************************************************************************************************************************/
-/*! exports provided: default */
+/***/ "./resources/js/utils/TaskUtils.js":
+/*!*****************************************!*\
+  !*** ./resources/js/utils/TaskUtils.js ***!
+  \*****************************************/
+/*! exports provided: calculateRemainingTime */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _Modal_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Modal.vue */ "./resources/js/components/Project/Panel/Modal.vue");
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
-function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
-function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
-function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "calculateRemainingTime", function() { return calculateRemainingTime; });
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_0__);
 
-
-//import SubscriptionCheck from '../../SubscriptionChecker.vue';
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-  components: {
-    TaskModal: _Modal_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
-  },
-  props: ['slug', 'tasks', 'access'],
-  data: function data() {
-    return {
-      task_score: 2,
-      selectedTask: null,
-      form: {
-        title: ''
-      },
-      errors: {}
-    };
-  },
-  methods: _objectSpread(_objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapMutations"])('project', ['addScore', 'reduceScore'])), Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapActions"])('project', ['loadTasks'])), {}, {
-    getResults: function getResults() {
-      var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
-      this.loadTasks({
-        slug: this.slug,
-        page: page
-      });
-    },
-    openModal: function openModal(task) {
-      this.selectedTask = task;
-      this.$modal.show('task-modal');
-    },
-    add: function add() {
-      var _this = this;
-      axios.post('/api/v1/projects/' + this.slug + '/task', this.form).then(function (response) {
-        _this.$vToastify.success("Project Task added");
-        _this.form.title = "";
-        _this.getResults();
-        _this.addScore(_this.task_score);
-      })["catch"](function (error) {
-        _this.form.title = "";
-        _this.taskErrors(error);
-      });
-    },
-    url: function url($slug, $id) {
-      return '/api/v1/projects/' + $slug + '/task/' + $id;
-    },
-    remove: function remove(id, index) {
-      var _this2 = this;
-      axios["delete"](this.url(this.slug, id)).then(function (response) {
-        _this2.getResults();
-        _this2.$vToastify.info("Project Task deleted");
-        _this2.reduceScore(_this2.task_score);
-      })["catch"](function (error) {
-        _this2.$vToastify.warning("Task deletion failed");
-      });
+function calculateRemainingTime(task, currentDate) {
+  if (task.due_at !== null) {
+    var duration = moment__WEBPACK_IMPORTED_MODULE_0___default.a.duration(moment__WEBPACK_IMPORTED_MODULE_0___default()(task.due_at).diff(moment__WEBPACK_IMPORTED_MODULE_0___default()(currentDate)));
+    if (duration.asMilliseconds() <= 0) {
+      return 'Due date passed';
     }
-    /*taskErrors(error){
-    if (!error.response) {
-    this.$vToastify.warning("An error occurred.");
-    return;
+    var days = duration.days();
+    var hours = duration.hours();
+    var minutes = duration.minutes();
+    var messageParts = [];
+    if (days > 0) {
+      messageParts.push("".concat(days, " day(s)"));
     }
-    let errors = error.response.data.errors;
-    if (errors) {
-    for (let key in errors) {
-      if (errors.hasOwnProperty(key)) {
-        this.$vToastify.warning(errors[key][0]);
-      }
+    if (hours > 0) {
+      messageParts.push("".concat(hours, " hour(s)"));
     }
-    } else {
-    this.$vToastify.warning("An error occurred.");
+    if (minutes > 0) {
+      messageParts.push("".concat(minutes, " minute(s)"));
     }
-    },*/
-  })
-});
-
-/***/ }),
-
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Project/Panel/Task.vue?vue&type=template&id=468be251&":
-/*!***************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib/loaders/templateLoader.js??ref--6!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Project/Panel/Task.vue?vue&type=template&id=468be251& ***!
-  \***************************************************************************************************************************************************************************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
-var render = function render() {
-  var _vm = this,
-    _c = _vm._self._c;
-  return _c("div", {
-    staticClass: "task"
-  }, [_vm._m(0), _vm._v(" "), _c("div", {
-    staticClass: "collapse",
-    attrs: {
-      id: "taskProject"
-    }
-  }, [_c("div", {
-    staticClass: "card card-body"
-  }, [_c("div", {
-    staticClass: "task-add"
-  }, [_vm.access ? _c("form", {
-    on: {
-      submit: function submit($event) {
-        $event.preventDefault();
-        return _vm.add.apply(null, arguments);
-      }
-    }
-  }, [_c("div", {
-    staticClass: "form-group"
-  }, [_vm._m(1), _vm._v(" "), _c("input", {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: _vm.form.title,
-      expression: "form.title"
-    }],
-    staticClass: "form-control",
-    attrs: {
-      type: "text",
-      name: "title"
-    },
-    domProps: {
-      value: _vm.form.title
-    },
-    on: {
-      input: function input($event) {
-        if ($event.target.composing) return;
-        _vm.$set(_vm.form, "title", $event.target.value);
-      }
-    }
-  })])]) : _vm._e()]), _vm._v(" "), _vm.tasks ? _c("div", {
-    staticClass: "task-list"
-  }, [_c("p", {
-    staticClass: "task-list_heading"
-  }, [_vm._v(" Project Tasks")]), _vm._v(" "), _vm._l(_vm.tasks.data, function (task, index) {
-    return _c("div", {
-      key: task.id
-    }, [_c("div", {
-      staticClass: "card task-card_style",
-      on: {
-        click: function click($event) {
-          return _vm.openModal(task);
-        }
-      }
-    }, [task.status ? _c("div", {
-      staticClass: "task-card_border",
-      style: {
-        borderColor: task.status.color
-      }
-    }) : _vm._e(), _vm._v(" "), _c("div", {
-      staticClass: "card-body task-card_body"
-    }, [_c("span", [_vm._v(_vm._s(task.title))])])])]);
-  }), _vm._v(" "), _c("modal", {
-    staticClass: "model-desin",
-    attrs: {
-      name: "task-modal",
-      height: "auto",
-      scrollable: true,
-      width: "65%",
-      clickToClose: false
-    }
-  }, [_vm.selectedTask ? _c("div", [_c("TaskModal", {
-    attrs: {
-      task: _vm.selectedTask,
-      slug: _vm.slug
-    }
-  })], 1) : _vm._e()]), _vm._v(" "), _c("pagination", {
-    attrs: {
-      data: _vm.tasks
-    },
-    on: {
-      "pagination-change-page": _vm.getResults
-    }
-  })], 2) : _vm._e()])])]);
-};
-var staticRenderFns = [function () {
-  var _vm = this,
-    _c = _vm._self._c;
-  return _c("div", {
-    staticClass: "task-top"
-  }, [_c("span", [_c("i", {
-    staticClass: "fas fa-tasks"
-  }), _vm._v(" "), _c("b", [_vm._v("Tasks")]), _vm._v(" "), _c("a", {
-    attrs: {
-      "data-toggle": "collapse",
-      href: "#taskProject",
-      role: "button",
-      "aria-expanded": "false",
-      "aria-controls": "taskProject"
-    }
-  }, [_c("i", {
-    staticClass: "fas fa-angle-down float-right"
-  })])])]);
-}, function () {
-  var _vm = this,
-    _c = _vm._self._c;
-  return _c("label", {
-    attrs: {
-      "for": "body"
-    }
-  }, [_c("i", [_vm._v("Create a New Task")])]);
-}];
-render._withStripped = true;
-
-
-/***/ }),
-
-/***/ "./resources/js/components/Project/Panel/Task.vue":
-/*!********************************************************!*\
-  !*** ./resources/js/components/Project/Panel/Task.vue ***!
-  \********************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _Task_vue_vue_type_template_id_468be251___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Task.vue?vue&type=template&id=468be251& */ "./resources/js/components/Project/Panel/Task.vue?vue&type=template&id=468be251&");
-/* harmony import */ var _Task_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Task.vue?vue&type=script&lang=js& */ "./resources/js/components/Project/Panel/Task.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
-
-
-
-
-
-/* normalize component */
-
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _Task_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _Task_vue_vue_type_template_id_468be251___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _Task_vue_vue_type_template_id_468be251___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
-  false,
-  null,
-  null,
-  null
-  
-)
-
-/* hot reload */
-if (false) { var api; }
-component.options.__file = "resources/js/components/Project/Panel/Task.vue"
-/* harmony default export */ __webpack_exports__["default"] = (component.exports);
-
-/***/ }),
-
-/***/ "./resources/js/components/Project/Panel/Task.vue?vue&type=script&lang=js&":
-/*!*********************************************************************************!*\
-  !*** ./resources/js/components/Project/Panel/Task.vue?vue&type=script&lang=js& ***!
-  \*********************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Task_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./Task.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Project/Panel/Task.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Task_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
-
-/***/ }),
-
-/***/ "./resources/js/components/Project/Panel/Task.vue?vue&type=template&id=468be251&":
-/*!***************************************************************************************!*\
-  !*** ./resources/js/components/Project/Panel/Task.vue?vue&type=template&id=468be251& ***!
-  \***************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_Task_vue_vue_type_template_id_468be251___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??ref--6!../../../../../node_modules/vue-loader/lib??vue-loader-options!./Task.vue?vue&type=template&id=468be251& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Project/Panel/Task.vue?vue&type=template&id=468be251&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_Task_vue_vue_type_template_id_468be251___WEBPACK_IMPORTED_MODULE_0__["render"]; });
-
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_Task_vue_vue_type_template_id_468be251___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
-
-
+    return "".concat(messageParts.join(', '), " remaining");
+  }
+}
 
 /***/ })
 

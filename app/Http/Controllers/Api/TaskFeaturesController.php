@@ -12,6 +12,7 @@ use App\Notifications\TaskAssigned;
 use App\Http\Resources\TaskResource;
 use App\Http\Requests\TaskMembersRequest;
 use F9Web\ApiResponseHelpers;
+use Illuminate\Support\Facades\DB;
 use App\Http\Resources\UsersResource;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Http\JsonResponse;
@@ -57,18 +58,48 @@ class TaskFeaturesController extends Controller
     ]);
     }
 
-    public function archive(Project $project,Task $task){
-
+    public function archive(Project $project,Task $task)
+    {
+      DB::transaction(function () use ($task) {     
         $task->delete();
-
         $task->activities()->update(['is_hidden' => true]);
+      });
 
-         return $this->respondWithSuccess([
+      return $this->respondWithSuccess([
         'message' => 'Project task archived successfully',
-        'members' => UsersResource::collection($project->tasks),
-    ]);
+        'members' => new TaskResource($task),
+      ]);
 
     }
+
+     public function unarchive(Project $project,Task $task){
+
+        DB::transaction(function () use ($task) { 
+        $task->restore();
+        $task->activities()->update(['is_hidden' => false]);
+        });
+
+       return $this->respondWithSuccess([
+        'message' => 'Project task unArchived successfully',
+        'task' => new TaskResource($task),
+    ]);
+    }
+
+     public function delete(Project $project,Task $task)
+     {
+        $deletedTask=$task;
+
+        DB::transaction(function () use ($task) { 
+        $task->activities->each->delete();
+        tap($task)->forceDelete();
+       });
+
+         return $this->respondWithSuccess([
+        'message' => 'Task deleted successfully',
+        'task' => new TaskResource($deletedTask),
+    ]);
+    }
+    
 
     public function search(Project $project,Request $request)
     {
@@ -84,7 +115,6 @@ class TaskFeaturesController extends Controller
             ->get();
 
       return UsersResource::collection($searchResults);
-
     }
 
     

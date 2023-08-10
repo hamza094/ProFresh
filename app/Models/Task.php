@@ -52,4 +52,9 @@ class Task extends Model
         return $query->onlyTrashed()->with('status')->get();
     }
 
+    public function scopeActive($query)
+    {
+        return $query->with('status')->get();
+    }
+
 }

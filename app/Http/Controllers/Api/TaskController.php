@@ -17,23 +17,13 @@ class TaskController extends ApiController
 {
   use ApiResponseHelpers;
 
-  public function index(Project $project,Request $request)
+  public function index(Project $project,Request $request,TaskService $taskService)
   {
-     $iconType = $request->query('request');
-     $isArchived = $iconType === 'archived';
+    $isArchived = $request->query('request') === 'archived';
 
-    $tasks = $isArchived ? $project->tasks()->archived() : $project->tasks()->with('status')->get();
+    $tasksData = $taskService->getTasksData($project, $isArchived);
 
-    $message = $isArchived ? 'Project Archived Tasks' : 'Project Active Tasks';
-
-    if ($tasks->isEmpty()) {
-        $message = 'Sorry, no tasks found.';
-    }
-
-    return $this->respondWithSuccess([
-        'message' => $message,
-        'tasks' => TaskResource::collection($tasks),
-    ]);
+    return $this->respondWithSuccess($tasksData);
   }
 
   public function store(Project $project,TaskRequest $request,TaskService $taskService)
@@ -42,7 +32,9 @@ class TaskController extends ApiController
 
     $task=$project->tasks()->firstOrCreate($request->validated());
 
-    $taskService->sendNotification($project);    
+    //$taskService->sendNotification($project); 
+
+    $task->load('status');   
 
     return $this->respondCreated([
       'message'=>'Task Created Successfully',

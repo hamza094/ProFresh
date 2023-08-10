@@ -2,14 +2,39 @@ const state = {
   project:[],
   user:{},
   getStage:0,
-  tasks:[],
+  tasks:{
+    data: [],
+    links: {},
+    meta: {}
+  },
+  archivedTasks:[],
 };
 
 
 const mutations = {
-  setTasks(state, tasksData) {
-    state.tasks = [...tasksData];
+setTasks(state,tasksData) {
+    state.tasks = tasksData.tasks;
   },
+  removeTaskFromState(state, taskId){
+    const index = state.tasks.data.findIndex(task => task.id === taskId);
+    if (index !== -1) {
+      state.tasks.data.splice(index, 1);
+    }
+  },
+
+  setArchivedTasks(state, archivetasksData) {
+    state.archivedTasks = [...archivetasksData];
+  },
+  pushArchivedTask(state, task){
+        state.archivedTasks.unshift(task);
+  },
+  removeArchivedTask(state, taskId){
+    const index = state.archivedTasks.findIndex(task => task.id === taskId);
+    if (index !== -1) {
+      state.archivedTasks.splice(index, 1);
+    }
+  },
+
     setProject(state, project) {
       state.project = project
       state.user = project.user
@@ -55,15 +80,34 @@ const actions = {
    loadProject({ commit }, slug) {
       return axios.get(`/api/v1/projects/${slug}`)
         .then(response => {
-
-        commit('setTasks', response.data.tasks.data);
-
         commit('setProject', response.data);
 
         this.$bus.emit('projectSlug',{slug:response.data.slug});
         })
         .catch(error => {
           //console.log(error.response.data.errors);
+        })
+      },
+
+    fetchTasks({ commit }, { slug, page }) {
+       return axios.get(`/api/v1/projects/${slug}/tasks?page=${page}`)
+        .then(response => {
+          commit('setTasks', { page, tasks: response.data.tasksData });
+        });
+    },
+
+      loadArchiveTasks({ commit }, slug) {
+      return axios.get(`/api/v1/projects/${slug}/tasks`,{
+         params: {
+        request: 'archived'
+      }
+      }).then(response => {
+        console.log(response); 
+        commit('setArchivedTasks', response.data.tasksData);
+
+        })
+        .catch(error => {
+          console.log(error.response.data.errors);
         })
       },
 };

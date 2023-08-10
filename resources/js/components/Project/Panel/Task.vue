@@ -25,8 +25,8 @@
          </a>
     </span>
   </p> 
-      <div  v-if="tasks.length > 0">
-       <div v-for="(task,index) in tasks" :key="task.id">
+      <div>
+       <div v-for="(task,index) in tasks.data" :key="task.id">
          <div class="card task-card_style" @click="openModal(task)">
           <div v-if="task.status" class="task-card_border" :style="{ 
             borderColor: task.status.color 
@@ -37,16 +37,17 @@
         </div>
       </div>
       </div> 
-      <div v-else>
+      <!--<div v-else>
           <p>Sorry, no tasks found.</p>
-      </div>
+      </div>-->
        <modal name="task-modal" height="auto" :scrollable="true"
       width="65%" class="model-desin" :clickToClose=false @modal-closed="closeModal">
       <div v-if="selectedTask">
         <TaskModal :task="selectedTask" :slug="slug" :state="state"></TaskModal @modal-closed="closeModal">
       </div>
     </modal>
-			<!--<pagination :data="tasks" @pagination-change-page="getResults"></pagination>-->
+	<pagination :data="tasks" @pagination-change-page="getResults"></pagination>
+
     </div>
   </div>
 </SubscriptionCheck>
@@ -55,14 +56,15 @@
 </template>
 <script>
   import TaskModal from './Modal.vue';
-  import { mapMutations, mapActions } from 'vuex';
+  import { mapMutations, mapActions, mapState } from 'vuex';
   //import SubscriptionCheck from '../../SubscriptionChecker.vue';
 
   export default {
     components:{TaskModal},
-    props:['slug','tasks','access'],
+    props:['slug','access'],
     data() {
       return {
+        currentTasks: [],
         task_score:2,
         state:'active',
         selectedTask: null,
@@ -72,16 +74,17 @@
             errors:{}
         };
     },
+    computed:{
+    ...mapState('project',['tasks']),
+  },
     methods: {
-      ...mapMutations('project',['addScore','reduceScore','setTasks']),
-      ...mapActions('project',['loadTasks']),
+      ...mapActions('project', ['fetchTasks']),
+      ...mapMutations('project',['addScore','reduceScore']),
 
-		 /*getResults(page = 1) {
-      this.loadTasks({
-        slug: this.slug,
-        page: page
-      });
-    },*/
+		   getResults(page) {
+        const slug = this.$route.params.slug;
+        this.fetchTasks({ slug, page });
+    },
       archiveTasks() {
         const panel1Handle = this.$showPanel({
           component: 'archive-tasks',
@@ -103,11 +106,11 @@
       this.$modal.show('task-modal');
     },
      add(){
-       axios.post('/api/v1/projects/'+this.slug+'/task',this.form)
+       axios.post('/api/v1/projects/'+this.slug+'/tasks',this.form)
           .then(response=>{
               this.$vToastify.success("Project Task added");
               this.form.title="";
-							//this.getResults();
+							this.getResults(1);
               this.addScore(this.task_score);
           }).catch(error=>{
 						this.form.title="";
@@ -123,6 +126,9 @@
 		},
 
     },
+     created() {
+    this.getResults(1);
+  },
 }
 </script>
 

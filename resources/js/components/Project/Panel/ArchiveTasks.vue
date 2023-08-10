@@ -7,8 +7,8 @@
           </div>
        </div>
           <div class="panel-top_content">
-             <div  v-if="tasks.length > 0">
-       <div v-for="(task,index) in tasks" :key="task.id">
+             <div  v-if="archivedTasks.length > 0">
+       <div v-for="(task,index) in archivedTasks" :key="task.id">
          <div class="card task-card_style" @click="openModal(task)">
           <div v-if="task.status" class="task-card_border" :style="{ 
             borderColor: task.status.color 
@@ -37,19 +37,24 @@
 
 <script>
     import TaskModal from './Modal.vue';
-export default {
-      components:{TaskModal},
+    import { mapState, mapMutations, mapActions } from 'vuex';
 
+export default {
+  components:{TaskModal},
   props:['slug'],
   data() {
     return {
       message: '',
-      tasks:'',
       selectedTask: null,
       state:'archived',
     };
   },
+  computed:{
+    ...mapState('project',['archivedTasks']),
+  },
   methods: {
+    ...mapActions('project',['loadArchiveTasks']),
+
    closePanel(){
       this.$emit("closePanel", {});
    },
@@ -62,16 +67,8 @@ export default {
   },
   },
   created(){
-      axios.get(`/api/v1/projects/${this.slug}/task`,{
-         params: {
-        request: 'archived'
-      }
-      }).then(response=>{
-        this.tasks=response.data.tasks;
-          }).catch(error=>{
-            console.log(error);
-          });
-
+    const slug = this.$route.params.slug;
+      this.loadArchiveTasks(slug);
   },
 };
 </script>

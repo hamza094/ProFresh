@@ -233,7 +233,7 @@ return [
     ],
 
     'project'=>[
-      'taskLimit' => '8',
+      'taskLimit' => '18',
       'abandonedLimit'=>'90',
       'filters'=>'10',
     ],

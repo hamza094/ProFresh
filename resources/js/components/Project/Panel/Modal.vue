@@ -164,12 +164,15 @@ Please note that this task is currently archived. Currently, you can only delete
                        </div>
           			</li>	
           			<li>
-          				<button class="btn btn-sm btn btn-sm btn-outline-info btn-block" @click.prevent="archive(task.id)">
+          				<button class="btn btn-sm btn btn-sm btn-outline-info btn-block" @click.prevent="archive(task,task.id)" v-if="state == 'active'">
           				  <i class="fas fa-ban pr-1"></i><b>Archive</b>
           				</button>
+                  <button v-else class="btn btn-sm btn btn-sm btn-outline-secondary btn-block" @click.prevent="unArchive(task,task.id)">
+                    <i class="fas fa-ban pr-1"></i><b>UnArchive</b>
+                  </button>
           			</li>
           			<li>	
-          				<button class="btn btn-sm btn btn-sm btn-outline-danger btn-block" @click.prevent="trash()">
+          				<button class="btn btn-sm btn btn-sm btn-outline-danger btn-block" @click.prevent="trash(task,task.id)" v-if="state == 'archived'">
           				  <i class="fas fa-trash-alt pr-1"></i><b>	Delete</b>
           				</button>
           			</li>
@@ -186,6 +189,7 @@ Please note that this task is currently archived. Currently, you can only delete
  import { VueEditor } from "vue2-editor";
 import { calculateRemainingTime } from '../../../utils/TaskUtils';
 import { debounce } from 'lodash';
+import { mapMutations} from 'vuex';
 
 export default {
 	components: {VueEditor},
@@ -239,6 +243,9 @@ export default {
 },
 },
   methods: {
+  ...mapMutations('project',['removeTaskFromState',
+    'pushArchivedTask','removeArchivedTask','fetchTasks']),
+
  updateTitle(id, task) {
     this.updateTask(
       id,task,{ title: this.form.title },
@@ -399,17 +406,37 @@ removeMember(member,id){
       return [];
     },
 
-    archive(taskId){
+    archive(task,taskId){
     	axios.delete(`/api/v1/projects/${this.slug}/tasks/${taskId}/archive`)
           .then(response=>{
-            //this.tasks=response.data.members;
-            this.$vToastify.success(response.data.message);
+            this.$vToastify.warning(response.data.message);
+            this.removeTaskFromState(taskId);
+            this.pushArchivedTask(task);
+            this.modalClose();
           }).catch(error=>{
             console.log(error);
           });
     },
-    trash(){
-    	console.log('delete');
+     unArchive(task,taskId){
+      axios.get(`/api/v1/projects/${this.slug}/tasks/${taskId}/unarchive`)
+          .then(response=>{
+            this.$vToastify.success(response.data.message);
+            this.removeArchivedTask(taskId);
+            this.fetchTasks({slug:this.$route.params.slug, page:1});
+            this.modalClose();
+          }).catch(error=>{
+            console.log(error);
+          });
+    },
+    trash(task,taskId){
+    	axios.delete(`/api/v1/projects/${this.slug}/tasks/${taskId}/delete`)
+          .then(response=>{
+            this.$vToastify.success(response.data.message);
+            this.removeArchivedTask(taskId);
+            this.modalClose();
+          }).catch(error=>{
+            console.log(error);
+          });
     },
     },
     mounted(){	 
