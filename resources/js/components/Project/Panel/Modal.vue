@@ -3,8 +3,6 @@
     <div class="edit-border-bottom">
         
         <div class="task-modal_content">
-
-          
          <span v-if="editing == task.id">
 
             <input class="title-form form-control" name="title" v-model="form.title" v-text="task.title">

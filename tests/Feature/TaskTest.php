@@ -16,6 +16,45 @@ class TaskTest extends TestCase
   use RefreshDatabase,ProjectSetup;
 
     /** @test */
+    public function allowed_user_see_archived_tasks()
+    {
+        $status=TaskStatus::factory()->create();
+ 
+        Task::factory(['deleted_at'=>Carbon::now()])
+        ->count(3)
+        ->for($this->project)
+        ->create(); 
+
+        $response = $this->getJson('/api/v1/projects/' . $this->project->slug . '/tasks?request=archived');
+
+        $response->assertStatus(200)
+                 ->assertJsonCount(3, 'tasksData')
+                 ->assertJsonStructure(['message', 'tasksData']);
+    }
+
+    /** @test */
+    public function allowed_user_see_active_tasks_and_paginat()
+    {
+        $status=TaskStatus::factory()->create();
+ 
+        Task::factory()
+        ->count(9)
+        ->for($this->project)
+        ->create(); 
+
+        $response = $this->getJson('/api/v1/projects/' . $this->project->slug . '/tasks');
+
+       $response->assertStatus(200)
+                ->assertJsonCount(3, 'tasksData')
+                ->assertJsonStructure([
+                    'message',
+                    'tasksData' => [
+                    'data' => [],'links','meta',
+                    ],
+                ]);
+    }
+
+    /** @test */
     public function task_requires_a_title()
     {
        $task=Task::factory()->make(['title'=>null,'project_id'=>$this->project->id]);
@@ -193,23 +232,5 @@ class TaskTest extends TestCase
       $this->withoutExceptionHandling()->deleteJson($task->path())->assertNoContent();
 
      $this->assertModelMissing($task);
-   }
-
-   
-   public function it_can_generate_paginated_links()
-   {
-     $project=Project::factory()->for($this->user)
-     ->hasTasks(config('project.taskLimit'))->create();
-
-     $response=$this->getJson($project->path().'?page=2')
-     ->assertOk();
-
-     $getResponse=$response->json()['tasks'];
-
-     $this->assertEquals($getResponse['meta']['current_page'],2);
-
-     $this->assertEquals($getResponse['data'][0]['id'],4);
-
-     $this->assertEquals(count(collect($getResponse['data'])),3);
-   }
+   }   
 }

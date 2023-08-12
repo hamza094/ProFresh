@@ -11,7 +11,7 @@ use Illuminate\Validation\ValidationException;
 class TaskService
 { 
 
-  public function getTasksData(Project $project, bool $isArchived)
+  public function getTasksData(Project $project, bool $isArchived): array
     {
         $tasksQuery = $project->tasks();
 

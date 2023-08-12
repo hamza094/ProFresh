@@ -1,0 +1,77 @@
+const state = {
+  archive:'',
+  message:'',
+  tasks:{
+    data: [],
+    links: {},
+    meta: {}
+  },
+  archivedTasks:[],
+};
+
+const mutations = {
+setTasks(state,tasksData) {
+    state.tasks = tasksData.tasks;
+  },
+  setMessage(state,message) {
+    state.message = message;
+  },
+  removeTaskFromState(state, taskId){
+    const index = state.tasks.data.findIndex(task => task.id === taskId);
+    if (index !== -1) {
+      state.tasks.data.splice(index, 1);
+    }
+  },
+
+  setArchivedTasks(state, archivetasksData) {
+    state.archivedTasks = [...archivetasksData];
+  },
+    setArchivedMessage(state, archive) {
+    state.archive = archive;
+  },
+  pushArchivedTask(state, task){
+        state.archivedTasks.unshift(task);
+  },
+  removeArchivedTask(state, taskId){
+    const index = state.archivedTasks.findIndex(task => task.id === taskId);
+    if (index !== -1) {
+      state.archivedTasks.splice(index, 1);
+    }
+  },
+};
+
+const actions = {
+
+    fetchTasks({ commit }, { slug, page }) {
+       return axios.get(`/api/v1/projects/${slug}/tasks?page=${page}`)
+        .then(response => {
+          commit('setTasks', { page, tasks: response.data.tasksData});
+          commit('setMessage', response.data.message);
+        }).catch(error=>{
+        commit('setTasks', { page, tasks: { data: [], links: {}, meta: {} } });
+        commit('setMessage', 'Failed to load project tasks');
+        });
+    },
+
+      loadArchiveTasks({ commit }, slug) {
+      return axios.get(`/api/v1/projects/${slug}/tasks`,{
+         params: {
+        request: 'archived'
+      }
+      }).then(response => { 
+        commit('setArchivedTasks', response.data.tasksData);
+        commit('setMessage', response.data.archive);
+        })
+        .catch(error => {
+        commit('setArchivedTasks', []);
+        commit('setArchiveMessage', 'Failed to load project tasks');
+        })
+      },
+};
+
+export default{
+  namespaced: true,
+  state,
+  mutations,
+  actions,
+}

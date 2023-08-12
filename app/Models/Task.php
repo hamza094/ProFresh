@@ -9,7 +9,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Task extends Model
 {
-  use RecordActivity, SoftDeletes, HasFactory;
+  //use RecordActivity,
+  use SoftDeletes, HasFactory;
 
   protected $guarded=[];
 
@@ -30,7 +31,7 @@ class Task extends Model
 
   public function path()
     {
-      return "/api/v1/projects/{$this->project->slug}/task/{$this->id}";
+      return "/api/v1/projects/{$this->project->slug}/tasks/{$this->id}";
     }
 
     public function project(){

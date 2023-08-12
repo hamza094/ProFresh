@@ -21,7 +21,7 @@ class TaskFeaturesController extends Controller
 {
     use ApiResponseHelpers;
 
-    public function members(Project $project,Task $task,TaskMembersRequest $request)
+    public function assign(Project $project,Task $task,TaskMembersRequest $request)
     {
         $members=$request->members;
 

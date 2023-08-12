@@ -24,9 +24,8 @@ class TaskResource extends JsonResource
         'members'=>UsersResource::collection($this->whenLoaded('assignee')),
          'due_at'=>$this->due_at,
          'notified'=>$this->notified,
-         'created_at'=>$this->created_at->format(config('app.date_formats.exact')),
-
-         'updated_at'=>$this->updated_at->format(config('app.date_formats.exact')),
+         'created_at'=>$this->created_at,
+         'updated_at'=>$this->updated_at,
        ];
     }
 }

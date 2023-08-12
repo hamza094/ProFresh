@@ -17,15 +17,14 @@
         </div>
   </form>
     </div>
+          <p class="task-list_heading"> {{this.message}}
     <div v-if="tasks" class="task-list">
-      <p class="task-list_heading"> Project Tasks
         <span class="float-right">
           <a v-on:click.prevent="archiveTasks" class="panel-list_item">
           <i class="fas fa-tasks"></i>
          </a>
     </span>
   </p> 
-      <div>
        <div v-for="(task,index) in tasks.data" :key="task.id">
          <div class="card task-card_style" @click="openModal(task)">
           <div v-if="task.status" class="task-card_border" :style="{ 
@@ -33,13 +32,10 @@
         }"></div>
           <div class="card-body task-card_body">
             <span>{{task.title}}</span>
+            <span class="float-right mt-4"><small><i class="far fa-clock"></i>:{{task.created_at | date}}</small></span>
           </div>
         </div>
       </div>
-      </div> 
-      <!--<div v-else>
-          <p>Sorry, no tasks found.</p>
-      </div>-->
        <modal name="task-modal" height="auto" :scrollable="true"
       width="65%" class="model-desin" :clickToClose=false @modal-closed="closeModal">
       <div v-if="selectedTask">
@@ -75,10 +71,10 @@
         };
     },
     computed:{
-    ...mapState('project',['tasks']),
+    ...mapState('task',['tasks','message']),
   },
     methods: {
-      ...mapActions('project', ['fetchTasks']),
+      ...mapActions('task', ['fetchTasks']),
       ...mapMutations('project',['addScore','reduceScore']),
 
 		   getResults(page) {

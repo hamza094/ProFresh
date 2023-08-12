@@ -17,7 +17,7 @@ class TaskController extends ApiController
 {
   use ApiResponseHelpers;
 
-  public function index(Project $project,Request $request,TaskService $taskService)
+  public function index(Project $project,Request $request,TaskService $taskService): JsonResponse
   {
     $isArchived = $request->query('request') === 'archived';
 

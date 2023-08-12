@@ -72,21 +72,30 @@ Route::controller(MessageController::class)->group(function(){
 
 
 //Task Routes
-Route::apiResource('/tasks',TaskController::class)
-->except(['show']);
+
+Route::middleware(['can:manage,project'])->group(function () {
+Route::apiResource('/tasks', TaskController::class)->except(['show']);
+});
 //->middleware('subscription');
 
-Route::patch('/tasks/{task}/members',[TaskFeaturesController::class,'members'])->name('task.members');
-
-Route::patch('/tasks/{task}/unassign',[TaskFeaturesController::class,'unassign']);
-
-Route::delete('/tasks/{task}/archive',[TaskFeaturesController::class,'archive']);
-
-Route::get('/tasks/{task}/unarchive',[TaskFeaturesController::class,'unarchive'])->withTrashed();
-
-Route::delete('/tasks/{task}/delete',[TaskFeaturesController::class,'delete'])->withTrashed();
-
 Route::get('/member/search', [TaskFeaturesController::class,'search']);
+
+Route::controller(TaskFeaturesController::class)
+->prefix('tasks/{task}')
+->group(function(){
+Route::patch('assign','assign')->name('task.assign');
+
+Route::patch('unassign','unassign')->name('task.unassign');
+
+Route::delete('archive','archive')->name('task.archive');
+
+Route::get('unarchive','unarchive')->name('task.unarchive')
+                                    ->withTrashed();
+
+Route::delete('delete','delete')->name('task.delete')
+                                ->withTrashed();
+});
+
 
 //->middleware('subscription');
 
