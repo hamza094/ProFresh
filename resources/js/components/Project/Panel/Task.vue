@@ -110,19 +110,15 @@
               this.addScore(this.task_score);
           }).catch(error=>{
 						this.form.title="";
-						this.taskErrors(error);
+            this.$vToastify.warning(error.response.data.message);
        });
     },
-      closeModal() {
+    closeModal() {
     this.selectedTask = null;
   },
 
-		url($slug,$id){
-			return '/api/v1/projects/'+$slug+'/task/'+$id;
-		},
-
-    },
-     created() {
+  },
+    created() {
     this.getResults(1);
   },
 }

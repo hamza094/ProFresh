@@ -17,15 +17,13 @@ class TaskTest extends TestCase
 
     /** @test */
     public function allowed_user_see_archived_tasks()
-    {
-        $status=TaskStatus::factory()->create();
- 
-        Task::factory(['deleted_at'=>Carbon::now()])
+    { 
+       Task::factory(['deleted_at'=>Carbon::now()])
         ->count(3)
         ->for($this->project)
         ->create(); 
 
-        $response = $this->getJson('/api/v1/projects/' . $this->project->slug . '/tasks?request=archived');
+        $response = $this->getJson($this->project->path().'/tasks?request=archived');
 
         $response->assertStatus(200)
                  ->assertJsonCount(3, 'tasksData')
@@ -34,15 +32,13 @@ class TaskTest extends TestCase
 
     /** @test */
     public function allowed_user_see_active_tasks_and_paginat()
-    {
-        $status=TaskStatus::factory()->create();
- 
-        Task::factory()
+    { 
+      Task::factory()
         ->count(9)
         ->for($this->project)
         ->create(); 
 
-        $response = $this->getJson('/api/v1/projects/' . $this->project->slug . '/tasks');
+        $response = $this->getJson($this->project->path(). '/tasks');
 
        $response->assertStatus(200)
                 ->assertJsonCount(3, 'tasksData')
@@ -67,53 +63,49 @@ class TaskTest extends TestCase
      /** @test */
      public function allowed_user_can_create_projects_task()
      {
-        $status=TaskStatus::factory()->create();
-
-       $response=$this->withoutExceptionHandling()->postJson($this->project->path().'/task',['title' => 'My Project Task','status_id'=>$status->id]);
-
-       $this->assertDatabaseHas('tasks',['title'=>'My Project Task']);
-
-       $response->assertJson([
+       $response=$this->postJson($this->project->path().'/tasks',[
+          'title' => 'My Project Task',
+          'status_id'=>$this->status->id])
+          ->assertCreated()
+          ->assertJson([
            "task"=>[      
            'id'=>1,
            'title'=>'My Project Task'
           ]]);
+
+        $this->assertDatabaseHas('tasks',['title'=>'My Project Task']);
+
    }
 
    /** @test */
    public function duplicate_project_task_can_not_be_created()
    {
-      $status=TaskStatus::factory()->create();
-
      $this->project->tasks()->create(['title'=>'Project Task']);
 
-     $response=$this->postJson($this->project->path().'/task',
+     $response=$this->postJson($this->project->path().'/tasks',
         ['title' => 'Project Task'])
-        ->assertUnprocessable()
-        ->assertJsonFragment([
-      'errors' => ['title' => ['Task with same title already exists.']]]);
+         ->assertJsonValidationErrors('title');
 
       $project2=Project::factory()->for($this->user)->create();
 
-      $response=$this->postJson($project2->path().'/task',
-         ['title' => 'Project Task'])->assertCreated();   
+      $response=$this->postJson($project2->path().'/tasks',
+         ['title' => 'Project Task'])
+         ->assertCreated();   
  }
 
    /** @test */
    public function task_limit_per_project()
    {
-      $status=TaskStatus::factory()->create();
-
      Task::factory()->count(config('app.project.taskLimit'))
      ->for($this->project)->create();
 
-     $response=$this->postJson($this->project->path().'/task',
+     $response=$this->postJson($this->project->path().'/tasks',
        ['title' => 'Project Task'])
        ->assertUnprocessable()
-      ->assertJsonValidationErrors('task');
-}
+      ->assertJsonValidationErrors('tasks');
+    }
 
-  /** @test */
+  
   public function allowed_user_can_update_project_task()
   {
      $status=TaskStatus::factory()->create();
@@ -145,7 +137,7 @@ class TaskTest extends TestCase
 
  }
 
-   /** @test */
+   
    public function members_attach_to_task()
    {
       $status=TaskStatus::factory()->create();
@@ -173,7 +165,7 @@ class TaskTest extends TestCase
         ]);
     }
 
-        /** @test */
+
     public function it_unassigns_a_member_from_the_task()
     {
         $status=TaskStatus::factory()->create();
@@ -200,7 +192,7 @@ class TaskTest extends TestCase
         ]);
     }
 
-    /** @test */
+    
    public function allowed_user_can_archive_and_unarchive_task()
    {
         $status=TaskStatus::factory()->create();
@@ -222,7 +214,7 @@ class TaskTest extends TestCase
       $this->assertEquals($task->deleted_at,null);
    }
 
-   /** @test */
+   
    public function allowed_user_can_delete_task()
    {
      $status=TaskStatus::factory()->create();

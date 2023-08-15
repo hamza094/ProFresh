@@ -26,20 +26,23 @@ class TaskController extends ApiController
     return $this->respondWithSuccess($tasksData);
   }
 
-  public function store(Project $project,TaskRequest $request,TaskService $taskService)
+  public function store(Project $project,TaskRequest $request,TaskService $taskService): JsonResponse
   {
     $taskService->checkLimits($project);
+    
+    return DB::transaction(function () use ($project, $request, $taskService) {
 
     $task=$project->tasks()->firstOrCreate($request->validated());
 
-    //$taskService->sendNotification($project); 
+    $taskService->sendNotification($project); 
 
     $task->load('status');   
 
     return $this->respondCreated([
-      'message'=>'Task Created Successfully',
+      'message'=>'Task added Successfully',
       'task'=>new TaskResource($task),
     ]);
+  });
   }
 
   public function update(Project $project,Task $task,TaskUpdate $request,TaskService $taskService): JsonResponse

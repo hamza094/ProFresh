@@ -45,7 +45,7 @@ class TaskService
   {
     throw_if($project->tasksReachedItsLimit(),
       ValidationException::withMessages(
-        ['members'=>'Project tasks reached their limit'])
+        ['tasks'=>'Project tasks reached their limit'])
       );
   }
 
