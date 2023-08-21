@@ -1064,6 +1064,10 @@ p {
   font-size: 1rem;
 }
 
+.task-description_content-link {
+  cursor: pointer;
+}
+
 .title-form {
   width: 50% !important;
   display: inherit !important;

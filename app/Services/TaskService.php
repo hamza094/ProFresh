@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use App\Actions\NotificationAction;
 use App\Models\TaskStatus;
 use App\Models\Project;
+use App\Models\Task;
 use App\Http\Resources\TaskResource;
 use App\Notifications\ProjectTask;
 use Illuminate\Validation\ValidationException;
@@ -49,7 +50,7 @@ class TaskService
       );
   }
 
-  public function updateStatus($task,$statusId): void{
+  public function updateStatus(Task $task,$statusId): void{
     if (isset($statusId)) {
         $status = TaskStatus::findOrFail($statusId);
         $task->status()->associate($status);

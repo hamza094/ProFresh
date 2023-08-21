@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\Project;
 use App\Notifications\ProjectTask;
 use App\Models\Task;
+use Illuminate\Support\Facades\DB;
 use App\Services\TaskService;
 use App\Http\Resources\TaskResource;
 use F9Web\ApiResponseHelpers;
@@ -29,12 +30,14 @@ class TaskController extends ApiController
   public function store(Project $project,TaskRequest $request,TaskService $taskService): JsonResponse
   {
     $taskService->checkLimits($project);
-    
-    return DB::transaction(function () use ($project, $request, $taskService) {
+
+    DB::transaction(function () use ($project, $request, $taskService) {
 
     $task=$project->tasks()->firstOrCreate($request->validated());
 
-    $taskService->sendNotification($project); 
+    $taskService->sendNotification($project);
+
+    }); 
 
     $task->load('status');   
 
@@ -42,30 +45,25 @@ class TaskController extends ApiController
       'message'=>'Task added Successfully',
       'task'=>new TaskResource($task),
     ]);
-  });
   }
 
   public function update(Project $project,Task $task,TaskUpdate $request,TaskService $taskService): JsonResponse
   {   
-    try {
-
-    $taskService->updateStatus($task, $request->validated('status_id'));
-
+     DB::transaction(function () use ($task, $request, $taskService) {    
+   $taskService->updateStatus($task, $request->validated('status_id'));
     $task->update($request->validated());
+  });
 
-    $keys = array_keys($request->validated());
-
-    $updatedMessage = 'Task ' . implode(', ', $keys);
-
-    return $this->respondWithSuccess([
-        'message' => $updatedMessage . ' Updated Successfully',
-        'task' => new TaskResource($task),
-    ]);
-
-    } catch (\Exception $e) {
-    return $this->respondError($e->getMessage());
+   if ($due_at = request()->input('due_at'))
+    {
+     $formattedTime = (new \DateTime($due_at))->format('Y-m-d H:i:s');
+     $task->due_at = \Timezone::convertFromLocal($formattedTime);
    }
 
+    return $this->respondWithSuccess([
+        'message' => 'Task Updated Successfully',
+        'task' => new TaskResource($task),
+    ]);
   }
 
   public function destroy(Project $project,Task $task)

@@ -81,18 +81,19 @@ Route::apiResource('/tasks', TaskController::class)->except(['show']);
 Route::get('/member/search', [TaskFeaturesController::class,'search']);
 
 Route::controller(TaskFeaturesController::class)
+->name('task.')
 ->prefix('tasks/{task}')
 ->group(function(){
-Route::patch('assign','assign')->name('task.assign');
+Route::patch('assign','assign')->name('assign');
 
-Route::patch('unassign','unassign')->name('task.unassign');
+Route::patch('unassign','unassign')->name('unassign');
 
-Route::delete('archive','archive')->name('task.archive');
+Route::delete('archive','archive')->name('archive');
 
-Route::get('unarchive','unarchive')->name('task.unarchive')
+Route::get('unarchive','unarchive')->name('unarchive')
                                     ->withTrashed();
 
-Route::delete('delete','delete')->name('task.delete')
+Route::delete('delete','delete')->name('delete')
                                 ->withTrashed();
 });
 

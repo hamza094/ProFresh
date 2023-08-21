@@ -1,0 +1,92 @@
+<template>
+  <div>
+         <div class="edit-border-bottom">
+        
+        <div class="task-modal_content">
+         <span v-if="editing == task.id">
+
+            <input class="title-form form-control" name="title" v-model="form.title" v-text="task.title">
+
+            <span class="btn btn-link btn-sm" @click="updateTitle(task.id,task)">Update</span>
+
+           <span class="btn btn-link btn-sm" @click="closeTitleForm(task.id,task)">Cancel</span>
+          </span>
+            
+           <span v-else class="task-modal_title" @click="openTitleForm(task.id,task)">{{task.title}}</span>
+
+            <span class="task-modal_close float-right" role="button" @click.prevent="modalClose">x</span>
+        </div>
+          
+        <span class="text-danger font-italic" v-if="errors.title" v-text="errors.title[0]"></span>
+       </div>
+
+        <div v-if="state == 'archived'" class="alert alert-warning" role="alert">
+Please note that this task is currently archived. Currently, you can only delete or unarchive this task.
+</div>
+
+  </div>
+</template>
+
+<script>
+import { mapMutations, mapActions, mapState } from 'vuex';
+import {url} from '../../../../utils/TaskUtils';
+export default {
+    props:['task','state','slug','errors'],
+
+  data() {
+    return {
+      editing:0,
+    };
+  },
+   computed: {
+    ...mapState('SingleTask',['form']),
+  },
+  methods: {
+  ...mapMutations('SingleTask',['setErrors','updateTaskTitle']),
+
+   updateTitle(id, task) {
+       if (this.form.title === this.task.title) {
+         return  this.$vToastify.warning('No changes made.');
+      }
+      
+   axios.put(url(this.slug, id),{ title: this.form.title })
+    .then(response => {
+      this.$vToastify.success(response.data.message);
+        this.editing = false;
+        this.setErrors([]);
+        this.updateTaskTitle(response.data.task.title);
+    })
+    .catch(error => {
+      this.setErrors(error.response.data.errors);
+    });
+  },
+
+    closeTitleForm(id,task){
+      this.editing=false;
+      this.form.title=task.title;
+      this.setErrors('');
+    },
+
+    openTitleForm(id,task){
+      this.editing = id;
+      this.form.title=task.title;
+    },
+
+    modalClose(){
+   this.$modal.hide('task-modal');
+   this.$modal.hide('archive-task-modal');
+   this.setErrors('');
+   this.form={
+   };
+   this.$emit('modal-closed');
+ },
+  },
+  created() {
+    
+  },
+};
+</script>
+
+<style scoped>
+  
+</style>

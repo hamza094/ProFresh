@@ -972,6 +972,9 @@ i{
     }
     &_content{
       font-size: 1rem;
+      &-link{
+        cursor: pointer;
+      }
     }
 
 }

@@ -105,39 +105,33 @@ class TaskTest extends TestCase
       ->assertJsonValidationErrors('tasks');
     }
 
-  
+  /** @test */  
   public function allowed_user_can_update_project_task()
   {
-     $status=TaskStatus::factory()->create();
-
      $task=$this->project->addTask('test task');
 
      $updatedTitle="Task title updated";
 
-     /*$this->putJson($task->path(), ['title' => $task->title])->assertUnprocessable();*/
-      $status2=TaskStatus::factory()->create();
+     $status2=TaskStatus::factory()->create();
 
      $response=$this->putJson($task->path(), [
       'title' => $updatedTitle,
       'description'=>'This is random project description',
-      'due_at'=>'2023-07-18T14:53:23.664508Z',
+      'due_at'=>Carbon::today()->addDays(5),
       'status_id'=>$status2->id
     ])
      ->assertJson(["task"=>['id'=>$task->id,'title'=>$updatedTitle]]);
 
+    $task->refresh();
+
      $this->assertDatabaseHas('tasks',[
       'title'=>$updatedTitle,
       'description'=>'This is random project description',
-      'due_at'=>'2023-07-18T14:53:23.664508Z',
-    ]);
+      'due_at'=>Carbon::today()->addDays(5),
+    ])
+     ->assertEquals($task->status->id,$status2->id);
+    }
 
-     $task->refresh();
-
-    $this->assertEquals($task->status->id,$status2->id);
-
- }
-
-   
    public function members_attach_to_task()
    {
       $status=TaskStatus::factory()->create();

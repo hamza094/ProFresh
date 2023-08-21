@@ -26,3 +26,29 @@ export function calculateRemainingTime(task, currentDate) {
     return `${messageParts.join(', ')} remaining`;
   }
 }
+
+export function url($slug,$id){
+      return '/api/v1/projects/'+$slug+'/tasks/'+$id;
+}
+
+/*export function updateTask(slug, id, task, data, additionalCallback) {
+  if (areObjectsEqual(data, task)) {
+    this.$vToastify.warning("Update not allowed. No changes were made.");
+    return;
+  }
+
+  axios.put(url(slug, id), data)
+    .then(response => {
+      this.$vToastify.success(response.data.message);
+      if (additionalCallback) {
+        additionalCallback(response.data); // Call additional callback if provided
+      }
+    })
+    .catch(error => {
+      console.logerror.response.data.errors;
+    });
+}
+
+export function areObjectsEqual(obj1, obj2) {
+  return Object.keys(obj1).every(key => obj1[key] === obj2[key]);
+}*/

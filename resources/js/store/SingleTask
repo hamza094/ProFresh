@@ -1,0 +1,63 @@
+const state = {
+  task:[],
+  statuses:[],
+  due_notifies:[],
+  errors:{},
+     form:{
+      title:'',
+      description:'',
+            due_at:'',
+            notified:'',
+            status_id:'',
+            search:'',
+          },
+};
+
+const mutations = {
+  setTask(state,task){
+   state.task=task;
+  },
+  setStatuses(state,data){
+    state.statuses=data;
+  },
+  setDueNotifies(state,data){
+    state.due_notifies=data;
+  },
+  setErrors(state,error){
+    state.errors=error;
+  },
+  updateTaskTitle(state,title){
+    state.task.title = title;
+  },
+  updateTaskDescription(state,description){
+    state.task.description = description;
+  },
+  updateTaskStatus(state,status){
+    state.task.status_id = status.id;
+    state.task.status=status;
+  },
+  updateTaskDue(state,due,notified){
+    state.task.due_at = due;
+    state.task.notified= notified;
+  },
+};
+
+const actions = {
+  loadStatuses({ commit }) {
+      return axios.get(`/api/v1/task/statuses`)
+        .then(response => {
+        commit('setStatuses', response.data.statuses);
+        commit('setDueNotifies', response.data.due_notifies);
+        })
+        .catch(error => {
+          //console.log(error.response.data.errors);
+        })
+      },
+};
+
+export default{
+  namespaced: true,
+  state,
+  mutations,
+  actions,
+}

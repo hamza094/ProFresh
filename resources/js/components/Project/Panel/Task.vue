@@ -38,9 +38,7 @@
       </div>
        <modal name="task-modal" height="auto" :scrollable="true"
       width="65%" class="model-desin" :clickToClose=false @modal-closed="closeModal">
-      <div v-if="selectedTask">
-        <TaskModal :task="selectedTask" :slug="slug" :state="state"></TaskModal @modal-closed="closeModal">
-      </div>
+        <TaskModal :slug="slug" :state="state"></TaskModal @modal-closed="closeModal">
     </modal>
 	<pagination :data="tasks" @pagination-change-page="getResults"></pagination>
 
@@ -61,9 +59,9 @@
     data() {
       return {
         currentTasks: [],
+        
         task_score:2,
         state:'active',
-        selectedTask: null,
         form:{
           title:'',
         },
@@ -74,8 +72,13 @@
     ...mapState('task',['tasks','message']),
   },
     methods: {
-      ...mapActions('task', ['fetchTasks']),
-      ...mapMutations('project',['addScore','reduceScore']),
+      ...mapActions({
+      fetchTasks: 'task/fetchTasks',
+      loadStatuses: 'SingleTask/loadStatuses',
+    }),
+
+      ...mapMutations('project',['addScore','reduceScore','setTask']),
+      ...mapMutations('SingleTask',['setTask']),
 
 		   getResults(page) {
         const slug = this.$route.params.slug;
@@ -98,7 +101,7 @@
             });
           },
      openModal(task) {
-      this.selectedTask = task;
+      this.setTask(task);
       this.$modal.show('task-modal');
     },
      add(){
@@ -114,12 +117,13 @@
        });
     },
     closeModal() {
-    this.selectedTask = null;
+      this.setTask([]);
   },
 
   },
     created() {
     this.getResults(1);
+    this.loadStatuses();
   },
 }
 </script>
