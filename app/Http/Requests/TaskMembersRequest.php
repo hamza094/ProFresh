@@ -3,6 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use App\Rules\ActiveProjectMember;
+use Illuminate\Validation\Rule;
 
 class TaskMembersRequest extends FormRequest
 {
@@ -24,9 +26,26 @@ class TaskMembersRequest extends FormRequest
     public function rules()
     {
         return [
-        'members' => ['required', 'array', 'min:1'],
+        'members' => ['required',
+         'array',
+          'min:1',
+          $this->membersValidation(),
+          new ActiveProjectMember($this->task),
+        ],
         'members.*' => ['required', 'exists:users,id', 'distinct'],
         ];
     }
 
+    protected function membersValidation()
+    {
+        return function ($attribute, $value, $fail) {
+            $existingMembersCount = $this->task->assignee()
+                ->whereIn('user_id', $value)
+                ->count();
+
+            if ($existingMembersCount > 0) {
+                $fail('One or more users are already assigned to the task.');
+            }
+        };
+    }
 }

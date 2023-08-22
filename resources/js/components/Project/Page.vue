@@ -115,7 +115,7 @@
 		<div class="col-md-4 side_panel">
 			Project Side Panel
 			<br>
-			<Task :slug="project.slug" :tasks="tasks" :access="permission.access"></Task>
+			<Task :slug="project.slug" :tasks="tasks" :access="permission.access" :projectMembers="this.project.members"></Task>
 			<hr>
 			<PanelFeatues :slug="project.slug" :notes="project.notes"
 			:members="project.members" :owner="user" :access="permission.access" :ownerLogin="permission.owner"></PanelFeatues>

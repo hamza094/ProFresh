@@ -15,6 +15,7 @@ use F9Web\ApiResponseHelpers;
 use Illuminate\Support\Facades\DB;
 use App\Http\Resources\UsersResource;
 use Illuminate\Validation\ValidationException;
+use App\Rules\TaskAssigneeMember;
 use Illuminate\Http\JsonResponse;
 
 class TaskFeaturesController extends Controller
@@ -23,18 +24,9 @@ class TaskFeaturesController extends Controller
 
     public function assign(Project $project,Task $task,TaskMembersRequest $request)
     {
-        $members=$request->members;
+       $members=$request->members;
 
-
-       $existingMembers = $task->assignee()->whereIn('user_id',$members)->count();
-       
-
-  throw_if($existingMembers > 0,
-      ValidationException::withMessages(
-        ['members'=>'One or more users are already assigned to the task.'])
-      );
-
-     $task->assignee()->syncWithoutDetaching($members);
+       $task->assignee()->syncWithoutDetaching($members);
 
     /*$task->assignee->each->notify(new TaskAssigned($task, $project, auth()->user()));*/
 
@@ -47,14 +39,17 @@ class TaskFeaturesController extends Controller
     public function unassign(Project $project,Task $task,Request $request)
     {       
         $request->validate([
-            'member' => 'required|exists:users,id',
+        'member' => ['required', 'exists:users,id', 
+               new TaskAssigneeMember($task)],
         ]);
 
     $task->assignee()->detach($request->member);
 
+    $user= User::find($request->member);
+
     return $this->respondWithSuccess([
         'message' => 'Task member Unassigned',
-        'members' => UsersResource::collection($task->assignee),
+        'member' => new UsersResource($user),
     ]);
     }
 

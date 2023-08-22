@@ -40,6 +40,15 @@ const mutations = {
     state.task.due_at = due;
     state.task.notified= notified;
   },
+  updateTaskMembers(state,members){
+    state.task.members = members;
+  },
+  unassignTaskMember(state,memberId){
+    const index = state.task.members.findIndex(member => member.id === memberId);
+    if (index !== -1) {
+      state.task.members.splice(index, 1);
+    }
+  },
 };
 
 const actions = {

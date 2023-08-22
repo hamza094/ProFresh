@@ -14,7 +14,7 @@ class TaskService
 
   public function getTasksData(Project $project, bool $isArchived): array
     {
-        $tasksQuery = $project->tasks();
+        $tasksQuery = $project->tasks()->with('assignee:name,id,username');
 
         if ($isArchived) {
             $tasksQuery->archived();

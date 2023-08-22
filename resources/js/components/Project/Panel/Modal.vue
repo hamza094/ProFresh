@@ -29,7 +29,8 @@
                     </span>
                     </span>
                   </template>  
-
+                </p>
+                <span class="text-danger font-italic" v-if="errors.member" v-text="errors.member"></span>
           					</p>
 
           				<p v-if="task.due_at"><small><b>Task due: </b> </small> {{task.due_at | datetime}}</p>
@@ -72,11 +73,10 @@
           					<i class="fas fa-user-alt pr-1"></i> <b>Members</b>
           				</button>
                 
-                <!--<TaskMembers></TaskMembers>-->
+                <TaskMembers :slug="slug" v-show=memberPop></TaskMembers>
 
           			</li>
 
-                
           			<li>
           				<button class="btn btn-sm btn btn-sm btn-outline-success btn-block" @click.prevent="datePop = !datePop">
           				  <i class="fas fa-clock pr-1"></i><b>Due Date</b>
@@ -125,16 +125,14 @@
 <script>
 import {calculateRemainingTime, url} from '../../../utils/TaskUtils';
 import { mapMutations, mapActions, mapState } from 'vuex';
-import { debounce } from 'lodash';
 import TopPanel from './Modal/TopArea.vue';
 import TaskDescription from './Modal/TaskDescription.vue';
-//import TaskMembers from './Modal/TaskMembers.vue';
-
+import TaskMembers from './Modal/TaskMembers.vue';
 
 export default {
-	components: {TopPanel,TaskDescription},
+	components: {TopPanel,TaskDescription,TaskMembers},
 
-  props:['slug','state'],
+  props:['slug','state','projectMembers'],
     data() {
       return {
         currentDate: new Date(),
@@ -156,11 +154,16 @@ export default {
     return calculateRemainingTime(this.task, this.currentDate);
 },
 },
+created() {
+  this.$bus.on('close-members-popup', ()=>{
+    this.memberPop = false;
+  });
+},
   methods: {
   ...mapMutations('project',['removeTaskFromState',
     'pushArchivedTask','removeArchivedTask','fetchTasks']),
 
-  ...mapMutations('SingleTask',['setErrors','updateTaskStatus','updateTaskDue']),
+  ...mapMutations('SingleTask',['setErrors','updateTaskStatus','updateTaskDue','unassignTaskMember']),
 
    changeStatus(statusId,task,id){
          axios.put(url(this.slug, id),{status_id:statusId})
@@ -195,13 +198,14 @@ export default {
       this.setErrors([]);      
     },
     unassignMember(taskId,memberId){
-      axios.patch(url(this.slug, taskId)+'unassign',{
+      axios.patch(url(this.slug, taskId)+'/unassign',{
               member:memberId,
           }).then(response=>{
-            this.task.members=response.data.members;
+            this.unassignTaskMember(response.data.member.id);
             this.$vToastify.success(response.data.message);
+            this.setErrors([]);
           }).catch(error=>{
-            console.log(error);
+            this.setErrors(error.response.data.errors);
           });
     },
     archive(task,taskId){
@@ -224,7 +228,7 @@ export default {
             this.fetchTasks({slug:this.$route.params.slug, page:1});
             this.modalClose();
           }).catch(error=>{
-            console.log(error);
+             this.setErrors(error.response.data.errors);
           });
     },
     trash(task,taskId){

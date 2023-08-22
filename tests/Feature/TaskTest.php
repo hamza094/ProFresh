@@ -132,58 +132,63 @@ class TaskTest extends TestCase
      ->assertEquals($task->status->id,$status2->id);
     }
 
-   public function members_attach_to_task()
+   /** @test */
+   public function members_assign_to_task()
    {
-      $status=TaskStatus::factory()->create();
-
       $task=$this->project->addTask('test task');
 
       $user = $this->user;
-      $members = [$user->toArray()];
+      $members = [$user->id];
 
-      $response = $this->withoutExceptionHandling()->patchJson(route('task.members', [
-            'project' => $this->project->slug,
-            'task' => $task->id,
-        ]), ['members' => $members]);   
+     $user->members()->syncWithoutDetaching([$this->project->id => ['active' => true]]);
 
-       $response->assertSuccessful()
+      $this->assignMembersToTask($task, $members)
+            ->assertSuccessful()
             ->assertJson([
                 'message' => 'Task assigned to member Successfully',
             ]);
 
-        $this->assertCount(1, $user->notifications);
+        //$this->assertCount(1, $user->notifications);
 
         $this->assertDatabaseHas('task_user', [
             'task_id' => $task->id,
             'user_id' => $user->id,
         ]);
-    }
 
+        $task->assignee()->attach($user->id);
 
-    public function it_unassigns_a_member_from_the_task()
+        $this->assignMembersToTask($task, $members)
+              ->assertStatus(422)
+              ->assertJsonValidationErrors(['members' => 'One or more users are already assigned to the task.']);
+    }  
+
+    /** @test */
+    public function unassign_a_member_from_a_task()
     {
-        $status=TaskStatus::factory()->create();
-
         $task=$this->project->addTask('test task');
 
         $task->assignee()->attach($this->user);
 
-        // Make a request to unassign the user from the task
-        $response = $this->patchJson("/api/v1/projects/{$this->project->id}/tasks/{$task->id}/unassign", [
-            'member' => $this->user->id,
+        $response= $this->patchJson(route('task.unassign', [
+        'project' => $this->project->slug,
+        'task' => $task->id,
+    ]), ['member' => $this->user->id])
+        ->assertSuccessful()
+        ->assertJson([
+            'message' => 'Task member Unassigned',
         ]);
-
-        $response->assertSuccessful();
 
         $this->assertDatabaseMissing('task_user', [
             'task_id' => $task->id,
-            'user_id' => $user->id,
+            'user_id' => $this->user->id,
         ]);
 
-        // Assert that the response contains the success message
-        $response->assertJson([
-            'message' => 'Task member Unassigned',
-        ]);
+     $response= $this->patchJson(route('task.unassign', [
+        'project' => $this->project->slug,
+        'task' => $task->id,
+    ]), ['member' => $this->user->id])
+        ->assertStatus(422)
+        ->assertJsonValidationErrors(['member' => 'The selected user is not a current member of task .']);
     }
 
     
@@ -218,5 +223,13 @@ class TaskTest extends TestCase
       $this->withoutExceptionHandling()->deleteJson($task->path())->assertNoContent();
 
      $this->assertModelMissing($task);
+   }
+
+   protected function assignMembersToTask(Task $task, array $members)
+   {
+    return $this->patchJson(route('task.assign', [
+        'project' => $this->project->slug,
+        'task' => $task->id,
+    ]), ['members' => $members]);
    }   
 }

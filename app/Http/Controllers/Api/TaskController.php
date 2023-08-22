@@ -31,13 +31,13 @@ class TaskController extends ApiController
   {
     $taskService->checkLimits($project);
 
-    DB::transaction(function () use ($project, $request, $taskService) {
+//DB::transaction(function () use ($project, $request, $taskService) {
 
     $task=$project->tasks()->firstOrCreate($request->validated());
 
     $taskService->sendNotification($project);
 
-    }); 
+    //}); 
 
     $task->load('status');   
 
@@ -47,8 +47,12 @@ class TaskController extends ApiController
     ]);
   }
 
-  public function update(Project $project,Task $task,TaskUpdate $request,TaskService $taskService): JsonResponse
-  {   
+  public function update(Project $project,Task $task,TaskUpdate $request,TaskService $taskService)
+  {  
+
+    if(!$request->validated()){
+      return 'unable to update';
+    } 
      DB::transaction(function () use ($task, $request, $taskService) {    
    $taskService->updateStatus($task, $request->validated('status_id'));
     $task->update($request->validated());
