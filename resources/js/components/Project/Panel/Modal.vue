@@ -128,6 +128,7 @@ import { mapMutations, mapActions, mapState } from 'vuex';
 import TopPanel from './Modal/TopArea.vue';
 import TaskDescription from './Modal/TaskDescription.vue';
 import TaskMembers from './Modal/TaskMembers.vue';
+import { modalClose } from '../../../mixins/modalClose';
 
 export default {
 	components: {TopPanel,TaskDescription,TaskMembers},
@@ -160,10 +161,12 @@ created() {
   });
 },
   methods: {
-  ...mapMutations('project',['removeTaskFromState',
-    'pushArchivedTask','removeArchivedTask','fetchTasks']),
+  ...mapMutations('task',['removeTaskFromState',
+    'pushArchivedTask','removeArchivedTask']),
 
-  ...mapMutations('SingleTask',['setErrors','updateTaskStatus','updateTaskDue','unassignTaskMember']),
+  ...mapMutations('SingleTask',['setErrors','updateTaskStatus','updateTaskDue','unassignTaskMember','setForm']),
+
+    ...mapActions({fetchTasks: 'task/fetchTasks'}),
 
    changeStatus(statusId,task,id){
          axios.put(url(this.slug, id),{status_id:statusId})
@@ -215,28 +218,27 @@ created() {
             this.$vToastify.warning(response.data.message);
             this.removeTaskFromState(taskId);
             this.pushArchivedTask(task);
-            this.modalClose();
+            modalClose(this);
           }).catch(error=>{
             console.log(error);
           });
     },
      unArchive(task,taskId){
-      axios.get(url(this.slug, taskId)+'unarchive')
+      axios.get(url(this.slug, taskId)+'/unarchive')
           .then(response=>{
             this.$vToastify.success(response.data.message);
             this.removeArchivedTask(taskId);
             this.fetchTasks({slug:this.$route.params.slug, page:1});
-            this.modalClose();
+            modalClose(this);
           }).catch(error=>{
              this.setErrors(error.response.data.errors);
           });
     },
     trash(task,taskId){
-    	axios.delete(url(this.slug, taskId)+'delete')
+    	axios.delete(url(this.slug, taskId)+'/delete')
           .then(response=>{
             this.$vToastify.success(response.data.message);
             this.removeArchivedTask(taskId);
-            this.modalClose();
           }).catch(error=>{
             console.log(error);
           });

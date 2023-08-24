@@ -57,7 +57,7 @@ class TaskFeaturesController extends Controller
     {
       DB::transaction(function () use ($task) {     
         $task->delete();
-        $task->activities()->update(['is_hidden' => true]);
+        //$task->activities()->update(['is_hidden' => true]);
       });
 
       return $this->respondWithSuccess([
@@ -71,7 +71,7 @@ class TaskFeaturesController extends Controller
 
         DB::transaction(function () use ($task) { 
         $task->restore();
-        $task->activities()->update(['is_hidden' => false]);
+        //$task->activities()->update(['is_hidden' => false]);
         });
 
        return $this->respondWithSuccess([
@@ -80,7 +80,7 @@ class TaskFeaturesController extends Controller
     ]);
     }
 
-     public function delete(Project $project,Task $task)
+     /*public function delete(Project $project,Task $task)
      {
         $deletedTask=$task;
 
@@ -93,7 +93,7 @@ class TaskFeaturesController extends Controller
         'message' => 'Task deleted successfully',
         'task' => new TaskResource($deletedTask),
     ]);
-    }
+    }*/
     
 
     public function search(Project $project,Request $request)

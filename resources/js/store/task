@@ -60,7 +60,7 @@ const actions = {
       }
       }).then(response => { 
         commit('setArchivedTasks', response.data.tasksData);
-        commit('setMessage', response.data.archive);
+        commit('setMessage', response.data.message);
         })
         .catch(error => {
         commit('setArchivedTasks', []);

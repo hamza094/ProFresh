@@ -77,7 +77,7 @@
       loadStatuses: 'SingleTask/loadStatuses',
     }),
 
-      ...mapMutations('project',['addScore','reduceScore','setTask']),
+      ...mapMutations('project',['addScore','reduceScore']),
       ...mapMutations('SingleTask',['setTask']),
 
 		   getResults(page) {

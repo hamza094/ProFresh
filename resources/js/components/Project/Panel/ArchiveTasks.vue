@@ -2,7 +2,7 @@
   <div class="panel">
        <div class="panel-top">
           <div class="panel-top_content">
-            <span class="panel-heading">Project Archived Tasks</span>
+            <span class="panel-heading">{{this.message}}</span>
            <span class="panel-exit float-right" role="button" @click.prevent="closePanel">x</span>
           </div>
        </div>
@@ -24,9 +24,7 @@
       </div>
       <modal name="archive-task-modal" height="auto" :scrollable="true"
       width="65%" class="model-desin archive-modal" :clickToClose=false @modal-closed="closeModal">
-      <div v-if="selectedTask">
-        <TaskModal :task="selectedTask" :slug="slug" :state="state"></TaskModal>
-      </div>
+         <TaskModal :slug="slug" :state="state"></TaskModal @modal-closed="closeModal">
     </modal>
           </div>
 
@@ -44,26 +42,26 @@ export default {
   props:['slug'],
   data() {
     return {
-      message: '',
-      selectedTask: null,
       state:'archived',
     };
   },
   computed:{
-    ...mapState('project',['archivedTasks']),
+    ...mapState('task',['archivedTasks','message']),
   },
   methods: {
-    ...mapActions('project',['loadArchiveTasks']),
+    ...mapActions('task',['loadArchiveTasks']),
+
+    ...mapMutations('SingleTask',['setTask']),
 
    closePanel(){
       this.$emit("closePanel", {});
    },
      openModal(task) {
-      this.selectedTask = task;
+      this.setTask(task);
       this.$modal.show('archive-task-modal');
     },
      closeModal() {
-    this.selectedTask = null;
+      this.setTask([]);
   },
   },
   created(){

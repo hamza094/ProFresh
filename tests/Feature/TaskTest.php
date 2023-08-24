@@ -188,23 +188,28 @@ class TaskTest extends TestCase
         'task' => $task->id,
     ]), ['member' => $this->user->id])
         ->assertStatus(422)
-        ->assertJsonValidationErrors(['member' => 'The selected user is not a current member of task .']);
+        ->assertJsonValidationErrors(['member' => 'The selected user is not a current member of task.']);
     }
 
-    
+     
+   /** @test */   
    public function allowed_user_can_archive_and_unarchive_task()
    {
-        $status=TaskStatus::factory()->create();
+      $task = Task::factory()->for($this->project)->create();
 
-     $task=Task::factory()->for($this->project)->create();
-
-       $response = $this->withoutExceptionHandling()->deleteJson("/api/v1/projects/{$this->project->slug}/tasks/{$task->id}/archive");
+       $response = $this->deleteJson(route('task.archive', [
+        'project' => $this->project->slug,
+        'task' => $task->id
+    ]));
 
         $this->assertSoftDeleted($task);
 
-           $task->activities()->update(['is_hidden' => false]);
+        //$task->activities()->update(['is_hidden' => false]);
 
-       $response = $this->getJson("/api/v1/projects/{$this->project->slug}/tasks/{$task->id}/unarchive");
+    $response = $this->getJson(route('task.unarchive', [
+        'project' => $this->project->slug,
+        'task' => $task->id,
+    ]));
 
       $task->refresh();
 
@@ -213,11 +218,9 @@ class TaskTest extends TestCase
       $this->assertEquals($task->deleted_at,null);
    }
 
-   
+   /** @test */
    public function allowed_user_can_delete_task()
    {
-     $status=TaskStatus::factory()->create();
-
      $task=Task::factory()->for($this->project)->create();
 
       $this->withoutExceptionHandling()->deleteJson($task->path())->assertNoContent();

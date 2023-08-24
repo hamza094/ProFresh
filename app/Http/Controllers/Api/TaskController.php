@@ -50,6 +50,10 @@ class TaskController extends ApiController
   public function update(Project $project,Task $task,TaskUpdate $request,TaskService $taskService)
   {  
 
+    if($task->trashed()){
+      return 'task is trashed';
+    }
+
     if(!$request->validated()){
       return 'unable to update';
     } 
@@ -72,7 +76,7 @@ class TaskController extends ApiController
 
   public function destroy(Project $project,Task $task)
   {
-     $task->activities()->delete();
+     //$task->activities()->delete();
 
      $task->forceDelete();  
 

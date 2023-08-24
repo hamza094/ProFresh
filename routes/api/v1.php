@@ -74,7 +74,7 @@ Route::controller(MessageController::class)->group(function(){
 //Task Routes
 
 Route::middleware(['can:manage,project'])->group(function () {
-Route::apiResource('/tasks', TaskController::class)->except(['show']);
+Route::apiResource('/tasks', TaskController::class)->withTrashed()->except(['show']);
 });
 //->middleware('subscription');
 
@@ -90,13 +90,10 @@ Route::patch('unassign','unassign')->name('unassign');
 
 Route::delete('archive','archive')->name('archive');
 
-Route::get('unarchive','unarchive')->name('unarchive')
-                                    ->withTrashed();
+Route::get('unarchive','unarchive')->name('unarchive');
 
-Route::delete('delete','delete')->name('delete')
-                                ->withTrashed();
+Route::delete('delete','delete')->name('delete');
 });
-
 
 //->middleware('subscription');
 

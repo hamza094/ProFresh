@@ -26,22 +26,20 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
   props: ['slug'],
   data: function data() {
     return {
-      message: '',
-      selectedTask: null,
       state: 'archived'
     };
   },
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapState"])('project', ['archivedTasks'])),
-  methods: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapActions"])('project', ['loadArchiveTasks'])), {}, {
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapState"])('task', ['archivedTasks', 'message'])),
+  methods: _objectSpread(_objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapActions"])('task', ['loadArchiveTasks'])), Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapMutations"])('SingleTask', ['setTask'])), {}, {
     closePanel: function closePanel() {
       this.$emit("closePanel", {});
     },
     openModal: function openModal(task) {
-      this.selectedTask = task;
+      this.setTask(task);
       this.$modal.show('archive-task-modal');
     },
     closeModal: function closeModal() {
-      this.selectedTask = null;
+      this.setTask([]);
     }
   }),
   created: function created() {
@@ -74,7 +72,7 @@ var render = function render() {
     staticClass: "panel-top_content"
   }, [_c("span", {
     staticClass: "panel-heading"
-  }, [_vm._v("Project Archived Tasks")]), _vm._v(" "), _c("span", {
+  }, [_vm._v(_vm._s(this.message))]), _vm._v(" "), _c("span", {
     staticClass: "panel-exit float-right",
     attrs: {
       role: "button"
@@ -117,13 +115,12 @@ var render = function render() {
     on: {
       "modal-closed": _vm.closeModal
     }
-  }, [_vm.selectedTask ? _c("div", [_c("TaskModal", {
+  }, [_c("TaskModal", {
     attrs: {
-      task: _vm.selectedTask,
       slug: _vm.slug,
       state: _vm.state
     }
-  })], 1) : _vm._e()])], 1)]);
+  })], 1)], 1)]);
 };
 var staticRenderFns = [];
 render._withStripped = true;

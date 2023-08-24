@@ -36,6 +36,6 @@ class TaskAssigneeMember implements Rule
      */
     public function message()
     {
-        return 'The selected user is not a current member of task .';
+        return 'The selected user is not a current member of task.';
     }
 }

@@ -30,6 +30,8 @@ Please note that this task is currently archived. Currently, you can only delete
 <script>
 import { mapMutations, mapActions, mapState } from 'vuex';
 import {url} from '../../../../utils/TaskUtils';
+import { modalClose } from '../../../../mixins/modalClose';
+
 export default {
     props:['task','state','slug','errors'],
 
@@ -42,7 +44,7 @@ export default {
     ...mapState('SingleTask',['form']),
   },
   methods: {
-  ...mapMutations('SingleTask',['setErrors','updateTaskTitle']),
+  ...mapMutations('SingleTask',['setErrors','updateTaskTitle','setForm']),
 
    updateTitle(id, task) {
        if (this.form.title === this.task.title) {
@@ -73,13 +75,8 @@ export default {
     },
 
     modalClose(){
-   this.$modal.hide('task-modal');
-   this.$modal.hide('archive-task-modal');
-   this.setErrors('');
-   this.form={
-   };
-   this.$emit('modal-closed');
- },
+      modalClose(this);
+   },
   },
   created() {
     
