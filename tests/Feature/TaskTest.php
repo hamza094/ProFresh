@@ -3,7 +3,10 @@
 namespace Tests\Feature;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Laravel\Sanctum\Sanctum;
+use Illuminate\Support\Facades\Hash;
 use App\Traits\ProjectSetup;
+use App\Policies\TasksPolicy;
 use App\Models\Project;
 use App\Models\TaskStatus;
 use App\Models\User;
@@ -31,7 +34,7 @@ class TaskTest extends TestCase
     }
 
     /** @test */
-    public function allowed_user_see_active_tasks_and_paginat()
+    public function allowed_user_see_active_tasks_and_paginate()
     { 
       Task::factory()
         ->count(9)
@@ -65,7 +68,8 @@ class TaskTest extends TestCase
      {
        $response=$this->postJson($this->project->path().'/tasks',[
           'title' => 'My Project Task',
-          'status_id'=>$this->status->id])
+          'status_id'=>$this->status->id,
+      ])
           ->assertCreated()
           ->assertJson([
            "task"=>[      
@@ -80,10 +84,10 @@ class TaskTest extends TestCase
    /** @test */
    public function duplicate_project_task_can_not_be_created()
    {
-     $this->project->tasks()->create(['title'=>'Project Task']);
+     $this->project->tasks()->create(['title'=>'Project Task','user_id'=>$this->project->user->id]);
 
      $response=$this->postJson($this->project->path().'/tasks',
-        ['title' => 'Project Task'])
+        ['title' => 'Project Task','status_id'=>$this->status->id])
          ->assertJsonValidationErrors('title');
 
       $project2=Project::factory()->for($this->user)->create();
@@ -226,6 +230,45 @@ class TaskTest extends TestCase
       $this->withoutExceptionHandling()->deleteJson($task->path())->assertNoContent();
 
      $this->assertModelMissing($task);
+   }
+
+   /** @test */
+   public function task_gate_check()
+   { 
+      $task=Task::factory()->for($this->project)->create();
+
+ /*     $user=User::factor()->create();
+
+      Sanctum::actingAs(
+       $this->user,
+   );*/
+
+       $this->deleteJson(route('task.archive', [
+        'project' => $this->project->slug,
+        'task' => $task->id
+    ]));
+
+       $response=$this->putJson($task->path(), [
+      'title' => 'this is updated task',
+    ])->assertJsonValidationErrors(['task' => 'Task is archived. Activate the task to proceed.']);
+   }
+
+   /** @test */
+   public function task_policy_check()
+   { 
+      $task=Task::factory()->for($this->project)->create();
+
+      $user=User::factory()->create();
+
+      Sanctum::actingAs(
+       $user,
+   );
+
+      $response = $this->deleteJson(route('task.archive', [
+        'project' => $this->project->slug,
+        'task' => $task->id
+    ]))->assertForbidden();
+    
    }
 
    protected function assignMembersToTask(Task $task, array $members)

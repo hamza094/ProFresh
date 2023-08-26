@@ -22,10 +22,13 @@ class Task extends Model
   {
     static::creating(function ($task) {
         if (!$task->status_id) {
-            $task->status_id = 1; // Assign the default status ID here
+            $task->status_id = 1; 
         }
+        //$task->user_id = auth()->id();
     });
   }
+
+
 
   //protected static $recordableEvents = ['created','updated'];
 
@@ -37,6 +40,11 @@ class Task extends Model
     public function project(){
       return $this->belongsTo(Project::class,'project_id');
    }
+
+    public function owner()
+    {
+     return $this->belongsTo(User::class,'user_id');
+    }
 
    public function assignee()
    {

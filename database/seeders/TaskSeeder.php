@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use App\Models\Project;
 use App\Models\Task;
+use DB;
 use Illuminate\Database\Eloquent\Factories\Sequence;
 
 class TaskSeeder extends Seeder
@@ -16,10 +17,16 @@ class TaskSeeder extends Seeder
      */
     public function run()
     {
-      $projects = Project::all();
+
+     $projects = Project::with('user')->get();
 
         $projects->each(function ($project){
-            Task::factory()->count(2)->create(['project_id'=>$project->id]);
+              $user_id = $project->user->id;
+
+            Task::factory()->count(2)->create([
+              'project_id'=>$project->id,
+              'user_id'=>$user_id,
+            ]);
         });
     }
 }

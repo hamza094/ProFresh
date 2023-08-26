@@ -84,13 +84,13 @@ Route::controller(TaskFeaturesController::class)
 ->name('task.')
 ->prefix('tasks/{task}')
 ->group(function(){
-Route::patch('assign','assign')->name('assign');
+Route::patch('assign','assign')->name('assign')->withTrashed();
 
-Route::patch('unassign','unassign')->name('unassign');
+Route::patch('unassign','unassign')->name('unassign')->withTrashed();
 
-Route::delete('archive','archive')->name('archive');
+Route::delete('archive','archive')->name('archive')->withTrashed();
 
-Route::get('unarchive','unarchive')->name('unarchive');
+Route::get('unarchive','unarchive')->name('unarchive')->withTrashed();
 
 Route::delete('delete','delete')->name('delete');
 });

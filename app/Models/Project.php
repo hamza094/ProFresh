@@ -79,7 +79,8 @@ class Project extends Model
     public function addTask($tasks)
     {
        return $this->tasks()->create([
-         'title'=> $tasks
+         'title'=> $tasks,
+         'user_id'=>$this->user->id,
        ]);
     }
 

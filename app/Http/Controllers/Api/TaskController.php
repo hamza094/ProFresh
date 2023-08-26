@@ -8,10 +8,12 @@ use Illuminate\Http\Request;
 use App\Models\Project;
 use App\Notifications\ProjectTask;
 use App\Models\Task;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\DB;
 use App\Services\TaskService;
 use App\Http\Resources\TaskResource;
 use F9Web\ApiResponseHelpers;
+use Auth;
 use Illuminate\Http\JsonResponse;
 
 class TaskController extends ApiController
@@ -29,11 +31,14 @@ class TaskController extends ApiController
 
   public function store(Project $project,TaskRequest $request,TaskService $taskService): JsonResponse
   {
+    $this->authorize('access',$project);
+
     $taskService->checkLimits($project);
 
 //DB::transaction(function () use ($project, $request, $taskService) {
 
-    $task=$project->tasks()->firstOrCreate($request->validated());
+    $task=$project->tasks()->firstOrCreate($request->validated()+['user_id' => Auth::id()]);
+
 
     $taskService->sendNotification($project);
 
@@ -49,10 +54,9 @@ class TaskController extends ApiController
 
   public function update(Project $project,Task $task,TaskUpdate $request,TaskService $taskService)
   {  
+     Gate::authorize('archive-task', $task);
 
-    if($task->trashed()){
-      return 'task is trashed';
-    }
+    $this->authorize('taskaccess',$task);
 
     if(!$request->validated()){
       return 'unable to update';
@@ -76,6 +80,8 @@ class TaskController extends ApiController
 
   public function destroy(Project $project,Task $task)
   {
+        $this->authorize('taskallow',$task);
+
      //$task->activities()->delete();
 
      $task->forceDelete();  

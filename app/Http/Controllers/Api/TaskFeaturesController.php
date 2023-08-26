@@ -11,6 +11,7 @@ use App\Services\TaskService;
 use App\Notifications\TaskAssigned;
 use App\Http\Resources\TaskResource;
 use App\Http\Requests\TaskMembersRequest;
+use Illuminate\Support\Facades\Gate;
 use F9Web\ApiResponseHelpers;
 use Illuminate\Support\Facades\DB;
 use App\Http\Resources\UsersResource;
@@ -24,11 +25,15 @@ class TaskFeaturesController extends Controller
 
     public function assign(Project $project,Task $task,TaskMembersRequest $request)
     {
+        Gate::authorize('archive-task', $task);
+
+        $this->authorize('taskallow',$task);
+
        $members=$request->members;
 
        $task->assignee()->syncWithoutDetaching($members);
 
-    /*$task->assignee->each->notify(new TaskAssigned($task, $project, auth()->user()));*/
+    $task->assignee->each->notify(new TaskAssigned($task, $project, auth()->user()));
 
     return $this->respondWithSuccess([
         'message' => 'Task assigned to member Successfully',
@@ -38,6 +43,10 @@ class TaskFeaturesController extends Controller
 
     public function unassign(Project $project,Task $task,Request $request)
     {       
+        Gate::authorize('archive-task', $task);
+
+            $this->authorize('taskallow',$task);
+
         $request->validate([
         'member' => ['required', 'exists:users,id', 
                new TaskAssigneeMember($task)],
@@ -55,6 +64,10 @@ class TaskFeaturesController extends Controller
 
     public function archive(Project $project,Task $task)
     {
+        Gate::authorize('archive-task', $task);
+
+        $this->authorize('taskaccess',$task);
+
       DB::transaction(function () use ($task) {     
         $task->delete();
         //$task->activities()->update(['is_hidden' => true]);
@@ -67,7 +80,9 @@ class TaskFeaturesController extends Controller
 
     }
 
-     public function unarchive(Project $project,Task $task){
+     public function unarchive(Project $project,Task $task)
+     {
+        $this->authorize('taskaccess',$task);
 
         DB::transaction(function () use ($task) { 
         $task->restore();
@@ -79,25 +94,13 @@ class TaskFeaturesController extends Controller
         'task' => new TaskResource($task),
     ]);
     }
-
-     /*public function delete(Project $project,Task $task)
-     {
-        $deletedTask=$task;
-
-        DB::transaction(function () use ($task) { 
-        $task->activities->each->delete();
-        tap($task)->forceDelete();
-       });
-
-         return $this->respondWithSuccess([
-        'message' => 'Task deleted successfully',
-        'task' => new TaskResource($deletedTask),
-    ]);
-    }*/
     
-
     public function search(Project $project,Request $request)
-    {
+    { 
+        Gate::authorize('archive-task', $task);
+
+        $this->authorize('taskaccess',$task);
+
        $searchTerm = $request->input('search');
 
        $searchResults = $project->activeMembers()

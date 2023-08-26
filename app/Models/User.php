@@ -156,8 +156,14 @@ class User extends Authenticatable implements Searchable, MustVerifyEmail
         ($this->subscribed('yearly') && $this->subscription('yearly')->onGracePeriod());
     }
 
+    public function tasks()
+    {
+      return $this->hasMany(Task::class);
+    }
+
     public function assigned()
     {
       return $this->belongsToMany(Task::class);
     }
+
 }

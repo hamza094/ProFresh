@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Task;
+use App\Models\User;
 use App\Models\Project;
 use App\Models\TaskStatus;
 use Carbon\Carbon;
@@ -26,6 +27,7 @@ class TaskFactory extends Factory
     {
         return [
         'title'=>$this->faker->catchPhrase,
+        'user_id'=>User::factory(),
         'project_id'=>Project::factory(),
         'description'=>$this->faker->text($maxNbChars = 250),
         'status_id'=>1

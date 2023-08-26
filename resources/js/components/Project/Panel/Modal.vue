@@ -176,6 +176,7 @@ created() {
         this.updateTaskStatus(response.data.task.status);
     })
     .catch(error => {
+      this.$vToastify.warning(error?.response?.data?.errors?.task?.[0] ?? 'An error occurred.');
       this.setErrors(error.response.data.errors);
     });
     },
