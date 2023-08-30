@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\Gate;
 use App\Models\Task;
 use Illuminate\Validation\ValidationException;
 
-
 class AuthServiceProvider extends ServiceProvider
 {
     /**

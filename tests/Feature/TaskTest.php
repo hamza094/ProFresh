@@ -7,6 +7,8 @@ use Laravel\Sanctum\Sanctum;
 use Illuminate\Support\Facades\Hash;
 use App\Traits\ProjectSetup;
 use App\Policies\TasksPolicy;
+use Illuminate\Support\Facades\Notification;
+use App\Notifications\TaskAssigned;
 use App\Models\Project;
 use App\Models\TaskStatus;
 use App\Models\User;
@@ -26,7 +28,7 @@ class TaskTest extends TestCase
         ->for($this->project)
         ->create(); 
 
-        $response = $this->getJson($this->project->path().'/tasks?request=archived');
+        $response = $this->withoutExceptionHandling()->getJson($this->project->path().'/tasks?request=archived');
 
         $response->assertStatus(200)
                  ->assertJsonCount(3, 'tasksData')
@@ -141,18 +143,20 @@ class TaskTest extends TestCase
    {
       $task=$this->project->addTask('test task');
 
-      $user = $this->user;
+      $user=User::factory()->create();
+      
       $members = [$user->id];
 
-     $user->members()->syncWithoutDetaching([$this->project->id => ['active' => true]]);
+     $user->members()->syncWithoutDetaching([
+        $this->project->id => ['active' => true]]);
 
       $this->assignMembersToTask($task, $members)
             ->assertSuccessful()
             ->assertJson([
-                'message' => 'Task assigned to member Successfully',
+              'message' => 'Task assigned to member Successfully',
             ]);
 
-        //$this->assertCount(1, $user->notifications);
+        $this->assertCount(1, $user->notifications);
 
         $this->assertDatabaseHas('task_user', [
             'task_id' => $task->id,
@@ -236,12 +240,6 @@ class TaskTest extends TestCase
    public function task_gate_check()
    { 
       $task=Task::factory()->for($this->project)->create();
-
- /*     $user=User::factor()->create();
-
-      Sanctum::actingAs(
-       $this->user,
-   );*/
 
        $this->deleteJson(route('task.archive', [
         'project' => $this->project->slug,

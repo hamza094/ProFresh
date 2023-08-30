@@ -185,6 +185,7 @@ export default{
       this.projectname = this.project.name;
       this.projectabout = this.project.about;
       this.members = this.project.members;
+      this.archiveTask();
     })
     .catch(error => {
       console.log(error.response.data.errors);
@@ -320,6 +321,18 @@ export default{
           this.chatusers.splice(this.chatusers.indexOf(auth), 1);
           this.$vToastify.info(`${auth.name} leave project conversation`);
         });
+      },
+
+      archiveTask(){
+      this.$bus.on('archiveTask', (taskId) => {
+    if (this.project.activities.subject_id !== null) {
+        this.project.activities = this.project.activities.filter(activity => activity.subject_id !== taskId);
+    }
+    console.log('eventliten');
+});
+      },
+      unarchiveTask(){
+
       }
   },
 

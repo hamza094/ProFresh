@@ -8,6 +8,7 @@ use App\Models\Project;
 use App\Models\Task;
 use App\Models\User;
 use App\Services\TaskService;
+use Auth;
 use App\Notifications\TaskAssigned;
 use App\Http\Resources\TaskResource;
 use App\Http\Requests\TaskMembersRequest;
@@ -33,7 +34,12 @@ class TaskFeaturesController extends Controller
 
        $task->assignee()->syncWithoutDetaching($members);
 
-    $task->assignee->each->notify(new TaskAssigned($task, $project, auth()->user()));
+    $usersToNotify = User::whereIn('id', $request->members)
+    ->where('id', '!=', Auth::id())
+    ->select('id', 'name', 'email')
+    ->get();
+
+    $usersToNotify->each->notify(new TaskAssigned($task, $project, auth()->user()));
 
     return $this->respondWithSuccess([
         'message' => 'Task assigned to member Successfully',
@@ -45,7 +51,7 @@ class TaskFeaturesController extends Controller
     {       
         Gate::authorize('archive-task', $task);
 
-            $this->authorize('taskallow',$task);
+        $this->authorize('taskallow',$task);
 
         $request->validate([
         'member' => ['required', 'exists:users,id', 
@@ -70,7 +76,7 @@ class TaskFeaturesController extends Controller
 
       DB::transaction(function () use ($task) {     
         $task->delete();
-        //$task->activities()->update(['is_hidden' => true]);
+        $task->activities()->update(['is_hidden' => true]);
       });
 
       return $this->respondWithSuccess([
@@ -86,7 +92,7 @@ class TaskFeaturesController extends Controller
 
         DB::transaction(function () use ($task) { 
         $task->restore();
-        //$task->activities()->update(['is_hidden' => false]);
+        $task->activities()->update(['is_hidden' => false]);
         });
 
        return $this->respondWithSuccess([
@@ -109,7 +115,8 @@ class TaskFeaturesController extends Controller
           $query->where('name', 'like', '%' . $searchTerm . '%')
                ->orWhere('email', 'like', '%' . $searchTerm . '%')
                ->orWhere('username', 'like', '%' . $searchTerm . '%');
-          })->take(5)
+          })->where('users.id', '!=', $authUserId)
+            ->take(5)
             ->get();
 
       return UsersResource::collection($searchResults);

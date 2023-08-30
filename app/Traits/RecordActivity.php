@@ -97,7 +97,7 @@ trait RecordActivity
         ->where(function ($query) {
             $query->where('is_hidden', false)->orWhereNull('is_hidden');
         })
-        ->with('user')
+        ->with('user:id','subject')
         ->latest();
     }
     /**

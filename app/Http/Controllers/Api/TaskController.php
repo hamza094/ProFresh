@@ -82,7 +82,7 @@ class TaskController extends ApiController
   {
         $this->authorize('taskallow',$task);
 
-     //$task->activities()->delete();
+     $task->activities()->delete();
 
      $task->forceDelete();  
 

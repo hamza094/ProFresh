@@ -9,8 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Task extends Model
 {
-  //use RecordActivity,
-  use SoftDeletes, HasFactory;
+  use RecordActivity, SoftDeletes, HasFactory;
 
   protected $guarded=[];
 
@@ -24,7 +23,6 @@ class Task extends Model
         if (!$task->status_id) {
             $task->status_id = 1; 
         }
-        //$task->user_id = auth()->id();
     });
   }
 

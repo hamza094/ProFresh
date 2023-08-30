@@ -215,10 +215,10 @@ created() {
     archive(task,taskId){
     	axios.delete(url(this.slug, taskId)+'/archive')
           .then(response=>{
-            console.log('success');
             this.$vToastify.warning(response.data.message);
             this.removeTaskFromState(taskId);
             this.pushArchivedTask(task);
+            this.$bus.emit('archiveTask',{taskId});
             modalClose(this);
           }).catch(error=>{
             console.log(error);
@@ -231,6 +231,7 @@ created() {
             this.removeArchivedTask(taskId);
             this.fetchTasks({slug:this.$route.params.slug, page:1});
             modalClose(this);
+            this.$bus.emit('unarchiveTask',{task});
           }).catch(error=>{
              this.setErrors(error.response.data.errors);
           });
