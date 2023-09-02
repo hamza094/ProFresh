@@ -49,7 +49,6 @@ class MessageController extends Controller
      return $this->respondNoContent([
        'message'=>'Scheduled message deleted Successfully'
      ]);
-
   }
 
 }

@@ -8,7 +8,6 @@ use Illuminate\Http\Request;
 use App\Models\Project;
 use App\Notifications\ProjectTask;
 use App\Models\Task;
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\DB;
 use App\Services\TaskService;
 use App\Http\Resources\TaskResource;
@@ -22,7 +21,7 @@ class TaskController extends ApiController
 
   public function index(Project $project,Request $request,TaskService $taskService): JsonResponse
   {
-    $isArchived = $request->query('request') === 'archived';
+    $isArchived = ($request->query('request') === 'archived') ? true : false;
 
     $tasksData = $taskService->getTasksData($project, $isArchived);
 
@@ -35,14 +34,9 @@ class TaskController extends ApiController
 
     $taskService->checkLimits($project);
 
-//DB::transaction(function () use ($project, $request, $taskService) {
-
     $task=$project->tasks()->firstOrCreate($request->validated()+['user_id' => Auth::id()]);
 
-
-    $taskService->sendNotification($project);
-
-    //}); 
+    $taskService->sendNotification($project); 
 
     $task->load('status');   
 
@@ -54,24 +48,19 @@ class TaskController extends ApiController
 
   public function update(Project $project,Task $task,TaskUpdate $request,TaskService $taskService)
   {  
-     Gate::authorize('archive-task', $task);
-
     $this->authorize('taskaccess',$task);
 
-    if(!$request->validated()){
-      return 'unable to update';
-    } 
-     DB::transaction(function () use ($task, $request, $taskService) {    
-   $taskService->updateStatus($task, $request->validated('status_id'));
-    $task->update($request->validated());
-  });
+    $taskService->updateValidation($request,$task);
 
-   if ($due_at = request()->input('due_at'))
-    {
-     $formattedTime = (new \DateTime($due_at))->format('Y-m-d H:i:s');
-     $task->due_at = \Timezone::convertFromLocal($formattedTime);
-   }
+     DB::transaction(function () use ($task, $request, $taskService)
+     {    
+        $taskService->updateStatus($task, $request->validated('status_id'));
 
+        $task->update($request->validated());
+    });
+
+      $taskService->setDueDate($request,$task);
+   
     return $this->respondWithSuccess([
         'message' => 'Task Updated Successfully',
         'task' => new TaskResource($task),
@@ -80,7 +69,7 @@ class TaskController extends ApiController
 
   public function destroy(Project $project,Task $task)
   {
-        $this->authorize('taskallow',$task);
+    $this->authorize('taskallow',$task);
 
      $task->activities()->delete();
 

@@ -78,21 +78,24 @@ Route::apiResource('/tasks', TaskController::class)->withTrashed()->except(['sho
 });
 //->middleware('subscription');
 
-Route::get('/member/search', [TaskFeaturesController::class,'search']);
+Route::get('/member/search', [TaskFeaturesController::class,'search'])->name('members.search');
 
 Route::controller(TaskFeaturesController::class)
 ->name('task.')
 ->prefix('tasks/{task}')
 ->group(function(){
+
+Route::middleware(['can:taskallow,task'])->group(function () {    
 Route::patch('assign','assign')->name('assign')->withTrashed();
-
 Route::patch('unassign','unassign')->name('unassign')->withTrashed();
+});
 
+Route::middleware(['can:taskaccess,task'])->group(function () {
 Route::delete('archive','archive')->name('archive')->withTrashed();
-
 Route::get('unarchive','unarchive')->name('unarchive')->withTrashed();
+});
 
-Route::delete('delete','delete')->name('delete');
+
 });
 
 //->middleware('subscription');

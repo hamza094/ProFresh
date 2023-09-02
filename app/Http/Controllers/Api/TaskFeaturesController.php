@@ -8,8 +8,7 @@ use App\Models\Project;
 use App\Models\Task;
 use App\Models\User;
 use App\Services\TaskService;
-use Auth;
-use App\Notifications\TaskAssigned;
+use App\Repository\TaskRepository;
 use App\Http\Resources\TaskResource;
 use App\Http\Requests\TaskMembersRequest;
 use Illuminate\Support\Facades\Gate;
@@ -24,22 +23,15 @@ class TaskFeaturesController extends Controller
 {
     use ApiResponseHelpers;
 
-    public function assign(Project $project,Task $task,TaskMembersRequest $request)
+    public function assign(Project $project,Task $task,TaskMembersRequest $request,TaskService $service)
     {
         Gate::authorize('archive-task', $task);
-
-        $this->authorize('taskallow',$task);
 
        $members=$request->members;
 
        $task->assignee()->syncWithoutDetaching($members);
 
-    $usersToNotify = User::whereIn('id', $request->members)
-    ->where('id', '!=', Auth::id())
-    ->select('id', 'name', 'email')
-    ->get();
-
-    $usersToNotify->each->notify(new TaskAssigned($task, $project, auth()->user()));
+       $service->notifyAssignees($request,$task,$project);
 
     return $this->respondWithSuccess([
         'message' => 'Task assigned to member Successfully',
@@ -50,8 +42,6 @@ class TaskFeaturesController extends Controller
     public function unassign(Project $project,Task $task,Request $request)
     {       
         Gate::authorize('archive-task', $task);
-
-        $this->authorize('taskallow',$task);
 
         $request->validate([
         'member' => ['required', 'exists:users,id', 
@@ -70,9 +60,7 @@ class TaskFeaturesController extends Controller
 
     public function archive(Project $project,Task $task)
     {
-        Gate::authorize('archive-task', $task);
-
-        $this->authorize('taskaccess',$task);
+      Gate::authorize('archive-task', $task);
 
       DB::transaction(function () use ($task) {     
         $task->delete();
@@ -88,8 +76,6 @@ class TaskFeaturesController extends Controller
 
      public function unarchive(Project $project,Task $task)
      {
-        $this->authorize('taskaccess',$task);
-
         DB::transaction(function () use ($task) { 
         $task->restore();
         $task->activities()->update(['is_hidden' => false]);
@@ -101,23 +87,9 @@ class TaskFeaturesController extends Controller
     ]);
     }
     
-    public function search(Project $project,Request $request)
+    public function search(Project $project,Request $request,TaskRepository $repository)
     { 
-        Gate::authorize('archive-task', $task);
-
-        $this->authorize('taskaccess',$task);
-
-       $searchTerm = $request->input('search');
-
-       $searchResults = $project->activeMembers()
-        ->select('users.id','name', 'email', 'username')
-        ->where(function ($query) use ($searchTerm) {
-          $query->where('name', 'like', '%' . $searchTerm . '%')
-               ->orWhere('email', 'like', '%' . $searchTerm . '%')
-               ->orWhere('username', 'like', '%' . $searchTerm . '%');
-          })->where('users.id', '!=', $authUserId)
-            ->take(5)
-            ->get();
+      $searchResults = $repository->searchMembers($request,$project);
 
       return UsersResource::collection($searchResults);
     }

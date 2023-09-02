@@ -33,7 +33,7 @@
                 <span class="text-danger font-italic" v-if="errors.member" v-text="errors.member"></span>
           					</p>
 
-          				<p v-if="task.due_at"><small><b>Task due: </b> </small> {{task.due_at | datetime}}</p>
+          				<p v-if="task.due_at"><small><b>Task due: </b> </small> {{task.due_at}} {{auth.timezone}}</p>
 
           				<p v-if="task.notified"><small><b>Notified: </b> </small>{{task.notified}} </p>
 
@@ -136,19 +136,21 @@ export default {
   props:['slug','state','projectMembers'],
     data() {
       return {
-        currentDate: new Date(),
+        currentDate: new Date().toUTCString(),
+        dateTime:new Date(),
         maxdateTime: null,
         memberPop:false,
         datePop:false,
         isEditable: false,
         due:'',
 		    model:{},
+        auth:this.$store.state.currentUser.user,
         };
     },
     computed: {
     ...mapState('SingleTask',['task','errors','form','statuses','due_notifies']),
   modifiedDate() {
-    const modifiedDate = new Date(this.currentDate.getTime() + 30 * 60000);
+    const modifiedDate = new Date(this.dateTime.getTime() + 30 * 60000);
     return modifiedDate.toISOString();
   },
   remainingTime(){
@@ -185,9 +187,14 @@ created() {
       axios.put(url(this.slug, id),
         {due_at:this.form.due_at,notified:this.form.notified})
     .then(response => {
+      const taskData = response.data.task;
       this.$vToastify.success(response.data.message);
         this.setErrors([]);
-         this.updateTaskDue(this.form.due_at,response.data.task.notified);
+        this.updateTaskDue({
+          dueAt:taskData.due_at,
+          notified:taskData.notified,
+          dueAtUtc:taskData.due_at_utc
+        });
          this.cancelDue();
     })
     .catch(error => {

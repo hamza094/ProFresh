@@ -19,6 +19,7 @@ class UsersResource extends JsonResource
           'name'=>$this->name,
           'username'=>$this->username,
           'email'=>$this->email,
+          'timezone'=>$this->timezone,
           'avatar' => $this->when($this->avatar,
                         fn()=>$this->avatar_path),
           $this->mergeWhen($this->email_verified_at, [

@@ -28,7 +28,7 @@ class TaskTest extends TestCase
         ->for($this->project)
         ->create(); 
 
-        $response = $this->withoutExceptionHandling()->getJson($this->project->path().'/tasks?request=archived');
+        $response = $this->getJson($this->project->path().'/tasks?request=archived');
 
         $response->assertStatus(200)
                  ->assertJsonCount(3, 'tasksData')
@@ -43,7 +43,7 @@ class TaskTest extends TestCase
         ->for($this->project)
         ->create(); 
 
-        $response = $this->getJson($this->project->path(). '/tasks');
+      $response = $this->getJson($this->project->path(). '/tasks');
 
        $response->assertStatus(200)
                 ->assertJsonCount(3, 'tasksData')
@@ -71,8 +71,7 @@ class TaskTest extends TestCase
        $response=$this->postJson($this->project->path().'/tasks',[
           'title' => 'My Project Task',
           'status_id'=>$this->status->id,
-      ])
-          ->assertCreated()
+      ])->assertCreated()
           ->assertJson([
            "task"=>[      
            'id'=>1,
@@ -88,9 +87,10 @@ class TaskTest extends TestCase
    {
      $this->project->tasks()->create(['title'=>'Project Task','user_id'=>$this->project->user->id]);
 
-     $response=$this->postJson($this->project->path().'/tasks',
-        ['title' => 'Project Task','status_id'=>$this->status->id])
-         ->assertJsonValidationErrors('title');
+     $response=$this->postJson($this->project->path().'/tasks',[
+        'title' => 'Project Task',
+        'status_id'=>$this->status->id
+        ])->assertJsonValidationErrors('title');
 
       $project2=Project::factory()->for($this->user)->create();
 
@@ -117,23 +117,25 @@ class TaskTest extends TestCase
      $task=$this->project->addTask('test task');
 
      $updatedTitle="Task title updated";
+     $updatedDescription="Task updated description";
+     $due_at=now()->addDays(5);
 
      $status2=TaskStatus::factory()->create();
 
-     $response=$this->putJson($task->path(), [
+     $this->withoutExceptionHandling()->putJson($task->path(), [
       'title' => $updatedTitle,
-      'description'=>'This is random project description',
-      'due_at'=>Carbon::today()->addDays(5),
+      'description'=>$updatedDescription,
+      'due_at'=>$due_at,
       'status_id'=>$status2->id
-    ])
-     ->assertJson(["task"=>['id'=>$task->id,'title'=>$updatedTitle]]);
+    ])->assertJson([
+        "task"=>['id'=>$task->id,'title'=>$updatedTitle]]);
 
     $task->refresh();
 
      $this->assertDatabaseHas('tasks',[
       'title'=>$updatedTitle,
-      'description'=>'This is random project description',
-      'due_at'=>Carbon::today()->addDays(5),
+      'description'=>$updatedDescription,
+      'due_at'=>$due_at,
     ])
      ->assertEquals($task->status->id,$status2->id);
     }
@@ -205,25 +207,19 @@ class TaskTest extends TestCase
    {
       $task = Task::factory()->for($this->project)->create();
 
-       $response = $this->deleteJson(route('task.archive', [
+      $this->deleteJson(route('task.archive', [
         'project' => $this->project->slug,
         'task' => $task->id
     ]));
 
-        $this->assertSoftDeleted($task);
+      $this->assertSoftDeleted($task);
 
-        //$task->activities()->update(['is_hidden' => false]);
-
-    $response = $this->getJson(route('task.unarchive', [
+     $this->getJson(route('task.unarchive', [
         'project' => $this->project->slug,
         'task' => $task->id,
-    ]));
-
-      $task->refresh();
+      ]));
 
       $this->assertNotSoftDeleted($task);
-
-      $this->assertEquals($task->deleted_at,null);
    }
 
    /** @test */
@@ -231,7 +227,7 @@ class TaskTest extends TestCase
    {
      $task=Task::factory()->for($this->project)->create();
 
-      $this->withoutExceptionHandling()->deleteJson($task->path())->assertNoContent();
+      $this->deleteJson($task->path())->assertNoContent();
 
      $this->assertModelMissing($task);
    }
@@ -266,7 +262,19 @@ class TaskTest extends TestCase
         'project' => $this->project->slug,
         'task' => $task->id
     ]))->assertForbidden();
-    
+   }
+
+   /** @test */
+   public function auth_user_can_search_project_members()
+   { 
+      $user = User::factory()->create();
+
+      $this->project->members()->attach($user->id, ['active' => true]);
+
+     $response = $this->getJson(route('members.search', ['project' => $this->project->slug]), ['search' => 'searchTerm'])
+     ->assertSuccessful();
+
+     $this->assertCount(1, $response->json());
    }
 
    protected function assignMembersToTask(Task $task, array $members)
