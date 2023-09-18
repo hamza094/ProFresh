@@ -14,7 +14,7 @@ class TaskStatusController extends Controller
     {
       return response()->json([
         'statuses'=>TaskStatusResource::collection(TaskStatus::all()),
-        'due_notifies'=>TaskDueNotifies::asArray(),
+        'due_notifies'=>TaskDueNotifies::values(),
       ]); 
     }
 

@@ -271,7 +271,7 @@ class TaskTest extends TestCase
 
       $this->project->members()->attach($user->id, ['active' => true]);
 
-     $response = $this->getJson(route('members.search', ['project' => $this->project->slug]), ['search' => 'searchTerm'])
+     $response = $this->withoutExceptionHandling()->getJson(route('members.search', ['project' => $this->project->slug]), ['search' => 'searchTerm'])
      ->assertSuccessful();
 
      $this->assertCount(1, $response->json());

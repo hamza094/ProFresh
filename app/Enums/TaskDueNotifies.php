@@ -7,17 +7,37 @@ enum TaskDueNotifies: string {
     case TWO_HOURS_BEFORE = '2 Hours Before';
     case FIFTEEN_MINUTES_BEFORE = '15 Minutes Before';
     case FIVE_MINUTES_BEFORE = '5 Minutes Before';
-    case AT_THE_TIME = 'At The Time';
+    case TWO_MINUTES_BEFORE = '2 Minutes Before';
 
-     public static function asArray(): array
+    /**
+     * Get all the enum values as an array.
+     *
+     * @return array
+     */
+    public static function values(): array
     {
-        return [
-            self::ONE_DAY_BEFORE,
-            self::TWO_HOURS_BEFORE,
-            self::FIFTEEN_MINUTES_BEFORE,
-            self::FIVE_MINUTES_BEFORE,
-            self::AT_THE_TIME,
-        ];
+        return array_column(self::cases(), 'value');
+    }
+    
+
+
+    /**
+     * Get the notification period in minutes for a given notification type.
+     *
+     * @param string $notificationType
+     * @return int|null
+    */
+    public static function getPeriodInMinutes(string $notificationType): ?int
+    {
+        return match ($notificationType) {
+            '1 Day Before' => 1440,
+            '2 Hours Before' => 120,
+            '15 Minutes Before' => 15,
+            '5 Minutes Before' => 5,
+            '2 Minutes Before' => 2,
+            default => null,
+    };
+    
     }
 }
 

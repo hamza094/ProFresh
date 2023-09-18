@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\DB;
 use App\Services\TaskService;
 use App\Http\Resources\TaskResource;
 use F9Web\ApiResponseHelpers;
+use App\Notifications\TaskDue;
 use Auth;
 use Illuminate\Http\JsonResponse;
 
@@ -59,7 +60,7 @@ class TaskController extends ApiController
         $task->update($request->validated());
     });
 
-      $taskService->setDueDate($request,$task);
+       $taskService->setDueDate($request,$task);
    
     return $this->respondWithSuccess([
         'message' => 'Task Updated Successfully',

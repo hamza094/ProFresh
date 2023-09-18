@@ -15,6 +15,10 @@ class Task extends Model
 
   protected $touches=['project'];
 
+  protected $casts = [
+    'due_at' => 'datetime',
+];
+
   protected $deletedAt = 'archived_at';
 
   protected static function booted()
@@ -62,6 +66,13 @@ class Task extends Model
     public function scopeActive($query)
     {
         return $query->with('status')->get();
+    }
+
+    public function scopeDueForNotifications($query){
+       $query
+        ->whereNotNull(['notified','due_at'])
+        ->where('due_at', '>=', now())
+        ->where('notify_sent', false);
     }
 
 }
