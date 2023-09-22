@@ -73,12 +73,8 @@ Route::controller(MessageController::class)->group(function(){
 
 //Task Routes
 
-Route::middleware(['can:manage,project'])->group(function () {
 Route::apiResource('/tasks', TaskController::class)->withTrashed()->except(['show']);
-});
 //->middleware('subscription');
-
-Route::get('/member/search', [TaskFeaturesController::class,'search'])->name('members.search');
 
 Route::controller(TaskFeaturesController::class)
 ->name('task.')
@@ -91,8 +87,11 @@ Route::patch('unassign','unassign')->name('unassign')->withTrashed();
 });
 
 Route::middleware(['can:taskaccess,task'])->group(function () {
-Route::delete('archive','archive')->name('archive')->withTrashed();
-Route::get('unarchive','unarchive')->name('unarchive')->withTrashed();
+Route::delete('archive','archive')->name('archive')
+    ->withTrashed();
+Route::get('unarchive','unarchive')->name('unarchive')
+        ->withTrashed();
+  Route::get('member/search', [TaskFeaturesController::class,'search'])->name('members.search');      
 });
 
 

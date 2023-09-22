@@ -26,7 +26,6 @@ class ProjectsPolicy
         return $user->is($project->user);
     }
 
-
     public function access(User $user, Project $project)
     {
         return $user->is($project->user) || $project->activeMembers->contains($user->id) 

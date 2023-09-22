@@ -9,8 +9,10 @@ use Illuminate\Notifications\Notification;
 use Illuminate\Notifications\Messages\BroadcastMessage;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-class TaskDue extends Notification implements ShouldBroadcast
+class TaskDue extends Notification implements ShouldQueue,ShouldBroadcast
 {
+    use Queueable;
+    
     protected $task;
     protected $user;
     protected $project;

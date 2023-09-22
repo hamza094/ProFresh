@@ -29,7 +29,7 @@ public function login(Request $request)
         ]);
     }
 
-    $user->timezone ?: UserLogin::dispatch($user);
+    UserLogin::dispatchIf(!$user->timezone, $user);
 
     return response()->json([
       'user' => new UsersResource($user),

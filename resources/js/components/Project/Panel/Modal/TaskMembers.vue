@@ -35,11 +35,11 @@
 
 <script type="text/javascript">
   import { mapMutations, mapActions, mapState } from 'vuex';
-  import {url} from '../../../../utils/TaskUtils';
+  import {url,ErrorHandling} from '../../../../utils/TaskUtils';
   import { debounce } from 'lodash';
 
 export default {
-    props:['slug'],
+    props:['slug','taskId'],
   computed:{
     ...mapState('SingleTask',['form','errors','task']),
   },
@@ -55,10 +55,17 @@ export default {
       this.performSearch(newSearch);
     }, 500),
     },
+    created(){
+     this.$bus.on('toggleMember', ()=>{
+    this.taskMembers = [];
+    this.setErrors([]);
+    this.form.search='';
+  });
+    },
   methods: {
     ...mapMutations('SingleTask',['setErrors','updateTaskMembers']),
   	  performSearch(searchTerm) {
-    axios.get(`/api/v1/projects/${this.slug}/member/search`, {
+    axios.get(`/api/v1/projects/${this.slug}/tasks/${this.taskId}/member/search`, {
         params: { search: this.form.search}
     })
     .then(response => {
@@ -69,6 +76,12 @@ export default {
     });
 },
  addMember(member,id){
+   const memberExists = this.taskMembers.some(m => m.id === member.id);
+
+  if (memberExists) {
+    return this.$vToastify.warning("Member already listed");
+  }
+
   this.taskMembers.push(member);
   this.searchResults=[];
   this.form.search='';
@@ -90,9 +103,7 @@ removeMember(member,id){
           }).then(response=>{
             this.assignSuccessfull(response);
           }).catch(error=>{
-             if (error.response.status === 422) {
-              this.setErrors(error.response.data.errors);
-            }
+            ErrorHandling(this,error);
           });
     },
 
@@ -110,9 +121,13 @@ removeMember(member,id){
       }
       return [];
     },
-    hasError(key) {
-      return this.errors.hasOwnProperty(key);
-    },
+      hasError(key) {
+    if (this.errors && typeof this.errors === 'object' && this.errors.hasOwnProperty(key)) {
+      return true;
+    }
+    return false;
+  },
+
   },
 };
 </script>

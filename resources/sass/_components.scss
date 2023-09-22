@@ -974,6 +974,10 @@ i{
       font-size: 1rem;
       &-link{
         cursor: pointer;
+        &:hover{
+            text-decoration: none;
+        }
+
       }
     }
 

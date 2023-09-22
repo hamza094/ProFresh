@@ -1068,6 +1068,10 @@ p {
   cursor: pointer;
 }
 
+.task-description_content-link:hover {
+  text-decoration: none;
+}
+
 .title-form {
   width: 50% !important;
   display: inherit !important;

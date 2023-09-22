@@ -17,7 +17,7 @@
             <span class="task-modal_close float-right" role="button" @click.prevent="modalClose">x</span>
         </div>
           
-        <span class="text-danger font-italic" v-if="errors.title" v-text="errors.title[0]"></span>
+        <span class="text-danger font-italic" v-if="errors?.title" v-text="errors?.title?.[0]"></span>
        </div>
 
         <div v-if="state == 'archived'" class="alert alert-warning" role="alert">
@@ -29,7 +29,7 @@ Please note that this task is currently archived. Currently, you can only delete
 
 <script>
 import { mapMutations, mapActions, mapState } from 'vuex';
-import {url} from '../../../../utils/TaskUtils';
+import {url,ErrorHandling } from '../../../../utils/TaskUtils';
 import { modalClose } from '../../../../mixins/modalClose';
 
 export default {
@@ -59,7 +59,7 @@ export default {
         this.updateTaskTitle(response.data.task.title);
     })
     .catch(error => {
-      this.setErrors(error.response.data.errors);
+        ErrorHandling(this,error);
     });
   },
 

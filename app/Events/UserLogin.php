@@ -3,10 +3,12 @@
 namespace App\Events;
 
 use App\Models\User;
+use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
 class UserLogin //implements ShouldQueue
 {
+    use Dispatchable;
     /**
     * The user instance.
     *

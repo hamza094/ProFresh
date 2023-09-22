@@ -122,7 +122,7 @@ class TaskTest extends TestCase
 
      $status2=TaskStatus::factory()->create();
 
-     $this->withoutExceptionHandling()->putJson($task->path(), [
+     $this->putJson($task->path(), [
       'title' => $updatedTitle,
       'description'=>$updatedDescription,
       'due_at'=>$due_at,
@@ -248,6 +248,24 @@ class TaskTest extends TestCase
    }
 
    /** @test */
+   public function project_members_does_not_perform_task_operations()
+   {
+     $task=Task::factory()->for($this->project)->create();
+
+     $user=User::factory()->create();
+
+     $this->project->members()->attach($user);
+
+     $user->members()->updateExistingPivot($this->project,['active'=>true]);
+
+      Sanctum::actingAs(
+       $user,
+   );
+
+    $this->assertFalse($user->can('taskaccess', $task));    
+   }
+
+   /** @test */
    public function task_policy_check()
    { 
       $task=Task::factory()->for($this->project)->create();
@@ -269,10 +287,16 @@ class TaskTest extends TestCase
    { 
       $user = User::factory()->create();
 
+      $task=Task::factory()->create(['project_id'=>$this->project->id]);
+
       $this->project->members()->attach($user->id, ['active' => true]);
 
-     $response = $this->withoutExceptionHandling()->getJson(route('members.search', ['project' => $this->project->slug]), ['search' => 'searchTerm'])
-     ->assertSuccessful();
+      $searchTerm=$user->username;
+
+     $response = $this->getJson(route('task.members.search',
+      ['project' => $this->project->slug,
+      'task'=>$task->id]),
+    ['search' => $searchTerm])->assertSuccessful();
 
      $this->assertCount(1, $response->json());
    }

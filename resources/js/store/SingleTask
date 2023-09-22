@@ -64,7 +64,7 @@ const actions = {
         commit('setDueNotifies', response.data.due_notifies);
         })
         .catch(error => {
-          //console.log(error.response.data.errors);
+          console.log(error.response.data.errors);
         })
       },
 };

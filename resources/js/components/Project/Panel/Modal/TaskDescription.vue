@@ -2,14 +2,13 @@
  <div class="task-description">
                  <p class="task-description_container">
                   <span class="task-description_heading">Description:</span>
-                  <span class="text-danger font-italic" v-if="errors.description" v-text="errors.description"></span>
+                  <span class="text-danger font-italic" v-if="errors?.description" v-text="errors?.description?.[0]"></span>
                 </p>
 
                 <div v-if="edit == task.id">
               
                 <vue-editor name="description" 
                 v-model="form.description" :editorToolbar="customToolbar"></vue-editor>
-
 
             <span class="btn btn-link btn-sm" @click="updateDescription(task.id,task)">Update</span>
 
@@ -18,10 +17,13 @@
           
       </div>
             <div v-else>
+
               <p v-if="task.description" class="task-description_content" @click="openDescriptionForm(task.id,task)" v-html="task.description"></p>
+
               <div v-else="task.description">
-              <p class="task-description_content">Sorry! currently no task description present. <span class="task-description_content-link" @click="openDescriptionForm(task.id,task)"> Click here to add description</span>
+              <p class="task-description_content">Sorry! currently no task description present. <a class="task-description_content-link" @click="openDescriptionForm(task.id,task)"> Click here to add description</a>
               </p>
+
             </div>
             </div>  
               </div>
@@ -30,7 +32,7 @@
 <script>
   import { VueEditor } from "vue2-editor";
   import { mapMutations, mapActions, mapState } from 'vuex';
-  import {url} from '../../../../utils/TaskUtils';
+  import {url,ErrorHandling} from '../../../../utils/TaskUtils';
 export default {
       props:['task','slug','errors'],
   components: {VueEditor},
@@ -65,7 +67,7 @@ export default {
         this.updateTaskDescription(response.data.task.description);
     })
     .catch(error => {
-      this.setErrors(error.response.data.errors);
+      ErrorHandling(this,error);
     });
    }, 
 

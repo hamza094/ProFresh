@@ -9,8 +9,10 @@
     <div class="collapse" id="taskProject">
      <!-- <SubscriptionCheck> -->
     <div class="card card-body">
+      <div v-if="!access">Only the project owner and members are allowed to access this feature.</div>
+      <div v-if="access">
     <div class="task-add">
-      <form class="" v-if="access" @submit.prevent="add">
+      <form class="" @submit.prevent="add">
         <div class="form-group">
           <label for="body"><i>Create a New Task</i></label>
           <input type="text" class="form-control" name="title" v-model="form.title">
@@ -41,7 +43,7 @@
         <TaskModal :slug="slug" :state="state"></TaskModal @modal-closed="closeModal">
     </modal>
 	<pagination :data="tasks" @pagination-change-page="getResults"></pagination>
-
+</div>
     </div>
   </div>
 </SubscriptionCheck>

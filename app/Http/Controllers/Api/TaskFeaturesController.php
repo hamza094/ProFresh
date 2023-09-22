@@ -29,9 +29,10 @@ class TaskFeaturesController extends Controller
 
        $members=$request->members;
 
+       DB::transaction(function () use ($task, $members, $service, $request, $project) {
        $task->assignee()->syncWithoutDetaching($members);
-
        $service->notifyAssignees($request,$task,$project);
+       });
 
     return $this->respondWithSuccess([
         'message' => 'Task assigned to member Successfully',
@@ -87,9 +88,9 @@ class TaskFeaturesController extends Controller
     ]);
     }
     
-    public function search(Project $project,Request $request,TaskRepository $repository)
+    public function search(Project $project,Task $task,Request $request,TaskRepository $repository)
     { 
-      $searchResults = $repository->searchMembers($request,$project);
+      $searchResults = $repository->searchMembers($request,$project,$task);
 
       return UsersResource::collection($searchResults);
     }

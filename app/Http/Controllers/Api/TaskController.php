@@ -22,6 +22,8 @@ class TaskController extends ApiController
 
   public function index(Project $project,Request $request,TaskService $taskService): JsonResponse
   {
+    $this->authorize('access', $project);
+
     $isArchived = ($request->query('request') === 'archived') ? true : false;
 
     $tasksData = $taskService->getTasksData($project, $isArchived);
@@ -37,7 +39,7 @@ class TaskController extends ApiController
 
     $task=$project->tasks()->firstOrCreate($request->validated()+['user_id' => Auth::id()]);
 
-    $taskService->sendNotification($project); 
+    $taskService->sendNotification($project);
 
     $task->load('status');   
 

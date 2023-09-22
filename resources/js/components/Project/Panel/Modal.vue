@@ -30,7 +30,7 @@
                     </span>
                   </template>  
                 </p>
-                <span class="text-danger font-italic" v-if="errors.member" v-text="errors.member"></span>
+                <span class="text-danger font-italic" v-if="errors?.member" v-text="errors?.member"></span>
           					</p>
 
           				<p v-if="task.due_at"><small><b>Task due: </b> </small> {{task.due_at}} {{auth.timezone}}</p>
@@ -69,11 +69,11 @@
 
           			<ul class="task-option_features">
           				<li>
-          				<button class="btn btn-sm btn-outline-primary btn-block member-dropdown" @click.prevent="memberPop = !memberPop">
+          				<button class="btn btn-sm btn-outline-primary btn-block member-dropdown" @click.prevent="toggleMemberPop">
           					<i class="fas fa-user-alt pr-1"></i> <b>Members</b>
           				</button>
                 
-                <TaskMembers :slug="slug" v-show=memberPop></TaskMembers>
+                <TaskMembers :slug="slug" :taskId="task.id" v-show=memberPop></TaskMembers>
 
           			</li>
 
@@ -90,6 +90,8 @@
                          <option value="">Choose Option</option>
                           <option v-for="notify in due_notifies" :value="notify">{{ notify }}</option>
                          </select>
+
+                           <span class="text-danger font-italic" v-if="errors?.notified" v-text="errors?.notified?.[0]"></span>
 
                          <div class="float-right mt-2">
                           <button class="btn btn-sm btn-secondary" @click.prevent="cancelDue()">Cancel</button>
@@ -123,7 +125,7 @@
 </template>
 
 <script>
-import {calculateRemainingTime, url} from '../../../utils/TaskUtils';
+import {calculateRemainingTime, url,ErrorHandling} from '../../../utils/TaskUtils';
 import { mapMutations, mapActions, mapState } from 'vuex';
 import TopPanel from './Modal/TopArea.vue';
 import TaskDescription from './Modal/TaskDescription.vue';
@@ -158,10 +160,17 @@ export default {
 },
 },
 created() {
+  window.addEventListener('beforeunload', this.handleBeforeUnload);
+
   this.$bus.on('close-members-popup', ()=>{
     this.memberPop = false;
   });
 },
+
+  beforeDestroy() {
+    window.removeEventListener('beforeunload', this.handleBeforeUnload);
+  },
+
   methods: {
   ...mapMutations('task',['removeTaskFromState',
     'pushArchivedTask','removeArchivedTask']),
@@ -178,8 +187,7 @@ created() {
         this.updateTaskStatus(response.data.task.status);
     })
     .catch(error => {
-      this.$vToastify.warning(error?.response?.data?.errors?.task?.[0] ?? 'An error occurred.');
-      this.setErrors(error.response.data.errors);
+      ErrorHandling(this,error);
     });
     },
 
@@ -198,7 +206,7 @@ created() {
          this.cancelDue();
     })
     .catch(error => {
-      this.setErrors(error.response.data.errors);
+      ErrorHandling(this,error);
     });
   },
 
@@ -216,7 +224,7 @@ created() {
             this.$vToastify.success(response.data.message);
             this.setErrors([]);
           }).catch(error=>{
-            this.setErrors(error.response.data.errors);
+              ErrorHandling(this,error);
           });
     },
     archive(task,taskId){
@@ -228,7 +236,7 @@ created() {
             this.$bus.emit('archiveTask',{taskId});
             modalClose(this);
           }).catch(error=>{
-            console.log(error);
+            ErrorHandling(this,error);
           });
     },
      unArchive(task,taskId){
@@ -240,7 +248,7 @@ created() {
             modalClose(this);
             this.$bus.emit('unarchiveTask',{task});
           }).catch(error=>{
-             this.setErrors(error.response.data.errors);
+             ErrorHandling(this,error);
           });
     },
     trash(task,taskId){
@@ -249,8 +257,15 @@ created() {
             this.$vToastify.success(response.data.message);
             this.removeArchivedTask(taskId);
           }).catch(error=>{
-            console.log(error);
+            ErrorHandling(this,error);
           });
+    },
+    toggleMemberPop() {
+      this.memberPop = !this.memberPop;
+      this.$bus.emit('toggleMember');
+    },
+     handleBeforeUnload() {
+      modalClose(this);
     },
     },
 } 
