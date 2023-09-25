@@ -1,0 +1,1544 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"sea",
+				"searchTerm"
+			],
+			[
+				"array_",
+				"array_column()"
+			],
+			[
+				"C",
+				"Carbon"
+			],
+			[
+				"task",
+				"taskData"
+			],
+			[
+				"date",
+				"dateTime"
+			],
+			[
+				"req",
+				"request"
+			],
+			[
+				"sera",
+				"searchTerm"
+			],
+			[
+				"TaskRes",
+				"TaskRepository"
+			],
+			[
+				"m",
+				"memberPop"
+			],
+			[
+				"Tas",
+				"TaskMembers"
+			],
+			[
+				"due",
+				"due_notifies"
+			],
+			[
+				"setS",
+				"statuses"
+			],
+			[
+				"S",
+				"SingleTask"
+			],
+			[
+				"Task",
+				"TaskStatus"
+			],
+			[
+				"tas",
+				"tasksData"
+			],
+			[
+				"fa",
+				"false"
+			],
+			[
+				"isA",
+				"isArchived"
+			],
+			[
+				"wid",
+				"width"
+			],
+			[
+				"text",
+				"text-align"
+			],
+			[
+				"se",
+				"searchResults"
+			],
+			[
+				"over",
+				"overflow-y"
+			],
+			[
+				"status",
+				"statusId"
+			],
+			[
+				"d",
+				"due_at"
+			],
+			[
+				"da",
+				"dateTime"
+			],
+			[
+				"re",
+				"remainingMessage"
+			],
+			[
+				"li",
+				"line-height"
+			],
+			[
+				"texr",
+				"text-transform"
+			],
+			[
+				"tex",
+				"text-transform"
+			],
+			[
+				"margin",
+				"margin-bottom"
+			],
+			[
+				"Re",
+				"Request"
+			],
+			[
+				"R",
+				"Request"
+			],
+			[
+				"TaskS",
+				"taskService"
+			],
+			[
+				"va",
+				"validatedData"
+			],
+			[
+				"ass",
+				"assertUnprocessable"
+			],
+			[
+				"ma",
+				"margin-right"
+			],
+			[
+				"dat",
+				"datePop"
+			],
+			[
+				"b",
+				"b"
+			],
+			[
+				"a",
+				"a"
+			],
+			[
+				"p",
+				"placeholder"
+			],
+			[
+				"text-a",
+				"text-align"
+			],
+			[
+				"mar",
+				"margin-bottom"
+			],
+			[
+				"border-",
+				"border-top"
+			],
+			[
+				"marg",
+				"margin-bottom"
+			],
+			[
+				"subs",
+				"subscription"
+			],
+			[
+				"subscr",
+				"subscription"
+			],
+			[
+				"btn",
+				"button"
+			],
+			[
+				"P",
+				"Property"
+			],
+			[
+				"Ap",
+				"ApartmentFactory"
+			],
+			[
+				"Apa",
+				"Apartment"
+			],
+			[
+				"A",
+				"ApartmentSearchResource"
+			],
+			[
+				"user",
+				"username"
+			],
+			[
+				"OA",
+				"OAuthAction"
+			],
+			[
+				"member",
+				"memberId"
+			],
+			[
+				"add",
+				"addScore"
+			],
+			[
+				"project",
+				"projectabout"
+			],
+			[
+				"proj",
+				"projectname"
+			],
+			[
+				"update",
+				"updateAbout"
+			],
+			[
+				"upda",
+				"updateName"
+			],
+			[
+				"pr",
+				"projectabout"
+			],
+			[
+				"get",
+				"getStage"
+			],
+			[
+				"lo",
+				"loadUser"
+			],
+			[
+				"f",
+				"featurePop"
+			],
+			[
+				"use",
+				"userAvatar"
+			],
+			[
+				"conver",
+				"conversation"
+			],
+			[
+				"fil",
+				"file"
+			],
+			[
+				"temp",
+				"tempFile"
+			],
+			[
+				"ava",
+				"avatar_path"
+			],
+			[
+				"in",
+				"invitations"
+			],
+			[
+				"inv",
+				"Invitation"
+			],
+			[
+				"margin-",
+				"margin-left"
+			],
+			[
+				"invi",
+				"Invitation"
+			],
+			[
+				"bor",
+				"border"
+			],
+			[
+				"M",
+				"MembersResource"
+			],
+			[
+				"Pro",
+				"ProjectsResource"
+			],
+			[
+				"Proje",
+				"ProjectsResource"
+			],
+			[
+				"moda",
+				"modalClose"
+			],
+			[
+				"unse",
+				"unset()"
+			],
+			[
+				"to",
+				"toArray"
+			],
+			[
+				"u",
+				"user"
+			],
+			[
+				"de",
+				"delivered_at"
+			],
+			[
+				"con",
+				"const"
+			],
+			[
+				"fun",
+				"function"
+			],
+			[
+				"ac",
+				"activitiesDesign"
+			],
+			[
+				"s",
+				"success"
+			],
+			[
+				"cons",
+				"console"
+			],
+			[
+				"me",
+				"message"
+			],
+			[
+				"data",
+				"date_formats"
+			],
+			[
+				"mem",
+				"members"
+			],
+			[
+				"act",
+				"activeMembers"
+			],
+			[
+				"load",
+				"loadInfo"
+			],
+			[
+				"fr",
+				"form"
+			],
+			[
+				"t",
+				"typing"
+			],
+			[
+				"for",
+				"forEach"
+			],
+			[
+				"w",
+				"withoutExceptionHandling"
+			],
+			[
+				"User",
+				"UserMentioned"
+			],
+			[
+				"conversat",
+				"conversation"
+			],
+			[
+				"conversa",
+				"conversation"
+			],
+			[
+				"preg_match",
+				"preg_match_all()"
+			],
+			[
+				"auto",
+				"autofocus"
+			],
+			[
+				"form",
+				"form-control"
+			],
+			[
+				"back",
+				"background-color"
+			],
+			[
+				"email",
+				"email_verified_at"
+			],
+			[
+				"curre",
+				"current_tenant_id"
+			],
+			[
+				"ten",
+				"tenants"
+			],
+			[
+				"cha",
+				"change"
+			],
+			[
+				"avata",
+				"avatar_path"
+			],
+			[
+				"avatar",
+				"avatar_path"
+			],
+			[
+				"convers",
+				"conversations"
+			],
+			[
+				"group_",
+				"group_id"
+			],
+			[
+				"g",
+				"Group"
+			],
+			[
+				"Send",
+				"SendSmsService"
+			],
+			[
+				"dele",
+				"deleted_at"
+			],
+			[
+				"infow",
+				"infoWinOpen"
+			],
+			[
+				"l",
+				"longitude"
+			],
+			[
+				"res",
+				"restaurants"
+			],
+			[
+				"notifi",
+				"notification"
+			],
+			[
+				"assert",
+				"assertEquals"
+			],
+			[
+				"send",
+				"sendProjectInvitation"
+			],
+			[
+				"H",
+				"Helpers"
+			],
+			[
+				"asse",
+				"assertJsonCount"
+			],
+			[
+				"activit",
+				"activities"
+			],
+			[
+				"activi",
+				"activities"
+			],
+			[
+				"font",
+				"font-weight"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"contents": "<?php\n\nnamespace App\\Notifications;\n\nuse Illuminate\\Bus\\Queueable;\nuse Illuminate\\Contracts\\Queue\\ShouldQueue;\nuse Illuminate\\Notifications\\Notification;\nuse Illuminate\\Notifications\\Messages\\MailMessage;\nuse Illuminate\\Notifications\\Messages\\BroadcastMessage;\nuse Illuminate\\Contracts\\Broadcasting\\ShouldBroadcast;\n\nclass TaskAssigned extends Notification implements ShouldBroadcast\n{\n    use Queueable;\n\n    protected $task;\n    protected $project;\n    protected $user;\n\n    /**\n     * Create a new notification instance.\n     *\n     * @return void\n     */\n    public function __construct($task,$project,$user){\n        $this->task=$task;\n        $this->project=$project;\n        $this->user=$user;\n\n    }\n\n    /**\n     * Get the notification's delivery channels.\n     *\n     * @param  mixed  $notifiable\n     * @return array\n     */\n    public function via($notifiable,)\n    {\n        return ['mail','database','broadcast'];\n    }\n\n    /**\n     * Get the mail representation of the notification.\n     *\n     * @param  mixed  $notifiable\n     * @return \\Illuminate\\Notifications\\Messages\\MailMessage\n     */\n    public function toMail($notifiable)\n    {\n        return (new MailMessage)\n                    ->line($this->user->name.' has assigned you a task: \"'.$this->task->title. '\" This is regarding the project '. $this->project->name)\n                    ->action('Notification Action', url('/'))\n                    ->line('Thank you for using our application!');\n    }\n\n    /**\n     * Get the array representation of the notification.\n     *\n     * @param  mixed  $notifiable\n     * @return array\n     */\n    public function toArray($notifiable)\n    {\n        return [\n          'message'=>'has assigned you a task: \"'.$this->task->title. '\" This is regarding the project '. $this->project->name,\n          'notifier' =>$this->user,\n          'link'=>$this->project->path()\n        ];\n    }\n\n    public function toBroadcast($notifiable)\n    {\n      return new BroadcastMessage([\n         'message'=>'has assigned you a task: \"'.$this->task->title. '\" This is regarding the project '. $this->project->name,\n          'notifier' =>$this->user->name,\n          'link'=>$this->project->path()\n    ]);\n  }\n}\n",
+			"file": "/C/laragon/www/profresh/app/Notifications/TaskAssigned.php",
+			"file_size": 2212,
+			"file_write_time": 133341689148317218,
+			"settings":
+			{
+				"buffer_size": 2212,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"contents": "<?php\n\nnamespace App\\Notifications;\n\nuse Illuminate\\Bus\\Queueable;\nuse Illuminate\\Contracts\\Queue\\ShouldQueue;\nuse Illuminate\\Notifications\\Messages\\MailMessage;\nuse Illuminate\\Notifications\\Notification;\nuse Illuminate\\Notifications\\Messages\\BroadcastMessage;\nuse Illuminate\\Contracts\\Broadcasting\\ShouldBroadcast;\n\nclass TaskDue extends Notification implements ShouldQueue,ShouldBroadcast\n{\n    use Queueable;\n    \n    protected $task;\n    protected $user;\n    protected $project;\n\n    /**\n     * Create a new notification instance.\n     *\n     * @return void\n     */\n    public function __construct($task,$user,$project)\n    {\n        $this->task=$task;\n        $this->user=$user;\n        $this->project=$project;\n    }\n\n    /**\n     * Get the notification's delivery channels.\n     *\n     * @param  mixed  $notifiable\n     * @return array\n     */\n    public function via($notifiable)\n    {\n        return ['mail','database','broadcast'];\n    }\n\n    /**\n     * Get the mail representation of the notification.\n     *\n     * @param  mixed  $notifiable\n     * @return \\Illuminate\\Notifications\\Messages\\MailMessage\n     */\n    public function toMail($notifiable)\n    {\n        return (new MailMessage)\n                ->line(\"Your task '{$this->task->title}' due '{$this->task->due_at}' is approaching. You are getting this mail because you selected to be notified '{$this->task->notified}'. Keep an eye on your task.\")\n                ->action('Notification Action', url(env('APP_URL') . \"/projects/\" . $this->project->path()))\n                ->line('Thank you for using our application!');\n    }\n\n    /**\n     * Get the array representation of the notification.\n     *\n     * @param  mixed  $notifiable\n     * @return array\n     */\n    public function toArray($notifiable)\n    {\n        return [\n          'message'=>\"Your task '{$this->task->title}' due '{$this->task->due_at}' is approaching. You are getting this mail because you selected to be notified '{$this->task->notified}'. Keep an eye on your task.\",\n          'notifier' =>$this->user,\n          'link'=>$this->project->path()\n        ];\n    }\n\n    public function toBroadcast($notifiable)\n    {\n      return new BroadcastMessage([\n         'message'=>\"Your task '{$this->task->title}' due '{$this->task->due_at}' is approaching. You are getting this mail because you selected to be notified '{$this->task->notified}'. Keep an eye on your task.\",\n          'notifier' =>$this->user->name,\n          'link'=>$this->project->path()\n    ]);\n  }\n}\n",
+			"file": "/C/laragon/www/profresh/app/Notifications/TaskDue.php",
+			"file_size": 2510,
+			"file_write_time": 133398707682856467,
+			"settings":
+			{
+				"buffer_size": 2510,
+				"line_ending": "Unix"
+			},
+			"undo_stack":
+			[
+				[
+					5,
+					1,
+					"insert",
+					{
+						"characters": "\n"
+					},
+					"AQAAADsBAAAAAAAAPAEAAAAAAAAAAAAA",
+					"BQAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvwAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAA7AQAAAAAAADsBAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					6,
+					1,
+					"paste",
+					null,
+					"AQAAADwBAAAAAAAASwEAAAAAAAAAAAAA",
+					"BQAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvwAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAA8AQAAAAAAADwBAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					39,
+					1,
+					"left_delete",
+					null,
+					"AQAAAEsBAAAAAAAASwEAAAAAAAABAAAACg",
+					"BQAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvwAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAABMAQAAAAAAAEwBAAAAAAAAAAAAAAAALEA"
+				],
+				[
+					42,
+					15,
+					"left_delete",
+					null,
+					"DwAAAEkBAAAAAAAASQEAAAAAAAABAAAAO0gBAAAAAAAASAEAAAAAAAABAAAAZUcBAAAAAAAARwEAAAAAAAABAAAAbEYBAAAAAAAARgEAAAAAAAABAAAAYkUBAAAAAAAARQEAAAAAAAABAAAAYUQBAAAAAAAARAEAAAAAAAABAAAAd0MBAAAAAAAAQwEAAAAAAAABAAAAb0IBAAAAAAAAQgEAAAAAAAABAAAAckEBAAAAAAAAQQEAAAAAAAABAAAAaEABAAAAAAAAQAEAAAAAAAABAAAAVD8BAAAAAAAAPwEAAAAAAAABAAAAID4BAAAAAAAAPgEAAAAAAAABAAAAZT0BAAAAAAAAPQEAAAAAAAABAAAAczwBAAAAAAAAPAEAAAAAAAABAAAAdTsBAAAAAAAAOwEAAAAAAAABAAAACg",
+					"BQAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvwAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAABKAQAAAAAAAEoBAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					46,
+					1,
+					"paste",
+					null,
+					"AQAAAGsBAAAAAAAAdwEAAAAAAAAAAAAA",
+					"BQAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvwAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAABrAQAAAAAAAGsBAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					48,
+					1,
+					"insert",
+					{
+						"characters": "\n"
+					},
+					"AgAAAIgBAAAAAAAAiQEAAAAAAAAAAAAAiQEAAAAAAACNAQAAAAAAAAAAAAA",
+					"BQAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvwAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAACIAQAAAAAAAIgBAAAAAAAAAAAAAADoiEA"
+				],
+				[
+					49,
+					1,
+					"paste",
+					null,
+					"AQAAAI0BAAAAAAAAoAEAAAAAAAAAAAAA",
+					"BQAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvwAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAACNAQAAAAAAAI0BAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					50,
+					1,
+					"left_delete",
+					null,
+					"AQAAAJ8BAAAAAAAAnwEAAAAAAAABAAAACg",
+					"BQAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvwAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAACgAQAAAAAAAKABAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					52,
+					1,
+					"left_delete",
+					null,
+					"AQAAAI0BAAAAAAAAjQEAAAAAAAAEAAAAICAgIA",
+					"BQAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvwAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAACRAQAAAAAAAJEBAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					54,
+					1,
+					"insert",
+					{
+						"characters": "\n"
+					},
+					"AgAAAJsBAAAAAAAAnAEAAAAAAAAAAAAAnAEAAAAAAACgAQAAAAAAAAAAAAA",
+					"BQAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvwAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAACbAQAAAAAAAJsBAAAAAAAAAAAAAAAA8L8"
+				]
+			]
+		},
+		{
+			"contents": "<?php\n\nnamespace App\\Http\\Requests;\n\nuse Illuminate\\Foundation\\Http\\FormRequest;\nuse Illuminate\\Validation\\Rule;\nuse App\\Enums\\TaskDueNotifies;\nuse Carbon\\Carbon;\n\nclass TaskUpdate extends FormRequest\n{\n    /**\n     * Determine if the user is authorized to make this request.\n     *\n     * @return bool\n     */\n    public function authorize()\n    {\n        return true;\n    }\n\n      protected function prepareForValidation()\n    {\n        $dueAt = $this->input('due_at');\n\n        if ($dueAt) {\n\n            $parsedDueAt = Carbon::parse($dueAt);\n\n            $this->merge([\n                'due_at' => $parsedDueAt,\n            ]);\n        }\n    }\n\n    /**\n     * Get the validation rules that apply to the request.\n     *\n     * @return array\n     */\n    public function rules()\n    {\n        $project=$this->project;\n\n        return [\n          'title' => [\n            'sometimes',\n             'required',\n             'max:55',\n            Rule::unique('tasks')/*->ignore($this->task)*/->where(function ($query) use ($project) {\n            return $query->where('project_id', $project->id);\n        }),\n        ],\n            'description' => 'sometimes|max:350',\n            'due_at' => 'sometimes|date|required_with:notified',\n            'status_id'=>'required|sometimes',\n            'notified'=>[\n                'sometimes',\n                'required',\n                Rule::in(TaskDueNotifies::values()),\n            ],\n        ];\n    }\n}\n",
+			"file": "/C/laragon/www/profresh/app/Http/Requests/TaskUpdate.php",
+			"file_size": 1451,
+			"file_write_time": 133399543463268743,
+			"redo_stack":
+			[
+				[
+					5,
+					1,
+					"insert",
+					{
+						"characters": "7"
+					},
+					"AQAAAIsEAAAAAAAAiwQAAAAAAAABAAAANw",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAIwEAAAAAAAAjAQAAAAAAAAAAAAAAADwvw"
+				],
+				[
+					4,
+					1,
+					"left_delete",
+					null,
+					"AQAAAIsEAAAAAAAAjAQAAAAAAAAAAAAA",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAIsEAAAAAAAAiwQAAAAAAAAAAAAAAADwvw"
+				]
+			],
+			"settings":
+			{
+				"buffer_size": 1451,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/C/laragon/www/profresh/app/Http/Controllers/Api/TaskController.php",
+			"settings":
+			{
+				"buffer_size": 1762,
+				"line_ending": "Windows"
+			},
+			"undo_stack":
+			[
+				[
+					6,
+					1,
+					"insert",
+					{
+						"characters": "\n"
+					},
+					"AQAAAIABAAAAAAAAgQEAAAAAAAAAAAAA",
+					"BQAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvwAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAACAAQAAAAAAAIABAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					7,
+					1,
+					"paste",
+					null,
+					"AQAAAIEBAAAAAAAApAEAAAAAAAAAAAAA",
+					"BQAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvwAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAACBAQAAAAAAAIEBAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					8,
+					1,
+					"left_delete",
+					null,
+					"AQAAAKMBAAAAAAAAowEAAAAAAAABAAAACg",
+					"BQAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvwAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAACkAQAAAAAAAKQBAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					19,
+					1,
+					"insert",
+					{
+						"characters": "\n\n"
+					},
+					"BQAAADEEAAAAAAAAMgQAAAAAAAAAAAAAMgQAAAAAAAA2BAAAAAAAAAAAAAA2BAAAAAAAADcEAAAAAAAAAAAAADcEAAAAAAAAOwQAAAAAAAAAAAAAMgQAAAAAAAAyBAAAAAAAAAQAAAAgICAg",
+					"BQAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvwAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAxBAAAAAAAADEEAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					20,
+					1,
+					"paste",
+					null,
+					"AQAAADcEAAAAAAAAfAQAAAAAAAAAAAAA",
+					"BQAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvwAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAA3BAAAAAAAADcEAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					21,
+					1,
+					"left_delete",
+					null,
+					"AQAAAHsEAAAAAAAAewQAAAAAAAABAAAACg",
+					"BQAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvwAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAB8BAAAAAAAAHwEAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					24,
+					1,
+					"insert",
+					{
+						"characters": "\n\n"
+					},
+					"BQAAAAgFAAAAAAAACQUAAAAAAAAAAAAACQUAAAAAAAANBQAAAAAAAAAAAAANBQAAAAAAAA4FAAAAAAAAAAAAAA4FAAAAAAAAEgUAAAAAAAAAAAAACQUAAAAAAAAJBQAAAAAAAAQAAAAgICAg",
+					"BQAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvwAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAIBQAAAAAAAAgFAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					25,
+					1,
+					"insert_snippet",
+					{
+						"contents": "{$0}"
+					},
+					"AQAAAA4FAAAAAAAAEAUAAAAAAAAAAAAA",
+					"BQAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvwAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAOBQAAAAAAAA4FAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					26,
+					1,
+					"insert",
+					{
+						"characters": "_)"
+					},
+					"AgAAAA8FAAAAAAAAEAUAAAAAAAAAAAAAEAUAAAAAAAARBQAAAAAAAAAAAAA",
+					"BQAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvwAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAPBQAAAAAAAA8FAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					28,
+					1,
+					"left_delete",
+					null,
+					"AQAAAA4FAAAAAAAADgUAAAAAAAABAAAAew",
+					"BQAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvwAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAPBQAAAAAAAA8FAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					30,
+					1,
+					"left_delete",
+					null,
+					"AQAAAA4FAAAAAAAADgUAAAAAAAABAAAAXw",
+					"BQAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvwAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAPBQAAAAAAAA8FAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					33,
+					1,
+					"left_delete",
+					null,
+					"AQAAAA4FAAAAAAAADgUAAAAAAAABAAAAKQ",
+					"BQAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvwAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAPBQAAAAAAAA8FAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					35,
+					1,
+					"insert",
+					{
+						"characters": ");"
+					},
+					"AgAAAA8FAAAAAAAAEAUAAAAAAAAAAAAAEAUAAAAAAAARBQAAAAAAAAAAAAA",
+					"BQAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvwAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAPBQAAAAAAAA8FAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					37,
+					1,
+					"left_delete",
+					null,
+					"AQAAAAgFAAAAAAAACAUAAAAAAAABAAAACg",
+					"BQAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvwAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAJBQAAAAAAAAkFAAAAAAAAAAAAAAAAWEA"
+				],
+				[
+					39,
+					1,
+					"left_delete",
+					null,
+					"AQAAAHsEAAAAAAAAewQAAAAAAAABAAAACg",
+					"BQAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvwAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAB8BAAAAAAAAHwEAAAAAAAAAAAAAABYg0A"
+				],
+				[
+					53,
+					1,
+					"left_delete",
+					null,
+					"AQAAAIEBAAAAAAAAgQEAAAAAAAAjAAAAdXNlIElsbHVtaW5hdGVcU3VwcG9ydFxGYWNhZGVzXERCOwo",
+					"BQAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvwAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAACBAQAAAAAAAKQBAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					77,
+					7,
+					"left_delete",
+					null,
+					"BwAAAOwEAAAAAAAA7AQAAAAAAAABAAAAIOsEAAAAAAAA6wQAAAAAAAABAAAAO+oEAAAAAAAA6gQAAAAAAAABAAAAKekEAAAAAAAA6QQAAAAAAAABAAAAfecEAAAAAAAA5wQAAAAAAAACAAAAICDlBAAAAAAAAOUEAAAAAAAAAgAAACAg5AQAAAAAAADkBAAAAAAAAAEAAAAK",
+					"BQAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvwAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAADtBAAAAAAAAO0EAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					79,
+					59,
+					"left_delete",
+					null,
+					"OwAAAFcEAAAAAAAAVwQAAAAAAAABAAAAe1YEAAAAAAAAVgQAAAAAAAABAAAAIFUEAAAAAAAAVQQAAAAAAAABAAAAKVQEAAAAAAAAVAQAAAAAAAABAAAAZVMEAAAAAAAAUwQAAAAAAAABAAAAY1IEAAAAAAAAUgQAAAAAAAABAAAAaVEEAAAAAAAAUQQAAAAAAAABAAAAdlAEAAAAAAAAUAQAAAAAAAABAAAAck8EAAAAAAAATwQAAAAAAAABAAAAZU4EAAAAAAAATgQAAAAAAAABAAAAU00EAAAAAAAATQQAAAAAAAABAAAAa0wEAAAAAAAATAQAAAAAAAABAAAAc0sEAAAAAAAASwQAAAAAAAABAAAAYUoEAAAAAAAASgQAAAAAAAABAAAAdEkEAAAAAAAASQQAAAAAAAABAAAAJEgEAAAAAAAASAQAAAAAAAABAAAAIEcEAAAAAAAARwQAAAAAAAABAAAALEYEAAAAAAAARgQAAAAAAAABAAAAdEUEAAAAAAAARQQAAAAAAAABAAAAY0QEAAAAAAAARAQAAAAAAAABAAAAZUMEAAAAAAAAQwQAAAAAAAABAAAAakIEAAAAAAAAQgQAAAAAAAABAAAAb0EEAAAAAAAAQQQAAAAAAAABAAAAckAEAAAAAAAAQAQAAAAAAAABAAAAcD8EAAAAAAAAPwQAAAAAAAABAAAAJD4EAAAAAAAAPgQAAAAAAAABAAAAID0EAAAAAAAAPQQAAAAAAAABAAAALDwEAAAAAAAAPAQAAAAAAAABAAAAdDsEAAAAAAAAOwQAAAAAAAABAAAAczoEAAAAAAAAOgQAAAAAAAABAAAAZTkEAAAAAAAAOQQAAAAAAAABAAAAdTgEAAAAAAAAOAQAAAAAAAABAAAAcTcEAAAAAAAANwQAAAAAAAABAAAAZTYEAAAAAAAANgQAAAAAAAABAAAAcjUEAAAAAAAANQQAAAAAAAABAAAAJDQEAAAAAAAANAQAAAAAAAABAAAAKDMEAAAAAAAAMwQAAAAAAAABAAAAIDIEAAAAAAAAMgQAAAAAAAABAAAAZTEEAAAAAAAAMQQAAAAAAAABAAAAczAEAAAAAAAAMAQAAAAAAAABAAAAdS8EAAAAAAAALwQAAAAAAAABAAAAIC4EAAAAAAAALgQAAAAAAAABAAAAKS0EAAAAAAAALQQAAAAAAAABAAAAKCwEAAAAAAAALAQAAAAAAAABAAAAICsEAAAAAAAAKwQAAAAAAAABAAAAbioEAAAAAAAAKgQAAAAAAAABAAAAbykEAAAAAAAAKQQAAAAAAAABAAAAaSgEAAAAAAAAKAQAAAAAAAABAAAAdCcEAAAAAAAAJwQAAAAAAAABAAAAYyYEAAAAAAAAJgQAAAAAAAABAAAAbiUEAAAAAAAAJQQAAAAAAAABAAAAdSQEAAAAAAAAJAQAAAAAAAABAAAAZiMEAAAAAAAAIwQAAAAAAAABAAAAKCIEAAAAAAAAIgQAAAAAAAABAAAAbiEEAAAAAAAAIQQAAAAAAAABAAAAbyAEAAAAAAAAIAQAAAAAAAABAAAAaR8EAAAAAAAAHwQAAAAAAAABAAAAdB4EAAAAAAAAHgQAAAAAAAABAAAAYx0EAAAAAAAAHQQAAAAAAAABAAAAYQ",
+					"BQAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvwAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAABYBAAAAAAAAFgEAAAAAAAAAAAAAABYg0A"
+				],
+				[
+					80,
+					12,
+					"left_delete",
+					null,
+					"DAAAABwEAAAAAAAAHAQAAAAAAAABAAAAcxsEAAAAAAAAGwQAAAAAAAABAAAAbhoEAAAAAAAAGgQAAAAAAAABAAAAYRkEAAAAAAAAGQQAAAAAAAABAAAAchgEAAAAAAAAGAQAAAAAAAABAAAAdBcEAAAAAAAAFwQAAAAAAAABAAAAOhYEAAAAAAAAFgQAAAAAAAABAAAAOhUEAAAAAAAAFQQAAAAAAAABAAAAQhQEAAAAAAAAFAQAAAAAAAABAAAARBIEAAAAAAAAEgQAAAAAAAACAAAAICAQBAAAAAAAABAEAAAAAAAAAgAAACAgDwQAAAAAAAAPBAAAAAAAAAEAAAAK",
+					"BQAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvwAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAdBAAAAAAAAB0EAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					1,
+					1,
+					"revert",
+					null,
+					"AwAAAAAAAAAAAAAAAAAAAAAAAAChCAAAPD9waHAKCm5hbWVzcGFjZSBBcHBcSHR0cFxDb250cm9sbGVyc1xBcGk7Cgp1c2UgQXBwXEh0dHBcUmVxdWVzdHNcVGFza1JlcXVlc3Q7CnVzZSBBcHBcSHR0cFxSZXF1ZXN0c1xUYXNrVXBkYXRlOwp1c2UgSWxsdW1pbmF0ZVxIdHRwXFJlcXVlc3Q7CnVzZSBBcHBcTW9kZWxzXFByb2plY3Q7CnVzZSBBcHBcTm90aWZpY2F0aW9uc1xQcm9qZWN0VGFzazsKdXNlIEFwcFxNb2RlbHNcVGFzazsKdXNlIElsbHVtaW5hdGVcU3VwcG9ydFxGYWNhZGVzXERCOwp1c2UgQXBwXFNlcnZpY2VzXFRhc2tTZXJ2aWNlOwp1c2UgQXBwXEh0dHBcUmVzb3VyY2VzXFRhc2tSZXNvdXJjZTsKdXNlIEY5V2ViXEFwaVJlc3BvbnNlSGVscGVyczsKdXNlIEFwcFxOb3RpZmljYXRpb25zXFRhc2tEdWU7CnVzZSBBdXRoOwp1c2UgSWxsdW1pbmF0ZVxIdHRwXEpzb25SZXNwb25zZTsKCmNsYXNzIFRhc2tDb250cm9sbGVyIGV4dGVuZHMgQXBpQ29udHJvbGxlcgp7CiAgdXNlIEFwaVJlc3BvbnNlSGVscGVyczsKCiAgcHVibGljIGZ1bmN0aW9uIGluZGV4KFByb2plY3QgJHByb2plY3QsUmVxdWVzdCAkcmVxdWVzdCxUYXNrU2VydmljZSAkdGFza1NlcnZpY2UpOiBKc29uUmVzcG9uc2UKICB7CiAgICAkdGhpcy0+YXV0aG9yaXplKCdhY2Nlc3MnLCAkcHJvamVjdCk7CgogICAgJGlzQXJjaGl2ZWQgPSAoJHJlcXVlc3QtPnF1ZXJ5KCdyZXF1ZXN0JykgPT09ICdhcmNoaXZlZCcpID8gdHJ1ZSA6IGZhbHNlOwoKICAgICR0YXNrc0RhdGEgPSAkdGFza1NlcnZpY2UtPmdldFRhc2tzRGF0YSgkcHJvamVjdCwgJGlzQXJjaGl2ZWQpOwoKICAgIHJldHVybiAkdGhpcy0+cmVzcG9uZFdpdGhTdWNjZXNzKCR0YXNrc0RhdGEpOwogIH0KCiAgcHVibGljIGZ1bmN0aW9uIHN0b3JlKFByb2plY3QgJHByb2plY3QsVGFza1JlcXVlc3QgJHJlcXVlc3QsVGFza1NlcnZpY2UgJHRhc2tTZXJ2aWNlKTogSnNvblJlc3BvbnNlCiAgewogICAgJHRoaXMtPmF1dGhvcml6ZSgnYWNjZXNzJywkcHJvamVjdCk7CgogICAgJHRhc2tTZXJ2aWNlLT5jaGVja0xpbWl0cygkcHJvamVjdCk7CgogICAgJHRhc2s9JHByb2plY3QtPnRhc2tzKCktPmZpcnN0T3JDcmVhdGUoJHJlcXVlc3QtPnZhbGlkYXRlZCgpK1sndXNlcl9pZCcgPT4gQXV0aDo6aWQoKV0pOwoKICAgICR0YXNrU2VydmljZS0+c2VuZE5vdGlmaWNhdGlvbigkcHJvamVjdCk7CgogICAgJHRhc2stPmxvYWQoJ3N0YXR1cycpOyAgIAoKICAgIHJldHVybiAkdGhpcy0+cmVzcG9uZENyZWF0ZWQoWwogICAgICAnbWVzc2FnZSc9PidUYXNrIGFkZGVkIFN1Y2Nlc3NmdWxseScsCiAgICAgICd0YXNrJz0+bmV3IFRhc2tSZXNvdXJjZSgkdGFzayksCiAgICBdKTsKICB9CgogIHB1YmxpYyBmdW5jdGlvbiB1cGRhdGUoUHJvamVjdCAkcHJvamVjdCxUYXNrICR0YXNrLFRhc2tVcGRhdGUgJHJlcXVlc3QsVGFza1NlcnZpY2UgJHRhc2tTZXJ2aWNlKQogIHsgIAogICAgJHRoaXMtPmF1dGhvcml6ZSgndGFza2FjY2VzcycsJHRhc2spOwoKICAgICR0YXNrU2VydmljZS0+dXBkYXRlVmFsaWRhdGlvbigkcmVxdWVzdCwkdGFzayk7CgogICAgIERCOjp0cmFuc2FjdGlvbihmdW5jdGlvbiAoKSB1c2UgKCR0YXNrLCAkcmVxdWVzdCwgJHRhc2tTZXJ2aWNlKQogICAgIHsgICAgCiAgICAgICAgJHRhc2tTZXJ2aWNlLT51cGRhdGVTdGF0dXMoJHRhc2ssICRyZXF1ZXN0LT52YWxpZGF0ZWQoJ3N0YXR1c19pZCcpKTsKCiAgICAgICAgJHRhc2stPnVwZGF0ZSgkcmVxdWVzdC0+dmFsaWRhdGVkKCkpOwogICAgfSk7CgogICAgICAgJHRhc2tTZXJ2aWNlLT5zZXREdWVEYXRlKCRyZXF1ZXN0LCR0YXNrKTsKICAgCiAgICByZXR1cm4gJHRoaXMtPnJlc3BvbmRXaXRoU3VjY2VzcyhbCiAgICAgICAgJ21lc3NhZ2UnID0+ICdUYXNrIFVwZGF0ZWQgU3VjY2Vzc2Z1bGx5JywKICAgICAgICAndGFzaycgPT4gbmV3IFRhc2tSZXNvdXJjZSgkdGFzayksCiAgICBdKTsKICB9CgogIHB1YmxpYyBmdW5jdGlvbiBkZXN0cm95KFByb2plY3QgJHByb2plY3QsVGFzayAkdGFzaykKICB7CiAgICAkdGhpcy0+YXV0aG9yaXplKCd0YXNrYWxsb3cnLCR0YXNrKTsKCiAgICAgJHRhc2stPmFjdGl2aXRpZXMoKS0+ZGVsZXRlKCk7CgogICAgICR0YXNrLT5mb3JjZURlbGV0ZSgpOyAgCgogICAgIHJldHVybiAkdGhpcy0+cmVzcG9uZE5vQ29udGVudChbJ21lc3NhZ2UnPT4nVGFzayBkZWxldGVkIHN1Y2Nlc3NmdWxseSddKTsKICB9Cgp9CgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADiBgAAAAAAAAAAAAA",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAA8EAAAAAAAADwQAAAAAAAAAAAAAAADwvw"
+				]
+			]
+		},
+		{
+			"contents": "<?php\n\nnamespace App\\Http\\Controllers\\Api;\n\nuse App\\Http\\Controllers\\Controller;\nuse Illuminate\\Http\\Request;\nuse App\\Models\\Project;\nuse App\\Models\\Task;\nuse App\\Models\\User;\nuse App\\Services\\TaskService;\nuse App\\Repository\\TaskRepository;\nuse App\\Http\\Resources\\TaskResource;\nuse App\\Http\\Requests\\TaskMembersRequest;\nuse Illuminate\\Support\\Facades\\Gate;\nuse F9Web\\ApiResponseHelpers;\nuse Illuminate\\Support\\Facades\\DB;\nuse App\\Http\\Resources\\UsersResource;\nuse Illuminate\\Validation\\ValidationException;\nuse App\\Rules\\TaskAssigneeMember;\nuse Illuminate\\Http\\JsonResponse;\n\nclass TaskFeaturesController extends Controller\n{\n    use ApiResponseHelpers;\n\n    public function assign(Project $project,Task $task,TaskMembersRequest $request,TaskService $service)\n    {\n        Gate::authorize('archive-task', $task);\n\n       $members=$request->members;\n\n       DB::transaction(function () use ($task, $members, $service, $request, $project) {\n       $task->assignee()->syncWithoutDetaching($members);\n       $service->notifyAssignees($request,$task,$project);\n       });\n\n    return $this->respondWithSuccess([\n        'message' => 'Task assigned to member Successfully',\n        'taskMembers' =>  UsersResource::collection($task->assignee),\n    ]);\n    }\n\n    public function unassign(Project $project,Task $task,Request $request)\n    {       \n        Gate::authorize('archive-task', $task);\n\n        $request->validate([\n        'member' => ['required', 'exists:users,id', \n               new TaskAssigneeMember($task)],\n        ]);\n\n    $task->assignee()->detach($request->member);\n\n    $user= User::find($request->member);\n\n    return $this->respondWithSuccess([\n        'message' => 'Task member Unassigned',\n        'member' => new UsersResource($user),\n    ]);\n    }\n\n    public function archive(Project $project,Task $task)\n    {\n      Gate::authorize('archive-task', $task);\n\n      DB::transaction(function () use ($task) {     \n        $task->delete();\n        $task->activities()->update(['is_hidden' => true]);\n      });\n\n      return $this->respondWithSuccess([\n        'message' => 'Project task archived successfully',\n        'members' => new TaskResource($task),\n      ]);\n\n    }\n\n     public function unarchive(Project $project,Task $task)\n     {\n        DB::transaction(function () use ($task) { \n        $task->restore();\n        $task->activities()->update(['is_hidden' => false]);\n        });\n\n       return $this->respondWithSuccess([\n        'message' => 'Project task unArchived successfully',\n        'task' => new TaskResource($task),\n    ]);\n    }\n    \n    public function search(Project $project,Task $task,Request $request,TaskRepository $repository)\n    { \n      $searchResults = $repository->searchMembers($request,$project,$task);\n\n      return UsersResource::collection($searchResults);\n    }\n\n    \n}\n\n\n",
+			"file": "/C/laragon/www/profresh/app/Http/Controllers/Api/TaskFeaturesController.php",
+			"file_size": 2834,
+			"file_write_time": 133398719999851885,
+			"settings":
+			{
+				"buffer_size": 2834,
+				"line_ending": "Unix"
+			},
+			"undo_stack":
+			[
+				[
+					18,
+					1,
+					"insert",
+					{
+						"characters": "\n\n"
+					},
+					"BQAAAFEDAAAAAAAAUgMAAAAAAAAAAAAAUgMAAAAAAABZAwAAAAAAAAAAAABZAwAAAAAAAFoDAAAAAAAAAAAAAFoDAAAAAAAAYQMAAAAAAAAAAAAAUgMAAAAAAABSAwAAAAAAAAcAAAAgICAgICAg",
+					"BQAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvwAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAABRAwAAAAAAAFEDAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					19,
+					1,
+					"paste",
+					null,
+					"AQAAAFoDAAAAAAAArAMAAAAAAAAAAAAA",
+					"BQAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvwAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAABaAwAAAAAAAFoDAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					20,
+					1,
+					"left_delete",
+					null,
+					"AQAAAKsDAAAAAAAAqwMAAAAAAAABAAAACg",
+					"BQAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvwAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAACsAwAAAAAAAKwDAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					25,
+					1,
+					"insert",
+					{
+						"characters": "\n"
+					},
+					"AgAAACIEAAAAAAAAIwQAAAAAAAAAAAAAIwQAAAAAAAAqBAAAAAAAAAAAAAA",
+					"BQAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvwAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAiBAAAAAAAACIEAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					26,
+					1,
+					"paste",
+					null,
+					"AQAAACoEAAAAAAAALgQAAAAAAAAAAAAA",
+					"BQAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvwAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAqBAAAAAAAACoEAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					28,
+					1,
+					"left_delete",
+					null,
+					"AQAAAOcDAAAAAAAA5wMAAAAAAAABAAAACg",
+					"BQAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvwAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAADoAwAAAAAAAOgDAAAAAAAAAAAAAAAAAAA"
+				],
+				[
+					30,
+					1,
+					"left_delete",
+					null,
+					"AQAAAKsDAAAAAAAAqwMAAAAAAAABAAAACg",
+					"BQAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvwAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAACsAwAAAAAAAKwDAAAAAAAAAAAAAAAAAAA"
+				],
+				[
+					32,
+					1,
+					"left_delete",
+					null,
+					"AQAAACsEAAAAAAAAKwQAAAAAAAABAAAACg",
+					"BQAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvwAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAsBAAAAAAAACwEAAAAAAAAAAAAAAAwfUA"
+				]
+			]
+		}
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"Package Control: Install Package",
+				"Package Control: Install Package"
+			],
+			[
+				"Snippet: ",
+				"Snippet: Prettier ignore next node (JsPrettier)"
+			],
+			[
+				"",
+				"Bookmarks: Select All"
+			],
+			[
+				"pre",
+				"JsPrettier: Format Code"
+			],
+			[
+				"prettify",
+				"Preferences: Settings – Syntax Specific"
+			]
+		],
+		"width": 0.0
+	},
+	"console":
+	{
+		"height": 213.0,
+		"history":
+		[
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": true,
+		"show_open_files": true,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/C/laragon/www/profresh",
+		"/C/laragon/www/profresh/.github",
+		"/C/laragon/www/profresh/app",
+		"/C/laragon/www/profresh/app/Actions",
+		"/C/laragon/www/profresh/app/Console",
+		"/C/laragon/www/profresh/app/Enums",
+		"/C/laragon/www/profresh/app/Events",
+		"/C/laragon/www/profresh/app/Exports",
+		"/C/laragon/www/profresh/app/Http",
+		"/C/laragon/www/profresh/app/Jobs",
+		"/C/laragon/www/profresh/app/Listeners",
+		"/C/laragon/www/profresh/app/Models",
+		"/C/laragon/www/profresh/app/Notifications",
+		"/C/laragon/www/profresh/app/Policies",
+		"/C/laragon/www/profresh/app/Providers",
+		"/C/laragon/www/profresh/app/Repository",
+		"/C/laragon/www/profresh/app/Services",
+		"/C/laragon/www/profresh/app/Traits",
+		"/C/laragon/www/profresh/bootstrap",
+		"/C/laragon/www/profresh/config",
+		"/C/laragon/www/profresh/database",
+		"/C/laragon/www/profresh/database/factories",
+		"/C/laragon/www/profresh/database/seeders",
+		"/C/laragon/www/profresh/resources",
+		"/C/laragon/www/profresh/resources/js",
+		"/C/laragon/www/profresh/resources/sass",
+		"/C/laragon/www/profresh/routes",
+		"/C/laragon/www/profresh/routes/api",
+		"/C/laragon/www/profresh/storage",
+		"/C/laragon/www/profresh/storage/logs",
+		"/C/laragon/www/profresh/tests",
+		"/C/laragon/www/profresh/tests/Feature"
+	],
+	"file_history":
+	[
+		"/C/laragon/www/profresh/resources/js/components/Project/Panel/Modal/TopArea.vue",
+		"/C/laragon/www/profresh/resources/js/mixins/modalClose.js",
+		"/C/laragon/www/profresh/routes/api/v1.php",
+		"/C/laragon/www/profresh/tests/Feature/TaskTest.php",
+		"/C/laragon/www/profresh/app/Repository/TaskRepository.php",
+		"/C/laragon/www/profresh/app/Http/Controllers/Api/TaskFeaturesController.php",
+		"/C/laragon/www/profresh/resources/js/components/Project/Panel/Modal/TaskMembers.vue",
+		"/C/laragon/www/profresh/resources/js/components/Project/Panel/Modal.vue",
+		"/C/laragon/www/profresh/resources/js/components/Project/Panel/Modal/TaskDescription.vue",
+		"/C/laragon/www/profresh/.env",
+		"/C/laragon/www/profresh/app/Http/Controllers/Api/Auth/LoginController.php",
+		"/C/laragon/www/profresh/app/Events/UserLogin.php",
+		"/C/laragon/www/profresh/resources/js/components/Project/Panel/Task.vue",
+		"/C/laragon/www/profresh/database/seeders/DatabaseSeeder.php",
+		"/C/laragon/www/profresh/resources/sass/_components.scss",
+		"/C/laragon/www/profresh/app/Policies/TasksPolicy.php",
+		"/C/laragon/www/profresh/resources/js/store/SingleTask",
+		"/C/laragon/www/profresh/resources/js/store/task",
+		"/C/laragon/www/profresh/resources/js/utils/TaskUtils.js",
+		"/C/laragon/www/profresh/app/Http/Controllers/Api/TaskController.php",
+		"/C/laragon/www/profresh/config/app.php",
+		"/C/laragon/www/profresh/app/Policies/ProjectsPolicy.php",
+		"/C/laragon/www/profresh/app/Services/TaskService.php",
+		"/C/laragon/www/profresh/resources/js/mixins/dueDate.js",
+		"/C/laragon/www/profresh/resources/js/mixins/popup.js",
+		"/C/laragon/www/profresh/tests/Feature/NotificationsTest.php",
+		"/C/laragon/www/profresh/app/Http/Requests/TaskUpdate.php",
+		"/C/laragon/www/profresh/tests/Feature/TaskNotifyTest.php",
+		"/C/laragon/www/profresh/app/Notifications/TaskDue.php",
+		"/C/laragon/www/profresh/app/Actions/TaskDueAction.php",
+		"/C/laragon/www/profresh/app/Enums/TaskDueNotifies.php",
+		"/C/laragon/www/profresh/app/Console/Commands/TaskNotify.php",
+		"/C/laragon/www/profresh/app/Console/Kernel.php",
+		"/C/laragon/www/profresh/app/Models/Task.php",
+		"/C/laragon/www/profresh/app/Traits/RecordActivity.php",
+		"/C/laragon/www/profresh/storage/logs/laravel.log",
+		"/C/laragon/www/profresh/app/Http/Resources/TaskResource.php",
+		"/C/laragon/www/profresh/app/Http/Controllers/Api/TaskStatusController.php",
+		"/C/laragon/www/profresh/database/migrations/2023_08_28_090923_create_tasks_table.php",
+		"/C/laragon/www/profresh/app/Http/Controllers/Api/Auth/OAuthController.php",
+		"/C/laragon/www/profresh/app/Notifications/ProjectInvitation.php",
+		"/C/laragon/www/profresh/app/Http/Resources/UserResource.php",
+		"/C/laragon/www/profresh/database/migrations/2023_09_11_202713_add_notify_sent_to_tasks.php",
+		"/C/laragon/www/profresh/resources/js/components/Project/Page.vue",
+		"/C/laragon/www/profresh/app/Http/Resources/ActivityResource.php",
+		"/C/laragon/www/profresh/app/Http/Controllers/Api/MessageController.php",
+		"/C/laragon/www/profresh/resources/js/components/Project/Panel/ArchiveTasks.vue",
+		"/C/laragon/www/profresh/app/Http/Resources/UsersResource.php",
+		"/C/laragon/www/profresh/app/Listeners/SaveUserTimezone.php",
+		"/C/laragon/www/profresh/app/Services/InvitationService.php",
+		"/C/laragon/www/profresh/app/Repository/ProjectRepository.php",
+		"/C/laragon/www/profresh/app/Http/Controllers/Api/ProjectController.php",
+		"/C/laragon/www/profresh/app/Models/User.php",
+		"/C/laragon/www/profresh/app/Models/Project.php",
+		"/C/laragon/www/profresh/app/Http/Kernel.php",
+		"/C/laragon/www/profresh/database/factories/ProjectFactory.php",
+		"/C/laragon/www/profresh/database/factories/UserInfoFactory.php",
+		"/C/laragon/www/profresh/database/factories/TaskFactory.php",
+		"/C/laragon/www/profresh/app/Traits/ProjectSetup.php",
+		"/C/laragon/www/profresh/app/Providers/AuthServiceProvider.php",
+		"/C/laragon/www/profresh/database/seeders/TaskSeeder.php",
+		"/C/laragon/www/profresh/app/Models/Conversation.php",
+		"/C/laragon/www/profresh/database/migrations/2023_06_28_090923_create_tasks_table.php",
+		"/C/laragon/www/profresh/app/Http/Middleware/WithTrashedMiddleware.php",
+		"/C/laragon/www/profresh/resources/js/app.js",
+		"/C/laragon/www/profresh/app/Rules/TaskAssigneeMember.php",
+		"/C/laragon/www/profresh/app/Rules/ActiveProjectMember.php",
+		"/C/laragon/www/profresh/app/Http/Requests/TaskMembersRequest.php",
+		"/C/laragon/www/profresh/app/Services/MessageService.php",
+		"/C/laragon/www/profresh/app/Actions/NotificationAction.php",
+		"/C/laragon/www/profresh/app/Http/Requests/TaskRequest.php",
+		"/C/laragon/www/profresh/app/Enums/ScoreValue.php",
+		"/C/laragon/www/profresh/resources/js/store/project",
+		"/C/laragon/www/profresh/app/Http/Controllers/Api/FeaturesController.php",
+		"/C/laragon/www/profresh/resources/js/store/index.js",
+		"/C/laragon/www/profresh/resources/js/components/Project/Panel/Model/TopArea.vue",
+		"/C/laragon/www/profresh/resources/js/components/Projects.vue",
+		"/C/laragon/www/profresh/app/Http/Resources/ProjectsResource.php",
+		"/C/laragon/www/profresh/app/Http/Resources/ProjectResource.php",
+		"/C/laragon/www/profresh/webpack.mix.js",
+		"/D/profresh/resources/js/store/project",
+		"/D/profresh/resources/sass/_components.scss",
+		"/D/profresh/app/Http/Requests/MessageRequest.php",
+		"/D/multi/app/Http/Controllers/Auth/RegisteredUserController.php",
+		"/D/multi/config/session.php",
+		"/D/multi/resources/views/auth/register.blade.php",
+		"/D/multi/.env",
+		"/D/profresh/resources/js/mixins/dueDate.js",
+		"/D/profresh/resources/js/utils/TaskUtils.js",
+		"/D/profresh/database/seeders/DatabaseSeeder.php",
+		"/D/profresh/database/seeders/UserSeeder.php",
+		"/D/profresh/app/Http/Resources/TaskResource.php",
+		"/D/profresh/app/Services/TaskService.php",
+		"/D/profresh/app/Http/Requests/TaskRequest.php",
+		"/D/profresh/tests/Feature/TaskTest.php",
+		"/D/profresh/tests/Unit/TaskTest.php",
+		"/D/profresh/database/migrations/2023_06_28_090923_create_tasks_table.php",
+		"/D/profresh/app/Http/Controllers/HomeController.php",
+		"/D/profresh/app/Rules/TaskTitle.php",
+		"/D/profresh/app/Rules/TaskLimit.php",
+		"/D/profresh/app/Rules/TasksTitle.php",
+		"/D/profresh/app/Notifications/ProjectTask.php",
+		"/D/profresh/database/factories/TaskFactory.php",
+		"/D/profresh/routes/api/v1.php",
+		"/D/profresh/app/Actions/NotificationAction.php",
+		"/D/profresh/app/Http/Controllers/Api/TaskController.php",
+		"/D/profresh/app/Http/Controllers/Api/ProjectController.php",
+		"/D/profresh/resources/js/components/Project/Panel/Modal.vue",
+		"/D/profresh/resources/js/components/Project/Panel/Task.vue",
+		"/D/profresh/app/Http/Resources/ProjectResource.php",
+		"/D/profresh/resources/js/components/Project/Feature/FeatureSection.vue",
+		"/D/profresh/resources/js/components/Project/Feature/Message.vue",
+		"/D/profresh/resources/js/components/SubscriptionChecker.vue",
+		"/D/profresh/app/Http/Controllers/Api/TaskStatusController.php",
+		"/D/profresh/database/seeders/TaskSeeder.php",
+		"/D/profresh/.env",
+		"/D/profresh/database/migrations/2023_06_27_123346_create_statuses_table.php",
+		"/D/profresh/app/Http/Resources/TaskStatusResource.php",
+		"/D/profresh/database/migrations/2023_06_28_175604_add_columns_to_tasks.php",
+		"/D/profresh/resources/views/layouts/app.blade.php",
+		"/D/profresh/resources/js/components/Project/Panel/Features.vue",
+		"/D/profresh/lang/es/auth.php",
+		"/D/profresh/app/Models/Task.php",
+		"/D/profresh/resources/js/router.js",
+		"/D/profresh/app/Models/User.php",
+		"/D/profresh/app/Models/TaskStatus.php",
+		"/D/profresh/app/Traits/ProjectSetup.php",
+		"/D/profresh/database/migrations/2023_07_03_130343_remove_task_status_from_tasks.php"
+	],
+	"find":
+	{
+		"height": 38.0
+	},
+	"find_in_files":
+	{
+		"height": 619.0,
+		"where_history":
+		[
+			"C:\\laragon\\www\\profresh,<project filters>"
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"setErrors",
+			"created",
+			"created\\",
+			"created",
+			"$on",
+			"un",
+			"task",
+			"search",
+			"seteRRORS",
+			"modalClose",
+			"active",
+			"updateexisting",
+			"assignMembersToTask",
+			"desc",
+			"notified",
+			"v-if=\"errors",
+			"member",
+			"members",
+			" v-if=\"errors",
+			"member",
+			"perf",
+			"member",
+			"error",
+			"getE",
+			"task",
+			"error",
+			"errorhandling",
+			"setErrors",
+			"component",
+			"task",
+			"index",
+			"v-if=\"errors",
+			"ErrorHa",
+			"Erro",
+			"permission",
+			"task",
+			"assign",
+			"get",
+			"error.response.data.errors",
+			"url",
+			"slug",
+			"hasO",
+			"task",
+			"content-link",
+			"v-if",
+			"attach",
+			"taskdue",
+			"assert",
+			"noti",
+			"assert",
+			"not",
+			"due_notifies",
+			"cast",
+			"noti",
+			"TaskDueAction",
+			"Task\n",
+			"TaskDue\n",
+			"TaskDueAction\n",
+			"use App\\Actions\\TaskDueAction;\n",
+			"TaskDueAction",
+			"use App\\Actions\\TaskDueAction;\n",
+			"notified",
+			"due",
+			"modi",
+			"modified",
+			"currentDate",
+			"modifiedDate",
+			"gettime",
+			"due_at",
+			"remai",
+			"due_at",
+			"alias",
+			"provider",
+			"trusted_proxies",
+			"Auth",
+			"User",
+			"middleware",
+			"task",
+			"search",
+			"member",
+			"task",
+			"modal",
+			"archive",
+			"$on",
+			"emit",
+			"activities",
+			"emit",
+			"body",
+			"morph",
+			"reco",
+			"subject",
+			"policy",
+			"taskallow",
+			"user",
+			"tasks",
+			"user",
+			"task",
+			"user",
+			"Exception\n",
+			"ValidationException\n",
+			"ValidationException;\n",
+			"use Illuminate\\Validation\\ValidationException;\n",
+			"vali",
+			"this.modal",
+			"messafe",
+			"task",
+			"message",
+			"setTask",
+			"message",
+			"closeModal",
+			"modalClose",
+			"  modalClose()",
+			"modalClose",
+			"MODALcLOSE",
+			"closeModal",
+			"modal-closed",
+			"modal",
+			"modalclose",
+			"modalClose",
+			"modal",
+			"modalclose",
+			"modalClose",
+			"activi",
+			"unassignTaskMember",
+			"memberPop",
+			"member",
+			"form",
+			"memberPop"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"scrollbar_highlights": true,
+		"show_context": true,
+		"use_buffer2": true,
+		"use_gitignore": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"folders":
+	[
+		{
+			"path": "C:\\laragon\\www\\profresh"
+		}
+	],
+	"groups":
+	[
+		{
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "/C/laragon/www/profresh/app/Notifications/TaskAssigned.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2212,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								105,
+								105
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"stack_multiselect": false,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "/C/laragon/www/profresh/app/Notifications/TaskDue.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2510,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								5,
+								5
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"stack_multiselect": false,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "/C/laragon/www/profresh/app/Http/Requests/TaskUpdate.php",
+					"selected": true,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1451,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1107,
+								1107
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 1207.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"stack_multiselect": false,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "/C/laragon/www/profresh/app/Http/Controllers/Api/TaskController.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1762,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.sublime-syntax",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 1.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"stack_multiselect": false,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "/C/laragon/www/profresh/app/Http/Controllers/Api/TaskFeaturesController.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2834,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1068,
+								1068
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 536.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"stack_multiselect": false,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 38.0
+	},
+	"input":
+	{
+		"height": 209.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "",
+	"project": "",
+	"replace":
+	{
+		"height": 72.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 500.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"",
+				"C:\\laragon\\www\\multi\\resources\\views\\auth\\multi.sublime-workspace"
+			]
+		],
+		"width": 380.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 307.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}

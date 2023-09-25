@@ -71,10 +71,11 @@ Route::controller(MessageController::class)->group(function(){
 
 //Task Routes
 Route::apiResource('/task',TaskController::class)
-->except(['index','show'])
-->middleware('subscription');
+->except(['index','show']);
+//->middleware('subscription');
 
-Route::patch('/task/{task}/status',[TaskController::class,'status'])->middleware('subscription');
+Route::patch('/task/{task}/status',[TaskController::class,'status']);
+//->middleware('subscription');
 
 //Chat Conversation Routes
 Route::apiResource('/conversations',ConversationController::class)
