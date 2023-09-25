@@ -2,6 +2,7 @@
 namespace App\Traits;
 use App\Models\User;
 use App\Models\Project;
+use App\Models\TaskStatus;
 use Laravel\Sanctum\Sanctum;
 use Illuminate\Support\Facades\Hash;
 
@@ -25,6 +26,10 @@ trait ProjectSetup
    );
 
    $this->project = Project::factory()->for($this->user)->create();
+
+    if ($this instanceof \Tests\Feature\TaskTest) {
+            $this->status = TaskStatus::factory()->create();
+        }
 
    $middlewaresToRemove = [
             \App\Http\Middleware\CheckSubscription::class,

@@ -18,6 +18,7 @@ class CreateActivitiesTable extends Migration
            $table->uuid('user_id');
            $table->unsignedInteger('project_id')->nullable();
            $table->nullableMorphs('subject');
+           $table->boolean('is_hidden')->default(false);
            $table->text('changes')->nullable();
            $table->string('description');
            $table->string('info')->nullable();

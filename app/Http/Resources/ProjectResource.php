@@ -3,7 +3,6 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
-use App\Http\Resources\TaskResource;
 use App\Http\Resources\ActivityResource;
 use App\Http\Resources\ConversationResource;
 use App\Http\Resources\UsersResource;
@@ -34,8 +33,6 @@ class ProjectResource extends JsonResource
 
           'completed'=>$this->completed,
           'score'=>$this->score(),
-
-          'tasks'=>TaskResource::collection($this->whenLoaded('tasks'))->paginate(3),
 
           'conversations'=>ConversationResource::collection($this->whenLoaded('conversations')->take(25)),
 

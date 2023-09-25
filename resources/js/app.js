@@ -28,6 +28,7 @@ import { Datetime } from 'vue-datetime';
 // You need a specific loader for CSS files
 import 'vue-datetime/dist/vue-datetime.css';
 
+
 Vue.use(Vuex);
 Vue.use(VueBus);
 Vue.use(VTooltip);
@@ -102,6 +103,7 @@ const options = {
 Vue.use(VueProgressBar, options)
 
 const components = [    ['project-button', './components/ProjectButton.vue'],
+  ['archive-tasks', './components/Project/Panel/ArchiveTasks.vue'],
   ['project-form', './components/ProjectForm.vue'],
   ['project-status', './components/Project/Status.vue'],
   ['project-features', './components/Project/Feature/FeatureSection.vue'],

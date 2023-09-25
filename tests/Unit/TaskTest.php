@@ -20,25 +20,8 @@ class TaskTest extends TestCase
    /** @test */
    public function it_belongs_to_a_project()
    {
-      $task = Task::factory()->create();
+      $task = Task::factory()->make();
+   
       $this->assertInstanceOf(Project::class, $task->project);
    }
-
-    /** @test */
-    public function it_can_be_completed()
-    {
-       $task=Task::factory()->create();
-       $this->assertFalse($task->completed);
-       $task->complete();
-       $this->assertTrue($task->fresh()->completed);
-    }
-
-     /** @test */
-     public function it_can_mark_uncompleted()
-     {
-        $task = Task::factory()->create(['completed'=>1]);
-        $this->assertTrue($task->completed);
-        $task->incomplete();
-        $this->assertFalse($task->fresh()->completed);
-    }
 }

@@ -3,14 +3,16 @@
 namespace App\Events;
 
 use App\Models\User;
+use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class UserLogin
+class UserLogin //implements ShouldQueue
 {
+    use Dispatchable;
     /**
     * The user instance.
     *
-    * @var \App\Models\Order
+    * @var \App\Models\User
     */
    public $user;
 

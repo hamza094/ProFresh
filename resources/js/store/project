@@ -44,10 +44,6 @@ const mutations = {
     state.project.postponed= data.postponed
     state.getStage=data.getStage
     },
-    updateTasks(state,data){
-     state.project.tasks = data.tasks;
-     state.project.activities = data.activities;
-    }
 
 };
 
@@ -56,20 +52,11 @@ const actions = {
       return axios.get(`/api/v1/projects/${slug}`)
         .then(response => {
         commit('setProject', response.data);
+
         this.$bus.emit('projectSlug',{slug:response.data.slug});
         })
         .catch(error => {
           //console.log(error.response.data.errors);
-        })
-      },
-      loadTasks({commit},{slug,page}){
-       return axios.get(`/api/v1/projects/${slug}?page=
-        ${page}`)
-        .then(response => {
-        commit('updateTasks', response.data);
-        })
-        .catch(error => {
-           console.log(error.response.data.errors);
         })
       },
 };

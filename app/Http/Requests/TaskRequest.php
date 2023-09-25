@@ -22,12 +22,21 @@ class TaskRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+      public function rules()
     {
-        return [
-          'body'=>'required|max:55'
+        $project=$this->project;
+
+      return [
+            'title' => [
+             'required',
+             'max:55',
+            Rule::unique('tasks')->where(function ($query) use ($project) {
+            return $query->where('project_id', $project->id);
+        }),
+        ],
         ];
-    }
+
+    } 
 
     /**
      * Get the error messages for the defined validation rules.
@@ -37,8 +46,9 @@ class TaskRequest extends FormRequest
     public function messages()
     {
         return [
-           'body.required' => 'Task body required.',
-           'body.max'=>'Your task is too long.'
+           'title.required' => 'Task title required.',
+           'title.max'=>'Your task title is too long.',
+           'title.unique'=>'Task with same title already exists.'
           ];
      }
   }

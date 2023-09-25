@@ -881,6 +881,112 @@ i{
   cursor: pointer;
 }
   }
+  &-card{
+    &_style{
+    width: 18rem;
+    margin-bottom: 1rem;
+    cursor: pointer;  
+    }
+    &_body{
+        padding: .5rem 1rem 1rem 1rem !important;
+        font-size: 1rem;
+    }
+    &_border{
+      border: 0.3rem solid;
+      width: 25%;
+      margin: .5rem 0 0 .5rem;
+      border-radius: 0.5rem;
+    }
+  }
+  &-modal{
+    &_title{
+      font-size: 1.5rem;
+    }
+    &_close{
+     font-size: 1.5rem;
+     margin-top: -1rem;
+    }
+    &_content{
+        padding: .5rem;
+    }
+  }
+  &-option{
+    &_labels{
+      list-style-type: none;
+      margin-bottom: 1.5rem;
+      &-component{
+        cursor: pointer;
+        color: white;
+        padding: .2rem;
+        text-align: center;
+        border-radius: .2rem;
+      }
+    }
+  &_features{
+      list-style-type: none;
+      li{
+        &:not(:last-child){
+            margin-bottom: .5rem;
+        }
+
+      }
+  }
+}
+&-member{
+     display: inline-block;
+  background-color:$color-secondary;
+  color: white;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  text-align: center;
+  line-height: 30px;
+  text-decoration:none;
+  &:hover{
+    text-decoration:none;
+
+   color:white;
+  }
+
+  &-container {
+   display: inline-block;
+  text-align: center;
+  margin-right: 10px; /* Adjust the margin as needed */
+}
+
+&-username {
+  font-size: 14px; 
+  color: #333;
+  }
+}
+&-description{
+    &_container{
+        margin-bottom: .6rem;
+    }
+    margin-top: 2rem;
+    &_heading{
+      font-weight: 600;
+      font-size: 1rem;
+      text-transform: uppercase;
+      letter-spacing: .2rem;
+    }
+    &_content{
+      font-size: 1rem;
+      &-link{
+        cursor: pointer;
+        &:hover{
+            text-decoration: none;
+        }
+
+      }
+    }
+
+}
+}
+
+.title-form{
+  width: 50% !important;
+  display: inherit !important;
 }
 
 .project-appointment{
@@ -909,8 +1015,23 @@ transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out !import
 margin-bottom: .8rem;
 }
 
+.unassign-cross {
+        position: relative;
+    top: -8px;
+    right: 4px;
+    font-size: 1rem;
+    color: red;
+    cursor: pointer;
+     opacity: 0;
+     transition: opacity 0.2s ease;
+}
+
+.task-member-username:hover .unassign-cross {
+    opacity: 1;
+}
+
 .invite{
-  &-list{
+ &-list{
     position: relative;
   }
   ul{
@@ -919,7 +1040,7 @@ margin-bottom: .8rem;
     border:1px solid $color-secondary;
     border-radius: 4px;
      padding-left: 0;
-     background-color: white;
+     background-color:#D3D3D3;
      width: 100%;
 
   }
@@ -932,6 +1053,24 @@ padding-bottom: .2rem;
   background-color:#e5e5ee;
 }
 }
+}
+
+.member-list{
+    position: relative;
+    text-align: center;
+    background-color: #eee;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    padding: .4rem 0 .4rem 0;
+
+ &_items{
+    cursor: pointer;
+    transition: background-color 0.1s ease;
+    &:hover{
+        background-color: #4682B4;
+        color: white;
+    }
+
+ }  
 }
 
 .pro-info{
@@ -1183,4 +1322,26 @@ padding-bottom: .2rem;
 
 button.gnuIjg {
   display: none !important;
+}
+
+  .member-dropdown{
+        &_item{
+            padding: .5rem;
+            position: fixed;
+            border-radius: .2rem;
+            box-shadow: 0 0 10px rgba(0,0,0,.2);
+            z-index:2000 !important;
+            background-color: $color-white;
+            width:18rem;
+            height:auto;
+            overflow: hidden;
+            border:1px solid $color-light-grey;
+        }
+    }
+.vm--container{
+    z-index: 0 !important;
+}
+
+.page-link{
+    position:inherit !important;
 }

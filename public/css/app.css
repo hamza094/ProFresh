@@ -964,6 +964,119 @@ p {
   cursor: pointer;
 }
 
+.task-card_style {
+  width: 18rem;
+  margin-bottom: 1rem;
+  cursor: pointer;
+}
+
+.task-card_body {
+  padding: 0.5rem 1rem 1rem 1rem !important;
+  font-size: 1rem;
+}
+
+.task-card_border {
+  border: 0.3rem solid;
+  width: 25%;
+  margin: 0.5rem 0 0 0.5rem;
+  border-radius: 0.5rem;
+}
+
+.task-modal_title {
+  font-size: 1.5rem;
+}
+
+.task-modal_close {
+  font-size: 1.5rem;
+  margin-top: -1rem;
+}
+
+.task-modal_content {
+  padding: 0.5rem;
+}
+
+.task-option_labels {
+  list-style-type: none;
+  margin-bottom: 1.5rem;
+}
+
+.task-option_labels-component {
+  cursor: pointer;
+  color: white;
+  padding: 0.2rem;
+  text-align: center;
+  border-radius: 0.2rem;
+}
+
+.task-option_features {
+  list-style-type: none;
+}
+
+.task-option_features li:not(:last-child) {
+  margin-bottom: 0.5rem;
+}
+
+.task-member {
+  display: inline-block;
+  background-color: #12344D;
+  color: white;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  text-align: center;
+  line-height: 30px;
+  text-decoration: none;
+}
+
+.task-member:hover {
+  text-decoration: none;
+  color: white;
+}
+
+.task-member-container {
+  display: inline-block;
+  text-align: center;
+  margin-right: 10px;
+  /* Adjust the margin as needed */
+}
+
+.task-member-username {
+  font-size: 14px;
+  color: #333;
+}
+
+.task-description {
+  margin-top: 2rem;
+}
+
+.task-description_container {
+  margin-bottom: 0.6rem;
+}
+
+.task-description_heading {
+  font-weight: 600;
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2rem;
+}
+
+.task-description_content {
+  font-size: 1rem;
+}
+
+.task-description_content-link {
+  cursor: pointer;
+}
+
+.task-description_content-link:hover {
+  text-decoration: none;
+}
+
+.title-form {
+  width: 50% !important;
+  display: inherit !important;
+}
+
 .project-appointment {
   margin-top: 0.5rem;
 }
@@ -990,6 +1103,21 @@ p {
   margin-bottom: 0.8rem;
 }
 
+.unassign-cross {
+  position: relative;
+  top: -8px;
+  right: 4px;
+  font-size: 1rem;
+  color: red;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.task-member-username:hover .unassign-cross {
+  opacity: 1;
+}
+
 .invite-list {
   position: relative;
 }
@@ -1000,7 +1128,7 @@ p {
   border: 1px solid #12344D;
   border-radius: 4px;
   padding-left: 0;
-  background-color: white;
+  background-color: #D3D3D3;
   width: 100%;
 }
 
@@ -1013,6 +1141,24 @@ p {
 
 .invite li:hover {
   background-color: #e5e5ee;
+}
+
+.member-list {
+  position: relative;
+  text-align: center;
+  background-color: #eee;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+  padding: 0.4rem 0 0.4rem 0;
+}
+
+.member-list_items {
+  cursor: pointer;
+  transition: background-color 0.1s ease;
+}
+
+.member-list_items:hover {
+  background-color: #4682B4;
+  color: white;
 }
 
 .pro-info {
@@ -1270,6 +1416,27 @@ p {
 
 button.gnuIjg {
   display: none !important;
+}
+
+.member-dropdown_item {
+  padding: 0.5rem;
+  position: fixed;
+  border-radius: 0.2rem;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  z-index: 2000 !important;
+  background-color: #FFFFFF;
+  width: 18rem;
+  height: auto;
+  overflow: hidden;
+  border: 1px solid #e5e5ee;
+}
+
+.vm--container {
+  z-index: 0 !important;
+}
+
+.page-link {
+  position: inherit !important;
 }
 
 .padding-0 {

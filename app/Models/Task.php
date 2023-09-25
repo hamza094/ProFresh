@@ -3,38 +3,76 @@
 namespace App\Models;
 
 use App\Traits\RecordActivity;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Task extends Model
 {
-  use RecordActivity, HasFactory;
+  use RecordActivity, SoftDeletes, HasFactory;
 
   protected $guarded=[];
 
   protected $touches=['project'];
 
-  protected $casts=['completed'=>'boolean'];
+  protected $casts = [
+    'due_at' => 'datetime',
+];
+
+  protected $deletedAt = 'archived_at';
+
+  protected static function booted()
+  {
+    static::creating(function ($task) {
+        if (!$task->status_id) {
+            $task->status_id = 1; 
+        }
+    });
+  }
+
+
 
   //protected static $recordableEvents = ['created','updated'];
 
   public function path()
     {
-      return "/api/v1/projects/{$this->project->slug}/task/{$this->id}";
-    }
-
-    public function complete()
-    {
-      $this->update(['completed'=>true]);
-    }
-
-    public function incomplete()
-    {
-      $this->update(['completed'=>false]);
+      return "/api/v1/projects/{$this->project->slug}/tasks/{$this->id}";
     }
 
     public function project(){
-      return $this->belongsTo(Project::class);
+      return $this->belongsTo(Project::class,'project_id');
    }
+
+    public function owner()
+    {
+     return $this->belongsTo(User::class,'user_id');
+    }
+
+   public function assignee()
+   {
+     return $this->belongsToMany(User::class);
+   }
+
+    public function status()
+    {
+      return $this->belongsTo(TaskStatus::class,'status_id');
+    }
+
+    public function scopeArchived($query)
+    {
+        return $query->onlyTrashed()->with('status')->get();
+    }
+
+    public function scopeActive($query)
+    {
+        return $query->with('status')->get();
+    }
+
+    public function scopeDueForNotifications($query){
+       $query
+        ->whereNotNull(['notified','due_at'])
+        ->where('due_at', '>=', now())
+        ->where('notify_sent', false);
+    }
 
 }

@@ -4,6 +4,7 @@ namespace App\Listeners;
 
 use App\Events\UserLogin;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Queue\InteractsWithQueue;
 
 class SaveUserTimezone
@@ -26,11 +27,15 @@ class SaveUserTimezone
      */
     public function handle(UserLogin $event)
     {
-      $ip = file_get_contents("http://ipecho.net/plain");
-      $url = 'http://ip-api.com/json/'.$ip;
-      $tz = file_get_contents($url);
-      $tz = json_decode($tz,true)['timezone'];
+      try{
+      $ip = Http::get("http://ipecho.net/plain")->body();
+      $getTz = Http::get("http://ip-api.com/json/$ip")->json();
+      $tz=$getTz['timezone'];
       $event->user->timezone=$tz;
       $event->user->save();
+
+     } catch(\Exception $e){
+        return response()->json(['error' => $e->getMessage()], 500);
+     }
     }
 }

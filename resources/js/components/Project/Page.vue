@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div v-if="this.show">
 		<div class="container-fluid ">
 			<div class="row">
 				<div class="col-md-8 page pd-r">
@@ -115,7 +115,7 @@
 		<div class="col-md-4 side_panel">
 			Project Side Panel
 			<br>
-			<Task :slug="project.slug" :tasks="project.tasks" :access="permission.access"></Task>
+			<Task :slug="project.slug" :tasks="tasks" :access="permission.access" :projectMembers="this.project.members"></Task>
 			<hr>
 			<PanelFeatues :slug="project.slug" :notes="project.notes"
 			:members="project.members" :owner="user" :access="permission.access" :ownerLogin="permission.owner"></PanelFeatues>
@@ -133,6 +133,12 @@
 	</div>
 </div>
 </div>
+<!--<div v-else class="text-center mt-5">
+    <h3>Thank you for your patience. The page is loading, and we're almost there!</h3>
+    <div class="d-flex mt-3 justify-content-center align-items-center">
+      <ring-loader :color=this.color :size="100" />
+    </div>
+  </div>-->
 </template>
 <script>
 	import Status from './Status.vue'
@@ -156,6 +162,7 @@ export default{
 
     data(){	
     return{
+     color:'#301934', 
 		 nameEdit:false,
 		 aboutEdit:false,
 		 projectname:'',
@@ -166,6 +173,7 @@ export default{
      Hot_Score: 21,
 		 path:'',
 		 members:'',
+		 show:false
     };
     },
 
@@ -173,9 +181,11 @@ export default{
     	const slug = this.$route.params.slug;
       this.loadProject(slug)
       .then(() => {
+      	this.show=true;
       this.projectname = this.project.name;
       this.projectabout = this.project.about;
       this.members = this.project.members;
+      this.archiveTask();
     })
     .catch(error => {
       console.log(error.response.data.errors);
@@ -183,10 +193,10 @@ export default{
     },
 
     computed: {
-    	...mapState('project',['project','user','getStage']),
+    	...mapState('project',['project','user','getStage','tasks']),
 
     permission() {
-      const {access, owner} = permission(this.auth, this.project.members, this.project.user);
+      const {access, owner} = permission(this.auth.id, this.project.members, this.user.id);
 
       return {access, owner};
    },
@@ -311,6 +321,18 @@ export default{
           this.chatusers.splice(this.chatusers.indexOf(auth), 1);
           this.$vToastify.info(`${auth.name} leave project conversation`);
         });
+      },
+
+      archiveTask(){
+      this.$bus.on('archiveTask', (taskId) => {
+    if (this.project.activities.subject_id !== null) {
+        this.project.activities = this.project.activities.filter(activity => activity.subject_id !== taskId);
+    }
+    console.log('eventliten');
+});
+      },
+      unarchiveTask(){
+
       }
   },
 

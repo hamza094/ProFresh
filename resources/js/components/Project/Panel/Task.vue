@@ -1,50 +1,49 @@
 <template>
 	<div class="task">
   <div class="task-top">
-    <span><b>Tasks</b> <a data-toggle="collapse" href="#taskProject" role="button" aria-expanded="false" aria-controls="taskProject">
+    <span><i class="fas fa-tasks"></i> <b>Tasks</b> <a data-toggle="collapse" href="#taskProject" role="button" aria-expanded="false" aria-controls="taskProject">
       <i class="fas fa-angle-down float-right"></i></a></span>
   </div>
 
   <!--Task -->
     <div class="collapse" id="taskProject">
-      <!--<SubscriptionCheck>-->
+     <!-- <SubscriptionCheck> -->
     <div class="card card-body">
+      <div v-if="!access">Only the project owner and members are allowed to access this feature.</div>
+      <div v-if="access">
     <div class="task-add">
-      <form class="" v-if="access" @submit.prevent="add">
+      <form class="" @submit.prevent="add">
         <div class="form-group">
-          <label for="body">Add New Task</label>
-          <input type="text" class="form-control" name="body" v-model="form.body">
+          <label for="body"><i>Create a New Task</i></label>
+          <input type="text" class="form-control" name="title" v-model="form.title">
         </div>
   </form>
     </div>
+          <p class="task-list_heading"> {{this.message}}
     <div v-if="tasks" class="task-list">
-      <p class="task-list_heading">Project Tasks</p>
-      <div v-for="(task,index) in tasks.data" :key="task.id">
-        <p class="task-list_text">
-          <span v-if="editing == task.id">
-            <textarea class="form-control" name="body" rows="1" cols="34" v-model="form.editbody"  v-text="task.body" style="resize: none;"></textarea>
-            <span class="btn btn-link btn-sm" @click="update(task.id,task)">Update</span>
-           <span class="btn btn-link btn-sm" @click="closeEditForm(task.id,task)">Cancel</span>
-          </span>
-          <span  v-else :class="{ 'task-list_text-body' : task.completed == true}">{{task.body}}</span>
-
-          <span v-if="access" class="float-right">
-
-          <span>
-            <input  v-if="task.completed" class="form-check-input" type="checkbox" @change="markUncomplete(task.id,task)"  checked>
-            <input v-else class="form-check-input" type="checkbox"  name="completed" @change="markComplete(task.id,task)">
-          </span>
-
-           <span @click="remove(task.id,index)"><i class="far fa-trash-alt" style="color:#E74C3C"></i></span>
-          <span @click="openEditForm(task.id,task)"><i class="far fa-edit" style="color:#2980B9"></i></span>
-
-          </span>
-          <br>
-          <span class="task-list_time"><i class="far fa-clock"></i> {{task.created_at}}</span>
-         </p>
-				 <hr>
+        <span class="float-right">
+          <a v-on:click.prevent="archiveTasks" class="panel-list_item">
+          <i class="fas fa-tasks"></i>
+         </a>
+    </span>
+  </p> 
+       <div v-for="(task,index) in tasks.data" :key="task.id">
+         <div class="card task-card_style" @click="openModal(task)">
+          <div v-if="task.status" class="task-card_border" :style="{ 
+            borderColor: task.status.color 
+        }"></div>
+          <div class="card-body task-card_body">
+            <span>{{task.title}}</span>
+            <span class="float-right mt-4"><small><i class="far fa-clock"></i>:{{task.created_at | date}}</small></span>
+          </div>
+        </div>
       </div>
-			<pagination :data="tasks" @pagination-change-page="getResults"></pagination>
+       <modal name="task-modal" height="auto" :scrollable="true"
+      width="65%" class="model-desin" :clickToClose=false @modal-closed="closeModal">
+        <TaskModal :slug="slug" :state="state"></TaskModal @modal-closed="closeModal">
+    </modal>
+	<pagination :data="tasks" @pagination-change-page="getResults"></pagination>
+</div>
     </div>
   </div>
 </SubscriptionCheck>
@@ -52,120 +51,81 @@
 </div>
 </template>
 <script>
-  import { mapMutations, mapActions } from 'vuex';
-  //import SubscriptionCheck from '../../SubscriptionChecker.vue'; 
-
+  import TaskModal from './Modal.vue';
+  import { mapMutations, mapActions, mapState } from 'vuex';
+  //import SubscriptionCheck from '../../SubscriptionChecker.vue';
   export default {
-    //components:{SubscriptionCheck},
-    props:['slug','tasks','access'],
+    components:{TaskModal},
+    props:['slug','access'],
     data() {
       return {
+        currentTasks: [],
+        
         task_score:2,
-        editing:0,
-          form:{
-          	body:'',
-          	editbody:'',
-          	completed:'',
-          },
+        state:'active',
+        form:{
+          title:'',
+        },
             errors:{}
         };
     },
+    computed:{
+    ...mapState('task',['tasks','message']),
+  },
     methods: {
-      ...mapMutations('project',['addScore','reduceScore']),
-      ...mapActions('project',['loadTasks']),
+      ...mapActions({
+      fetchTasks: 'task/fetchTasks',
+      loadStatuses: 'SingleTask/loadStatuses',
+    }),
 
-		 getResults(page = 1) {
-      this.loadTasks({
-        slug: this.slug,
-        page: page
-      });
+      ...mapMutations('project',['addScore','reduceScore']),
+      ...mapMutations('SingleTask',['setTask']),
+
+		   getResults(page) {
+        const slug = this.$route.params.slug;
+        this.fetchTasks({ slug, page });
+    },
+      archiveTasks() {
+        const panel1Handle = this.$showPanel({
+          component: 'archive-tasks',
+          openOn: 'right',
+          width:440,
+          disableBgClick:true,
+          keepAlive:true,
+          props: {
+            slug: this.slug, 
+          }
+          })
+          panel1Handle.promise
+            .then(result => {
+
+            });
+          },
+     openModal(task) {
+      this.setTask(task);
+      this.$modal.show('task-modal');
     },
      add(){
-       axios.post('/api/v1/projects/'+this.slug+'/task',this.form)
+       axios.post('/api/v1/projects/'+this.slug+'/tasks',this.form)
           .then(response=>{
               this.$vToastify.success("Project Task added");
-              this.form.body="";
-							this.getResults();
+              this.form.title="";
+							this.getResults(1);
               this.addScore(this.task_score);
           }).catch(error=>{
-						this.form.body="";
-						this.taskErrors(error);
+						this.form.title="";
+            this.$vToastify.warning(error.response.data.message);
        });
     },
-		url($slug,$id){
-			return '/api/v1/projects/'+$slug+'/task/'+$id;
-		},
+    closeModal() {
+      this.setTask([]);
+  },
 
-      update(id,task){
-      axios.put(this.url(this.slug,id),{
-        body:this.form.editbody,
-      }).then(response=>{
-          this.$vToastify.success("Task Updated");
-          this.editing=false;
-          task.body=this.form.editbody;
-      }).catch(error=>{
-        this.taskErrors(error);
-      })
-    },
-
-    closeEditForm(id,task){
-      this.editing=false;
-      this.form.editbody=task.body;
-    },
-
-    markComplete(id,task){
-      axios.patch(this.url(this.slug,id)+'/status',{
-        completed:true,
-      }).then(response=>{
-        this.$vToastify.success("Task Completed");
-				task.completed=true;
-      }).catch(error=>{
-        this.$vToastify.warning("Task Status Updated failed");
-      })
-    },
-
-    markUncomplete(id,task){
-      axios.patch(this.url(this.slug,id)+'/status',{
-        completed:false,
-      }).then(response=>{
-          this.$vToastify.info("Task Marked Uncomplete");
-					task.completed=false;
-      }).catch(error=>{
-        this.$vToastify.warning("Task Status Updated failed");
-      })
-    },
-
-    remove(id,index){
-      axios.delete(this.url(this.slug,id))
-      .then(response=>{
-				 this.getResults();
-         this.$vToastify.info("Project Task deleted");
-         this.reduceScore(this.task_score);
-      }).catch(error=>{
-        this.$vToastify.warning("Task deletion failed");
-      })
-    },
-
-    openEditForm(id,task){
-      this.editing = id;
-      this.form.editbody=task.body;
-    },
-    taskErrors(error){
-		if (!error.response) {
-    this.$vToastify.warning("An error occurred.");
-    return;
-  }
-  let errors = error.response.data.errors;
-  if (errors) {
-    for (let key in errors) {
-      if (errors.hasOwnProperty(key)) {
-        this.$vToastify.warning(errors[key][0]);
-      }
-    }
-  } else {
-    this.$vToastify.warning("An error occurred.");
-  }
-		},
-    },
+  },
+    created() {
+    this.getResults(1);
+    this.loadStatuses();
+  },
 }
 </script>
+

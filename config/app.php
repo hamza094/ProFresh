@@ -163,6 +163,7 @@ return [
         Illuminate\View\ViewServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
         Bugsnag\BugsnagLaravel\BugsnagServiceProvider::class,
+        \Torann\GeoIP\GeoIPServiceProvider::class,
 
         /*
          * Package Service Providers...
@@ -230,10 +231,12 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'Image' => Intervention\Image\Facades\Image::class,
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
+        'GeoIP' => \Torann\GeoIP\Facades\GeoIP::class,
+
     ],
 
     'project'=>[
-      'taskLimit' => '8',
+      'taskLimit' => '18',
       'abandonedLimit'=>'90',
       'filters'=>'10',
     ],

@@ -2,6 +2,7 @@
 
 namespace App\Console;
 use App\Models\Messages;
+use App\Models\Task;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -28,6 +29,15 @@ class Kernel extends ConsoleKernel
         ->when(function () {
             return Message::messageScheduled()->exists();
         })->withoutOverlapping();
+
+
+        $schedule->command('tasks:notify')
+         ->withoutOverlapping()
+         ->runInBackground()
+         ->when(function () {
+            return Task::dueForNotifications()
+                    ->count() > 0;
+        });       
 
          $schedule->command('remove:abandon')->daily();
          $schedule->command('queue:prune-batches --hours=48 --unfinished=72')->daily();

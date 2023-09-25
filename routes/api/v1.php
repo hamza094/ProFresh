@@ -20,7 +20,8 @@ use App\Http\Controllers\Api\
   MessageController,
   ActivityController,
   SubscriptionController,
-
+  TaskStatusController,
+  TaskFeaturesController
 };
 /*
 |--------------------------------------------------------------------------
@@ -69,13 +70,33 @@ Route::controller(MessageController::class)->group(function(){
   Route::delete('messages/{message}/delete','delete');
 })->middleware('subscription');
 
-//Task Routes
-Route::apiResource('/task',TaskController::class)
-->except(['index','show']);
+
+Route::apiResource('/tasks', TaskController::class)->withTrashed()->except(['show']);
 //->middleware('subscription');
 
-Route::patch('/task/{task}/status',[TaskController::class,'status']);
+Route::controller(TaskFeaturesController::class)
+->name('task.')
+->prefix('tasks/{task}')
+->group(function(){
+
+Route::middleware(['can:taskallow,task'])->group(function () {    
+Route::patch('assign','assign')->name('assign')->withTrashed();
+Route::patch('unassign','unassign')->name('unassign')->withTrashed();
+});
+
+Route::middleware(['can:taskaccess,task'])->group(function () {
+Route::delete('archive','archive')->name('archive')
+    ->withTrashed();
+Route::get('unarchive','unarchive')->name('unarchive')
+        ->withTrashed();
+  Route::get('member/search', [TaskFeaturesController::class,'search'])->name('members.search');      
+});
+
+
+});
+
 //->middleware('subscription');
+
 
 //Chat Conversation Routes
 Route::apiResource('/conversations',ConversationController::class)
@@ -129,7 +150,10 @@ Route::get('subscription/{plan}/cancel','cancel')
     ->name('subscription.cancel');  
 });
 
-});             
+});
+
+Route::get('task/statuses',TaskStatusController::class)
+           ->name('task.status');             
 });
 });
 

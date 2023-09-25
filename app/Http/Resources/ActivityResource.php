@@ -17,6 +17,7 @@ class ActivityResource extends JsonResource
         return [
           'description' => $this->{$this->description}(),
           'time' => $this->created_at->diffForHumans(),
+        'subject_id' => $this->subject_type === "App\\Models\\Task" ? ($this->subject ? $this->subject->id : null) : $this->subject_type,
           'user'=>$this->user,
         ];
     }
@@ -53,7 +54,10 @@ class ActivityResource extends JsonResource
 
   protected function created_task()
   {
-    return 'Task'.' '.Str::limit($this->subject->body,17,'..').' '.'added';
+      if ($this->subject && $this->subject->body) {
+        return 'Task'.' '.Str::limit($this->subject->body, 17, '..').' '.'added';
+    }
+    return 'Task added';
   }
 
   protected function updated_task()
@@ -71,7 +75,7 @@ class ActivityResource extends JsonResource
 
   protected function deleted_task()
   {
-    return 'Task deleted from the project';
+    return 'Task archived from the project';
   }
 
   protected function created_message()

@@ -1,8 +1,10 @@
 <?php
 
 namespace App\Http\Resources;
-
+use App\Http\Resources\TaskStatusResource;
+use App\Http\Resources\UsersResource;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Carbon\Carbon;
 
 class TaskResource extends JsonResource
 {
@@ -16,12 +18,21 @@ class TaskResource extends JsonResource
     {
        return [
          'id'=>$this->id,
-         'body'=>$this->body,
-         'completed'=>$this->completed,
+         'title'=>$this->title,
+         'description'=>$this->description,
+         'status_id'=>$this->status_id,
+         'status'=>new TaskStatusResource($this->whenLoaded('status')),
+
+        'members'=>UsersResource::collection($this->whenLoaded('assignee')),
+
+        'due_at_utc'=>$this->due_at,
+         'notified'=>$this->notified,
+
+         'due_at'=>$this->when($this->due_at,fn()=>
+            \Timezone::convertToLocal(Carbon::parse($this->due_at))),
          
-         'created_at'=>$this->created_at->format(config('app.date_formats.exact')),
-         
-         'updated_at'=>$this->updated_at->format(config('app.date_formats.exact')),
+         'created_at'=>$this->created_at,
+         'updated_at'=>$this->updated_at,
        ];
     }
 }
