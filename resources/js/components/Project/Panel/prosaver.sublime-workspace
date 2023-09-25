@@ -500,11 +500,19 @@
 	"buffers":
 	[
 		{
+<<<<<<< HEAD
 			"file": "/C/laragon/www/profresh/app/Notifications/TaskAssigned.php",
+=======
+			"contents": "<?php\n\nnamespace App\\Notifications;\n\nuse Illuminate\\Bus\\Queueable;\nuse Illuminate\\Contracts\\Queue\\ShouldQueue;\nuse Illuminate\\Notifications\\Notification;\nuse Illuminate\\Notifications\\Messages\\MailMessage;\nuse Illuminate\\Notifications\\Messages\\BroadcastMessage;\nuse Illuminate\\Contracts\\Broadcasting\\ShouldBroadcast;\n\nclass TaskAssigned extends Notification implements ShouldBroadcast\n{\n    use Queueable;\n\n    protected $task;\n    protected $project;\n    protected $user;\n\n    /**\n     * Create a new notification instance.\n     *\n     * @return void\n     */\n    public function __construct($task,$project,$user){\n        $this->task=$task;\n        $this->project=$project;\n        $this->user=$user;\n\n    }\n\n    /**\n     * Get the notification's delivery channels.\n     *\n     * @param  mixed  $notifiable\n     * @return array\n     */\n    public function via($notifiable,)\n    {\n        return ['mail','database','broadcast'];\n    }\n\n    /**\n     * Get the mail representation of the notification.\n     *\n     * @param  mixed  $notifiable\n     * @return \\Illuminate\\Notifications\\Messages\\MailMessage\n     */\n    public function toMail($notifiable)\n    {\n        return (new MailMessage)\n                    ->line($this->user->name.' has assigned you a task: \"'.$this->task->title. '\" This is regarding the project '. $this->project->name)\n                    ->action('Notification Action', url('/'))\n                    ->line('Thank you for using our application!');\n    }\n\n    /**\n     * Get the array representation of the notification.\n     *\n     * @param  mixed  $notifiable\n     * @return array\n     */\n    public function toArray($notifiable)\n    {\n        return [\n          'message'=>'has assigned you a task: \"'.$this->task->title. '\" This is regarding the project '. $this->project->name,\n          'notifier' =>$this->user,\n          'link'=>$this->project->path()\n        ];\n    }\n\n    public function toBroadcast($notifiable)\n    {\n      return new BroadcastMessage([\n         'message'=>'has assigned you a task: \"'.$this->task->title. '\" This is regarding the project '. $this->project->name,\n          'notifier' =>$this->user->name,\n          'link'=>$this->project->path()\n    ]);\n  }\n}\n",
+			"file": "/C/laragon/www/profresh/app/Notifications/TaskAssigned.php",
+			"file_size": 2212,
+			"file_write_time": 133341689148317218,
+>>>>>>> master
 			"settings":
 			{
 				"buffer_size": 2212,
 				"line_ending": "Unix"
+<<<<<<< HEAD
 			},
 			"undo_stack":
 			[
@@ -516,6 +524,18 @@
 			{
 				"buffer_size": 2510,
 				"encoding": "UTF-8",
+=======
+			}
+		},
+		{
+			"contents": "<?php\n\nnamespace App\\Notifications;\n\nuse Illuminate\\Bus\\Queueable;\nuse Illuminate\\Contracts\\Queue\\ShouldQueue;\nuse Illuminate\\Notifications\\Messages\\MailMessage;\nuse Illuminate\\Notifications\\Notification;\nuse Illuminate\\Notifications\\Messages\\BroadcastMessage;\nuse Illuminate\\Contracts\\Broadcasting\\ShouldBroadcast;\n\nclass TaskDue extends Notification implements ShouldQueue,ShouldBroadcast\n{\n    use Queueable;\n    \n    protected $task;\n    protected $user;\n    protected $project;\n\n    /**\n     * Create a new notification instance.\n     *\n     * @return void\n     */\n    public function __construct($task,$user,$project)\n    {\n        $this->task=$task;\n        $this->user=$user;\n        $this->project=$project;\n    }\n\n    /**\n     * Get the notification's delivery channels.\n     *\n     * @param  mixed  $notifiable\n     * @return array\n     */\n    public function via($notifiable)\n    {\n        return ['mail','database','broadcast'];\n    }\n\n    /**\n     * Get the mail representation of the notification.\n     *\n     * @param  mixed  $notifiable\n     * @return \\Illuminate\\Notifications\\Messages\\MailMessage\n     */\n    public function toMail($notifiable)\n    {\n        return (new MailMessage)\n                ->line(\"Your task '{$this->task->title}' due '{$this->task->due_at}' is approaching. You are getting this mail because you selected to be notified '{$this->task->notified}'. Keep an eye on your task.\")\n                ->action('Notification Action', url(env('APP_URL') . \"/projects/\" . $this->project->path()))\n                ->line('Thank you for using our application!');\n    }\n\n    /**\n     * Get the array representation of the notification.\n     *\n     * @param  mixed  $notifiable\n     * @return array\n     */\n    public function toArray($notifiable)\n    {\n        return [\n          'message'=>\"Your task '{$this->task->title}' due '{$this->task->due_at}' is approaching. You are getting this mail because you selected to be notified '{$this->task->notified}'. Keep an eye on your task.\",\n          'notifier' =>$this->user,\n          'link'=>$this->project->path()\n        ];\n    }\n\n    public function toBroadcast($notifiable)\n    {\n      return new BroadcastMessage([\n         'message'=>\"Your task '{$this->task->title}' due '{$this->task->due_at}' is approaching. You are getting this mail because you selected to be notified '{$this->task->notified}'. Keep an eye on your task.\",\n          'notifier' =>$this->user->name,\n          'link'=>$this->project->path()\n    ]);\n  }\n}\n",
+			"file": "/C/laragon/www/profresh/app/Notifications/TaskDue.php",
+			"file_size": 2510,
+			"file_write_time": 133398707682856467,
+			"settings":
+			{
+				"buffer_size": 2510,
+>>>>>>> master
 				"line_ending": "Unix"
 			},
 			"undo_stack":
@@ -528,7 +548,11 @@
 						"characters": "\n"
 					},
 					"AQAAADsBAAAAAAAAPAEAAAAAAAAAAAAA",
+<<<<<<< HEAD
 					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAA7AQAAAAAAADsBAAAAAAAAAAAAAAAA8L8"
+=======
+					"BQAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvwAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAA7AQAAAAAAADsBAAAAAAAAAAAAAAAA8L8"
+>>>>>>> master
 				],
 				[
 					6,
@@ -536,7 +560,11 @@
 					"paste",
 					null,
 					"AQAAADwBAAAAAAAASwEAAAAAAAAAAAAA",
+<<<<<<< HEAD
 					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAA8AQAAAAAAADwBAAAAAAAAAAAAAAAA8L8"
+=======
+					"BQAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvwAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAA8AQAAAAAAADwBAAAAAAAAAAAAAAAA8L8"
+>>>>>>> master
 				],
 				[
 					39,
@@ -544,7 +572,11 @@
 					"left_delete",
 					null,
 					"AQAAAEsBAAAAAAAASwEAAAAAAAABAAAACg",
+<<<<<<< HEAD
 					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAABMAQAAAAAAAEwBAAAAAAAAAAAAAAAALEA"
+=======
+					"BQAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvwAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAABMAQAAAAAAAEwBAAAAAAAAAAAAAAAALEA"
+>>>>>>> master
 				],
 				[
 					42,
@@ -552,7 +584,11 @@
 					"left_delete",
 					null,
 					"DwAAAEkBAAAAAAAASQEAAAAAAAABAAAAO0gBAAAAAAAASAEAAAAAAAABAAAAZUcBAAAAAAAARwEAAAAAAAABAAAAbEYBAAAAAAAARgEAAAAAAAABAAAAYkUBAAAAAAAARQEAAAAAAAABAAAAYUQBAAAAAAAARAEAAAAAAAABAAAAd0MBAAAAAAAAQwEAAAAAAAABAAAAb0IBAAAAAAAAQgEAAAAAAAABAAAAckEBAAAAAAAAQQEAAAAAAAABAAAAaEABAAAAAAAAQAEAAAAAAAABAAAAVD8BAAAAAAAAPwEAAAAAAAABAAAAID4BAAAAAAAAPgEAAAAAAAABAAAAZT0BAAAAAAAAPQEAAAAAAAABAAAAczwBAAAAAAAAPAEAAAAAAAABAAAAdTsBAAAAAAAAOwEAAAAAAAABAAAACg",
+<<<<<<< HEAD
 					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAABKAQAAAAAAAEoBAAAAAAAAAAAAAAAA8L8"
+=======
+					"BQAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvwAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAABKAQAAAAAAAEoBAAAAAAAAAAAAAAAA8L8"
+>>>>>>> master
 				],
 				[
 					46,
@@ -560,7 +596,11 @@
 					"paste",
 					null,
 					"AQAAAGsBAAAAAAAAdwEAAAAAAAAAAAAA",
+<<<<<<< HEAD
 					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAABrAQAAAAAAAGsBAAAAAAAAAAAAAAAA8L8"
+=======
+					"BQAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvwAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAABrAQAAAAAAAGsBAAAAAAAAAAAAAAAA8L8"
+>>>>>>> master
 				],
 				[
 					48,
@@ -570,7 +610,11 @@
 						"characters": "\n"
 					},
 					"AgAAAIgBAAAAAAAAiQEAAAAAAAAAAAAAiQEAAAAAAACNAQAAAAAAAAAAAAA",
+<<<<<<< HEAD
 					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAACIAQAAAAAAAIgBAAAAAAAAAAAAAADoiEA"
+=======
+					"BQAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvwAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAACIAQAAAAAAAIgBAAAAAAAAAAAAAADoiEA"
+>>>>>>> master
 				],
 				[
 					49,
@@ -578,7 +622,11 @@
 					"paste",
 					null,
 					"AQAAAI0BAAAAAAAAoAEAAAAAAAAAAAAA",
+<<<<<<< HEAD
 					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAACNAQAAAAAAAI0BAAAAAAAAAAAAAAAA8L8"
+=======
+					"BQAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvwAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAACNAQAAAAAAAI0BAAAAAAAAAAAAAAAA8L8"
+>>>>>>> master
 				],
 				[
 					50,
@@ -586,7 +634,11 @@
 					"left_delete",
 					null,
 					"AQAAAJ8BAAAAAAAAnwEAAAAAAAABAAAACg",
+<<<<<<< HEAD
 					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAACgAQAAAAAAAKABAAAAAAAAAAAAAAAA8L8"
+=======
+					"BQAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvwAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAACgAQAAAAAAAKABAAAAAAAAAAAAAAAA8L8"
+>>>>>>> master
 				],
 				[
 					52,
@@ -594,7 +646,11 @@
 					"left_delete",
 					null,
 					"AQAAAI0BAAAAAAAAjQEAAAAAAAAEAAAAICAgIA",
+<<<<<<< HEAD
 					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAACRAQAAAAAAAJEBAAAAAAAAAAAAAAAA8L8"
+=======
+					"BQAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvwAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAACRAQAAAAAAAJEBAAAAAAAAAAAAAAAA8L8"
+>>>>>>> master
 				],
 				[
 					54,
@@ -604,16 +660,59 @@
 						"characters": "\n"
 					},
 					"AgAAAJsBAAAAAAAAnAEAAAAAAAAAAAAAnAEAAAAAAACgAQAAAAAAAAAAAAA",
+<<<<<<< HEAD
 					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAACbAQAAAAAAAJsBAAAAAAAAAAAAAAAA8L8"
+=======
+					"BQAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvwAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAACbAQAAAAAAAJsBAAAAAAAAAAAAAAAA8L8"
+>>>>>>> master
 				]
 			]
 		},
 		{
+<<<<<<< HEAD
 			"file": "/C/laragon/www/profresh/app/Http/Controllers/Api/TaskController.php",
 			"settings":
 			{
 				"buffer_size": 2209,
 				"encoding": "UTF-8",
+=======
+			"contents": "<?php\n\nnamespace App\\Http\\Requests;\n\nuse Illuminate\\Foundation\\Http\\FormRequest;\nuse Illuminate\\Validation\\Rule;\nuse App\\Enums\\TaskDueNotifies;\nuse Carbon\\Carbon;\n\nclass TaskUpdate extends FormRequest\n{\n    /**\n     * Determine if the user is authorized to make this request.\n     *\n     * @return bool\n     */\n    public function authorize()\n    {\n        return true;\n    }\n\n      protected function prepareForValidation()\n    {\n        $dueAt = $this->input('due_at');\n\n        if ($dueAt) {\n\n            $parsedDueAt = Carbon::parse($dueAt);\n\n            $this->merge([\n                'due_at' => $parsedDueAt,\n            ]);\n        }\n    }\n\n    /**\n     * Get the validation rules that apply to the request.\n     *\n     * @return array\n     */\n    public function rules()\n    {\n        $project=$this->project;\n\n        return [\n          'title' => [\n            'sometimes',\n             'required',\n             'max:55',\n            Rule::unique('tasks')/*->ignore($this->task)*/->where(function ($query) use ($project) {\n            return $query->where('project_id', $project->id);\n        }),\n        ],\n            'description' => 'sometimes|max:350',\n            'due_at' => 'sometimes|date|required_with:notified',\n            'status_id'=>'required|sometimes',\n            'notified'=>[\n                'sometimes',\n                'required',\n                Rule::in(TaskDueNotifies::values()),\n            ],\n        ];\n    }\n}\n",
+			"file": "/C/laragon/www/profresh/app/Http/Requests/TaskUpdate.php",
+			"file_size": 1451,
+			"file_write_time": 133399543463268743,
+			"redo_stack":
+			[
+				[
+					5,
+					1,
+					"insert",
+					{
+						"characters": "7"
+					},
+					"AQAAAIsEAAAAAAAAiwQAAAAAAAABAAAANw",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAIwEAAAAAAAAjAQAAAAAAAAAAAAAAADwvw"
+				],
+				[
+					4,
+					1,
+					"left_delete",
+					null,
+					"AQAAAIsEAAAAAAAAjAQAAAAAAAAAAAAA",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAIsEAAAAAAAAiwQAAAAAAAAAAAAAAADwvw"
+				]
+			],
+			"settings":
+			{
+				"buffer_size": 1451,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/C/laragon/www/profresh/app/Http/Controllers/Api/TaskController.php",
+			"settings":
+			{
+				"buffer_size": 1762,
+>>>>>>> master
 				"line_ending": "Windows"
 			},
 			"undo_stack":
@@ -626,7 +725,11 @@
 						"characters": "\n"
 					},
 					"AQAAAIABAAAAAAAAgQEAAAAAAAAAAAAA",
+<<<<<<< HEAD
 					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAACAAQAAAAAAAIABAAAAAAAAAAAAAAAA8L8"
+=======
+					"BQAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvwAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAACAAQAAAAAAAIABAAAAAAAAAAAAAAAA8L8"
+>>>>>>> master
 				],
 				[
 					7,
@@ -634,7 +737,11 @@
 					"paste",
 					null,
 					"AQAAAIEBAAAAAAAApAEAAAAAAAAAAAAA",
+<<<<<<< HEAD
 					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAACBAQAAAAAAAIEBAAAAAAAAAAAAAAAA8L8"
+=======
+					"BQAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvwAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAACBAQAAAAAAAIEBAAAAAAAAAAAAAAAA8L8"
+>>>>>>> master
 				],
 				[
 					8,
@@ -642,7 +749,11 @@
 					"left_delete",
 					null,
 					"AQAAAKMBAAAAAAAAowEAAAAAAAABAAAACg",
+<<<<<<< HEAD
 					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAACkAQAAAAAAAKQBAAAAAAAAAAAAAAAA8L8"
+=======
+					"BQAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvwAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAACkAQAAAAAAAKQBAAAAAAAAAAAAAAAA8L8"
+>>>>>>> master
 				],
 				[
 					19,
@@ -652,7 +763,11 @@
 						"characters": "\n\n"
 					},
 					"BQAAADEEAAAAAAAAMgQAAAAAAAAAAAAAMgQAAAAAAAA2BAAAAAAAAAAAAAA2BAAAAAAAADcEAAAAAAAAAAAAADcEAAAAAAAAOwQAAAAAAAAAAAAAMgQAAAAAAAAyBAAAAAAAAAQAAAAgICAg",
+<<<<<<< HEAD
 					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAxBAAAAAAAADEEAAAAAAAAAAAAAAAA8L8"
+=======
+					"BQAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvwAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAxBAAAAAAAADEEAAAAAAAAAAAAAAAA8L8"
+>>>>>>> master
 				],
 				[
 					20,
@@ -660,7 +775,11 @@
 					"paste",
 					null,
 					"AQAAADcEAAAAAAAAfAQAAAAAAAAAAAAA",
+<<<<<<< HEAD
 					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAA3BAAAAAAAADcEAAAAAAAAAAAAAAAA8L8"
+=======
+					"BQAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvwAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAA3BAAAAAAAADcEAAAAAAAAAAAAAAAA8L8"
+>>>>>>> master
 				],
 				[
 					21,
@@ -668,7 +787,11 @@
 					"left_delete",
 					null,
 					"AQAAAHsEAAAAAAAAewQAAAAAAAABAAAACg",
+<<<<<<< HEAD
 					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAB8BAAAAAAAAHwEAAAAAAAAAAAAAAAA8L8"
+=======
+					"BQAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvwAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAB8BAAAAAAAAHwEAAAAAAAAAAAAAAAA8L8"
+>>>>>>> master
 				],
 				[
 					24,
@@ -678,7 +801,11 @@
 						"characters": "\n\n"
 					},
 					"BQAAAAgFAAAAAAAACQUAAAAAAAAAAAAACQUAAAAAAAANBQAAAAAAAAAAAAANBQAAAAAAAA4FAAAAAAAAAAAAAA4FAAAAAAAAEgUAAAAAAAAAAAAACQUAAAAAAAAJBQAAAAAAAAQAAAAgICAg",
+<<<<<<< HEAD
 					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAIBQAAAAAAAAgFAAAAAAAAAAAAAAAA8L8"
+=======
+					"BQAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvwAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAIBQAAAAAAAAgFAAAAAAAAAAAAAAAA8L8"
+>>>>>>> master
 				],
 				[
 					25,
@@ -688,7 +815,11 @@
 						"contents": "{$0}"
 					},
 					"AQAAAA4FAAAAAAAAEAUAAAAAAAAAAAAA",
+<<<<<<< HEAD
 					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAOBQAAAAAAAA4FAAAAAAAAAAAAAAAA8L8"
+=======
+					"BQAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvwAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAOBQAAAAAAAA4FAAAAAAAAAAAAAAAA8L8"
+>>>>>>> master
 				],
 				[
 					26,
@@ -698,7 +829,11 @@
 						"characters": "_)"
 					},
 					"AgAAAA8FAAAAAAAAEAUAAAAAAAAAAAAAEAUAAAAAAAARBQAAAAAAAAAAAAA",
+<<<<<<< HEAD
 					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAPBQAAAAAAAA8FAAAAAAAAAAAAAAAA8L8"
+=======
+					"BQAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvwAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAPBQAAAAAAAA8FAAAAAAAAAAAAAAAA8L8"
+>>>>>>> master
 				],
 				[
 					28,
@@ -706,7 +841,11 @@
 					"left_delete",
 					null,
 					"AQAAAA4FAAAAAAAADgUAAAAAAAABAAAAew",
+<<<<<<< HEAD
 					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAPBQAAAAAAAA8FAAAAAAAAAAAAAAAA8L8"
+=======
+					"BQAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvwAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAPBQAAAAAAAA8FAAAAAAAAAAAAAAAA8L8"
+>>>>>>> master
 				],
 				[
 					30,
@@ -714,7 +853,11 @@
 					"left_delete",
 					null,
 					"AQAAAA4FAAAAAAAADgUAAAAAAAABAAAAXw",
+<<<<<<< HEAD
 					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAPBQAAAAAAAA8FAAAAAAAAAAAAAAAA8L8"
+=======
+					"BQAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvwAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAPBQAAAAAAAA8FAAAAAAAAAAAAAAAA8L8"
+>>>>>>> master
 				],
 				[
 					33,
@@ -722,7 +865,11 @@
 					"left_delete",
 					null,
 					"AQAAAA4FAAAAAAAADgUAAAAAAAABAAAAKQ",
+<<<<<<< HEAD
 					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAPBQAAAAAAAA8FAAAAAAAAAAAAAAAA8L8"
+=======
+					"BQAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvwAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAPBQAAAAAAAA8FAAAAAAAAAAAAAAAA8L8"
+>>>>>>> master
 				],
 				[
 					35,
@@ -732,7 +879,11 @@
 						"characters": ");"
 					},
 					"AgAAAA8FAAAAAAAAEAUAAAAAAAAAAAAAEAUAAAAAAAARBQAAAAAAAAAAAAA",
+<<<<<<< HEAD
 					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAPBQAAAAAAAA8FAAAAAAAAAAAAAAAA8L8"
+=======
+					"BQAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvwAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAPBQAAAAAAAA8FAAAAAAAAAAAAAAAA8L8"
+>>>>>>> master
 				],
 				[
 					37,
@@ -740,7 +891,11 @@
 					"left_delete",
 					null,
 					"AQAAAAgFAAAAAAAACAUAAAAAAAABAAAACg",
+<<<<<<< HEAD
 					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAJBQAAAAAAAAkFAAAAAAAAAAAAAAAAWEA"
+=======
+					"BQAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvwAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAJBQAAAAAAAAkFAAAAAAAAAAAAAAAAWEA"
+>>>>>>> master
 				],
 				[
 					39,
@@ -748,7 +903,11 @@
 					"left_delete",
 					null,
 					"AQAAAHsEAAAAAAAAewQAAAAAAAABAAAACg",
+<<<<<<< HEAD
 					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAB8BAAAAAAAAHwEAAAAAAAAAAAAAABYg0A"
+=======
+					"BQAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvwAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAB8BAAAAAAAAHwEAAAAAAAAAAAAAABYg0A"
+>>>>>>> master
 				],
 				[
 					53,
@@ -756,7 +915,11 @@
 					"left_delete",
 					null,
 					"AQAAAIEBAAAAAAAAgQEAAAAAAAAjAAAAdXNlIElsbHVtaW5hdGVcU3VwcG9ydFxGYWNhZGVzXERCOwo",
+<<<<<<< HEAD
 					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAACBAQAAAAAAAKQBAAAAAAAAAAAAAAAA8L8"
+=======
+					"BQAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvwAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAACBAQAAAAAAAKQBAAAAAAAAAAAAAAAA8L8"
+>>>>>>> master
 				],
 				[
 					77,
@@ -764,7 +927,11 @@
 					"left_delete",
 					null,
 					"BwAAAOwEAAAAAAAA7AQAAAAAAAABAAAAIOsEAAAAAAAA6wQAAAAAAAABAAAAO+oEAAAAAAAA6gQAAAAAAAABAAAAKekEAAAAAAAA6QQAAAAAAAABAAAAfecEAAAAAAAA5wQAAAAAAAACAAAAICDlBAAAAAAAAOUEAAAAAAAAAgAAACAg5AQAAAAAAADkBAAAAAAAAAEAAAAK",
+<<<<<<< HEAD
 					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAADtBAAAAAAAAO0EAAAAAAAAAAAAAAAA8L8"
+=======
+					"BQAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvwAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAADtBAAAAAAAAO0EAAAAAAAAAAAAAAAA8L8"
+>>>>>>> master
 				],
 				[
 					79,
@@ -772,7 +939,11 @@
 					"left_delete",
 					null,
 					"OwAAAFcEAAAAAAAAVwQAAAAAAAABAAAAe1YEAAAAAAAAVgQAAAAAAAABAAAAIFUEAAAAAAAAVQQAAAAAAAABAAAAKVQEAAAAAAAAVAQAAAAAAAABAAAAZVMEAAAAAAAAUwQAAAAAAAABAAAAY1IEAAAAAAAAUgQAAAAAAAABAAAAaVEEAAAAAAAAUQQAAAAAAAABAAAAdlAEAAAAAAAAUAQAAAAAAAABAAAAck8EAAAAAAAATwQAAAAAAAABAAAAZU4EAAAAAAAATgQAAAAAAAABAAAAU00EAAAAAAAATQQAAAAAAAABAAAAa0wEAAAAAAAATAQAAAAAAAABAAAAc0sEAAAAAAAASwQAAAAAAAABAAAAYUoEAAAAAAAASgQAAAAAAAABAAAAdEkEAAAAAAAASQQAAAAAAAABAAAAJEgEAAAAAAAASAQAAAAAAAABAAAAIEcEAAAAAAAARwQAAAAAAAABAAAALEYEAAAAAAAARgQAAAAAAAABAAAAdEUEAAAAAAAARQQAAAAAAAABAAAAY0QEAAAAAAAARAQAAAAAAAABAAAAZUMEAAAAAAAAQwQAAAAAAAABAAAAakIEAAAAAAAAQgQAAAAAAAABAAAAb0EEAAAAAAAAQQQAAAAAAAABAAAAckAEAAAAAAAAQAQAAAAAAAABAAAAcD8EAAAAAAAAPwQAAAAAAAABAAAAJD4EAAAAAAAAPgQAAAAAAAABAAAAID0EAAAAAAAAPQQAAAAAAAABAAAALDwEAAAAAAAAPAQAAAAAAAABAAAAdDsEAAAAAAAAOwQAAAAAAAABAAAAczoEAAAAAAAAOgQAAAAAAAABAAAAZTkEAAAAAAAAOQQAAAAAAAABAAAAdTgEAAAAAAAAOAQAAAAAAAABAAAAcTcEAAAAAAAANwQAAAAAAAABAAAAZTYEAAAAAAAANgQAAAAAAAABAAAAcjUEAAAAAAAANQQAAAAAAAABAAAAJDQEAAAAAAAANAQAAAAAAAABAAAAKDMEAAAAAAAAMwQAAAAAAAABAAAAIDIEAAAAAAAAMgQAAAAAAAABAAAAZTEEAAAAAAAAMQQAAAAAAAABAAAAczAEAAAAAAAAMAQAAAAAAAABAAAAdS8EAAAAAAAALwQAAAAAAAABAAAAIC4EAAAAAAAALgQAAAAAAAABAAAAKS0EAAAAAAAALQQAAAAAAAABAAAAKCwEAAAAAAAALAQAAAAAAAABAAAAICsEAAAAAAAAKwQAAAAAAAABAAAAbioEAAAAAAAAKgQAAAAAAAABAAAAbykEAAAAAAAAKQQAAAAAAAABAAAAaSgEAAAAAAAAKAQAAAAAAAABAAAAdCcEAAAAAAAAJwQAAAAAAAABAAAAYyYEAAAAAAAAJgQAAAAAAAABAAAAbiUEAAAAAAAAJQQAAAAAAAABAAAAdSQEAAAAAAAAJAQAAAAAAAABAAAAZiMEAAAAAAAAIwQAAAAAAAABAAAAKCIEAAAAAAAAIgQAAAAAAAABAAAAbiEEAAAAAAAAIQQAAAAAAAABAAAAbyAEAAAAAAAAIAQAAAAAAAABAAAAaR8EAAAAAAAAHwQAAAAAAAABAAAAdB4EAAAAAAAAHgQAAAAAAAABAAAAYx0EAAAAAAAAHQQAAAAAAAABAAAAYQ",
+<<<<<<< HEAD
 					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAABYBAAAAAAAAFgEAAAAAAAAAAAAAABYg0A"
+=======
+					"BQAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvwAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAABYBAAAAAAAAFgEAAAAAAAAAAAAAABYg0A"
+>>>>>>> master
 				],
 				[
 					80,
@@ -780,16 +951,38 @@
 					"left_delete",
 					null,
 					"DAAAABwEAAAAAAAAHAQAAAAAAAABAAAAcxsEAAAAAAAAGwQAAAAAAAABAAAAbhoEAAAAAAAAGgQAAAAAAAABAAAAYRkEAAAAAAAAGQQAAAAAAAABAAAAchgEAAAAAAAAGAQAAAAAAAABAAAAdBcEAAAAAAAAFwQAAAAAAAABAAAAOhYEAAAAAAAAFgQAAAAAAAABAAAAOhUEAAAAAAAAFQQAAAAAAAABAAAAQhQEAAAAAAAAFAQAAAAAAAABAAAARBIEAAAAAAAAEgQAAAAAAAACAAAAICAQBAAAAAAAABAEAAAAAAAAAgAAACAgDwQAAAAAAAAPBAAAAAAAAAEAAAAK",
+<<<<<<< HEAD
 					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAdBAAAAAAAAB0EAAAAAAAAAAAAAAAA8L8"
+=======
+					"BQAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvwAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAdBAAAAAAAAB0EAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					1,
+					1,
+					"revert",
+					null,
+					"AwAAAAAAAAAAAAAAAAAAAAAAAAChCAAAPD9waHAKCm5hbWVzcGFjZSBBcHBcSHR0cFxDb250cm9sbGVyc1xBcGk7Cgp1c2UgQXBwXEh0dHBcUmVxdWVzdHNcVGFza1JlcXVlc3Q7CnVzZSBBcHBcSHR0cFxSZXF1ZXN0c1xUYXNrVXBkYXRlOwp1c2UgSWxsdW1pbmF0ZVxIdHRwXFJlcXVlc3Q7CnVzZSBBcHBcTW9kZWxzXFByb2plY3Q7CnVzZSBBcHBcTm90aWZpY2F0aW9uc1xQcm9qZWN0VGFzazsKdXNlIEFwcFxNb2RlbHNcVGFzazsKdXNlIElsbHVtaW5hdGVcU3VwcG9ydFxGYWNhZGVzXERCOwp1c2UgQXBwXFNlcnZpY2VzXFRhc2tTZXJ2aWNlOwp1c2UgQXBwXEh0dHBcUmVzb3VyY2VzXFRhc2tSZXNvdXJjZTsKdXNlIEY5V2ViXEFwaVJlc3BvbnNlSGVscGVyczsKdXNlIEFwcFxOb3RpZmljYXRpb25zXFRhc2tEdWU7CnVzZSBBdXRoOwp1c2UgSWxsdW1pbmF0ZVxIdHRwXEpzb25SZXNwb25zZTsKCmNsYXNzIFRhc2tDb250cm9sbGVyIGV4dGVuZHMgQXBpQ29udHJvbGxlcgp7CiAgdXNlIEFwaVJlc3BvbnNlSGVscGVyczsKCiAgcHVibGljIGZ1bmN0aW9uIGluZGV4KFByb2plY3QgJHByb2plY3QsUmVxdWVzdCAkcmVxdWVzdCxUYXNrU2VydmljZSAkdGFza1NlcnZpY2UpOiBKc29uUmVzcG9uc2UKICB7CiAgICAkdGhpcy0+YXV0aG9yaXplKCdhY2Nlc3MnLCAkcHJvamVjdCk7CgogICAgJGlzQXJjaGl2ZWQgPSAoJHJlcXVlc3QtPnF1ZXJ5KCdyZXF1ZXN0JykgPT09ICdhcmNoaXZlZCcpID8gdHJ1ZSA6IGZhbHNlOwoKICAgICR0YXNrc0RhdGEgPSAkdGFza1NlcnZpY2UtPmdldFRhc2tzRGF0YSgkcHJvamVjdCwgJGlzQXJjaGl2ZWQpOwoKICAgIHJldHVybiAkdGhpcy0+cmVzcG9uZFdpdGhTdWNjZXNzKCR0YXNrc0RhdGEpOwogIH0KCiAgcHVibGljIGZ1bmN0aW9uIHN0b3JlKFByb2plY3QgJHByb2plY3QsVGFza1JlcXVlc3QgJHJlcXVlc3QsVGFza1NlcnZpY2UgJHRhc2tTZXJ2aWNlKTogSnNvblJlc3BvbnNlCiAgewogICAgJHRoaXMtPmF1dGhvcml6ZSgnYWNjZXNzJywkcHJvamVjdCk7CgogICAgJHRhc2tTZXJ2aWNlLT5jaGVja0xpbWl0cygkcHJvamVjdCk7CgogICAgJHRhc2s9JHByb2plY3QtPnRhc2tzKCktPmZpcnN0T3JDcmVhdGUoJHJlcXVlc3QtPnZhbGlkYXRlZCgpK1sndXNlcl9pZCcgPT4gQXV0aDo6aWQoKV0pOwoKICAgICR0YXNrU2VydmljZS0+c2VuZE5vdGlmaWNhdGlvbigkcHJvamVjdCk7CgogICAgJHRhc2stPmxvYWQoJ3N0YXR1cycpOyAgIAoKICAgIHJldHVybiAkdGhpcy0+cmVzcG9uZENyZWF0ZWQoWwogICAgICAnbWVzc2FnZSc9PidUYXNrIGFkZGVkIFN1Y2Nlc3NmdWxseScsCiAgICAgICd0YXNrJz0+bmV3IFRhc2tSZXNvdXJjZSgkdGFzayksCiAgICBdKTsKICB9CgogIHB1YmxpYyBmdW5jdGlvbiB1cGRhdGUoUHJvamVjdCAkcHJvamVjdCxUYXNrICR0YXNrLFRhc2tVcGRhdGUgJHJlcXVlc3QsVGFza1NlcnZpY2UgJHRhc2tTZXJ2aWNlKQogIHsgIAogICAgJHRoaXMtPmF1dGhvcml6ZSgndGFza2FjY2VzcycsJHRhc2spOwoKICAgICR0YXNrU2VydmljZS0+dXBkYXRlVmFsaWRhdGlvbigkcmVxdWVzdCwkdGFzayk7CgogICAgIERCOjp0cmFuc2FjdGlvbihmdW5jdGlvbiAoKSB1c2UgKCR0YXNrLCAkcmVxdWVzdCwgJHRhc2tTZXJ2aWNlKQogICAgIHsgICAgCiAgICAgICAgJHRhc2tTZXJ2aWNlLT51cGRhdGVTdGF0dXMoJHRhc2ssICRyZXF1ZXN0LT52YWxpZGF0ZWQoJ3N0YXR1c19pZCcpKTsKCiAgICAgICAgJHRhc2stPnVwZGF0ZSgkcmVxdWVzdC0+dmFsaWRhdGVkKCkpOwogICAgfSk7CgogICAgICAgJHRhc2tTZXJ2aWNlLT5zZXREdWVEYXRlKCRyZXF1ZXN0LCR0YXNrKTsKICAgCiAgICByZXR1cm4gJHRoaXMtPnJlc3BvbmRXaXRoU3VjY2VzcyhbCiAgICAgICAgJ21lc3NhZ2UnID0+ICdUYXNrIFVwZGF0ZWQgU3VjY2Vzc2Z1bGx5JywKICAgICAgICAndGFzaycgPT4gbmV3IFRhc2tSZXNvdXJjZSgkdGFzayksCiAgICBdKTsKICB9CgogIHB1YmxpYyBmdW5jdGlvbiBkZXN0cm95KFByb2plY3QgJHByb2plY3QsVGFzayAkdGFzaykKICB7CiAgICAkdGhpcy0+YXV0aG9yaXplKCd0YXNrYWxsb3cnLCR0YXNrKTsKCiAgICAgJHRhc2stPmFjdGl2aXRpZXMoKS0+ZGVsZXRlKCk7CgogICAgICR0YXNrLT5mb3JjZURlbGV0ZSgpOyAgCgogICAgIHJldHVybiAkdGhpcy0+cmVzcG9uZE5vQ29udGVudChbJ21lc3NhZ2UnPT4nVGFzayBkZWxldGVkIHN1Y2Nlc3NmdWxseSddKTsKICB9Cgp9CgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADiBgAAAAAAAAAAAAA",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAA8EAAAAAAAADwQAAAAAAAAAAAAAAADwvw"
+>>>>>>> master
 				]
 			]
 		},
 		{
+<<<<<<< HEAD
 			"file": "/C/laragon/www/profresh/app/Http/Controllers/Api/TaskFeaturesController.php",
 			"settings":
 			{
 				"buffer_size": 2834,
 				"encoding": "UTF-8",
+=======
+			"contents": "<?php\n\nnamespace App\\Http\\Controllers\\Api;\n\nuse App\\Http\\Controllers\\Controller;\nuse Illuminate\\Http\\Request;\nuse App\\Models\\Project;\nuse App\\Models\\Task;\nuse App\\Models\\User;\nuse App\\Services\\TaskService;\nuse App\\Repository\\TaskRepository;\nuse App\\Http\\Resources\\TaskResource;\nuse App\\Http\\Requests\\TaskMembersRequest;\nuse Illuminate\\Support\\Facades\\Gate;\nuse F9Web\\ApiResponseHelpers;\nuse Illuminate\\Support\\Facades\\DB;\nuse App\\Http\\Resources\\UsersResource;\nuse Illuminate\\Validation\\ValidationException;\nuse App\\Rules\\TaskAssigneeMember;\nuse Illuminate\\Http\\JsonResponse;\n\nclass TaskFeaturesController extends Controller\n{\n    use ApiResponseHelpers;\n\n    public function assign(Project $project,Task $task,TaskMembersRequest $request,TaskService $service)\n    {\n        Gate::authorize('archive-task', $task);\n\n       $members=$request->members;\n\n       DB::transaction(function () use ($task, $members, $service, $request, $project) {\n       $task->assignee()->syncWithoutDetaching($members);\n       $service->notifyAssignees($request,$task,$project);\n       });\n\n    return $this->respondWithSuccess([\n        'message' => 'Task assigned to member Successfully',\n        'taskMembers' =>  UsersResource::collection($task->assignee),\n    ]);\n    }\n\n    public function unassign(Project $project,Task $task,Request $request)\n    {       \n        Gate::authorize('archive-task', $task);\n\n        $request->validate([\n        'member' => ['required', 'exists:users,id', \n               new TaskAssigneeMember($task)],\n        ]);\n\n    $task->assignee()->detach($request->member);\n\n    $user= User::find($request->member);\n\n    return $this->respondWithSuccess([\n        'message' => 'Task member Unassigned',\n        'member' => new UsersResource($user),\n    ]);\n    }\n\n    public function archive(Project $project,Task $task)\n    {\n      Gate::authorize('archive-task', $task);\n\n      DB::transaction(function () use ($task) {     \n        $task->delete();\n        $task->activities()->update(['is_hidden' => true]);\n      });\n\n      return $this->respondWithSuccess([\n        'message' => 'Project task archived successfully',\n        'members' => new TaskResource($task),\n      ]);\n\n    }\n\n     public function unarchive(Project $project,Task $task)\n     {\n        DB::transaction(function () use ($task) { \n        $task->restore();\n        $task->activities()->update(['is_hidden' => false]);\n        });\n\n       return $this->respondWithSuccess([\n        'message' => 'Project task unArchived successfully',\n        'task' => new TaskResource($task),\n    ]);\n    }\n    \n    public function search(Project $project,Task $task,Request $request,TaskRepository $repository)\n    { \n      $searchResults = $repository->searchMembers($request,$project,$task);\n\n      return UsersResource::collection($searchResults);\n    }\n\n    \n}\n\n\n",
+			"file": "/C/laragon/www/profresh/app/Http/Controllers/Api/TaskFeaturesController.php",
+			"file_size": 2834,
+			"file_write_time": 133398719999851885,
+			"settings":
+			{
+				"buffer_size": 2834,
+>>>>>>> master
 				"line_ending": "Unix"
 			},
 			"undo_stack":
@@ -802,7 +995,11 @@
 						"characters": "\n\n"
 					},
 					"BQAAAFEDAAAAAAAAUgMAAAAAAAAAAAAAUgMAAAAAAABZAwAAAAAAAAAAAABZAwAAAAAAAFoDAAAAAAAAAAAAAFoDAAAAAAAAYQMAAAAAAAAAAAAAUgMAAAAAAABSAwAAAAAAAAcAAAAgICAgICAg",
+<<<<<<< HEAD
 					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAABRAwAAAAAAAFEDAAAAAAAAAAAAAAAA8L8"
+=======
+					"BQAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvwAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAABRAwAAAAAAAFEDAAAAAAAAAAAAAAAA8L8"
+>>>>>>> master
 				],
 				[
 					19,
@@ -810,7 +1007,11 @@
 					"paste",
 					null,
 					"AQAAAFoDAAAAAAAArAMAAAAAAAAAAAAA",
+<<<<<<< HEAD
 					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAABaAwAAAAAAAFoDAAAAAAAAAAAAAAAA8L8"
+=======
+					"BQAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvwAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAABaAwAAAAAAAFoDAAAAAAAAAAAAAAAA8L8"
+>>>>>>> master
 				],
 				[
 					20,
@@ -818,7 +1019,11 @@
 					"left_delete",
 					null,
 					"AQAAAKsDAAAAAAAAqwMAAAAAAAABAAAACg",
+<<<<<<< HEAD
 					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAACsAwAAAAAAAKwDAAAAAAAAAAAAAAAA8L8"
+=======
+					"BQAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvwAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAACsAwAAAAAAAKwDAAAAAAAAAAAAAAAA8L8"
+>>>>>>> master
 				],
 				[
 					25,
@@ -828,7 +1033,11 @@
 						"characters": "\n"
 					},
 					"AgAAACIEAAAAAAAAIwQAAAAAAAAAAAAAIwQAAAAAAAAqBAAAAAAAAAAAAAA",
+<<<<<<< HEAD
 					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAiBAAAAAAAACIEAAAAAAAAAAAAAAAA8L8"
+=======
+					"BQAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvwAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAiBAAAAAAAACIEAAAAAAAAAAAAAAAA8L8"
+>>>>>>> master
 				],
 				[
 					26,
@@ -836,7 +1045,11 @@
 					"paste",
 					null,
 					"AQAAACoEAAAAAAAALgQAAAAAAAAAAAAA",
+<<<<<<< HEAD
 					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAqBAAAAAAAACoEAAAAAAAAAAAAAAAA8L8"
+=======
+					"BQAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvwAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAqBAAAAAAAACoEAAAAAAAAAAAAAAAA8L8"
+>>>>>>> master
 				],
 				[
 					28,
@@ -844,7 +1057,11 @@
 					"left_delete",
 					null,
 					"AQAAAOcDAAAAAAAA5wMAAAAAAAABAAAACg",
+<<<<<<< HEAD
 					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAADoAwAAAAAAAOgDAAAAAAAAAAAAAAAAAAA"
+=======
+					"BQAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvwAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAADoAwAAAAAAAOgDAAAAAAAAAAAAAAAAAAA"
+>>>>>>> master
 				],
 				[
 					30,
@@ -852,7 +1069,11 @@
 					"left_delete",
 					null,
 					"AQAAAKsDAAAAAAAAqwMAAAAAAAABAAAACg",
+<<<<<<< HEAD
 					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAACsAwAAAAAAAKwDAAAAAAAAAAAAAAAAAAA"
+=======
+					"BQAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvwAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAACsAwAAAAAAAKwDAAAAAAAAAAAAAAAAAAA"
+>>>>>>> master
 				],
 				[
 					32,
@@ -860,7 +1081,11 @@
 					"left_delete",
 					null,
 					"AQAAACsEAAAAAAAAKwQAAAAAAAABAAAACg",
+<<<<<<< HEAD
 					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAsBAAAAAAAACwEAAAAAAAAAAAAAAAwfUA"
+=======
+					"BQAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvwAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAsBAAAAAAAACwEAAAAAAAAAAAAAAAwfUA"
+>>>>>>> master
 				]
 			]
 		}
@@ -922,16 +1147,22 @@
 		"/C/laragon/www/profresh/app",
 		"/C/laragon/www/profresh/app/Actions",
 		"/C/laragon/www/profresh/app/Console",
+<<<<<<< HEAD
 		"/C/laragon/www/profresh/app/Console/Commands",
+=======
+>>>>>>> master
 		"/C/laragon/www/profresh/app/Enums",
 		"/C/laragon/www/profresh/app/Events",
 		"/C/laragon/www/profresh/app/Exports",
 		"/C/laragon/www/profresh/app/Http",
+<<<<<<< HEAD
 		"/C/laragon/www/profresh/app/Http/Controllers",
 		"/C/laragon/www/profresh/app/Http/Controllers/Api",
 		"/C/laragon/www/profresh/app/Http/Controllers/Api/Auth",
 		"/C/laragon/www/profresh/app/Http/Requests",
 		"/C/laragon/www/profresh/app/Http/Resources",
+=======
+>>>>>>> master
 		"/C/laragon/www/profresh/app/Jobs",
 		"/C/laragon/www/profresh/app/Listeners",
 		"/C/laragon/www/profresh/app/Models",
@@ -939,7 +1170,10 @@
 		"/C/laragon/www/profresh/app/Policies",
 		"/C/laragon/www/profresh/app/Providers",
 		"/C/laragon/www/profresh/app/Repository",
+<<<<<<< HEAD
 		"/C/laragon/www/profresh/app/Rules",
+=======
+>>>>>>> master
 		"/C/laragon/www/profresh/app/Services",
 		"/C/laragon/www/profresh/app/Traits",
 		"/C/laragon/www/profresh/bootstrap",
@@ -949,6 +1183,7 @@
 		"/C/laragon/www/profresh/database/seeders",
 		"/C/laragon/www/profresh/resources",
 		"/C/laragon/www/profresh/resources/js",
+<<<<<<< HEAD
 		"/C/laragon/www/profresh/resources/js/components",
 		"/C/laragon/www/profresh/resources/js/components/Authentication",
 		"/C/laragon/www/profresh/resources/js/components/Dashboard",
@@ -960,6 +1195,8 @@
 		"/C/laragon/www/profresh/resources/js/mixins",
 		"/C/laragon/www/profresh/resources/js/store",
 		"/C/laragon/www/profresh/resources/js/utils",
+=======
+>>>>>>> master
 		"/C/laragon/www/profresh/resources/sass",
 		"/C/laragon/www/profresh/routes",
 		"/C/laragon/www/profresh/routes/api",
@@ -1298,14 +1535,21 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
+<<<<<<< HEAD
 					"stack_index": 2,
+=======
+					"stack_index": 3,
+>>>>>>> master
 					"stack_multiselect": false,
 					"type": "text"
 				},
 				{
 					"buffer": 1,
 					"file": "/C/laragon/www/profresh/app/Notifications/TaskDue.php",
+<<<<<<< HEAD
 					"selected": true,
+=======
+>>>>>>> master
 					"semi_transient": false,
 					"settings":
 					{
@@ -1316,8 +1560,13 @@
 						"selection":
 						[
 							[
+<<<<<<< HEAD
 								98,
 								98
+=======
+								5,
+								5
+>>>>>>> master
 							]
 						],
 						"settings":
@@ -1330,25 +1579,74 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
+<<<<<<< HEAD
 					"stack_index": 0,
+=======
+					"stack_index": 1,
+>>>>>>> master
 					"stack_multiselect": false,
 					"type": "text"
 				},
 				{
 					"buffer": 2,
+<<<<<<< HEAD
 					"file": "/C/laragon/www/profresh/app/Http/Controllers/Api/TaskController.php",
 					"semi_transient": false,
 					"settings":
 					{
 						"buffer_size": 2209,
+=======
+					"file": "/C/laragon/www/profresh/app/Http/Requests/TaskUpdate.php",
+					"selected": true,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1451,
+>>>>>>> master
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
+<<<<<<< HEAD
 								1039,
 								1039
+=======
+								1107,
+								1107
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 1207.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"stack_multiselect": false,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "/C/laragon/www/profresh/app/Http/Controllers/Api/TaskController.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1762,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+>>>>>>> master
 							]
 						],
 						"settings":
@@ -1358,15 +1656,26 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
+<<<<<<< HEAD
 						"translation.y": 1044.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 1,
+=======
+						"translation.y": 1.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+>>>>>>> master
 					"stack_multiselect": false,
 					"type": "text"
 				},
 				{
+<<<<<<< HEAD
 					"buffer": 3,
+=======
+					"buffer": 4,
+>>>>>>> master
 					"file": "/C/laragon/www/profresh/app/Http/Controllers/Api/TaskFeaturesController.php",
 					"semi_transient": false,
 					"settings":
@@ -1392,7 +1701,11 @@
 						"translation.y": 536.0,
 						"zoom_level": 1.0
 					},
+<<<<<<< HEAD
 					"stack_index": 3,
+=======
+					"stack_index": 4,
+>>>>>>> master
 					"stack_multiselect": false,
 					"type": "text"
 				}

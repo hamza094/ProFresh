@@ -71,8 +71,6 @@ Route::controller(MessageController::class)->group(function(){
 })->middleware('subscription');
 
 
-//Task Routes
-
 Route::apiResource('/tasks', TaskController::class)->withTrashed()->except(['show']);
 //->middleware('subscription');
 

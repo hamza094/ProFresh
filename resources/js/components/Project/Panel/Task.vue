@@ -54,7 +54,6 @@
   import TaskModal from './Modal.vue';
   import { mapMutations, mapActions, mapState } from 'vuex';
   //import SubscriptionCheck from '../../SubscriptionChecker.vue';
-
   export default {
     components:{TaskModal},
     props:['slug','access'],
