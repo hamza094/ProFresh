@@ -15,7 +15,7 @@ __webpack_require__.r(__webpack_exports__);
       form: {
         stage_id: 1,
         tasks: [{
-          body: ''
+          title: ''
         }]
       },
       stages: [],
@@ -40,12 +40,12 @@ __webpack_require__.r(__webpack_exports__);
     },
     addTask: function addTask() {
       this.form.tasks.push({
-        body: ''
+        title: ''
       });
     },
     removeTask: function removeTask() {
       this.form.tasks.pop({
-        body: ''
+        title: ''
       });
     },
     projectSubmit: function projectSubmit() {
@@ -55,7 +55,7 @@ __webpack_require__.r(__webpack_exports__);
         _this2.form = "";
         _this2.closePanel();
         setTimeout(function () {
-          _this2.$router.push('/projects/' + response.data.slug);
+          _this2.$router.push('/projects/' + response.data.project.slug);
         }, 3000);
       })["catch"](function (error) {
         if (error.response.data.message.includes('The tasks.')) {
@@ -238,8 +238,8 @@ var render = function render() {
       directives: [{
         name: "model",
         rawName: "v-model",
-        value: task.body,
-        expression: "task.body"
+        value: task.title,
+        expression: "task.title"
       }],
       staticClass: "form-control model-input mb-2",
       attrs: {
@@ -248,12 +248,12 @@ var render = function render() {
         name: "task"
       },
       domProps: {
-        value: task.body
+        value: task.title
       },
       on: {
         input: function input($event) {
           if ($event.target.composing) return;
-          _vm.$set(task, "body", $event.target.value);
+          _vm.$set(task, "title", $event.target.value);
         }
       }
     });

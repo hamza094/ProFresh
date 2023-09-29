@@ -28,8 +28,14 @@ class UserTest extends TestCase
    /** @test */
     public function auth_user_see_all_users()
     {
-      $this->getJson('/api/v1/users')
-            ->assertSee($this->user->name);
+      $response=$this->getJson('/api/v1/users');
+
+        $response->assertStatus(200)
+                 ->assertJsonFragment([
+                  'id'=>$this->user->id,
+                  'name'=>$this->user->name
+               ]);
+      
     }
 
      /** @test */

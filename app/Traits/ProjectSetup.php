@@ -25,11 +25,13 @@ trait ProjectSetup
        $this->user,
    );
 
+   $this->status = TaskStatus::factory()->create();
+
    $this->project = Project::factory()->for($this->user)->create();
 
-    if ($this instanceof \Tests\Feature\TaskTest) {
-            $this->status = TaskStatus::factory()->create();
-        }
+    //if ($this instanceof \Tests\Feature\TaskTest) {
+            //$this->status = TaskStatus::factory()->create();
+        //}
 
    $middlewaresToRemove = [
             \App\Http\Middleware\CheckSubscription::class,

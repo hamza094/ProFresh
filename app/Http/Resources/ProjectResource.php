@@ -42,11 +42,12 @@ class ProjectResource extends JsonResource
           'deleted_at'=>$this->when(!empty($this->deleted_at),
                      fn()=>$this->deleted_at->diffforHumans()),
 
-          'stage_updated_at'=>$this->stage_updated_at
-                 ->format(config('app.date_formats.exact')),
+          'stage_updated_at'=>$this->when(!empty($this->stage_updated_at),
+               fn()=>$this->stage_updated_at
+                 ->format(config('app.date_formats.exact'))),
 
           'days_limit'=>config('app.project.abandonedLimit'),
-
+          
           'activities'=>ActivityResource::collection($this->getLimitedActivities()),
         ];
     }

@@ -12,6 +12,7 @@ use App\Http\Requests\ProjectStoreRequest;
 use App\Services\ProjectService;
 use App\Repository\ProjectRepository;
 use App\Http\Resources\ProjectResource;
+use App\Http\Resources\ProjectsResource;
 use Illuminate\Support\Facades\DB;
 use F9Web\ApiResponseHelpers;
 use Illuminate\Http\JsonResponse;
@@ -22,7 +23,6 @@ class ProjectController extends ApiController
 
   public function store(ProjectStoreRequest $request,ProjectService $service): JsonResponse
   {
-
     DB::beginTransaction();
 
     try{
@@ -43,8 +43,7 @@ class ProjectController extends ApiController
 
     return $this->respondCreated([
       'message'=>'Project Created Successfully',
-      'path'=>$project->path(),
-      'slug'=>$project->slug
+      'project'=>new ProjectsResource($project),
     ]);
   }
 

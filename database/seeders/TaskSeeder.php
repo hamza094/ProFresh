@@ -23,7 +23,7 @@ class TaskSeeder extends Seeder
         $projects->each(function ($project){
               $user_id = $project->user->id;
 
-            Task::factory()->count(2)->create([
+            Task::factory()->count(6)->create([
               'project_id'=>$project->id,
               'user_id'=>$user_id,
             ]);

@@ -9,7 +9,10 @@ use App\Enums\ScoreValue;
 use App\Actions\ScoreAction;
 use App\Models\Task;
 use App\Models\User;
+use App\Models\TaskStatus;
 use App\Models\Project;
+use Laravel\Sanctum\Sanctum;
+use Illuminate\Support\Facades\Hash;
 
 class ProjectTest extends TestCase
 {
@@ -60,7 +63,10 @@ class ProjectTest extends TestCase
   /** @test */
    public function a_project_can_add_a_task()
    {
-     $project=Project::factory()->create();
+      $user=User::factory()->create();
+      Sanctum::actingAs($user);
+      $status=TaskStatus::factory()->create();
+     $project=Project::factory()->create(['user_id'=>$user->id]);
      $project->addTask('run berry run');
      $this->assertCount(1,$project->tasks);
   }
@@ -83,6 +89,7 @@ class ProjectTest extends TestCase
   /** @test */
   public function get_project_total_score()
   {
+    $status=TaskStatus::factory()->create();
     $project = Project::factory()->create();
 
     Task::factory()->for($project)->count(4)->create();
@@ -101,6 +108,7 @@ class ProjectTest extends TestCase
   /** @test */
   public function check_project_status()
   {
+    $status=TaskStatus::factory()->create();
     $project = Project::factory()->create();
 
     Task::factory()->for($project)->count(4)->create();
