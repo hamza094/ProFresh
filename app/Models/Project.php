@@ -80,7 +80,7 @@ class Project extends Model
     {
        return $this->tasks()->create([
          'title'=> $tasks,
-         'user_id'=>$this->user->id,
+         'user_id'=>auth()->id(),
        ]);
     }
 

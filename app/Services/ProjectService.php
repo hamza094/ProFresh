@@ -40,17 +40,21 @@ class ProjectService
 
     if($filteredTasks){
      request()->validate([
-        'tasks.*.body' => ['sometimes','max:55','min:5'],
-      ]); 
+        'tasks.*.title' => ['sometimes','max:55','min:5'],
+      ]);
 
-    $project->addTasks($filteredTasks);
+     $tasksWithUser = $filteredTasks->map(function ($task){
+        return array_merge($task, ['user_id' => auth()->id()]);
+      });
+
+    $project->addTasks($tasksWithUser);
     }
   }
 
    private function getFilteredTasks($tasks)
    {
      return collect($tasks)->filter(function ($value, $key) {
-         return !empty($value['body']);
+         return !empty($value['title']);
     });      
   }
 

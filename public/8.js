@@ -1,6 +1,5 @@
 (window["webpackJsonp"] = window["webpackJsonp"] || []).push([[8],{
 
-<<<<<<< HEAD
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Project/Feature/Schedule.vue?vue&type=script&lang=js&":
 /*!***********************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Project/Feature/Schedule.vue?vue&type=script&lang=js& ***!
@@ -236,7 +235,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_Schedule_vue_vue_type_template_id_83b4c31e___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
-throw new Error("Module parse failed: Unexpected token (2:16)\nYou may need an appropriate loader to handle this file type, currently no loaders are configured to process this file. See https://webpack.js.org/concepts#loaders\n| {\n> \t\"auto_complete\":\n| \t{\n| \t\t\"selected_items\":");
 
 /***/ })
 

@@ -75,7 +75,7 @@ class NotificationsTest extends TestCase
  
     $this->addMember($this->project,$user);
 
-    $this->postJson($this->project->path().'/task',['body'=>'new task added']);
+    $this->postJson($this->project->path().'/tasks',['title'=>'new task added']);
 
     Notification::assertSentTo($user, ProjectTask::class);    
   }

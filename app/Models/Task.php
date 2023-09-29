@@ -30,8 +30,6 @@ class Task extends Model
     });
   }
 
-
-
   //protected static $recordableEvents = ['created','updated'];
 
   public function path()
@@ -74,5 +72,4 @@ class Task extends Model
         ->where('due_at', '>=', now())
         ->where('notify_sent', false);
     }
-
 }

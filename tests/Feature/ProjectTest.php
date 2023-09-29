@@ -34,14 +34,15 @@ class ProjectTest extends TestCase
        ]);
 
        $attributes['tasks']=[
-           ['body'=>'task 1'],
-           ['body'=>'task 2']
+        [
+          'title'=>'task 1',
+        ],
+           ['title'=>'task 2']
         ];
 
        $response=$this->postJson('api/v1/projects',$attributes);
-
-       $project=Project::where('slug','=',$response['slug'])
-                ->firstOrFail();
+        
+       $project = Project::where('slug', '=', $response->json('project.slug'))->firstOrFail();       
 
        $this->assertCount(2,$project->tasks);
     }
@@ -64,13 +65,13 @@ class ProjectTest extends TestCase
         'about'=>'about this project',
         'stage_id'=>1,
          'tasks' => [
-             ['body' => str_repeat('a', 56)],
-             ['body' => ''],
+             ['title' => str_repeat('a', 56)],
+             ['title' => ''],
          ],
        ]);
 
-        $response->assertJsonValidationErrors('tasks.0.body');
-        $response->assertJsonValidationErrors('tasks.1.body');
+        $response->assertJsonValidationErrors('tasks.0.title');
+        $response->assertJsonValidationErrors('tasks.1.title');
     }
 
      /** @test */

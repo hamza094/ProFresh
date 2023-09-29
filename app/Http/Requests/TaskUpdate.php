@@ -51,7 +51,7 @@ class TaskUpdate extends FormRequest
             return $query->where('project_id', $project->id);
         }),
         ],
-            'description' => 'sometimes|max:350',
+            'description' => 'sometimes|max:1000',
             'due_at' => 'sometimes|date|required_with:notified',
             'status_id'=>'required|sometimes',
             'notified'=>[

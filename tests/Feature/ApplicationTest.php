@@ -10,6 +10,7 @@ use App\Traits\ProjectSetup;
 use Laravel\Sanctum\Sanctum;
 use App\Exports\ProjectsExport;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
@@ -20,8 +21,8 @@ class ApplicationTest extends TestCase
      /** @test */
    public function only_allowed_users_can_access_project_features
      (){
-       $this->withoutExceptionHandling()->postJson($this->project->path().'/task',
-          ['body' => 'My Project Task'])->assertCreated();
+       $this->withoutExceptionHandling()->postJson($this->project->path().'/tasks',
+          ['title' => 'My Project Task'])->assertCreated();
 
           $this->project->invite($user=User::factory()->create());
 
@@ -29,17 +30,15 @@ class ApplicationTest extends TestCase
 
          $this->getJson($this->project->path().'/accept-invitation')->assertOk();
 
-         $this->postJson($this->project->path().'/task',
-          ['body' => 'My Project Task Updated'])->assertCreated();
+         $this->postJson($this->project->path().'/tasks',
+          ['title' => 'My Project Task Updated'])->assertCreated();
 
          Sanctum::actingAs(User::factory()->create());
 
-         $response=$this->postJson($this->project->path().'/task',
-            ['body' => 'My Project Task Updated'])
-            ->assertForbidden()
-            ->assertJson([
-              'message'=>"Only Project's owner and members are allowed to access this feature.",
-            ]);
+         $this->expectException(AuthorizationException::class);
+
+         $response=$this->postJson($this->project->path().
+            '/tasks' );
     }
 
     /** @test */

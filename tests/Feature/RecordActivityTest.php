@@ -66,30 +66,30 @@ class RecordActivityTest extends TestCase
    /** @test */
    public function record_on_creating_task()
    {
-    $task = $this->project->addTask('test task');
+    $task = $this->project->addTask('Test Task');
 
     $this->assertCount(2, $this->project->activities);
     $activity = $this->project->activities->last();
 
     $this->assertEquals('created_task', $activity->description);
     $this->assertInstanceOf(Task::class, $activity->subject);
-    $this->assertEquals('test task', $activity->subject->body);
+    $this->assertEquals('Test Task', $activity->subject->title);
   }
 
    /** @test */
    public function record_on_updating_task()
    {
      $task=$this->project->addTask('test task');
-     $body=$task->body;
+     $title=$task->title;
 
-     $this->putJson($task->path(), ['body' => 'changed']);
+     $this->putJson($task->path(), ['title' => 'changed']);
 
      $activity = $this->project->activities->last();
      $this->assertEquals('updated_task',$activity->description);
 
      $this->assertEquals([
-          'before' => ['body' => $body,'completed'=>false],
-          'after' =>  ['body' => 'changed']
+          'before' => ['title' => $title],
+          'after' =>  ['title' => 'changed']
       ], $activity->changes);
   }
 

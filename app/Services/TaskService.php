@@ -12,9 +12,12 @@ use Auth;
 use App\Http\Resources\TaskResource;
 use App\Notifications\ProjectTask;
 use Illuminate\Validation\ValidationException;
+use F9Web\ApiResponseHelpers;
+use Illuminate\Http\JsonResponse;
 
 class TaskService
 { 
+    use ApiResponseHelpers;
 
   public function getTasksData(Project $project, bool $isArchived): array
     {

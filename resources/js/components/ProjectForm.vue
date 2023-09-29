@@ -35,7 +35,7 @@
                     <label for="Tasks" class="label-name">Need Some Tasks?:
                     <span class="text-danger font-italic" v-if="taskError"> {{this.taskError}}</span>
                     </label>
-                    <input type="text" class="form-control model-input mb-2" placeholder="Task..." name="task" v-for="task in form.tasks" v-model="task.body"> 
+                    <input type="text" class="form-control model-input mb-2" placeholder="Task..." name="task" v-for="task in form.tasks" v-model="task.title"> 
                     <button type="btn" class="btn btn-primary btn-sm" v-if="form.tasks && form.tasks.length < 3" @click.prevent="addTask"><i class="fas fa-plus-circle"></i> Add new Task Field
                     </button>
                      <button v-if="form.tasks && form.tasks.length > 1" type="btn" class="btn btn-danger btn-sm" @click.prevent="removeTask"><i class="fa fa-minus-circle" aria-hidden="true"></i> Remove Task Field
@@ -56,7 +56,6 @@
                             <button class="btn panel-btn_save" @click.prevent="projectSubmit">Save</button>
                         </div>
                     </div>
-
                 </form>
         </div>
     </div>
@@ -68,7 +67,7 @@ export default{
            form:{
             stage_id:1,
             tasks:[
-             {body:''}
+             {title:''}
             ]
            },
            stages:[],
@@ -92,10 +91,10 @@ export default{
                  });
             },
         addTask(){
-          this.form.tasks.push({body:''});
+          this.form.tasks.push({title:''});
       },
       removeTask(){
-        this.form.tasks.pop({body:''});
+        this.form.tasks.pop({title:''});
       },   
         projectSubmit(){
          axios.post('/api/v1/projects',this.form)
@@ -104,7 +103,7 @@ export default{
                this.form="";
                 this.closePanel();
                 setTimeout(()=>{
-                this.$router.push('/projects/'+response.data.slug);
+                this.$router.push('/projects/'+response.data.project.slug);
                 },3000)
 
             }).catch(error=>{
