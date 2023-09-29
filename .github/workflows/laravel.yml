@@ -23,10 +23,11 @@ jobs:
       - name: Clear Composer Cache
         run: composer clear-cache   # Add this step to clear Composer's cache
 
-     - name: Install Dependencies (Verbose)
-       run: |
-        set -e  # Enable error trapping
-         composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist -vvv || (echo "Composer install failed" && exit 1)
+      - name: Install Dependencies (Verbose)
+        run: |
+          set -e  # Enable error trapping
+          composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist -vvv || (echo "Composer install failed" && exit 1)
+
       - name: Generate key
         run: php artisan key:generate
 
