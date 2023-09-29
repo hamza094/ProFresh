@@ -26,7 +26,7 @@ jobs:
       - name: Install Dependencies (Verbose)
         run: |
           set -e  # Enable error trapping
-          composer update -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist -vvv || (echo "Composer update failed" && exit 1)
+          composer update -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist -vvv --ignore-platform-reqs || (echo "Composer update failed" && exit 1)
 
       - name: Generate key
         run: php artisan key:generate
