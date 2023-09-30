@@ -49,6 +49,7 @@ class TaskAssigned extends Notification implements ShouldBroadcast
     public function toMail($notifiable)
     {
         return (new MailMessage)
+                   ->from('ProFresh@live.com', 'ProFresh')
                     ->line($this->user->name.' has assigned you a task: "'.$this->task->title. '" This is regarding the project '. $this->project->name)
                     ->action('Notification Action', url('/'))
                     ->line('Thank you for using our application!');
