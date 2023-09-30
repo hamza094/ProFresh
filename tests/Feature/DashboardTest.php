@@ -18,7 +18,7 @@ class DashboardTest extends TestCase
        $projects=Project::factory()->count(3)->for($this->user)
                  ->create();
 
-       $response=$this->withoutExceptionHandling()->getJson('/api/v1/user/projects');
+       $response=$this->getJson('/api/v1/user/projects');
 
        $response
         ->assertOk()
@@ -30,8 +30,7 @@ class DashboardTest extends TestCase
        $this->deleteJson($this->project->path());
 
        $response=$this->getJson('/api/v1/user/projects?abandoned=true')
-        ->assertSee($this->project->name)
-        ->assertOk();
+       ->assertOk();
 
         $response->assertJson([
             'projects'=>[0=>['name'=>$this->project->name]],

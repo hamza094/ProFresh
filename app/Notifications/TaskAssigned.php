@@ -35,7 +35,7 @@ class TaskAssigned extends Notification implements ShouldBroadcast
      * @param  mixed  $notifiable
      * @return array
      */
-    public function via($notifiable,)
+    public function via($notifiable)
     {
         return ['mail','database','broadcast'];
     }
