@@ -13,7 +13,7 @@ use App\Http\Controllers\Api\
   NotificationsController,
   AvatarController,
   ConversationController,
-  DashboardController,
+  ProjectDashboardController,
   UserController,
   WelcomeController,
   StageController,
@@ -114,7 +114,7 @@ Route::apiResource('/users',UserController::class);
 Route::get('users/search', [InvitationController::class,'search']);
 
 //Dashboard Routes
-Route::get('/user/projects',[DashboardController::class,'userprojects']);
+Route::get('/user/projects',[ProjectDashboardController::class,'userprojects']);
 
 Route::group(['prefix' => 'users/{user}'], function() {
 

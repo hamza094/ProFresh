@@ -28,9 +28,6 @@ jobs:
           set -e  # Enable error trapping
           composer update -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist -vvv --ignore-platform-reqs || (echo "Composer update failed" && exit 1)
 
-      - name: Dump Composer Autoload
-        run: composer dump-autoload  
-        
       - name: Generate key
         run: php artisan key:generate
 
