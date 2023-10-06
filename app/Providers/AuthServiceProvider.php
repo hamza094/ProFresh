@@ -29,8 +29,6 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->registerPolicies();
-
     Gate::define('archive-task', function ($user, Task $task) {
     return $task->trashed()
         ? throw ValidationException::withMessages(['task' => 'Task is archived. Activate the task to proceed.'])
