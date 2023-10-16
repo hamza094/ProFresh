@@ -15,9 +15,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Modal_TaskDescription_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Modal/TaskDescription.vue */ "./resources/js/components/Project/Panel/Modal/TaskDescription.vue");
 /* harmony import */ var _Modal_TaskMembers_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Modal/TaskMembers.vue */ "./resources/js/components/Project/Panel/Modal/TaskMembers.vue");
 /* harmony import */ var _mixins_modalClose__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../mixins/modalClose */ "./resources/js/mixins/modalClose.js");
-function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
 function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
 function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
@@ -36,18 +36,20 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
   props: ['slug', 'state', 'projectMembers'],
   data: function data() {
     return {
-      currentDate: new Date(),
+      currentDate: new Date().toUTCString(),
+      dateTime: new Date(),
       maxdateTime: null,
       memberPop: false,
       datePop: false,
       isEditable: false,
       due: '',
-      model: {}
+      model: {},
+      auth: this.$store.state.currentUser.user
     };
   },
   computed: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapState"])('SingleTask', ['task', 'errors', 'form', 'statuses', 'due_notifies'])), {}, {
     modifiedDate: function modifiedDate() {
-      var modifiedDate = new Date(this.currentDate.getTime() + 30 * 60000);
+      var modifiedDate = new Date(this.dateTime.getTime() + 30 * 60000);
       return modifiedDate.toISOString();
     },
     remainingTime: function remainingTime() {
@@ -56,9 +58,13 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
   }),
   created: function created() {
     var _this = this;
+    window.addEventListener('beforeunload', this.handleBeforeUnload);
     this.$bus.on('close-members-popup', function () {
       _this.memberPop = false;
     });
+  },
+  beforeDestroy: function beforeDestroy() {
+    window.removeEventListener('beforeunload', this.handleBeforeUnload);
   },
   methods: _objectSpread(_objectSpread(_objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapMutations"])('task', ['removeTaskFromState', 'pushArchivedTask', 'removeArchivedTask'])), Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapMutations"])('SingleTask', ['setErrors', 'updateTaskStatus', 'updateTaskDue', 'unassignTaskMember', 'setForm'])), Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapActions"])({
     fetchTasks: 'task/fetchTasks'
@@ -72,9 +78,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
         _this2.setErrors([]);
         _this2.updateTaskStatus(response.data.task.status);
       })["catch"](function (error) {
-        var _error$response$data$, _error$response;
-        _this2.$vToastify.warning((_error$response$data$ = error === null || error === void 0 || (_error$response = error.response) === null || _error$response === void 0 || (_error$response = _error$response.data) === null || _error$response === void 0 || (_error$response = _error$response.errors) === null || _error$response === void 0 || (_error$response = _error$response.task) === null || _error$response === void 0 ? void 0 : _error$response[0]) !== null && _error$response$data$ !== void 0 ? _error$response$data$ : 'An error occurred.');
-        _this2.setErrors(error.response.data.errors);
+        Object(_utils_TaskUtils__WEBPACK_IMPORTED_MODULE_0__["ErrorHandling"])(_this2, error);
       });
     },
     taskDue: function taskDue(id, task) {
@@ -83,12 +87,17 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
         due_at: this.form.due_at,
         notified: this.form.notified
       }).then(function (response) {
+        var taskData = response.data.task;
         _this3.$vToastify.success(response.data.message);
         _this3.setErrors([]);
-        _this3.updateTaskDue(_this3.form.due_at, response.data.task.notified);
+        _this3.updateTaskDue({
+          dueAt: taskData.due_at,
+          notified: taskData.notified,
+          dueAtUtc: taskData.due_at_utc
+        });
         _this3.cancelDue();
       })["catch"](function (error) {
-        _this3.setErrors(error.response.data.errors);
+        Object(_utils_TaskUtils__WEBPACK_IMPORTED_MODULE_0__["ErrorHandling"])(_this3, error);
       });
     },
     cancelDue: function cancelDue() {
@@ -106,22 +115,21 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
         _this4.$vToastify.success(response.data.message);
         _this4.setErrors([]);
       })["catch"](function (error) {
-        _this4.setErrors(error.response.data.errors);
+        Object(_utils_TaskUtils__WEBPACK_IMPORTED_MODULE_0__["ErrorHandling"])(_this4, error);
       });
     },
     archive: function archive(task, taskId) {
       var _this5 = this;
       axios["delete"](Object(_utils_TaskUtils__WEBPACK_IMPORTED_MODULE_0__["url"])(this.slug, taskId) + '/archive').then(function (response) {
-        console.log('success');
         _this5.$vToastify.warning(response.data.message);
         _this5.removeTaskFromState(taskId);
         _this5.pushArchivedTask(task);
         _this5.$bus.emit('archiveTask', {
-          task: task
+          taskId: taskId
         });
         Object(_mixins_modalClose__WEBPACK_IMPORTED_MODULE_5__["modalClose"])(_this5);
       })["catch"](function (error) {
-        console.log(error);
+        Object(_utils_TaskUtils__WEBPACK_IMPORTED_MODULE_0__["ErrorHandling"])(_this5, error);
       });
     },
     unArchive: function unArchive(task, taskId) {
@@ -138,7 +146,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
           task: task
         });
       })["catch"](function (error) {
-        _this6.setErrors(error.response.data.errors);
+        Object(_utils_TaskUtils__WEBPACK_IMPORTED_MODULE_0__["ErrorHandling"])(_this6, error);
       });
     },
     trash: function trash(task, taskId) {
@@ -147,8 +155,15 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
         _this7.$vToastify.success(response.data.message);
         _this7.removeArchivedTask(taskId);
       })["catch"](function (error) {
-        console.log(error);
+        Object(_utils_TaskUtils__WEBPACK_IMPORTED_MODULE_0__["ErrorHandling"])(_this7, error);
       });
+    },
+    toggleMemberPop: function toggleMemberPop() {
+      this.memberPop = !this.memberPop;
+      this.$bus.emit('toggleMember');
+    },
+    handleBeforeUnload: function handleBeforeUnload() {
+      Object(_mixins_modalClose__WEBPACK_IMPORTED_MODULE_5__["modalClose"])(this);
     }
   })
 });
@@ -167,9 +182,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue2_editor__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue2-editor */ "./node_modules/vue2-editor/dist/vue2-editor.esm.js");
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 /* harmony import */ var _utils_TaskUtils__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../utils/TaskUtils */ "./resources/js/utils/TaskUtils.js");
-function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
 function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
 function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
@@ -210,7 +225,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
         _this.setErrors([]);
         _this.updateTaskDescription(response.data.task.description);
       })["catch"](function (error) {
-        _this.setErrors(error.response.data.errors);
+        Object(_utils_TaskUtils__WEBPACK_IMPORTED_MODULE_2__["ErrorHandling"])(_this, error);
       });
     },
     closeDescriptionForm: function closeDescriptionForm(id, task) {
@@ -238,9 +253,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 /* harmony import */ var _utils_TaskUtils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../../utils/TaskUtils */ "./resources/js/utils/TaskUtils.js");
 /* harmony import */ var _mixins_modalClose__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../mixins/modalClose */ "./resources/js/mixins/modalClose.js");
-function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
 function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
 function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
@@ -269,7 +284,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
         _this.setErrors([]);
         _this.updateTaskTitle(response.data.task.title);
       })["catch"](function (error) {
-        _this.setErrors(error.response.data.errors);
+        Object(_utils_TaskUtils__WEBPACK_IMPORTED_MODULE_1__["ErrorHandling"])(_this, error);
       });
     },
     closeTitleForm: function closeTitleForm(id, task) {
@@ -302,6 +317,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
 var render = function render() {
+  var _vm$errors, _vm$errors2, _vm$errors3, _vm$errors4;
   var _vm = this,
     _c = _vm._self._c;
   return _c("div", {
@@ -346,12 +362,12 @@ var render = function render() {
         }
       }
     }, [_vm._v("×")])])], 1);
-  })], 2), _vm._v(" "), _vm.errors.member ? _c("span", {
+  })], 2), _vm._v(" "), (_vm$errors = _vm.errors) !== null && _vm$errors !== void 0 && _vm$errors.member ? _c("span", {
     staticClass: "text-danger font-italic",
     domProps: {
-      textContent: _vm._s(_vm.errors.member)
+      textContent: _vm._s((_vm$errors2 = _vm.errors) === null || _vm$errors2 === void 0 ? void 0 : _vm$errors2.member)
     }
-  }) : _vm._e(), _vm._v(" "), _c("p"), _vm._v(" "), _vm.task.due_at ? _c("p", [_vm._m(2), _vm._v(" " + _vm._s(_vm._f("datetime")(_vm.task.due_at)))]) : _vm._e(), _vm._v(" "), _vm.task.notified ? _c("p", [_vm._m(3), _vm._v(_vm._s(_vm.task.notified) + " ")]) : _vm._e(), _vm._v(" "), _vm.task.due_at ? _c("p", [_c("small", [_c("b", [_vm._v("Days Left: ")]), _vm._v(_vm._s(this.remainingTime) + "  ")])]) : _vm._e()]), _vm._v(" "), _c("TaskDescription", {
+  }) : _vm._e(), _vm._v(" "), _c("p"), _vm._v(" "), _vm.task.due_at ? _c("p", [_vm._m(2), _vm._v(" " + _vm._s(_vm.task.due_at) + " " + _vm._s(_vm.auth.timezone))]) : _vm._e(), _vm._v(" "), _vm.task.notified ? _c("p", [_vm._m(3), _vm._v(_vm._s(_vm.task.notified) + " ")]) : _vm._e(), _vm._v(" "), _vm.task.due_at ? _c("p", [_c("small", [_c("b", [_vm._v("Days Left: ")]), _vm._v(_vm._s(this.remainingTime) + "  ")])]) : _vm._e()]), _vm._v(" "), _c("TaskDescription", {
     attrs: {
       task: _vm.task,
       slug: _vm.slug,
@@ -391,7 +407,7 @@ var render = function render() {
     on: {
       click: function click($event) {
         $event.preventDefault();
-        _vm.memberPop = !_vm.memberPop;
+        return _vm.toggleMemberPop.apply(null, arguments);
       }
     }
   }, [_c("i", {
@@ -404,7 +420,8 @@ var render = function render() {
       expression: "memberPop"
     }],
     attrs: {
-      slug: _vm.slug
+      slug: _vm.slug,
+      taskId: _vm.task.id
     }
   })], 1), _vm._v(" "), _c("li", [_c("button", {
     staticClass: "btn btn-sm btn btn-sm btn-outline-success btn-block",
@@ -467,7 +484,12 @@ var render = function render() {
         value: notify
       }
     }, [_vm._v(_vm._s(notify))]);
-  })], 2), _vm._v(" "), _c("div", {
+  })], 2), _vm._v(" "), (_vm$errors3 = _vm.errors) !== null && _vm$errors3 !== void 0 && _vm$errors3.notified ? _c("span", {
+    staticClass: "text-danger font-italic",
+    domProps: {
+      textContent: _vm._s((_vm$errors4 = _vm.errors) === null || _vm$errors4 === void 0 || (_vm$errors4 = _vm$errors4.notified) === null || _vm$errors4 === void 0 ? void 0 : _vm$errors4[0])
+    }
+  }) : _vm._e(), _vm._v(" "), _c("div", {
     staticClass: "float-right mt-2"
   }, [_c("button", {
     staticClass: "btn btn-sm btn-secondary",
@@ -559,6 +581,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
 var render = function render() {
+  var _vm$errors, _vm$errors2;
   var _vm = this,
     _c = _vm._self._c;
   return _c("div", {
@@ -567,10 +590,10 @@ var render = function render() {
     staticClass: "task-description_container"
   }, [_c("span", {
     staticClass: "task-description_heading"
-  }, [_vm._v("Description:")]), _vm._v(" "), _vm.errors.description ? _c("span", {
+  }, [_vm._v("Description:")]), _vm._v(" "), (_vm$errors = _vm.errors) !== null && _vm$errors !== void 0 && _vm$errors.description ? _c("span", {
     staticClass: "text-danger font-italic",
     domProps: {
-      textContent: _vm._s(_vm.errors.description)
+      textContent: _vm._s((_vm$errors2 = _vm.errors) === null || _vm$errors2 === void 0 || (_vm$errors2 = _vm$errors2.description) === null || _vm$errors2 === void 0 ? void 0 : _vm$errors2[0])
     }
   }) : _vm._e()]), _vm._v(" "), _vm.edit == _vm.task.id ? _c("div", [_c("vue-editor", {
     attrs: {
@@ -610,7 +633,7 @@ var render = function render() {
     }
   }) : _c("div", [_c("p", {
     staticClass: "task-description_content"
-  }, [_vm._v("Sorry! currently no task description present. "), _c("span", {
+  }, [_vm._v("Sorry! currently no task description present. "), _c("a", {
     staticClass: "task-description_content-link",
     on: {
       click: function click($event) {
@@ -637,6 +660,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
 var render = function render() {
+  var _vm$errors, _vm$errors2;
   var _vm = this,
     _c = _vm._self._c;
   return _c("div", [_c("div", {
@@ -696,10 +720,10 @@ var render = function render() {
         return _vm.modalClose.apply(null, arguments);
       }
     }
-  }, [_vm._v("x")])]), _vm._v(" "), _vm.errors.title ? _c("span", {
+  }, [_vm._v("x")])]), _vm._v(" "), (_vm$errors = _vm.errors) !== null && _vm$errors !== void 0 && _vm$errors.title ? _c("span", {
     staticClass: "text-danger font-italic",
     domProps: {
-      textContent: _vm._s(_vm.errors.title[0])
+      textContent: _vm._s((_vm$errors2 = _vm.errors) === null || _vm$errors2 === void 0 || (_vm$errors2 = _vm$errors2.title) === null || _vm$errors2 === void 0 ? void 0 : _vm$errors2[0])
     }
   }) : _vm._e()]), _vm._v(" "), _vm.state == "archived" ? _c("div", {
     staticClass: "alert alert-warning",

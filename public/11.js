@@ -13,9 +13,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _utils_TaskUtils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../../utils/TaskUtils */ "./resources/js/utils/TaskUtils.js");
 /* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
 /* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_2__);
-function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
 function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
 function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
@@ -23,7 +23,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['slug'],
+  props: ['slug', 'taskId'],
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])('SingleTask', ['form', 'errors', 'task'])),
   data: function data() {
     return {
@@ -36,20 +36,34 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       this.performSearch(newSearch);
     }, 500)
   },
+  created: function created() {
+    var _this = this;
+    this.$bus.on('toggleMember', function () {
+      _this.taskMembers = [];
+      _this.setErrors([]);
+      _this.form.search = '';
+    });
+  },
   methods: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapMutations"])('SingleTask', ['setErrors', 'updateTaskMembers'])), {}, {
     performSearch: function performSearch(searchTerm) {
-      var _this = this;
-      axios.get("/api/v1/projects/".concat(this.slug, "/member/search"), {
+      var _this2 = this;
+      axios.get("/api/v1/projects/".concat(this.slug, "/tasks/").concat(this.taskId, "/member/search"), {
         params: {
           search: this.form.search
         }
       }).then(function (response) {
-        _this.searchResults = response.data;
+        _this2.searchResults = response.data;
       })["catch"](function (error) {
         console.log(error);
       });
     },
     addMember: function addMember(member, id) {
+      var memberExists = this.taskMembers.some(function (m) {
+        return m.id === member.id;
+      });
+      if (memberExists) {
+        return this.$vToastify.warning("Member already listed");
+      }
       this.taskMembers.push(member);
       this.searchResults = [];
       this.form.search = '';
@@ -60,7 +74,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       });
     },
     assignMembers: function assignMembers(taskId) {
-      var _this2 = this;
+      var _this3 = this;
       if (!this.taskMembers.length) {
         return this.$vToastify.info('no member is selected to assign task');
       }
@@ -70,11 +84,9 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       axios.patch(Object(_utils_TaskUtils__WEBPACK_IMPORTED_MODULE_1__["url"])(this.slug, taskId) + '/assign', {
         members: memberIds
       }).then(function (response) {
-        _this2.assignSuccessfull(response);
+        _this3.assignSuccessfull(response);
       })["catch"](function (error) {
-        if (error.response.status === 422) {
-          _this2.setErrors(error.response.data.errors);
-        }
+        Object(_utils_TaskUtils__WEBPACK_IMPORTED_MODULE_1__["ErrorHandling"])(_this3, error);
       });
     },
     assignSuccessfull: function assignSuccessfull(response) {
@@ -91,7 +103,10 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       return [];
     },
     hasError: function hasError(key) {
-      return this.errors.hasOwnProperty(key);
+      if (this.errors && _typeof(this.errors) === 'object' && this.errors.hasOwnProperty(key)) {
+        return true;
+      }
+      return false;
     }
   })
 });
@@ -273,19 +288,22 @@ __webpack_require__.r(__webpack_exports__);
 /*!*****************************************!*\
   !*** ./resources/js/utils/TaskUtils.js ***!
   \*****************************************/
-/*! exports provided: calculateRemainingTime, url */
+/*! exports provided: calculateRemainingTime, url, ErrorHandling */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "calculateRemainingTime", function() { return calculateRemainingTime; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "url", function() { return url; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ErrorHandling", function() { return ErrorHandling; });
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_0__);
 
 function calculateRemainingTime(task, currentDate) {
-  if (task.due_at !== null) {
-    var duration = moment__WEBPACK_IMPORTED_MODULE_0___default.a.duration(moment__WEBPACK_IMPORTED_MODULE_0___default()(task.due_at).diff(moment__WEBPACK_IMPORTED_MODULE_0___default()(currentDate)));
+  if (task.due_at_utc !== null) {
+    var dueDate = moment__WEBPACK_IMPORTED_MODULE_0___default.a.utc(task.due_at_utc);
+    var now = moment__WEBPACK_IMPORTED_MODULE_0___default.a.utc(currentDate);
+    var duration = moment__WEBPACK_IMPORTED_MODULE_0___default.a.duration(dueDate.diff(now));
     if (duration.asMilliseconds() <= 0) {
       return 'Due date passed';
     }
@@ -308,28 +326,14 @@ function calculateRemainingTime(task, currentDate) {
 function url($slug, $id) {
   return '/api/v1/projects/' + $slug + '/tasks/' + $id;
 }
-
-/*export function updateTask(slug, id, task, data, additionalCallback) {
-  if (areObjectsEqual(data, task)) {
-    this.$vToastify.warning("Update not allowed. No changes were made.");
-    return;
+function ErrorHandling(component, error) {
+  var _error$response, _error$response2;
+  var toastMessage = (error === null || error === void 0 || (_error$response = error.response) === null || _error$response === void 0 || (_error$response = _error$response.data) === null || _error$response === void 0 || (_error$response = _error$response.errors) === null || _error$response === void 0 || (_error$response = _error$response.task) === null || _error$response === void 0 ? void 0 : _error$response[0]) || (error === null || error === void 0 || (_error$response2 = error.response) === null || _error$response2 === void 0 || (_error$response2 = _error$response2.data) === null || _error$response2 === void 0 ? void 0 : _error$response2.message) || 'An error occurred';
+  component.$vToastify.warning(toastMessage);
+  if (error.response) {
+    return component.setErrors(error.response.data.errors);
   }
-
-  axios.put(url(slug, id), data)
-    .then(response => {
-      this.$vToastify.success(response.data.message);
-      if (additionalCallback) {
-        additionalCallback(response.data); // Call additional callback if provided
-      }
-    })
-    .catch(error => {
-      console.logerror.response.data.errors;
-    });
 }
-
-export function areObjectsEqual(obj1, obj2) {
-  return Object.keys(obj1).every(key => obj1[key] === obj2[key]);
-}*/
 
 /***/ })
 

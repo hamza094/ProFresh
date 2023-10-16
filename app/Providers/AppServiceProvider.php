@@ -10,6 +10,8 @@ use App\Interfaces\SendSmsInterface;
 use App\Services\SendSmsService;
 use Illuminate\Support\Collection;
 use App\Services\PaginationService;
+use Opcodes\LogViewer\Facades\LogViewer;
+
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -38,6 +40,13 @@ class AppServiceProvider extends ServiceProvider
     {
         Model::preventLazyLoading(! app()->isProduction());
         //Model::shouldBeStrict(! app()->isProduction());
+
+        /* LogViewer::auth(function ($request) {
+        return $request->user()
+            && in_array($request->user()->email, [
+                'ressie03@example.net',
+            ]); 
+        });*/
 
 
         /**

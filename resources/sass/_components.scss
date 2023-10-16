@@ -40,6 +40,7 @@ height:100vh;
     &:hover &-name{
          visibility: visible;
         text-decoration: none !important;
+        font-size:1rem;
     }
     &-logo{
         font-size: 1.5rem;

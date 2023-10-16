@@ -39,6 +39,13 @@
                         </span></p>
                     </router-link>
 
+                     <router-link to="/admin/panel" class="panel-list_item">
+                        <p><span class="icon">
+                            <i class="icon-logo fas fa-user-lock"></i>
+                            <span class="icon-name">Admin Panel</span>
+                        </span></p>
+                    </router-link>
+
                     <a href="" @click.prevent="signOut()" class="panel-list_item">
                         <p><span class="icon"><i class="icon-logo fas fa-sign-out-alt"></i><span class="icon-name">Logout</span></span></p>
                     </a>

@@ -44,6 +44,7 @@
 .icon:hover .icon-name {
   visibility: visible;
   text-decoration: none !important;
+  font-size: 1rem;
 }
 
 .icon-logo {
