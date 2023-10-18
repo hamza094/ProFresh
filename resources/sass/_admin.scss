@@ -1,0 +1,25 @@
+.admin{
+	&-dashboard{
+		&-link{
+    color:black;
+		&:hover{
+        text-decoration: none;
+        color:black;
+		};
+	}
+	}
+	&-panel{
+		&-link{
+    color:grey;
+    font-weight: 900;
+		&:hover{
+        text-decoration: none;
+        color:$color-secondary;
+        font-weight: 900;
+		};
+	}
+	}
+}
+ .angle-pointer{
+  cursor: pointer;
+ }

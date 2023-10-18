@@ -4,15 +4,17 @@
    <div class="container">
      		<div class="row">
                <div class="col-md-4">
+                <router-link to="/admin/projects" class="admin-dashboard-link">
                    <div class="card">
                   <div class="ribbon ribbon-top bg-blue">
                     <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z"></path></svg>
                   </div>
                   <div class="card-body">
                     <h3 class="card-title">Projects</h3>
-                    <p class="text-secondary">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto at consectetur culpa ducimus eum fuga fugiat, ipsa iusto, modi nostrum recusandae reiciendis saepe.</p>
+                    <p class="text-secondary">Empower administrators with comprehensive project control, offering insights, filtering options, and member management capabilities.It's where you can keep an eagle eye on projects, </p>
                   </div>
                 </div>
+              </router-link>
                </div>
                <div class="col-md-4">
                    <div class="card">
@@ -29,7 +31,7 @@
                   </div>
                   <div class="card-body">
                     <h3 class="card-title">Tasks</h3>
-                    <p class="text-secondary">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto at consectetur culpa ducimus eum fuga fugiat, ipsa iusto, modi nostrum recusandae reiciendis saepe.</p>
+                    <p class="text-secondary">The Tasks section enables granular task management. Admins can oversee, edit, and optimize individual tasks, improving project productivity.</p>
                   </div>
                 </div>
                </div>
@@ -46,7 +48,7 @@
                   </div>
                   <div class="card-body">
                     <h3 class="card-title">Users</h3>
-                    <p class="text-secondary">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto at consectetur culpa ducimus eum fuga fugiat, ipsa iusto, modi nostrum recusandae reiciendis saepe.</p>
+                    <p class="text-secondary">The Users section manages user accounts, roles, permissions, and login options, maintaining a secure and organized user environment.</p>
                   </div>
                 </div>
                </div>
@@ -165,7 +167,7 @@
                               Misceleneous
                             </div>
                             <div class="text-secondary">
-                              21 today
+                              
                             </div>
                           </div>
                         </div>

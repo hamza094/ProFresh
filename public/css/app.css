@@ -1604,6 +1604,30 @@ button.gnuIjg {
   transform: scale(1.1);
 }
 
+.admin-dashboard-link {
+  color: black;
+}
+
+.admin-dashboard-link:hover {
+  text-decoration: none;
+  color: black;
+}
+
+.admin-panel-link {
+  color: grey;
+  font-weight: 900;
+}
+
+.admin-panel-link:hover {
+  text-decoration: none;
+  color: #12344D;
+  font-weight: 900;
+}
+
+.angle-pointer {
+  cursor: pointer;
+}
+
 .tooltip {
   display: block !important;
   z-index: 10000;

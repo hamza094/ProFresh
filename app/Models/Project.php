@@ -172,4 +172,8 @@ class Project extends Model
         return $this->activities()->take(5)->get();
    }
 
+   public function state(){
+    return $this->deleted_at ? 'trashed' : 'active';
+   }
+
 }
