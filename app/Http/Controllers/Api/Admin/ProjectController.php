@@ -18,15 +18,23 @@ class ProjectController extends ApiController
     public function index(Request $request){
         $perPage = 10;
 
-        $sortDirection = $request->input('sort'); 
+        $sortDirection = $request->input('sort');
+        $searchTerm = $request->input('search'); 
 
         $projects = Project::with('stage')
             ->withCount('tasks', 'activeMembers')
             ->withTrashed()
-            ->orderBy('created_at',$sortDirection)
-            ->get();
-
-        $projectCount = Project::withTrashed()->count(); 
+             ->when($sortDirection, function ($query) use ($sortDirection) {
+           $query->orderBy('created_at', $sortDirection);
+            })
+             ->when($searchTerm, function ($query) use ($searchTerm) {
+            $query->where('name', 'like', "%$searchTerm%")
+                ->orWhereHas('user', function ($query) use ($searchTerm) {
+                    $query->where('name', 'like', "%$searchTerm%")
+                        ->orWhere('username', 'like', "%$searchTerm%");
+                });
+        })
+        ->get();
 
         return response()->json([
         'projects' => ProjectResource::collection($projects)

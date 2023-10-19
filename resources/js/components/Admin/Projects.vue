@@ -29,7 +29,7 @@
                       <div class="ms-auto text-secondary">
                         Search:
                         <div class="ms-2 d-inline-block">
-                          <input type="text" class="form-control form-control-sm" aria-label="Search invoice">
+                          <input type="text" class="form-control form-control-sm" placeholder="By Project And User" name="search" autocomplete="off" v-model="searchTerm" @keydown="searchProjects()">
                         </div>
                       </div>
                     </div>
@@ -40,7 +40,7 @@
                         <tr>
                           <th class="w-1"><input class="form-check-input m-0 align-middle" type="checkbox" aria-label="Select all invoices"></th>
                           <th class="w-1">No.
-                            <i v-if="currentSort === 'asc'" class="fas fa-angle-up angle-pointer" @click="toggleSort('asc')"></i>
+                            <i v-if="currentSort === 'asc' || currentSort === ''" class="fas fa-angle-up angle-pointer" @click="toggleSort('asc')"></i>
 
                             <i v-if="currentSort === 'desc'" class="fas fa-angle-down angle-pointer" @click="toggleSort('desc')"></i>
                           </th>
@@ -79,7 +79,8 @@
                           </td>
                           <td>
                         <router-link :to="'/user/'+project.owner.id+'/profile'" class="admin-panel-link">
-                        <span>{{project.owner.name}}</span>
+                        <div>{{project.owner.name}}</div>
+                        <div>({{project.owner.username}})</div>
                         </router-link>
                           </td>
                           <td>
@@ -110,21 +111,37 @@
 	</div>
 </template>
 <script>
+  import { debounce } from 'lodash';
 
 export default{
     data(){
     return{
 	   projects:[],
        totalProjects:0,
-       currentSort: 'desc',
+       currentSort: 'asc',
        from:0,
        to:0,
        total:0,
+       searchTerm:'',
     };
     },
     methods:{			
         getResults(page=1){
-        axios.get(`/api/v1/admin/projects?page=${page}&sort=${this.currentSort}`)
+        const queryParameters = {
+        page: page,
+      };
+
+       if (this.searchTerm) {
+        queryParameters.search = this.searchTerm;
+      }
+
+      if (this.currentSort) {
+        queryParameters.sort = this.currentSort;
+      }
+
+        axios.get(`/api/v1/admin/projects`,{
+          params: queryParameters,
+        })
         .then(response => {
         this.from=response.data.projects.meta.from;
         this.to=response.data.projects.meta.to;
@@ -141,6 +158,9 @@ export default{
       this.currentSort = this.currentSort === order ? (order === 'asc' ? 'desc' : 'asc') : order;
       this.getResults();
     },
+    searchProjects:debounce(function () { 
+      this.getResults();
+    },1000),
     },
     mounted(){
         this.getResults();

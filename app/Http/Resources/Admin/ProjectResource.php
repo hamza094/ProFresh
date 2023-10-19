@@ -24,7 +24,7 @@ class ProjectResource extends JsonResource
         'state'=>$this->state(),
         'stage'=>new StageResource($this->stage),
         'created_at'=>$this->created_at->diffforHumans(),
-        'owner'=>$this->user()->select('id','avatar_path','name')->first(),
+        'owner'=>$this->user()->select('id','avatar_path','username','name')->first(),
         'tasks_count'=>$this->whenCounted('tasks'),
         'members_count'=>$this->whenCounted('activeMembers'),
         'score'=>$this->score(),
