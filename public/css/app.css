@@ -1628,6 +1628,50 @@ button.gnuIjg {
   cursor: pointer;
 }
 
+.filter {
+  color: #12344D;
+  cursor: pointer;
+}
+
+.filter-dropdown_item {
+  position: absolute;
+  border-radius: 0.2rem;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  z-index: 2000 !important;
+  background-color: #FFFFFF;
+  width: 32rem;
+  height: auto;
+  overflow: hidden;
+  top: 2.8rem;
+  border: 1px solid #e5e5ee;
+  padding: 0.2rem;
+}
+
+.filter-list {
+  list-style: none;
+  padding-left: 2rem;
+}
+
+.filter-list_item {
+  display: inline;
+  margin-right: 2.5rem;
+}
+
+.filter-content {
+  padding: 0.8rem;
+}
+
+.filter-content_border {
+  border: none;
+  border-top: 0.2rem solid #12344D;
+  margin-bottom: 1rem;
+}
+
+.form-date_close {
+  cursor: pointer;
+  color: red;
+}
+
 .tooltip {
   display: block !important;
   z-index: 10000;

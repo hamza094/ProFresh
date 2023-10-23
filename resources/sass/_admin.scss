@@ -23,3 +23,46 @@
  .angle-pointer{
   cursor: pointer;
  }
+
+ .filter{
+ 	color: $color-secondary;
+ 	cursor: pointer;
+    //dropdown
+    &-dropdown{
+        &_item{
+            position: absolute;
+            border-radius: .2rem;
+            box-shadow: 0 0 10px rgba(0,0,0,.2);
+            z-index:2000 !important;
+            background-color: $color-white;
+            width:32rem;
+            height:auto;
+            overflow: hidden;
+            top:2.8rem;
+            border:1px solid $color-light-grey;
+            padding: .2rem;
+        }
+    }
+    &-list{
+    	list-style: none;
+        padding-left: 2rem;
+
+        &_item{
+        	 display: inline;
+            margin-right: 2.5rem;
+        }
+    }
+    &-content{
+    	padding: .8rem;
+    	&_border{
+        border: none;
+        border-top: .2rem solid $color-secondary;
+        margin-bottom: 1rem ;
+    	}
+    }
+}
+
+.form-date_close{
+	cursor: pointer;
+	color: red;
+}

@@ -10,26 +10,98 @@
                   </div>
                   <div class="card-body border-bottom py-3">
                     <div class="d-flex">
-                    
-                        <span class="dropdown">
-                              <button class="btn btn-primary dropdown-toggle align-text-top" data-bs-boundary="viewport" data-bs-toggle="dropdown">Filters</button>
-                              <div class="dropdown-menu dropdown-menu-end">
-                                <a class="dropdown-item" href="#">
-                                  Action
-                                </a>
-                                <a class="dropdown-item" href="#">
-                                  Another action
-                                </a>
-                              </div>
-                            </span>
-                      <div class="ms-auto text-secondary">
-                        <button class="btn btn-sm btn-danger">Bulk Delete</button>
-                      </div>
+                        <div class="filter-dropdown">
+                              <span class="filter" @click="isPop = !isPop">Filters <i class="fas fa-filter"></i></span>
+                             <div class="filter-dropdown_item" v-show=isPop>
+                                 <div class="container">
+                                    <div class="filter-content">
+                                        <div class="row">
+                                            <h4>Filter By</h4>
+                                            <div class="col-md-4">
+  <input class="form-check-input" type="radio"
+   v-model="form.projects" id="RadioProjects" value="active"   @click="toggleRadio('active')"> 
+  Active Projects                                            
+    </div>
+    <div class="col-md-4">
+  <input class="form-check-input" type="radio" v-model="form.projects" id="RadioProjects" value="trashed" @click="toggleRadio('trashed')"> 
+  Trashed Projects  
+    </div>
+    <div class="col-md-4">
+    <div class="form-check">
+  <input class="form-check-input" type="checkbox" 
+  id="CheckTasks" v-model='form.activeTasks'>
+  <label class="form-check-label" for="CheckTasks">
+    Active Tasks
+  </label>
+</div>  
+                </div>
+                </div>
+                <div class="filter-content_border"></div>
+                <div class="row">
+                <div class="col-md-6">
+                <h4>Search By Stage</h4>
+                <select class="form-select" aria-label="Default select example" v-model="form.stage">
+                <option selected value="">Choose from options</option>
+    <option v-for="stage in stages" :key="stage.id" :value="stage.id">{{ stage.name }}</option>
+    <option :key="0" :value="0">Close/postpone</option>
+                </select>
+                </div>
+                <div class="col-md-5">
+                   <h4>Search By Date</h4>
+                <datetime type="date" value-zone="local" 
+            zone="local" v-model="form.date">
+                </datetime>
+                 </div>
+        <div class="col-md-1">
+        <span class="form-date_close" @click.pervent="form.date = ''" v-if="form.date !== ''">x</span>
+    </div>
 
-                      <div class="ms-auto text-secondary">
-                        Search:
-                        <div class="ms-2 d-inline-block">
-                          <input type="text" class="form-control form-control-sm" placeholder="By Project And User" name="search" autocomplete="off" v-model="searchTerm" @keydown="searchProjects()">
+                <!--<ul class="filter-list">
+                <div v-for="stage in stages">
+                <li class="filter-list_item">
+                  <input class="form-check-input" type="radio"  id="stageRadio" v-model="form.stage" :value="stage.id" @click="toggleStage(stage.id)">
+                {{stage.name}}
+            </li>
+           </div>
+                <li class="filter-list_item">
+                  <input class="form-check-input" type="radio" 
+                  id="stageRadio" v-model="form.stage" value=0 
+                  @click="toggleStage(0)">
+                 Close/postpone
+             </li>
+                </ul>-->
+            </div>
+        <div class="filter-content_border"></div>
+    <div class="row">
+        <h4>Search By fields</h4>
+    <div class="col-md-4">
+    <input class="form-check-input" v-model="form.status" type="radio" id="statusCheck" value="hot" @click="toggleStatus('hot')">
+    Hot Projects <span class="status-dot bg-red"></span>  
+    </div>
+    <div class="col-md-4">
+    <input class="form-check-input" v-model="form.status" type="radio" id="statusCheck" value="cold" @click="toggleStatus('cold')">
+    Cold Projects  <span class="status-dot bg-blue"></span>
+    </div>
+        <div class="col-md-4">
+        <input class="form-check-input" type="checkbox" v-model="form.hasMembers" id="flexCheckDefault" >
+  <label class="form-check-label" for="flexCheckDefault">
+    Has Members
+  </label>    
+    </div>
+    </div>
+    <button class="float-right mt-4 mb-2 btn btn-primary btn-pill w-50" @click.pervent="filter">Filter</button>    
+    </div>
+   </div>
+    </div>
+    </div>
+    <div class="ms-auto text-secondary">
+    <button class="btn btn-sm btn-danger">Bulk Delete</button>
+    </div>
+
+    <div class="ms-auto text-secondary">
+        Search:
+    <div class="ms-2 d-inline-block">
+    <input type="text" class="form-control form-control-sm" placeholder="By Project And User" name="search" autocomplete="off" v-model="searchTerm" @keydown="searchProjects()">
                         </div>
                       </div>
                     </div>
@@ -117,15 +189,62 @@ export default{
     data(){
     return{
 	   projects:[],
+       stages:[],
        totalProjects:0,
        currentSort: 'asc',
        from:0,
        to:0,
        total:0,
        searchTerm:'',
+       isPop:false,
+       form:{
+        projects:'',
+        activeTasks:'',
+        hasMembers:'',
+        status:'',
+        date:'',
+        stage:'',
+       }
     };
+    }, 
+    watch:{
+        /*isPop(isPop){
+            if(isPop){
+            document.addEventListener('click', (event) => this.$options.methods.handleClickOutside.call(this, event, '.filter-dropdown', this.isPop));
+            }
+        }*/
     },
-    methods:{			
+    methods:{
+    loadStages(){
+    axios.get('/api/v1/stages').
+    then(response=>{
+       this.stages=response.data;
+   }).catch(error=>{
+     console.log(error.response.data.errors);
+   });
+    },
+    toggleRadio(selectedValue) {
+      if (this.form.projects === selectedValue) {
+        this.form.projects = null;
+      } else {
+        this.form.projects = selectedValue;
+      }
+    },
+    toggleStatus(selectedValue) {
+      if (this.form.status === selectedValue) {
+        this.form.status = null;
+      } else {
+        this.form.status = selectedValue;
+      }
+    },
+    toggleStage(selectedValue) {
+        console.log(selectedValue);
+      if (this.form.stage === selectedValue) {
+        this.form.stage = null;
+      } else {
+        this.form.stage = selectedValue;
+      }
+    },			
         getResults(page=1){
         const queryParameters = {
         page: page,
@@ -161,9 +280,16 @@ export default{
     searchProjects:debounce(function () { 
       this.getResults();
     },1000),
+    filter(){
+        this.form={};
+        this.form.date='';
+        this.form.stage='';
+        this.isPop=false;
+    }
     },
     mounted(){
         this.getResults();
+        this.loadStages();
     }
 }
 </script>
