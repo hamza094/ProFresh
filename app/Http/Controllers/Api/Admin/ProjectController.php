@@ -19,7 +19,14 @@ class ProjectController extends ApiController
         $perPage = 10;
 
         $sortDirection = $request->input('sort');
-        $searchTerm = $request->input('search'); 
+        $searchTerm = $request->input('search');
+        $filterBy = $request->input('filter');
+        $activeMembers = $request->input('members');
+        $status = $request->input('status');
+        $tasks = $request->input('tasks');
+        $stage = $request->input('stage');
+        $startdate = $request->input('from');
+        $enddate = $request->input('to');
 
         $projects = Project::with('stage')
             ->withCount('tasks', 'activeMembers')
@@ -34,11 +41,37 @@ class ProjectController extends ApiController
                         ->orWhere('username', 'like', "%$searchTerm%");
                 });
         })
-        ->get();
+          ->when($filterBy === "active", function ($query) {
+        $query->whereNull('deleted_at'); 
+       })
+        ->when($filterBy === "trashed", function ($query) {
+    $query->whereNotNull('deleted_at'); 
+    })
+      ->when($activeMembers, function ($query) {
+         $query->whereHas('members', function ($subQuery) {
+        $subQuery->where('project_members.active', true);
+    }); 
+    })
+    ->when($tasks, function ($query) {
+    $query->has('tasks'); 
+    })
+    ->when($stage, function ($query) use($stage) {
+    $query->where('stage_id',$stage); 
+    })
+    ->when($startdate && $enddate, function ($query) use ($startdate, $enddate) {
+      $query->whereBetween('created_at', [$startdate, $enddate]);
+    })
+    ->get();
 
-        return response()->json([
-        'projects' => ProjectResource::collection($projects)
-                      ->paginate($perPage),
-        ]);
+    if ($status) {
+    $filteredProjects = $projects->filter(function ($project) use ($status) {
+        return $project->status === $status;
+    });
+
+    $projects = $filteredProjects;
+    }
+          
+        return ProjectResource::collection($projects)->paginate($perPage);
+
     }
 }

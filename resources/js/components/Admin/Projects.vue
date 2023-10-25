@@ -38,41 +38,26 @@
                 </div>
                 <div class="filter-content_border"></div>
                 <div class="row">
-                <div class="col-md-6">
-                <h4>Search By Stage</h4>
-                <select class="form-select" aria-label="Default select example" v-model="form.stage">
-                <option selected value="">Choose from options</option>
-    <option v-for="stage in stages" :key="stage.id" :value="stage.id">{{ stage.name }}</option>
-    <option :key="0" :value="0">Close/postpone</option>
-                </select>
-                </div>
-                <div class="col-md-5">
-                   <h4>Search By Date</h4>
-                <datetime type="date" value-zone="local" 
-            zone="local" v-model="form.date">
-                </datetime>
-                 </div>
-        <div class="col-md-1">
-        <span class="form-date_close" @click.pervent="form.date = ''" v-if="form.date !== ''">x</span>
-    </div>
-
-                <!--<ul class="filter-list">
-                <div v-for="stage in stages">
-                <li class="filter-list_item">
-                  <input class="form-check-input" type="radio"  id="stageRadio" v-model="form.stage" :value="stage.id" @click="toggleStage(stage.id)">
+                <div class="col-md-12">
+                <h4>By Stage</h4>
+                <ul class="filter-list">
+                <li class="filter-list_item" v-for="stage in stages">
+                <input class="form-check-input form-radio" type="radio" name="stageRadio" v-model="form.stage" :value="stage.id" @click.pervent="toggleStage(stage.id)">
+                <label class="form-check-label">
                 {{stage.name}}
-            </li>
-           </div>
+                </label>
+                </li>
                 <li class="filter-list_item">
-                  <input class="form-check-input" type="radio" 
-                  id="stageRadio" v-model="form.stage" value=0 
-                  @click="toggleStage(0)">
-                 Close/postpone
-             </li>
-                </ul>-->
+                  <input class="form-check-input form-radio" type="radio" name="stageRadio" v-model="form.stage" :value="0" @click.pervent="toggleStage(0)">
+                <label class="form-check-label">
+                Clo/Pos
+                </label>
+                </li>
+                </ul>
+                </div>
             </div>
         <div class="filter-content_border"></div>
-    <div class="row">
+    <div class="row mb-3">
         <h4>Search By fields</h4>
     <div class="col-md-4">
     <input class="form-check-input" v-model="form.status" type="radio" id="statusCheck" value="hot" @click="toggleStatus('hot')">
@@ -88,8 +73,27 @@
     Has Members
   </label>    
     </div>
-    </div>
-    <button class="float-right mt-4 mb-2 btn btn-primary btn-pill w-50" @click.pervent="filter">Filter</button>    
+</div>
+            <div class="filter-content_border"></div>
+
+<div class="row">
+                    <h4>Search By Date</h4>
+       
+                   <div class="col-md-6">
+                       <h6 style="display: inline-block;">From:</h6>  <span style="display: inline-block;" class="form-date_close" @click.pervent="form.startdate = ''" 
+                       v-if="form.startdate !== ''">x</span>
+            <datetime type="date" value-zone="local" 
+            zone="local" v-model="form.startdate">
+                </datetime>
+                   </div>
+                   <div class="col-md-6">
+                    <h6 style="display: inline-block;">To:</h6>  <span style="display: inline-block;" class="form-date_close" @click.pervent="form.enddate = ''" v-if="form.enddate !== ''">x</span>
+                <datetime type="date" value-zone="local" 
+                  zone="local" v-model="form.enddate">
+                </datetime>
+                   </div>
+               </div>
+    <button class="float-right mt-4 mb-2 btn btn-primary btn-pill w-50" @click.pervent="filterBy()">Filter</button>    
     </div>
    </div>
     </div>
@@ -202,17 +206,18 @@ export default{
         activeTasks:'',
         hasMembers:'',
         status:'',
-        date:'',
+        startdate:'',
+        enddate:'',
         stage:'',
        }
     };
     }, 
     watch:{
-        /*isPop(isPop){
+        isPop(isPop){
             if(isPop){
             document.addEventListener('click', (event) => this.$options.methods.handleClickOutside.call(this, event, '.filter-dropdown', this.isPop));
             }
-        }*/
+        }
     },
     methods:{
     loadStages(){
@@ -258,15 +263,35 @@ export default{
         queryParameters.sort = this.currentSort;
       }
 
+      if (this.form.projects) {
+        queryParameters.filter = this.form.projects;
+      }
+       if (this.form.hasMembers) {
+        queryParameters.members = 'true';
+      }
+      if (this.form.status) {
+        queryParameters.status = this.form.status;
+      }
+      if (this.form.activeTasks) {
+        queryParameters.tasks = 'true';
+      }
+       if (this.form.stage) {
+        queryParameters.stage = this.form.stage;
+      }
+       if (this.form.startdate) {
+        queryParameters.from = this.form.startdate;
+      }
+       if (this.form.enddate) {
+        queryParameters.to = this.form.enddate;
+      }
         axios.get(`/api/v1/admin/projects`,{
           params: queryParameters,
         })
         .then(response => {
-        this.from=response.data.projects.meta.from;
-        this.to=response.data.projects.meta.to;
-        this.total=response.data.projects.meta.total;
-        this.projects=response.data.projects;
-        this.totalProjects=response.data.projectsCount;
+        this.from=response.data.meta.from;
+        this.to=response.data.meta.to;
+        this.total=response.data.meta.total;
+        this.projects=response.data;
         })
         .catch(error => {
           //console.log(error.response.data.errors);
@@ -277,15 +302,16 @@ export default{
       this.currentSort = this.currentSort === order ? (order === 'asc' ? 'desc' : 'asc') : order;
       this.getResults();
     },
+        filterBy(){
+        this.getResults();
+        //this.form={};
+        //this.form.date='';
+        //this.form.stage='';
+        this.isPop=false;
+    },
     searchProjects:debounce(function () { 
       this.getResults();
     },1000),
-    filter(){
-        this.form={};
-        this.form.date='';
-        this.form.stage='';
-        this.isPop=false;
-    }
     },
     mounted(){
         this.getResults();

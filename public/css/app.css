@@ -1648,13 +1648,16 @@ button.gnuIjg {
 }
 
 .filter-list {
-  list-style: none;
-  padding-left: 2rem;
+  list-style-type: none;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: -0.5rem;
 }
 
 .filter-list_item {
-  display: inline;
-  margin-right: 2.5rem;
+  margin-right: 2.3rem;
+  margin-top: 0.5rem;
 }
 
 .filter-content {
@@ -1670,6 +1673,11 @@ button.gnuIjg {
 .form-date_close {
   cursor: pointer;
   color: red;
+}
+
+.form-check-input {
+  border: 1px solid #B0E0E6;
+  padding: 5px;
 }
 
 .tooltip {
