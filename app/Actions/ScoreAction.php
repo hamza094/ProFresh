@@ -18,11 +18,13 @@ class ScoreAction
 
   public function calculateTotal(): int
   {  
-    return array_sum([
-      $this->taskScore(),
-      $this->notesScore(),
-      $this->membersScore()
-    ]);
+    $total = 0;
+
+    $total += $this->taskScore();
+    $total += $this->notesScore();
+    $total += $this->membersScore();
+
+    return $total;
   }
    
    private function taskScore(): int

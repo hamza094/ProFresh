@@ -6,16 +6,23 @@
           <div class="col-12">
                 <div class="card">
                   <div class="card-header">
+
                     <h3 class="card-title">Projects</h3>
+                    <span class="ml-2" v-for="(filter, index) in appliedFilters" :key="index">
+                      <span>> {{filter}}  </span>
+                    </span>
                   </div>
+
                   <div class="card-body border-bottom py-3">
                     <div class="d-flex">
+
                         <div class="filter-dropdown">
                               <span class="filter" @click="isPop = !isPop">Filters <i class="fas fa-filter"></i></span>
                              <div class="filter-dropdown_item" v-show=isPop>
                                  <div class="container">
                                     <div class="filter-content">
                                         <div class="row">
+
                                             <h4>Filter By</h4>
                                             <div class="col-md-4">
   <input class="form-check-input" type="radio"
@@ -34,9 +41,10 @@
     Active Tasks
   </label>
 </div>  
-                </div>
-                </div>
-                <div class="filter-content_border"></div>
+      </div>
+    </div>
+
+            <div class="filter-content_border"></div>
                 <div class="row">
                 <div class="col-md-12">
                 <h4>By Stage</h4>
@@ -56,7 +64,9 @@
                 </ul>
                 </div>
             </div>
-        <div class="filter-content_border"></div>
+
+       <div class="filter-content_border"></div>
+
     <div class="row mb-3">
         <h4>Search By fields</h4>
     <div class="col-md-4">
@@ -74,7 +84,8 @@
   </label>    
     </div>
 </div>
-            <div class="filter-content_border"></div>
+
+  <div class="filter-content_border"></div>
 
 <div class="row">
                     <h4>Search By Date</h4>
@@ -111,7 +122,8 @@
                     </div>
                   </div>
                   <div class="table-responsive">
-                    <table class="table card-table table-vcenter text-nowrap datatable">
+                    <div v-if="message" class=" mt-3 text-center"><h4>{{message}}</h4></div>
+                    <table v-else class="table card-table table-vcenter text-nowrap datatable">
                       <thead>
                         <tr>
                           <th class="w-1"><input class="form-check-input m-0 align-middle" type="checkbox" aria-label="Select all invoices"></th>
@@ -147,8 +159,11 @@
                             <span v-else class="badge bg-danger">{{project.status}}</span>
                              
                           </td>
-                          <td>
-                            {{project.stage.name}}
+                          <td v-if="!project.stage">
+                           Clo/Pos
+                          </td>
+                          <td v-else>
+                          {{project.stage.name}}
                           </td>
                           <td><span v-if="project.state == 'active'" class="bg badge bg-success me-1">{{project.state}}</span>
                             <span v-else class="bg badge bg-warning me-1">{{project.state}}</span>
@@ -194,6 +209,7 @@ export default{
     return{
 	   projects:[],
        stages:[],
+       appliedFilters:[],
        totalProjects:0,
        currentSort: 'asc',
        from:0,
@@ -201,6 +217,7 @@ export default{
        total:0,
        searchTerm:'',
        isPop:false,
+       message:'',
        form:{
         projects:'',
         activeTasks:'',
@@ -219,8 +236,8 @@ export default{
             }
         }
     },
-    methods:{
-    loadStages(){
+  methods:{
+  loadStages(){
     axios.get('/api/v1/stages').
     then(response=>{
        this.stages=response.data;
@@ -228,90 +245,82 @@ export default{
      console.log(error.response.data.errors);
    });
     },
-    toggleRadio(selectedValue) {
-      if (this.form.projects === selectedValue) {
-        this.form.projects = null;
-      } else {
-        this.form.projects = selectedValue;
-      }
-    },
-    toggleStatus(selectedValue) {
-      if (this.form.status === selectedValue) {
-        this.form.status = null;
-      } else {
-        this.form.status = selectedValue;
-      }
-    },
-    toggleStage(selectedValue) {
-        console.log(selectedValue);
-      if (this.form.stage === selectedValue) {
-        this.form.stage = null;
-      } else {
-        this.form.stage = selectedValue;
-      }
-    },			
-        getResults(page=1){
-        const queryParameters = {
+
+  toggle(fieldName, selectedValue) {
+  if (this.form[fieldName] === selectedValue) {
+    this.form[fieldName] = null;
+  } else {
+    this.form[fieldName] = selectedValue;
+   }
+  },
+
+  toggleRadio(selectedValue) {
+    this.toggle('projects', selectedValue);
+  },
+
+  toggleStatus(selectedValue) {
+    this.toggle('status', selectedValue);
+  },
+
+  toggleStage(selectedValue) {
+    this.toggle('stage', selectedValue);
+  },
+
+    getResults(page=1){
+      const queryParameters = {
         page: page,
+        search: this.searchTerm,
+        sort: this.currentSort,
+        filter: this.form.projects,
+        members: this.form.hasMembers ? 'true' : undefined,
+        status: this.form.status,
+        tasks: this.form.activeTasks ? 'true' : undefined,
+        stage: this.form.stage,
+        from: this.form.startdate,
+        to: this.form.enddate,
       };
 
-       if (this.searchTerm) {
-        queryParameters.search = this.searchTerm;
-      }
+      const filteredParameters = Object.fromEntries(
+      Object.entries(queryParameters).filter(([_, value]) => value !== undefined && value !== ''));
 
-      if (this.currentSort) {
-        queryParameters.sort = this.currentSort;
-      }
-
-      if (this.form.projects) {
-        queryParameters.filter = this.form.projects;
-      }
-       if (this.form.hasMembers) {
-        queryParameters.members = 'true';
-      }
-      if (this.form.status) {
-        queryParameters.status = this.form.status;
-      }
-      if (this.form.activeTasks) {
-        queryParameters.tasks = 'true';
-      }
-       if (this.form.stage) {
-        queryParameters.stage = this.form.stage;
-      }
-       if (this.form.startdate) {
-        queryParameters.from = this.form.startdate;
-      }
-       if (this.form.enddate) {
-        queryParameters.to = this.form.enddate;
-      }
-        axios.get(`/api/v1/admin/projects`,{
-          params: queryParameters,
+      axios.get(`/api/v1/admin/projects`,{
+          params: filteredParameters,
         })
-        .then(response => {
-        this.from=response.data.meta.from;
-        this.to=response.data.meta.to;
-        this.total=response.data.meta.total;
-        this.projects=response.data;
+      .then(response => {
+        if(response.data.projects){
+          this.projects=response.data.projects;
+          this.from=this.projects.meta.from;
+          this.to=this.projects.meta.to;
+          this.total=this.projects.meta.total;
+         } else {  
+        this.projects='';
+        this.from='';
+        this.to='';
+        this.total='';
+        }
+
+        this.appliedFilters = response.data.appliedFilters;
+        this.message = response.data.projects ? '' : response.data.message;
         })
         .catch(error => {
-          //console.log(error.response.data.errors);
+          this.$vToastify.warning('Error! Please review and correct the fields.');
         })
-        },
+        }, 
+
       toggleSort(order) {
-      // Toggle sorting order when clicking the angle icons
       this.currentSort = this.currentSort === order ? (order === 'asc' ? 'desc' : 'asc') : order;
       this.getResults();
     },
-        filterBy(){
-        this.getResults();
-        //this.form={};
-        //this.form.date='';
-        //this.form.stage='';
-        this.isPop=false;
+
+    filterBy(){
+      this.getResults();
+      this.isPop=false;
     },
+
     searchProjects:debounce(function () { 
       this.getResults();
     },1000),
+
     },
     mounted(){
         this.getResults();

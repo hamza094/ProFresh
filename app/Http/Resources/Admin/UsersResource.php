@@ -16,6 +16,7 @@ class UsersResource extends JsonResource
     {
          return [
           'id'=>$this->id,
+          'name'=>$this->name,
           'username'=>$this->username,
           'avatar' => $this->when($this->avatar,
                         fn()=>$this->avatar_path),

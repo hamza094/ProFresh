@@ -131,7 +131,7 @@ class Project extends Model
 
     public function score()
     {
-      $this->loadCount(['tasks', 'activeMembers']);
+      //$this->loadCount(['tasks', 'activeMembers']);
       $scoreAction = new ScoreAction($this);
       $total = $scoreAction->calculateTotal();
       $this->updateStatus($total);
