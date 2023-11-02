@@ -110,7 +110,7 @@
     </div>
     </div>
     <div class="ms-auto text-secondary">
-    <button class="btn btn-sm btn-danger">Bulk Delete</button>
+    <button class="btn btn-sm btn-danger" @click.pervent="bulkDelete">Bulk Delete</button>
     </div>
 
     <div class="ms-auto text-secondary">
@@ -126,7 +126,9 @@
                     <table v-else class="table card-table table-vcenter text-nowrap datatable">
                       <thead>
                         <tr>
-                          <th class="w-1"><input class="form-check-input m-0 align-middle" type="checkbox" aria-label="Select all invoices"></th>
+                          <th class="w-1"><input class="form-check-input m-0 align-middle" type="checkbox" aria-label="Select all invoices"
+                          v-model="selectAll"
+                          @change="selectAllProjects"></th>
                           <th class="w-1">No.
                             <i v-if="currentSort === 'asc' || currentSort === ''" class="fas fa-angle-up angle-pointer" @click="toggleSort('asc')"></i>
 
@@ -145,7 +147,9 @@
                       </thead>
                       <tbody>
                         <tr v-for="(project,index) in projects.data" :key="project.id">
-                          <td><input class="form-check-input m-0 align-middle" type="checkbox" aria-label="Select invoice"></td>
+                          <td><input class="form-check-input m-0 align-middle" type="checkbox" aria-label="Select invoice"
+                          v-model="selectedProjects"
+                          :value="project.id"></td>
                           <td>{{project.id}}</td>
                           <td>
                             <router-link :to="'/projects/'+project.slug" class="admin-panel-link">
@@ -209,6 +213,8 @@ export default{
     return{
 	   projects:[],
        stages:[],
+       selectedProjects: [],
+       selectAll: false,
        appliedFilters:[],
        totalProjects:0,
        currentSort: 'asc',
@@ -265,6 +271,13 @@ export default{
   toggleStage(selectedValue) {
     this.toggle('stage', selectedValue);
   },
+   selectAllProjects() {
+      if (this.selectAll) {
+      this.selectedProjects = this.projects.data.map((project) => project.id);
+      } else {
+        this.selectedProjects = [];
+      }
+    },
 
     getResults(page=1){
       const queryParameters = {
@@ -316,7 +329,28 @@ export default{
       this.getResults();
       this.isPop=false;
     },
-
+        bulkDelete() {
+      if (this.selectedProjects.length === 0) {
+        return;
+      }
+      this.sweetAlert('Yes, Delete Selected ' + this.selectedProjects.length + ' Projects!')
+        .then((result) => {
+          if (result.value) {
+            axios.delete('/api/v1/admin/projects/bulk-delete', {
+              data: { project_ids: this.selectedProjects },
+            })
+              .then((response) => {
+                this.$vToastify.success(response.data.message);
+                this.getResults();
+              })
+              .catch((error) => {
+                swal.fire('Failed!', 'There was something wrong.', 'warning');
+              });
+          }
+            this.selectedProjects = [];
+            this.selectAll=false;
+        });
+    },
     searchProjects:debounce(function () { 
       this.getResults();
     },1000),

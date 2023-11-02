@@ -40,6 +40,19 @@ class ProjectController extends ApiController
         'projects'=>ProjectResource::collection($projects)->paginate($perPage),
         'appliedFilters' => $appliedFilters,
     ]);     
+    }
+
+    public function bulkDelete(Request $request)
+    {
+        $projectIds = $request->input('project_ids', []);
+
+        Project::withTrashed()->whereIn('id', $projectIds)->each(function ($project) {
+    $project->forceDelete();
+    });
+
+        return $this->respondWithSuccess([
+        'message'=>'Projects deleted Successfully',
+    ]); 
 
     }
 }
