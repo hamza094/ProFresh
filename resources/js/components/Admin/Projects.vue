@@ -300,17 +300,10 @@ export default{
           params: filteredParameters,
         })
       .then(response => {
-        if(response.data.projects){
           this.projects=response.data.projects;
-          this.from=this.projects.meta.from;
-          this.to=this.projects.meta.to;
-          this.total=this.projects.meta.total;
-         } else {  
-        this.projects='';
-        this.from='';
-        this.to='';
-        this.total='';
-        }
+          this.from=this.projects.meta.from || '';
+          this.to=this.projects.meta.to || '';
+          this.total=this.projects.meta.total || '';
 
         this.appliedFilters = response.data.appliedFilters;
         this.message = response.data.projects ? '' : response.data.message;
@@ -354,7 +347,6 @@ export default{
     searchProjects:debounce(function () { 
       this.getResults();
     },1000),
-
     },
     mounted(){
         this.getResults();

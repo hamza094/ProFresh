@@ -17,6 +17,7 @@
               </router-link>
                </div>
                <div class="col-md-4">
+                 <router-link to="/admin/tasks" class="admin-dashboard-link">
                    <div class="card">
                   <div class="ribbon ribbon-top bg-yellow">
                     <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-list-tree" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -34,6 +35,7 @@
                     <p class="text-secondary">The Tasks section enables granular task management. Admins can oversee, edit, and optimize individual tasks, improving project productivity.</p>
                   </div>
                 </div>
+              </router-link>
                </div>
                               <div class="col-md-4">
                    <div class="card">

@@ -18,6 +18,7 @@ import Profile from './components/Profile/ProfilePage';
 import Subscription from './components/Subscription';
 import AdminPanel from './components/Admin/Dashboard';
 import ProjectPanel from './components/Admin/Projects';
+import TaskPanel from './components/Admin/Tasks';
 import NotFound from './components/Error';
 
 const guest = (to, from, next) => {
@@ -66,6 +67,12 @@ let router = new Router({
             path: '/admin/projects',
             component: ProjectPanel,
             name: "ProjectPanel",
+            beforeEnter: auth,
+        },
+        {
+            path: '/admin/tasks',
+            component: TaskPanel,
+            name: "TaskPanel",
             beforeEnter: auth,
         },
         {

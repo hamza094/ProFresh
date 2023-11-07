@@ -18,7 +18,7 @@ class UserSeeder extends Seeder
        User::factory()->count(14)
          ->has(Project::factory()
          ->state(['stage_id'=>1])
-         ->count(3))
+         ->count(6))
          ->create();
     }
 }

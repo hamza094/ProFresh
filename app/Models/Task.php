@@ -72,4 +72,8 @@ class Task extends Model
         ->where('due_at', '>=', now())
         ->where('notify_sent', false);
     }
+
+    public function state(){
+    return $this->deleted_at ? 'trashed' : 'active';
+   }
 }
