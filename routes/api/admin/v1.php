@@ -7,7 +7,8 @@ use App\Http\Controllers\Api\Auth\OAuthController;
 use App\Http\Controllers\Api\Admin\
 {
   ProjectController,
-  TaskController
+  TaskController,
+  UserController,
 };
 /*
 |--------------------------------------------------------------------------
@@ -16,12 +17,14 @@ use App\Http\Controllers\Api\Admin\
 
 Route::group(['prefix'=>'v1/admin'], function () {
 
-Route::middleware(['auth:sanctum'])->group(function () {  
+Route::middleware(['auth:sanctum',\App\Http\Middleware\TrackLastActiveAt::class])->group(function () {  
 
 //Project Api Resource Routes
 Route::get('/projects', [ProjectController::class,'index']);
 
 Route::get('/tasks', [TaskController::class,'index']);
+
+Route::get('/users', [UserController::class,'index']);
 
 
 Route::delete('/projects/bulk-delete', [ProjectController::class,'bulkDelete']);

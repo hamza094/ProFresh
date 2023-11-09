@@ -37,7 +37,8 @@
                 </div>
               </router-link>
                </div>
-                              <div class="col-md-4">
+                  <div class="col-md-4">
+                  <router-link to="/admin/users" class="admin-dashboard-link">  
                    <div class="card">
                   <div class="ribbon ribbon-top bg-green">
                     <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-users" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -53,6 +54,7 @@
                     <p class="text-secondary">The Users section manages user accounts, roles, permissions, and login options, maintaining a secure and organized user environment.</p>
                   </div>
                 </div>
+              </router-link>  
                </div>
      		</div>
 

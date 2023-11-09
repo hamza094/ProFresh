@@ -64,6 +64,7 @@ class User extends Authenticatable implements Searchable, MustVerifyEmail
         'oauth_provider' => OAuthProvider::class,
         'oauth_token' => 'encrypted',
         'oauth_refresh_token' => 'encrypted',
+        'last_active_at'=>'datetime'
     ];
 
     public function sendEmailVerificationNotification()

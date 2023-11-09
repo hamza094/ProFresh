@@ -37,6 +37,7 @@ class Kernel extends HttpKernel
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
+             \App\Http\Middleware\TrackLastActiveAt::class,
             //\App\Http\Middleware\LastActive::class,
 
         ],
@@ -45,6 +46,7 @@ class Kernel extends HttpKernel
              'throttle:60,10',
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
             \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
+             \App\Http\Middleware\TrackLastActiveAt::class,
         ],
     ];
 

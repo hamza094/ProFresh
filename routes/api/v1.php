@@ -35,7 +35,7 @@ Route::controller(OAuthController::class)->group(function () {
     Route::get('/auth/callback/{provider}', 'callback')->name('oauth.callback');
 });  
 
-Route::middleware(['auth:sanctum'])->group(function () {  
+Route::middleware(['auth:sanctum',\App\Http\Middleware\TrackLastActiveAt::class])->group(function () {  
 
 Route::get('/welcome',[WelcomeController::class,'index']);
 
