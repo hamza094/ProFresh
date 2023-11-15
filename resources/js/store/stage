@@ -1,0 +1,58 @@
+const state = {
+  stages:[],
+};
+
+const mutations = {
+  setStages(state,data){
+    state.stages=data;
+  },
+
+  setErrors(state,error){
+  },
+
+  stageUpdate(state, updatedStage) {
+    const index = state.stages.findIndex(stage => stage.id === updatedStage.id);
+    if (index !== -1) {
+      // Replace the existing stage with the updated stage
+      state.stages.splice(index, 1, updatedStage);
+    }
+  },
+
+  addStage(state, newStage)
+  {
+    state.stages.push(newStage);
+  },
+
+  stageDelete(state, stageIdToDelete) {
+    state.stages = state.stages.filter(stage => stage.id !== stageIdToDelete);
+  },
+};
+
+const actions = {
+  loadStages({ commit }) {
+      return axios.get(`/api/v1/admin/stages`)
+        .then(response => {
+        commit('setStages', response.data);
+        })
+        .catch(error => {
+          console.log(error.response.data.errors);
+        })
+      },
+
+    async addNewStage({ commit }, stageData) {
+    try {
+      const response = await axios.post('/api/v1/admin/stages', stageData);
+      commit('addStage', response.data.stage);
+    } catch (error) {
+      console.error('Error adding stage:', error);
+      throw error; 
+    }
+  },
+};
+
+export default{
+  namespaced: true,
+  state,
+  mutations,
+  actions,
+}

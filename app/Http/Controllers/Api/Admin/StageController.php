@@ -1,0 +1,51 @@
+<?php
+
+namespace App\Http\Controllers\Api\Admin;
+
+use App\Http\Controllers\Controller;
+use App\Models\Stage;
+use Illuminate\Validation\Rule;
+use Illuminate\Http\Request;
+use F9Web\ApiResponseHelpers;
+use Illuminate\Http\JsonResponse;
+use App\Http\Resources\Admin\StageResource;
+use App\Http\Requests\Admin\StageRequest;
+
+class StageController extends Controller
+{
+    use ApiResponseHelpers;
+
+    public function index()
+    {
+      $stages=Stage::all();
+
+      return StageResource::collection($stages);
+    }
+
+    public function store(StageRequest $request)
+    {
+        $stage = Stage::create($request->validated());
+
+        return $this->respondCreated([
+            'message'=>'Stage created successfully',
+            'stage'=>new StageResource($stage)
+        ]);
+    }
+
+    public function update(Request $request,Stage $stage)
+    {
+        $stage->update($request->validate(['name' => 'required|string|max:255']));
+
+         return $this->respondWithSuccess([
+            'message'=>'Stage updated successfully',
+            'stage'=>new StageResource($stage)
+        ]);
+    }
+
+    public function destroy(Stage $stage)
+    {
+      $stage->delete();
+
+      return $this->respondOk('Stage deleted successfully');
+    }
+}

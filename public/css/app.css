@@ -1432,9 +1432,9 @@ button.gnuIjg {
   border: 1px solid #e5e5ee;
 }
 
-.vm--container {
-  z-index: 0 !important;
-}
+/*.vm--container{
+    z-index: 0 !important;
+}*/
 
 .page-link {
   position: inherit !important;

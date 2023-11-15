@@ -57,8 +57,6 @@
               </router-link>  
                </div>
      		</div>
-
-
     <div class="row row-cards mt-4">
                   <div class="col-sm-6 col-lg-3">
                     <div class="card card-sm">
@@ -137,47 +135,40 @@
                           </div>
                           <div class="col">
                             <div class="font-weight-medium">
-                              Statuses Panel
+                              Stages Panel
                             </div>
-                            <div class="text-secondary">
-                              <a href="" class="btn btn-outline-info w-100 btn-sm" target="_blank">View</a>
-                            </div>
+                            <Stage></Stage>
                           </div>
                         </div>
                       </div>
                     </div>
                   </div>
-                  <div class="col-sm-6 col-lg-3">
+
+                   <div class="col-sm-6 col-lg-3">
                     <div class="card card-sm">
                       <div class="card-body">
                         <div class="row align-items-center">
                           <div class="col-auto">
-                            <span class="bg-facebook text-white avatar">
-                              <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-binary-tree" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <span class="bg-twitter text-white avatar">
+                              <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-align-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-   <path d="M6 20a2 2 0 1 0 -4 0a2 2 0 0 0 4 0z"></path>
-   <path d="M16 4a2 2 0 1 0 -4 0a2 2 0 0 0 4 0z"></path>
-   <path d="M16 20a2 2 0 1 0 -4 0a2 2 0 0 0 4 0z"></path>
-   <path d="M11 12a2 2 0 1 0 -4 0a2 2 0 0 0 4 0z"></path>
-   <path d="M21 12a2 2 0 1 0 -4 0a2 2 0 0 0 4 0z"></path>
-   <path d="M5.058 18.306l2.88 -4.606"></path>
-   <path d="M10.061 10.303l2.877 -4.604"></path>
-   <path d="M10.065 13.705l2.876 4.6"></path>
-   <path d="M15.063 5.7l2.881 4.61"></path>
-</svg>                            </span>
+   <path d="M4 6l16 0"></path>
+   <path d="M10 12l10 0"></path>
+   <path d="M6 18l14 0"></path>
+</svg>
+                            </span>
                           </div>
                           <div class="col">
                             <div class="font-weight-medium">
-                              Misceleneous
+                              Statuses Panel
                             </div>
-                            <div class="text-secondary">
-                              
-                            </div>
+                            
                           </div>
                         </div>
                       </div>
                     </div>
                   </div>
+                  
                 </div>
 <div class="row mt-5">
             <div class="col-md-6">
@@ -295,18 +286,17 @@
 	</div>
 </template>
 <script>
+  import Stage from './Stage.vue'
 
 export default{
-
+  components: {Stage},
     data(){
     return{
 	   		
     };
     },
     methods:{
-   
-      
-			
+      		
 			
 			
     },
