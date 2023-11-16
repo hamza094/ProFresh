@@ -112,7 +112,7 @@
                               Database Backup
                             </div>
                             <div class="text-secondary">
-                              <a href="" class="btn btn-outline-success w-100 btn-sm" target="_blank">Run Backup</a>
+                              <button href="" class="btn btn-outline-success w-100 btn-sm" target="_blank" @click.pervent="runBackup()">Run Backup</button>
                             </div>
                           </div>
                         </div>
@@ -296,7 +296,14 @@ export default{
     };
     },
     methods:{
-      		
+    runBackup(){
+    axios.get('/api/v1/admin/backup/database').
+    then(response=>{
+       
+   }).catch(error=>{
+     console.log(error.response.data.errors);
+   });
+    },		
 			
 			
     },

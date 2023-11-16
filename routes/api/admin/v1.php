@@ -9,7 +9,8 @@ use App\Http\Controllers\Api\Admin\
   ProjectController,
   TaskController,
   UserController,
-  StageController
+  StageController,
+  DashBoardController,
 };
 /*
 |--------------------------------------------------------------------------
@@ -26,6 +27,8 @@ Route::get('/projects', [ProjectController::class,'index']);
 Route::get('/tasks', [TaskController::class,'index']);
 
 Route::get('/users', [UserController::class,'index']);
+
+Route::get('/backup/database', [DashBoardController::class,'backup']);
 
 Route::apiResource('/stages', StageController::class);
 
