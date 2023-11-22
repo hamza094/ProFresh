@@ -1,0 +1,58 @@
+const state = {
+  statuses:[],
+};
+
+const mutations = {
+  setStatuses(state,data){
+    state.statuses=data;
+  },
+
+  setErrors(state,error){
+  },
+
+  statusUpdate(state, updatedStatus) {
+    const index = state.statuses.findIndex(status => status.id === updatedStatus.id);
+    if (index !== -1) {
+      // Replace the existing status with the updated status
+      state.statuses.splice(index, 1, updatedStatus);
+    }
+  },
+
+  addStatus(state, newStatus)
+  {
+    state.statuses.push(newStatus);
+  },
+
+  statusDelete(state, statusIdToDelete) {
+    state.statuses = state.statuses.filter(status => status.id !== statusIdToDelete);
+  },
+};
+
+const actions = {
+  loadStatuses({ commit }) {
+      return axios.get(`/api/v1/admin/statuses`)
+        .then(response => {
+        commit('setStatuses', response.data);
+        })
+        .catch(error => {
+          console.log(error.response.data.errors);
+        })
+      },
+
+    async addNewStatus({ commit }, statusData) {
+    try {
+      const response = await axios.post('/api/v1/admin/statuses', statusData);
+      commit('addStatus', response.data.status);
+    } catch (error) {
+      console.error('Error adding status:', error);
+      throw error; 
+    }
+  },
+};
+
+export default{
+  namespaced: true,
+  state,
+  mutations,
+  actions,
+}

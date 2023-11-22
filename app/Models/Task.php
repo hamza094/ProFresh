@@ -51,9 +51,9 @@ class Task extends Model
      return $this->belongsToMany(User::class);
    }
 
-    public function status()
+     public function status()
     {
-      return $this->belongsTo(TaskStatus::class,'status_id');
+      return $this->belongsTo(TaskStatus::class, 'status_id');
     }
 
     public function scopeArchived($query)

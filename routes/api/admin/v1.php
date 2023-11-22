@@ -10,6 +10,7 @@ use App\Http\Controllers\Api\Admin\
   TaskController,
   UserController,
   StageController,
+  StatusController,
   DashBoardController,
 };
 /*
@@ -31,6 +32,9 @@ Route::get('/users', [UserController::class,'index']);
 Route::get('/backup/database', [DashBoardController::class,'backup']);
 
 Route::apiResource('/stages', StageController::class);
+
+Route::apiResource('/statuses', StatusController::class);
+
 
 Route::delete('/projects/bulk-delete', [ProjectController::class,'bulkDelete']);
 

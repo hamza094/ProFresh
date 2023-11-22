@@ -63,7 +63,7 @@
                       <div class="card-body">
                         <div class="row align-items-center">
                           <div class="col-auto">
-                            <span class="bg-primary text-white avatar">
+                            <span class="bg-danger text-white avatar">
                              <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-tilt-shift" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
    <path d="M8.56 3.69a9 9 0 0 0 -2.92 1.95"></path>
@@ -80,10 +80,10 @@
                           </div>
                           <div class="col">
                             <div class="font-weight-medium">
-                              Site Logs Viewer
+                              <span class="text-secondary"><b>Site Logs Viewer</b></span>
                             </div>
                             <div class="text-secondary">
-                              <a href="/log-viewer" class="btn btn-outline-primary w-100 btn-sm" target="_blank">View</a>
+                              <a href="/log-viewer" class="btn btn-outline-danger w-100 btn-sm" target="_blank">View</a>
                             </div>
                           </div>
                         </div>
@@ -109,7 +109,7 @@
                           </div>
                           <div class="col">
                             <div class="font-weight-medium">
-                              Database Backup
+                               <span class="text-secondary"><b>Database Backup</b></span>
                             </div>
                             <div class="text-secondary">
                               <button href="" class="btn btn-outline-success w-100 btn-sm" target="_blank" @click.pervent="runBackup()">Run Backup</button>
@@ -135,7 +135,7 @@
                           </div>
                           <div class="col">
                             <div class="font-weight-medium">
-                              Stages Panel
+                               <span class="text-secondary"><b>Stages Panel</b></span>
                             </div>
                             <Stage></Stage>
                           </div>
@@ -149,20 +149,15 @@
                       <div class="card-body">
                         <div class="row align-items-center">
                           <div class="col-auto">
-                            <span class="bg-twitter text-white avatar">
-                              <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-align-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-   <path d="M4 6l16 0"></path>
-   <path d="M10 12l10 0"></path>
-   <path d="M6 18l14 0"></path>
-</svg>
+                            <span class="bg-dark text-white avatar">
+    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-redux" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M16.54 7c-.805 -2.365 -2.536 -4 -4.54 -4c-2.774 0 -5.023 2.632 -5.023 6.496c0 1.956 1.582 4.727 2.512 6" /><path d="M4.711 11.979c-1.656 1.877 -2.214 4.185 -1.211 5.911c1.387 2.39 5.138 2.831 8.501 .9c1.703 -.979 2.875 -3.362 3.516 -4.798" /><path d="M15.014 19.99c2.511 0 4.523 -.438 5.487 -2.1c1.387 -2.39 -.215 -5.893 -3.579 -7.824c-1.702 -.979 -4.357 -1.235 -5.927 -1.07" /><path d="M10.493 9.862c.48 .276 1.095 .112 1.372 -.366a1 1 0 0 0 -.367 -1.365a1.007 1.007 0 0 0 -1.373 .366a1 1 0 0 0 .368 1.365z" /><path d="M9.5 15.5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /><path d="M15.5 14m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /></svg>
                             </span>
                           </div>
                           <div class="col">
                             <div class="font-weight-medium">
-                              Statuses Panel
+                               <span class="text-secondary"><b>Task Statuses</b></span>
                             </div>
-                            
+                            <TaskStatus></TaskStatus>
                           </div>
                         </div>
                       </div>
@@ -287,9 +282,10 @@
 </template>
 <script>
   import Stage from './Stage.vue'
+  import TaskStatus from './TaskStatus.vue'
 
 export default{
-  components: {Stage},
+  components: {Stage,TaskStatus},
     data(){
     return{
 	   		

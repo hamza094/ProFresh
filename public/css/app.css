@@ -1680,6 +1680,14 @@ button.gnuIjg {
   padding: 5px;
 }
 
+.status-color {
+  display: inline-block;
+  width: 0.7rem;
+  height: 0.7rem;
+  border-radius: 50%;
+  margin-left: 0.5rem;
+}
+
 .tooltip {
   display: block !important;
   z-index: 10000;

@@ -9,7 +9,7 @@
     <div class="mb-2 mt-3">
     <form>
      <div class="form-group row">
-    <label for="colFormLabel" class="col-sm-3 col-form-label">Add Task</label>
+    <label for="colFormLabel" class="col-sm-3 col-form-label">Add Stage</label>
     <div class="col-sm-6">
       <input type="text" class="form-control" id="colFormLabel" placeholder="Stage Name" v-model="form.name" @  @keypress.enter.prevent="addStage">
     </div>

@@ -9,6 +9,7 @@ import project from "./project"
 import task from "./task"
 import SingleTask from "./SingleTask"
 import stage from "./stage"
+import status from "./status"
 
 Vue.use(Vuex)
 
@@ -23,6 +24,7 @@ export default new Vuex.Store({
      project,
      task,
      SingleTask,
-     stage
+     stage,
+     status
   }
 })
