@@ -24,6 +24,7 @@ class EventServiceProvider extends ServiceProvider
       UserLogin::class => [
         SaveUserTimezone::class,
     ],
+      'App\Events\DashboardActivity' => [],
      'App\Events\ActivityLogged' => [],
      'App\Events\NewMessage' => [],
 

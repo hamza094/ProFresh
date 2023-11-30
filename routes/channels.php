@@ -28,6 +28,10 @@ Broadcast::channel('activity', function ($user) {
       return true;
 });
 
+Broadcast::channel('activities', function ($user) {
+      return true;
+});
+
 Broadcast::channel('conversations.{slug}', function ($user,$slug) {
 
     $project=Project::with('user')->where('slug',$slug)

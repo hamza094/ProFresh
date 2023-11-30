@@ -167,31 +167,43 @@
                 </div>
 <div class="row mt-5">
             <div class="col-md-6">
-                <div class="card" style="height: 28rem">
-                    <div class="card-header">
-                        <div class="card-activity">
-                            Activities
-                        </div>
-                    </div>
-                      <div class="card-body card-body-scrollable card-body-scrollable-shadow">
-                        <div class="divide-y"> 
-                          <div>
-                            <div class="row">
-                              <div class="col-auto">
-                                <span class="avatar" style="background-image: url(./static/avatars/002f.jpg)"></span>
-                              </div>
-                              <div class="col">
-                                <div class="text-truncate">
-                                  <strong>Kellie Skingley</strong> closed a new deal on project <strong>Pen Pineapple Apple Pen</strong>.
-                                </div>
-                                <div class="text-secondary">2 days ago</div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
+    <div class="card" style="height: 28rem">
+        <div class="card-header">
+            <div class="card-activity">
+                Activities
             </div>
+        </div>
+        <div class="card-body card-body-scrollable card-body-scrollable-shadow">
+            <div class="divide-y"> 
+                <div v-for="activity in activities">
+                    <div class="row">
+                        <div class="col-auto">
+                            <span class="avatar">
+                                <router-link :to="`/user/${activity.user.id}/profile`">
+                                    <img class="avatar" :src="activity.user.avatar" alt="Avatar">
+                                </router-link>
+                            </span>
+                        </div>
+                        <div class="col">
+                            <div class="">
+                                <strong>{{ activity.user.name }}</strong> {{ activity.description }}
+                                <span v-if="activity.project !== null">
+                                    <strong>
+                                        <router-link :to="`/projects/${activity.project.slug}`">{{ activity.project.name }}</router-link>
+                                    </strong>
+                                    <span v-if="activity.project.state === 'active'" class="badge bg-success">Active</span>
+                                    <span v-if="activity.project.state === 'trashed'" class="badge bg-warning text-dark">Trashed</span>
+                                </span>
+                            </div>
+                            <div class="text-secondary">{{activity.time}}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
             <div class="col-md-6 mt5">
                 Chart
             </div>
@@ -275,9 +287,6 @@
                   </div>
                 </div>
         </div>
-
-
- 
 	</div>
 </template>
 <script>
@@ -288,7 +297,7 @@ export default{
   components: {Stage,TaskStatus},
     data(){
     return{
-	   		
+	   	activities:[],	
     };
     },
     methods:{
@@ -299,11 +308,26 @@ export default{
    }).catch(error=>{
      console.log(error.response.data.errors);
    });
+    },
+    loadActivities(){
+    axios.get('/api/v1/admin/dashboard/activities').
+    then(response=>{
+       this.activities=response.data;
+   }).catch(error=>{
+     console.log(error.response.data.errors);
+   });
+    },
+     listenForActivities() {
+      Echo.channel('activities')
+        .listen('DashboardActivity', (e) => {
+          this.activities.unshift(e);
+      });
     },		
-			
 			
     },
     mounted(){
+      this.listenForActivities();
+      this.loadActivities();
     }
 }
 </script>

@@ -5,6 +5,8 @@ use App\Models\Activity;
 use App\Models\Project;
 use Illuminate\Support\Arr;
 use App\Events\ActivityLogged;
+use App\Events\DashboardActivity;
+use App\Events\Random;
 
 trait RecordActivity
 {
@@ -75,7 +77,13 @@ trait RecordActivity
             'info'=>$info,
         ]);
 
-        ActivityLogged::dispatch($activity);
+        $activity->load('user','project','subject');
+
+       if (strpos($description, '_stage') === false && strpos($description, '_taskstatus') === false) {
+           ActivityLogged::dispatch($activity);
+        }
+
+        DashboardActivity::dispatch($activity);
     }
     /**
      * The activity feed for the project.

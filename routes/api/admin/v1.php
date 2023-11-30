@@ -40,6 +40,8 @@ Route::delete('/projects/bulk-delete', [ProjectController::class,'bulkDelete']);
 
 Route::delete('/tasks/bulk-delete', [TaskController::class,'bulkDelete']);
 
+Route::get('dashboard/activities',[DashBoardController::class,'activities']);
+
 //Project Route Prefix
 Route::group(['prefix' => 'projects/{project}'], function() {
 

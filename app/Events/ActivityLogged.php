@@ -3,8 +3,8 @@
 namespace App\Events;
 
 use App\Models\Activity;
-use App\Http\Resources\ActivityResource;
 use Illuminate\Broadcasting\Channel;
+use App\Http\Resources\ActivityResource;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
 use Illuminate\Broadcasting\PrivateChannel;

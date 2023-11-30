@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Api\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
+use App\Http\Resources\Admin\ActivitiesResource;
+use App\Models\Activity;
 
 class DashboardController extends Controller
 {
@@ -17,5 +19,12 @@ class DashboardController extends Controller
         } catch (\Throwable $e) {
             return response()->json(['error' => $e->getMessage()], 500);
         }
+    }
+
+    public function activities()
+    {
+        $activities=Activity::with('user','subject','project')->latest()->limit(15)->get();
+
+        return ActivitiesResource::collection($activities);
     }
 }
