@@ -205,7 +205,7 @@
 </div>
 
             <div class="col-md-6 mt5">
-                Chart
+                <Chart></Chart>
             </div>
         </div>
             <div class="card mt-5">
@@ -292,9 +292,10 @@
 <script>
   import Stage from './Stage.vue'
   import TaskStatus from './TaskStatus.vue'
+  import Chart from './Chart.vue'
 
 export default{
-  components: {Stage,TaskStatus},
+  components: {Stage,TaskStatus,Chart},
     data(){
     return{
 	   	activities:[],	

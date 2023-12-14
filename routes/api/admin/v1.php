@@ -42,6 +42,8 @@ Route::delete('/tasks/bulk-delete', [TaskController::class,'bulkDelete']);
 
 Route::get('dashboard/activities',[DashBoardController::class,'activities']);
 
+Route::get('data',[DashBoardController::class,'data']);
+
 //Project Route Prefix
 Route::group(['prefix' => 'projects/{project}'], function() {
 

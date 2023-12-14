@@ -176,4 +176,9 @@ class Project extends Model
     return $this->deleted_at ? 'trashed' : 'active';
    }
 
+    public function getStateAttribute()
+    {
+        return $this->deleted_at ? 'trashed' : 'active';
+    }
+
 }
