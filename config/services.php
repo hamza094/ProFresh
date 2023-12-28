@@ -50,7 +50,10 @@ return [
 
     'paddle' => [
       'monthly' => env('Monthly_Plan'),
-      'yearly' => env('Yearly_Plan'), 
+      'yearly' => env('Yearly_Plan'),
+      'vendor_id'=>env('PADDLE_VENDOR_ID'),
+      'vendor_auth_code'=>env('PADDLE_VENDOR_AUTH_CODE'), 
+      'results_per_page'=>10,
      ],
 
     'paypal' => [

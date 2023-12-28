@@ -13,6 +13,8 @@ use App\Http\Controllers\Api\Admin\
   StatusController,
   DashBoardController,
 };
+use App\Http\Controllers\Api\Admin\Integration\PaddleController;
+
 /*
 |--------------------------------------------------------------------------
 | API V1 Routes
@@ -43,6 +45,8 @@ Route::delete('/tasks/bulk-delete', [TaskController::class,'bulkDelete']);
 Route::get('dashboard/activities',[DashBoardController::class,'activities']);
 
 Route::get('data',[DashBoardController::class,'data']);
+
+Route::get('subscriptions/list',[PaddleController::class,'subscribedUsers']);
 
 //Project Route Prefix
 Route::group(['prefix' => 'projects/{project}'], function() {

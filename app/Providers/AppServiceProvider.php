@@ -11,6 +11,8 @@ use App\Services\SendSmsService;
 use Illuminate\Support\Collection;
 use App\Services\PaginationService;
 use Opcodes\LogViewer\Facades\LogViewer;
+use App\Interfaces\Paddle;
+use App\Services\Admin\Integration\PaddleService;
 
 
 class AppServiceProvider extends ServiceProvider
@@ -28,6 +30,11 @@ class AppServiceProvider extends ServiceProvider
           SendSmsInterface::class,
           SendSmsService::class
          );
+
+       $this->app->bind(
+         abstract: Paddle::class,
+         concrete: fn (): Paddle => new PaddleService()
+        );
     }
 
 

@@ -221,67 +221,43 @@
                         </div>
                         entries
                       </div>
-                      <div class="ms-auto text-secondary">
-                        Search:
-                        <div class="ms-2 d-inline-block">
-                          <input type="text" class="form-control form-control-sm" aria-label="Search invoice">
-                        </div>
-                      </div>
                     </div>
                   </div>
                   <div class="table-responsive">
                     <table class="table card-table table-vcenter text-nowrap datatable">
                       <thead>
                         <tr>
-                          <th class="w-1">No. 
-                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-sm icon-thick" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M6 15l6 -6l6 6"></path></svg>
-                          </th>
-                          <th>Invoice Subject</th>
-                          <th>Client</th>
-                          <th>VAT No.</th>
-                          <th>Created</th>
-                          <th>Status</th>
-                          <th>Price</th>
-                          <th></th>
+                          <th>User Id</th>
+                          <th>Email</th>
+                          <th>Signup Date</th>
+                          <th>Last Payment Amount</th>
+                          <th>Last Payment Date</th>
+                          <th>Next Payment Date</th>
                         </tr>
                       </thead>
                       <tbody>
-                        <tr>
-                          <td><span class="text-secondary">001408</span></td>
-                          <td><a href="invoice.html" class="text-reset" tabindex="-1">Icons</a></td>
+                        <tr v-for="subscription in subscriptions">
+                          <td><span class="text-secondary">{{subscription.userId}}</span></td>
+                          <td><a href="invoice.html" class="text-reset" tabindex="-1">{{subscription.email}}</a></td>
                           <td>
-                            <span class="flag flag-xs flag-country-pl me-2"></span>
-                            Tookapic
-                          </td>
-                          <td>
-                            87956621
+                          
+                            {{subscription.signUpDate}}
                           </td>
                           <td>
-                            13 May 2018
+                        {{subscription.lastPaymentAmount}}{{subscription.lastPaymentCurrency}}
                           </td>
                           <td>
-                            <span class="badge bg-success me-1"></span> Paid Today
+                             {{subscription.lastPaymentDate}}
                           </td>
-                          <td>$940</td>
-                          <td class="text-end">
-                            <span class="dropdown">
-                              <button class="btn dropdown-toggle align-text-top" data-bs-boundary="viewport" data-bs-toggle="dropdown">Actions</button>
-                              <div class="dropdown-menu dropdown-menu-end">
-                                <a class="dropdown-item" href="#">
-                                  Action
-                                </a>
-                                <a class="dropdown-item" href="#">
-                                  Another action
-                                </a>
-                              </div>
-                            </span>
-                          </td>
+                        <td>{{subscription.nextPaymentDate}}</td>
                         </tr>
                       </tbody>
                     </table>
                   </div>
                   <div class="card-footer d-flex align-items-center">
-                    <p class="m-0 text-secondary">Showing <span>1</span> to <span>8</span> of <span>16</span> entries</p>
+                    <p class="m-0 text-secondary">Showing <span>1</span> to <span>10</span>
+                      <a href="https://sandbox-login.paddle.com" target="_blank">For in-depth analysis, check the Paddle subscription dashboard.</a>
+                    </p>
                     <ul class="pagination m-0 ms-auto">
                     </ul>
                   </div>
@@ -298,14 +274,23 @@ export default{
   components: {Stage,TaskStatus,Chart},
     data(){
     return{
-	   	activities:[],	
+	   	activities:[],
+      subscriptions:[],	
     };
     },
     methods:{
     runBackup(){
-    axios.get('/api/v1/admin/backup/database').
+    axios.get('/api/v1/admin/subscriptions/list').
     then(response=>{
        
+   }).catch(error=>{
+     console.log(error.response.data.errors);
+   });
+    },
+    subscriptionList(){
+          axios.get('/api/v1/admin/subscriptions/list').
+    then(response=>{
+      this.subscriptions=response.data.data;
    }).catch(error=>{
      console.log(error.response.data.errors);
    });
@@ -329,6 +314,7 @@ export default{
     mounted(){
       this.listenForActivities();
       this.loadActivities();
+      this.subscriptionList();
     }
 }
 </script>
