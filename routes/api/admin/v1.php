@@ -12,6 +12,9 @@ use App\Http\Controllers\Api\Admin\
   StageController,
   StatusController,
   DashBoardController,
+  RolesController,
+  PermissionsController,
+  RolePermissionController
 };
 use App\Http\Controllers\Api\Admin\Integration\PaddleController;
 
@@ -37,6 +40,9 @@ Route::apiResource('/stages', StageController::class);
 
 Route::apiResource('/statuses', StatusController::class);
 
+Route::apiResource('/roles', RolesController::class);
+
+Route::apiResource('/permissions', PermissionsController::class);
 
 Route::delete('/projects/bulk-delete', [ProjectController::class,'bulkDelete']);
 
@@ -47,6 +53,12 @@ Route::get('dashboard/activities',[DashBoardController::class,'activities']);
 Route::get('data',[DashBoardController::class,'data']);
 
 Route::get('subscriptions/list',[PaddleController::class,'subscribedUsers']);
+
+Route::get('/assign/roles/{role}/permissions/{permission}',[RolePermissionController::class,'assignRole']);
+
+Route::get('/unAssign/roles/{role}/permissions/{permission}',[RolePermissionController::class,'unAssignPermission']);
+
+Route::get('assign/users/{user}/roles/{role}',[RolePermissionController::class,'assignUserRole']);
 
 //Project Route Prefix
 Route::group(['prefix' => 'projects/{project}'], function() {

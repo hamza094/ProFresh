@@ -96,7 +96,7 @@
    <section class="footer">
      <footer class="page-footer font-small blue">
   <!-- Copyright -->
-  <div class="footer-copyright text-center py-3 ft">© 2023 Copyright:
+  <div class="footer-copyright text-center py-3 ft">© 2024 Copyright:
     <a href="/"> Profresh.com</a>
   </div>
   <!-- Copyright -->

@@ -46,6 +46,8 @@ return [
             'provider' => 'users',
             'hash' => false,
         ],
+        
+
     ],
 
     /*

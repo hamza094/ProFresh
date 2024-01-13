@@ -3,6 +3,7 @@
 namespace App\Http\Resources\Admin;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use App\Http\Resources\Admin\RolesResource;
 
 class UsersResource extends JsonResource
 {
@@ -26,7 +27,7 @@ class UsersResource extends JsonResource
             'projects_member'=>$this->members(true)->count(),
             'last_active'=>$this->when(!empty($this->last_active_at),
                fn()=>$this->last_active_at->diffForHumans()),
-            'status'=>'User',
+            'roles'=>RolesResource::collection($this->whenLoaded('roles')),
             'timezone'=>$this->timezone,
         ];
     }

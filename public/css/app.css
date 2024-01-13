@@ -1688,6 +1688,32 @@ button.gnuIjg {
   margin-left: 0.5rem;
 }
 
+.role-dropdown_item {
+  position: absolute;
+  border-radius: 0.2rem;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  z-index: 2000 !important;
+  background-color: #FFFFFF;
+  width: 24rem;
+  height: auto;
+  right: 0rem;
+  overflow: hidden;
+  border: 1px solid #e5e5ee;
+}
+
+.role-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  /* Display items horizontally */
+}
+
+.role-list-item {
+  margin-right: 10px;
+  /* Add space between items */
+}
+
 .tooltip {
   display: block !important;
   z-index: 10000;

@@ -13,7 +13,7 @@ class UserController extends Controller
     {
         $perPage=7;
 
-       $users = User::with('subscriptions')
+       $users = User::with('subscriptions','roles')
        ->withCount('projects')
        ->when($request->search, function ($query) use ($request) {
            $query->where('name', 'like', '%' . $request->search . '%')

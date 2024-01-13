@@ -16,12 +16,16 @@ use Laravel\Sanctum\HasApiTokens;
 use App\Jobs\QueuedVerifyEmailJob;
 use App\Jobs\QueuedPasswordResetJob;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable implements Searchable, MustVerifyEmail
 {
-    use HasFactory, Notifiable, Billable, HasApiTokens,HasUuids;
+    use HasFactory, Notifiable, Billable, HasApiTokens,HasUuids,HasRoles;
     
     protected $guarded = [];
+
+        public function guardName(): string { return 'sanctum'; }
+
 
     //protected $appends = ['LastSeen'];
 

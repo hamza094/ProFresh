@@ -203,25 +203,13 @@
         </div>
     </div>
 </div>
-
-            <div class="col-md-6 mt5">
-                <Chart></Chart>
-            </div>
+      <div class="col-md-6 mt5">
+          <Chart></Chart>
+      </div>
         </div>
             <div class="card mt-5">
                   <div class="card-header">
                     <h3 class="card-title">Invoices</h3>
-                  </div>
-                  <div class="card-body border-bottom py-3">
-                    <div class="d-flex">
-                      <div class="text-secondary">
-                        Show
-                        <div class="mx-2 d-inline-block">
-                          <input type="text" class="form-control form-control-sm" value="8" size="3" aria-label="Invoices count">
-                        </div>
-                        entries
-                      </div>
-                    </div>
                   </div>
                   <div class="table-responsive">
                     <table class="table card-table table-vcenter text-nowrap datatable">
@@ -255,8 +243,8 @@
                     </table>
                   </div>
                   <div class="card-footer d-flex align-items-center">
-                    <p class="m-0 text-secondary">Showing <span>1</span> to <span>10</span>
-                      <a href="https://sandbox-login.paddle.com" target="_blank">For in-depth analysis, check the Paddle subscription dashboard.</a>
+                    <p class="m-0 text-secondary">Showing <span>1</span> to <span>10 </span>
+                      <a href="https://sandbox-vendors.paddle.com/subscriptions/customers" target="_blank">For in-depth analysis, check the Paddle subscriptions dashboard.</a>
                     </p>
                     <ul class="pagination m-0 ms-auto">
                     </ul>
@@ -309,8 +297,8 @@ export default{
           this.activities.unshift(e);
       });
     },		
-			
     },
+    
     mounted(){
       this.listenForActivities();
       this.loadActivities();
