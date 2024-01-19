@@ -82,124 +82,31 @@
                 </div>
               </div>
      		</div>
-        <div class="row mt-3">
-          <div class="col-md-6">
-           <div class="card">
-             <div class="card-header">
-               Roles
-             </div>
-             <div class="card-body">
-               Add New Role
-               <div class="ms-2 d-inline-block">
-                <input type="text" class="form-control form-control-sm" name="role" v-model="form.role" autocomplete="off" @keyup.enter="addRole()">
-              </div>
-              <div class="mt-3">
-                <div v-for="role in roles" :key="role.id" class="role-container">
-  <div class="role-content">
-    <p>{{ role.name }}</p>
-    <div class="button-group">
-      <div class="role-dropdown"
-          @click="toggleDropdown(role.id)">
-        <span class="btn btn-sm btn-primary" role="button">+</span>
-        <div class="role-dropdown_item" v-show="isOpen[role.id]">
-          <div class="role-dropdown_content">
-            <ul class="role-list" v-for="permission in role.permissions">
-              <li class="role-list_items">
-                {{permission.name}} 
-                <span class="btn btn-secondary btn-sm" @click.pervent="unAssignPermission(permission.id,role.id)">-</span>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      <button class="btn btn-sm btn-danger" @click="removeRole(role.id)">Delete</button>
-    </div>
-  </div>
-</div>
-                
-              </div>
-             </div>
-           </div>            
-          </div>
-          <div class="col-md-6">
-             <div class="card">
-             <div class="card-header">
-               Permissions
-             </div>
-             <div class="card-body">
-               Add New Permission
-               <div class="ms-2 d-inline-block">
-                <input type="text" class="form-control form-control-sm" name="role" v-model="form.permission" autocomplete="off" @keyup.enter="addPermission()">
-              </div>
-              <div class="mt-3">
-                <div v-for="permission in permissions" :key="permission.id">
-                <p> 
-                   <div class="dropdown">
-                         {{permission.name}} <a class="dropdown-toggle text-secondary" href="#" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Assign to role
-                          </a>
-                            <div class="dropdown-menu dropdown-menu-end" style="">
-        <div v-for="role in roles" :key="role.id">
-            <!-- Check if user exists and has roles before accessing roles -->
-            <a :class="{ 'dropdown-item': true, 'active': user && user.roles && hasRole(user.roles, role) }" @click="assignUserRole(role.id, user.id)">
-                {{ role.name }}
-            </a>
-        </div>
-    </div>
-                  <span class="float-right">
-                    <span><button class="btn btn-sm btn-danger" @click="removePermission(permission.id)">Delete</button></span>
-                  </span>
-                </div>
-                </p> 
-                </div>
-                
-              </div>
-             </div>
-           </div> 
-          </div>
-        </div>
-
+       <RolesAndPermissions></RolesAndPermissions>
         </div>
  
 	</div>
 </template>
 <script>
   import { debounce } from 'lodash';
+  import RolesAndPermissions from './RolesAndPermissions.vue'
+  import { mapState } from 'vuex';
 
 export default{
+    components: {RolesAndPermissions},
     data(){
     return{
 	    users:[],
-      isOpen: {},
       from:0,
       to:0,
       total:0,
       searchTerm:'',
-      roles:[],
-      isPop:false,
-      permissions:[],
-      form:{
-        role:'',
-        permission:'',
-      }
     };
-    }, 
-    watch:{
-      isPop(isPop){
-            if(isPop){
-            document.addEventListener('click', (event) => this.$options.methods.handleClickOutside.call(this, event, '.role-dropdown', this.isPop));
-            }
-        }
     },
+      computed: {
+      ...mapState('roles',['roles']),
+  }, 
   methods:{
-      toggleDropdown(roleId) {
-    this.isOpen = {
-      ...this.isOpen,
-      [roleId]: !this.isOpen[roleId]
-    };
-  },
-    hasRole(userRoles, loopRole) {
-      return userRoles && userRoles.some(userRole => userRole.id === loopRole.id);
-    },
       getResults(page = 1) {
       const queryParameters = {
         page: page,
@@ -221,102 +128,32 @@ export default{
         .catch(error => {
         });
     },
-    searchUsers:debounce(function () { 
-      this.getResults();
-    },1000),
-    addRole(){
-      axios.post('/api/v1/admin/roles',{
-        role:this.form.role
-      })
-      .then(response=>{
-        this.$vToastify.success(response.data.message);
-       this.form.role="";
-       this.loadRoles();
-   }).catch(error=>{
-     console.log(error);
-   });
-    },
-    addPermission(){
-      axios.post('/api/v1/admin/permissions',{
-        permission:this.form.permission
-      })
-      .then(response=>{
-       this.$vToastify.success(response.data.message);
-       this.form.permission="";
-       this.loadPermissions();
-   }).catch(error=>{
-     console.log(error);
-   });
-    },
-     loadPermissions(){
-      axios.get('/api/v1/admin/permissions')
-      .then(response=>{
-       this.permissions=response.data.permissions;
-   }).catch(error=>{
-     console.log(error);
-   });
-    },
-    loadRoles(){
-      axios.get('/api/v1/admin/roles')
-      .then(response=>{
-       this.roles=response.data.roles;
-   }).catch(error=>{
-     console.log(error);
-   });
-    },
-    removeRole(roleId){
-    axios.delete('/api/v1/admin/roles/'+roleId)
-      .then(response=>{
-      this.$vToastify.success(response.data.message);
-      this.loadRoles();
-   }).catch(error=>{
-     console.log(error);
-   });
-    },
-    removePermission(permissionId){
-    axios.delete('/api/v1/admin/permissions/'+permissionId)
-      .then(response=>{
-      this.$vToastify.success(response.data.message);
-      this.loadPermissions();
-   }).catch(error=>{
-     console.log(error);
-   });
-    },
-    updateRole(){
-     console.log('update');
-    },
-    assignPermission(permissionId,roleId){
-     axios.get('/api/v1/admin/assign/roles/'+roleId+'/permissions/'+permissionId)
-      .then(response=>{
-      this.$vToastify.success(response.data.message);
-      this.loadPermissions();
-   }).catch(error=>{
-     console.log(error);
-   });
-    },
-    unAssignPermission(permissionId,roleId){
-    axios.get('/api/v1/admin/unAssign/roles/'+roleId+'/permissions/'+permissionId)
-      .then(response=>{
-      this.$vToastify.success(response.data.message);
-      this.loadRoles();
-   }).catch(error=>{
-     console.log(error);
-   });
-    },
-    assignUserRole(roleId,userId){
+      assignUserRole(roleId,userId){
      axios.get('/api/v1/admin/assign/users/'+userId+'/roles/'+roleId)
       .then(response=>{
       this.$vToastify.success(response.data.message);
-      this.loadUsers();
+      this.handleUpdateUser(response.data.user);
    }).catch(error=>{
-     console.log(error);
+      if (error.response.status === 422) {
+      this.$vToastify.warning(error.response.data.errors.role[0]);
+      }else{
+      this.$vToastify.warning('Error! Contact Admin support');
+      }
    });
     },
+     handleUpdateUser(user) {
+      const index = this.users.data.findIndex(existingUser => existingUser.id === user.id);
+
+      if (index !== -1) {
+        this.users.data.splice(index, 1, user)
+      }
+    },
+    searchUsers:debounce(function () { 
+      this.getResults();
+    },1000),
     },
     mounted(){
       this.getResults();
-      this.loadRoles();
-      this.loadPermissions();
     }
 }
 </script>

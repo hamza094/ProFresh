@@ -24,7 +24,7 @@ class User extends Authenticatable implements Searchable, MustVerifyEmail
     
     protected $guarded = [];
 
-        public function guardName(): string { return 'sanctum'; }
+    public function guardName(): string { return 'sanctum'; }
 
 
     //protected $appends = ['LastSeen'];

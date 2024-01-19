@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\TaskStatus;
+use App\Models\User;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -25,6 +26,8 @@ class TaskStatusFactory extends Factory
         return [
             'label'=>'Not Started',
             'color'=>'#CCCCCC',
+                    'user_id'=>User::factory(),
+
         ];
     }
 
@@ -34,6 +37,8 @@ class TaskStatusFactory extends Factory
          return [
             'label' => 'Started',
             'color' => '#FFD700',
+                    'user_id'=>User::factory(),
+
         ];
     });
    }
@@ -44,6 +49,8 @@ class TaskStatusFactory extends Factory
          return [
             'label' => 'In Progress',
             'color' => '#0000FF',
+                    'user_id'=>User::factory(),
+
         ];
     });
    }
@@ -54,6 +61,8 @@ class TaskStatusFactory extends Factory
          return [
             'label' => 'Completed',
             'color' => '#00FF00',
+                    'user_id'=>User::factory(),
+
         ];
     });
    }

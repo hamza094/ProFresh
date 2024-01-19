@@ -40,10 +40,6 @@ Route::apiResource('/stages', StageController::class);
 
 Route::apiResource('/statuses', StatusController::class);
 
-Route::apiResource('/roles', RolesController::class);
-
-Route::apiResource('/permissions', PermissionsController::class);
-
 Route::delete('/projects/bulk-delete', [ProjectController::class,'bulkDelete']);
 
 Route::delete('/tasks/bulk-delete', [TaskController::class,'bulkDelete']);
@@ -54,7 +50,12 @@ Route::get('data',[DashBoardController::class,'data']);
 
 Route::get('subscriptions/list',[PaddleController::class,'subscribedUsers']);
 
-Route::get('/assign/roles/{role}/permissions/{permission}',[RolePermissionController::class,'assignRole']);
+Route::apiResource('/roles', RolesController::class)->except(['show']);
+
+Route::apiResource('/permissions', PermissionsController::class)
+       ->except(['show']);
+
+Route::get('/assign/roles/{role}/permissions/{permission}',[RolePermissionController::class,'assignRolePermission']);
 
 Route::get('/unAssign/roles/{role}/permissions/{permission}',[RolePermissionController::class,'unAssignPermission']);
 

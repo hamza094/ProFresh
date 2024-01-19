@@ -6,9 +6,14 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
+use App\Http\Resources\Admin\RoleResource;
+use App\Http\Requests\Admin\RoleRequest;
+use F9Web\ApiResponseHelpers;
+use Illuminate\Http\JsonResponse;
 
 class RolesController extends Controller
 {
+    use ApiResponseHelpers;
     /**
      * Display a listing of the resource.
      *
@@ -18,7 +23,7 @@ class RolesController extends Controller
     {
         $roles=Role::with('permissions')->get();
 
-        return response()->json(['roles'=>$roles]);
+        return RoleResource::collection($roles);
     }
 
     /**
@@ -27,25 +32,16 @@ class RolesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(RoleRequest $request)
     {
-        $role = Role::create(['name' => $request->role]);
+        $role = Role::create($request->validated());
 
-        return response()->json([
-            'role'=>$role,
-            'message'=>'Role Created Successfully'
-        ]);
-    }
+        $role->load('permissions');
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
+        return $this->respondCreated([
+         'message'=>'Role Created Successfully',
+         'role'=> new RoleResource($role)
+       ]);
     }
 
     /**
@@ -70,6 +66,8 @@ class RolesController extends Controller
     {
         Role::where('id',$role->id)->delete();
 
-        return response()->json(['message'=>'Role Deleted Successfully']);
+        return $this->respondNoContent([
+            'message'=>'Role Deleted Successfully'
+        ]);
     }
 }

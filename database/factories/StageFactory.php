@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Stage;
+use App\Models\User;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -23,6 +24,8 @@ class StageFactory extends Factory
     {
       return [
             'name'=>'Begining',
+                                'user_id'=>User::factory(),
+
         ];
     }
 
@@ -31,6 +34,8 @@ class StageFactory extends Factory
       return $this->state(function (array $attributes) {
          return [
             'name' => 'Defining',
+                                'user_id'=>User::factory(),
+
         ];
     });
    }
@@ -40,6 +45,8 @@ class StageFactory extends Factory
      return $this->state(function (array $attributes) {
         return [
            'name' => 'Designing',
+                               'user_id'=>User::factory(),
+
        ];
    });
   }
@@ -49,6 +56,8 @@ class StageFactory extends Factory
     return $this->state(function (array $attributes) {
        return [
           'name' => 'Developing',
+                              'user_id'=>User::factory(),
+
       ];
   });
  }
@@ -58,6 +67,8 @@ class StageFactory extends Factory
    return $this->state(function (array $attributes) {
       return [
          'name' => 'Execution',
+                             'user_id'=>User::factory(),
+
      ];
  });
 }

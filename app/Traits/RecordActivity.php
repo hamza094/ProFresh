@@ -68,7 +68,6 @@ trait RecordActivity
             return 'Already exist';
           }
       }
-
       $activity=$this->activities()->create([
             'user_id' => auth()->id() ?: ($this->project ?? $this)->user->id,
             'description' => $description,

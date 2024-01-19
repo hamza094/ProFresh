@@ -5,6 +5,7 @@ namespace App\Http\Resources\Admin;
 use Illuminate\Http\Resources\Json\JsonResource;
 use App\Http\Resources\Admin\UserResource;
 use App\Http\Resources\Admin\ProjectsResource;
+use Illuminate\Support\Str;
 use App\Models\Project;
 
 class ActivitiesResource extends JsonResource
@@ -59,8 +60,8 @@ class ActivitiesResource extends JsonResource
 
   protected function created_task()
   {
-      if ($this->subject && $this->subject->body) {
-        return 'Added new task '.' '.Str::limit($this->subject->body, 7, '..').' '.'in';
+      if ($this->subject && $this->subject->title) {
+        return 'Added new task '.' '.Str::limit($this->subject->title, 7, '..').' '.'in';
     }
     return 'Added new Task in';
   }
@@ -69,13 +70,13 @@ class ActivitiesResource extends JsonResource
   {
     $task = $this->subject;
     $updatedKey = key($this->changes['after']);
-    $taskName = Str::limit($task->body, 17, '..');
+    $taskName = Str::limit($task->title, 17, '..');
 
     if ($updatedKey === 'completed') {
         return "Updated Task '$taskName' status in";
     }
 
-    return "Updated Task '$taskName' body in";
+    return "Updated Task '$taskName' title in";
   }
 
   protected function deleted_task()

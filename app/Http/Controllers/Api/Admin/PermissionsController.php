@@ -4,10 +4,14 @@ namespace App\Http\Controllers\Api\Admin;
 
 use App\Http\Controllers\Controller;
 use Spatie\Permission\Models\Permission;
+use App\Http\Resources\Admin\PermissionsResource;
 use Illuminate\Http\Request;
+use F9Web\ApiResponseHelpers;
+use Illuminate\Http\JsonResponse;
 
 class PermissionsController extends Controller
 {
+    use ApiResponseHelpers;
     /**
      * Display a listing of the resource.
      *
@@ -17,7 +21,7 @@ class PermissionsController extends Controller
     {
         $permissions=Permission::all();
 
-        return response()->json(['permissions'=>$permissions]);
+        return PermissionsResource::collection($permissions);
     }
 
     /**
@@ -30,18 +34,11 @@ class PermissionsController extends Controller
     {
       $permission = Permission::create(['name' => $request->permission]);
 
-      return response()->json(['message'=>'Permission Created Successfully']);
-    }
+      return $this->respondCreated([
+        'message'=>'Permission Created Successfully',
+        'data'=> new PermissionsResource($permission)
+    ]);
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
     }
 
     /**
@@ -66,6 +63,8 @@ class PermissionsController extends Controller
     {
         Permission::where('id',$permission->id)->delete();
 
-        return response()->json(['message'=>'Permission Deleted Successfully']);
+        return $this->respondNoContent([
+            'message'=>'Permission Deleted Successfully'
+        ]);
     }
 }

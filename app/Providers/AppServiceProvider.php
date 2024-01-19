@@ -46,7 +46,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Model::preventLazyLoading(! app()->isProduction());
-        //Model::shouldBeStrict(! app()->isProduction());
+        Model::shouldBeStrict(! app()->isProduction());
 
         /* LogViewer::auth(function ($request) {
         return $request->user()

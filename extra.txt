@@ -32,3 +32,9 @@ table
         $rules += ['strtdt' => 'required'];
     }
     
+
+     <a :class="{ 'dropdown-item': true, 'active': user && user.roles && hasRole(user.roles, role) }" @click="assignPermissionRole(role.id, permission.id)">
+
+       hasRole(userRoles, loopRole) {
+      return userRoles && userRoles.some(userRole => userRole.id === loopRole.id);
+    },
