@@ -17,7 +17,7 @@
   <div class="role-content">
     <p>{{ role.name }}</p>
     <div class="button-group">
-      <div class="role-dropdown"
+      <div v-if="role.permissions.length > 0" class="role-dropdown"
           @click="toggleDropdown(role.id)">
         <span class="btn btn-sm btn-primary" role="button">+</span>
         <div class="role-dropdown_item" v-show="isOpen[role.id]">
@@ -25,7 +25,7 @@
             <ul class="role-list" v-for="permission in role.permissions">
               <li class="role-list_items">
                 {{permission.name}} 
-                <span class="btn btn-secondary btn-sm" @click.pervent="unAssignPermission(permission.id,role.id)">-</span>
+                <span @click.pervent="unAssignPermission(permission.id,role.id)" class="cursor"><i class="fas fa-minus-circle"></i></span>
               </li>
             </ul>
           </div>

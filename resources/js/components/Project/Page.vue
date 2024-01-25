@@ -196,12 +196,12 @@ export default{
     	...mapState('project',['project','user','getStage','tasks']),
 
     permission() {
-      const {access, owner} = permission(this.auth.id, this.project.members, this.user.id);
+      const {access, owner} = permission(this.auth.id, this.project.members, this.user.id,this.auth.isAdmin);
 
       return {access, owner};
    },
 
-    status() {
+    status(){
       return this.project.score > this.Hot_Score ? 'hot' : 'cold'
     },
   },

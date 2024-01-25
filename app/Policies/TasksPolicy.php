@@ -12,6 +12,15 @@ class TasksPolicy
 {
     use HandlesAuthorization;
 
+    public function before(User $user, string $ability): bool|null
+    {
+      if ($user->isAdmin()) {
+          return true;
+      }
+ 
+      return null; 
+   }
+
     public function taskaccess(User $user,Task $task)
     {
        return  $user->is($task->owner) || $user->is($task->project->user) || $task->assignee->contains($user->id) 
@@ -25,4 +34,5 @@ class TasksPolicy
                ? Response::allow()
                : Response::deny("Only Project's owner and task owner are allowed to access this feature.");
     }
+
 }

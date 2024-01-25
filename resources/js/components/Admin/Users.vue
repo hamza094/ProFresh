@@ -52,18 +52,19 @@
                           <td>
                           <div class="dropdown">
                           <a class="dropdown-toggle text-secondary" href="#" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <div v-if="!user.roles || user.roles.length === 0">
-                              <span>Not Defined</span>
-                            </div>
-                            <div v-else>
-                              <span v-for="role in user.roles">
-                                <span>{{role.name}}</span>
-                              </span>
-                            </div> 
-                        </a>
+                  <span v-if="!user.roles || user.roles.length === 0">
+                      Not Defined
+                    </span>
+                  <span v-else>
+                <span v-for="role in user.roles">
+                   {{ role.name }}
+                </span>
+             </span>
+            </a>
                           <div class="dropdown-menu dropdown-menu-end" style="">
                           <div v-for="role in roles" :key="role.id">
-                            <a class="dropdown-item" @click="assignUserRole(role.id,user.id)">{{role.name}}</a>
+                            <a :class="{ 'dropdown-item': true, 'active': user && user.roles && hasRole(user.roles, role) }" 
+                            @click="assignUserRole(role.id,user.id)">{{role.name}}</a>
                           </div>
                           </div>
                         </div>
@@ -77,7 +78,7 @@
                   </div>
                   <div class="card-footer d-flex">
      <p class="float-left">Showing <span>{{from}}</span> to {{to}}<span></span> of <span></span>{{total}} entries</p>
-                        <pagination :data="this.users" @pagination-change-page="getResults()"></pagination>
+                        <pagination :data="this.users" @pagination-change-page="getResults"></pagination>
                   </div>
                 </div>
               </div>
@@ -147,6 +148,9 @@ export default{
       if (index !== -1) {
         this.users.data.splice(index, 1, user)
       }
+    },
+    hasRole(userRoles, loopRole) {
+      return userRoles && userRoles.some(userRole => userRole.id === loopRole.id);
     },
     searchUsers:debounce(function () { 
       this.getResults();

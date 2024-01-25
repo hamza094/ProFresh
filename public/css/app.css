@@ -1694,7 +1694,7 @@ button.gnuIjg {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   z-index: 2000 !important;
   background-color: #FFFFFF;
-  width: 24rem;
+  width: 12rem;
   height: auto;
   right: 0rem;
   overflow: hidden;
@@ -1703,15 +1703,15 @@ button.gnuIjg {
 
 .role-list {
   list-style: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  /* Display items horizontally */
 }
 
-.role-list-item {
-  margin-right: 10px;
-  /* Add space between items */
+.role-list_items {
+  display: inline-block;
+  padding: 0.5rem 0.2rem 0.2rem 0.2rem;
+}
+
+.cursor:hover {
+  cursor: pointer;
 }
 
 .tooltip {

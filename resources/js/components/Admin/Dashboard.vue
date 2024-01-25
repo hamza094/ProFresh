@@ -1,7 +1,7 @@
 <template>
 	<div>
      <div class="page-top mb-4">Welcome To Your Dashboard</div>
-   <div class="container">
+   <div class="container" v-if="admin.access">
      		<div class="row">
                <div class="col-md-4">
                 <router-link to="/admin/projects" class="admin-dashboard-link">
@@ -251,20 +251,32 @@
                   </div>
                 </div>
         </div>
+        <div v-else>
+          <h3 class="text-center">Access to this area is restricted to the admin only</h3>
+        </div>
 	</div>
 </template>
 <script>
   import Stage from './Stage.vue'
   import TaskStatus from './TaskStatus.vue'
   import Chart from './Chart.vue'
+  import { admin } from '../../auth'
+
 
 export default{
   components: {Stage,TaskStatus,Chart},
     data(){
     return{
 	   	activities:[],
-      subscriptions:[],	
+      subscriptions:[],
+      auth:this.$store.state.currentUser.user,	
     };
+    },
+    computed:{
+    admin() {
+      const {access} = admin(this.auth.isAdmin);
+      return {access};
+    },
     },
     methods:{
     runBackup(){

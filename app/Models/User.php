@@ -140,7 +140,8 @@ class User extends Authenticatable implements Searchable, MustVerifyEmail
     public function isSubscribed()
     {
       return $this->subscribed('monthly') || 
-             $this->subscribed('yearly');
+             $this->subscribed('yearly') || 
+             $this->isAdmin();
     }
 
     public function subscribedPlan()
@@ -169,6 +170,12 @@ class User extends Authenticatable implements Searchable, MustVerifyEmail
     public function assigned()
     {
       return $this->belongsToMany(Task::class);
+    }
+
+    public function isAdmin()
+    {
+        return $this->hasRole('Admin');
+
     }
 
 }

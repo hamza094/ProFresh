@@ -6,7 +6,6 @@ use Illuminate\Http\Resources\Json\JsonResource;
 use App\Http\Resources\StageResource;
 use App\Http\Resources\Admin\UserResource;
 
-
 class ProjectResource extends JsonResource
 {
     /**

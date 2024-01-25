@@ -21,6 +21,15 @@ class ProjectsPolicy
         //
     }
 
+    public function before(User $user, string $ability): bool|null
+    {
+      if ($user->isAdmin()) {
+          return true;
+      }
+ 
+      return null; 
+   }
+
     public function manage(User $user, Project $project)
     {
         return $user->is($project->user);

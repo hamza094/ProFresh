@@ -89,24 +89,28 @@
     box-shadow: 0 0 10px rgba(0,0,0,.2);
     z-index:2000 !important;
     background-color: $color-white;
-    width:24rem;
+    width:12rem;
     height:auto;
     right: 0rem;
     overflow: hidden;
     border:1px solid $color-light-grey;
     &_content{
+    
     }
     }
 }
 
 .role-list {
     list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex; /* Display items horizontally */
 }
 
-.role-list-item {
-    margin-right: 10px; /* Add space between items */
+.role-list_items {
+    display: inline-block; 
+    padding:.5rem .2rem .2rem .2rem;
 }
 
+.cursor{
+    &:hover{
+    cursor:pointer;
+    }
+}

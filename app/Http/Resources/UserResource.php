@@ -5,6 +5,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Resources\Json\JsonResource;
 use App\Http\Resources\UserInfoResource;
 use App\Http\Resources\ProjectInvitaionResource;
+use App\Http\Resources\Admin\RolesResource;
 
 class UserResource extends JsonResource
 {
@@ -31,6 +32,8 @@ class UserResource extends JsonResource
         'info' => new UserInfoResource($this->info),
 
         'invited_projects' =>ProjectInvitaionResource::collection($this->whenLoaded('members')),
+
+        'roles'=>RolesResource::collection($this->whenLoaded('roles')),
 
         'created_at'=>$this->created_at->diffForHumans(),
         'updated_at'=>$this->updated_at->diffForHumans()

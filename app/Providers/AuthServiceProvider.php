@@ -29,10 +29,17 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-    Gate::define('archive-task', function ($user, Task $task) {
-    return $task->trashed()
-        ? throw ValidationException::withMessages(['task' => 'Task is archived. Activate the task to proceed.'])
-        : true;
-      });
-}
+       $this->registerPolicies();
+
+        Gate::before(function ($user, $ability) {
+            return $user->hasRole('Admin') ? true : null;
+        });
+
+
+      Gate::define('archive-task', function ($user, Task $task){
+        return $task->trashed()
+        ? throw ValidationException::withMessages(['task' => 'Task is archived. Activate the task to proceed.']) : true;
+        });
+      
+    }
 }
