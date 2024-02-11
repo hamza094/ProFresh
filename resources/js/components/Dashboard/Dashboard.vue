@@ -51,6 +51,13 @@
             <ProjectChart> </ProjectChart>
             </div>
             <div class="col-md-6">
+            <p><b>Your Activity Calender</b></p>
+            <div class="m-5">
+                <vc-calendar 
+                is-expanded
+                :attributes='attributes'
+                  />   
+            </div>
             </div>
         </div>
         </div>
@@ -58,19 +65,48 @@
 </template>
 <script>
     import ProjectChart from './ProjectChart.vue'
+    import CustomPopover from './CustomPopover.vue'
 
 export default{
-        components: {ProjectChart},
+    components: {ProjectChart,CustomPopover},
 
     data(){
     return{
 	    projects: {},
         projectState: "",
         projectsCount: 0,
-        message: '',		
+        message: '',
+        activities:[],		
     };
     },
+    computed: {
+     attributes() {
+      return [
+        ...this.activities.map(activity => ({
+
+          dates: moment(activity.time).format('YYYY-MM-DD'),
+          dot: {
+            color: activity.color,
+            //class: todo.isComplete ? 'opacity-75' : '',
+          },
+          popover: {
+            label: activity.description,
+            visibility: 'click',
+          },
+          customData: activity,
+        })),
+      ];
+    },
+  },
     methods:{
+      calendarData(){
+        axios.get('/api/v1/admin/calendar/data').
+         then(response=>{
+            this.activities=response.data;
+         }).catch(error=>{
+           console.log(error);
+         });
+      },  
       activeProjects(){
         axios.get(this.url()).
             then(({data})=>(this.getData(data)));
@@ -100,6 +136,7 @@ export default{
     },
     mounted(){
         this.activeProjects();
+        this.calendarData();
     }
 }
 </script>

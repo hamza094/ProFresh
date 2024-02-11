@@ -27,7 +27,7 @@ import VueToastify from "vue-toastify";
 import { Datetime } from 'vue-datetime';
 // You need a specific loader for CSS files
 import 'vue-datetime/dist/vue-datetime.css';
-
+import VCalendar from 'v-calendar';
 
 Vue.use(Vuex);
 Vue.use(VueBus);
@@ -71,6 +71,10 @@ Vue.filter('reciept_date',function(data){
 Vue.filter('datetime',function(data){
    return  moment(data).format("MMM Do YY h:mm:ss a");
 })
+
+Vue.use(VCalendar, {
+  componentPrefix: 'vc',               
+});
 
 import { Settings } from 'luxon'
 Settings.defaultLocale = 'en'

@@ -10,6 +10,7 @@ use App\Models\Activity;
 use App\Models\Project;
 use App\Models\Task;
 use Carbon\Carbon;
+use App\Http\Resources\UserActivitiesResource;
 use App\Services\Admin\DashboardService;
 
 
@@ -50,5 +51,14 @@ class DashboardController extends Controller
     $data = $this->dashboardService->fetchDataForMonths($startDate, $endDate);
 
       return response()->json($data);
+    }
+
+    public function calendar()
+    {
+        $activities=Activity::where('user_id', auth()->id())->with('subject','project.stage')->get();
+
+        return UserActivitiesResource::collection($activities);
+            
+
     }
 }

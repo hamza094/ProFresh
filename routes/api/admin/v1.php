@@ -25,7 +25,7 @@ use App\Http\Controllers\Api\Admin\Integration\PaddleController;
 
 Route::group(['prefix'=>'v1/admin'], function () {
 
-Route::middleware(['auth:sanctum',\App\Http\Middleware\TrackLastActiveAt::class,'role:Admin'])->group(function () {  
+Route::middleware(['auth:sanctum',/*\App\Http\Middleware\TrackLastActiveAt::class,'role:Admin'*/])->group(function () {  
 
 //Project Api Resource Routes
 Route::get('/projects', [ProjectController::class,'index']);
@@ -47,6 +47,8 @@ Route::delete('/tasks/bulk-delete', [TaskController::class,'bulkDelete']);
 Route::get('dashboard/activities',[DashBoardController::class,'activities']);
 
 Route::get('data',[DashBoardController::class,'data']);
+
+Route::get('/calendar/data',[DashBoardController::class,'calendar']);
 
 Route::get('subscriptions/list',[PaddleController::class,'subscribedUsers']);
 

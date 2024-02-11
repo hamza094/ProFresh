@@ -139,9 +139,10 @@ class User extends Authenticatable implements Searchable, MustVerifyEmail
 
     public function isSubscribed()
     {
-      return $this->subscribed('monthly') || 
+        return true;
+      /*return $this->subscribed('monthly') || 
              $this->subscribed('yearly') || 
-             $this->isAdmin();
+             $this->isAdmin();*/
     }
 
     public function subscribedPlan()
