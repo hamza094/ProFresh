@@ -65,10 +65,9 @@
 </template>
 <script>
     import ProjectChart from './ProjectChart.vue'
-    import CustomPopover from './CustomPopover.vue'
 
 export default{
-    components: {ProjectChart,CustomPopover},
+    components: {ProjectChart},
 
     data(){
     return{
@@ -91,7 +90,7 @@ export default{
           },
           popover: {
             label: activity.description,
-            visibility: 'click',
+            visibility: 'hover',
           },
           customData: activity,
         })),
@@ -100,7 +99,7 @@ export default{
   },
     methods:{
       calendarData(){
-        axios.get('/api/v1/admin/calendar/data').
+        axios.get('/api/v1/user/activities').
          then(response=>{
             this.activities=response.data;
          }).catch(error=>{

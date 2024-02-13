@@ -38,4 +38,12 @@ class DashboardTest extends TestCase
           ]);
     }
 
+    /** @test */
+    public function auth_user_view_his_activities()
+    {
+      $response=$this->getJson('api/v1/user/activities')->assertOk(); 
+
+      $response->assertJsonFragment(['user_id' => $this->user->id]);
+    }
+
 }

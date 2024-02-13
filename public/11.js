@@ -1,9 +1,9 @@
 (window["webpackJsonp"] = window["webpackJsonp"] || []).push([[11],{
 
-/***/ "./resources/js/components/Admin/profresh.sublime-workspace":
-/*!******************************************************************!*\
-  !*** ./resources/js/components/Admin/profresh.sublime-workspace ***!
-  \******************************************************************/
+/***/ "./resources/js/components/Project/Panel/prosaver.sublime-workspace":
+/*!**************************************************************************!*\
+  !*** ./resources/js/components/Project/Panel/prosaver.sublime-workspace ***!
+  \**************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 

@@ -48,8 +48,6 @@ Route::get('dashboard/activities',[DashBoardController::class,'activities']);
 
 Route::get('data',[DashBoardController::class,'data']);
 
-Route::get('/calendar/data',[DashBoardController::class,'calendar']);
-
 Route::get('subscriptions/list',[PaddleController::class,'subscribedUsers']);
 
 Route::apiResource('/roles', RolesController::class)->except(['show']);

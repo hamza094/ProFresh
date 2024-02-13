@@ -23,6 +23,7 @@ class UserActivitiesResource extends JsonResource
             'time' => Carbon::create(now()->year, rand(1, 12), rand(1, 28)),
            'subject_id' => $this->subject_type === "App\\Models\\Task" ? ($this->subject ? $this->subject->id : null) : $this->subject_type,
            'color' => $this->color(),
+           'user_id'=>$this->user_id,
         ];
     }
 
@@ -58,8 +59,8 @@ class UserActivitiesResource extends JsonResource
 
   protected function created_task()
   {
-      if ($this->subject && $this->subject->body) {
-        return 'Task'.' '.Str::limit($this->subject->body, 17, '..').' '.'added in '. $this->project->name;
+      if ($this->subject && $this->subject->title) {
+        return 'Task'.' '.Str::limit($this->subject->title, 12, '..').' '.'added in '. $this->project->name;
     }
     return "Task added in {$this->project->name}";
   }
@@ -68,7 +69,7 @@ class UserActivitiesResource extends JsonResource
   {
     $task = $this->subject;
     $updatedKey = key($this->changes['after']);
-    $taskName = Str::limit($task->body, 17, '..');
+    $taskName = Str::limit($task->title, 12, '..');
 
     if ($updatedKey === 'completed') {
         return "Task '$taskName' status updated in {$this->project->name}";
@@ -86,7 +87,7 @@ class UserActivitiesResource extends JsonResource
   {
     $status = $this->subject->delivered_at == null ? 'scheduled' : 'sent';
 
-    return 'Message ' . Str::limit($this->subject->message, 17, '..') . ' ' . $status;
+    return 'Message ' . Str::limit($this->subject->message, 12, '..') . ' ' . $status;
   }
 
   protected function sent_invitation_member()
@@ -102,6 +103,32 @@ class UserActivitiesResource extends JsonResource
   protected function remove_project_member()
   {
     return "Project {$this->project->name} member {$this->info} removed";
+  }
+
+    protected function updated_taskstatus(){
+     $label = $this->subject->label;
+    return "Updated Task Status with label '$label'";
+  }
+
+   protected function created_taskstatus(){
+    return "Created new Task Status";
+  }
+
+   protected function deleted_taskstatus(){
+    return "Deleted Task status";
+  }
+
+  protected function updated_stage(){
+     $name = $this->subject->name;
+    return "Updated Stage with name '$name'";
+  }
+
+   protected function created_stage(){
+    return "Created new Stage";
+  }
+
+   protected function deleted_stage(){
+    return "Deleted Stage";
   }
 
   protected function color()
