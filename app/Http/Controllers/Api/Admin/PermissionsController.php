@@ -19,7 +19,7 @@ class PermissionsController extends Controller
      */
     public function index()
     {
-        $permissions=Permission::all();
+        $permissions = Permission::all();
 
         return PermissionsResource::collection($permissions);
     }

@@ -9,9 +9,10 @@ use App\Models\User;
 use App\Models\Project;
 use App\Models\Activity;
 use Illuminate\Http\JsonResponse;
-use App\Services\DashboardService;
 use App\Http\Resources\UserActivitiesResource;
+use App\Services\DashboardService;
 use App\Http\Resources\ProjectsResource;
+use Carbon\Carbon;
 
 class ProjectDashboardController extends Controller
 {
@@ -29,12 +30,23 @@ class ProjectDashboardController extends Controller
 
     public function activities()
     {
-        $activities=Activity::query()
-             ->where('user_id', auth()->id())
-             ->with('subject','project.stage')
-             ->get();
+        $activities = Activity::query()
+         ->where('user_id', auth()->id())
+         ->with(['subject', 'project' => function ($query) {
+              $query->withTrashed();
+           }, 'project.stage'])
+        ->get();
 
         return UserActivitiesResource::collection($activities);       
+    }
+
+    public function data(Request $request)
+    {     
+      $data = [];
+
+    $data = $this->dashboardService->fetchData();
+
+      return response()->json(['projectsData'=>$data]);
     }
 
 }
