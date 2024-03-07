@@ -43,7 +43,7 @@
      			
      		</div>
      	</div>
-        <div class="dashboard-project_info m-4">
+        <div class="dashboard-project_info m-5">
         <p class="float-left"><b>Your Projects Info</b></p>
         <br>
         <div class="row">
@@ -61,13 +61,27 @@
             </div>
         </div>
         </div>
+          <div class="dashboard-tasks_info m-5">
+        <p class="float-left"><b>Your Tasks Info</b></p>
+        <br>
+        <div class="row">
+            <TasksData></TasksData>
+            <div class="col-md-5">
+            <p><b>Your Tasks edith</b></p>
+            <div class="m-5">
+               
+            </div>
+            </div>
+        </div>
+        </div>
 	</div>
 </template>
 <script>
     import ProjectChart from './ProjectChart.vue'
+    import TasksData from './TasksData.vue'
 
 export default{
-    components: {ProjectChart},
+    components: {ProjectChart,TasksData},
 
     data(){
     return{

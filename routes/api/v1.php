@@ -39,6 +39,9 @@ Route::middleware(['auth:sanctum'/*,\App\Http\Middleware\TrackLastActiveAt::clas
 
 Route::get('data',[ProjectDashboardController::class,'data']);
 
+Route::get('tasksdata',[ProjectDashboardController::class,'tasksData']);
+
+
 Route::get('/user/activities',[ProjectDashboardController::class,'activities']);
 
 

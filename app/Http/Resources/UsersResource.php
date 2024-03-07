@@ -14,6 +14,12 @@ class UsersResource extends JsonResource
      */
     public function toArray($request)
     {
+       if ($request->is('api/v1/tasksdata')) {
+        return [
+          'id'=>$this->id,
+          'name'=>$this->name,
+        ];
+    }
         return [
           'id'=>$this->id,
           'name'=>$this->name,

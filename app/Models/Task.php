@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use App\Traits\RecordActivity;
 use Illuminate\Database\Eloquent\Model;
+use App\Enums\TaskStatus as TaskStatusEnum;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -74,6 +76,42 @@ class Task extends Model
     }
 
     public function state(){
-    return $this->deleted_at ? 'trashed' : 'active';
+      return $this->deleted_at ? 'trashed' : 'active';
    }
+
+    public function scopeCompleted($query)
+    {
+        return $query->where('status_id', TaskStatusEnum::COMPLETED);
+    }
+
+     // Scope for remaining tasks
+    public function scopeRemaining($query)
+    {
+        return $query->where('due_at', '>=', now())
+                     ->where('status_id', '!=', TaskStatusEnum::COMPLETED);
+    }
+
+    // Scope for overdue tasks
+    public function scopeOverdue($query)
+    {
+        return $query->where('due_at', '<', now())
+                     ->where('status_id', '!=', TaskStatusEnum::COMPLETED);
+    }
+
+    public function dueStatus()
+    {
+        if ($this->completed()->exists()) {
+            return TaskStatusEnum::STATUS_COMPLETED;
+        }
+
+        if ($this->overdue()->exists()) {
+            return TaskStatusEnum::STATUS_OVERDUE;
+        }
+
+        if ($this->remaining()->exists()) {
+            return TaskStatusEnum::STATUS_REMAINING;
+        }
+
+        return null;
+    }
 }

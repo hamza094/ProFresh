@@ -20,3 +20,42 @@
    };
 }
 }
+
+ .nav-pills .nav-link {
+      text-decoration: none;
+      text-transform: uppercase;
+    }
+
+    .nav-pills{
+    	&_listitems{
+    		text-transform: uppercase;
+    	}
+    }
+
+.horizontal-line {
+  border-top: 1px solid #D3D3D3;
+  margin: 1rem 0;
+}
+
+.tasks-link{
+font-weight:bold;
+	&:hover{
+   text-decoration:none;
+  }
+}
+
+.trash-link {
+  color: #FFD700;
+  &:hover{
+  color: #B8860B;
+  }
+}
+
+.created_icon{
+    color: $color-secondary;
+}
+
+.assigned_icon{
+	color: green;
+}
+
