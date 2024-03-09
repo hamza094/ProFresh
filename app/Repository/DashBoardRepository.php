@@ -38,7 +38,6 @@ class DashBoardRepository
           ->orWhere('project_members.user_id', $userId);
     })
     ->first();
-
     }
 
  }

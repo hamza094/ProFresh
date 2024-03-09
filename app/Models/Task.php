@@ -97,21 +97,4 @@ class Task extends Model
         return $query->where('due_at', '<', now())
                      ->where('status_id', '!=', TaskStatusEnum::COMPLETED);
     }
-
-    public function dueStatus()
-    {
-        if ($this->completed()->exists()) {
-            return TaskStatusEnum::STATUS_COMPLETED;
-        }
-
-        if ($this->overdue()->exists()) {
-            return TaskStatusEnum::STATUS_OVERDUE;
-        }
-
-        if ($this->remaining()->exists()) {
-            return TaskStatusEnum::STATUS_REMAINING;
-        }
-
-        return null;
-    }
 }

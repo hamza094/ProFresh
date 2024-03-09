@@ -18,14 +18,13 @@ class UserTasksResource extends JsonResource
     public function toArray($request)
     {
         return [
+         'id'=>$this->id,
          'title'=>$this->title,
          'status'=>new TaskStatusResource($this->whenLoaded('status')),
          'project'=>new ProjectsResource($this->whenLoaded('project')),
          'assignee'=>UsersResource::collection($this->whenLoaded('assignee')),
          'due_at'=>$this->when($this->due_at,fn()=>
             \Timezone::convertToLocal(Carbon::parse($this->due_at))),
-         'due_status' => $this->dueStatus(),
-         'user_id'=>$this->user_id,
          'state' => $this->when($this->user_id !== auth()->id(), 'assigned', 'created'),
          'created_at'=>$this->created_at->diffForHumans(),
        ];

@@ -19,6 +19,9 @@ class ProjectsResource extends JsonResource
             'name' => $this->name,
             'slug' => $this->slug,
             'state'=>$this->state,
+            'links'=>[
+             'self'=>"/api/v1/".$this->slug,
+        ],
         ];
     }
 

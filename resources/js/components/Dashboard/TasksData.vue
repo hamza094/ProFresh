@@ -50,13 +50,12 @@
                           <span :style="'background-color: ' + task.status.color" class="badge ml-1">{{task.status.label}} 
                           </span>
 
-                          <span v-if="task.due_status === 'overdue'" class="badge badge-danger">
+                          <span v-if="filters.includes('Filter by Overdue')" class="badge badge-danger">
                               Overdue
                           </span>
 
-                          <span v-if="task.due_status === 'remaining'" class="badge badge-info">Remaining</span>
+                          <span v-if="filters.includes('Filter by Remaining')" class="badge badge-info">Remaining</span>
                         </p>
-
                       <p>
                           <!-- Due date, created at and project details -->
                           <span v-if="task.due_at"><i class="fas fa-stopwatch"></i>19 feb 12</span>

@@ -10,6 +10,7 @@ use App\Models\Task;
 use App\Models\Project;
 use App\Models\Activity;
 use Illuminate\Http\JsonResponse;
+use App\Repository\UserTasksDataRepository;
 use App\Http\Resources\UserActivitiesResource;
 use App\Services\DashboardService;
 use App\Http\Resources\ProjectsResource;
@@ -51,40 +52,11 @@ class ProjectDashboardController extends Controller
       return response()->json(['projectsData'=>$data]);
     }
 
-    public function tasksData(Request $request)
+    public function tasksData(UserTasksDataRepository $repository,Request $request)
     {
-        $userId=auth()->id();
+       $tasks = $repository->getTasks(auth()->id(),$request);
 
-        $tasks = Task::where(function ($query) use ($userId,$request) {
-    if ($request->user_created){
-        $query->where('user_id', $userId);
-    }
-       if ($request->task_assigned) {
-        $query->orWhereHas('assignee', function ($subquery) use ($userId) {
-            $subquery->where('users.id', $userId);
-        });
-    }
-    })
-   ->when($request->completed, fn ($query)=> 
-       $query->where('user_id', $userId)->completed())
-
-    ->when($request->overdue, fn ($query) =>
-        $query->where('user_id', $userId)->overdue())
-
-   ->when($request->remaining, fn ($query)=> 
-        $query->where('user_id', $userId)->remaining())
-
-    ->with(['project' => fn ($q) => $q->withTrashed(), 'status', 'assignee'])
-    ->get();
-
-      $appliedFilters = collect([
-        'user_created' => 'Filter by Created',
-        'task_assigned' => 'Filter by Assigned',
-        'completed' => 'Filter by Completed',
-        'overdue' => 'Filter by Overdue',
-        'remaining' => 'Filter by Remaining',
-    ])->only(array_keys($request->all()))
-       ->values()->toArray();
+       $appliedFilters = $repository->appliedFilters($request);
 
     return [
         'tasks' => UserTasksResource::collection($tasks),
