@@ -37,13 +37,11 @@ Route::controller(OAuthController::class)->group(function () {
 
 Route::middleware(['auth:sanctum'/*,\App\Http\Middleware\TrackLastActiveAt::class*/])->group(function () {
 
-Route::get('data',[ProjectDashboardController::class,'data']);
-
-Route::get('tasksdata',[ProjectDashboardController::class,'tasksData']);
-
-
-Route::get('/user/activities',[ProjectDashboardController::class,'activities']);
-
+Route::controller(ProjectDashboardController::class)->group(function(){
+ Route::get('/data','data');
+ Route::get('/tasksdata','tasksData');
+ Route::get('/user/activities','activities');
+})->middleware(['can:owner','user']);
 
 Route::get('/welcome',[WelcomeController::class,'index']);
 
