@@ -20,7 +20,7 @@ class UserTasksDataRepository
    ->when($request->remaining, fn ($query)=> 
         $query->where('user_id', $userId)->remaining())
 
-    ->with(['project' => fn ($q) => $q->withTrashed(), 'status', 'assignee'])
+    ->with(['project' => fn ($q) => $q->withTrashed(), 'status', 'assignee:id,name'])
     ->get();
 
     }

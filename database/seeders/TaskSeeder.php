@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use App\Models\Project;
+use App\Models\User;
 use App\Models\Task;
 use DB;
 use Illuminate\Database\Eloquent\Factories\Sequence;
@@ -18,24 +19,36 @@ class TaskSeeder extends Seeder
      */
     public function run()
     {
+      $projects = Project::with('user')->get();
 
-     $projects = Project::with('user')->get();
+$projects->each(function ($project) {
+    $user = $project->user;
 
-        $projects->each(function ($project){
-              $user_id = $project->user->id;
+    Task::factory()->count(6)->create([
+        'user_id' => $user->id,
+        'project_id' => $project->id,
+    ]);
 
-            Task::factory()->count(4)->create([
-              'project_id'=>$project->id,
-              'user_id'=>$user_id,
-              'status_id'=>1
-            ]);
+    Task::factory()->trashed()->count(3)->create([
+        'user_id' => $user->id,
+        'project_id' => $project->id,
+    ]);
 
-            Task::factory()->count(2)->create([
-                'project_id' => $project->id,
-                'user_id' => $user_id,
-                'status_id'=>1,
-                'deleted_at'=>Carbon::now()->subDays(30),
-            ]);
-        });
+    Task::factory()->completed()->count(3)->create([
+        'user_id' => $user->id,
+        'project_id' => $project->id,
+    ]);
+
+    Task::factory()->overdue()->count(2)->create([
+        'user_id' => $user->id,
+        'project_id' => $project->id,
+    ]);
+
+    Task::factory()->remaining()->count(3)->create([
+        'user_id' => $user->id,
+        'project_id' => $project->id,
+    ]);
+});
+
     }
 }

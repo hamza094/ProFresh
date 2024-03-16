@@ -58,7 +58,7 @@
                         </p>
                       <p>
                           <!-- Due date, created at and project details -->
-                          <span v-if="task.due_at"><i class="fas fa-stopwatch"></i>19 feb 12</span>
+                          <span v-if="task.due_at"><i class="fas fa-stopwatch"></i>{{task.due_at}}</span>
 
                         <span class="ml-3">
                         <i class="fas fa-project-diagram"></i>
