@@ -7,6 +7,7 @@ import Home from './components/Home';
 import Register from './components/Authentication/Register';
 import Login from './components/Authentication/Login';
 import OAuth from './components/Authentication/OAuth';
+import ZoomAuth from './components/Authentication/ZoomAuth';
 import Dashboard from './components/Dashboard/Dashboard';
 import ForgotPassword from './components/Authentication/ForgotPassword';
 import ResetPassword from './components/Authentication/ResetPassword';
@@ -51,6 +52,12 @@ let router = new Router({
            component: OAuth,
            name: "OAuth",
            beforeEnter: guest,
+        },
+        {
+           path: '/oauth/zoom/callback',
+           component: ZoomAuth,
+           name: "ZoomAuth",
+           beforeEnter: auth,
         },
         {
             path: '/home',

@@ -34,6 +34,8 @@ class ProjectResource extends JsonResource
           'completed'=>$this->completed,
           'score'=>$this->score(),
 
+          'ownerNotAuthorized' => auth()->user()->is($this->user) && !auth()->user()->isConnectedToZoom(),
+
           'conversations'=>ConversationResource::collection($this->whenLoaded('conversations')->take(25)),
 
           'created_at'=>$this->created_at->diffforHumans(),

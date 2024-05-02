@@ -107,6 +107,14 @@
 								<p v-text="project.updated_at"></p>
 							</div>
 						</div>
+						<br>
+						<hr>
+						<div class="project-info">
+							<div class="project-info_socre">
+								<p class="project-info_score-heading">Meetings</p>
+								<p v-if="project.ownerNotAuthorized" class="btn btn-sm btn-secondary" @click.pervent="authorize">Authorize With Zoom</p>
+							</div>
+						</div>
 					</div>
 
 				</div>
@@ -220,6 +228,14 @@ export default{
 						  this.nameEdit = false;
 						  this.projectname=this.project.name;
               this.showError(error);
+					 });
+			},
+
+			authorize(){
+				axios.get(`/api/v1/oauth/zoom/redirect`,{
+					}).then(response=>{
+						window.location.href = response.data.redirectUrl;
+					}).catch(error=>{
 					 });
 			},
 

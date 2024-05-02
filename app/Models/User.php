@@ -56,6 +56,9 @@ class User extends Authenticatable implements Searchable, MustVerifyEmail
         'remember_token',
         'oauth_token',
         'oauth_refresh_token',
+        'zoom_access_token',
+        'zoom_refresh_token',
+        'zoom_expires_at',
     ];
 
     /**
@@ -68,7 +71,10 @@ class User extends Authenticatable implements Searchable, MustVerifyEmail
         'oauth_provider' => OAuthProvider::class,
         'oauth_token' => 'encrypted',
         'oauth_refresh_token' => 'encrypted',
-        'last_active_at'=>'datetime'
+        'last_active_at'=>'datetime',
+         'zoom_access_token' => 'encrypted',
+         'zoom_refresh_token' => 'encrypted',
+         'zoom_expires_at' => 'datetime',
     ];
 
     public function sendEmailVerificationNotification()
@@ -177,6 +183,24 @@ class User extends Authenticatable implements Searchable, MustVerifyEmail
     {
         return $this->hasRole('Admin');
 
+    }
+
+    public function updateZoomOAuthDetails(
+        string $accessToken,
+        string $refreshToken,
+        \DateTimeImmutable $expiresAt
+  ): void {
+        $this->zoom_access_token = $accessToken;
+        $this->zoom_refresh_token = $refreshToken;
+        $this->zoom_expires_at = $expiresAt;
+        $this->save();
+  }
+
+   public function isConnectedToZoom(): bool
+   {
+       return $this->zoom_access_token
+       && $this->zoom_refresh_token
+       && $this->zoom_expires_at;
     }
 
 }

@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Api\Auth\OAuthController;
 
+use App\Http\Controllers\Api\OAuth\ZoomAuthController;
+
 use App\Http\Controllers\Api\
 {
   ProjectController,
@@ -156,7 +158,15 @@ Route::get('subscription/{plan}/cancel','cancel')
 });
 
 Route::get('task/statuses',TaskStatusController::class)
-           ->name('task.status');             
+           ->name('task.status');  
+   
+Route::controller(ZoomAuthController::class)
+ ->as('oauth.zoom.')
+ ->group(function () {
+ Route::get('oauth/zoom/redirect', 'redirect')->name('redirect');
+ Route::get('oauth/zoom/callback', 'callback')->name('callback');
+ });    
+                      
 });
 });
 
