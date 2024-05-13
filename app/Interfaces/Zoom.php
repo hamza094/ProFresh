@@ -5,6 +5,8 @@ namespace App\Interfaces;
 use App\DataTransferObjects\Zoom\AccessTokenDetails;
 use App\DataTransferObjects\Zoom\AuthorizationCallbackDetails;
 use App\DataTransferObjects\Zoom\AuthorizationRedirectDetails;
+use App\DataTransferObjects\Zoom\NewMeetingData;
+use App\DataTransferObjects\Zoom\Meeting;
 use App\Models\User;
 
 interface Zoom
@@ -15,5 +17,6 @@ interface Zoom
  AuthorizationCallbackDetails $callbackDetails
  ): AccessTokenDetails;
 
+  public function createMeeting(NewMeetingData $meetingData,User $user): Meeting;
 
 }

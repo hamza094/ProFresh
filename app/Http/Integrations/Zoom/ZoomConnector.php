@@ -7,6 +7,7 @@ use Saloon\Http\Connector;
 use Saloon\Traits\OAuth2\AuthorizationCodeGrant;
 use Saloon\Traits\Plugins\AcceptsJson;
 use App\Http\Integrations\Zoom\Requests\GetAccessTokenRequest;
+use App\Http\Integrations\Zoom\Requests\GetRefreshTokenRequest;
 use Saloon\Http\Request;
 use App\Exceptions\Integrations\Zoom\ZoomException;
 use App\Exceptions\Integrations\Zoom\NotFoundException;
@@ -24,7 +25,7 @@ class ZoomConnector extends Connector
      */
     public function resolveBaseUrl(): string
     {
-        return '';
+        return 'https://api.zoom.us/v2/';
     }
 
     /**
@@ -38,7 +39,10 @@ class ZoomConnector extends Connector
             ->setRedirectUri('http://localhost:8000/oauth/zoom/callback')
             ->setAuthorizeEndpoint('https://zoom.us/oauth/authorize')
             ->setTokenEndpoint('https://zoom.us/oauth/token')
-            ->setDefaultScopes(['user:read:zak']);
+            ->setDefaultScopes(['user:read:zak','meeting:write:meeting','meeting:read:list_meetings',
+                'meeting:read:meeting',
+                'meeting:delete:meeting',
+                'meeting:update:meeting']);
     }
 
     protected function resolveAccessTokenRequest(
@@ -46,10 +50,16 @@ class ZoomConnector extends Connector
         OAuthConfig $oauthConfig
     ): Request {
     return new GetAccessTokenRequest($code, $oauthConfig);
-
   }
 
-   public function getRequestException(
+    protected function resolveRefreshTokenRequest(
+        OAuthConfig $oauthConfig,
+        string $refreshToken
+     ): Request {
+          return new GetRefreshTokenRequest($oauthConfig, $refreshToken);
+    }
+
+    public function getRequestException(
         Response $response, ?Throwable $senderException
         ): ?Throwable {
          return match ($response->status()) {
@@ -63,12 +73,11 @@ class ZoomConnector extends Connector
             code: $response->status(),
             previous: $senderException,
         ),
-        default => new GitHubException(
+        default => new ZoomException(
             message: $response->body(),
             code: $response->status(),
             previous: $senderException,
         ),
     };
   }
-
 }

@@ -6,6 +6,8 @@ use App\Http\Controllers\Api\Auth\OAuthController;
 
 use App\Http\Controllers\Api\OAuth\ZoomAuthController;
 
+use App\Http\Controllers\Api\ZoomController;
+
 use App\Http\Controllers\Api\
 {
   ProjectController,
@@ -158,7 +160,9 @@ Route::get('subscription/{plan}/cancel','cancel')
 });
 
 Route::get('task/statuses',TaskStatusController::class)
-           ->name('task.status');  
+           ->name('task.status'); 
+
+Route::post('/zoom/meeting/create',[ZoomController::class,'createMeeting'])->name('zoom.meetings.store');           
    
 Route::controller(ZoomAuthController::class)
  ->as('oauth.zoom.')

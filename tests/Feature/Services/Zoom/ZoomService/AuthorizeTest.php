@@ -60,7 +60,7 @@ class AuthorizeTest extends TestCase
             'grant_type' => 'authorization_code',
             'code' => 'dummy-code',
             'redirect_uri' =>
-            'http://127.0.0.1:8000/oauth/zoom/callback',
+            'http://localhost:8000/oauth/zoom/callback',
              'code_verifier' => 'dummy-code-verifier'
         ];
        });

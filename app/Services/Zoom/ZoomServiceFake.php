@@ -2,21 +2,31 @@
 
 namespace App\Services\Zoom;
 
-//use App\Collections\Spotify\ArtistCollection;
 use App\DataTransferObjects\Zoom\AccessTokenDetails;
 use App\DataTransferObjects\Zoom\AuthorizationCallbackDetails;
 use App\DataTransferObjects\Zoom\AuthorizationRedirectDetails;
 use App\Exceptions\Integrations\Zoom\ZoomException;
+use App\DataTransferObjects\Zoom\Meeting;
+use App\DataTransferObjects\Zoom\NewMeetingData;
+use Illuminate\Support\Collection;
+use PHPUnit\Framework\Assert;
 use App\Interfaces\Zoom;
+use Faker\Generator;
 use App\Models\User;
 
 final class ZoomServiceFake implements Zoom
 {
 	private ZoomException $failureException;
-
+    private Generator $faker;
+    public Collection $meetingsToCreate;
 	public string $authorizationUrl;
     public string $state;
     public string $codeVerifier;
+
+    public function __construct()
+    {
+       $this->meetingsToCreate = new Collection();
+    } 
 
  public function getAuthRedirectDetails(): AuthorizationRedirectDetails
  {
@@ -49,7 +59,6 @@ final class ZoomServiceFake implements Zoom
       return $this;
  }
 
-
   public function buildAuthorizationUrlUsing(
         string $authorizationUrl,
         string $state,
@@ -61,10 +70,58 @@ final class ZoomServiceFake implements Zoom
         return $this;
  }
 
- /*public function getTopArtists(User $user): ArtistCollection
+ public function createMeeting(NewMeetingData $meetingData,User $user): Meeting
+ {  
+
+    if(isset($this->failureException)) {
+      throw $this->failureException;
+    }
+
+    $this->meetingsToCreate->push($meetingData);
+
+    return $this->fakeMeeting();
+
+ }
+
+   private function fakeMeeting(): Meeting
  {
- throw new \Exception('Not implemented');
- }*/
+    $faker = app(Generator::class);
+    //$topic ??= $faker->word;
+    //$agenda ??= $faker->sentence;
+
+    return new Meeting(
+        id: 1234,
+        topic: 'topic of meeting',
+        agenda: 'this is the agenda of meeting',
+        createdAt:'2024-05-18 18:00:07',
+        duration: 30,
+        startTime:'2024-05-27 18:00:07',
+        startUrl:'https://zoom.us/s/1234567890?pwd=yourpassword', 
+        status: 'waiting',
+        timezone: 'UTC',
+        password: 'herpku',
+        joinBeforeHost:false,
+
+      );
+ }
+
+  public function assertNoMeetingsCreated(): void
+  {
+   Assert::assertEmpty($this->meetingsToCreate,'Meeting was not created.');
+  }
+
+public function assertMeetingCreated(string $id,string $topic,
+ bool $agenda): void 
+{
+   
+   $meetingIsToBeCreated = $this->meetingsToCreate
+ ->where('id', $id)
+ ->where('topic', $topic)
+ ->where('agenda', $agenda)
+ ->isNotEmpty();
+
+ Assert::assertTrue($meetingIsToBeCreated,'Meetings were created.');
+}
 
 }
 

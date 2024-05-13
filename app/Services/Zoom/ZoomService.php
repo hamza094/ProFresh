@@ -5,8 +5,11 @@ namespace App\Services\Zoom;
 use App\DataTransferObjects\Zoom\AccessTokenDetails;
 use App\DataTransferObjects\Zoom\AuthorizationCallbackDetails;
 use App\DataTransferObjects\Zoom\AuthorizationRedirectDetails;
+use App\DataTransferObjects\Zoom\NewMeetingData;
+use App\DataTransferObjects\Zoom\Meeting;
 use App\Http\Integrations\Zoom\ZoomConnector;
 use App\Http\Integrations\Zoom\Requests\GetAccessTokenRequest;
+use App\Http\Integrations\Zoom\Requests\CreateMeeting;
 use App\Interfaces\Zoom;
 use App\Models\User;
 use Illuminate\Support\Str;
@@ -28,6 +31,7 @@ final class ZoomService implements Zoom
      $connector = $this->connector();
 
      $authorizationUrl = $connector->getAuthorizationUrl(
+    scopeSeparator: ',',
      additionalQueryParameters: [
        'code_challenge' => $codeChallenge,
        'code_challenge_method' => 'S256',
@@ -78,9 +82,10 @@ final class ZoomService implements Zoom
        $accessTokenDetails = $this->getZoomOAuthDetails($user);
 
         $connector = $this->connector()->authenticate($accessTokenDetails);
-       
+
         if ($accessTokenDetails->hasExpired()) {
-            $newAccessTokenDetails =
+
+        $newAccessTokenDetails =
             
          $connector->refreshAccessToken($accessTokenDetails);
 
@@ -112,4 +117,17 @@ final class ZoomService implements Zoom
         );
     }
 
+    public function createMeeting(NewMeetingData $meetingData,User $user): Meeting
+   {
+     if (!$user->isConnectedToZoom()) 
+     {
+       throw new ZoomException('User is not connected to Zoom.');
+     }
+
+    return $this->connectorForUser($user)
+       ->send(new CreateMeeting($meetingData))
+       ->dtoOrFail();
+   }
+
 }
+
