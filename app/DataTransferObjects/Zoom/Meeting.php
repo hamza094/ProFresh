@@ -1,41 +1,45 @@
 <?php 
 
 namespace App\DataTransferObjects\Zoom;
-
+use Auth;
 use Carbon\CarbonInterface;
 use Carbon\Carbon;
+use Ramsey\Uuid\Uuid;
+use DateTime;
 
 final class Meeting
 {
    public function __construct(
-   public int $id,
+   public int $meeting_id,
    public string $topic,
    public string $agenda,
-   public string $createdAt,
+   public string $created_at,
    public int $duration,
-   public string $startTime,
-   public string $startUrl,
+   public string $start_time,
+   public string $start_url,
+   public string $join_url,
    public string $status,
    public string $timezone,
    public string $password,
-   public bool $joinBeforeHost,
+   public bool $join_before_host,
 
  ) {}
 
    public static function fromResponse(array $response): static
   {
    return new static(
-     id: $response['id'],
+     meeting_id: $response['id'],
      topic: $response['topic'],
      agenda: $response['agenda'],
-     createdAt: Carbon::parse($response['created_at']),
+     created_at: Carbon::parse($response['created_at']),
      duration: $response['duration'],
-     startTime: Carbon::parse($response['start_time']),
-     startUrl: $response['start_url'],
+     start_time: Carbon::parse($response['start_time']),
+     start_url: $response['start_url'],
+     join_url: $response['start_url'],
      status: $response['status'],
      timezone:$response['timezone'],
      password:$response['password'],
-     joinBeforeHost:$response['join_before_host'],
+     join_before_host:$response['join_before_host'] ?? false,
  );
 }
 

@@ -97,20 +97,20 @@ final class ZoomServiceFake implements Zoom
         duration: 30,
         startTime:'2024-05-27 18:00:07',
         startUrl:'https://zoom.us/s/1234567890?pwd=yourpassword', 
+        //joinUrl:'https://zoom.us/j/1234567890?pwd=yourpassword',
         status: 'waiting',
         timezone: 'UTC',
         password: 'herpku',
         joinBeforeHost:false,
-
       );
  }
 
-  public function assertNoMeetingsCreated(): void
+  /*public function assertNoMeetingsCreated(): void
   {
    Assert::assertEmpty($this->meetingsToCreate,'Meeting was not created.');
-  }
+  }*/
 
-public function assertMeetingCreated(string $id,string $topic,
+/*public function assertMeetingCreated(string $id,string $topic,
  bool $agenda): void 
 {
    
@@ -121,7 +121,7 @@ public function assertMeetingCreated(string $id,string $topic,
  ->isNotEmpty();
 
  Assert::assertTrue($meetingIsToBeCreated,'Meetings were created.');
-}
+}*/
 
 }
 

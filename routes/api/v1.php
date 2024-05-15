@@ -117,6 +117,7 @@ Route::controller(InvitationController::class)->group(function(){
   Route::get('/accept-invitation','accept')->name('accept.invitation');
   Route::get('/ignore','ignore');
 });
+Route::post('/zoom/meeting/create',[ZoomController::class,'createMeeting'])->name('zoom.meetings.store');
 });
 
 Route::apiResource('/users',UserController::class);
@@ -161,8 +162,7 @@ Route::get('subscription/{plan}/cancel','cancel')
 
 Route::get('task/statuses',TaskStatusController::class)
            ->name('task.status'); 
-
-Route::post('/zoom/meeting/create',[ZoomController::class,'createMeeting'])->name('zoom.meetings.store');           
+           
    
 Route::controller(ZoomAuthController::class)
  ->as('oauth.zoom.')

@@ -203,4 +203,9 @@ class User extends Authenticatable implements Searchable, MustVerifyEmail
        && $this->zoom_expires_at;
     }
 
+   public function meetings()
+   {
+      return $this->hasMany(Meeting::class); 
+   } 
+
 }

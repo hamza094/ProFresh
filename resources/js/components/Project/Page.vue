@@ -323,7 +323,7 @@ export default{
 			},
 		 createMeeting() {
       // Send the form data object with Axios
-      axios.post(`/api/v1/zoom/meeting/create`,this.form)
+      axios.post(`/api/v1/projects/${this.project.slug}/zoom/meeting/create`,this.form)
         .then(response => {
           console.log(response);
         })

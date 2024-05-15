@@ -65,23 +65,27 @@ class MeetingTest extends TestCase
 
        $meeting = (new ZoomService())->createMeeting($meetingData,$user);
 
-  $expectedData = [
-        'id' => 124,
-        'topic' => 'this is fun',
-        'agenda' => 'the agenda of this meeting should be discussed soon',
-        'createdAt' => '2024-05-16 18:00:07',
-        'duration' => 30,
-        'password' => 'hacker',
-        'joinBeforeHost' => false,
-        'startTime' => '2024-05-18 18:00:07',
-        'startUrl' => 'https://zoom.us/s/1234567890?pwd=yourpassword',
-        'status' => 'waiting',
-        'timezone' => 'UTC',
-    ];
+$this->assertEquals($meeting->meeting_id,124);
 
-    foreach ($expectedData as $key => $value) {
-        $this->assertEquals($meeting->$key, $value);
-    }
+        $this->assertEquals($meeting->topic, 'this is fun');
+
+        $this->assertEquals($meeting->agenda, 'the agenda of this meeting should be discussed soon');
+
+        $this->assertEquals($meeting->created_at,'2024-05-16 18:00:07');
+
+        $this->assertEquals($meeting->duration, 30);
+
+        $this->assertEquals($meeting->password, 'hacker');
+
+        $this->assertEquals($meeting->join_before_host, false);
+
+        $this->assertEquals($meeting->start_time, '2024-05-18 18:00:07');
+
+        $this->assertEquals($meeting->start_url, 'https://zoom.us/s/1234567890?pwd=yourpassword');
+
+        $this->assertEquals($meeting->status,'waiting');
+
+        $this->assertEquals($meeting->timezone,'UTC');
 
      Saloon::assertNotSent(GetRefreshTokenRequest::class);
 

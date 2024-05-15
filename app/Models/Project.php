@@ -181,4 +181,8 @@ class Project extends Model
         return $this->deleted_at ? 'trashed' : 'active';
     }
 
+    public function meetings(){
+      return $this->hasMany(Meeting::class);
+    }
+
 }
