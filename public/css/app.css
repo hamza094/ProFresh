@@ -1440,6 +1440,29 @@ button.gnuIjg {
   position: inherit !important;
 }
 
+.card-hover {
+  cursor: pointer;
+}
+
+.meeting_list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.meeting_list li {
+  margin-top: 0.8rem;
+  margin-left: 0.5rem;
+}
+
+.meeting-agenda {
+  font-size: 1.1rem;
+}
+
+.meeting_item {
+  color: #999999;
+}
+
 .padding-0 {
   padding-right: 0;
 }

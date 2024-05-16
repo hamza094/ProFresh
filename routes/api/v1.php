@@ -118,6 +118,7 @@ Route::controller(InvitationController::class)->group(function(){
   Route::get('/ignore','ignore');
 });
 Route::post('/zoom/meeting/create',[ZoomController::class,'createMeeting'])->name('zoom.meetings.store');
+Route::get('/meetings/{meeting}',[ZoomController::class,'show'])->name('zoom.meetings.show');
 });
 
 Route::apiResource('/users',UserController::class);

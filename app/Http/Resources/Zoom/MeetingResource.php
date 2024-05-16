@@ -3,6 +3,7 @@
 namespace App\Http\Resources\Zoom;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use App\Http\Resources\UsersResource;
 use Carbon\Carbon;
 
 class MeetingResource extends JsonResource
@@ -17,10 +18,19 @@ class MeetingResource extends JsonResource
     {
         return [
            'id'=>$this->id,
+           'meeting_id'=>$this->meeting_id,
            'topic'=>$this->topic,
            'agenda'=>$this->agenda,
-           'created_at'=>$this->created_at,
-           'start_time'=>Carbon::parse($this->start_time)->diffForHumans(),
+           'created_at'=>$this->created_at->diffForHumans([
+               'parts' => 3,
+               'join' =>", ",
+           ]),
+           'owner'=>new UsersResource($this->whenLoaded('user')),
+           'start_time'=>Carbon::parse($this->start_time)->format('j F Y, H:i'),
+           'duration'=>$this->duration,
+           'start_url'=>$this->start_url,
+           'join_url'=>$this->join_url,
+           'password'=>$this->password,
            'status'=>$this->status,
            'timezone'=>$this->timezone,
         ];

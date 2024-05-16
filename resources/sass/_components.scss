@@ -1346,3 +1346,25 @@ button.gnuIjg {
 .page-link{
     position:inherit !important;
 }
+
+.card-hover{
+    cursor:pointer;
+}
+
+.meeting{
+    &_list{
+    list-style: none;
+        padding: 0;
+        margin: 0;
+        li{
+         margin-top:.8rem;
+         margin-left:.5rem;
+        }
+    }
+    &-agenda{
+          font-size:1.1rem;
+        }
+    &_item{
+       color:#999999;
+    }    
+}

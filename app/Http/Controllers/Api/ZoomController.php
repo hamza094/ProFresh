@@ -23,8 +23,8 @@ class ZoomController extends Controller
 {
     use ApiResponseHelpers;
 
-    public function createMeeting(Zoom $zoom,Project $project,Request $request,ZoomConnector $connector)
- {     
+  public function createMeeting(Zoom $zoom,Project $project,Request $request,ZoomConnector $connector)
+  {     
     $user=auth()->user();
 
     try {
@@ -54,5 +54,12 @@ class ZoomController extends Controller
       'meeting'=>new MeetingResource($projectMeeting),
     ]);        
  }
+
+   public function show(Project $project,Meeting $meeting)
+    {
+      $meeting->load(['user']);
+
+      return new MeetingResource($meeting);
+    }
 
 }
