@@ -12,6 +12,7 @@ use Saloon\RateLimitPlugin\Exceptions\RateLimitReachedException;
 use Illuminate\Http\Request;
 use App\Http\Integrations\Zoom\ZoomConnector;
 use App\Http\Resources\Zoom\MeetingResource;
+use App\Services\MeetingService;
 use App\Interfaces\Zoom;
 use F9Web\ApiResponseHelpers;
 use DateTime;
@@ -54,6 +55,17 @@ class ZoomController extends Controller
       'meeting'=>new MeetingResource($projectMeeting),
     ]);        
  }
+
+  public function index(Project $project,Request $request,MeetingService $meetingService): JsonResponse
+  {
+    //$this->authorize('access', $project);
+
+    $isPrevious = ($request->query('request') === 'previous') ? true : false;
+
+    $meetingsData = $meetingService->getMeetingsData($project, $isPrevious);
+
+    return $this->respondWithSuccess($meetingsData);
+  }
 
    public function show(Project $project,Meeting $meeting)
     {

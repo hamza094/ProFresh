@@ -6,7 +6,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
 use App\Http\Resources\ActivityResource;
 use App\Http\Resources\ConversationResource;
 use App\Http\Resources\UsersResource;
-use App\Http\Resources\Zoom\MeetingsResource;
+//use App\Http\Resources\Zoom\MeetingsResource;
 use Carbon\Carbon;
 
 class ProjectResource extends JsonResource
@@ -52,7 +52,7 @@ class ProjectResource extends JsonResource
           'days_limit'=>config('app.project.abandonedLimit'),
           
           'activities'=>ActivityResource::collection($this->getLimitedActivities()),
-          'meetings'=>MeetingsResource::collection($this->whenLoaded('meetings')),
+          /*'meetings'=>MeetingsResource::collection($this->whenLoaded('meetings')),*/
         ];
     }
 }

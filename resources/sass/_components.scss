@@ -1367,4 +1367,25 @@ button.gnuIjg {
     &_item{
        color:#999999;
     }    
+    &_button{
+      text-decoration: none !important;
+
+    &:hover,
+    &:focus {
+    text-decoration: none !important;
+  }
+}
+}
+
+.btn-link.active {
+  background-color: #007bff;
+  border-color: #007bff;
+  color: white !important;
+}
+
+.btn-link {
+  &:hover,
+  &:focus {
+    text-decoration: none;
+  }
 }

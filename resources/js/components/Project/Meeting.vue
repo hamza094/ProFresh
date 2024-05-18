@@ -7,8 +7,28 @@
 				<button v-if="!notAuthorize" class="btn btn-sm btn-primary" @click.pervent="openMeetingModal()">Create Meating</button>
 					</div>
 					<hr>
-
-				<div v-for="meeting in this.projectMeetings" :key="meeting.id">
+                <div class="btn-group" role="group">
+      <button
+        type="button"
+        class="btn btn-link btn-sm meeting_button"
+        :class="{ active: !showPrevious }"
+        @click="showCurrentMeetings"
+      >
+        Current Meetings
+      </button>
+      <button
+        type="button"
+        class="btn btn-link btn-sm meeting_button"
+        :class="{ active: showPrevious }"
+        @click="showPreviousMeetings"
+      >
+        Previous Meetings
+      </button>
+    </div>
+                   <div v-if="message" class="alert alert-info">
+      {{ message }}
+    </div>
+				<div v-for="(meeting,index) in meetings.data" :key="meeting.id">
                 <div class="card mt-3 card-hover" @click.pervent="getMeeting(meeting.id)">
                 	<div class="ribbon bg-red">{{meeting.status}}</div>
                   <div class="card-stamp">
@@ -32,6 +52,8 @@
                 </div>
               </div>
 		</div>
+	<pagination :data="meetings" @pagination-change-page="getResults"></pagination>
+
 
 <MeetingModal :projectSlug="this.projectSlug"></MeetingModal>
 
@@ -86,7 +108,6 @@
     </ul>
     <button class="btn btn-danger float-right mb-3">Delete</button>
 </div>
-
     </div>
 
 </modal> 
@@ -106,18 +127,36 @@ export default{
 
     data(){	
     return{
-		meetings:[],
 		meeting:[],
+        showPrevious: false,
     };
     },
+    computed:{
+    ...mapState('meeting',['meetings','message']),
+  },
 
     methods:{ 
-    	openMeetingModal() {
+    	...mapActions({
+      fetchMeetings: 'meeting/fetchMeetings',
+    }),
+
+    getResults(page) {
+        const slug = this.$route.params.slug;
+        this.fetchMeetings({ slug, page, isPrevious: this.showPrevious });
+    },
+    showCurrentMeetings() {
+      this.showPrevious = false;
+      this.getResults();
+    },
+    showPreviousMeetings() {
+      this.showPrevious = true;
+      this.getResults();
+    },	
+    openMeetingModal() {
       this.$bus.emit('open-meeting-modal');
     },
     getMeeting(meeting){
     	this.$modal.show('ViewMeeting');
-
     	axios.get(`/api/v1/projects/${this.projectSlug}/meetings/${meeting}`,)
         .then(response => {
           this.meeting=response.data;
@@ -130,14 +169,24 @@ export default{
            this.$modal.hide('ViewMeeting');
            this.meeting=[];
     },
-        authorize(){
-				axios.get(`/api/v1/oauth/zoom/redirect`,{
-					}).then(response=>{
-						window.location.href = response.data.redirectUrl;
-					}).catch(error=>{
+    authorize(){
+		axios.get(`/api/v1/oauth/zoom/redirect`,{
+			}).then(response=>{
+			   window.location.href = response.data.redirectUrl;
+			}).catch(error=>{
 	});
-	
   },
-}
+},
+created(){
+     this.showCurrentMeetings();
+  },
+    mounted() {
+    this.$bus.on('get-results', () => {
+      this.showCurrentMeetings();
+    });
+  },
+  destroyed() {
+    this.$bus.$off('get-results');
+  },
 }
 </script>

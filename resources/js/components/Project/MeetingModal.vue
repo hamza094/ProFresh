@@ -97,6 +97,7 @@ export default{
     	strttm:'',
     	timezone:''
     },
+    errors:[],
     };
     },
     mounted() {
@@ -108,12 +109,14 @@ export default{
     this.$bus.$off('open-meeting-modal');
   },
 
-    methods:{ 
+    methods:{
+        ...mapMutations('meeting', ['addMeeting']), 
     	createMeeting() {
       // Send the form data object with Axios
       axios.post(`/api/v1/projects/${this.projectSlug}/zoom/meeting/create`,this.form)
         .then(response => {
-          console.log(response);
+          this.addMeeting(response.data.meeting);
+        this.$bus.emit('get-results');
         })
         .catch(error => {
           console.error(error);

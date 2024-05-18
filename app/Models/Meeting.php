@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 
 class Meeting extends Model
 {
@@ -39,5 +41,16 @@ class Meeting extends Model
 
     public function project(){
         return $this->belongsTo(Project::class);
+    }
+
+    public function scopePrevious(Builder $query): Builder
+    {
+        return $query->where('start_time', '<', Carbon::now());
+    }
+
+
+    public function scopeScheduled(Builder $query): Builder
+    {
+        return $query->where('start_time', '>=', Carbon::now());
     }
 }

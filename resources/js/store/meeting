@@ -1,0 +1,48 @@
+const state = {
+  meetings:{
+    data: [],
+    links: {},
+    meta: {}
+  },
+    message:'',
+};
+
+const mutations = {
+setMeetings(state,meetingsData) {
+    state.meetings = meetingsData.meetings;
+  },
+  setMessage(state,message) {
+    state.message = message;
+  },
+  removeMeetingFromState(state, meetingId){
+    const index = state.meetings.data.findIndex(meeting => meeting.id === meetingId);
+    if (index !== -1) {
+      state.meetings.data.splice(index, 1);
+    }
+  },
+   addMeeting(state, meeting) {
+    state.meetings.data.unshift(meeting);
+  },
+};
+
+const actions = {
+  fetchMeetings({ commit }, { slug, page, isPrevious }) {
+    const params = isPrevious ? { request: 'previous', page } : { page };
+    return axios.get(`/api/v1/projects/${slug}/meetings`, { params })
+      .then(response => {
+        commit('setMeetings', { page, meetings: response.data.meetingsData });
+        commit('setMessage', response.data.message);
+      })
+      .catch(error => {
+        commit('setMeetings', { data: [], links: {}, meta: {} });
+        commit('setMessage', 'Failed to load project meetings');
+      });
+  }
+};
+
+export default{
+  namespaced: true,
+  state,
+  mutations,
+  actions,
+}

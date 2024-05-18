@@ -11,6 +11,7 @@ import SingleTask from "./SingleTask"
 import stage from "./stage"
 import status from "./status"
 import roles from "./roles"
+import meeting from "./meeting"
 
 Vue.use(Vuex)
 
@@ -27,6 +28,7 @@ export default new Vuex.Store({
      SingleTask,
      stage,
      status,
-     roles
+     roles,
+     meeting
   }
 })
