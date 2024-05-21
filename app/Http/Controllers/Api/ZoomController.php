@@ -24,8 +24,10 @@ class ZoomController extends Controller
 {
     use ApiResponseHelpers;
 
-  public function createMeeting(Zoom $zoom,Project $project,Request $request,ZoomConnector $connector)
-  {     
+  public function createMeeting(Zoom $zoom,Project $project,Request $request,ZoomConnector $connector): JsonResponse
+  {
+    $this->authorize('manage', $project);
+     
     $user=auth()->user();
 
     try {
@@ -38,15 +40,14 @@ class ZoomController extends Controller
         joinBeforeHost:$request->joinBeforeHost,
         startTime:  new DateTime($request->strttm),
         timezone: 'UTC'
-     ),$user
+     ),
+      $user
     );
    } catch(ZoomException $exception){
-    return response()->json(['error'=>$exception->getMessage()]);
+    return response()->json(['error'=>$exception->getMessage()], 400);
    }
 
-   $meetingArray = (array) $meeting;
-
-   $meetingArray['user_id'] = auth()->id();
+   $meetingArray = array_merge((array) $meeting, ['user_id' => $user->id]);
 
    $projectMeeting=$project->meetings()->create($meetingArray);
 
@@ -58,7 +59,7 @@ class ZoomController extends Controller
 
   public function index(Project $project,Request $request,MeetingService $meetingService): JsonResponse
   {
-    //$this->authorize('access', $project);
+     $this->authorize('access', $project);
 
     $isPrevious = ($request->query('request') === 'previous') ? true : false;
 

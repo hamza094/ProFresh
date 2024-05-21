@@ -48,7 +48,6 @@ class Meeting extends Model
         return $query->where('start_time', '<', Carbon::now());
     }
 
-
     public function scopeScheduled(Builder $query): Builder
     {
         return $query->where('start_time', '>=', Carbon::now());

@@ -7,6 +7,7 @@ use App\DataTransferObjects\Zoom\AuthorizationCallbackDetails;
 use App\DataTransferObjects\Zoom\AuthorizationRedirectDetails;
 use App\DataTransferObjects\Zoom\NewMeetingData;
 use App\DataTransferObjects\Zoom\Meeting;
+use App\Exceptions\Integrations\Zoom\ZoomException;
 use App\Http\Integrations\Zoom\ZoomConnector;
 use App\Http\Integrations\Zoom\Requests\GetAccessTokenRequest;
 use App\Http\Integrations\Zoom\Requests\CreateMeeting;

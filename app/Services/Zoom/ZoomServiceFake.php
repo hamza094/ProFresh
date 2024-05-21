@@ -28,9 +28,9 @@ final class ZoomServiceFake implements Zoom
        $this->meetingsToCreate = new Collection();
     } 
 
- public function getAuthRedirectDetails(): AuthorizationRedirectDetails
- {
-    return new AuthorizationRedirectDetails(
+    public function getAuthRedirectDetails(): AuthorizationRedirectDetails
+    {
+      return new AuthorizationRedirectDetails(
           authorizationUrl: $this->authorizationUrl,
           state: $this->state,
           codeVerifier: $this->codeVerifier,
@@ -90,38 +90,37 @@ final class ZoomServiceFake implements Zoom
     //$agenda ??= $faker->sentence;
 
     return new Meeting(
-        id: 1234,
+        meeting_id: 1234,
         topic: 'topic of meeting',
         agenda: 'this is the agenda of meeting',
-        createdAt:'2024-05-18 18:00:07',
+        created_at:'2024-05-18 18:00:07',
         duration: 30,
-        startTime:'2024-05-27 18:00:07',
-        startUrl:'https://zoom.us/s/1234567890?pwd=yourpassword', 
-        //joinUrl:'https://zoom.us/j/1234567890?pwd=yourpassword',
+        start_time:'2024-05-27 18:00:07',
+        start_url:'https://zoom.us/s/1234567890?pwd=yourpassword', 
+        join_url:'https://zoom.us/j/1234567890?pwd=yourpassword',
         status: 'waiting',
         timezone: 'UTC',
         password: 'herpku',
-        joinBeforeHost:false,
+        join_before_host:false,
       );
  }
 
-  /*public function assertNoMeetingsCreated(): void
+  public function assertNoMeetingsCreated(): void
   {
-   Assert::assertEmpty($this->meetingsToCreate,'Meeting was not created.');
-  }*/
+    Assert::assertEmpty($this->meetingsToCreate,'Meeting was not created.');
+  }
 
-/*public function assertMeetingCreated(string $id,string $topic,
- bool $agenda): void 
+public function assertMeetingCreated(string $topic,
+ bool $agenda,int $duration): void 
 {
-   
    $meetingIsToBeCreated = $this->meetingsToCreate
- ->where('id', $id)
- ->where('topic', $topic)
- ->where('agenda', $agenda)
- ->isNotEmpty();
+    ->where('topic', $topic)
+    ->where('agenda', $agenda)
+    ->where('duration', $duration)
+    ->isNotEmpty();
 
  Assert::assertTrue($meetingIsToBeCreated,'Meetings were created.');
-}*/
+}
 
 }
 

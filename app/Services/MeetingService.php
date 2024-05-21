@@ -12,8 +12,8 @@ use Illuminate\Http\JsonResponse;
 
 class MeetingService
 { 
-    use ApiResponseHelpers;
-
+  use ApiResponseHelpers;
+  
   public function getMeetingsData(Project $project, bool $isPrevious): array
     {
       $meetingsQuery = $project->meetings()->with('user');
