@@ -65,7 +65,6 @@ class StoreTest extends TestCase
     $zoomFake->assertNoMeetingsCreated();
 
     $response->assertBadRequest();
-
  }
    
 }

@@ -25,6 +25,7 @@ class MeetingResource extends JsonResource
                'parts' => 3,
                'join' =>", ",
            ]),
+           'updated_at'=>$this->updated_at->diffForHumans(),
            'owner'=>new UsersResource($this->whenLoaded('user')),
            'start_time'=>Carbon::parse($this->start_time)->format('j F Y, H:i'),
            'duration'=>$this->duration,

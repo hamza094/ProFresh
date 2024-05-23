@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\DataTransferObjects\Zoom\NewMeetingData;
+use App\DataTransferObjects\Zoom\UpdateMeetingData;
 use App\DataTransferObjects\Zoom\Meeting as MeetingDto;
 use App\Exceptions\Integrations\Zoom\ZoomException;
 use App\Exceptions\Integrations\Zoom\NotFoundException;
@@ -11,6 +12,7 @@ use App\Exceptions\Integrations\Zoom\UnauthorizedException;
 use Saloon\RateLimitPlugin\Exceptions\RateLimitReachedException;
 use Illuminate\Http\Request;
 use App\Http\Integrations\Zoom\ZoomConnector;
+use App\Http\Requests\Zoom\MeetingUpdateRequest;
 use App\Http\Resources\Zoom\MeetingResource;
 use App\Services\MeetingService;
 use App\Interfaces\Zoom;
@@ -24,7 +26,7 @@ class ZoomController extends Controller
 {
     use ApiResponseHelpers;
 
-  public function createMeeting(Zoom $zoom,Project $project,Request $request,ZoomConnector $connector): JsonResponse
+  public function createMeeting(Zoom $zoom,Project $project,MeetingUpdateRequest $request,ZoomConnector $connector): JsonResponse
   {
     $this->authorize('manage', $project);
      
@@ -73,6 +75,34 @@ class ZoomController extends Controller
       $meeting->load(['user']);
 
       return new MeetingResource($meeting);
+    }
+
+    public function update(Zoom $zoom,Project $project,Meeting $meeting,MeetingUpdateRequest $request){
+
+    $this->authorize('manage', $project);
+
+    try {
+     $zoomMeeting =  $zoom->updateMeeting(
+      $request->validated(),
+      auth()->user()
+    );
+   } catch(ZoomException $exception){
+    return response()->json(['error'=>$exception->getMessage()], 400);
+   }
+
+    try {
+        $meeting->update($request->validated());
+    } catch (\Exception $exception) {
+        return response()->json(['error' => 'Unable to update meeting in database'], 500);
+    }
+
+    $meeting->load(['user']);
+
+    return $this->respondWithSuccess([
+      'message'=>'Meeting Updated Successfully',
+      'meeting'=>new MeetingResource($meeting),
+    ]);      
+
     }
 
 }

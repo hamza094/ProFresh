@@ -6,6 +6,7 @@ use App\DataTransferObjects\Zoom\AccessTokenDetails;
 use App\DataTransferObjects\Zoom\AuthorizationCallbackDetails;
 use App\DataTransferObjects\Zoom\AuthorizationRedirectDetails;
 use App\DataTransferObjects\Zoom\NewMeetingData;
+use App\DataTransferObjects\Zoom\UpdateMeetingData;
 use App\DataTransferObjects\Zoom\Meeting;
 use App\Models\User;
 
@@ -18,5 +19,7 @@ interface Zoom
  ): AccessTokenDetails;
 
   public function createMeeting(NewMeetingData $meetingData,User $user): Meeting;
+
+public function updateMeeting(array $validated,User $user);
 
 }

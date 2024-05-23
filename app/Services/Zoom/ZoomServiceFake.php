@@ -8,6 +8,7 @@ use App\DataTransferObjects\Zoom\AuthorizationRedirectDetails;
 use App\Exceptions\Integrations\Zoom\ZoomException;
 use App\DataTransferObjects\Zoom\Meeting;
 use App\DataTransferObjects\Zoom\NewMeetingData;
+use App\DataTransferObjects\Zoom\UpdateMeetingData;
 use Illuminate\Support\Collection;
 use PHPUnit\Framework\Assert;
 use App\Interfaces\Zoom;
@@ -80,6 +81,11 @@ final class ZoomServiceFake implements Zoom
     $this->meetingsToCreate->push($meetingData);
 
     return $this->fakeMeeting();
+
+ }
+
+ public function updateMeeting(UpdateMeetingData $meetingData,User $user)
+ {  
 
  }
 

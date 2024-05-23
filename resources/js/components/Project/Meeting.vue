@@ -3,6 +3,7 @@
 <div class="project-info">
 		<div class="project-info_socre">
 			<p class="project-info_score-heading">Meetings</p>
+      <button class="btn btn-info" @click.prevent="UpdateMeeting">Update Meeting</button>
 				<p v-if="notAuthorize" class="btn btn-sm btn-secondary" @click.prevent="authorize">Authorize With Zoom</p>
 				<button v-if="!notAuthorize" class="btn btn-sm btn-primary" @click.pervent="openMeetingModal()">Create Meating</button>
 					</div>
@@ -129,6 +130,10 @@ export default{
     return{
 		meeting:[],
         showPrevious: false,
+        updateForm:{
+          meeting_id:82494622387,
+          agenda:'the is thunder of lightining bolt'
+        }
     };
     },
     computed:{
@@ -147,6 +152,15 @@ export default{
     showCurrentMeetings() {
       this.showPrevious = false;
       this.getResults();
+    },
+    UpdateMeeting(){
+      axios.post(`/api/v1/projects/${this.projectSlug}/meetings/1/update`,this.updateForm)
+        .then(response => {
+          this.meeting=response.data;
+        })
+        .catch(error => {
+          console.error(error);
+        });
     },
     showPreviousMeetings() {
       this.showPrevious = true;

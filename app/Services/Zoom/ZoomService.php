@@ -6,11 +6,13 @@ use App\DataTransferObjects\Zoom\AccessTokenDetails;
 use App\DataTransferObjects\Zoom\AuthorizationCallbackDetails;
 use App\DataTransferObjects\Zoom\AuthorizationRedirectDetails;
 use App\DataTransferObjects\Zoom\NewMeetingData;
+use App\DataTransferObjects\Zoom\UpdateMeetingData;
 use App\DataTransferObjects\Zoom\Meeting;
 use App\Exceptions\Integrations\Zoom\ZoomException;
 use App\Http\Integrations\Zoom\ZoomConnector;
 use App\Http\Integrations\Zoom\Requests\GetAccessTokenRequest;
 use App\Http\Integrations\Zoom\Requests\CreateMeeting;
+use App\Http\Integrations\Zoom\Requests\UpdateMeeting;
 use App\Interfaces\Zoom;
 use App\Models\User;
 use Illuminate\Support\Str;
@@ -128,6 +130,18 @@ final class ZoomService implements Zoom
     return $this->connectorForUser($user)
        ->send(new CreateMeeting($meetingData))
        ->dtoOrFail();
+   }
+
+   public function updateMeeting(array $validated,User $user)
+   {
+     if (!$user->isConnectedToZoom()) 
+     {
+       throw new ZoomException('User is not connected to Zoom.');
+     }
+
+    return $this->connectorForUser($user)
+       ->send(new UpdateMeeting($validated))
+       ->throw();
    }
 
 }
