@@ -3,6 +3,7 @@
 namespace App\Http\Resources\Zoom;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Str;
 use App\Http\Resources\UsersResource;
 use Carbon\Carbon;
 
@@ -19,8 +20,8 @@ class MeetingResource extends JsonResource
         return [
            'id'=>$this->id,
            'meeting_id'=>$this->meeting_id,
-           'topic'=>$this->topic,
-           'agenda'=>$this->agenda,
+           'topic'=> Str::headline($this->topic),
+           'agenda'=>Str::ucfirst($this->agenda),
            'created_at'=>$this->created_at->diffForHumans([
                'parts' => 3,
                'join' =>", ",
@@ -32,7 +33,7 @@ class MeetingResource extends JsonResource
            'start_url'=>$this->start_url,
            'join_url'=>$this->join_url,
            'password'=>$this->password,
-           'status'=>$this->status,
+           'status'=>Str::ucfirst($this->status),
            'timezone'=>$this->timezone,
         ];
     }

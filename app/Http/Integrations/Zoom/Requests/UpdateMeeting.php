@@ -8,6 +8,7 @@ use App\DataTransferObjects\Zoom\UpdateMeetingData;
 use Saloon\Contracts\Body\HasBody;
 use Saloon\Http\Response;
 use Saloon\Traits\Body\HasJsonBody;
+use DateTime;
 use Carbon\Carbon;
 
 class UpdateMeeting extends Request implements HasBody
@@ -36,7 +37,7 @@ class UpdateMeeting extends Request implements HasBody
             'topic' => $this->validated['topic'] ?? null,
             'agenda' => $this->validated['agenda'] ?? null,
             'duration' => $this->validated['duration'] ?? null,
-            'start_time' => isset($this->validated['start_time']) ? $this->validated['start_time']->format('Y-m-d H:i:s') : null,
+            'start_time' => isset($this->validated['start_time']) ? (new DateTime($this->validated['start_time']))->format('Y-m-d\TH:i:s\Z') : null,
             'password' => $this->validated['password'] ?? null,
             'join_before_host' => $this->validated['join_before_host'] ?? null,
             'timezone' => $this->validated['timezone'] ?? null,

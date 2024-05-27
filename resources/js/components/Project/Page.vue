@@ -10,16 +10,16 @@
 								<span class="page-top_arrow"> > </span>
 								<span> {{project.name}}</span>
 							</span>
-							<project-features :slug="project.slug"  :members="this.project.members" :name="this.project.name">
-							</project-features>
+							<!--<project-features :slug="project.slug"  :members="this.project.members" :name="this.project.name">
+							</project-features>-->
 						</div>
 					</div>
 					<div class="page-content">
 						<div class="row">
 							<div class="col-md-2">
-								<Status :projectName='project.name' :start="project.created_at" :stage="project.stage"
+								<!--<Status :projectName='project.name' :start="project.created_at" :stage="project.stage"
 								:completed="this.project.completed" :status="this.status" :score="this.project.score">
-							</Status>
+							</Status>-->
 						</div>
 						<div class="col-md-10">
 							<div class="content">
@@ -82,16 +82,16 @@
 						</div>
 					</div>
 					<br>
-					<Stage :slug="project.slug" :projectstage='project.stage' :postponed="project.postponed"
+					<!--<Stage :slug="project.slug" :projectstage='project.stage' :postponed="project.postponed"
 					:completed="project.completed" :stage_updated="project.stage_updated_at" :get_stage="this.getStage" :access="permission.access">
-				</Stage>
+				</Stage>-->
 				<br>
 				<hr>
 				<h3>RECENT ACTIVITIES</h3>
 				<div class="row">
-					<RecentActivities 
+					<!--<RecentActivities 
 					:activities="project.activities" :slug="project.slug" :name="project.name">
-					</RecentActivities>
+					</RecentActivities>-->
 					<div class="col-md-5">
 						<div class="project-info">
 							<div class="project-info_socre">
@@ -120,8 +120,8 @@
 			<br>
 			<Task :slug="project.slug" :tasks="tasks" :access="permission.access" :projectMembers="this.project.members"></Task>
 			<hr>
-			<PanelFeatues :slug="project.slug" :notes="project.notes"
-			:members="project.members" :owner="user" :access="permission.access" :ownerLogin="permission.owner"></PanelFeatues>
+			<!--<PanelFeatues :slug="project.slug" :notes="project.notes"
+			:members="project.members" :owner="user" :access="permission.access" :ownerLogin="permission.owner"></PanelFeatues>-->
 			<hr>
 			<div>
             <p><b>Online Users For Chat</b></p>
@@ -129,8 +129,8 @@
             </div>
 
 			<hr>
-			<Chat :slug="project.slug" 
-			:conversations="project.conversations" :users="project.members" :auth="this.auth"></Chat>
+			<!--<Chat :slug="project.slug" 
+			:conversations="project.conversations" :users="project.members" :auth="this.auth"></Chat>-->
 		</div>
 	</div>
 </div>

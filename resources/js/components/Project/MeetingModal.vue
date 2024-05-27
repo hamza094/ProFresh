@@ -97,7 +97,7 @@ export default{
     	strttm:'',
     	timezone:''
     },
-    errors:[],
+    errors:{},
     };
     },
     mounted() {

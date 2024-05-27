@@ -23,6 +23,12 @@ setMeetings(state,meetingsData) {
    addMeeting(state, meeting) {
     state.meetings.data.unshift(meeting);
   },
+  meetingUpdate(state, updatedMeeting) {
+    const index = state.meetings.data.findIndex(meeting => meeting.id === updatedMeeting.id);
+    if (index !== -1) {
+      state.meetings.data.splice(index, 1, updatedMeeting);
+    }
+  },
 };
 
 const actions = {

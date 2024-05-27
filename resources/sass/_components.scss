@@ -1352,6 +1352,11 @@ button.gnuIjg {
 }
 
 .meeting{
+    &_heading{
+        color:#999999;
+       font-weight:bold;
+       font-size: 1.3rem;
+    }
     &_list{
     list-style: none;
         padding: 0;
@@ -1366,6 +1371,7 @@ button.gnuIjg {
         }
     &_item{
        color:#999999;
+       font-weight:bold;
     }    
     &_button{
       text-decoration: none !important;

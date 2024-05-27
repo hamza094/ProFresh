@@ -10,6 +10,7 @@ use App\Exceptions\Integrations\Zoom\ZoomException;
 use App\Exceptions\Integrations\Zoom\NotFoundException;
 use App\Exceptions\Integrations\Zoom\UnauthorizedException;
 use Saloon\RateLimitPlugin\Exceptions\RateLimitReachedException;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Http\Integrations\Zoom\ZoomConnector;
 use App\Http\Requests\Zoom\MeetingUpdateRequest;
@@ -81,27 +82,29 @@ class ZoomController extends Controller
 
     $this->authorize('manage', $project);
 
-    try {
-     $zoomMeeting =  $zoom->updateMeeting(
-      $request->validated(),
-      auth()->user()
-    );
-   } catch(ZoomException $exception){
-    return response()->json(['error'=>$exception->getMessage()], 400);
-   }
+    DB::beginTransaction();
 
     try {
         $meeting->update($request->validated());
+
+        DB::commit();
+
+        $zoom->updateMeeting($request->validated(), auth()->user());
+
+        $meeting->load(['user']);
+
+        return $this->respondWithSuccess([
+            'message' => 'Meeting Updated Successfully',
+            'meeting' => new MeetingResource($meeting),
+        ]);
+
     } catch (\Exception $exception) {
-        return response()->json(['error' => 'Unable to update meeting in database'], 500);
-    }
+        DB::rollBack();
 
-    $meeting->load(['user']);
+        $statusCode = $exception instanceof ZoomException ? 400 : 500;
 
-    return $this->respondWithSuccess([
-      'message'=>'Meeting Updated Successfully',
-      'meeting'=>new MeetingResource($meeting),
-    ]);      
+        return response()->json(['error' => $exception->getMessage()], $statusCode);
+    }     
 
     }
 
