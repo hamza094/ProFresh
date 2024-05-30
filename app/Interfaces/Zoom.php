@@ -22,4 +22,6 @@ interface Zoom
 
 public function updateMeeting(array $validated,User $user);
 
+public function deleteMeeting(int $meetingId,User $user);
+
 }

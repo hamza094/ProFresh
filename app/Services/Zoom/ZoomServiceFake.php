@@ -95,6 +95,16 @@ final class ZoomServiceFake implements Zoom
 
  }
 
+  public function deleteMeeting(int $meetingId,User $user)
+ {
+    if(isset($this->failureException)) {
+      throw $this->failureException;
+    }
+
+    return response()->json(204);  
+
+ }
+
    private function fakeMeeting(): Meeting
  {
     $faker = app(Generator::class);

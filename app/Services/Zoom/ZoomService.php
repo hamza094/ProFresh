@@ -13,6 +13,7 @@ use App\Http\Integrations\Zoom\ZoomConnector;
 use App\Http\Integrations\Zoom\Requests\GetAccessTokenRequest;
 use App\Http\Integrations\Zoom\Requests\CreateMeeting;
 use App\Http\Integrations\Zoom\Requests\UpdateMeeting;
+use App\Http\Integrations\Zoom\Requests\DeleteMeeting;
 use App\Interfaces\Zoom;
 use App\Models\User;
 use Illuminate\Support\Str;
@@ -141,6 +142,19 @@ final class ZoomService implements Zoom
 
     return $this->connectorForUser($user)
        ->send(new UpdateMeeting($validated))
+       ->throw();
+   }
+
+   public function deleteMeeting(int $meetingId,User $user)
+   {
+
+     if (!$user->isConnectedToZoom()) 
+     {
+       throw new ZoomException('User is not connected to Zoom.');
+     }
+
+    return $this->connectorForUser($user)
+       ->send(new DeleteMeeting($meetingId))
        ->throw();
    }
 

@@ -104,7 +104,39 @@ class ZoomController extends Controller
         $statusCode = $exception instanceof ZoomException ? 400 : 500;
 
         return response()->json(['error' => $exception->getMessage()], $statusCode);
-    }     
+      }     
+    }
+
+    public function destroy(Zoom $zoom,Project $project,Meeting $meeting)
+    {
+
+      $this->authorize('manage', $project);
+
+      $Id=$meeting->id;
+
+      $meetingId=$meeting->meeting_id;
+
+    DB::beginTransaction();
+
+    try {
+        $meeting->delete();
+
+        $zoom->deleteMeeting($meetingId,auth()->user());
+
+         DB::commit();
+
+        return $this->respondWithSuccess([
+            'message' => 'Meeting Deleted Successfully',
+            'meetingId' => $meetingId,
+        ]);
+
+    } catch (\Exception $exception) {
+        DB::rollBack();
+
+        $statusCode = $exception instanceof ZoomException ? 400 : 500;
+
+        return response()->json(['error' => $exception->getMessage()], $statusCode);
+      } 
 
     }
 

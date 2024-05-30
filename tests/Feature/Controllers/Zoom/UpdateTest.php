@@ -5,7 +5,6 @@ namespace Tests\Feature\Controllers\Zoom;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use App\Exceptions\Integrations\Zoom\ZoomException;
-use App\Http\Integrations\Zoom\Requests\UpdateMeeting;
 use Tests\Traits\InteractsWithZoom;
 use App\Models\Meeting;
 use App\Traits\ProjectSetup;
