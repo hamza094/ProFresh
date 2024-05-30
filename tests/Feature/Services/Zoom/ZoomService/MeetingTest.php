@@ -54,7 +54,7 @@ class MeetingTest extends TestCase
 
     /** @test */
     public function meeting_can_be_created_in_zoom(): void
-    {
+    {               
       Saloon::fake([
        'users/me/meetings' => $this->mockMeetingResponse(),
      ]);     

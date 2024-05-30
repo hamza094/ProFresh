@@ -87,9 +87,9 @@ class ZoomController extends Controller
     try {
         $meeting->update($request->validated());
 
-        DB::commit();
-
         $zoom->updateMeeting($request->validated(), auth()->user());
+
+         DB::commit();
 
         $meeting->load(['user']);
 

@@ -9,6 +9,7 @@ use App\Exceptions\Integrations\Zoom\ZoomException;
 use App\DataTransferObjects\Zoom\Meeting;
 use App\DataTransferObjects\Zoom\NewMeetingData;
 use App\DataTransferObjects\Zoom\UpdateMeetingData;
+use App\Http\Requests\Zoom\MeetingUpdateRequest;
 use Illuminate\Support\Collection;
 use PHPUnit\Framework\Assert;
 use App\Interfaces\Zoom;
@@ -84,8 +85,13 @@ final class ZoomServiceFake implements Zoom
 
  }
 
- public function updateMeeting(UpdateMeetingData $meetingData,User $user)
- {  
+ public function updateMeeting(array $validated,User $user)
+ {
+    if(isset($this->failureException)) {
+      throw $this->failureException;
+    }
+
+    return response()->json(204);  
 
  }
 
