@@ -172,7 +172,7 @@
         </li>
     </ul>
     <div v-if="!isEditing">
-    <button class="btn btn-danger float-right mb-3">Delete</button>
+    <button class="btn btn-danger float-right mb-3" @click.pervent="deleteMeeting(meeting.id)">Delete</button>
     <button class="btn btn-primary float-left mb-3" @click.pervent="meetingEdit()">Edit</button>
   </div>
   <div v-if="isEditing">
@@ -228,10 +228,22 @@ export default{
       fetchMeetings: 'meeting/fetchMeetings',
     }),
     ...mapMutations('meeting', {
-      updateMeetingInState: 'meetingUpdate'
+      updateMeetingInState: 'meetingUpdate',
+      removeMeetingFromState: 'removeMeetingFromState',
     }),
      filterForm() {
       return Object.fromEntries(Object.entries(this.form).filter(([key, value]) => value !== null && value !== ''));
+    },
+    deleteMeeting(meeting){
+     axios.delete(`/api/v1/projects/${this.projectSlug}/meetings/${meeting}/delete`)
+        .then(response => {
+           this.removeMeetingFromState(meeting);
+           this.$vToastify.success(response.data.message);
+           this.meetingModalClose();
+        })
+        .catch(error => {
+          console.error(error);
+        });
     },
 
     getResults(page) {
@@ -273,7 +285,7 @@ export default{
     },
     getMeeting(meeting){
     	this.$modal.show('ViewMeeting');
-    	axios.get(`/api/v1/projects/${this.projectSlug}/meetings/${meeting}`,)
+    	axios.get(`/api/v1/projects/${this.projectSlug}/meetings/${meeting}`)
         .then(response => {
           this.meeting=response.data;
           this.form.agenda=this.meeting.agenda;

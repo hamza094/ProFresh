@@ -119,15 +119,14 @@ class ZoomController extends Controller
     DB::beginTransaction();
 
     try {
-        $meeting->delete();
+        //$meeting->delete();
 
-        $zoom->deleteMeeting($meetingId,auth()->user());
+        //$zoom->deleteMeeting($meetingId,auth()->user());
 
          DB::commit();
 
         return $this->respondWithSuccess([
             'message' => 'Meeting Deleted Successfully',
-            'meetingId' => $meetingId,
         ]);
 
     } catch (\Exception $exception) {
