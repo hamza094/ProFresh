@@ -6,8 +6,6 @@ use App\Http\Controllers\Api\Auth\OAuthController;
 
 use App\Http\Controllers\Api\OAuth\ZoomAuthController;
 
-use App\Http\Controllers\Api\ZoomController;
-
 use App\Http\Controllers\Api\
 {
   ProjectController,
@@ -25,7 +23,8 @@ use App\Http\Controllers\Api\
   ActivityController,
   SubscriptionController,
   TaskStatusController,
-  TaskFeaturesController
+  TaskFeaturesController,
+  ZoomMeetingController,
 };
 /*
 |--------------------------------------------------------------------------
@@ -117,16 +116,12 @@ Route::controller(InvitationController::class)->group(function(){
   Route::get('/accept-invitation','accept')->name('accept.invitation');
   Route::get('/ignore','ignore');
 });
-Route::post('/zoom/meeting/create',[ZoomController::class,'createMeeting'])->name('zoom.meetings.store');
 
-Route::get('/meetings/{meeting}',[ZoomController::class,'show'])->name('zoom.meetings.show');
+Route::apiResource('/meetings',ZoomMeetingController::class);
 
-Route::get('/meetings',[ZoomController::class,'index'])->name('zoom.meetings.view');
-
-Route::post('/meetings/{meeting}/update',[ZoomController::class,'update'])->name('zoom.meetings.update');
-
-Route::delete('/meetings/{meeting}/delete',[ZoomController::class,'destroy'])->name('zoom.meetings.delete');
 });
+
+
 
 Route::apiResource('/users',UserController::class);
 

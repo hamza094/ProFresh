@@ -38,7 +38,8 @@
         "spatie/laravel-permission": "^6.3",
         "spatie/laravel-searchable": "^1.11.2",
         "torann/geoip": "^3.0",
-        "vonage/client": "^3.0"
+        "vonage/client": "^3.0",
+        "wendelladriel/laravel-validated-dto": "^3.5"
     },
     "require-dev": {
         "beyondcode/laravel-query-detector": "^1.5",

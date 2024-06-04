@@ -26,12 +26,10 @@ class UpdateTest extends TestCase
     $updatedMeetingID=18976;
     $updatedDuration=15;
 
-     $this->withoutExceptionHandling()->postJson('/api/v1/projects/'.$this->project->slug.'/meetings/'.$meeting->id.'/update', [
+     $this->patchJson('/api/v1/projects/'.$this->project->slug.'/meetings/'.$meeting->id, [
         'meeting_id'=>$updatedMeetingID,
       'duration' => $updatedDuration,
-    ]);
-
-     $meeting->refresh();
+    ])->assertStatus(200);
 
       $this->assertDatabaseHas('meetings',[
       'duration'=>$updatedDuration,
@@ -54,13 +52,10 @@ public function database_changes_are_rolled_back_if_zoom_update_fails()
          new ZoomException('Test error message')
         );
 
-    $response = $this->postJson('/api/v1/projects/' . $this->project->slug . '/meetings/' . $meeting->id . '/update', [
+    $response = $this->patchJson('/api/v1/projects/' . $this->project->slug . '/meetings/' . $meeting->id, [
         'meeting_id' => $updatedMeetingID,
         'duration' => $updatedDuration,
-    ]);
-
-    $response->assertStatus(400);
-    $meeting->refresh();
+    ])->assertStatus(400);
 
     $this->assertDatabaseMissing('meetings', [
         'duration' => $updatedDuration,
@@ -75,12 +70,10 @@ public function database_changes_are_rolled_back_if_zoom_update_fails()
         ->for($this->project)
         ->create(['user_id' => $this->user->id]);
 
-    $response = $this->postJson('/api/v1/projects/' . $this->project->slug . '/meetings/' . $meeting->id . '/update', [
+    $response = $this->patchJson('/api/v1/projects/' . $this->project->slug . '/meetings/' . $meeting->id, [
         'meeting_id' => 'not-an-integer',
-    ]);
-
-    $response->assertStatus(422);
-    $response->assertJsonValidationErrors(['meeting_id']);
+    ])->assertStatus(422)
+    ->assertJsonValidationErrors(['meeting_id']);
   }
 
 

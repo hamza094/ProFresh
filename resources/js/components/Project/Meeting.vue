@@ -265,7 +265,7 @@ export default{
       Object.entries(this.form).filter(([key, value]) => value !== null && value !== '')
     );
 
-      axios.post(`/api/v1/projects/${this.projectSlug}/meetings/${id}/update`,filteredForm)
+      axios.put(`/api/v1/projects/${this.projectSlug}/meetings/${id}/update`,filteredForm)
         .then(response => {
           this.meeting=response.data.meeting;
           this.updateMeetingInState(response.data.meeting);

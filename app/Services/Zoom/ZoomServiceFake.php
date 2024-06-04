@@ -113,7 +113,7 @@ final class ZoomServiceFake implements Zoom
 
     return new Meeting(
         meeting_id: 1234,
-        topic: 'topic of meeting',
+        topic: 'Topic Of Meeting',
         agenda: 'this is the agenda of meeting',
         created_at:'2024-05-18 18:00:07',
         duration: 30,

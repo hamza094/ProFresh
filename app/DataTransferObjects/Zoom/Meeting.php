@@ -7,7 +7,7 @@ use Carbon\Carbon;
 use Ramsey\Uuid\Uuid;
 use DateTime;
 
-final class Meeting
+final class Meeting 
 {
    public function __construct(
    public int $meeting_id,

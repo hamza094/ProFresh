@@ -28,13 +28,14 @@ class StoreTest extends TestCase
         'topic' => 'test-repo',
         'agenda' => 'test-description',
         'duration' => 30,
-        'password' => "meting password",
+        'password' => "metingpass",
         'joinBeforeHost'=>false,
       ];
 
-      $response=$this->postJson(route('zoom.meetings.store',['project'=>$this->project->slug]), $postBody);
+      $response=$this->postJson(route('meetings.store',['project'=>$this->project->slug]), $postBody);
 
       $meetingResponse=$response->json()['meeting'];
+
 
        $zoomFake->assertMeetingCreated(
            topic: $postBody['topic'],
@@ -60,7 +61,7 @@ class StoreTest extends TestCase
         'joinBeforeHost'=>false,
     ];
 
-     $response=$this->postJson(route('zoom.meetings.store',['project'=>$this->project->slug]), $postBody);
+     $response=$this->postJson(route('meetings.store',['project'=>$this->project->slug]), $postBody);
       
     $zoomFake->assertNoMeetingsCreated();
 
