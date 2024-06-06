@@ -4,7 +4,6 @@ namespace App\Http\Integrations\Zoom\Requests;
 
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
-use App\DataTransferObjects\Zoom\UpdateMeetingData;
 use Saloon\Contracts\Body\HasBody;
 use Saloon\Http\Response;
 use Saloon\Traits\Body\HasJsonBody;

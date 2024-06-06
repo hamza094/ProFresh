@@ -5,7 +5,6 @@ namespace App\Services\Zoom;
 use App\DataTransferObjects\Zoom\AccessTokenDetails;
 use App\DataTransferObjects\Zoom\AuthorizationCallbackDetails;
 use App\DataTransferObjects\Zoom\AuthorizationRedirectDetails;
-use App\DataTransferObjects\Zoom\NewMeetingData;
 use App\DataTransferObjects\Zoom\UpdateMeetingData;
 use App\DataTransferObjects\Zoom\Meeting;
 use App\Exceptions\Integrations\Zoom\ZoomException;
@@ -121,7 +120,7 @@ final class ZoomService implements Zoom
         );
     }
 
-    public function createMeeting(NewMeetingData $meetingData,User $user): Meeting
+    public function createMeeting(array $validated,User $user): Meeting
    {
      if (!$user->isConnectedToZoom()) 
      {
@@ -129,7 +128,7 @@ final class ZoomService implements Zoom
      }
 
     return $this->connectorForUser($user)
-       ->send(new CreateMeeting($meetingData))
+       ->send(new CreateMeeting($validated))
        ->dtoOrFail();
    }
 

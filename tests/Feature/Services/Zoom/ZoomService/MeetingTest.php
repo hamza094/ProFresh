@@ -65,7 +65,7 @@ class MeetingTest extends TestCase
 
        $meeting = (new ZoomService())->createMeeting($meetingData,$user);
 
-$this->assertEquals($meeting->meeting_id,124);
+       $this->assertEquals($meeting->meeting_id,124);
 
         $this->assertEquals($meeting->topic, 'this is fun');
 
@@ -98,22 +98,22 @@ $this->assertEquals($meeting->meeting_id,124);
          'duration' => 30,
          'password' => 'hacker',
          'join_before_host' => false,
-         'start_time' => (new DateTime('2024-05-18T18:00:07Z'))->format('Y-m-d H:i:s'),
+         'start_time' => (new DateTime('2024-06-18T18:00:07Z'))->format('Y-m-d H:i:s'),
          'timezone' => 'UTC'
     ]);
  
    }
 
     private function meetingData(){
-       return new NewMeetingData(
-         topic: 'this is fun', 
-         agenda: 'the agenda of this meeting should discussed soon',
-         duration: 30,
-         password:'hacker',
-         joinBeforeHost: false,
-         startTime: new DateTime('2024-05-18T18:00:07Z'),
-         timezone: 'UTC'
-       );        
+       return [
+         'topic' => 'this is fun', 
+         'agenda' => 'the agenda of this meeting should discussed soon',
+         'duration' => 30,
+         'password' =>'hacker',
+         'join_before_host' => false,
+         'start_time' => (new DateTime('2024-06-18T18:00:07Z'))->format('Y-m-d H:i:s'),
+         'timezone' => 'UTC'
+       ];        
     }
 
     private function userCreate($expireAt)

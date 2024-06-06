@@ -4,11 +4,11 @@ namespace App\Http\Integrations\Zoom\Requests;
 
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
-use App\DataTransferObjects\Zoom\NewMeetingData;
 use App\DataTransferObjects\Zoom\Meeting;
 use Saloon\Contracts\Body\HasBody;
 use Saloon\Http\Response;
 use Saloon\Traits\Body\HasJsonBody;
+use DateTime;
 use Carbon\Carbon;
 
 class CreateMeeting extends Request implements HasBody
@@ -28,19 +28,19 @@ class CreateMeeting extends Request implements HasBody
     }
 
      public function __construct(
-       private readonly NewMeetingData $newMeetingData,
+      private readonly array $validated,
     ) {}
 
       protected function defaultBody(): array
     {
       return [
-        'topic'=> $this->newMeetingData->topic,
-        'agenda'=> $this->newMeetingData->agenda,
-        'duration'=> $this->newMeetingData->duration,
-        'password'=> $this->newMeetingData->password,
-        'join_before_host'=> $this->newMeetingData->joinBeforeHost,
-        'start_time'=> $this->newMeetingData->startTime->format('Y-m-d H:i:s'),
-        'timezone'=> $this->newMeetingData->timezone,
+        'topic'=> $this->validated['topic'],
+        'agenda'=> $this->validated['agenda'],
+        'duration'=> $this->validated['duration'],
+        'password'=> $this->validated['password'],
+        'join_before_host'=> $this->validated['join_before_host'],
+        'start_time'=> (new DateTime($this->validated['start_time']))->format('Y-m-d H:i:s'),
+        'timezone'=> $this->validated['timezone'],
     ];
  }
    public function createDtoFromResponse(Response $response): mixed

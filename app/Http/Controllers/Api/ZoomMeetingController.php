@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\DataTransferObjects\Zoom\NewMeetingData;
 use App\DataTransferObjects\Zoom\UpdateMeetingData;
 use App\DataTransferObjects\Zoom\Meeting as MeetingDto;
 use App\Exceptions\Integrations\Zoom\ZoomException;
@@ -14,6 +13,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Http\Integrations\Zoom\ZoomConnector;
 use App\Http\Requests\Zoom\MeetingUpdateRequest;
+use App\Http\Requests\Zoom\MeetingStoreRequest;
 use App\Http\Resources\Zoom\MeetingResource;
 use App\Services\MeetingService;
 use App\Interfaces\Zoom;
@@ -47,7 +47,7 @@ class ZoomMeetingController extends Controller
     return new MeetingResource($meeting);
   }
 
-  public function store(Zoom $zoom,Project $project,Request $request): JsonResponse
+  public function store(Zoom $zoom,Project $project,MeetingStoreRequest $request): JsonResponse
   {
     $this->authorize('manage', $project);
      
@@ -55,16 +55,7 @@ class ZoomMeetingController extends Controller
 
     try {
      $meeting =  $zoom->createMeeting(
-      new NewMeetingData(
-        topic: $request->topic,
-        agenda: $request->agenda,
-        duration: (int) $request->duration,
-        password: $request->password,
-        joinBeforeHost:$request->joinBeforeHost,
-        startTime:  new DateTime($request->strttm),
-        timezone: 'UTC'
-     ),
-      $user
+      $request->validated(),$user
     );
    } catch(ZoomException $exception){
     return response()->json(['error'=>$exception->getMessage()], 400);

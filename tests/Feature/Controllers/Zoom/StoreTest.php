@@ -7,7 +7,7 @@ use Illuminate\Foundation\Testing\WithFaker;
 use App\Exceptions\Integrations\Zoom\ZoomException;
 use Tests\Traits\InteractsWithZoom;
 use App\Traits\ProjectSetup;
-
+use Carbon\Carbon;
 use Tests\TestCase;
 
 class StoreTest extends TestCase
@@ -20,7 +20,7 @@ class StoreTest extends TestCase
      */
 
     /** @test */
-    public function meeting_can_be_created_in_zoom()
+    public function meeting_can_be_created_successfully()
     {
         $zoomFake = $this->fakeZoom();
 
@@ -29,13 +29,14 @@ class StoreTest extends TestCase
         'agenda' => 'test-description',
         'duration' => 30,
         'password' => "metingpass",
-        'joinBeforeHost'=>false,
+        'join_before_host'=>false,
+        'start_time'=>Carbon::now()->addWeek(),
+        'timezone'=>'UTC'
       ];
 
-      $response=$this->postJson(route('meetings.store',['project'=>$this->project->slug]), $postBody);
+      $response=$this->withoutExceptionHandling()->postJson(route('meetings.store',['project'=>$this->project->slug]), $postBody);
 
       $meetingResponse=$response->json()['meeting'];
-
 
        $zoomFake->assertMeetingCreated(
            topic: $postBody['topic'],
@@ -49,17 +50,19 @@ class StoreTest extends TestCase
     /** @test */
   public function user_get_exception_if_error_occurs(): void
  {
-    $zoomFake = $this->fakeZoom()->shouldFailWithException(
-         new ZoomException('Test error message')
-        );
-
     $postBody = [
         'topic' => 'test-repo',
         'agenda' => 'test-description',
         'duration' => 30,
-        'password' => "meting password",
-        'joinBeforeHost'=>false,
-    ];
+        'password' => "metingpass",
+        'join_before_host'=>false,
+        'start_time'=>Carbon::now()->addWeek(),
+        'timezone'=>'UTC'
+      ];
+
+      $zoomFake = $this->fakeZoom()->shouldFailWithException(
+         new ZoomException('Test error message')
+        );
 
      $response=$this->postJson(route('meetings.store',['project'=>$this->project->slug]), $postBody);
       
@@ -67,5 +70,33 @@ class StoreTest extends TestCase
 
     $response->assertBadRequest();
  }
+
+   /** @test */
+    public function it_validates_meeting_creation_request()
+    {
+        $postBody = [
+            'topic' => '',
+            'agenda' => '',
+            'duration' => 'not-an-integer',
+            'password' => '',
+            'join_before_host' => 'not-a-boolean',
+            'start_time' => Carbon::now()->subWeek(),
+            'timezone' => 'invalid/timezone',
+        ];
+
+         $response=$this->postJson(route('meetings.store',['project'=>$this->project->slug]), $postBody);
+
+        $response->assertStatus(422);
+
+        $response->assertJsonValidationErrors([
+            'topic',
+            'agenda',
+            'duration',
+            'password',
+            'join_before_host',
+            'start_time',
+            'timezone',
+        ]);
+    }
    
 }

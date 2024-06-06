@@ -7,7 +7,6 @@ use App\DataTransferObjects\Zoom\AuthorizationCallbackDetails;
 use App\DataTransferObjects\Zoom\AuthorizationRedirectDetails;
 use App\Exceptions\Integrations\Zoom\ZoomException;
 use App\DataTransferObjects\Zoom\Meeting;
-use App\DataTransferObjects\Zoom\NewMeetingData;
 use App\DataTransferObjects\Zoom\UpdateMeetingData;
 use App\Http\Requests\Zoom\MeetingUpdateRequest;
 use Illuminate\Support\Collection;
@@ -72,14 +71,14 @@ final class ZoomServiceFake implements Zoom
         return $this;
  }
 
- public function createMeeting(NewMeetingData $meetingData,User $user): Meeting
+ public function createMeeting(array $validated,User $user): Meeting
  {  
 
     if(isset($this->failureException)) {
       throw $this->failureException;
     }
 
-    $this->meetingsToCreate->push($meetingData);
+    $this->meetingsToCreate->push($validated);
 
     return $this->fakeMeeting();
 

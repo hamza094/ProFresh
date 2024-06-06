@@ -35,12 +35,12 @@
 		<div class="form-group">
   <p><b>Join Befor Host:</b></p>
   <div class="form-check form-check-inline">
-    <input class="form-check-input" type="radio" id="joinBefore" name="joinBeforeHost" value="true" v-model="form.joinBeforeHost">
-    <label class="form-check-label" for="joinBefore">Yes</label>
+    <input class="form-check-input" type="radio" id="joinBefore" name="join_before_host" value="true" v-model="form.join_before_host">
+    <label class="form-check-label" for="join_before">Yes</label>
   </div>
 
   <div class="form-check form-check-inline">
-    <input class="form-check-input" type="radio" id="joinAfter" name="joinBeforeHost" value="false" v-model="form.joinBeforeHost">
+    <input class="form-check-input" type="radio" id="joinAfter" name="join_before_host" value="false" v-model="form.join_before_host">
     <label class="form-check-label" for="joinAfter">No</label>
   </div>
   <p class="text-danger" v-if="this.errors"></p>
@@ -56,8 +56,8 @@
   </select>
 </div>
 <div class="form-group">
-  <label for="strttm"><b>Start Time:</b></label>
-  <datetime type="datetime" v-model="form.strttm" value-zone="local" zone="local"></datetime>
+  <label for="startTime"><b>Start Time:</b></label>
+  <datetime type="datetime" v-model="form.start_time" value-zone="local" zone="local"></datetime>
 </div>
   </div>
 
@@ -92,10 +92,10 @@ export default{
 	form:{
     	topic:'',
     	agenda:'',
-    	joinBeforeHost:'',
+    	join_before_host:'',
     	duration:'',
-    	strttm:'',
-    	timezone:''
+    	start_time:'',
+    	timezone:'UTC',
     },
     errors:{},
     };
@@ -113,7 +113,7 @@ export default{
         ...mapMutations('meeting', ['addMeeting']), 
     	createMeeting() {
       // Send the form data object with Axios
-      axios.post(`/api/v1/projects/${this.projectSlug}/zoom/meeting/create`,this.form)
+      axios.post(`/api/v1/projects/${this.projectSlug}/meetings`,this.form)
         .then(response => {
           this.addMeeting(response.data.meeting);
         this.$bus.emit('get-results');
