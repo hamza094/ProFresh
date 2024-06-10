@@ -48,7 +48,7 @@ class ZoomMeetingController extends Controller
   }
 
   public function store(Zoom $zoom,Project $project,MeetingStoreRequest $request): JsonResponse
-  {
+  {    
     $this->authorize('manage', $project);
      
     $user=auth()->user();

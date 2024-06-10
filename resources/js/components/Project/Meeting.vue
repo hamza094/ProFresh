@@ -80,7 +80,7 @@
         <li>
         	<b>Agenda: </b>
            <span v-if="!isEditing" class="meeting_item meeting-agenda">{{meeting.agenda}}
-           <span class="text-danger font-italic" v-if="errors.agenda" v-text="errors.agenda"></span> 
+           <span class="text-danger font-italic" v-if="errors.agenda" v-text="errors.agenda[0]"></span> 
            </span>
            <textarea v-else class="form-control" v-model="form.agenda"></textarea>
         </li>

@@ -39,7 +39,7 @@ class CreateMeeting extends Request implements HasBody
         'duration'=> $this->validated['duration'],
         'password'=> $this->validated['password'],
         'join_before_host'=> $this->validated['join_before_host'],
-        'start_time'=> (new DateTime($this->validated['start_time']))->format('Y-m-d H:i:s'),
+        'start_time'=> (new DateTime($this->validated['start_time']))->format('Y-m-d\TH:i:s\Z'),
         'timezone'=> $this->validated['timezone'],
     ];
  }

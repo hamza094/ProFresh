@@ -38,13 +38,13 @@ class MeetingStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'topic'=>'string|max:200|required',
-            'agenda'=>'string|max:2000|required',
-            'duration'=>'integer|required',
-            'start_time' => 'after:now|required',
-            'timezone'=>'string|timezone:all|required',
-            'password'=>'string|max:10|required',
-            'join_before_host'=>'boolean|required',
+            'topic'=>'required|max:200|string',
+            'agenda'=>'required|max:2000|string',
+            'duration'=>'required|integer',
+            'start_time' => 'required|after:now',
+            'timezone'=>'required|timezone:all|string',
+            'password'=>'required|max:10|string',
+            'join_before_host'=>'required|boolean',
         ];
     }
 }

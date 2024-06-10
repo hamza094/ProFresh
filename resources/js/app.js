@@ -15,6 +15,7 @@ import VModal from 'vue-js-modal';
 import moment from 'moment';
 import "emoji-mart-vue-fast/css/emoji-mart.css";
 import alertNotice from './mixins/alertNotice';
+import errorHandling from './mixins/errorHandling';
 import currentStage from './mixins/currentStage';
 import popup from './mixins/popup';
 import conversation from './mixins/conversation';
@@ -55,6 +56,7 @@ Vue.mixin(alertNotice);
 Vue.mixin(currentStage);
 Vue.mixin(conversation);
 Vue.mixin(activitiesDesign);
+Vue.mixin(errorHandling);
 
 Vue.filter('time',function(data){
    return  moment(data).format('h:mm:ss a');
