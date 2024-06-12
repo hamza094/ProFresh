@@ -5,5 +5,6 @@ export default {
       const errorMessage = error.response?.data?.error || 'An unexpected error occurred.';
       this.$vToastify.error(errorMessage);
     }
-  }
+  },
+
 }

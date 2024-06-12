@@ -35,6 +35,7 @@ class MeetingResource extends JsonResource
            'password'=>$this->password,
            'status'=>Str::ucfirst($this->status),
            'timezone'=>$this->timezone,
+            'join_before_host' => $this->join_before_host ? 'Yes' : 'No',        
         ];
     }
 }
