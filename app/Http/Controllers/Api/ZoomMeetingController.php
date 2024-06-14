@@ -5,10 +5,6 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\DataTransferObjects\Zoom\UpdateMeetingData;
 use App\DataTransferObjects\Zoom\Meeting as MeetingDto;
-use App\Exceptions\Integrations\Zoom\ZoomException;
-use App\Exceptions\Integrations\Zoom\NotFoundException;
-use App\Exceptions\Integrations\Zoom\UnauthorizedException;
-use Saloon\RateLimitPlugin\Exceptions\RateLimitReachedException;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Http\Integrations\Zoom\ZoomConnector;
@@ -21,11 +17,22 @@ use F9Web\ApiResponseHelpers;
 use DateTime;
 use App\Models\Project;
 use App\Models\Meeting;
+use App\Services\ExceptionService;
 use Illuminate\Http\JsonResponse;
+use App\Exceptions\Integrations\Zoom\ZoomException;
+
 
 class ZoomMeetingController extends Controller
 {
   use ApiResponseHelpers;
+
+  protected $exceptionService;
+
+    public function __construct(ExceptionService $exceptionService)
+    {
+        $this->exceptionService = $exceptionService;
+    }
+
 
   public function index(Project $project,Request $request,MeetingService $meetingService): JsonResponse
   {
@@ -54,21 +61,20 @@ class ZoomMeetingController extends Controller
     $user=auth()->user();
 
     try {
-     $meeting =  $zoom->createMeeting(
-      $request->validated(),$user
-    );
-   } catch(ZoomException $exception){
-    return response()->json(['error'=>$exception->getMessage()], 400);
-   }
+      $meeting = $zoom->createMeeting($request->validated(), $user);
 
-   $meetingArray = (array) $meeting + ['user_id' => $user->id];
+        $meetingArray = (array) $meeting + ['user_id' => $user->id];
+   
+        $projectMeeting=$project->meetings()->create($meetingArray);
 
-   $projectMeeting=$project->meetings()->create($meetingArray);
+        return $this->respondCreated([
+          'message' => 'Meeting Created Successfully',
+          'meeting' => new MeetingResource($projectMeeting),
+        ]);
 
-    return $this->respondCreated([
-      'message'=>'Meeting Created Successfully',
-      'meeting'=>new MeetingResource($projectMeeting),
-    ]);        
+   }catch(ZoomException $exception){
+      return $this->exceptionService->handleZoom($exception);
+   }        
   }
 
   public function update(Zoom $zoom,Project $project,Meeting $meeting,MeetingUpdateRequest $request){
@@ -94,9 +100,7 @@ class ZoomMeetingController extends Controller
     } catch (\Exception $exception) {
         DB::rollBack();
 
-        $statusCode = $exception instanceof ZoomException ? 400 : 500;
-
-        return response()->json(['error' => $exception->getMessage()], $statusCode);
+        return $this->exceptionService->handleZoom($exception);
       }     
     }
 
@@ -122,9 +126,7 @@ class ZoomMeetingController extends Controller
     } catch (\Exception $exception) {
         DB::rollBack();
 
-        $statusCode = $exception instanceof ZoomException ? 400 : 500;
-
-        return response()->json(['error' => $exception->getMessage()], $statusCode);
+        return $this->exceptionService->handleZoom($exception);
       } 
 
     }

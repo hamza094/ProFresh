@@ -39,7 +39,6 @@ class MeetingDeleteTest extends TestCase
      && $request->getMethod() === Method::DELETE);
     }
 
-
     private function userCreate($expireAt)
     {
         return User::factory()
