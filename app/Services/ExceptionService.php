@@ -4,7 +4,6 @@ namespace App\Services;
 
 use Illuminate\Http\JsonResponse;
 use App\Exceptions\Integrations\Zoom\ZoomException;
-use App\Exceptions\RateLimitReachedException;
 use App\Exceptions\Integrations\Zoom\NotFoundException;
 use App\Exceptions\Integrations\Zoom\UnauthorizedException;
 use Saloon\RateLimitPlugin\Exceptions\RateLimitReachedException;

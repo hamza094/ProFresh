@@ -6,6 +6,10 @@ use App\Http\Controllers\Api\Auth\OAuthController;
 
 use App\Http\Controllers\Api\OAuth\ZoomAuthController;
 
+use App\Http\Controllers\Api\Webhooks\ZoomController;
+
+use App\Http\Middleware\VerifyZoomWebhook;
+
 use App\Http\Controllers\Api\
 {
   ProjectController,
@@ -36,7 +40,11 @@ Route::group(['prefix'=>'v1'], function () {
 Route::controller(OAuthController::class)->group(function () {
     Route::get('/auth/redirect/{provider}', 'redirect')->name('oauth.redirect');
     Route::get('/auth/callback/{provider}', 'callback')->name('oauth.callback');
-});  
+}); 
+
+Route::post('/webhooks/zoom/meetings/update',[ZoomController::class,'update'])
+  ->name('webhooks.meetings.update')
+  ->middleware(VerifyZoomWebhook::class); 
 
 Route::middleware(['auth:sanctum'/*,\App\Http\Middleware\TrackLastActiveAt::class*/])->group(function () {
 

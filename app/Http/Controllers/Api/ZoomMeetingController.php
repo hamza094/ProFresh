@@ -84,9 +84,12 @@ class ZoomMeetingController extends Controller
     DB::beginTransaction();
 
     try {
+
         $meeting->update($request->validated());
 
         $zoom->updateMeeting($request->validated(), auth()->user());
+        
+        $meeting->save();
 
          DB::commit();
 

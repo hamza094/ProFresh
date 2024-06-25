@@ -1,0 +1,18 @@
+{
+    "event": "meeting.updated",
+    "payload": {
+        "account_id": "HsTKzp8YTIWubRtgF7L_2w",
+        "operator": "test_operator@example.com",
+        "operator_id": "tWcCtVTiTum7Ctdx1p0GWQ",
+        "object": {
+            "id": 813,
+            "topic": "eye to eye like sky"
+        },
+        "old_object": {
+            "id": 813,
+            "topic": "shining in the sky"
+        },
+        "time_stamp": 1719229788513
+    },
+    "event_ts": 1719229788513
+}
