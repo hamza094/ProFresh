@@ -28,6 +28,13 @@ class UpdateMeeting extends Request implements HasBody
        private readonly array $validated,
     ) {}
 
+     protected function defaultHeaders(): array
+    {
+        return [
+            'X-Programmatic-Update' => 'true',
+        ];
+    } 
+
     /**
      * The endpoint for the request
      */

@@ -17,7 +17,7 @@ class VerifyZoomWebhook
      * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
      */
     public function handle(Request $request, Closure $next): Response
-    {
+    {   
         $providedSignature = $request->header('x-zm-signature');
 
         $zoomTimestamp = $request->header('x-zm-request-timestamp');
@@ -30,14 +30,14 @@ class VerifyZoomWebhook
         return $next($request);
     }
 
-     private function isRequestValid( $providedSignature, string $timestamp, Request $request): bool
+     public function isRequestValid(?string $providedSignature, ?string $timestamp, Request $request): bool
     {
         return !$this->isTimestampInvalid($timestamp) 
         &&
         $this->isSignatureValid($providedSignature, $timestamp, $request);
     }
 
-     private function isTimestampInvalid(string $timestamp): bool
+     private function isTimestampInvalid(?string $timestamp): bool
     {
         return abs(time() - $timestamp) > 300;
     }

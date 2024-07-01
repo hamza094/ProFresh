@@ -5,31 +5,18 @@ namespace App\Http\Controllers\Api\Webhooks;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Log;
 use App\Models\Meeting;
+use App\Jobs\Webhooks\Zoom\UpdateMeetingWebhook;
 use Illuminate\Http\Request;
 
 class ZoomController extends Controller
 {
-     public function update(Request $request)
+    public function update(Request $request)
     {
-       try {
-            $payload = $request->input('payload');
-            $meetingId = $payload['object']['id'];
-            $updateData = $payload['object'];
-            unset($updateData['id'], $updateData['uuid']);
+       $payload = $request->input('payload');
 
-            $meeting = Meeting::where('meeting_id', $meetingId)->first();
+        UpdateMeetingWebhook::dispatch($payload);
 
-            if ($meeting) {
-                $meeting->update($updateData);
-                  return response()->json(['status' => 'success'], 200);
-            } else {
-                return response()->json(['status' => 'error', 'message' => 'Meeting not found'], 404);
-            }
-
-        } catch (\Exception $e) {
-            
-            return response()->json(['status' => 'error', 'message' => 'Internal server error'], 500);
-        }    
+        return response()->json(['status' => 'success'], 200);    
     }
 
     }

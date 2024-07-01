@@ -5,10 +5,12 @@
         "operator": "test_operator@example.com",
         "operator_id": "tWcCtVTiTum7Ctdx1p0GWQ",
         "object": {
+            "uuid": "aAcZTflfSPqz6TsDJ/lDKA==",
             "id": 813,
             "topic": "eye to eye like sky"
         },
         "old_object": {
+            "uuid": "aAcZTflfSPqz6TsDJ/lDKA==",
             "id": 813,
             "topic": "shining in the sky"
         },

@@ -7,8 +7,11 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use App\Models\Meeting;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Queue;
+use App\Jobs\Webhooks\Zoom\UpdateMeetingWebhook;
 use Carbon\Carbon;
 use Tests\TestCase;
+use Mockery;
 
 class ZoomControllerTest extends TestCase
 {
@@ -18,15 +21,17 @@ class ZoomControllerTest extends TestCase
     {
       parent::setUp();
 
-      $this->travelTo(Carbon::parse('2024-06-24 19:36:28'));
+      $this->travelTo(Carbon::parse('2024-06-24 11:49:48'));
 
-    $this->withoutMiddleware([\App\Http\Middleware\VerifyZoomWebhook::class]);
-
+     Queue::fake([UpdateMeetingWebhook::class]);
     }
     
     /** @test */
     public function meeting_can_be_updated()
     {
+
+    $this->withoutMiddleware([\App\Http\Middleware\VerifyZoomWebhook::class]);
+
         $meeting=Meeting::factory()->create([
           'meeting_id'=>813,
           'topic'=>'shining in the sky'
@@ -42,11 +47,18 @@ class ZoomControllerTest extends TestCase
             ->assertOk()
             ->assertExactJson(['status' => 'success']);
 
-            $this->assertSame(
-               expected: 'eye to eye like sky',
-               actual: $meeting->fresh()->topic,
-            );
-
+         Queue::assertPushed(UpdateMeetingWebhook::class, function ($job) use ($postBody) {
+        return $job->payload == $postBody['payload'];
+    });
     }
+ 
+    
+    /** @test */
+    public function error_is_returned_if_the_request_was_not_sent_from_zoom()
+   {
+    $response=$this->post(route('webhooks.meetings.update'),['invalid_key' => 'invalid_value'])->assertForbidden();
+
+     Queue::assertNothingPushed();
+ }
 
 }
