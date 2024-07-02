@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Log;
 use App\Models\Meeting;
 use App\Jobs\Webhooks\Zoom\UpdateMeetingWebhook;
+use App\Jobs\Webhooks\Zoom\DeleteMeetingWebhook;
 use Illuminate\Http\Request;
 
 class ZoomController extends Controller
@@ -15,6 +16,15 @@ class ZoomController extends Controller
        $payload = $request->input('payload');
 
         UpdateMeetingWebhook::dispatch($payload);
+
+        return response()->json(['status' => 'success'], 200);    
+    }
+
+    public function delete(Request $request)
+    {
+       $payload = $request->input('payload');
+
+        DeleteMeetingWebhook::dispatch($payload);
 
         return response()->json(['status' => 'success'], 200);    
     }

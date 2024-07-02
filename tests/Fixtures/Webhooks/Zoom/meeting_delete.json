@@ -1,0 +1,15 @@
+{
+    "event": "meeting.deleted",
+    "payload": {
+        "account_id": "HsTKzp8YTIWubRtgF7L_2w",
+        "operator": "test_operator@example.com",
+        "operator_id": "tWcCtVTiTum7Ctdx1p0GWQ",
+        "object": {
+            "uuid": "aAcZTflfSPqz6TsDJ/lDKA==",
+            "id": 813,
+            "type": 3
+        },
+        "time_stamp": 1719229788513
+    },
+    "event_ts": 1719229788513
+}

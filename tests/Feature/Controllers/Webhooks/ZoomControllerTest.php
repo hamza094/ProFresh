@@ -9,6 +9,7 @@ use App\Models\Meeting;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Queue;
 use App\Jobs\Webhooks\Zoom\UpdateMeetingWebhook;
+use App\Jobs\Webhooks\Zoom\DeleteMeetingWebhook;
 use Carbon\Carbon;
 use Tests\TestCase;
 use Mockery;
@@ -23,7 +24,11 @@ class ZoomControllerTest extends TestCase
 
       $this->travelTo(Carbon::parse('2024-06-24 11:49:48'));
 
-     Queue::fake([UpdateMeetingWebhook::class]);
+     Queue::fake([
+        UpdateMeetingWebhook::class,
+        DeleteMeetingWebhook::class
+    ]);
+     
     }
     
     /** @test */
@@ -42,12 +47,36 @@ class ZoomControllerTest extends TestCase
            flags: JSON_THROW_ON_ERROR,
         );
 
-        $response=$this->post(route('webhooks.meetings.update'),
+        $response=$this->withoutExceptionHandling()->post(route('webhooks.meetings.update'),
          $postBody)
             ->assertOk()
             ->assertExactJson(['status' => 'success']);
 
          Queue::assertPushed(UpdateMeetingWebhook::class, function ($job) use ($postBody) {
+        return $job->payload == $postBody['payload'];
+    });
+    }
+
+    /** @test */
+    public function meeting_can_be_deleted()
+    {
+    $this->withoutMiddleware([\App\Http\Middleware\VerifyZoomWebhook::class]);
+
+        $meeting=Meeting::factory()->create([
+          'meeting_id'=>813,
+        ]);
+
+        $postBody = File::json(
+           path: base_path('tests/Fixtures/Webhooks/Zoom/meeting_delete.json'),
+           flags: JSON_THROW_ON_ERROR,
+        );
+
+        $response=$this->withoutExceptionHandling()->post(route('webhooks.meetings.delete'),
+         $postBody)
+            ->assertOk()
+            ->assertExactJson(['status' => 'success']);
+
+         Queue::assertPushed(DeleteMeetingWebhook::class, function ($job) use ($postBody) {
         return $job->payload == $postBody['payload'];
     });
     }

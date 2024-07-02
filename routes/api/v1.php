@@ -44,7 +44,11 @@ Route::controller(OAuthController::class)->group(function () {
 
 Route::post('/webhooks/zoom/meetings/update',[ZoomController::class,'update'])
   ->name('webhooks.meetings.update')
-  ->middleware(VerifyZoomWebhook::class); 
+  ->middleware(VerifyZoomWebhook::class);
+
+Route::post('/webhooks/zoom/meetings/delete',[ZoomController::class,'delete'])
+  ->name('webhooks.meetings.delete')
+  ->middleware(VerifyZoomWebhook::class);  
 
 Route::middleware(['auth:sanctum'/*,\App\Http\Middleware\TrackLastActiveAt::class*/])->group(function () {
 
