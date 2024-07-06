@@ -50,6 +50,10 @@ Route::post('/webhooks/zoom/meetings/delete',[ZoomController::class,'delete'])
   ->name('webhooks.meetings.delete')
   ->middleware(VerifyZoomWebhook::class);  
 
+Route::post('/webhooks/zoom/meetings/start',[ZoomController::class,'start'])
+  ->name('webhooks.meetings.start')
+  ->middleware(VerifyZoomWebhook::class);   
+
 Route::middleware(['auth:sanctum'/*,\App\Http\Middleware\TrackLastActiveAt::class*/])->group(function () {
 
 Route::controller(ProjectDashboardController::class)->group(function(){

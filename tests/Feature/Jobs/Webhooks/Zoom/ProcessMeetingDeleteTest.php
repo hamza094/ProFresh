@@ -7,6 +7,7 @@ use App\Jobs\Webhooks\Zoom\DeleteMeetingWebhook;
 use App\Models\Meeting;
 use Illuminate\Support\Facades\Exceptions;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Facades\File;
 use Tests\TestCase;
 
 class ProcessMeetingDeleteTest extends TestCase
@@ -26,15 +27,12 @@ class ProcessMeetingDeleteTest extends TestCase
           'meeting_id'=>813,
         ]);
 
-        $payload = [
-        'account_id' => 'HsTKzp8YTIWubRtgF7L_2w',
-        'operator' => 'test_operator@example.com',
-        'operator_id' => 'tWcCtVTiTum7Ctdx1p0GWQ',
-        'object' => [
-            'id' => 813,
-            'type' => 0
-        ],
-    ];  
+         $fixture = File::json(
+        path: base_path('tests/Fixtures/Webhooks/Zoom/meeting_delete.json'),
+        flags: JSON_THROW_ON_ERROR,
+    );
+
+        $payload = $fixture['payload'];  
 
         $job = new DeleteMeetingWebhook(payload: $payload);
 
@@ -48,23 +46,20 @@ class ProcessMeetingDeleteTest extends TestCase
     public function throw_exception_if_meeting_not_found()
     {
         $meeting=Meeting::factory()->create([
-          'meeting_id'=>813,
+          'meeting_id'=>413,
         ]);
 
-        $payload = [
-        'account_id' => 'HsTKzp8YTIWubRtgF7L_2w',
-        'operator' => 'test_operator@example.com',
-        'operator_id' => 'tWcCtVTiTum7Ctdx1p0GWQ',
-        'object' => [
-            'id' => 313,
-            'type' => 0
-        ],
-    ];  
+       $fixture = File::json(
+        path: base_path('tests/Fixtures/Webhooks/Zoom/meeting_delete.json'),
+        flags: JSON_THROW_ON_ERROR,
+    );
+
+        $payload = $fixture['payload'];  
 
         $job = new DeleteMeetingWebhook(payload: $payload);
 
         $this->assertDatabaseHas('meetings', [
-        'meeting_id' => 813,
+        'meeting_id' => 413,
         ]);
 
        $this->assertThrows(

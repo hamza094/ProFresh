@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Queue;
 use App\Jobs\Webhooks\Zoom\UpdateMeetingWebhook;
 use App\Jobs\Webhooks\Zoom\DeleteMeetingWebhook;
+use App\Jobs\Webhooks\Zoom\StartMeetingWebhook;
 use Carbon\Carbon;
 use Tests\TestCase;
 use Mockery;
@@ -26,7 +27,8 @@ class ZoomControllerTest extends TestCase
 
      Queue::fake([
         UpdateMeetingWebhook::class,
-        DeleteMeetingWebhook::class
+        DeleteMeetingWebhook::class,
+        StartMeetingWebhook::class,
     ]);
      
     }
@@ -77,6 +79,30 @@ class ZoomControllerTest extends TestCase
             ->assertExactJson(['status' => 'success']);
 
          Queue::assertPushed(DeleteMeetingWebhook::class, function ($job) use ($postBody) {
+        return $job->payload == $postBody['payload'];
+    });
+    }
+
+    /** @test */
+    public function zoom_meeting_can_be_started()
+    {
+    $this->withoutMiddleware([\App\Http\Middleware\VerifyZoomWebhook::class]);
+
+        $meeting=Meeting::factory()->create([
+          'meeting_id'=>813,
+        ]);
+
+        $postBody = File::json(
+           path: base_path('tests/Fixtures/Webhooks/Zoom/meeting_start.json'),
+           flags: JSON_THROW_ON_ERROR,
+        );
+
+        $response=$this->withoutExceptionHandling()->post(route('webhooks.meetings.start'),
+         $postBody)
+            ->assertOk()
+            ->assertExactJson(['status' => 'success']);
+
+         Queue::assertPushed(StartMeetingWebhook::class, function ($job) use ($postBody) {
         return $job->payload == $postBody['payload'];
     });
     }
