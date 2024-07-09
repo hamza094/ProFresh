@@ -10,6 +10,7 @@ use App\Notifications\Zoom\MeetingStarted;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Throwable;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Models\Meeting;
 
@@ -40,8 +41,7 @@ class StartMeetingWebhook implements ShouldQueue
 
         try{
            $meeting = Meeting::query()->with([
-            'project:id,name,slug',
-            'project.activeMembers'
+            'project.activeMembers',
           ])
            ->where('meeting_id', $meetingId)
            ->firstOrFail();
@@ -52,11 +52,11 @@ class StartMeetingWebhook implements ShouldQueue
 
             $start_time = $this->payload['object']['start_time'];
 
-            $user = $project->user()->select('uuid', 'name');
+            $user = $project->user()->select('id', 'name')->first();
 
-            $notification = new MeetingStarted($project,$meeting,$start_time,$user);
-
-            $activeMembers->each->notify($notification);
+            foreach($activeMembers as $member){
+             $member->notify(new MeetingStarted($project,$meeting,$start_time,$user));
+            }
 
             Log::channel('webhook')->info('Meeting notifications sent successfully', ['meeting_id' => $meetingId]);
 
@@ -73,4 +73,13 @@ class StartMeetingWebhook implements ShouldQueue
 
     }
     }
+
+    public function failed(Throwable $exception)
+    {
+        Log::channel('webhook')->error('Start Meeting webhook job failed', [
+            'error' => $exception->getMessage(),
+            'trace' => $exception->getTraceAsString()
+        ]);
+    }
+
 }

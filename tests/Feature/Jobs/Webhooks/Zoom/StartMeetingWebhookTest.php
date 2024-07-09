@@ -50,8 +50,7 @@ class StartMeetingWebhookTest extends TestCase
 
         $job = new StartMeetingWebhook(payload: $payload);
 
-        $job->handle();
-
+        dd($job->handle());
 
     Notification::assertSentTo(
         [$user, $user1],
@@ -63,6 +62,7 @@ class StartMeetingWebhookTest extends TestCase
                 && in_array('broadcast', $channels);
         }
     );
+
 
     }
 

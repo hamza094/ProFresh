@@ -42,18 +42,19 @@ Route::controller(OAuthController::class)->group(function () {
     Route::get('/auth/callback/{provider}', 'callback')->name('oauth.callback');
 }); 
 
-Route::post('/webhooks/zoom/meetings/update',[ZoomController::class,'update'])
-  ->name('webhooks.meetings.update')
-  ->middleware(VerifyZoomWebhook::class);
+// Zoom Webhooks
+Route::controller(ZoomController::class)
+->middleware(VerifyZoomWebhook::class)
+->prefix('webhooks/zoom/meetings')
+->as('webhooks.meetings.')
+->group(function(){
+Route::post('update','update')->name('update');
 
-Route::post('/webhooks/zoom/meetings/delete',[ZoomController::class,'delete'])
-  ->name('webhooks.meetings.delete')
-  ->middleware(VerifyZoomWebhook::class);  
+Route::post('delete','delete')->name('delete');
 
-Route::post('/webhooks/zoom/meetings/start',[ZoomController::class,'start'])
-  ->name('webhooks.meetings.start')
-  ->middleware(VerifyZoomWebhook::class);   
-
+Route::post('start','start')->name('start');
+});
+  
 Route::middleware(['auth:sanctum'/*,\App\Http\Middleware\TrackLastActiveAt::class*/])->group(function () {
 
 Route::controller(ProjectDashboardController::class)->group(function(){

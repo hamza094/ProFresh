@@ -49,7 +49,7 @@ class ZoomControllerTest extends TestCase
            flags: JSON_THROW_ON_ERROR,
         );
 
-        $response=$this->withoutExceptionHandling()->post(route('webhooks.meetings.update'),
+        $response=$this->post(route('webhooks.meetings.update'),
          $postBody)
             ->assertOk()
             ->assertExactJson(['status' => 'success']);
@@ -73,7 +73,7 @@ class ZoomControllerTest extends TestCase
            flags: JSON_THROW_ON_ERROR,
         );
 
-        $response=$this->withoutExceptionHandling()->post(route('webhooks.meetings.delete'),
+        $response=$this->post(route('webhooks.meetings.delete'),
          $postBody)
             ->assertOk()
             ->assertExactJson(['status' => 'success']);
@@ -97,7 +97,7 @@ class ZoomControllerTest extends TestCase
            flags: JSON_THROW_ON_ERROR,
         );
 
-        $response=$this->withoutExceptionHandling()->post(route('webhooks.meetings.start'),
+        $response=$this->post(route('webhooks.meetings.start'),
          $postBody)
             ->assertOk()
             ->assertExactJson(['status' => 'success']);

@@ -2,12 +2,15 @@
 
 namespace App\Notifications\Zoom;
 
+use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
+use Illuminate\Notifications\Messages\BroadcastMessage;
+use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-class MeetingStarted extends Notification
+class MeetingStarted extends Notification implements ShouldBroadcast,ShouldQueue
 {
     use Queueable;
 
@@ -25,8 +28,8 @@ class MeetingStarted extends Notification
     {
         $this->project = $project;
         $this->meeting = $meeting;
-        $this->start_time = $start_time;
         $this->user = $user;
+        $this->start_time = Carbon::parse($start_time)->format('d F \a\t H:i:s');
     }
 
     /**
@@ -61,7 +64,7 @@ class MeetingStarted extends Notification
             ]);
     }
 
-    public function toBroadcast($notifiable)
+    public function toBroadcast($notifiable) :BroadcastMessage
     {
       return new BroadcastMessage([
         'message' => 'Project ' . $this->project->name . ' Meeting ' . $this->meeting->topic . ' started at ' . $this->start_time . ' ' . $this->meeting->timezone,

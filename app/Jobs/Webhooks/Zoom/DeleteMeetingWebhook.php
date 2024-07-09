@@ -23,6 +23,9 @@ class DeleteMeetingWebhook implements ShouldQueue
      *
      * @return void
      */
+
+    public $tries = 2;
+
     public function __construct(array $payload)
     {
         $this->payload = $payload;
@@ -51,7 +54,19 @@ class DeleteMeetingWebhook implements ShouldQueue
 
         throw new ModelNotFoundException('Meeting not available in database', 0, $e);
 
-}
+   }
+    }
 
+    public function failed(\Exception $exception)
+    {
+        Log::channel('webhook')->error('Delete Meeting webhook job failed', [
+            'error' => $exception->getMessage(),
+            'trace' => $exception->getTraceAsString()
+        ]);
+    }
+
+    public function backoff(): array
+    {
+      return [5, 30];
     }
 }

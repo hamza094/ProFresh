@@ -67,9 +67,14 @@ class UpdateMeetingWebhook implements ShouldQueue
 
     public function failed(\Exception $exception)
     {
-        Log::channel('webhook')->error('Webhook job failed', [
+        Log::channel('webhook')->error('Update Meeting webhook job failed', [
             'error' => $exception->getMessage(),
             'trace' => $exception->getTraceAsString()
         ]);
+    }
+
+    public function backoff(): array
+    {
+      return [5, 30];
     }
 }

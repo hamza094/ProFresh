@@ -28,13 +28,6 @@ class UpdateMeeting extends Request implements HasBody
        private readonly array $validated,
     ) {}
 
-     protected function defaultHeaders(): array
-    {
-        return [
-            'X-Programmatic-Update' => 'true',
-        ];
-    } 
-
     /**
      * The endpoint for the request
      */
@@ -43,9 +36,9 @@ class UpdateMeeting extends Request implements HasBody
         return '/meetings/'.$this->validated['meeting_id'];
     }
 
-      protected function defaultBody(): array
+    protected function defaultBody(): array
     {
-      return array_filter([
+        return array_filter([
             'topic' => $this->validated['topic'] ?? null,
             'agenda' => $this->validated['agenda'] ?? null,
             'duration' => $this->validated['duration'] ?? null,
@@ -56,9 +49,9 @@ class UpdateMeeting extends Request implements HasBody
         ], function ($value) {
             return !is_null($value);
         });
- }
+    }
 
-  protected function resolveLimits(): array
+    protected function resolveLimits(): array
     {
       return [
         Limit::allow(requests: 4)->everySeconds(seconds: 1),
