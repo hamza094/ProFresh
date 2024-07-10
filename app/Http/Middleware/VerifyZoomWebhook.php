@@ -24,7 +24,7 @@ class VerifyZoomWebhook
 
         if (!$this->isRequestValid($providedSignature, $zoomTimestamp,$request)){
          
-             abort(Response::HTTP_FORBIDDEN, 'Invalid signature.');
+             abort(Response::HTTP_FORBIDDEN, 'The webhook signature was invalid.');
         }
 
         return $next($request);
@@ -55,5 +55,7 @@ class VerifyZoomWebhook
 
         return 'v0=' . hash_hmac('sha256', $message, config('services.zoom.webhook_secret'));
     }
+
+    
 
 }
