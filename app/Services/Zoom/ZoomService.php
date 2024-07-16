@@ -13,6 +13,7 @@ use App\Http\Integrations\Zoom\Requests\GetAccessTokenRequest;
 use App\Http\Integrations\Zoom\Requests\CreateMeeting;
 use App\Http\Integrations\Zoom\Requests\UpdateMeeting;
 use App\Http\Integrations\Zoom\Requests\DeleteMeeting;
+use App\Http\Integrations\Zoom\Requests\GetZakToken;
 use App\Interfaces\Zoom;
 use App\Models\User;
 use Illuminate\Support\Str;
@@ -155,6 +156,20 @@ final class ZoomService implements Zoom
     return $this->connectorForUser($user)
        ->send(new DeleteMeeting($meetingId))
        ->throw();
+   }
+
+    public function getZakToken(User $user)
+   {
+     if (!$user->isConnectedToZoom()) 
+     {
+       throw new ZoomException('User is not connected to Zoom.');
+     }
+
+    $response= $this->connectorForUser($user)
+       ->send(new GetZakToken())
+       ->json();
+
+       return $response['token'];
    }
 
 }

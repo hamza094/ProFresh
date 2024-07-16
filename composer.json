@@ -15,6 +15,7 @@
         "cviebrock/eloquent-sluggable": "^10.0",
         "doctrine/dbal": "^3.7",
         "f9webltd/laravel-api-response-helpers": "^1.5",
+        "firebase/php-jwt": "^6.10",
         "friendsofphp/php-cs-fixer": "^3.10.0",
         "guzzlehttp/guzzle": "^7.0.1",
         "intervention/image": "^2.5",

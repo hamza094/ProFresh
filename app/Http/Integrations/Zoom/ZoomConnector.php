@@ -39,7 +39,9 @@ class ZoomConnector extends Connector
             ->setRedirectUri('http://localhost:8000/oauth/zoom/callback')
             ->setAuthorizeEndpoint('https://zoom.us/oauth/authorize')
             ->setTokenEndpoint('https://zoom.us/oauth/token')
-            ->setDefaultScopes(['user:read:zak','meeting:write:meeting','meeting:read:list_meetings',
+            ->setDefaultScopes(['user:read:zak',
+                'user:read:token',
+                'meeting:write:meeting','meeting:read:list_meetings',
                 'meeting:read:meeting',
                 'meeting:delete:meeting',
                 'meeting:update:meeting']);

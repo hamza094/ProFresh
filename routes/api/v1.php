@@ -10,6 +10,9 @@ use App\Http\Controllers\Api\Webhooks\ZoomController;
 
 use App\Http\Middleware\VerifyZoomWebhook;
 
+use App\Http\Controllers\Api\Zoom\ZoomTokenController;
+
+
 use App\Http\Controllers\Api\
 {
   ProjectController,
@@ -56,6 +59,10 @@ Route::post('start','start')->name('start');
 });
   
 Route::middleware(['auth:sanctum'/*,\App\Http\Middleware\TrackLastActiveAt::class*/])->group(function () {
+
+ Route::get('/user/token',[ZoomTokenController::class,'getUserToken']);
+
+ Route::get('/user/jwt/token',[ZoomTokenController::class,'getJwtToken']);   
 
 Route::controller(ProjectDashboardController::class)->group(function(){
  Route::get('/data','data');

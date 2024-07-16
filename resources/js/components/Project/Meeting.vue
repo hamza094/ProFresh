@@ -11,6 +11,9 @@
 					</div>
 					<hr>
       <div class="btn-group" role="group">
+         <button class="btn btn-sm btn-secondary" @click.pervent="getToken">Zak Token</button>
+         <br>
+         <button class="btn btn-sm btn-secondary" @click.pervent="jwtToken">Jwt Token</button>
       <button
         type="button"
         class="btn btn-link btn-sm meeting_button"
@@ -51,6 +54,11 @@
                     		{{meeting.timezone}}
                     </p>
                     <p><b>Created At:</b> {{meeting.created_at}}</p>
+                    <p>
+                      <button class="btn btn-sm btn-priamry" @click.pervent="initializeMeting('start',meeting)">Start Meeting</button>
+                      <button class="btn btn-sm btn-warning" @click.pervent="initializeMeting('join',meeting)"
+                      >Join Meeting</button>
+                    </p>
                   </div>
                 </div>
               </div>
@@ -60,6 +68,9 @@
   <MeetingModal :projectSlug="this.projectSlug"></MeetingModal>
 
   <ViewModal :projectSlug="this.projectSlug"></ViewModal>
+
+  <div id="meetingSDKElement">
+</div>
  
 </div>
 </template>	
@@ -69,6 +80,7 @@
     import ViewModal from './ViewModal.vue'
   import { permission } from '../../auth'
   import { mapState, mapMutations, mapActions } from 'vuex';
+  import ZoomMtgEmbedded from '@zoom/meetingsdk/embedded';
 
 export default{
 	props:['projectSlug','projectMeetings','notAuthorize'],
@@ -80,6 +92,7 @@ export default{
     data(){	
     return{
         showPrevious: false,
+        client: null,
     };
     },
     computed:{
@@ -90,6 +103,24 @@ export default{
     	...mapActions({
       fetchMeetings: 'meeting/fetchMeetings',
     }),
+
+      getToken(){
+         axios.get(`/api/v1/user/token`,{
+      }).then(response=>{
+         console.log(response);
+      }).catch(error=>{
+        console.log(error);
+        });
+      },
+
+      jwtToken(){
+         axios.get(`/api/v1/user/jwt/token`,{
+      }).then(response=>{
+         console.log(response);
+      }).catch(error=>{
+        console.log(error);
+        });
+      },
 
     getMeeting(meetingId) {
       this.$bus.$emit('view-meeting-modal', meetingId);
@@ -117,6 +148,31 @@ export default{
 			   window.location.href = response.data.redirectUrl;
 			}).catch(error=>{
 	});
+  },
+
+  initializeMeting(action,meeting){
+     this.client = ZoomMtgEmbedded.createClient();
+
+      let meetingSDKElement = document.getElementById('meetingSDKElement');
+
+      this.client.init({
+        zoomAppRoot: meetingSDKElement,
+        language: 'en-US',
+      });
+
+      const meetingConfig = {
+        sdkKey: sdkKey,
+        signature: signature,
+        meetingNumber: meetingNumber,
+        password: password,
+        userName: userName,
+      };
+
+       if (action === 'start') {
+        meetingConfig.zak = getZakToken;
+      }
+
+      this.client.join(meetingConfig);
   },
 },
 created(){
