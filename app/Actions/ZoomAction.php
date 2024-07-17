@@ -31,9 +31,7 @@ class ZoomAction
             'tokenExp' => $exp,
         ];
 
-        $jwt = JWT::encode($payload, $this->sdkSecret, 'HS256');
-
-        return $jwt;
+        return JWT::encode($payload, $this->sdkSecret, 'HS256');
       
     }
 

@@ -95,14 +95,18 @@ final class ZoomServiceFake implements Zoom
  }
 
   public function deleteMeeting(int $meetingId,User $user)
- {
+  {
     if(isset($this->failureException)) {
       throw $this->failureException;
     }
 
     return response()->json(204);  
-
  }
+
+   public function getZakToken($user){
+     $token="zak&token";
+     return  $token;
+   }
 
    private function fakeMeeting(): Meeting
  {

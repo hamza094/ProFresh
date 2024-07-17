@@ -28,5 +28,7 @@
         <server name="SESSION_DRIVER" value="array"/>
         <server name="TELESCOPE_ENABLED" value="false"/>
         <server name="BROADCAST_DRIVER" value="null"/>
+        <env name="ZOOM_TEST_CLIENT_ID" value="zoomtestclientid"/>
+    <env name="ZOOM_TEST_CLIENT_SECRET" value="zoomtestclientid"/>
     </php>
 </phpunit>
