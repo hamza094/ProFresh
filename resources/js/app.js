@@ -29,7 +29,9 @@ import { Datetime } from 'vue-datetime';
 // You need a specific loader for CSS files
 import 'vue-datetime/dist/vue-datetime.css';
 import VCalendar from 'v-calendar';
+import PortalVue from 'portal-vue';
 
+Vue.use(PortalVue);
 Vue.use(Vuex);
 Vue.use(VueBus);
 Vue.use(VTooltip);

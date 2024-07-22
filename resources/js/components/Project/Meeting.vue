@@ -1,5 +1,6 @@
 <template>
 	<div>
+      <div id="meetingSDKElement"></div>
 <div class="project-info">
 		<div class="project-info_socre">
 			<p class="project-info_score-heading">Meetings</p>
@@ -11,9 +12,6 @@
 					</div>
 					<hr>
       <div class="btn-group" role="group">
-         <button class="btn btn-sm btn-secondary" @click.pervent="getToken">Zak Token</button>
-         <br>
-         <button class="btn btn-sm btn-secondary" @click.pervent="jwtToken">Jwt Token</button>
       <button
         type="button"
         class="btn btn-link btn-sm meeting_button"
@@ -54,13 +52,13 @@
                     		{{meeting.timezone}}
                     </p>
                     <p><b>Created At:</b> {{meeting.created_at}}</p>
-                    <p>
-                      <button class="btn btn-sm btn-priamry" @click.pervent="initializeMeting('start',meeting)">Start Meeting</button>
-                      <button class="btn btn-sm btn-warning" @click.pervent="initializeMeting('join',meeting)"
-                      >Join Meeting</button>
-                    </p>
                   </div>
                 </div>
+                <div class="card-footer">
+                      <button v-if="!notAuthorize && meeting.owner.id === auth.id" class="btn btn-sm btn-primary" @click.pervent="initializeMeting('start',meeting)">Start Meeting</button>
+                      <button v-if="meeting.owner.id !== auth.id" class="btn btn-sm btn-warning text-white" @click.pervent="initializeMeting('join',meeting)"
+                      >Join Meeting</button>
+                  </div>
               </div>
 		</div>
 	<pagination :data="meetings" @pagination-change-page="getResults"></pagination>
@@ -68,9 +66,6 @@
   <MeetingModal :projectSlug="this.projectSlug"></MeetingModal>
 
   <ViewModal :projectSlug="this.projectSlug"></ViewModal>
-
-  <div id="meetingSDKElement">
-</div>
  
 </div>
 </template>	
@@ -80,7 +75,7 @@
     import ViewModal from './ViewModal.vue'
   import { permission } from '../../auth'
   import { mapState, mapMutations, mapActions } from 'vuex';
-  import ZoomMtgEmbedded from '@zoom/meetingsdk/embedded';
+  import { fetchTokens, setupAndJoinMeeting } from '../../utils/zoomUtils';
 
 export default{
 	props:['projectSlug','projectMeetings','notAuthorize'],
@@ -93,6 +88,8 @@ export default{
     return{
         showPrevious: false,
         client: null,
+        auth:this.$store.state.currentUser.user,
+        loadingId:null,
     };
     },
     computed:{
@@ -104,26 +101,8 @@ export default{
       fetchMeetings: 'meeting/fetchMeetings',
     }),
 
-      getToken(){
-         axios.get(`/api/v1/user/token`,{
-      }).then(response=>{
-         console.log(response);
-      }).catch(error=>{
-        console.log(error);
-        });
-      },
-
-      jwtToken(){
-         axios.get(`/api/v1/user/jwt/token`,{
-      }).then(response=>{
-         console.log(response);
-      }).catch(error=>{
-        console.log(error);
-        });
-      },
-
     getMeeting(meetingId) {
-      this.$bus.$emit('view-meeting-modal', meetingId);
+      this.$bus.$emit('view-meeting-modal',meetingId);
     },
   
     getResults(page) {
@@ -150,31 +129,31 @@ export default{
 	});
   },
 
-  initializeMeting(action,meeting){
-     this.client = ZoomMtgEmbedded.createClient();
+  async initializeMeting(action,meeting)
+  {
+    this.loadingId=this.$vToastify.loader('Initializing meeting. Please hold on...');
 
-      let meetingSDKElement = document.getElementById('meetingSDKElement');
+    try{
+   const role = this.auth.id === meeting.owner.id ? 1 : 0;
 
-      this.client.init({
-        zoomAppRoot: meetingSDKElement,
-        language: 'en-US',
-      });
+  const [zakTokenResponse, jwtTokenResponse] = await fetchTokens(action, role, meeting.meeting_id,this.$vToastify);
 
-      const meetingConfig = {
-        sdkKey: sdkKey,
-        signature: signature,
-        meetingNumber: meetingNumber,
-        password: password,
-        userName: userName,
-      };
+    const zak_token = zakTokenResponse ? zakTokenResponse.zak_token : null;
 
-       if (action === 'start') {
-        meetingConfig.zak = getZakToken;
-      }
+    const jwt_token = jwtTokenResponse.jwt_token;
 
-      this.client.join(meetingConfig);
+    await setupAndJoinMeeting(action, meeting, jwt_token, zak_token,this.auth);
+
+    this.$vToastify.success('Meeting initiated successfully!');
+
+    }catch(error){
+      this.$vToastify.error('Meeting initiated failed!');
+    } finally {
+    this.$vToastify.stopLoader(this.loadingId);
+    this.loadingId=null;
+    }
   },
-},
+ },
 created(){
      this.showCurrentMeetings();
   },

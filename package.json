@@ -37,6 +37,7 @@
         "luxon": "^1.27.0",
         "moment": "^2.29.1",
         "moment-timezone": "^0.5.33",
+        "portal-vue": "^2.1.7",
         "pusher-js": "^7.0.3",
         "sweetalert2": "^10.16.9",
         "v-calendar": "^2.4.2",

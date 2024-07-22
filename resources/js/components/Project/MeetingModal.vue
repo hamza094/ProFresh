@@ -145,6 +145,7 @@ export default{
     },
 
      openMeetingModal() {
+       console.log('Meeting ID:', meetingId); // Ensure it's a number
       this.$modal.show('MeetingModal');
     },
 

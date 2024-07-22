@@ -127,7 +127,7 @@
         </template>
       </meeting-detail>
 
-    <meeting-action v-if="!isEditing" label="Get zak token" button-label="Get Token" />
+    <button v-if="!isEditing" class="btn btn-sm btn-primary"> Get zak token</button>
 
     </ul>
 

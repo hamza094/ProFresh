@@ -11,7 +11,7 @@
 export default {
   props: {
     label: String,
-    value: String,
+    value: [String,Number],
     isEditing: Boolean,
   },
 };
