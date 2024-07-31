@@ -6,15 +6,16 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
-use App\Notifications\Zoom\MeetingStarted;
-use Illuminate\Support\Facades\Log;
+use App\Notifications\Zoom\MeetingEnded;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Throwable;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Facades\Log;
 use App\Models\Meeting;
+use Carbon\Carbon;
 
-class StartMeetingWebhook implements ShouldQueue
+class MeetingEndsWebhook implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
@@ -37,7 +38,7 @@ class StartMeetingWebhook implements ShouldQueue
      */
     public function handle()
     {
-        $meetingId = $this->payload['object']['id'];
+         $meetingId = $this->payload['object']['id'];
 
         try{
            $meeting = Meeting::query()->with([
@@ -52,15 +53,19 @@ class StartMeetingWebhook implements ShouldQueue
 
             $start_time = $this->payload['object']['start_time'];
 
+            $end_time = $this->payload['object']['end_time'];
+
+           $endAt = Carbon::parse($end_time)->format('F j, Y g:i A');
+
             $user = $project->user()->select('id', 'name')->first();
 
-            $meeting->update(['status' => 'started']);
+            $meeting->update(['status' => 'ended']);
 
             foreach($activeMembers as $member){
-             $member->notify(new MeetingStarted($project,$meeting,$start_time,$user));
+             $member->notify(new MeetingEnded($project,$meeting,$start_time,$endAt,$user));
             }
 
-            Log::channel('webhook')->info('Meeting notifications sent successfully', ['meeting_id' => $meetingId]);
+            Log::channel('webhook')->info('Meeting ended notifications sent successfully', ['meeting_id' => $meetingId]);
 
         } catch (ModelNotFoundException $e) {
 
@@ -68,7 +73,7 @@ class StartMeetingWebhook implements ShouldQueue
 
     } catch (\Exception $e) {
 
-        Log::channel('webhook')->error('Error processing meeting started webhook', [
+        Log::channel('webhook')->error('Error processing meeting ending webhook', [
             'meeting_id' => $meetingId,
             'error' => $e->getMessage(),
         ]);
@@ -78,10 +83,9 @@ class StartMeetingWebhook implements ShouldQueue
 
     public function failed(Throwable $exception)
     {
-        Log::channel('webhook')->error('Start Meeting webhook job failed', [
+        Log::channel('webhook')->error('Meeting Ended webhook job failed', [
             'error' => $exception->getMessage(),
             'trace' => $exception->getTraceAsString()
         ]);
     }
-
 }

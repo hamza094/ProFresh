@@ -56,6 +56,8 @@ Route::post('update','update')->name('update');
 Route::post('delete','delete')->name('delete');
 
 Route::post('start','start')->name('start');
+
+Route::post('ended','ended')->name('ended');
 });
   
 Route::middleware(['auth:sanctum'/*,\App\Http\Middleware\TrackLastActiveAt::class*/])->group(function () {
