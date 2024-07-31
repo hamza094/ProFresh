@@ -34,13 +34,14 @@
     </div>
 				<div v-for="(meeting,index) in meetings.data" :key="meeting.id">
                 <div class="card mt-3 card-hover" @click.pervent="getMeeting(meeting.id)">
-                	<div class="ribbon bg-red">{{meeting.status}}</div>
+                	<div :class="['ribbon', ribbonColor(meeting.status)]">{{meeting.status}}</div>
                   <div class="card-stamp">
                     <div class="card-stamp-icon bg-yellow">
                       <!-- Download SVG icon from http://tabler-icons.io/i/bell -->
                       <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M10 5a2 2 0 1 1 4 0a7 7 0 0 1 4 6v3a4 4 0 0 0 2 3h-16a4 4 0 0 0 2 -3v-3a7 7 0 0 1 4 -6"></path><path d="M9 17v1a3 3 0 0 0 6 0v-1"></path></svg>
                     </div>
                   </div>
+                  <div v-if="meeting.status === 'Started'" class="glowing-dot"></div>
                   <div class="card-body">
                     <h3 class="card-title">{{meeting.topic}}</h3>
                     <p class="text-secondary">{{meeting.agenda}}</p>
@@ -55,8 +56,10 @@
                   </div>
                 </div>
                 <div class="card-footer">
-                      <button v-if="!notAuthorize && meeting.owner.id === auth.id" class="btn btn-sm btn-primary" @click.pervent="initializeMeting('start',meeting)">Start Meeting</button>
-                      <button v-if="meeting.owner.id !== auth.id" class="btn btn-sm btn-warning text-white" @click.pervent="initializeMeting('join',meeting)"
+                      <button v-if="!notAuthorize && meeting.owner.id === auth.id && meeting.status !== 'Started'" class="btn btn-sm btn-primary" @click.prevent="initializeMeting('start',meeting)">
+                      Start Meeting
+                    </button>
+                      <button v-if="meeting.owner.id !== auth.id" class="btn btn-sm btn-warning text-white" @click.prevent="initializeMeting('join',meeting)"
                       >Join Meeting</button>
                   </div>
               </div>
@@ -153,6 +156,16 @@ export default{
     this.loadingId=null;
     }
   },
+  ribbonColor(status) {
+      switch (status) {
+        case 'Waiting':
+          return 'bg-yellow';
+        case 'Started':
+          return 'bg-green';
+        default:
+          return 'bg-red';
+      }
+    },
  },
 created(){
      this.showCurrentMeetings();

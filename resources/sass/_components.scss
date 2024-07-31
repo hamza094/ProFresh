@@ -1395,3 +1395,27 @@ button.gnuIjg {
     text-decoration: none;
   }
 }
+
+/* Meeting glow circle */
+
+.glowing-dot {
+  width: 15px;
+  height: 15px;
+  background-color: green;
+  border-radius: 50%;
+  border: 2px solid white;
+  animation: glow 1s infinite alternate;
+}
+
+@keyframes glow {
+  from {
+    box-shadow: 0 0 10px rgba(0, 128, 0, 0.8),
+              0 0 20px rgba(0, 128, 0, 0.6),
+              0 0 30px rgba(0, 128, 0, 0.4);
+  }
+  to {
+    box-shadow: 0 0 20px rgba(0, 255, 0, 0.8),
+              0 0 40px rgba(0, 255, 0, 0.6),
+              0 0 60px rgba(0, 255, 0, 0.4);
+  }
+}
