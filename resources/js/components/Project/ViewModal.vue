@@ -65,7 +65,7 @@
       </template>
     </meeting-detail>
 
-    <meeting-detail v-if="!isEditing" label="Status" :value="meeting.status" />
+    <meeting-detail v-if="!isEditing" label="Status" :value="meeting.status" /> 
 
         <li v-if="!isEditing">
           <b>Start Url: </b><span v-if="Object.keys(meeting).length > 0" class="btn btn-secondary btn-sm">Start Meeting As Owner</span>

@@ -2,7 +2,9 @@
   <li>
     <b>{{ label }}: </b>
     <slot>
-      <span class="meeting_item">{{ value }}</span>
+      <span class="meeting_item">
+      {{ value }}
+    </span>
     </slot>
   </li>
 </template>

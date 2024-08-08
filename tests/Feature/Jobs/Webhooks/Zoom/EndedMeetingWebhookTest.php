@@ -9,6 +9,8 @@ use App\Models\Meeting;
 use App\Traits\ProjectSetup;
 use Illuminate\Support\Facades\File;
 use App\Jobs\Webhooks\Zoom\MeetingEndsWebhook;
+use Illuminate\Support\Facades\Event;
+use App\Events\Zoom\MeetingStatusUpdate;
 use App\Models\User;
 use Illuminate\Support\Facades\Notification;
 use App\Notifications\Zoom\MeetingEnded;
@@ -21,6 +23,7 @@ class EndedMeetingWebhookTest extends TestCase
     public function notifies_project_members_on_meeting_ended()
     {
         Notification::fake();
+        Event::fake();
 
         $meeting=Meeting::factory()->create([
           'meeting_id'=>813,
@@ -48,6 +51,10 @@ class EndedMeetingWebhookTest extends TestCase
         $job->handle();
 
     $this->assertEquals('ended', $meeting->fresh()->status);
+
+    Event::assertDispatched(function (MeetingStatusUpdate $event) use ($meeting) {
+    return $event->meeting->id === $meeting->id;
+  });
 
     Notification::assertSentTo(
         [$user, $user1],

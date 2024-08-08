@@ -10,6 +10,23 @@ const state = {
 const mutations = {
 setMeetings(state,meetingsData) {
     state.meetings = meetingsData.meetings;
+
+     state.meetings.data.forEach(meeting => {
+      Echo.leave(`meetingStatus.${meeting.id}`);
+    });
+
+     // Attach listeners for all meetings
+    state.meetings.data.forEach(meeting => {
+      Echo.private(`meetingStatus.${meeting.id}`)
+        .listen('MeetingStatusUpdate', (e) => {
+          console.log(e);
+          const index = state.meetings.data.findIndex(m => m.id === e.id);
+          if (index !== -1) {
+            state.meetings.data.splice(index, 1, { ...state.meetings.data[index], status: e.status });
+          }
+        });
+    });
+
   },
   setMessage(state,message) {
     state.message = message;

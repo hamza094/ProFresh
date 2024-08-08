@@ -12,6 +12,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Throwable;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use App\Events\MeetingStatusUpdate;
 use App\Models\Meeting;
 
 class StartMeetingWebhook implements ShouldQueue
@@ -46,6 +47,10 @@ class StartMeetingWebhook implements ShouldQueue
            ->where('meeting_id', $meetingId)
            ->firstOrFail();
 
+           if($meeting->status == 'started'){
+            return Log::channel('webhook')->info('Meeting notification already sent');
+           }
+
             $project = $meeting->project;
 
             $activeMembers = $project->activeMembers;
@@ -55,6 +60,8 @@ class StartMeetingWebhook implements ShouldQueue
             $user = $project->user()->select('id', 'name')->first();
 
             $meeting->update(['status' => 'started']);
+
+            event(new MeetingStatusUpdate($meeting));
 
             foreach($activeMembers as $member){
              $member->notify(new MeetingStarted($project,$meeting,$start_time,$user));

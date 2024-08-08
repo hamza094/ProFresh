@@ -59,9 +59,12 @@ Route::post('start','start')->name('start');
 
 Route::post('ended','ended')->name('ended');
 });
+
+
+
   
 Route::middleware(['auth:sanctum'/*,\App\Http\Middleware\TrackLastActiveAt::class*/])->group(function () {
-
+Route::get('/webhooks/zoom/meetings/{meeting}',[ZoomController::class,'event']);
  Route::get('/user/token',[ZoomTokenController::class,'getUserToken']);
 
  Route::get('/user/jwt/token',[ZoomTokenController::class,'getJwtToken']);   

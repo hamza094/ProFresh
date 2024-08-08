@@ -11,6 +11,8 @@ use App\Models\User;
 use Illuminate\Support\Facades\Notification;
 use App\Notifications\Zoom\MeetingStarted;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Facades\Event;
+use App\Events\Zoom\MeetingStatusUpdate;
 use Tests\TestCase;
 
 class StartMeetingWebhookTest extends TestCase
@@ -27,6 +29,7 @@ class StartMeetingWebhookTest extends TestCase
     public function notifies_project_members_on_meeting_start()
     {
         Notification::fake();
+        Event::fake();
 
         $meeting=Meeting::factory()->create([
           'meeting_id'=>813,
@@ -51,6 +54,12 @@ class StartMeetingWebhookTest extends TestCase
         $job = new StartMeetingWebhook(payload: $payload);
 
         $job->handle();
+
+        $this->assertEquals('started', $meeting->fresh()->status);
+
+       Event::assertDispatched(function (MeetingStatusUpdate $event) use ($meeting) {
+    return $event->meeting->id === $meeting->id;
+});
 
     Notification::assertSentTo(
         [$user, $user1],
