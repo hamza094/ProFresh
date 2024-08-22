@@ -10,7 +10,9 @@ use App\Notifications\Zoom\MeetingStarted;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Notification;
 use Throwable;
+use App\Enums\MeetingState;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Events\MeetingStatusUpdate;
 use App\Models\Meeting;
@@ -19,7 +21,8 @@ class StartMeetingWebhook implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    public $payload;
+    private string $meetingId;
+    private string $startTime;
 
     /**
      * Create a new job instance.
@@ -28,7 +31,8 @@ class StartMeetingWebhook implements ShouldQueue
      */
     public function __construct(array $payload)
     {
-        $this->payload = $payload;
+        $this->meetingId = $payload['object']['id'];
+        $this->startTime = $payload['object']['start_time'];
     }
 
     /**
@@ -38,57 +42,61 @@ class StartMeetingWebhook implements ShouldQueue
      */
     public function handle()
     {
-        $meetingId = $this->payload['object']['id'];
-
         try{
-           $meeting = Meeting::query()->with([
-            'project.activeMembers',
-          ])
-           ->where('meeting_id', $meetingId)
-           ->firstOrFail();
 
-           if($meeting->status == 'started'){
-            return Log::channel('webhook')->info('Meeting notification already sent');
-           }
+            $meeting = $this->getMeeting();
 
-            $project = $meeting->project;
-
-            $activeMembers = $project->activeMembers;
-
-            $start_time = $this->payload['object']['start_time'];
-
-            $user = $project->user()->select('id', 'name')->first();
-
-            $meeting->update(['status' => 'started']);
-
-            event(new MeetingStatusUpdate($meeting));
-
-            foreach($activeMembers as $member){
-             $member->notify(new MeetingStarted($project,$meeting,$start_time,$user));
-            }
-
-            Log::channel('webhook')->info('Meeting notifications sent successfully', ['meeting_id' => $meetingId]);
+            $this->validateStaus($meeting);
+            $this->updateMeetingStatus($meeting);
+            $this->sendNotifications($meeting);
 
         } catch (ModelNotFoundException $e) {
-
-        Log::channel('webhook')->info('Meeting not found', ['meeting_id' => $meetingId]);
+        Log::channel('webhook')->error("Meeting with ID {$this->meetingId} not found in the database.");
+            throw $e;
 
     } catch (\Exception $e) {
-
-        Log::channel('webhook')->error('Error processing meeting started webhook', [
-            'meeting_id' => $meetingId,
-            'error' => $e->getMessage(),
-        ]);
-
+      Log::channel('webhook')->error("Error processing meeting starting webhook: " . $e->getMessage(), ['exception' => $e]);
+       throw $e;
     }
+    }
+
+    private function getMeeting(): Meeting
+    {
+       return Meeting::where('meeting_id', $this->meetingId)->firstOrFail();
+    }
+
+    private function updateMeetingStatus(Meeting $meeting): void
+    {
+        $meeting->update(['status' => MeetingState::START->value]);
+
+        event(new MeetingStatusUpdate($meeting));
+    }
+
+    private function sendNotifications(Meeting $meeting): void
+    {
+        $project = $meeting->project()->with('asignees')->firstOrFail();
+
+        $members = $project->asignees;
+
+        Notification::send($members, new MeetingStarted($project, $meeting, $this->startTime, auth()->user()));
+    }
+
+    private function validateStaus($meeting)
+    {
+       if($meeting->status === MeetingState::START->value){
+            return Log::channel('webhook')->info("Meeting already started for meeting_id: {$this->meetingId}");
+        }
     }
 
     public function failed(Throwable $exception)
     {
-        Log::channel('webhook')->error('Start Meeting webhook job failed', [
+        Log::error('Meeting Started webhook job failed', [
+            'meeting_id' => $this->meetingId,
             'error' => $exception->getMessage(),
-            'trace' => $exception->getTraceAsString()
+            'trace' => $exception->getTraceAsString(),
         ]);
     }
+
+
 
 }

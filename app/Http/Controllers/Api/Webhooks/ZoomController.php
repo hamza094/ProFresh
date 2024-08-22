@@ -8,7 +8,6 @@ use App\Jobs\Webhooks\Zoom\UpdateMeetingWebhook;
 use App\Jobs\Webhooks\Zoom\DeleteMeetingWebhook;
 use App\Jobs\Webhooks\Zoom\StartMeetingWebhook;
 use App\Jobs\Webhooks\Zoom\MeetingEndsWebhook;
-use App\Events\MeetingStatusUpdate;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Http\Request;
 
@@ -50,13 +49,12 @@ class ZoomController extends Controller
         return response()->json(['status' => 'success'], 200);    
     }
 
-    public function event(Meeting $meeting)
-    { 
-      $meeting->update(['status' => 'started']);
+   public function check(){
 
-      event(new MeetingStatusUpdate($meeting));
+        StartMeetingWebhook::dispatch();
 
-    }
+        return response()->json(['status' => 'success'], 200);
+   } 
 
     }
 

@@ -10,7 +10,7 @@ use App\Traits\ProjectSetup;
 use Illuminate\Support\Facades\File;
 use App\Jobs\Webhooks\Zoom\MeetingEndsWebhook;
 use Illuminate\Support\Facades\Event;
-use App\Events\Zoom\MeetingStatusUpdate;
+use App\Events\MeetingStatusUpdate;
 use App\Models\User;
 use Illuminate\Support\Facades\Notification;
 use App\Notifications\Zoom\MeetingEnded;
@@ -32,12 +32,9 @@ class EndedMeetingWebhookTest extends TestCase
           'status'=>'waiting',
         ]);
 
-        $user=User::factory()->create();
-
-        $user1=User::factory()->create();
-
-        $this->inviteAndActivateUser($this->project, $user);
-        $this->inviteAndActivateUser($this->project, $user1);
+         $users = User::factory()->count(2)->create()->each(fn($user) => 
+        $this->inviteAndActivateUser($this->project, $user)
+      );
 
          $fixture = File::json(
         path: base_path('tests/Fixtures/Webhooks/Zoom/meeting_ended.json'),
@@ -56,16 +53,10 @@ class EndedMeetingWebhookTest extends TestCase
     return $event->meeting->id === $meeting->id;
   });
 
-    Notification::assertSentTo(
-        [$user, $user1],
-        MeetingEnded::class,
-        function (MeetingEnded $notification, $channels) use ($job) {
-            return $notification->meeting->meeting_id === $job->payload['object']['id']
-                && in_array('mail', $channels)
-                && in_array('database', $channels)
-                && in_array('broadcast', $channels);
-        }
-    );
+     Notification::assertSentTo($users, MeetingEnded::class, function ($notification, $channels) use ($payload) {
+        return $notification->meeting->meeting_id === $payload['object']['id']
+            && $channels === ['mail', 'database', 'broadcast'];
+    });
 
     }
 

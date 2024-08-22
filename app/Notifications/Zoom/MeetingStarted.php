@@ -9,6 +9,7 @@ use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use Illuminate\Notifications\Messages\BroadcastMessage;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
+use App\Channels\DatabaseChannel;
 
 class MeetingStarted extends Notification implements ShouldBroadcast
 {
@@ -79,7 +80,7 @@ class MeetingStarted extends Notification implements ShouldBroadcast
      * @param  mixed  $notifiable
      * @return array
      */
-    public function toArray($notifiable)
+    public function toDatabase($notifiable)
     {
         return [
          'message' => 'Project ' . $this->project->name . ' Meeting ' . $this->meeting->topic . ' started at ' . $this->start_time . ' ' . $this->meeting->timezone,

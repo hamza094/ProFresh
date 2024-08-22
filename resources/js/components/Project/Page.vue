@@ -109,7 +109,8 @@
 						</div>
 						<br>
 						<hr>
-						<Meeting :projectSlug="this.project.slug" :projectMeetings="this.project.meetings" :notAuthorize="this.project.ownerNotAuthorized"></Meeting>
+						<Meeting :projectSlug="this.project.slug" :projectMeetings="this.project.meetings" :notAuthorize="this.project.ownerNotAuthorized"
+						:members="project.members"></Meeting>
 					</div>
 				</div>
 			</div>

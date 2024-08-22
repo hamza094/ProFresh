@@ -8,6 +8,8 @@
 				<p v-if="notAuthorize" class="btn btn-sm btn-secondary" @click.prevent="authorize">Authorize With Zoom</p>
 
 				<button v-if="!notAuthorize" class="btn btn-sm btn-primary" @click.pervent="openMeetingModal()">Create Meating</button>
+
+        <button class="btn btn-sm btn-warning" @click.pervent="check()">check</button>
         
 					</div>
 					<hr>
@@ -41,7 +43,7 @@
                       <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M10 5a2 2 0 1 1 4 0a7 7 0 0 1 4 6v3a4 4 0 0 0 2 3h-16a4 4 0 0 0 2 -3v-3a7 7 0 0 1 4 -6"></path><path d="M9 17v1a3 3 0 0 0 6 0v-1"></path></svg>
                     </div>
                   </div>
-                  <div v-if="meeting.status === 'started'" class="glowing-dot"></div>
+                  <div v-if="meeting.status === 'Started'" class="glowing-dot"></div>
                   <div class="card-body">
                     <h3 class="card-title">{{meeting.topic}}</h3>
                     <p class="text-secondary">{{meeting.agenda}}</p>
@@ -56,11 +58,10 @@
                   </div>
                 </div>
                 <div class="card-footer">
-                  <button class="btn btn-sm btn-primary" @click.pervent="checkEvent(meeting.id)">Check Event</button>
-                      <button v-if="!notAuthorize && meeting.owner.id === auth.id && meeting.status !== 'started'" class="btn btn-sm btn-primary" @click.prevent="initializeMeting('start',meeting)">
+                      <button v-if="canStartMeeting(meeting)" class="btn btn-sm btn-primary" @click.prevent="initializeMeting('start',meeting)">
                       Start Meeting
                     </button>
-                      <button v-if="meeting.owner.id !== auth.id" class="btn btn-sm btn-warning text-white" @click.prevent="initializeMeting('join',meeting)"
+                      <button v-else-if="canJoinMeeting(meeting)"  class="btn btn-sm btn-warning text-white" @click.prevent="initializeMeting('join',meeting)"
                       >Join Meeting</button>
                   </div>
               </div>
@@ -69,7 +70,7 @@
 
   <MeetingModal :projectSlug="this.projectSlug"></MeetingModal>
 
-  <ViewModal :projectSlug="this.projectSlug"></ViewModal>
+  <ViewModal :projectSlug="this.projectSlug" :members="this.members" :notAuthorize="this.notAuthorize"></ViewModal>
  
 </div>
 </template>	
@@ -80,9 +81,10 @@
   import { permission } from '../../auth'
   import { mapState, mapMutations, mapActions } from 'vuex';
   import { fetchTokens, setupAndJoinMeeting } from '../../utils/zoomUtils';
+  import { canStartMeeting, canJoinMeeting  } from '../../utils/meetingUtils';
 
 export default{
-	props:['projectSlug','projectMeetings','notAuthorize'],
+	props:['projectSlug','projectMeetings','notAuthorize','members'],
 	  components:{
 	  	MeetingModal,
       ViewModal
@@ -104,17 +106,14 @@ export default{
     	...mapActions({
       fetchMeetings: 'meeting/fetchMeetings',
     }),
-      checkEvent(meetingId) {
-    axios.get(`/api/v1/webhooks/zoom/meetings/${meetingId}`)
-        .then(response => {
-            console.log(response);
-        })
-        .catch(error => {
-            console.log(error);
-        });
-    },
     getMeeting(meetingId) {
       this.$bus.$emit('view-meeting-modal',meetingId);
+    },
+     canStartMeeting(meeting) {
+      return canStartMeeting(meeting, this.auth, !this.notAuthorize);
+    },
+    canJoinMeeting(meeting) {
+      return canJoinMeeting(meeting, this.auth, this.members);
     },
   
     getResults(page) {
@@ -139,6 +138,14 @@ export default{
 			   window.location.href = response.data.redirectUrl;
 			}).catch(error=>{
 	});
+  },
+
+   check(){
+    axios.get(`/api/v1/webhooks/zoom/meetings/check`,{
+      }).then(response=>{
+         console.log(response);
+      }).catch(error=>{
+  });
   },
 
   async initializeMeting(action,meeting)
@@ -178,6 +185,7 @@ export default{
  },
 created(){
      this.showCurrentMeetings();
+     this.$bus.$on('initialize-meeting', this.initializeMeting);
   },
     mounted() {
     this.$bus.on('get-results', () => {
@@ -186,6 +194,8 @@ created(){
   },
   destroyed() {
     this.$bus.$off('get-results');
+    this.$bus.$off('initialize-meeting', this.initializeMeting);
+
   },
 }
 </script>

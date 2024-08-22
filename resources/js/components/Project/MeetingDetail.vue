@@ -3,7 +3,7 @@
     <b>{{ label }}: </b>
     <slot>
       <span class="meeting_item">
-      {{ value }}
+      <span :class="statusBadgeClass">{{ value }}</span>
     </span>
     </slot>
   </li>
@@ -15,6 +15,11 @@ export default {
     label: String,
     value: [String,Number],
     isEditing: Boolean,
+  },
+  computed: {
+    statusBadgeClass() {
+      return this.value === 'Started' ? 'badge badge-success' : '';
+    },
   },
 };
 </script>

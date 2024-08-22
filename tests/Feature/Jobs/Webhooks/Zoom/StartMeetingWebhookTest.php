@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Notification;
 use App\Notifications\Zoom\MeetingStarted;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Event;
-use App\Events\Zoom\MeetingStatusUpdate;
+use App\Events\MeetingStatusUpdate;
 use Tests\TestCase;
 
 class StartMeetingWebhookTest extends TestCase
@@ -37,12 +37,9 @@ class StartMeetingWebhookTest extends TestCase
           'user_id'=>$this->user->id,
         ]);
 
-        $user=User::factory()->create();
-
-        $user1=User::factory()->create();
-
-        $this->inviteAndActivateUser($this->project, $user);
-        $this->inviteAndActivateUser($this->project, $user1);
+        $users = User::factory()->count(2)->create()->each(fn($user) => 
+        $this->inviteAndActivateUser($this->project, $user)
+      );
 
          $fixture = File::json(
         path: base_path('tests/Fixtures/Webhooks/Zoom/meeting_start.json'),
@@ -60,18 +57,11 @@ class StartMeetingWebhookTest extends TestCase
        Event::assertDispatched(function (MeetingStatusUpdate $event) use ($meeting) {
     return $event->meeting->id === $meeting->id;
 });
-
-    Notification::assertSentTo(
-        [$user, $user1],
-        MeetingStarted::class,
-        function (MeetingStarted $notification, $channels) use ($job) {
-            return $notification->meeting->meeting_id === $job->payload['object']['id']
-                && in_array('mail', $channels)
-                && in_array('database', $channels)
-                && in_array('broadcast', $channels);
-        }
-    );
-
+       
+    Notification::assertSentTo($users, MeetingStarted::class, function ($notification, $channels) use ($payload) {
+        return $notification->meeting->meeting_id === $payload['object']['id']
+            && $channels === ['mail', 'database', 'broadcast'];
+    });
 
     }
 

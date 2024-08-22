@@ -10,9 +10,11 @@ use App\Notifications\Zoom\MeetingEnded;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Throwable;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Events\MeetingStatusUpdate;
 use Illuminate\Support\Facades\Log;
+use App\Enums\MeetingState;
 use App\Models\Meeting;
 use Carbon\Carbon;
 
@@ -20,7 +22,9 @@ class MeetingEndsWebhook implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    public $payload;
+    private $meetingId;
+    private $startTime;
+    private $endTime;
 
     /**
      * Create a new job instance.
@@ -29,7 +33,10 @@ class MeetingEndsWebhook implements ShouldQueue
      */
     public function __construct(array $payload)
     {
-        $this->payload = $payload;
+        $this->meetingId = $payload['object']['id'];
+        $this->startTime = $payload['object']['start_time'];
+        $this->endTime = $payload['object']['end_time'];
+
     }
 
     /**
@@ -39,60 +46,60 @@ class MeetingEndsWebhook implements ShouldQueue
      */
     public function handle()
     {
-         $meetingId = $this->payload['object']['id'];
-
         try{
-           $meeting = Meeting::query()->with([
-            'project.activeMembers',
-          ])
-           ->where('meeting_id', $meetingId)
-           ->firstOrFail();
+            $meeting = $this->getMeeting();
 
-           if($meeting->status == 'ended'){
-            return Log::channel('webhook')->info('Meeting notification already sent');
-           }
-
-            $project = $meeting->project;
-
-            $activeMembers = $project->activeMembers;
-
-            $start_time = $this->payload['object']['start_time'];
-
-            $end_time = $this->payload['object']['end_time'];
-
-           $endAt = Carbon::parse($end_time)->format('F j, Y g:i A');
-
-            $user = $project->user()->select('id', 'name')->first();
-
-            $meeting->update(['status' => 'ended']);
-
-            event(new MeetingStatusUpdate($meeting));
-
-            foreach($activeMembers as $member){
-             $member->notify(new MeetingEnded($project,$meeting,$start_time,$endAt,$user));
-            }
-
-            Log::channel('webhook')->info('Meeting ended notifications sent successfully', ['meeting_id' => $meetingId]);
+            $this->validateStaus($meeting);
+            $this->updateMeetingStatus($meeting);
+            $this->sendNotifications($meeting);
 
         } catch (ModelNotFoundException $e) {
 
-        Log::channel('webhook')->info('Meeting not found', ['meeting_id' => $meetingId]);
+              Log::channel('webhook')->error("Meeting with ID {$this->meetingId} not found in the database.");
+            throw $e;
 
     } catch (\Exception $e) {
-
-        Log::channel('webhook')->error('Error processing meeting ending webhook', [
-            'meeting_id' => $meetingId,
-            'error' => $e->getMessage(),
-        ]);
-
+        Log::channel('webhook')->error("Error processing meeting ending webhook: " . $e->getMessage(), ['exception' => $e]);
+       throw $e;
     }
+    }
+
+    private function getMeeting(): Meeting
+    {
+        return Meeting::where('meeting_id', $this->meetingId)->firstOrFail();
+    }
+
+    private function validateStaus($meeting)
+    {
+       if($meeting->status === MeetingState::ENDS->value){
+            return Log::channel('webhook')->info("Meeting already ended for meeting_id: {$this->meetingId}");
+        }
+    }
+
+    private function updateMeetingStatus(Meeting $meeting): void
+    {
+        $meeting->update(['status' => MeetingState::ENDS->value]);
+
+        event(new MeetingStatusUpdate($meeting));
+    }
+
+    private function sendNotifications(Meeting $meeting): void
+    {
+        $project = $meeting->project()->with('asignees')->firstOrFail();
+
+        $members = $project->asignees;
+
+        $endAt = Carbon::parse($this->endTime)->format('F j, Y g:i A');
+
+        Notification::send($members, new MeetingEnded($project,$meeting,$this->startTime,$endAt,auth()->user()));
     }
 
     public function failed(Throwable $exception)
     {
-        Log::channel('webhook')->error('Meeting Ended webhook job failed', [
+        Log::error('Meeting Ended webhook job failed', [
+            'meeting_id' => $this->meetingId,
             'error' => $exception->getMessage(),
-            'trace' => $exception->getTraceAsString()
+            'trace' => $exception->getTraceAsString(),
         ]);
     }
 }

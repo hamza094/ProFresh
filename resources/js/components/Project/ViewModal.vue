@@ -5,6 +5,7 @@
     :clickToClose=false >
 
     <div class="edit-border-top p-3">
+      <div v-if="meeting.status === 'Started'" class="glowing-dot"></div>
 
      <div class="edit-border-bottom">
 
@@ -65,15 +66,7 @@
       </template>
     </meeting-detail>
 
-    <meeting-detail v-if="!isEditing" label="Status" :value="meeting.status" /> 
-
-        <li v-if="!isEditing">
-          <b>Start Url: </b><span v-if="Object.keys(meeting).length > 0" class="btn btn-secondary btn-sm">Start Meeting As Owner</span>
-        </li>
-
-        <li v-if="!isEditing">
-          <b>Join Url: </b><span v-if="Object.keys(meeting).length > 0" class="btn btn-secondary btn-sm">Join Meeting As Guest</span>
-        </li>
+    <meeting-detail v-if="!isEditing" label="Status" :value="meeting.status"/>
 
     <meeting-detail v-if="!isEditing && meeting.owner" label="Created By" :value="meeting.owner.name" />
 
@@ -127,11 +120,16 @@
         </template>
       </meeting-detail>
 
-    <button v-if="!isEditing" class="btn btn-sm btn-primary"> Get zak token</button>
+       <li v-if="!isEditing && Object.keys(meeting).length > 0">
+          <button v-if="canStartMeeting(meeting)" class="btn btn-secondary btn-sm" @click.prevent="emitInitializeMeting('start',meeting)">Start Meeting As Owner</button>
+        
+          <button v-else-if="canJoinMeeting(meeting)" class="btn btn-secondary btn-sm" @click.prevent="emitInitializeMeting('join',meeting)">Join Meeting</button>
+
+        </li>
 
     </ul>
 
-    <div v-if="Object.keys(meeting).length > 0">
+    <div v-if="Object.keys(meeting).length > 0" class="mt-3">
     <div v-if="!isEditing">
     <button class="btn btn-danger float-right mb-3" @click.pervent="deleteMeeting(meeting.id)" :disabled="loader">{{ loader ? 'Deleting...' : 'Delete' }}</button>
     <button class="btn btn-primary float-left mb-3" @click.pervent="meetingEdit()">Edit</button>
@@ -155,13 +153,14 @@
 <script>
   import { mapState, mapMutations, mapActions } from 'vuex';
   import MeetingDetail from './MeetingDetail.vue';
+    import { canStartMeeting, canJoinMeeting  } from '../../utils/meetingUtils';
 
 export default{
   components: {
     MeetingDetail
   },
 
-	props:['projectSlug'],
+	props:['projectSlug','notAuthorize','members'],
 
     data() {	
      return{
@@ -171,6 +170,7 @@ export default{
         loader:false,
         loading:false,
         loaderId: null,
+        auth:this.$store.state.currentUser.user,
         form:{
           meeting_id:'',
           topic:'',
@@ -197,6 +197,19 @@ export default{
       updateMeetingInState: 'meetingUpdate',
       removeMeetingFromState: 'removeMeetingFromState',
     }),
+
+    emitInitializeMeting(action, meeting) {
+      this.$bus.$emit('initialize-meeting', action, meeting);
+      this.meetingModalClose();
+    },
+
+    canStartMeeting(meeting) {
+      return canStartMeeting(meeting, this.auth, !this.notAuthorize);
+    },
+
+    canJoinMeeting(meeting) {
+      return canJoinMeeting(meeting, this.auth, this.members);
+    },
 
     updateMeeting(id){
       this.initiliazeUpdateMeeting();
