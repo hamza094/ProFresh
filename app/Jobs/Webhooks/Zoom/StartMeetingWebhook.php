@@ -46,7 +46,7 @@ class StartMeetingWebhook implements ShouldQueue
 
             $meeting = $this->getMeeting();
 
-            $this->validateStaus($meeting);
+            $this->validateStatus($meeting);
             $this->updateMeetingStatus($meeting);
             $this->sendNotifications($meeting);
 
@@ -76,12 +76,14 @@ class StartMeetingWebhook implements ShouldQueue
     {
         $project = $meeting->project()->with('asignees')->firstOrFail();
 
+        $user= $meeting->project->user;
+
         $members = $project->asignees;
 
-        Notification::send($members, new MeetingStarted($project, $meeting, $this->startTime, auth()->user()));
+        Notification::send($members, new MeetingStarted($project, $meeting, $this->startTime, $user));
     }
 
-    private function validateStaus($meeting)
+    private function validateStatus($meeting)
     {
        if($meeting->status === MeetingState::START->value){
             return Log::channel('webhook')->info("Meeting already started for meeting_id: {$this->meetingId}");

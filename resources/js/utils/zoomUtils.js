@@ -25,6 +25,8 @@ export async function setupAndJoinMeeting(action, meeting, jwt_token, zak_token,
   client.init({
     zoomAppRoot: meetingSDKElement,
     language: 'en-US',
+    patchJsMedia: true, 
+    leaveOnPageUnload: true
   });
 
   const meetingConfig = {

@@ -62,7 +62,6 @@ class StartMeetingWebhookTest extends TestCase
         return $notification->meeting->meeting_id === $payload['object']['id']
             && $channels === ['mail', 'database', 'broadcast'];
     });
-
     }
 
     private function inviteAndActivateUser($project, $user)

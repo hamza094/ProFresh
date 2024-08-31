@@ -47,8 +47,7 @@ Route::controller(OAuthController::class)->group(function () {
 
 // Zoom Webhooks
 Route::controller(ZoomController::class)
-//->middleware(VerifyZoomWebhook::class)
-->middleware('auth:sanctum')
+->middleware(VerifyZoomWebhook::class)
 ->prefix('webhooks/zoom/meetings')
 ->as('webhooks.meetings.')
 ->group(function(){
@@ -59,8 +58,6 @@ Route::post('delete','delete')->name('delete');
 Route::post('start','start')->name('start');
 
 Route::post('ended','ended')->name('ended');
-
-Route::get('check','check')->name('check');
 
 });
 

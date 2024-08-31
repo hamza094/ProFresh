@@ -1,4 +1,5 @@
 export function canStartMeeting(meeting, auth, isAuthorized) {
+    console.log(meeting, auth, isAuthorized);
   return isAuthorized && 
          meeting.owner.id === auth.id && 
          meeting.status !== 'Started';

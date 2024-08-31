@@ -36,7 +36,6 @@ class MeetingEndsWebhook implements ShouldQueue
         $this->meetingId = $payload['object']['id'];
         $this->startTime = $payload['object']['start_time'];
         $this->endTime = $payload['object']['end_time'];
-
     }
 
     /**
@@ -49,7 +48,7 @@ class MeetingEndsWebhook implements ShouldQueue
         try{
             $meeting = $this->getMeeting();
 
-            $this->validateStaus($meeting);
+            $this->validateStatus($meeting);
             $this->updateMeetingStatus($meeting);
             $this->sendNotifications($meeting);
 
@@ -69,7 +68,7 @@ class MeetingEndsWebhook implements ShouldQueue
         return Meeting::where('meeting_id', $this->meetingId)->firstOrFail();
     }
 
-    private function validateStaus($meeting)
+    private function validateStatus($meeting)
     {
        if($meeting->status === MeetingState::ENDS->value){
             return Log::channel('webhook')->info("Meeting already ended for meeting_id: {$this->meetingId}");
@@ -87,11 +86,13 @@ class MeetingEndsWebhook implements ShouldQueue
     {
         $project = $meeting->project()->with('asignees')->firstOrFail();
 
+        $user= $meeting->project->user;
+
         $members = $project->asignees;
 
         $endAt = Carbon::parse($this->endTime)->format('F j, Y g:i A');
 
-        Notification::send($members, new MeetingEnded($project,$meeting,$this->startTime,$endAt,auth()->user()));
+        Notification::send($members, new MeetingEnded($project,$meeting,$this->startTime,$endAt,$user));
     }
 
     public function failed(Throwable $exception)

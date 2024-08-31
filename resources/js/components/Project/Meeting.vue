@@ -8,9 +8,6 @@
 				<p v-if="notAuthorize" class="btn btn-sm btn-secondary" @click.prevent="authorize">Authorize With Zoom</p>
 
 				<button v-if="!notAuthorize" class="btn btn-sm btn-primary" @click.pervent="openMeetingModal()">Create Meating</button>
-
-        <button class="btn btn-sm btn-warning" @click.pervent="check()">check</button>
-        
 					</div>
 					<hr>
       <div class="btn-group" role="group">
@@ -43,7 +40,7 @@
                       <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M10 5a2 2 0 1 1 4 0a7 7 0 0 1 4 6v3a4 4 0 0 0 2 3h-16a4 4 0 0 0 2 -3v-3a7 7 0 0 1 4 -6"></path><path d="M9 17v1a3 3 0 0 0 6 0v-1"></path></svg>
                     </div>
                   </div>
-                  <div v-if="meeting.status === 'Started'" class="glowing-dot"></div>
+                  <div v-if="meeting.status === 'started'" class="glowing-dot"></div>
                   <div class="card-body">
                     <h3 class="card-title">{{meeting.topic}}</h3>
                     <p class="text-secondary">{{meeting.agenda}}</p>
@@ -58,10 +55,13 @@
                   </div>
                 </div>
                 <div class="card-footer">
-                      <button v-if="canStartMeeting(meeting)" class="btn btn-sm btn-primary" @click.prevent="initializeMeting('start',meeting)">
+                      <button v-if="!notAuthorize && 
+         meeting.owner.id === auth.id && 
+         meeting.status !== 'started'" class="btn btn-sm btn-primary" @click.prevent="initializeMeting('start',meeting)">
                       Start Meeting
                     </button>
-                      <button v-else-if="canJoinMeeting(meeting)"  class="btn btn-sm btn-warning text-white" @click.prevent="initializeMeting('join',meeting)"
+                      <button v-else-if="meeting.owner.id !== auth.id && 
+         members.includes(auth)"  class="btn btn-sm btn-warning text-white" @click.prevent="initializeMeting('join',meeting)"
                       >Join Meeting</button>
                   </div>
               </div>
@@ -81,7 +81,7 @@
   import { permission } from '../../auth'
   import { mapState, mapMutations, mapActions } from 'vuex';
   import { fetchTokens, setupAndJoinMeeting } from '../../utils/zoomUtils';
-  import { canStartMeeting, canJoinMeeting  } from '../../utils/meetingUtils';
+  /*import { canStartMeeting, canJoinMeeting  } from '../../utils/meetingUtils';*/
 
 export default{
 	props:['projectSlug','projectMeetings','notAuthorize','members'],
@@ -96,25 +96,46 @@ export default{
         client: null,
         auth:this.$store.state.currentUser.user,
         loadingId:null,
+        shouldCleanUpZoom: false,
+        activeMeetingId:null,
     };
     },
     computed:{
     ...mapState('meeting',['meetings','message']),
-  },
 
+      meetingStatusListener() {
+      if (this.activeMeetingId) {
+        Echo.private(`meetingStatus.${this.activeMeetingId}`)
+          .listen('MeetingStatusUpdate', (e) => {
+            this.updateMeetingStatus({ id: e.id, status: e.status });
+          });
+        return () => {
+          Echo.leave(`meetingStatus.${this.activeMeetingId}`);
+        };
+      }
+    }
+  },
+  watch: {
+    meetingStatusListener(newListener, oldListener) {
+      if (oldListener) oldListener();
+    }
+  },
+  
     methods:{ 
     	...mapActions({
       fetchMeetings: 'meeting/fetchMeetings',
+      updateMeetingStatus: 'meeting/updateMeetingStatus',
     }),
+
     getMeeting(meetingId) {
       this.$bus.$emit('view-meeting-modal',meetingId);
     },
-     canStartMeeting(meeting) {
+     /*canStartMeeting(meeting) {
       return canStartMeeting(meeting, this.auth, !this.notAuthorize);
     },
     canJoinMeeting(meeting) {
       return canJoinMeeting(meeting, this.auth, this.members);
-    },
+    },*/
   
     getResults(page) {
       const slug = this.$route.params.slug;
@@ -140,17 +161,13 @@ export default{
 	});
   },
 
-   check(){
-    axios.get(`/api/v1/webhooks/zoom/meetings/check`,{
-      }).then(response=>{
-         console.log(response);
-      }).catch(error=>{
-  });
-  },
-
   async initializeMeting(action,meeting)
   {
     this.loadingId=this.$vToastify.loader('Initializing meeting. Please hold on...');
+
+    if(action === 'start'){
+      this.activeMeetingId = meeting.id;
+    }
 
     try{
    const role = this.auth.id === meeting.owner.id ? 1 : 0;
@@ -183,19 +200,24 @@ export default{
       }
     },
  },
-created(){
+  created(){
      this.showCurrentMeetings();
      this.$bus.$on('initialize-meeting', this.initializeMeting);
+  },
+  beforeDestroy() {
+     if (this.meetingStatusListener) {
+      this.meetingStatusListener();
+    }
   },
     mounted() {
     this.$bus.on('get-results', () => {
       this.showCurrentMeetings();
     });
+
   },
   destroyed() {
     this.$bus.$off('get-results');
     this.$bus.$off('initialize-meeting', this.initializeMeting);
-
   },
 }
 </script>

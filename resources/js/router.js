@@ -159,4 +159,17 @@ let router = new Router({
 
  })
 
+router.beforeEach((to, from, next) => {
+  if (document.getElementById('zoom-sdk-video-canvas')) {
+    const userConfirmed = window.confirm('Are you sure you want to leave this page? Your video session may be interrupted.')
+    if (userConfirmed) {
+      next()
+    } else {
+      next(false)
+    }
+  } else {
+    next()
+  }
+})
+
  export default router

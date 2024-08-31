@@ -18,7 +18,6 @@ class ZoomController extends Controller
        $payload = $request->input('payload');
 
         UpdateMeetingWebhook::dispatch($payload);
-
         return response()->json(['status' => 'success'], 200);    
     }
 
@@ -27,7 +26,6 @@ class ZoomController extends Controller
        $payload = $request->input('payload');
 
         DeleteMeetingWebhook::dispatch($payload);
-
         return response()->json(['status' => 'success'], 200);    
     }
 
@@ -35,26 +33,19 @@ class ZoomController extends Controller
     {
        $payload = $request->input('payload');
 
-        StartMeetingWebhook::dispatch($payload);
-
+        StartMeetingWebhook::dispatchAfterResponse($payload);
+        
         return response()->json(['status' => 'success'], 200);    
     }
 
     public function ended(Request $request)
     {
-       $payload = $request->input('payload');
+        $payload = $request->input('payload');
 
-        MeetingEndsWebhook::dispatch($payload);
-
-        return response()->json(['status' => 'success'], 200);    
-    }
-
-   public function check(){
-
-        StartMeetingWebhook::dispatch();
+        MeetingEndsWebhook::dispatchAfterResponse($payload);
 
         return response()->json(['status' => 'success'], 200);
-   } 
+    } 
 
     }
 

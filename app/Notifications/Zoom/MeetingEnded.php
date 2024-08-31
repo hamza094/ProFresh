@@ -25,13 +25,13 @@ class MeetingEnded extends Notification implements ShouldBroadcast
      *
      * @return void
      */
-    public function __construct($project,$meeting,$user,$start_time,$endAt)
+    public function __construct($project,$meeting,$start_time,$endAt,$user)
     {
         $this->project = $project;
         $this->meeting = $meeting;
-        $this->user = $user;
         $this->start_time = Carbon::parse($start_time)->format('d F \a\t H:i:s');
         $this->endAt = $endAt;
+        $this->user = $user;
     }
 
     /**

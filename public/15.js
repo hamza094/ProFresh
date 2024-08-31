@@ -14,6 +14,11 @@ __webpack_require__.r(__webpack_exports__);
     label: String,
     value: [String, Number],
     isEditing: Boolean
+  },
+  computed: {
+    statusBadgeClass: function statusBadgeClass() {
+      return this.value === 'Started' ? 'badge badge-success' : '';
+    }
   }
 });
 
@@ -36,7 +41,9 @@ var render = function render() {
   return _c("li", [_c("b", [_vm._v(_vm._s(_vm.label) + ": ")]), _vm._v(" "), _vm._t("default", function () {
     return [_c("span", {
       staticClass: "meeting_item"
-    }, [_vm._v(_vm._s(_vm.value))])];
+    }, [_c("span", {
+      "class": _vm.statusBadgeClass
+    }, [_vm._v(_vm._s(_vm.value))])])];
   })], 2);
 };
 var staticRenderFns = [];

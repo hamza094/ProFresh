@@ -10,24 +10,15 @@ const state = {
 const mutations = {
 setMeetings(state,meetingsData) {
     state.meetings = meetingsData.meetings;
-
-     state.meetings.data.forEach(meeting => {
-      Echo.leave(`meetingStatus.${meeting.id}`);
-    });
-
-     // Attach listeners for all meetings
-    state.meetings.data.forEach(meeting => {
-      Echo.private(`meetingStatus.${meeting.id}`)
-        .listen('MeetingStatusUpdate', (e) => {
-          console.log(e);
-          const index = state.meetings.data.findIndex(m => m.id === e.id);
-          if (index !== -1) {
-            state.meetings.data.splice(index, 1, { ...state.meetings.data[index], status: e.status });
-          }
-        });
-    });
-
   },
+
+  UPDATE_MEETING_STATUS(state, { id, status }) {
+    const index = state.meetings.data.findIndex(m => m.id === id);
+    if (index !== -1) {
+      state.meetings.data[index].status = status;
+    }
+  },
+
   setMessage(state,message) {
     state.message = message;
   },
@@ -60,7 +51,10 @@ const actions = {
         commit('setMeetings', { data: [], links: {}, meta: {} });
         commit('setMessage', 'Failed to load project meetings');
       });
-  }
+  },
+   updateMeetingStatus({ commit }, { id, status }) {
+    commit('UPDATE_MEETING_STATUS', { id, status });
+  },
 };
 
 export default{
