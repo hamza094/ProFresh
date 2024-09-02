@@ -30,7 +30,6 @@ class OAuthAction
               'oauth_refresh_token' => $oAuthUser->refreshToken,
             ]
         );
-
   }
 
  

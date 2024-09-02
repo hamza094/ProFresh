@@ -7,6 +7,7 @@ import Home from './components/Home';
 import Register from './components/Authentication/Register';
 import Login from './components/Authentication/Login';
 import OAuth from './components/Authentication/OAuth';
+import ZoomAuth from './components/Authentication/ZoomAuth';
 import Dashboard from './components/Dashboard/Dashboard';
 import ForgotPassword from './components/Authentication/ForgotPassword';
 import ResetPassword from './components/Authentication/ResetPassword';
@@ -51,6 +52,12 @@ let router = new Router({
            component: OAuth,
            name: "OAuth",
            beforeEnter: guest,
+        },
+        {
+           path: '/oauth/zoom/callback',
+           component: ZoomAuth,
+           name: "ZoomAuth",
+           beforeEnter: auth,
         },
         {
             path: '/home',
@@ -151,5 +158,18 @@ let router = new Router({
     ]
 
  })
+
+router.beforeEach((to, from, next) => {
+  if (document.getElementById('zoom-sdk-video-canvas')) {
+    const userConfirmed = window.confirm('Are you sure you want to leave this page? Your video session may be interrupted.')
+    if (userConfirmed) {
+      next()
+    } else {
+      next(false)
+    }
+  } else {
+    next()
+  }
+})
 
  export default router

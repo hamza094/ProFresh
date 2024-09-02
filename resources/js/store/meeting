@@ -1,0 +1,65 @@
+const state = {
+  meetings:{
+    data: [],
+    links: {},
+    meta: {}
+  },
+    message:'',
+};
+
+const mutations = {
+setMeetings(state,meetingsData) {
+    state.meetings = meetingsData.meetings;
+  },
+
+  UPDATE_MEETING_STATUS(state, { id, status }) {
+    const index = state.meetings.data.findIndex(m => m.id === id);
+    if (index !== -1) {
+      state.meetings.data[index].status = status;
+    }
+  },
+
+  setMessage(state,message) {
+    state.message = message;
+  },
+  removeMeetingFromState(state, meetingId){
+    const index = state.meetings.data.findIndex(meeting => meeting.id === meetingId);
+    if (index !== -1) {
+      state.meetings.data.splice(index, 1);
+    }
+  },
+   addMeeting(state, meeting) {
+    state.meetings.data.unshift(meeting);
+  },
+  meetingUpdate(state, updatedMeeting) {
+    const index = state.meetings.data.findIndex(meeting => meeting.id === updatedMeeting.id);
+    if (index !== -1) {
+      state.meetings.data.splice(index, 1, updatedMeeting);
+    }
+  },
+};
+
+const actions = {
+  fetchMeetings({ commit }, { slug, page, isPrevious }) {
+    const params = isPrevious ? { request: 'previous', page } : { page };
+    return axios.get(`/api/v1/projects/${slug}/meetings`, { params })
+      .then(response => {
+        commit('setMeetings', { page, meetings: response.data.meetingsData });
+        commit('setMessage', response.data.message);
+      })
+      .catch(error => {
+        commit('setMeetings', { data: [], links: {}, meta: {} });
+        commit('setMessage', 'Failed to load project meetings');
+      });
+  },
+   updateMeetingStatus({ commit }, { id, status }) {
+    commit('UPDATE_MEETING_STATUS', { id, status });
+  },
+};
+
+export default{
+  namespaced: true,
+  state,
+  mutations,
+  actions,
+}

@@ -4,6 +4,15 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Api\Auth\OAuthController;
 
+use App\Http\Controllers\Api\OAuth\ZoomAuthController;
+
+use App\Http\Controllers\Api\Webhooks\ZoomController;
+
+use App\Http\Middleware\VerifyZoomWebhook;
+
+use App\Http\Controllers\Api\Zoom\ZoomTokenController;
+
+
 use App\Http\Controllers\Api\
 {
   ProjectController,
@@ -21,7 +30,8 @@ use App\Http\Controllers\Api\
   ActivityController,
   SubscriptionController,
   TaskStatusController,
-  TaskFeaturesController
+  TaskFeaturesController,
+  ZoomMeetingController,
 };
 /*
 |--------------------------------------------------------------------------
@@ -33,9 +43,32 @@ Route::group(['prefix'=>'v1'], function () {
 Route::controller(OAuthController::class)->group(function () {
     Route::get('/auth/redirect/{provider}', 'redirect')->name('oauth.redirect');
     Route::get('/auth/callback/{provider}', 'callback')->name('oauth.callback');
-});  
+}); 
 
+// Zoom Webhooks
+Route::controller(ZoomController::class)
+->middleware(VerifyZoomWebhook::class)
+->prefix('webhooks/zoom/meetings')
+->as('webhooks.meetings.')
+->group(function(){
+Route::post('update','update')->name('update');
+
+Route::post('delete','delete')->name('delete');
+
+Route::post('start','start')->name('start');
+
+Route::post('ended','ended')->name('ended');
+
+});
+
+
+
+  
 Route::middleware(['auth:sanctum'/*,\App\Http\Middleware\TrackLastActiveAt::class*/])->group(function () {
+Route::get('/webhooks/zoom/meetings/{meeting}',[ZoomController::class,'event']);
+ Route::get('/user/token',[ZoomTokenController::class,'getUserToken']);
+
+ Route::get('/user/jwt/token',[ZoomTokenController::class,'getJwtToken']);   
 
 Route::controller(ProjectDashboardController::class)->group(function(){
  Route::get('/data','data');
@@ -113,7 +146,12 @@ Route::controller(InvitationController::class)->group(function(){
   Route::get('/accept-invitation','accept')->name('accept.invitation');
   Route::get('/ignore','ignore');
 });
+
+Route::apiResource('/meetings',ZoomMeetingController::class);
+
 });
+
+
 
 Route::apiResource('/users',UserController::class);
 
@@ -156,7 +194,16 @@ Route::get('subscription/{plan}/cancel','cancel')
 });
 
 Route::get('task/statuses',TaskStatusController::class)
-           ->name('task.status');             
+           ->name('task.status'); 
+           
+   
+Route::controller(ZoomAuthController::class)
+ ->as('oauth.zoom.')
+ ->group(function () {
+ Route::get('oauth/zoom/redirect', 'redirect')->name('redirect');
+ Route::get('oauth/zoom/callback', 'callback')->name('callback');
+ });    
+                      
 });
 });
 

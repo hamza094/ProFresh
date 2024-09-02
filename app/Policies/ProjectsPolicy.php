@@ -41,4 +41,9 @@ class ProjectsPolicy
                ? Response::allow()
                : Response::deny("Only Project's owner and members are allowed to access this feature.");
     }
+
+    public function zoomAuthorize(User $user, Project $project)
+    {
+      $user->is($project->user) && ! $user->isConnectedToZoom();
+    }
 }

@@ -49,7 +49,7 @@ class ProjectController extends ApiController
 
     public function show(Project $project)
     {
-      $project->load(['conversations.user']);
+      $project->load(['conversations.user','meetings']);
 
       return new ProjectResource($project);
     }

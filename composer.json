@@ -8,13 +8,14 @@
     ],
     "license": "MIT",
     "require": {
-        "php": "^7.4|^8.1.17",
+        "php": "^7.4|^8.2.17",
         "andreaselia/laravel-api-to-postman": "^1.10",
         "barryvdh/laravel-debugbar": "^3.5",
         "bugsnag/bugsnag-laravel": "^2.0",
         "cviebrock/eloquent-sluggable": "^10.0",
         "doctrine/dbal": "^3.7",
         "f9webltd/laravel-api-response-helpers": "^1.5",
+        "firebase/php-jwt": "^6.10",
         "friendsofphp/php-cs-fixer": "^3.10.0",
         "guzzlehttp/guzzle": "^7.0.1",
         "intervention/image": "^2.5",
@@ -32,13 +33,15 @@
         "pusher/pusher-php-server": "^7.2",
         "saloonphp/laravel-plugin": "^3.0",
         "saloonphp/pagination-plugin": "^2.0",
+        "saloonphp/rate-limit-plugin": "^2.0",
         "saloonphp/saloon": "^3.0",
         "spatie/image-optimizer": "^1.6",
         "spatie/laravel-backup": "^8.4",
         "spatie/laravel-permission": "^6.3",
         "spatie/laravel-searchable": "^1.11.2",
         "torann/geoip": "^3.0",
-        "vonage/client": "^3.0"
+        "vonage/client": "^3.0",
+        "wendelladriel/laravel-validated-dto": "^3.5"
     },
     "require-dev": {
         "beyondcode/laravel-query-detector": "^1.5",
@@ -56,7 +59,7 @@
     },
     "extra": {
         "laravel": {
-            "dont-discover": []
+            "dont-discover": ["laravel/telescope"]
         }
     },
     "autoload": {
@@ -86,6 +89,11 @@
         "post-create-project-cmd": [
             "@php artisan key:generate --ansi"
         ],
-        "post-install-cmd": ["php artisan storage:link --quiet"]
+        "post-install-cmd": [
+            "php artisan storage:link --quiet"
+        ],
+        "post-update-cmd": [
+            "@php artisan vendor:publish --tag=laravel-assets --ansi --force"
+        ]
     }
 }

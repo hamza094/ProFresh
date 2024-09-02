@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Interfaces\Zoom;
+use App\Services\Zoom\ZoomService;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Eloquent\Model;
@@ -13,7 +15,6 @@ use App\Services\PaginationService;
 use Opcodes\LogViewer\Facades\LogViewer;
 use App\Interfaces\Paddle;
 use App\Services\Admin\Integration\PaddleService;
-
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -35,6 +36,14 @@ class AppServiceProvider extends ServiceProvider
          abstract: Paddle::class,
          concrete: fn (): Paddle => new PaddleService()
         );
+
+        $this->app->bind(Zoom::class, ZoomService::class);
+
+        if ($this->app->environment('local')) {
+        $this->app->register(\Laravel\Telescope\TelescopeServiceProvider::class);
+        $this->app->register(TelescopeServiceProvider::class);
+    }
+
     }
 
 

@@ -15,6 +15,7 @@ import VModal from 'vue-js-modal';
 import moment from 'moment';
 import "emoji-mart-vue-fast/css/emoji-mart.css";
 import alertNotice from './mixins/alertNotice';
+import errorHandling from './mixins/errorHandling';
 import currentStage from './mixins/currentStage';
 import popup from './mixins/popup';
 import conversation from './mixins/conversation';
@@ -28,7 +29,9 @@ import { Datetime } from 'vue-datetime';
 // You need a specific loader for CSS files
 import 'vue-datetime/dist/vue-datetime.css';
 import VCalendar from 'v-calendar';
+import PortalVue from 'portal-vue';
 
+Vue.use(PortalVue);
 Vue.use(Vuex);
 Vue.use(VueBus);
 Vue.use(VTooltip);
@@ -55,6 +58,7 @@ Vue.mixin(alertNotice);
 Vue.mixin(currentStage);
 Vue.mixin(conversation);
 Vue.mixin(activitiesDesign);
+Vue.mixin(errorHandling);
 
 Vue.filter('time',function(data){
    return  moment(data).format('h:mm:ss a');

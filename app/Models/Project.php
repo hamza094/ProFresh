@@ -106,6 +106,14 @@ class Project extends Model
             ->members()
             ->wherePivot('active',true);
     }
+    
+    public function asignees(){
+      return $this
+      ->belongsToMany(User::class,'project_members')
+      ->wherePivot('active',true)
+      ->select(['users.id', 'users.name', 'users.email']);
+    }
+
 
     public function conversations()
     {
@@ -179,6 +187,10 @@ class Project extends Model
     public function getStateAttribute()
     {
         return $this->deleted_at ? 'trashed' : 'active';
+    }
+
+    public function meetings(){
+      return $this->hasMany(Meeting::class);
     }
 
 }

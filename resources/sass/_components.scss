@@ -1346,3 +1346,76 @@ button.gnuIjg {
 .page-link{
     position:inherit !important;
 }
+
+.card-hover{
+    cursor:pointer;
+}
+
+.meeting{
+    &_heading{
+        color:#999999;
+       font-weight:bold;
+       font-size: 1.3rem;
+    }
+    &_list{
+    list-style: none;
+        padding: 0;
+        margin: 0;
+        li{
+         margin-top:.8rem;
+         margin-left:.5rem;
+        }
+    }
+    &-agenda{
+          font-size:1.1rem;
+        }
+    &_item{
+       color:#999999;
+       font-weight:bold;
+    }    
+    &_button{
+      text-decoration: none !important;
+
+    &:hover,
+    &:focus {
+    text-decoration: none !important;
+  }
+}
+}
+
+.btn-link.active {
+  background-color: #007bff;
+  border-color: #007bff;
+  color: white !important;
+}
+
+.btn-link {
+  &:hover,
+  &:focus {
+    text-decoration: none;
+  }
+}
+
+/* Meeting glow circle */
+
+.glowing-dot {
+  width: 15px;
+  height: 15px;
+  background-color: green;
+  border-radius: 50%;
+  border: 2px solid white;
+  animation: glow 1s infinite alternate;
+}
+
+@keyframes glow {
+  from {
+    box-shadow: 0 0 10px rgba(0, 128, 0, 0.8),
+              0 0 20px rgba(0, 128, 0, 0.6),
+              0 0 30px rgba(0, 128, 0, 0.4);
+  }
+  to {
+    box-shadow: 0 0 20px rgba(0, 255, 0, 0.8),
+              0 0 40px rgba(0, 255, 0, 0.6),
+              0 0 60px rgba(0, 255, 0, 0.4);
+  }
+}

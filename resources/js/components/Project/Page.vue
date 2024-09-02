@@ -107,11 +107,15 @@
 								<p v-text="project.updated_at"></p>
 							</div>
 						</div>
+						<br>
+						<hr>
+						<Meeting :projectSlug="this.project.slug" :projectMeetings="this.project.meetings" :notAuthorize="this.project.ownerNotAuthorized"
+						:members="project.members"></Meeting>
 					</div>
-
 				</div>
 			</div>
 		</div>
+
 		<div class="col-md-4 side_panel">
 			Project Side Panel
 			<br>
@@ -121,7 +125,6 @@
 			:members="project.members" :owner="user" :access="permission.access" :ownerLogin="permission.owner"></PanelFeatues>
 			<hr>
 			<div>
-      							
             <p><b>Online Users For Chat</b></p>
             <p v-for="user in  chatusers">{{user.name}} <span class="chat-circle"></span> </p>
             </div>
@@ -142,6 +145,7 @@
 </template>
 <script>
 	import Status from './Status.vue'
+	import Meeting from './Meeting.vue'
 	import Stage from './Stage.vue'
 	import Task from './Panel/Task.vue'
 	import PanelFeatues from './Panel/Features.vue'
@@ -158,6 +162,7 @@ export default{
 	  	PanelFeatues,
 	  	RecentActivities,
 	  	Chat,
+	  	Meeting,
 	  },
 
     data(){	
@@ -173,7 +178,8 @@ export default{
      Hot_Score: 21,
 		 path:'',
 		 members:'',
-		 show:false
+		 show:false,
+		 errors:[],
     };
     },
 
@@ -185,6 +191,7 @@ export default{
       this.projectname = this.project.name;
       this.projectabout = this.project.about;
       this.members = this.project.members;
+      this.meetings= this.project.meetings;
       this.archiveTask();
     })
     .catch(error => {
@@ -222,7 +229,6 @@ export default{
               this.showError(error);
 					 });
 			},
-
 			updateUrl(url){
 				 window.history.replaceState(
           {additionalInformation: 'Updated the URL with Slug'},

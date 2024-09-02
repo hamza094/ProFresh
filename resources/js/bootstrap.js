@@ -61,7 +61,7 @@ window.axios.defaults.headers.common['X-CSRF-TOKEN'] = window.Laravel.csrfToken;
      cluster: process.env.MIX_PUSHER_APP_CLUSTER,
      encrypted: true,
      forceTLS: false,
-     authEndpoint: 'http://127.0.0.1:8000/api/broadcasting/auth',
+     authEndpoint: 'http://localhost:8000/api/broadcasting/auth',
      auth: {
       headers: {
         Accept: 'application/json',

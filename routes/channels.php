@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Broadcast;
 use App\Models\Project;
 use App\Models\User;
-
+use App\Models\Meeting;
 
 /*
 |--------------------------------------------------------------------------
@@ -51,6 +51,14 @@ Broadcast::channel('deleteConversation.{slug}', function ($user,$slug) {
     }
 });
 
+Broadcast::channel('meetingStatus.{id}', function ($user, $id) {
+    $meeting = Meeting::find($id);
+    $project = $meeting->project; 
+    
+    return $meeting && ($user->id === $meeting->user_id || 
+                        $user->id === $project->user_id || 
+                        $project->activeMembers->contains($user->id));
+});
 
 Broadcast::channel('typing.{slug}', function ($user,$slug){
 
@@ -61,6 +69,8 @@ Broadcast::channel('typing.{slug}', function ($user,$slug){
         return true;
     }
 });
+
+
 
 Broadcast::channel('chatroom.{slug}', function ($user,$slug){
 
