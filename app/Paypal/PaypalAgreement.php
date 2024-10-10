@@ -62,7 +62,6 @@ protected function shippingAddress(): ShippingAddress
   $shippingAddress = new ShippingAddress();
   $shippingAddress->setLine1('111 First Street')
     ->setCity('Saratoga')
->>>>>>> d6a92abbc7169d0a2d65386e414193170067155c
     ->setState('CA')
     ->setPostalCode('95070')
     ->setCountryCode('US');

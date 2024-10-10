@@ -40,7 +40,7 @@
                       <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M10 5a2 2 0 1 1 4 0a7 7 0 0 1 4 6v3a4 4 0 0 0 2 3h-16a4 4 0 0 0 2 -3v-3a7 7 0 0 1 4 -6"></path><path d="M9 17v1a3 3 0 0 0 6 0v-1"></path></svg>
                     </div>
                   </div>
-                  <div v-if="meeting.status === 'started'" class="glowing-dot"></div>
+                  <div v-if="meeting.status.toLowerCase() === 'started'" class="glowing-dot"></div>
                   <div class="card-body">
                     <h3 class="card-title">{{meeting.topic}}</h3>
                     <p class="text-secondary">{{meeting.agenda}}</p>
@@ -55,13 +55,10 @@
                   </div>
                 </div>
                 <div class="card-footer">
-                      <button v-if="!notAuthorize && 
-         meeting.owner.id === auth.id && 
-         meeting.status !== 'started'" class="btn btn-sm btn-primary" @click.prevent="initializeMeting('start',meeting)">
+                      <button v-if="shouldShowStartButton(meeting, auth, notAuthorize)" class="btn btn-sm btn-primary" @click.prevent="initializeMeting('start',meeting)">
                       Start Meeting
                     </button>
-                      <button v-else-if="meeting.owner.id !== auth.id && 
-         members.includes(auth)"  class="btn btn-sm btn-warning text-white" @click.prevent="initializeMeting('join',meeting)"
+                      <button v-else-if="shouldShowJoinButton(meeting, auth, members)"  class="btn btn-sm btn-warning text-white" @click.prevent="initializeMeting('join',meeting)"
                       >Join Meeting</button>
                   </div>
               </div>
@@ -81,7 +78,7 @@
   import { permission } from '../../auth'
   import { mapState, mapMutations, mapActions } from 'vuex';
   import { fetchTokens, setupAndJoinMeeting } from '../../utils/zoomUtils';
-  /*import { canStartMeeting, canJoinMeeting  } from '../../utils/meetingUtils';*/
+  import { shouldShowStartButton, shouldShowJoinButton } from '../../utils/meetingUtils';
 
 export default{
 	props:['projectSlug','projectMeetings','notAuthorize','members'],
@@ -126,17 +123,16 @@ export default{
       fetchMeetings: 'meeting/fetchMeetings',
       updateMeetingStatus: 'meeting/updateMeetingStatus',
     }),
+      shouldShowStartButton(meeting, auth, notAuthorize) {
+      return shouldShowStartButton(meeting, auth, notAuthorize);
+    },
+    shouldShowJoinButton(meeting, auth, members) {
+      return shouldShowJoinButton(meeting, auth, members);
+    },
 
     getMeeting(meetingId) {
       this.$bus.$emit('view-meeting-modal',meetingId);
     },
-     /*canStartMeeting(meeting) {
-      return canStartMeeting(meeting, this.auth, !this.notAuthorize);
-    },
-    canJoinMeeting(meeting) {
-      return canJoinMeeting(meeting, this.auth, this.members);
-    },*/
-  
     getResults(page) {
       const slug = this.$route.params.slug;
       this.fetchMeetings({ slug, page, isPrevious: this.showPrevious });

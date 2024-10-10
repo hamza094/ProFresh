@@ -9,8 +9,6 @@ Vue.config.productionTip = false
  * code may be modified to fit the specific needs of your application.
  */
 
- Vue.prototype.signedIn = window.App.signedIn;
-
  Vue.prototype.$user = '';
 
 try {

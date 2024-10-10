@@ -76,8 +76,6 @@ Route::controller(ProjectDashboardController::class)->group(function(){
  Route::get('/user/activities','activities');
 })->middleware(['can:owner','user']);
 
-Route::get('/welcome',[WelcomeController::class,'index']);
-
 //Return All Stages
 Route::get('/stages',[StageController::class,'index']);
 

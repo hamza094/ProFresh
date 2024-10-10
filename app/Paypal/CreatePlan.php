@@ -103,7 +103,6 @@ protected function MerchantPreferences() :MerchantPreferences
     $createdPlan=$this->planDetail($id);
 
     $patch = new Patch();
->>>>>>> d6a92abbc7169d0a2d65386e414193170067155c
 
     $value = new PayPalModel('{
            "state":"ACTIVE"

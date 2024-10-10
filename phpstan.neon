@@ -1,0 +1,23 @@
+includes:
+    - vendor/larastan/larastan/extension.neon
+
+parameters:
+
+    paths:
+        - app
+
+    # Level 9 is the highest level
+    level: 4
+
+    excludePaths:
+         -   */app/Paypal/CreatePlan.php
+         -   */app/Paypal/Paypal.php
+         -   */app/Paypal/PaypalAgreement.php
+         -   */app/Channels/DatabaseChannel.php
+
+
+#    ignoreErrors:
+#        - '#PHPDoc tag @var#'
+#
+#
+#    checkMissingIterableValueType: false
