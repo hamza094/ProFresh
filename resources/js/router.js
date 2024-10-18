@@ -114,7 +114,7 @@ let router = new Router({
             beforeEnter: guest,
         },
         {
-            path:'/api/v1/email/verify/:id',
+            path:'/api/v1/email/verify/:user',
             component: VerifyPassword,
             name: "verification.verify",
         },

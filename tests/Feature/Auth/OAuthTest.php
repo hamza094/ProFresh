@@ -62,7 +62,7 @@ class OAuthTest extends TestCase
 
         $response=$this->get(route('oauth.callback', ['provider' => 'github']))->assertSuccessful()
                         ->assertJsonStructure([
-                         'user' => ['id','name','email'],
+                         'user' => ['uuid','name','email'],
                          'access_token',
                          'message'
                         ]);

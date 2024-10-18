@@ -129,7 +129,7 @@ var render = function render() {
     }
   }, [_vm._m(1)])], 1) : _vm._e()])]), _vm._v(" "), _c("div", {
     staticClass: "col-md-11 panel-right"
-  }, [_c("nav", {
+  }, [_c("vue-progress-bar"), _vm._v(" "), _c("nav", {
     staticClass: "navbar navbar-expand-md navbar-light bg-white"
   }, [_c("router-link", {
     staticClass: "navbar-brand",

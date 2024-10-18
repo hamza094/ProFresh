@@ -95,18 +95,13 @@ Vue.use(VueToastify, {
 import VueProgressBar from 'vue-progressbar'
 
 const options = {
-  color: '#bffaf3',
-  failedColor: '#874b4b',
-  thickness: '7px',
-  transition: {
-    opacity: '0.6s',
-    speed: '3s',
-    opacity: '0.6s',
-    termination: 1800
-  },
+  color: '#12344D',
+  failedColor: '#800000',
+  thickness: '4px',
   autoRevert: true,
   location: 'top',
-  inverse: false
+  inverse: false,
+  autoFinish:true
 }
 Vue.use(VueProgressBar, options)
 

@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Support\Facades\Redis;
 use Spatie\Searchable\Searchable;
 use Spatie\Searchable\SearchResult;
+use Illuminate\Support\Str;
 use Laravel\Paddle\Billable;
 use App\Enums\OAuthProvider;
 use Laravel\Sanctum\HasApiTokens;
@@ -20,11 +21,16 @@ use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable implements Searchable, MustVerifyEmail
 {
-    use HasFactory, Notifiable, Billable, HasApiTokens,HasUuids,HasRoles;
+    use HasFactory, Notifiable, Billable, HasApiTokens,HasRoles;
     
     protected $guarded = [];
 
     public function guardName(): string { return 'sanctum'; }
+
+    public function getRouteKeyName(): string
+   {
+     return 'uuid';
+   }
 
 
     //protected $appends = ['LastSeen'];
@@ -76,6 +82,16 @@ class User extends Authenticatable implements Searchable, MustVerifyEmail
          'zoom_refresh_token' => 'encrypted',
          'zoom_expires_at' => 'datetime',
     ];
+
+     protected static function boot()
+    {
+        parent::boot();
+
+        // Automatically create a UUID for 'user_id'
+        static::creating(function ($user) {
+            $user->uuid = (string) Str::uuid();
+        });
+    }
 
     public function sendEmailVerificationNotification()
    {

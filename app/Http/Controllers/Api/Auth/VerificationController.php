@@ -25,7 +25,7 @@ class VerificationController extends ApiController
    /**
  * Mark the user's email address as verified.
  */
-public function verify(Request $request, User $id)
+public function verify(Request $request, User $user)
 {
     if (! URL::hasValidSignature($request)) {
         return response()->json([
@@ -33,15 +33,15 @@ public function verify(Request $request, User $id)
         ], 400);
     }
 
-    if ($id->hasVerifiedEmail()) {
+    if ($user->hasVerifiedEmail()) {
         return response()->json([
             'status' => trans('verification.already_verified'),
         ], 400);
     }
 
-    $id->markEmailAsVerified();
+    $user->markEmailAsVerified();
 
-    event(new Verified($id));
+    event(new Verified($user));
 
     return response()->json([
         'status' => trans('verification.verified'),

@@ -20,7 +20,7 @@ class AuthenticationTest extends TestCase
         // create a user
         User::factory()->create([
             'email'=>'johndoe@example.org',
-            'password'=>Hash::make('testpassword')
+            'password'=>Hash::make('Testpassword@3')
         ]);
 
     }
@@ -31,8 +31,8 @@ class AuthenticationTest extends TestCase
        $response=$this->postJson(route('auth.register'),
             ['name' => 'Elvis William',
             'email'=>'mihupocob@mailinator.com',
-             'password' => 'password',
-             'password_confirmation' =>  'password',
+             'password' =>'Password4!',
+             'password_confirmation' => 'Password4!',
          ])->assertCreated();
 
           $this->assertDatabaseHas('users',['email'=>'mihupocob@mailinator.com']);
@@ -43,7 +43,7 @@ class AuthenticationTest extends TestCase
     {
         $response = $this->postJson(route('auth.login'), [
             'email' =>'johndoe@example.org',
-            'password' => 'testpassword',
+            'password' => 'Testpassword@3',
         ]);
 
         $response->assertOk()
@@ -55,11 +55,34 @@ class AuthenticationTest extends TestCase
     {
         $response = $this->postJson(route('auth.login'), [
             'email' => 'test@test.com',
-            'password' => 'testpassword'
+            'password' => 'Testpassword@3'
         ]);
 
         $response->assertUnprocessable()
             ->assertJsonValidationErrors(['email']);
+    }
+
+      /** @test */
+    public function show_validation_password_errors()
+    {
+       $response=$this->postJson(route('auth.register'),
+            ['name' => 'Elvis William',
+            'email'=>'mihupocob@mailinator.com',
+             'password' =>'password',
+             'password_confirmation' => 'password',
+         ]);
+
+        $response->assertUnprocessable()
+        ->assertJsonValidationErrors(['password'])
+        ->assertJson([
+            'errors' => [
+                'password' => [
+                    "The password must include both uppercase and lowercase letters.",
+                    "The password must include at least one special character (symbol).",
+                    "The password must contain at least one number.",
+                ]
+            ]
+        ]);
     }
 
     /** @test */

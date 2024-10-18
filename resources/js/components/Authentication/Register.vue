@@ -75,11 +75,14 @@ export default{
 	},
 	methods:{
       RegisterUser(){
+        this.$Progress.start();
         axios.post('/api/v1/register',this.form,{
       }).then(response=>{
+        this.$Progress.finish();
         swal.fire("Account Registered","Please Verify your account and login","success");
           this.$router.push('/login');
          }).catch(error=>{
+            this.$Progress.fail();
            this.errors=error.response.data.errors;
       });
       }

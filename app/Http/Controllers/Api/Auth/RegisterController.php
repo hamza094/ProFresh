@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\RegisterUserRequest;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Api\ApiController;
 use App\Providers\RouteServiceProvider;
@@ -10,6 +11,8 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Auth\Events\Registered;
+use App\Http\Resources\UsersResource;
+use Illuminate\Http\JsonResponse;
 use App\Models\User;
 
 
@@ -33,30 +36,30 @@ class RegisterController extends ApiController
      */
     protected $redirectTo = RouteServiceProvider::HOME;
 
-    public function register(Request $request){
+    /**
+    * Register User
+    * 
+    * Registers a new user and returns the user API resource.
+    */
 
-      $validatedData = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:8|confirmed'
-        ]);
+    public function register(RegisterUserRequest $request){
 
-        $validatedData['password'] = bcrypt($request->password);
+      $validatedData = $request->validated();
 
+    $validatedData['password'] = bcrypt($request->password);
+
+      try {
         $user = User::create($validatedData);
-
         event(new Registered($user));
 
-        $user->save();
+        return response()->json([
+            'message' => 'User Registered Successfully',
+            'user' => new UsersResource($user)
+        ], 201);
 
-        if($user){
-          return response()->json([
-            'message'=>'User Registered Successfully',
-            'user'=>$user
-          ], 201);
-        }
-
-        return response()->json(null, 404);
+    } catch (\Exception $e) {
+        return response()->json(['error' => 'User registration failed.'], 500);
+    }
 
     }
 

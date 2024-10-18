@@ -86,8 +86,6 @@ export default {
   },
 
 	methods:{
-    ...mapActions('currentUser',['createUserToken']),
-    ...mapMutations('currentUser',['setUser','loggedIn']),
 
     login(){
       this.$store.dispatch('currentUser/loginUser',this.user);
@@ -102,6 +100,10 @@ export default {
         });
     },
     },
+      beforeRouteLeave(to, from, next) {
+    this.$store.commit('currentUser/clearErrors');
+    next();
+  },
 }
 
 </script>

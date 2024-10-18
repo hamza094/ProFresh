@@ -24,18 +24,20 @@ class ResetPasswordController extends ApiController
   | explore this trait and override any methods you wish to tweak.
   |
   */
+
+  /** Send Reset Link */
   public function sendResetLink(Request $request) {
     $request->validate(['email' => 'required|email']);
 
      $status = Password::sendResetLink(
          $request->only('email')
      );
-
      return $status === Password::RESET_LINK_SENT
                  ? back()->with(['status' => __($status)])
                  : back()->withErrors(['email' => __($status)]);
 	}
 
+   /** Reset User's Password */ 
    public function resetPassword(Request $request)
    {
         $request->validate([

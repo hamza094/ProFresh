@@ -34,7 +34,7 @@ export default{
     methods:{
         ...mapActions('subscribeUser',['userSubscription']),
        resendMail(){
-           axios.post('/api/v1/email/resend/'+this.user.id,{
+           axios.post('/api/v1/email/resend/'+this.user.uuid,{
            }).then(response=>{
                this.$vToastify.success("Verification link sent successfully");
            }).catch(error=>{

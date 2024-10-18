@@ -4,6 +4,9 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
+/**
+ * @mixin \App\Models\User
+ */
 class UsersResource extends JsonResource
 {
     /**
@@ -14,24 +17,52 @@ class UsersResource extends JsonResource
      */
     public function toArray($request)
     {
-       if ($request->is('api/v1/tasksdata')) {
+       /*if ($request->is('api/v1/tasksdata')) {
         return [
           'id'=>$this->id,
           'name'=>$this->name,
         ];
-    }
+    }*/
         return [
-          'id'=>$this->id,
+          /**
+           * User Uuid
+           *  @example 9b8ea076-6d80-4076-8a01-73b94f4c0bc3
+          * */
+          'uuid'=>$this->uuid,
+
+          /**
+           *  @example berry 
+          * */
           'name'=>$this->name,
-          'username'=>$this->username,
+
+          /**
+           *  @example user@example.com
+          * */
           'email'=>$this->email,
+
+          /**
+           *  @example Asia/Karachi
+          * */
           'timezone'=>$this->timezone,
+
+          /**
+           * Indicates whether the user is an admin.
+           * */
+          
           'isAdmin'=>$this->isAdmin(),
+
+          /**
+             * User's avatar URL (if exists).
+             * @example https://eu.ui-avatars.com/api/?name=Berry 
+             */
           'avatar' => $this->when($this->avatar,
                         fn()=>$this->avatar_path),
-          $this->mergeWhen($this->email_verified_at, [
-          'verified' => true,
-      ]), 
+
+           /**
+            * Return user email verified or not 
+            */ 
+          'verified' => $this->email_verified_at ? true : false,
+
         ];
     }
 }

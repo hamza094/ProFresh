@@ -17,7 +17,7 @@ class CreateConversationsTable extends Migration
             $table->id();
             $table->text('message')->nullable();
             $table->string('file')->nullable();
-            $table->uuid('user_id');
+            $table->integer('user_id');
             $table->foreignId('project_id')->constrained()
             ->onDelete('cascade');
             $table->timestamps();

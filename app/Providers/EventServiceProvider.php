@@ -3,7 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Auth\Events\Registered;
-//use Illuminate\Auth\Events\Verified;
+use Illuminate\Auth\Events\Verified;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 use App\Events\UserLogin;
@@ -29,7 +29,7 @@ class EventServiceProvider extends ServiceProvider
      'App\Events\NewMessage' => [],
      'App\Events\MeetingStatusUpdate' => [],
 
-  /*    Verified::class => [
+      /*Verified::class => [
       'App\Listeners\LogVerifiedUser',
     ],*/
     ];

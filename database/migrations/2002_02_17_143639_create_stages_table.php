@@ -15,7 +15,7 @@ class CreateStagesTable extends Migration
     {
         Schema::create('stages', function (Blueprint $table) {
             $table->id();
-            $table->foreignUuid('user_id');
+            $table->foreignId('user_id');
             $table->string('name');
             $table->timestamps();
         });

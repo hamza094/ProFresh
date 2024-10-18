@@ -25,7 +25,7 @@ use App\Http\Controllers\Api\Admin\Integration\PaddleController;
 
 Route::group(['prefix'=>'v1/admin'], function () {
 
-Route::middleware(['auth:sanctum',/*\App\Http\Middleware\TrackLastActiveAt::class,'role:Admin'*/])->group(function () {  
+Route::middleware(['auth:sanctum','verified',/*\App\Http\Middleware\TrackLastActiveAt::class,'role:Admin'*/])->group(function () {  
 
 //Project Api Resource Routes
 Route::get('/projects', [ProjectController::class,'index']);

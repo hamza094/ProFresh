@@ -35,7 +35,7 @@ class SaveUserTimezone
       $event->user->save();
 
      } catch(\Exception $e){
-        return response()->json(['error' => $e->getMessage()], 500);
+        \Log::error('Failed to update user timezone: ' . $e->getMessage());
      }
     }
 }

@@ -54,6 +54,8 @@
             </div>
 
             <div class="col-md-11 panel-right">
+            <vue-progress-bar></vue-progress-bar>
+
 
                 <nav class="navbar navbar-expand-md navbar-light bg-white">
                     <router-link class="navbar-brand" to='/home'><b>Profresh</b></router-link>

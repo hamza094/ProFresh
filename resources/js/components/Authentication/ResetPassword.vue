@@ -12,7 +12,8 @@
                             <label for="email" class="form-label">E-Mail Address</label>
 
                             <div class="col-md-8">
-                                <input id="email" type="email" class="form-control" name="email" v-model="form.email" value="" required autocomplete="email">
+                                <input id="email" type="email" class="form-control" name="email" v-model="form.email" required autocomplete="email"
+                                readonly >
                                  <span class="text-danger font-italic" v-if="errors.email" v-text="errors.email[0]"></span>
                             </div>
                         </div>
@@ -64,17 +65,27 @@ export default{
             }
 		};
 	},
+    mounted() {
+    // Get the email from the query parameters and set it in the form
+    const emailFromQuery = this.$route.query.email;
+    if (emailFromQuery) {
+      this.form.email = decodeURIComponent(emailFromQuery);
+    }
+  },
 	methods:{
       resetPassword(){
+        this.$Progress.start();
         axios.post('/api/v1/reset-password',{
 					email: this.form.email,
 					password: this.form.password,
 					password_confirmation: this.form.password_confirmation,
           token: this.$route.params.token
       }).then(response=>{
+        this.$Progress.finish();
         swal.fire("Password Changed","Please Login to continue","success");
           this.$router.push('/login');
          }).catch(error=>{
+            this.$Progress.fail();
            this.errors=error.response.data.errors;
       });
       }

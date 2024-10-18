@@ -14,33 +14,44 @@ use App\Http\Controllers\Api\ApiController;
 
 class OAuthController extends ApiController
 {
+    /** Get OAuth redirect url */
     public function redirect(OAuthProvider $provider): JsonResponse
     {
       if (auth()->check()) {
         return response()->json(['error' => 'User is already authenticated.'], 400);
     }
+      /** @var \Laravel\Socialite\Two\AbstractProvider $socialiteDriver */
+    $socialiteDriver = Socialite::driver($provider->driver());
 
-        $url = Socialite::driver($provider->driver())
-               ->stateless()->redirect()->getTargetUrl();
+    $url = $socialiteDriver->stateless()->redirect()->getTargetUrl();
     
        return response()->json(['redirect_url' => $url]);
     }
 
+    /** OAuth Authentication
+     *
+     * API endpoint for creating or updating user and enabling login through OAuth provider callback.
+     */
 
     public function callback(OAuthProvider $provider, OAuthAction $action): JsonResponse
     {
       try {
+        /** @var \Laravel\Socialite\Two\AbstractProvider $socialiteDriver */
+        $socialiteDriver = Socialite::driver($provider->driver());
 
-        $oAuthUser = Socialite::driver($provider->driver())->stateless()->user();
+        $oAuthUser = $socialiteDriver->stateless()->user();
 
         $user = $action->createUpdateUser($oAuthUser,$provider); 
 
         event(new UserLogin($user));
 
-    return response()->json([
+     return response()->json([
         'user' => new UsersResource($user),
         'message'=>'User login via Socialite',
-        'access_token' => $user->createToken('access')->plainTextToken,
+        'access_token' => $user->createToken(
+        'Api Token for ' . $user->email,
+        ['*'],
+        now()->addMonth())->plainTextToken,
     ], 200);
    } catch (\Exception $e) {
      return response()->json(['message' => 'Error processing user data.', 'error' => $e->getMessage()], 500);

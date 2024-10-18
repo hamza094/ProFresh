@@ -5,6 +5,8 @@ namespace Tests\Feature\Auth;
 use Tests\TestCase;
 use Laravel\Sanctum\Sanctum;
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
+
 
 use Illuminate\{
   Foundation\Testing\RefreshDatabase,
@@ -22,8 +24,16 @@ class VerificationTest extends TestCase
   /** @test */
  public function can_verify_email()
  {
-     $user = User::factory()->create(['email_verified_at' => null]);
-     $url = URL::temporarySignedRoute('verification.verify', now()->addMinutes(60), ['id' => $user->id]);
+
+     $user=User::factory()->create([
+            'email_verified_at' => null,
+        ]);
+
+     Sanctum::actingAs(
+            $user
+        );
+
+     $url = URL::temporarySignedRoute('verification.verify', now()->addMinutes(60), ['user' => $user->uuid]);
 
      Event::fake();
 
@@ -40,7 +50,12 @@ class VerificationTest extends TestCase
  public function can_not_verify_if_already_verified()
  {
      $user = User::factory()->create();
-     $url = URL::temporarySignedRoute('verification.verify', now()->addMinutes(60), ['id' => $user->id]);
+
+      Sanctum::actingAs(
+            $user
+        );
+
+     $url = URL::temporarySignedRoute('verification.verify', now()->addMinutes(60), ['user' => $user->uuid]);
 
      $this->postJson($url)
          ->assertStatus(400)
@@ -48,7 +63,7 @@ class VerificationTest extends TestCase
  }
 
    /** @test */
-  public function resend_verification_notification()
+  public function can_resend_verification_notification()
   {
      $user = User::factory()->create(['email_verified_at' => null]);
 
@@ -58,13 +73,14 @@ class VerificationTest extends TestCase
 
      Notification::fake();
 
-    $this->postJson('/api/v1/email/resend/'.$user->id, ['email' => $user->email])
+    $this->postJson('/api/v1/email/resend/'.$user->uuid, ['email' => $user->email])
        ->assertSuccessful();
 
     Notification::assertSentTo($user, VerifyEmail::class);
   }
 
-  /** @test */
+  
+ /** @test */ 
  public function can_not_resend_verification_notification_if_email_already_verified()
  {
      $user = User::factory()->create();
@@ -75,9 +91,13 @@ class VerificationTest extends TestCase
 
      Notification::fake();
 
-     $this->postJson('/api/v1/email/resend/'.$user->id, ['email' => $user->email])
+     $response=$this->postJson('/api/v1/email/resend/'.$user->uuid, ['email' => $user->email])
          ->assertUnprocessable()
-         ->assertJsonFragment(['errors' => ['email' => ['verification.already_verified']]]);
+         ->assertJsonFragment([
+            'errors' => [
+       'email' => ['verification.already_verified']
+   ]
+  ]);
 
      Notification::assertNotSentTo($user, VerifyEmail::class);
  }

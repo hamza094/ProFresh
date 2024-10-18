@@ -6,15 +6,16 @@
             <div class="form">
                 <div class="card-title">Account Verification</div>
 								<div class="card-body" v-if="success">
-									<h5>Congratulations! Your Account has been verified Successfully.
-										Please log in to continue </h5>
+									<span class="badge badge-success"><h5>Your Account has been verified Successfully.
+										Please log in to continue </h5></span>
 								</div>
 								<div class="card-body" v-if="error == 'verification.already_verified'">
-									<h5>Account already verified. Please log in to continue</h5>
+									<span class="badge badge-info"><h5>Account already verified. Please log in to continue</h5></span>
 								</div>
 								<div class="card-body" v-if="error == 'verification.invalid'">
-									<h5>Verification Error. Please log in to get the verified link again </h5>
+									<span class="badge badge-danger"><h5>Verification Error. Please log in to get the verified link again </h5></span>
 								</div>
+
             </div>
         </div>
     </div>
@@ -27,11 +28,15 @@
  export default {
 	 async beforeRouteEnter (to, from, next) {
 	   try {
-	     const { data } = await axios.post(`/api/v1/email/verify/${to.params.id}?${qs(to.query)}`)
-	     next(vm => { vm.success = data.status })
-			 console.log(data.success);
+	     const { data } = await axios.post(`/api/v1/email/verify/${to.params.user}?${qs(to.query)}`)
+	     next(vm => { 
+	     	vm.success = data.status;
+	     	vm.$store.dispatch('currentUser/updateVerifiedStatus', true);
+	     	 });
+			 
 	    } catch (e) {
-	      next(vm => { vm.error = e.response.data.status })
+	            next(vm => { vm.error = e.response?.data?.status || 'verification.invalid' });
+
 	    }
 	  },
 		data: () => ({

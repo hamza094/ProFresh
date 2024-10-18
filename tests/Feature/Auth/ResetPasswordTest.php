@@ -19,6 +19,8 @@ class ResetPasswordTest extends TestCase
     *
     * @return void
   */
+
+   /** @test */
    public function can_sends_password_reset_email()
    {
       $user = User::factory()->create();

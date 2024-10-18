@@ -38,7 +38,6 @@ class Kernel extends HttpKernel
             \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
              \App\Http\Middleware\TrackLastActiveAt::class,
-            //\App\Http\Middleware\LastActive::class,
 
         ],
 
@@ -73,6 +72,8 @@ class Kernel extends HttpKernel
         'permission' => \Spatie\Permission\Middleware\PermissionMiddleware::class,
         'role_or_permission' => \Spatie\Permission\Middleware\RoleOrPermissionMiddleware::class,
         'zoom.webhook'=>\App\Http\Middleware\VerifyZoomWebhook::class,
+        'guest.authenticated' => \App\Http\Middleware\AllowGuestOrAuthenticated::class,
+
     ];
 
     protected function bootstrappers()

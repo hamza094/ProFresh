@@ -29,13 +29,10 @@ Route::group(['prefix'=>'v1'], function () {
   Route::post('login', [LoginController::class, 'login'])
          ->name('auth.login');
 
-  Route::get('link', [LoginController::class, 'link']);       
-
   Route::post('/forgot-password', [ResetPasswordController::class, 'sendResetLink'])->name('password.email');
 
   Route::post('/reset-password', [ResetPasswordController::class, 'resetPassword'])->name('password.email');
 
-  Route::post('/email/verify/{id}', [VerificationController::class, 'verify'])->name('verification.verify');
 
     Route::get('/password/reset/{token}', [VerificationController::class, 'resetForm'])->name('password.reset');  
 
@@ -44,7 +41,10 @@ Route::group(['prefix'=>'v1'], function () {
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
 
-  Route::post('/email/resend/{id}', [VerificationController::class, 'resend'])
+  Route::post('/email/verify/{user}', [VerificationController::class, 'verify'])
+     ->name('verification.verify');
+
+  Route::post('/email/resend/{user}', [VerificationController::class, 'resend'])
     ->name('verification.resend');
 
   Route::post('logout', [LoginController::class, 'logout'])->name('auth.logout');
