@@ -4,7 +4,7 @@ namespace App\Events;
 
 use App\Models\Activity;
 use Illuminate\Broadcasting\Channel;
-use App\Http\Resources\Admin\ActivitiesResource;
+use App\Http\Resources\Api\V1\Admin\ActivitiesResource;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
 use Illuminate\Broadcasting\PrivateChannel;

@@ -4,10 +4,10 @@ namespace App\Jobs;
 
 use App\Models\Project;
 use App\Models\Message;
-use App\Services\SendSmsService;
+use App\Services\Api\V1\SendSmsService;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
-use App\Http\Requests\MessageRequest;
+use App\Http\Requests\Api\V1\MessageRequest;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Bus\Batchable;

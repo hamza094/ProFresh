@@ -3,18 +3,18 @@
 namespace App\Providers;
 
 use App\Interfaces\Zoom;
-use App\Services\Zoom\ZoomService;
+use App\Services\Api\V1\Zoom\ZoomService;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Resources\Json\JsonResource;
 use App\Interfaces\SendSmsInterface;
-use App\Services\SendSmsService;
+use App\Services\Api\V1\SendSmsService;
 use Illuminate\Support\Collection;
-use App\Services\PaginationService;
+use App\Services\Api\V1\PaginationService;
 use Opcodes\LogViewer\Facades\LogViewer;
 use App\Interfaces\Paddle;
-use App\Services\Admin\Integration\PaddleService;
+use App\Services\Api\V1\Admin\Integration\PaddleService;
 
 class AppServiceProvider extends ServiceProvider
 {

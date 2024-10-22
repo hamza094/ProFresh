@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\RegisterUserRequest;
+use App\Http\Requests\Api\V1\RegisterUserRequest;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Api\ApiController;
 use App\Providers\RouteServiceProvider;
@@ -11,7 +11,7 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Auth\Events\Registered;
-use App\Http\Resources\UsersResource;
+use App\Http\Resources\Api\V1\UsersResource;
 use Illuminate\Http\JsonResponse;
 use App\Models\User;
 

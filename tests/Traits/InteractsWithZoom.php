@@ -3,8 +3,8 @@
 namespace Tests\Traits;
 
 use App\Interfaces\Zoom;
-use App\Services\Zoom\ZoomService;
-use App\Services\Zoom\ZoomServiceFake;
+use App\Services\Api\V1\Zoom\ZoomService;
+use App\Services\Api\V1\Zoom\ZoomServiceFake;
 
 trait InteractsWithZoom
 {

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Api\Auth\OAuthController;
 
-use App\Http\Controllers\Api\Admin\
+use App\Http\Controllers\Api\V1\Admin\
 {
   ProjectController,
   TaskController,
@@ -16,14 +16,14 @@ use App\Http\Controllers\Api\Admin\
   PermissionsController,
   RolePermissionController
 };
-use App\Http\Controllers\Api\Admin\Integration\PaddleController;
+use App\Http\Controllers\Api\V1\Admin\Integration\PaddleController;
 
 /*
 |--------------------------------------------------------------------------
 | API V1 Routes
 |--------------------------------------------------------------------------*/
 
-Route::group(['prefix'=>'v1/admin'], function () {
+Route::group(['prefix'=>'admin'], function () {
 
 Route::middleware(['auth:sanctum','verified',/*\App\Http\Middleware\TrackLastActiveAt::class,'role:Admin'*/])->group(function () {  
 

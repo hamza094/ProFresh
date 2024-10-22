@@ -8,7 +8,7 @@ use App\Events\UserLogin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
-use App\Http\Resources\UsersResource;
+use App\Http\Resources\Api\V1\UsersResource;
 use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Api\ApiController;
 

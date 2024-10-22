@@ -4,7 +4,7 @@ namespace App\Events;
 
 use App\Models\Conversation;
 use App\Models\Project;
-use App\Http\Resources\ConversationResource;
+use App\Http\Resources\Api\V1\ConversationResource;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;

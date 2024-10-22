@@ -6,14 +6,14 @@ use App\Http\Controllers\Api\Auth\OAuthController;
 
 use App\Http\Controllers\Api\OAuth\ZoomAuthController;
 
-use App\Http\Controllers\Api\Webhooks\ZoomController;
+use App\Http\Controllers\Api\V1\Webhooks\ZoomController;
 
 use App\Http\Middleware\VerifyZoomWebhook;
 
-use App\Http\Controllers\Api\Zoom\ZoomTokenController;
+use App\Http\Controllers\Api\V1\Zoom\ZoomTokenController;
 
 
-use App\Http\Controllers\Api\
+use App\Http\Controllers\Api\V1\
 {
   ProjectController,
   TaskController,
@@ -37,8 +37,6 @@ use App\Http\Controllers\Api\
 |--------------------------------------------------------------------------
 | API V1 Routes
 |--------------------------------------------------------------------------*/
-
-Route::group(['prefix'=>'v1'], function () {
 
 Route::controller(OAuthController::class)->group(function () {
     Route::get('/auth/redirect/{provider}', 'redirect')->name('oauth.redirect');
@@ -202,7 +200,6 @@ Route::controller(ZoomAuthController::class)
  Route::get('oauth/zoom/callback', 'callback')->name('callback');
  });    
                       
-});
 });
 
 ?>

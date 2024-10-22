@@ -4,7 +4,7 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use App\Models\Message;
-use App\Services\MessageService;
+use App\Services\Api\V1\MessageService;
 use Illuminate\Support\Facades\Bus;
 
 class ScheduledMessages extends Command

@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use App\Actions\OAuthAction;
 use Illuminate\Http\JsonResponse;
 use App\Events\UserLogin;
-use App\Http\Resources\UsersResource;
+use App\Http\Resources\Api\V1\UsersResource;
 use Laravel\Socialite\Facades\Socialite;
 use App\Http\Controllers\Api\ApiController;
 
