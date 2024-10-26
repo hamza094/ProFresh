@@ -195,6 +195,7 @@ export default{
       this.archiveTask();
     })
     .catch(error => {
+    	console.log(this.auth);
       console.log(error.response.data.errors);
     });
     },
@@ -203,7 +204,7 @@ export default{
     	...mapState('project',['project','user','getStage','tasks']),
 
     permission() {
-      const {access, owner} = permission(this.auth.id, this.project.members, this.user.id,this.auth.isAdmin);
+      const {access, owner} = permission(this.auth.uuid, this.project.members, this.user.uuid,this.auth.isAdmin);
 
       return {access, owner};
    },

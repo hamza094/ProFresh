@@ -25,7 +25,9 @@ class ResetPasswordController extends ApiController
   |
   */
 
-  /** Send Reset Link */
+  /**
+   * @unauthenticated
+   *  Send Reset Link */
   public function sendResetLink(Request $request) {
     $request->validate(['email' => 'required|email']);
 
@@ -37,7 +39,9 @@ class ResetPasswordController extends ApiController
                  : back()->withErrors(['email' => __($status)]);
 	}
 
-   /** Reset User's Password */ 
+   /** 
+    * @unauthenticated
+    * Reset User's Password */ 
    public function resetPassword(Request $request)
    {
         $request->validate([

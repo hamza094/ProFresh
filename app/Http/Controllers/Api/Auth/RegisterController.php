@@ -37,6 +37,7 @@ class RegisterController extends ApiController
     protected $redirectTo = RouteServiceProvider::HOME;
 
     /**
+    * @unauthenticated
     * Register User
     * 
     * Registers a new user and returns the user API resource.

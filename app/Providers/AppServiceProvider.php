@@ -15,6 +15,9 @@ use App\Services\Api\V1\PaginationService;
 use Opcodes\LogViewer\Facades\LogViewer;
 use App\Interfaces\Paddle;
 use App\Services\Api\V1\Admin\Integration\PaddleService;
+use Dedoc\Scramble\Scramble;
+use Dedoc\Scramble\Support\Generator\OpenApi;
+use Dedoc\Scramble\Support\Generator\SecurityScheme;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -54,6 +57,13 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+      Scramble::afterOpenApiGenerated(function (OpenApi $openApi) {
+        $openApi->secure(
+            SecurityScheme::http('bearer')
+        );
+    });
+
+
         Model::preventLazyLoading(! app()->isProduction());
         //Model::shouldBeStrict(! app()->isProduction());
 

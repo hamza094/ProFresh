@@ -6,6 +6,9 @@ use App\Http\Resources\Api\V1\UsersResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Carbon\Carbon;
 
+/**
+ * @mixin \App\Models\Task
+ */
 class TaskResource extends JsonResource
 {
     /**

@@ -12,7 +12,7 @@ import Dashboard from './components/Dashboard/Dashboard';
 import ForgotPassword from './components/Authentication/ForgotPassword';
 import ResetPassword from './components/Authentication/ResetPassword';
 import VerifyPassword from './components/Authentication/VerifyPassword';
-import Project from './components/Project/Page';
+import ProjectPage from './components/Project/ProjectPage';
 import Activities from './components/Project/Activities';
 import Projects from './components/Projects';
 import Profile from './components/Profile/ProfilePage';
@@ -126,8 +126,8 @@ let router = new Router({
           },
           {
             path: "/projects/:slug",
-            component: Project,
-            name: "Project",
+            component: ProjectPage,
+            name: "ProjectPage",
             beforeEnter: auth,
           },
           {

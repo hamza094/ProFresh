@@ -14,7 +14,10 @@ use App\Http\Controllers\Api\ApiController;
 
 class OAuthController extends ApiController
 {
-    /** Get OAuth redirect url */
+    /** 
+     * @unauthenticated
+     * Get OAuth redirect url
+     */
     public function redirect(OAuthProvider $provider): JsonResponse
     {
       if (auth()->check()) {
@@ -28,8 +31,10 @@ class OAuthController extends ApiController
        return response()->json(['redirect_url' => $url]);
     }
 
-    /** OAuth Authentication
-     *
+    /**
+     * @unauthenticated
+     *  OAuth Authentication
+     * 
      * API endpoint for creating or updating user and enabling login through OAuth provider callback.
      */
 

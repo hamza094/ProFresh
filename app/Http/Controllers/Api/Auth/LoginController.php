@@ -16,6 +16,7 @@ class LoginController extends ApiController
 {
 
   /**
+   * @unauthenticated
  * Login User.
  *
  * This method authenticates the user using provided credentials

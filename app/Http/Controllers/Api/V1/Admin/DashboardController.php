@@ -10,7 +10,7 @@ use App\Models\Activity;
 use App\Models\Project;
 use App\Models\Task;
 use Carbon\Carbon;
-use App\Services\Api\V1\AdminDashboardService;
+use App\Services\Api\V1\Admin\DashboardService;
 
 
 class DashboardController extends Controller

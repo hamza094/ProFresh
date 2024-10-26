@@ -48,6 +48,12 @@ class ProjectController extends ApiController
     ]);
   }
 
+  /** Retrieve a specific project
+   * 
+   * 
+   * Returns detailed information about a project including its members, conversations, and activities
+   */
+
     public function show(Project $project)
     {
       $project->load(['conversations.user','meetings']);
