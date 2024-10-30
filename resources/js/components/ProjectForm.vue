@@ -35,10 +35,18 @@
                     <label for="Tasks" class="label-name">Need Some Tasks?:
                     <span class="text-danger font-italic" v-if="taskError"> {{this.taskError}}</span>
                     </label>
-                    <input type="text" class="form-control model-input mb-2" placeholder="Task..." name="task" v-for="task in form.tasks" v-model="task.title"> 
+                     <div v-if="form.tasks.length > 0">
+                            <input type="text" 
+                                   class="form-control model-input mb-2" 
+                                   placeholder="Task..." 
+                                   name="task" 
+                                   v-for="(task, index) in form.tasks" 
+                                   :key="index" 
+                                   v-model="task.title"> 
+                        </div>
                     <button type="btn" class="btn btn-primary btn-sm" v-if="form.tasks && form.tasks.length < 3" @click.prevent="addTask"><i class="fas fa-plus-circle"></i> Add new Task Field
                     </button>
-                     <button v-if="form.tasks && form.tasks.length > 1" type="btn" class="btn btn-danger btn-sm" @click.prevent="removeTask"><i class="fa fa-minus-circle" aria-hidden="true"></i> Remove Task Field
+                     <button v-if="form.tasks && form.tasks.length > 0" type="btn" class="btn btn-danger btn-sm" @click.prevent="removeTask"><i class="fa fa-minus-circle" aria-hidden="true"></i> Remove Task Field
                     </button>
                 </div>
 
@@ -66,9 +74,7 @@ export default{
         return{
            form:{
             stage_id:1,
-            tasks:[
-             {title:''}
-            ]
+            tasks:[]
            },
            stages:[],
             errors:{},
@@ -94,14 +100,17 @@ export default{
           this.form.tasks.push({title:''});
       },
       removeTask(){
-        this.form.tasks.pop({title:''});
+        this.form.tasks.pop();
       },   
         projectSubmit(){
-         axios.post('/api/v1/projects',this.form)
+               let formData = { ...this.form };
+            if (!formData.tasks || formData.tasks.every(task => !task.title)) {
+                delete formData.tasks;
+            }
+         axios.post('/api/v1/projects',formData)
             .then(response=>{
              this.$vToastify.success("New project created");
-               this.form="";
-                this.closePanel();
+                this.form = { stage_id: 1, tasks: [] };this.closePanel();
                 setTimeout(()=>{
                 this.$router.push('/projects/'+response.data.project.slug);
                 },3000)

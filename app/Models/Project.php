@@ -5,8 +5,10 @@ namespace App\Models;
 use App\Traits\RecordActivity;
 use App\Actions\ScoreAction;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Facades\Redis;
 use Cviebrock\EloquentSluggable\Sluggable;
 use App\Enums\ScoreValue;
@@ -49,8 +51,9 @@ class Project extends Model
       return "/api/v1/projects/{$this->slug}";
   }
 
-   public function user(){
-       return $this->belongsTo(User::class);
+   public function user(): BelongsTo
+   {
+      return $this->belongsTo(User::class);
    }
 
    protected static function boot()
@@ -61,12 +64,12 @@ class Project extends Model
    });
    }
 
-   public function stage()
+   public function stage(): BelongsTo
    {
      return $this->belongsTo(Stage::class);
    }
 
-    public function tasks()
+    public function tasks(): HasMany
     {
       return $this->hasMany(Task::class)->latest();
     }
@@ -81,12 +84,15 @@ class Project extends Model
        return $this->tasks()->create([
          'title'=> $tasks,
          'user_id'=>auth()->id(),
+         'status_id'=>1,
        ]);
     }
 
     public function addTasks($tasks)
     {
-      return $this->tasks()->createMany($tasks);   
+      //$this->timestamps = false;
+      
+      return $this->tasks()->createManyQuietly($tasks);   
     }
 
     public function invite(User $user)

@@ -34,10 +34,8 @@ class ProjectTest extends TestCase
        ]);
 
        $attributes['tasks']=[
-        [
-          'title'=>'task 1',
-        ],
-           ['title'=>'task 2']
+        ['title'=>'task 1'],
+        ['title'=>'task 2']
         ];
 
        $response=$this->postJson('api/v1/projects',$attributes);
@@ -82,6 +80,26 @@ class ProjectTest extends TestCase
 
       $response->assertJsonMissingValidationErrors('project.name');
     }
+
+
+    /** @test */
+    public function project_cannot_have_more_than_three_tasks()
+{
+    $attributes = Project::factory()->raw([
+        'user_id' => auth()->id()
+    ]);
+
+    $attributes['tasks'] = [
+        ['title' => 'Task 1'],
+        ['title' => 'Task 2'],
+        ['title' => 'Task 3'],
+        ['title' => 'Task 4'] // exceeds the limit
+    ];
+
+    $response = $this->postJson('api/v1/projects', $attributes);
+
+    $response->assertJsonValidationErrors('tasks');
+}
 
     /** @test */
     public function auth_user_can_get_project_resource()

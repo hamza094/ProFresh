@@ -36,30 +36,16 @@ class ProjectService
   }
 
   public function addTasksToProject($project,$tasks): void
-  {
-    $filteredTasks = $this->getFilteredTasks($tasks);
+  {    
+    $tasksWithUser = collect($tasks['tasks'])->map(fn ($task)=>
+        [...$task, 'user_id' => auth()->id()]);
 
-    if($filteredTasks){
-     request()->validate([
-        'tasks.*.title' => ['sometimes','max:55','min:5'],
-      ]);
+    dd('stop');
 
-     $tasksWithUser = $filteredTasks->map(function ($task){
-        return array_merge($task, ['user_id' => auth()->id()]);
-      });
-
-    $project->addTasks($tasksWithUser);
-    }
+    $project->addTasks($tasksWithUser);   
   }
 
-   private function getFilteredTasks($tasks)
-   {
-     return collect($tasks)->filter(function ($value, $key) {
-         return !empty($value['title']);
-    });      
-  }
-
-    public function sendNotification($project)
+  public function sendNotification($project)
    {
      $user = auth()->user()->toArray();
 

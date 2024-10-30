@@ -7,6 +7,7 @@ use App\Traits\RecordActivity;
 use Illuminate\Database\Eloquent\Model;
 use App\Enums\TaskStatus as TaskStatusEnum;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Task extends Model
@@ -15,7 +16,7 @@ class Task extends Model
 
   protected $guarded=[];
 
-  protected $touches=['project'];
+  //protected $touches=['project'];
 
   protected $casts = [
     'due_at' => 'datetime',
@@ -39,8 +40,9 @@ class Task extends Model
       return "/api/v1/projects/{$this->project->slug}/tasks/{$this->id}";
     }
 
-    public function project(){
-      return $this->belongsTo(Project::class,'project_id');
+    public function project(): BelongsTo
+    {
+      return $this->belongsTo(Project::class);
    }
 
     public function owner()

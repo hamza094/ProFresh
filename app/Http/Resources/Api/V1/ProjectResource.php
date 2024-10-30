@@ -6,6 +6,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
 use App\Http\Resources\Api\V1\ActivityResource;
 use App\Http\Resources\Api\V1\ConversationResource;
 use App\Http\Resources\Api\V1\UsersResource;
+use App\Http\Resources\Api\V1\StageResource;
 use Carbon\Carbon;
 
 /**

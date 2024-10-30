@@ -22,6 +22,15 @@ class ProjectController extends ApiController
 {
   use ApiResponseHelpers;
 
+  /**
+   * Create a new project.
+   * 
+   * This endpoint allows authenticated users to create a new project. The request must include 
+  the project's basic details, such as the name, about information, stage, and optional notes and tasks. 
+  The response will include the newly created project's information along with related resources.
+  *
+  */
+
   public function store(ProjectStoreRequest $request,ProjectService $service): JsonResponse
   {
     DB::beginTransaction();
@@ -29,9 +38,11 @@ class ProjectController extends ApiController
     try{
 
     $project = Auth::user()->projects()
-                  ->create($request->validated());
-         
-    $service->addTasksToProject($project,$request->tasks);
+                  ->create($request->safe()->except(['tasks']));
+
+   if($request->tasks){
+     $service->addTasksToProject($project,$request->safe()->only(['tasks']));
+   }               
 
     DB::commit();
 
@@ -42,10 +53,10 @@ class ProjectController extends ApiController
     throw $ex;
     }
 
-    return $this->respondCreated([
-      'message'=>'Project Created Successfully',
-      'project'=>new ProjectsResource($project),
-    ]);
+    return response()->json([
+    'message' => 'Project Created Successfully',
+    'project' => new ProjectsResource($project),
+    ], 201);
   }
 
   /** Retrieve a specific project

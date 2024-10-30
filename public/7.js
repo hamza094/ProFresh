@@ -9,14 +9,18 @@
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       form: {
         stage_id: 1,
-        tasks: [{
-          title: ''
-        }]
+        tasks: []
       },
       stages: [],
       errors: {},
@@ -44,15 +48,22 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     removeTask: function removeTask() {
-      this.form.tasks.pop({
-        title: ''
-      });
+      this.form.tasks.pop();
     },
     projectSubmit: function projectSubmit() {
       var _this2 = this;
-      axios.post('/api/v1/projects', this.form).then(function (response) {
+      var formData = _objectSpread({}, this.form);
+      if (!formData.tasks || formData.tasks.every(function (task) {
+        return !task.title;
+      })) {
+        delete formData.tasks;
+      }
+      axios.post('/api/v1/projects', formData).then(function (response) {
         _this2.$vToastify.success("New project created");
-        _this2.form = "";
+        _this2.form = {
+          stage_id: 1,
+          tasks: []
+        };
         _this2.closePanel();
         setTimeout(function () {
           _this2.$router.push('/projects/' + response.data.project.slug);
@@ -233,7 +244,7 @@ var render = function render() {
     }
   }, [_vm._v("Need Some Tasks?:\n                "), _vm.taskError ? _c("span", {
     staticClass: "text-danger font-italic"
-  }, [_vm._v(" " + _vm._s(this.taskError))]) : _vm._e()]), _vm._v(" "), _vm._l(_vm.form.tasks, function (task) {
+  }, [_vm._v(" " + _vm._s(this.taskError))]) : _vm._e()]), _vm._v(" "), _vm.form.tasks.length > 0 ? _c("div", _vm._l(_vm.form.tasks, function (task, index) {
     return _c("input", {
       directives: [{
         name: "model",
@@ -241,6 +252,7 @@ var render = function render() {
         value: task.title,
         expression: "task.title"
       }],
+      key: index,
       staticClass: "form-control model-input mb-2",
       attrs: {
         type: "text",
@@ -257,7 +269,7 @@ var render = function render() {
         }
       }
     });
-  }), _vm._v(" "), _vm.form.tasks && _vm.form.tasks.length < 3 ? _c("button", {
+  }), 0) : _vm._e(), _vm._v(" "), _vm.form.tasks && _vm.form.tasks.length < 3 ? _c("button", {
     staticClass: "btn btn-primary btn-sm",
     attrs: {
       type: "btn"
@@ -270,7 +282,7 @@ var render = function render() {
     }
   }, [_c("i", {
     staticClass: "fas fa-plus-circle"
-  }), _vm._v(" Add new Task Field\n                ")]) : _vm._e(), _vm._v(" "), _vm.form.tasks && _vm.form.tasks.length > 1 ? _c("button", {
+  }), _vm._v(" Add new Task Field\n                ")]) : _vm._e(), _vm._v(" "), _vm.form.tasks && _vm.form.tasks.length > 0 ? _c("button", {
     staticClass: "btn btn-danger btn-sm",
     attrs: {
       type: "btn"
@@ -286,7 +298,7 @@ var render = function render() {
     attrs: {
       "aria-hidden": "true"
     }
-  }), _vm._v(" Remove Task Field\n                ")]) : _vm._e()], 2), _vm._v(" "), _c("div", {
+  }), _vm._v(" Remove Task Field\n                ")]) : _vm._e()]), _vm._v(" "), _c("div", {
     staticClass: "form-group"
   }, [_c("label", {
     staticClass: "label-name",

@@ -15,12 +15,12 @@ class CreateProjectsTable extends Migration
     {
         Schema::create('projects', function (Blueprint $table) {
             $table->id();
-            $table->string("name",100);
-            $table->string("slug",100);
+            $table->string("name",150);
+            $table->string("slug",150);
             $table->mediumText("about");
             $table->foreignId('user_id')->constrained()
                   ->onDelete('cascade');
-            $table->foreignId('stage_id')->nullable();
+            $table->foreignId('stage_id');
             $table->boolean('completed')->default(false);
             $table->text('notes')->nullable();
             $table->string('postponed')->nullable();
