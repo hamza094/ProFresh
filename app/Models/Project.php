@@ -182,8 +182,8 @@ class Project extends Model
       ->get();
    }
 
-   public function getLimitedActivities(){
-        return $this->activities()->take(5)->get();
+   public function limitedActivities(){
+        return $this->activities()->take(5);
    }
 
    public function state(){

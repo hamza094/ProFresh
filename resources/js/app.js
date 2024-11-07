@@ -101,7 +101,7 @@ const options = {
   autoRevert: true,
   location: 'top',
   inverse: false,
-  autoFinish:true
+  autoFinish:false
 }
 Vue.use(VueProgressBar, options)
 

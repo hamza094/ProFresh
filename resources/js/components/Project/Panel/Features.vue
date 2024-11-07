@@ -2,14 +2,35 @@
   <div>
     <div class="project-note">
       <div id="wrapper">
+        <!-- Project Notes Section -->
         <p><b>Add Project Note:</b></p>
-<SubscriptionCheck>
-    <form v-if="access" id="paper" method="post" @keyup.enter.prevent="ProjectNote">
-      <textarea placeholder="Write Project Notes" id="text" name="notes" rows="4" v-model="form.notes" v-text="this.notes"></textarea>
+
+<!-- <SubscriptionCheck> -->
+
+    <form v-if="access" 
+    id="paper"
+     method="post"
+     @keyup.enter.prevent="ProjectNote">
+
+      <textarea placeholder="Write Project Notes"
+       id="text"
+        name="notes"
+         rows="4"
+          v-model="form.notes"
+           v-text="this.notes">
+      </textarea>
       <br>
   </form>
-    <textarea v-if="!access" placeholder="Only project members and owners are allowed to write project notes." id="text" rows="4" v-model="form.notes" v-text="this.notes" readonly></textarea>
-</SubscriptionCheck>
+
+    <textarea v-if="!access"
+     placeholder="Only project members and owners are allowed to write project notes."
+      id="text"
+       rows="4"
+        v-model="form.notes"
+         v-text="this.notes"
+          readonly>
+    </textarea>
+<!-- </SubscriptionCheck> -->
     <br>
 </div>
     </div>
@@ -85,25 +106,34 @@ export default{
     }
   },
   methods:{
-        ...mapMutations('project',['noteScore','updateScore','detachMember']),
+        ...mapMutations('project',['updateNotes','noteScore','updateScore','detachMember']),
 
     ProjectNote(){
+      this.$Progress.start();
+  document.getElementById('text').blur();
+
       axios.patch('/api/v1/projects/'+this.slug,{
         notes:this.form.notes,
-      }).then(response=>{
-        this.updateNotes(response.data.notes);
-        this.$vToastify.success("Notes Updated");
-        this.noteScore(response.data.score);
-        console.log(response.data.score);
+      }).then(({ data }) => {
+        const { project, message } = data;
+        this.$Progress.finish();
+        this.updateNotes(project.notes);
+        this.$vToastify.success(message);
+        this.noteScore(project.score);
       }).catch(error=>{
-          if(error.response.data.errors && error.response.data.errors.notes[0]){
-            this.$vToastify.warning(error.response.data.errors.notes[0]);
+          this.$Progress.fail();
+          const dataErrors = error.response.data.errors;
+
+          if(dataErrors && dataErrors.notes[0]){
+            this.$vToastify.warning(dataErrors.notes[0]);
         }
         if(error.response.data.error){
   				this.$vToastify.warning(error.response.data.error);
   			}
           this.form.notes=this.notes;
-      })
+      }).finally(() => {
+       document.getElementById('focus-target').focus();
+    });
     },
     searchUsers() {
     axios.get('/api/v1/users/search', { params: { query: this.query } })

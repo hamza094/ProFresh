@@ -10,10 +10,9 @@ class NotificationAction
 {
   public static function send($notification,$project): void
   {
-     $users = $project->activeMembers;
-     $users[] = $project->user;
-
-     collect($users)
+    $users = $project->activeMembers->push($project->user);
+    
+     $users
        ->reject(fn($user) => self::isAuthUser($user))
        ->each(fn($user) => $user->notify($notification));      
   }

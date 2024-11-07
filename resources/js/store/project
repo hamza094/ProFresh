@@ -1,5 +1,5 @@
 const state = {
-  project:[],
+  project:{},
   user:{},
   getStage:0,
 };
@@ -7,15 +7,18 @@ const state = {
 
 const mutations = {
     setProject(state, project) {
-      state.project = project
-      state.user = project.user
-      state.getStage = project.stage.id
-      state.members.unshift(project.user)
+      state.project = { ...project };
+      state.user = project.user;
+      state.getStage = project.stage.id;
+      state.members.unshift(project.user);
     },
-    nameUpdate(state,name,slug){
-      state.project.name = name
-      state.project.slug = slug
-    },
+    nameUpdate(state, { name, slug }) {
+    state.project = {
+      ...state.project,
+      name,
+      slug,
+    };
+  },
     aboutUpdate(state,about){
       state.project.about = about
     },

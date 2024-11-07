@@ -72,19 +72,9 @@ class ProjectTest extends TestCase
         $response->assertJsonValidationErrors('tasks.1.title');
     }
 
-     /** @test */
-    public function updated_project_requires_a_name()
-    {
-      $response=$this->patchJson($this->project->path(),
-        ['name'=>null])->assertUnprocessable();
-
-      $response->assertJsonMissingValidationErrors('project.name');
-    }
-
-
     /** @test */
     public function project_cannot_have_more_than_three_tasks()
-{
+   {
     $attributes = Project::factory()->raw([
         'user_id' => auth()->id()
     ]);
@@ -99,7 +89,7 @@ class ProjectTest extends TestCase
     $response = $this->postJson('api/v1/projects', $attributes);
 
     $response->assertJsonValidationErrors('tasks');
-}
+  }
 
     /** @test */
     public function auth_user_can_get_project_resource()
@@ -127,22 +117,51 @@ class ProjectTest extends TestCase
 
        $this->project->refresh();
 
-       $response->assertJson([
-           'message'=>'Project name updated sucessfully',
-           'name'=>$this->project->name,
-           'slug'=>$this->project->slug
-        ]);
+        $response
+          ->assertStatus(200)
+          ->assertJson([
+              'message'=>'Project Updated Successfully',
+              'project'=>[
+                'name'=>$this->project->name,
+                'slug'=>$this->project->slug,
+              ]
+            ]);
     }
 
     /** @test */
-    public function data_with_same_request_not_be_updated()
+    public function updated_project_requires_a_name()
     {
       $response=$this->patchJson($this->project->path(),
-        ['name'=>$this->project->name])->assertStatus(400);
+        ['name'=>null])->assertUnprocessable();
+
+      $response->assertJsonMissingValidationErrors('project.name');
+    }
+
+    /** @test */
+    public function it_does_not_update_with_invalid_fields()
+    {
+      $response=$this->patchJson($this->project->path(),
+        ['invalid_field'=>'Some value'])
+        ->assertStatus(400);
 
       $response->assertJson([
-          'error'=>"You haven't changed anything",
+          'error'=>"You haven't changed anything.",
          ]);
+    }
+
+     /** @test */
+    public function it_does_not_update_field_with_same_data()
+    {
+        $project=Project::factory()->create(['name'=>'Xepra Tech']);
+
+      $response=$this->patchJson($project->path(),
+        [
+            'name'=>$project->name,
+    ])->assertStatus(422);
+
+        $response->assertJsonValidationErrors([
+            'name' => 'The name must be different from the current name.'
+        ]);
     }
 
    /** @test*/

@@ -22,6 +22,8 @@ class ProjectResource extends JsonResource
      */
     public function toArray($request)
     {
+        $showRoute = $request->routeIs('projects.show');
+
         return [
         /**
          *  @example 1
@@ -53,7 +55,8 @@ class ProjectResource extends JsonResource
          * Returns true if completed, otherwise false.
          * @example false
         */
-          'completed'=>$this->completed,
+        'completed'=>$this->when($showRoute,
+                $this->completed),
 
         /**
          * The total score associated with the project.
@@ -65,7 +68,8 @@ class ProjectResource extends JsonResource
          * Reason why the project phase was postponed, if any.
          * @example null
         */
-          'postponed'=>$this->postponed,
+          'postponed'=>$this->when($showRoute,
+                    $this->postponed),
 
         /**
          * Date when the project was created, displayed in a human-readable format.
@@ -83,7 +87,7 @@ class ProjectResource extends JsonResource
          * Shows the date the project was deleted if it is currently in the "trashed" state.
          * @example 10 June 2024
         */
-          'deleted_at'=>$this->when(!empty($this->deleted_at),
+        'deleted_at'=>$this->when(!empty($this->deleted_at),
                      fn()=>$this->deleted_at->diffforHumans()),
 
         /**
@@ -94,36 +98,55 @@ class ProjectResource extends JsonResource
                fn()=>$this->stage_updated_at
                  ->format(config('app.date_formats.exact'))),
 
-          'ownerNotAuthorized' => auth()->user()->is($this->user) && !auth()->user()->isConnectedToZoom(),
+          'ownerNotAuthorized' => $this->when($showRoute,
+            auth()->user()->is($this->user) && !auth()->user()->isConnectedToZoom(),
+        ),
 
-          'days_limit'=>config('app.project.abandonedLimit'),
+          'days_limit'=>$this->when(
+            $showRoute,
+            config('app.project.abandonedLimit'),
+          ),
 
         /**
          * Basic details of the project owner.
          * @example [data]
         */
-         'user'=>$this->user()->select('uuid','name','avatar_path','username','email')->first(),
+        'user' => $this->when($showRoute && $this->relationLoaded('user'), fn() => $this->user->only(['uuid', 'name', 'avatar_path', 'username', 'email'])),
+
 
 
         /**
          * Current stage information for the project.
         */
-        'stage'=>new StageResource($this->stage),
+        'stage' => $this->when($showRoute && $this->relationLoaded('stage'), fn() => new StageResource($this->stage)),
+
 
         /**
          * List of active project members.
         */
-        'members'=>UsersResource::collection($this->activeMembers()->get()),
+        'members' => $this->when($showRoute && $this->relationLoaded('activeMembers'), fn() => UsersResource::collection($this->activeMembers)),
+
 
         /**
          * Limited list of project chat conversations.
         */
-        'conversations'=>ConversationResource::collection($this->whenLoaded('conversations')->take(25)),
+        'conversations' => $this->when(
+          $showRoute,
+        fn () => ConversationResource::collection($this->whenLoaded('conversations')->take(25))
+      ),
 
         /**
          * Limited list of recent project activities.
         */
-        'activities'=>ActivityResource::collection($this->getLimitedActivities()),
+        'activities' => $this->whenLoaded('limitedActivities', function () {
+    return ActivityResource::collection($this->limitedActivities);
+}),
+
+        'links'=>$this->when(
+            $request->routeIs('projects.update'),[
+          'self'=>"/api/v1/".$this->slug,
+        ],
+      ),
         ];
     }
 }

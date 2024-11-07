@@ -14,9 +14,9 @@ __webpack_require__.r(__webpack_exports__);
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
 function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
-function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
-function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
+function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -42,14 +42,16 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
   methods: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapMutations"])('project', ['noteScore', 'updateScore', 'detachMember'])), {}, {
     ProjectNote: function ProjectNote() {
       var _this = this;
+      this.$Progress.start();
       axios.patch('/api/v1/projects/' + this.slug, {
         notes: this.form.notes
       }).then(function (response) {
-        _this.updateNotes(response.data.notes);
-        _this.$vToastify.success("Notes Updated");
-        _this.noteScore(response.data.score);
-        console.log(response.data.score);
+        _this.$Progress.finish();
+        _this.updateNotes(response.data.project.notes);
+        _this.$vToastify.success(response.data.message);
+        _this.noteScore(response.data.project.score);
       })["catch"](function (error) {
+        _this.$Progress.fail();
         if (error.response.data.errors && error.response.data.errors.notes[0]) {
           _this.$vToastify.warning(error.response.data.errors.notes[0]);
         }
@@ -144,7 +146,7 @@ var render = function render() {
     attrs: {
       id: "wrapper"
     }
-  }, [_vm._m(0), _vm._v(" "), _c("SubscriptionCheck", [_vm.access ? _c("form", {
+  }, [_vm._m(0), _vm._v(" "), _vm.access ? _c("form", {
     attrs: {
       id: "paper",
       method: "post"
@@ -202,7 +204,7 @@ var render = function render() {
         _vm.$set(_vm.form, "notes", $event.target.value);
       }
     }
-  }) : _vm._e()]), _vm._v(" "), _c("br")], 1)]), _vm._v(" "), _c("hr"), _vm._v(" "), _vm.access ? _c("div", {
+  }) : _vm._e(), _vm._v(" "), _c("br")])]), _vm._v(" "), _c("hr"), _vm._v(" "), _vm.access ? _c("div", {
     staticClass: "invite"
   }, [_vm._m(1), _vm._v(" "), _c("input", {
     directives: [{

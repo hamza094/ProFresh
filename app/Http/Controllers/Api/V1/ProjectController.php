@@ -7,7 +7,7 @@ use Illuminate\Support\Arr;
 use App\Models\User;
 use App\Models\Project;
 use Illuminate\Http\Request;
-use App\Http\Requests\Api\V1\ProjectRequest;
+use App\Http\Requests\Api\V1\ProjectUpdateRequest;
 use App\Http\Requests\Api\V1\ProjectStoreRequest;
 use App\Services\Api\V1\ProjectService;
 use App\Repository\ProjectRepository;
@@ -67,33 +67,37 @@ class ProjectController extends ApiController
 
     public function show(Project $project)
     {
-      $project->load(['conversations.user','meetings']);
+      $project->load(['conversations.user','stage','meetings','activeMembers','limitedActivities']);
 
       return new ProjectResource($project);
     }
 
-    public function update(Project $project,ProjectRequest $request,ProjectService $service)
+
+    /**
+     *  Update Project Fields
+     * 
+     *  This endpoint allows you to update the details of an existing project. 
+     * It requires the project's slug and the updated fields (name, about, notes) when they are present in the request body and returns the updated resource.
+     * 
+     * @response array{message: 'Project Updated Successfully',project:array{id:1, slug:'the-dimension', name:'The Dimension', about:'This is the project dimension description', score:5, created_at:'5 days ago', updated_at:'few seconds ago',links:array{self:'api/v1/projects/the-dimension'}}}
+    */  
+    public function update(Project $project,ProjectUpdateRequest $request,ProjectService $service)
     {
       $this->authorize('access', $project);
 
-      if($service->requestAttributesUnchanged($project)){
+    if (empty($request->validated())) {
 
-        return $this
-            ->respondError("You haven't changed anything");
-      }
+    return $this->respondError("You haven't changed anything.");
+    }
 
       $project->update($request->validated());
 
-      $changedAttribute=$service->getChangedAttribute($request);
-
       $service->sendNotification($project);
 
-      return $this->respondWithSuccess([
-        'message'=>'Project '.$changedAttribute.' updated sucessfully',
-         $changedAttribute=>$project->{$changedAttribute},
-        'slug'=>$project->slug,
-        'score'=>$project->score()
-      ]);
+     return response()->json([
+      'message' => 'Project Updated Successfully',
+      'project' => new ProjectResource($project),
+      ], 200);
     }
 
     /*

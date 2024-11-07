@@ -70,7 +70,7 @@ Route::get('/webhooks/zoom/meetings/{meeting}',[ZoomController::class,'event']);
 
 Route::controller(ProjectDashboardController::class)->group(function(){
  Route::get('/data','data');
- Route::get('/tasksdata','tasksData');
+ Route::get('/tasksdata','tasksData')->name('tasks.data');
  Route::get('/user/activities','activities');
 })->middleware(['can:owner','user']);
 
@@ -82,7 +82,7 @@ Route::apiResource('/projects', ProjectController::class)->except(['show']);
 
 //Project Route Prefix
 Route::group(['prefix' => 'projects/{project}'], function() {
-Route::get('/',[ProjectController::class,'show'])->withTrashed();
+Route::get('/',[ProjectController::class,'show'])->name('projects.show')->withTrashed();
 
 Route::get('/delete',[ProjectController::class,'delete'])->can('manage','project');
 Route::get('/restore',[ProjectController::class,'restore'])->withTrashed()->can('manage','project');

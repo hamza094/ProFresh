@@ -23,17 +23,43 @@
 						</div>
 						<div class="col-md-10">
 							<div class="content">
+               <!-- Project name section -->
 								<p class="content-name">
-									<span v-if="nameEdit"> <input class="form-control sm-6" type="text" name="name" v-model="projectname"></span>
-									<span v-else>{{project.name}}</span>
+
 									<span v-if="nameEdit">
-										<button type="button" class="btn btn-link btn-sm" @click="updateName()">Update</button>
-										<button  type="button" class="btn btn-link btn-sm" @click="cancelUpdate()">Cancel</button>
+									 <input 
+									 class="form-control sm-6" 
+									 type="text" 
+									 v-model="projectname">
 									</span>
+
+									<span v-else>{{project.name}}</span>
+
+									<span v-if="nameEdit">
+										<button 
+										type="button"
+										 class="btn btn-link btn-sm" 
+										 @click="updateName()">
+										Update
+									</button>
+										<button
+										  type="button"
+										   class="btn btn-link btn-sm"
+										    @click="cancelUpdate()">
+										  Cancel
+										</button>
+									</span>
+
 									<span v-else>
-										<button v-if="permission.access" type="button" class="btn btn-link btn-sm" @click="nameEdit = true">Edit</button>
+										<button v-if="permission.access"
+										 type="button"
+										  class="btn btn-link btn-sm"
+										   @click="nameEdit = true">
+										 Edit
+									  </button>
 									</span>
 								</p>
+
 								<p class="content-info">
 									Created On
 									<span class="content-dot"></span>
@@ -58,18 +84,30 @@
 					<p class="pro-info">Project Detail</p>
 					<div class="row">
 						<div class="col-md-6">
-							<p  class="crm-info"> <b>About</b>:
+							<!-- About Section -->
+							<p  class="crm-info"> 
+								<b>About</b>:
 								<span v-if="aboutEdit">
-									<textarea name="name" rows="4" cols="30" v-model="projectabout" v-text="project.about" class="form-control"></textarea>
+									<textarea 
+									 rows="4"
+									  cols="30"
+									   v-model="projectabout"
+									    v-text="project.about"
+									     class="form-control">	
+									</textarea>
 								</span>
+
 								<span v-else> {{project.about}} </span>
+
 								<span v-if="aboutEdit">
 									<button type="button" class="btn btn-link btn-sm" @click="updateAbout()">Update</button>
 									<button type="button" class="btn btn-link btn-sm" @click="aboutCancel()">Cancel</button>
 								</span>
+
 								<span v-else>
 									<button v-if="permission.access" type="button" class="btn btn-link btn-sm" @click="editAbout()">Edit</button>
 								</span>
+
 							</p>
 							<p v-if="!project.postponed" class="crm-info"> <b>Postponed reason</b>: <span> The project is currently active.
 							Please try to avoid the project being postpone without any reason </span></p>
@@ -216,30 +254,35 @@ export default{
 
     methods:{
     ...mapActions('project',['loadProject']),
-    ...mapMutations('project',['nameUpdate','aboutUpdate']),
+    ...mapMutations('project',['aboutUpdate']),
 
 			updateName(){
+				this.$Progress.start();
 				axios.patch(`/api/v1/projects/${this.project.slug}`,{
 							name:this.projectname,
 					}).then(response=>{
-						this.updateNameState(response.data.name,response.data.slug,response.data.message);
-             	this.updateUrl(response.data.slug);
+						 const { name, slug}=response.data.project;
+						  this.$Progress.finish();
+						this.updateNameState(name,slug,response.data.message);
+             	this.updateUrl(slug);
 					}).catch(error=>{
+							this.$Progress.fail();
 						  this.nameEdit = false;
 						  this.projectname=this.project.name;
               this.showError(error);
 					 });
 			},
-			updateUrl(url){
-				 window.history.replaceState(
-          {additionalInformation: 'Updated the URL with Slug'},
-          'Updated Project URL',
-          `http://127.0.0.1:8000/projects/${url}`
-          );
-			},
+		updateUrl(slug) {
+  if (this.$route.params.slug !== slug) {
+    this.$router.replace({
+      name: 'ProjectPage',
+      params: { ...this.$route.params, slug }
+    });
+  }
+},
 
 			updateNameState(name,slug,msg){
-				this.nameUpdate(name,slug);
+				this.$store.commit('project/nameUpdate', { name, slug });
 				this.projectname=name;
 				this.nameEdit = false;
 				this.$vToastify.success(msg);
@@ -251,14 +294,18 @@ export default{
 			},
 
 			updateAbout(){
+								this.$Progress.start();
 					axios.patch(`/api/v1/projects/${this.project.slug}`,{
 							about:this.projectabout,
 					}).then(response=>{
-						  this.aboutUpdate(response.data.about);
-							this.projectabout=response.data.about;
+							this.$Progress.finish();
+							const data= response.data;
+						  this.aboutUpdate(data.project.about);
+							this.projectabout=data.project.about;
 							this.aboutEdit = false;
-							this.$vToastify.success(response.data.messge);
+							this.$vToastify.success(data.message);
 					}).catch(error=>{
+						this.$Progress.fail();
 						this.aboutEdit = false;
 						this.projectabout=this.project.about;
 						 this.showError(error);

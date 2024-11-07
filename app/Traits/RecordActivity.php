@@ -83,7 +83,7 @@ trait RecordActivity
            ActivityLogged::dispatch($activity);
         }
 
-        DashboardActivity::dispatch($activity);
+        //DashboardActivity::dispatch($activity);
     }
     /**
      * The activity feed for the project.

@@ -303,16 +303,16 @@ export default{
      console.log(error.response.data.errors);
    });
     },
-     listenForActivities() {
+     /*listenForActivities() {
       Echo.channel('activities')
         .listen('DashboardActivity', (e) => {
           this.activities.unshift(e);
       });
-    },		
+    },*/		
     },
     
     mounted(){
-      this.listenForActivities();
+      //this.listenForActivities();
       this.loadActivities();
       this.subscriptionList();
     }
