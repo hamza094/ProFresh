@@ -8,7 +8,7 @@ use App\DataTransferObjects\Paddle\UserSubscriptionData;
 use App\Interfaces\Paddle;
 
 class PaddleController extends Controller
-{
+{ 
      public function subscribedUsers(Paddle $paddle)
  { 
     //try {

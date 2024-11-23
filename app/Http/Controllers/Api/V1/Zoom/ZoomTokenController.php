@@ -8,7 +8,9 @@ use App\Actions\ZoomAction;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use App\Http\Requests\Api\V1\Zoom\JwtTokenRequest;
+use Dedoc\Scramble\Attributes\ExcludeAllRoutesFromDocs;
 
+#[ExcludeAllRoutesFromDocs]
 class ZoomTokenController extends Controller
 {
     public function getUserToken(Zoom $zoom): JsonResponse

@@ -3,6 +3,8 @@
 namespace App\Http\Requests\Api\V1;
 
 use Illuminate\Foundation\Http\FormRequest;
+use App\Enums\StageStatus;
+use Closure;
 
 class StageRequest extends FormRequest
 {
@@ -24,8 +26,23 @@ class StageRequest extends FormRequest
     public function rules()
     {
         return [
-          'stage'=>'sometimes|required',
-          'postponed'=>'sometimes|required'
+
+          /**
+           * @example 1
+           */
+          'stage' => ['required','int',
+                 function (string $attribute, mixed $value, Closure $fail) {
+                     if ((int)$value === (int)$this->project->stage_id) {
+                         $fail("The selected stage must be different from the current project stage.");
+                     }
+                 },
+            ],
+
+          /**
+           * @example null
+           */
+          'postponed_reason' => ['sometimes','required','string',
+      ],
         ];
     }
 }

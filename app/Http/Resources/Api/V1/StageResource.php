@@ -20,13 +20,13 @@ class StageResource extends JsonResource
         return [
         /**
          * @example 1
-        */  
-          'id'=>$this->id,
+        */
+          'id' => $this->id,
 
         /**
-         * @example Begining
-        */ 
-          'name'=>$this->name,
+         * @example Planing
+        */
+          'name' => $this->name,
         ];
     }
 }

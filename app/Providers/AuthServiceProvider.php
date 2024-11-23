@@ -34,44 +34,45 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-       $this->registerPolicies();
+        $this->registerPolicies();
 
-       Password::defaults(fn () =>
+        Password::defaults(
+            fn () =>
         Password::min(8)
-           ->letters()
-            ->mixedCase()
-           ->numbers()
-           ->symbols()
-      );
+            ->letters()
+             ->mixedCase()
+            ->numbers()
+            ->symbols()
+        );
 
         Gate::before(function ($user, $ability) {
             return $user->hasRole('Admin') ? true : null;
         });
 
 
-      Gate::define('archive-task', function ($user, Task $task){
-        return $task->trashed()
-        ? throw ValidationException::withMessages(['task' => 'Task is archived. Activate the task to proceed.']) : true;
+        Gate::define('archive-task', function ($user, Task $task) {
+            return $task->trashed()
+            ? throw ValidationException::withMessages(['task' => 'Task is archived. Activate the task to proceed.']) : true;
         });
 
 
-    VerifyEmail::toMailUsing(function (object $notifiable, string $url) {
-        return (new MailMessage)
-            ->subject('Verify Email Address')
-            ->line('Click the button below to verify your email address.This link will expire after 60 minutes.Please Remember you must be login to get your account verified')
-            ->action('Verify Email Address', $url);
-    });
+        VerifyEmail::toMailUsing(function (object $notifiable, string $url) {
+            return (new MailMessage())
+                ->subject('Verify Email Address')
+                ->line('Click the button below to verify your email address.This link will expire after 60 minutes.Please Remember you must be login to get your account verified')
+                ->action('Verify Email Address', $url);
+        });
 
-    VerifyEmail::$createUrlCallback = function ($notifiable) {
-        return URL::temporarySignedRoute(
-            'verification.verify',
-            Carbon::now()->addMinutes(60),
-            [
-                'user' => $notifiable->uuid,
-                'hash' => sha1($notifiable->getEmailForVerification()),
-            ]
-        );
-    };
-      
+        VerifyEmail::$createUrlCallback = function ($notifiable) {
+            return URL::temporarySignedRoute(
+                'verification.verify',
+                Carbon::now()->addMinutes(60),
+                [
+                    'user' => $notifiable->uuid,
+                    'hash' => sha1($notifiable->getEmailForVerification()),
+                ]
+            );
+        };
+
     }
 }

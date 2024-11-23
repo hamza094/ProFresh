@@ -43,8 +43,7 @@ const mutations = {
     updateStage(state,data){
     state.project.stage_updated_at = data.stage_updated
     state.project.stage = data.current_stage
-    state.project.completed = data.completed
-    state.project.postponed= data.postponed
+    state.project.postponed_reason= data.postponed_reason
     state.getStage=data.getStage
     },
 

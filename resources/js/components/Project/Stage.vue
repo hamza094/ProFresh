@@ -5,46 +5,48 @@
       <p><span><b>Project Stage Last Updated:</b> {{stage_updated}}</span></p>
     </div>
   <div class="row" v-if="access">
-    <div v-for="stage in stages" class="arrow-pointer-pd" @click="stageChange(stage.id)" :key="stage.id">
-       <p :class="stageCondition(stage.id)" class="arrow-pointer"><span class="arrow-pointer-span">{{stage.id}}. {{stage.name}}</span></p>
-     </div>
-     <div class="stage-dropdown" @click="stagePop = !stagePop">
-       <p :class="lastStage()" class="arrow-pointer"><span class="arrow-pointer-span">{{status}} <i class="fas fa-angle-double-down"></i></span></p>
-       <div class="stage-dropdown_item" v-show=stagePop>
-         <ul>
-           <li v-if="!completed" class="stage-dropdown_item-content" @click="projectClose">Closure</li>
-           <li v-if="projectstage" class="stage-dropdown_item-content" @click="$modal.show('stage-reason')">Postponed</li>
-         </ul>
-       </div>
-    </div>
-  </div>
+  <ul class="d-flex flex-wrap ml-2 list-unstyled m-0 p-0 w-100">
+    <li
+      v-for="stage in stages"
+      :key="stage.id"
+      class="arrow-pointer-pd me-3"
+      @click="handleStageClick(stage)"
+    >
+      <p :class="getStageClass(stage)" class="arrow-pointer">
+        <span class="arrow-pointer-span">{{ stage.id }}. {{ stage.name }}</span>
+      </p>
+    </li>
+  </ul>
+</div>
   <div v-else>
     <h5>Only project members and owners are allowed to change the project stage.</h5>
   </div>
 </div>
 <div>
-  <modal name="stage-reason" :clickToClose=false>
+  <modal name="stage-reason" :clickToClose=false 
+    :height="260"
+     :adaptive="true">
     <div class="panel-top_content">
+
         <span class="panel-heading">Project Satge Postponed</span>
-        <span class="panel-exit float-right" role="button" @click.prevent="$modal.hide('stage-reason')">x</span>
+
+        <span 
+        class="panel-exit float-right" 
+        role="button" 
+        @click.prevent="$modal.hide('stage-reason')">
+        x
+      </span>
     </div>
-    <hr>
       <div class="panel-top_content">
         <div class="form-group">
            <label for="unqstage" class="label-name">Reason of project to be Postponed:</label>
-          <select class="custom-select" id="unqstage" name="unqstage" v-model="reason" title="Some placeholder text...">
-            <option value="Junk Project">Junk Project</option>
-            <option value="Unable to reach">Unable to reach</option>
-            <option value="Not intrested">Not intrested</option>
-          </select>
+           <input type="text" class="form-control" name="unqstage" id="unqstage" v-model="reason">
         </div>
       </div>
-      <div class="panel-bottom">
           <div class="panel-top_content float-right">
               <button class="btn panel-btn_close" @click.prevent="$modal.hide('stage-reason')">Cancel</button>
              <button class="btn panel-btn_save" @click.prevent="postpone">Save</button>
           </div>
-      </div>
 </modal>
 </div>
 </div>
@@ -54,78 +56,57 @@
   import { mapMutations } from 'vuex';
 
   export default{
-    props:['slug','projectstage','completed','stage_updated','postponed','get_stage','access'],
+    props:['slug','stage_updated','postponed_reason','get_stage','access'],
     data(){
        return{
-         activeStage:'',
-         stagePop:false,
          reason:'',
          stages:{},
-         status:'',
-         stageUpdation:'',
+         selectedStage:0,
        }
-    },
-    watch:{
-        stagePop(stagePop){
-            if(stagePop){
-                document.addEventListener('click',this.offIfClickedOutside);
-            }
-        }
     },
     methods:{
       ...mapMutations('project',['updateStage']),
 
-      stageCondition(stageId) {
-        if(this.projectstage){
-        const activeStage = stageId === this.projectstage.id ? 'current' : 'stages';
-         this.activeStage = activeStage;
-         return activeStage;
+  getStageClass(stage) {
+  if (this.get_stage === stage.id) {
+    if (stage.name === "Postponed") return "postpone";
+    if (stage.name === "Completed") return "closed";
+    return "current";
+  }
+  return "stages";
+ },
+
+    handleStageClick(stage) {
+      if (stage.name === "Postponed") {
+        this.selectedStage=stage.id;
+        this.$modal.show("stage-reason"); 
+      } else {
+        this.stageChange(stage.id); 
       }
-
-      if(!this.projectstage){
-        if(this.completed){
-          this.activeStage="closed";
-           return 'closed';
-        }
-        this.activeStage="postpone";
-         return 'postpone';
-      }
-
-  },
-
-      lastStage(){
-        if(!this.projectstage && this.completed){
-            this.status="Closed";
-            return "closed";
-        }
-        if(!this.projectstage && !this.completed){
-          this.status="Postponed";
-          return "postpone";
-        }
-        if(this.projectstage && !this.completed){
-          this.status="Clo/Pos..";
-          return "stages";
-        }
-      },
+    },
 
   updateProject(data) {
-  axios.patch('/api/v1/projects/' + this.slug + '/stage', data)
+    this.$Progress.start();
+  axios.patch(`/api/v1/projects/${this.slug}/stage`, data)
+
     .then(response => {
+      this.$Progress.finish();
       const project = response.data.project;
 
       let eventData = {
-        completed: data.completed || 0,
         current_stage: project.stage || null,
         stage_updated: project.stage_updated_at,
-        postponed: project.postponed || null,
+        postponed_reason: project.postponed_reason || null,
         getStage: project.stage ? project.stage.id : 0
       };
-      this.eventListener(eventData);
+      this.updateStage(eventData);
       this.$vToastify.success("Successfully update");
     })
     .catch(error => {
+      this.$Progress.fail();
       this.$vToastify.error("Error in Project Phase Conversion");
     });
+    this.selectedStage=0;
 },  
 
   stageChange(stageId) {
@@ -137,13 +118,10 @@
 },
       
  postpone() {
-   this.updateProject({ postponed: this.reason });
+   this.updateProject({stage:this.selectedStage, postponed_reason: this.reason });
    this.$modal.hide('stage-reason');
 },
 
- projectClose() {
-  this.updateProject({ completed: 'true' });  
-},
 
  loadStages(){
     axios.get('/api/v1/stages').
@@ -154,16 +132,6 @@
    });
 },
 
-eventListener(data){
-  this.updateStage(data);
-},
-
-  offIfClickedOutside(event){
-      if(!event.target.closest('.stage-dropdown')){
-        this.stagePop=false;
-        document.removeEventListener('click',this.offIfClickedOutside);
-    }
-  },
  },
  mounted(){
       this.loadStages();

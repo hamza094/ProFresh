@@ -18,6 +18,8 @@ use App\Services\Api\V1\Admin\Integration\PaddleService;
 use Dedoc\Scramble\Scramble;
 use Dedoc\Scramble\Support\Generator\OpenApi;
 use Dedoc\Scramble\Support\Generator\SecurityScheme;
+use Illuminate\Routing\Route;
+use Illuminate\Support\Str;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -62,6 +64,24 @@ class AppServiceProvider extends ServiceProvider
             SecurityScheme::http('bearer')
         );
     });
+
+    Scramble::routes(function (Route $route) {
+     $excludedPrefixes = [
+        'api/v1/admin',
+        'api/v1/webhooks',
+        'api/v1/oauth/zoom',
+        'api/v1/user/token',
+        'api/v1/user/jwt/token',
+        'api/v1/user/activities',
+        'api/v1/data',
+        'api/v1/tasksdata',
+        'api/v1/user/projects',
+    ];
+
+    return Str::startsWith($route->uri, 'api/v1') && 
+       !Str::startsWith($route->uri, $excludedPrefixes);
+
+});
 
 
         Model::preventLazyLoading(! app()->isProduction());

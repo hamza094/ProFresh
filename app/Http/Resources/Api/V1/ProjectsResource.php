@@ -63,12 +63,10 @@ class ProjectsResource extends JsonResource
      */
         'created_at'=>$this->created_at,
 
-        //'completed'=>$this->completed,
-
           /**
      * Links related to the project.
      * @example {
-     *   "self": "/api/v1/the-dimension"
+     *   "self": "/api/v1/projects/the-dimension"
      * }
      */
         'links'=>[

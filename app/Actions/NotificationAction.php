@@ -19,7 +19,7 @@ class NotificationAction
 
   private static function isAuthUser($user): bool
   {
-     return auth()->id() == $user->id;
+     return auth()->id() === $user->id;
   }
 
 }

@@ -4,73 +4,89 @@ namespace Database\Factories;
 
 use App\Models\Stage;
 use App\Models\User;
-
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class StageFactory extends Factory
 {
-  /**
-   * The name of the factory's corresponding model.
-   *
-   * @var string
-   */
-  protected $model = Stage::class;
+    /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = Stage::class;
     /**
      * Define the model's default state.
      *
      * @return array
      */
+
     public function definition()
     {
-      return [
-            'name'=>'Begining',
-                                'user_id'=>User::factory(),
-
-        ];
+        return [
+          'name' => 'Planing',
+          'user_id' => User::factory(),
+          ];
     }
 
-    public function define()
+    public function design()
     {
-      return $this->state(function (array $attributes) {
-         return [
-            'name' => 'Defining',
-                                'user_id'=>User::factory(),
-
+        return $this->state(function (array $attributes) {
+            return [
+               'name' => 'Design',
+               'user_id' => User::factory(),
         ];
-    });
-   }
+        });
+    }
 
-   public function design()
-   {
-     return $this->state(function (array $attributes) {
-        return [
-           'name' => 'Designing',
-                               'user_id'=>User::factory(),
+    public function develop()
+    {
+        return $this->state(function (array $attributes) {
+            return [
+               'name' => 'Develop',
+                'user_id' => User::factory(),
 
        ];
-   });
-  }
+        });
+    }
 
-  public function develop()
-  {
-    return $this->state(function (array $attributes) {
-       return [
-          'name' => 'Developing',
-                              'user_id'=>User::factory(),
-
+    public function testing()
+    {
+        return $this->state(function (array $attributes) {
+            return [
+               'name' => 'Testing',
+               'user_id' => User::factory(),
       ];
-  });
- }
+        });
+    }
 
- public function execution()
- {
-   return $this->state(function (array $attributes) {
-      return [
-         'name' => 'Execution',
-                             'user_id'=>User::factory(),
-
+    public function deliver()
+    {
+        return $this->state(function (array $attributes) {
+            return [
+               'name' => 'Deliver',
+                'user_id' => User::factory(),
      ];
- });
-}
+        });
+    }
+
+    public function completed()
+    {
+        return $this->state(function (array $attributes) {
+            return [
+               'name' => 'Completed',
+                'user_id' => User::factory(),
+     ];
+        });
+    }
+
+    public function postponed()
+    {
+        return $this->state(function (array $attributes) {
+            return [
+               'name' => 'Postponed',
+                'user_id' => User::factory(),
+     ];
+        });
+    }
 
 }

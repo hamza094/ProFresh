@@ -29,7 +29,6 @@ class ProjectResource extends JsonResource
         'members_count'=>$this->whenCounted('activeMembers'),
         'score'=>$this->score(),
         'status'=>$this->status,
-        'completed'=>$this->completed,
         'links'=>[
           'self'=>"/api/v1/".$this->slug,
         ],

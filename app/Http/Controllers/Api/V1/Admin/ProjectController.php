@@ -17,28 +17,28 @@ class ProjectController extends ApiController
 {
     use ApiResponseHelpers;
 
-    public function index(ProjectFilterRequest $request,ProjectFiltersRepository $repository): JsonResponse
+    public function index(ProjectFilterRequest $request, ProjectFiltersRepository $repository): JsonResponse
     {
         $perPage = 10;
         $appliedFilters = [];
 
-       $data = $repository->filters($request,$perPage,$appliedFilters);
+        $data = $repository->filters($request, $perPage, $appliedFilters);
 
-       $projects=$data['projects'];
-       $appliedFilters=$data['appliedFilters'];
+        $projects = $data['projects'];
+        $appliedFilters = $data['appliedFilters'];
 
-    if($projects->isEmpty()){
-         return $this->respondWithSuccess([
-        'message'=>'Sorry no result found',
+        if ($projects->isEmpty()) {
+            return $this->respondWithSuccess([
+        'message' => 'Sorry no result found',
         'appliedFilters' => $appliedFilters,
     ]);
-         
-    }
 
-    return $this->respondWithSuccess([
-        'projects'=>ProjectResource::collection($projects)->paginate($perPage),
-        'appliedFilters' => $appliedFilters,
-    ]);     
+        }
+
+        return $this->respondWithSuccess([
+            'projects' => ProjectResource::collection($projects)->paginate($perPage),
+            'appliedFilters' => $appliedFilters,
+        ]);
     }
 
     public function bulkDelete(Request $request)
@@ -46,12 +46,12 @@ class ProjectController extends ApiController
         $projectIds = $request->input('project_ids', []);
 
         Project::withTrashed()->whereIn('id', $projectIds)->each(function ($project) {
-    $project->forceDelete();
-    });
+            $project->forceDelete();
+        });
 
         return $this->respondWithSuccess([
-        'message'=>'Projects deleted Successfully',
-    ]); 
+        'message' => 'Projects deleted Successfully',
+    ]);
 
     }
 }

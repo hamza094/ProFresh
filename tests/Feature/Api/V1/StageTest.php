@@ -14,85 +14,88 @@ use Laravel\Sanctum\Sanctum;
 
 class StageTest extends TestCase
 {
-  use RefreshDatabase;
+    use RefreshDatabase;
 
-  public $project;
+    public $project;
 
-  public function setUp() :void
-  {
-      parent::setUp();
+    public function setUp(): void
+    {
+        parent::setUp();
 
-      // create a user
-     $user=User::factory()->create([
-          'email'=>'johndoe@example.org',
-          'password'=>Hash::make('testpassword')
-      ]);
+        // create a user
+        $user = User::factory()->create([
+             'email' => 'johndoe@example.org',
+             'password' => Hash::make('testpassword')
+         ]);
 
-      Sanctum::actingAs(
-          $user,
-      );
+        Sanctum::actingAs(
+            $user,
+        );
 
-      Stage::factory()->create();
-      Stage::factory()->define()->create();
-      Stage::factory()->design()->create();
+        Stage::factory()->create();
+        Stage::factory()->design()->create();
+        Stage::factory()->develop()->create();
+        Stage::factory()->postponed()->create();
 
-      $this->project=Project::factory()->for($user)
-      ->create(['stage_id'=>1]);
-  }
+        $this->project = Project::factory()->for($user)
+        ->create(['stage_id' => 1]);
+    }
 
-  /** @test */
-  public function allowed_user_can_change_project_stage()
-  {
-    $this->assertEquals('Begining',$this->project->stage->name);
-    $new_stage = 2;
+    /** @test */
+    public function stages_loaded_sucessfully()
+    {
+        $stages = Stage::all();
 
-    $response=$this->patchJson($this->project->path().'/stage',[
-          'stage'=>$new_stage,
-      ]);
+        $response = $this->getJson('api/v1/stages')
+          ->assertOk();
 
-      $this->assertDatabaseHas('projects',['id'=>$this->project->id,'stage_id'=>$new_stage]);
+        $this->assertEquals($stages->count(), 4);
+    }
 
-      $this->project->refresh();
+    /** @test */
+    public function allowed_user_can_change_project_stage()
+    {
+        $this->assertEquals('Planing', $this->project->stage->name);
 
-      $response->assertJson([
-        'project'=>[
-          'stage'=>['name'=>$this->project->stage->name,
-                   'id'=>$this->project->stage->id],
-          'stage_updated_at'=>$this->project->stage_updated_at
-                    ->format(config('app.date_formats.exact'))]
-       ]);
- }
+        $newStageId = 2;
 
-  /** @test */
-  public function allowed_user_can_postponed_stage_and_update_reason()
-  {
-    $postponed='Unable to reach';
-    $response=$this->patchJson($this->project->path().'/stage',[
-      'postponed'=>$postponed,
-      ]);
+        $response = $this->withoutExceptionHandling()
+        ->patchJson($this->project->path().'/stage', [
+              'stage' => $newStageId,
+          ]);
 
-    $this->assertDatabaseHas('projects',['id'=>$this->project->id,'postponed'=>$postponed,'stage_id'=>null]);
+        $this->assertDatabaseHas('projects', ['id' => $this->project->id,'stage_id' => $newStageId]);
 
-     $this->project->refresh();
+        $this->project->refresh();
 
-     $response->assertJson([
-       'project'=>['postponed'=>$this->project->postponed]
+        $response->assertJson([
+          'project' => [
+            'stage' => ['name' => $this->project->stage->name,
+                     'id' => $this->project->stage->id],
+            'stage_updated_at' => $this->project->stage_updated_at
+                      ->format(config('app.date_formats.exact'))]
+         ]);
+    }
+
+    /** @test */
+    public function allowed_user_can_update_postponed_reason()
+    {
+        $postponed_reason = 'Unable to reach';
+
+        $response = $this->withoutExceptionHandling()->patchJson($this->project->path().'/stage', [
+            'stage' => 4,
+          'postponed_reason' => $postponed_reason,
+          ]);
+
+        $this->project->refresh();
+
+        $this->assertDatabaseHas('projects', ['id' => $this->project->id,'postponed_reason' => $postponed_reason,'stage_id' => 4]);
+
+        $this->project->refresh();
+
+        $response->assertJson([
+          'project' => ['postponed_reason' => $this->project->postponed_reason]
    ]);
-  }
+    }
 
-  /** @test */
-  public function allowed_user_can_update_stage_to_complete()
-  {
-     $response=$this->withoutExceptionHandling()->patchJson($this->project->path().'/stage',[
-      'completed'=>'true',
-     ]);
-
-     $this->assertDatabaseHas('projects',['id'=>$this->project->id,'completed'=>true,'stage_id'=>null]);
-
-     $this->project->refresh();
-
-     $response->assertJson([
-          'project'=>['completed'=>$this->project->completed]
-      ]);
-   }
 }

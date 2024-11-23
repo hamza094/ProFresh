@@ -25,12 +25,11 @@ class ProjectFactory extends Factory
     public function definition()
     {
         return [
-        'user_id'=>User::factory(),
-        'stage_id'=>Stage::factory(),
-        'completed'=>false,
+        'user_id' => User::factory(),
+        'stage_id' => Stage::factory(),
         'name' => $this->faker->catchPhrase,
-        'about'=>$this->faker->text($maxNbChars = 250),
-        'stage_updated_at'=>Carbon::now(),
+        'about' => $this->faker->text($maxNbChars = 250),
+        'stage_updated_at' => Carbon::now(),
         ];
     }
 }

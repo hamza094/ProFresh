@@ -109,9 +109,9 @@
 								</span>
 
 							</p>
-							<p v-if="!project.postponed" class="crm-info"> <b>Postponed reason</b>: <span> The project is currently active.
+							<p v-if="!project.postponed_reason" class="crm-info"> <b>Postponed reason</b>: <span> The project is currently active.
 							Please try to avoid the project being postpone without any reason </span></p>
-							<p v-else class="crm-info"> <b>Postponed reason</b>: <span> {{project.postponed}}  </span></p>
+							<p v-else class="crm-info"> <b>Postponed reason</b>: <span> {{project.postponed_reason}}  </span></p>
 						</div>
 						<div class="col-md-6">
 							<p class="crm-info"> <b>Tasks</b>: <span> Info </span></p>
@@ -120,8 +120,8 @@
 						</div>
 					</div>
 					<br>
-					<Stage :slug="project.slug" :projectstage='project.stage' :postponed="project.postponed"
-					:completed="project.completed" :stage_updated="project.stage_updated_at" :get_stage="this.getStage" :access="permission.access">
+					<Stage :slug="project.slug" :projectstage='project.stage' :postponed_reason="project.postponed_reason"
+					 :stage_updated="project.stage_updated_at" :get_stage="this.getStage" :access="permission.access">
 				</Stage>
 				<br>
 				<hr>

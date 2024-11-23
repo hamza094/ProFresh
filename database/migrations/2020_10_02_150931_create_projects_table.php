@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use App\Models\Stage;
 
 class CreateProjectsTable extends Migration
 {
@@ -15,15 +16,16 @@ class CreateProjectsTable extends Migration
     {
         Schema::create('projects', function (Blueprint $table) {
             $table->id();
-            $table->string("name",150);
-            $table->string("slug",150);
+            $table->string("name", 150);
+            $table->string("slug", 150);
             $table->mediumText("about");
             $table->foreignId('user_id')->constrained()
                   ->onDelete('cascade');
-            $table->foreignId('stage_id');
-            $table->boolean('completed')->default(false);
+            $table->foreignIdFor(Stage::class)
+                  ->nullOnDelete()
+                  ->constrained();
             $table->text('notes')->nullable();
-            $table->string('postponed')->nullable();
+            $table->string('postponed_reason')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

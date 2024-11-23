@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\V1\Admin;
 
+use Dedoc\Scramble\Attributes\ExcludeRouteFromDocs;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
@@ -12,7 +13,6 @@ use App\Models\Task;
 use Carbon\Carbon;
 use App\Services\Api\V1\Admin\DashboardService;
 
-
 class DashboardController extends Controller
 {
     protected $dashboardService;
@@ -22,6 +22,7 @@ class DashboardController extends Controller
         $this->dashboardService = $dashboardService;
     }
 
+   #[ExcludeRouteFromDocs]
     public function backup()
     {
        try {
@@ -39,7 +40,8 @@ class DashboardController extends Controller
 
         return ActivitiesResource::collection($activities);
     }
-
+ 
+  #[ExcludeRouteFromDocs]
    public function data(Request $request)
    {     
     $data = [];
