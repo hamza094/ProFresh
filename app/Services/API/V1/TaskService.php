@@ -11,6 +11,7 @@ use App\Models\Task;
 use App\Models\User;
 use Auth;
 use App\Http\Resources\Api\V1\TaskResource;
+use App\Http\Resources\Api\V1\TasksResource;
 use App\Notifications\ProjectTask;
 use Illuminate\Validation\ValidationException;
 use F9Web\ApiResponseHelpers;
@@ -22,23 +23,26 @@ class TaskService
 
   public function getTasksData(Project $project, bool $isArchived): array
     {
-      $tasksQuery = $project->tasks()->with('assignee:name,id,username');
-
-      $tasksQuery->when($isArchived, fn($query) => $query->archived(), fn($query) => $query->active());
-
-      $tasks = $tasksQuery->get();
+      $tasks = $this->getTasks($project,$isArchived);
 
        $message = $tasks->isEmpty()
             ? 'Sorry, no tasks found.'
             : $this->getMessage($isArchived);
 
-         $tasksData = TaskResource::collection($tasks);
-
-        if (!$isArchived) {
-            $tasksData = $tasksData->paginate(3);
-        }
+          $tasksData =  $isArchived
+           ? TasksResource::collection($tasks)
+           : TasksResource::collection($tasks)->paginate(3);
 
         return compact('message', 'tasksData');
+    }
+
+    private function getTasks($project,$isArchived)
+    {
+      return $project->tasks()
+      ->with('project')
+      ->when($isArchived, 
+        fn($query) => $query->archived(), 
+        fn($query) => $query->active());
     }
 
     private function getMessage(bool $isArchived): string
@@ -46,42 +50,14 @@ class TaskService
       return 'Project ' . ($isArchived ? 'Archived' : 'Active') . ' Tasks';
     }
 
-  public function checkLimits($project)
-  {
-    throw_if($project->tasksReachedItsLimit(),
-      ValidationException::withMessages(
-        ['tasks'=>'Project tasks reached their limit'])
-      );
-  }
-
-  public function updateStatus(Task $task,$statusId): void{
-    if (isset($statusId)) {
-        $status = TaskStatus::findOrFail($statusId);
-        $task->status()->associate($status);
-    }
-  }
-
-  public function setDueDate($request,$task)
-  {
-    if($due_at = request()->input('due_at'))
-    {
-    $formattedTime = (new \DateTime($due_at))->format('Y-m-d H:i:s');
-
-     $task->due_at = \Timezone::convertFromLocal($formattedTime);
-
-     $task->save();
-   }
-  }
-
-  public function updateValidation($request,$task)
-  {
-     Gate::authorize('archive-task', $task);
-
+   public function checkValidation($request,$task)
+   {
+    Gate::authorize('archive-task', $task);
+ 
     if(!$request->validated()){
-       return $this->respondError('Field missing in task');
+       return response()->json(['Field missing in task'], 400);
     } 
   }
-
 
   public function sendNotification($project)
   {
@@ -99,7 +75,6 @@ class TaskService
     ->get();
 
     $usersToNotify->each->notify(new TaskAssigned($task, $project, auth()->user()));
-
   }  
 }
 

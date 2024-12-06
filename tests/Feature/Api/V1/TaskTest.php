@@ -112,6 +112,20 @@ class TaskTest extends TestCase
       ->assertJsonValidationErrors('tasks');
     }
 
+    /** @test */
+    public function allowed_user_can_get_task_resource()
+    {
+      $task=$this->project->tasks()->create(['title'=>'Project Task','user_id'=>$this->project->user->id]);
+
+      $response=$this->getJson($task->path())
+      ->assertOk();
+
+      $response->assertJson([
+            'id'=>$task->id,
+            'title'=>$task->title,
+        ]);
+    }
+
   /** @test */  
   public function allowed_user_can_update_project_task()
   {
@@ -139,6 +153,28 @@ class TaskTest extends TestCase
       'due_at'=>$due_at,
     ])
      ->assertEquals($task->status->id,$status2->id);
+    }
+
+    /** @test */
+    public function due_at_timezone_works_as_expected()
+    {
+        $this->user->update(['timezone'=>'Asia/Karachi']);
+
+        $task=$this->project->addTask('test task');
+
+        $due_at = '2024-12-04T15:00:00';
+
+    $response=$this->putJson($task->path(), [
+      'due_at'=>$due_at,
+     ]);
+
+    $expectedDueAt = Carbon::parse($due_at,$this->user->timezone)->setTimezone('UTC');
+
+    $task->refresh();
+
+    $this->assertEquals($expectedDueAt->toDateTimeString(), $task->due_at->toDateTimeString());
+
+    $this->assertEquals($expectedDueAt->toDateTimeString(), $task->due_at->toDateTimeString());
     }
 
    /** @test */

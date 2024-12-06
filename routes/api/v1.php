@@ -105,9 +105,14 @@ Route::controller(MessageController::class)->group(function(){
   Route::delete('messages/{message}/delete','delete');
 })->middleware('subscription');
 
+
+//Chat Conversation Routes
+Route::apiResource('/conversations',ConversationController::class)->only(['store','destroy'])
+    ->middleware('subscription');
+});
+
 Route::apiResource('/tasks', TaskController::class)
 ->withTrashed()
-->except(['show'])
 ->middleware('subscription');
 
 Route::controller(TaskFeaturesController::class)
@@ -128,13 +133,7 @@ Route::get('unarchive','unarchive')->name('unarchive')
   Route::get('member/search', [TaskFeaturesController::class,'search'])->name('members.search');      
 });
 
-
 })->middleware('subscription');
-
-//Chat Conversation Routes
-Route::apiResource('/conversations',ConversationController::class)->only(['store','destroy'])
-    ->middleware('subscription');
-});
 
 Route::controller(InvitationController::class)->group(function(){
   Route::post('invitations','store')->name('send.invitation')->can('manage','project');

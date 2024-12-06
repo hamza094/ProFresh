@@ -4,6 +4,8 @@ namespace App\Http\Requests\Api\V1;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use Illuminate\Validation\ValidationException;
+
 
 class TaskRequest extends FormRequest
 {
@@ -17,6 +19,16 @@ class TaskRequest extends FormRequest
         return true;
     }
 
+    protected function prepareForValidation(): void
+    {
+     $project = $this->route('project');
+
+      throw_if($project->tasksReachedItsLimit(),
+      ValidationException::withMessages(
+        ['tasks'=>'Project tasks reached their limit'])
+       );
+    }
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -27,9 +39,17 @@ class TaskRequest extends FormRequest
         $project=$this->project;
 
       return [
+          /**
+             * Tasks title
+             * 
+             * - Project task must be unique
+             * 
+             * @example "this is a new project task"
+             */
             'title' => [
              'required',
              'max:55',
+             'min:3',
             Rule::unique('tasks')->where(function ($query) use ($project) {
             return $query->where('project_id', $project->id);
         }),

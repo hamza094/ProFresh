@@ -19,16 +19,18 @@ class TaskUpdate extends FormRequest
         return true;
     }
 
-      protected function prepareForValidation()
+    protected function prepareForValidation()
     {
         $dueAt = $this->input('due_at');
 
         if ($dueAt) {
 
-            $parsedDueAt = Carbon::parse($dueAt);
+        $parsedDueAt = Carbon::parse($dueAt); 
+        $formattedTime = $parsedDueAt->format('Y-m-d H:i:s');
+        $convertedTime = \Timezone::convertFromLocal($formattedTime);
 
             $this->merge([
-                'due_at' => $parsedDueAt,
+                'due_at' => $convertedTime,
             ]);
         }
     }
@@ -43,6 +45,9 @@ class TaskUpdate extends FormRequest
         $project=$this->project;
 
         return [
+            /*
+            * Task's Title
+            */
           'title' => [
             'sometimes',
              'required',
@@ -51,9 +56,27 @@ class TaskUpdate extends FormRequest
             return $query->where('project_id', $project->id);
         }),
         ],
+        /*
+        * Task's Description
+        */
             'description' => 'sometimes|max:1000',
-            'due_at' => 'sometimes|date|required_with:notified',
-            'status_id'=>'required|sometimes',
+
+            /*
+            * Task's Due Date
+            * - This field required with notified
+            * - Field must be valid date
+            *
+            @example "2024-12-09T15:25:00.00"
+            */
+            'due_at' => 'date|sometimes|required_with:notified',
+            /**
+            * TaskStatus id which task associated to
+            * @example 1
+            */
+            'status_id'=>'required|int|max:4|sometimes',
+            /*
+            * Notified task users about task due date
+            */
             'notified'=>[
                 'sometimes',
                 'required',

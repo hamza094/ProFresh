@@ -28,6 +28,7 @@ class StageRequest extends FormRequest
         return [
 
           /**
+           * 
            * @example 1
            */
           'stage' => ['required','int',
@@ -45,4 +46,13 @@ class StageRequest extends FormRequest
       ],
         ];
     }
+
+    public function messages()
+{
+    return [
+        'stage.required' => 'The stage field is required.',
+        'stage.in' => 'The selected stage is invalid. Please choose a valid stage.',
+        // Add more custom messages here
+    ];
+}
 }

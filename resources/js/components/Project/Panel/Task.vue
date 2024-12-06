@@ -102,8 +102,15 @@
             });
           },
      openModal(task) {
-      this.setTask(task);
-      this.$modal.show('task-modal');
+      this.$Progress.start();
+      axios.get('/api/v1/projects/'+this.slug+'/tasks/'+task.id)
+          .then(response=>{
+          this.$Progress.finish();
+            this.setTask(response.data);
+            this.$modal.show('task-modal');
+          }).catch(error=>{
+          this.$Progress.fail();
+       });
     },
      add(){
        axios.post('/api/v1/projects/'+this.slug+'/tasks',this.form)

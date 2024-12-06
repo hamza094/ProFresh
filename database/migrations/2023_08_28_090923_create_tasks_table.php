@@ -15,11 +15,21 @@ class CreateTasksTable extends Migration
     {
         Schema::create('tasks', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->foreignId('project_id')->constrained()->onDelete('cascade');
-            $table->foreignId('status_id')->nullable()->constrained();
-            $table->string('title');
-            $table->text('description')->nullable();
+            $table->foreignId('user_id')
+                  ->cascadeOnDelete()
+                  ->constrained();
+
+            $table->foreignId('project_id')
+                  ->cascadeOnDelete()
+                  ->constrained();
+
+            $table->foreignId('status_id')
+                  ->nullOnDelete()
+                  ->nullable();
+
+            $table->string('title',55);
+            $table->tinyText('description')
+                  ->nullable();
             $table->dateTime('due_at')->nullable();
             $table->string('notified')->nullable();
             $table->softDeletes();

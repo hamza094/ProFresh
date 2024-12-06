@@ -94,8 +94,6 @@ class TaskFeaturesController extends Controller
 
       return UsersResource::collection($searchResults);
     }
-
-    
 }
 
 

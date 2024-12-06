@@ -4,6 +4,7 @@ namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Exception;
+use Illuminate\Validation\ValidationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
@@ -77,6 +78,15 @@ $this->renderable(function (MethodNotAllowedHttpException $e, $request) {
       'message' => 'The HTTP method used for the request is not allowed.',
     ], 405);
   }
-});  
+}); 
+
+     $this->renderable(function (\Illuminate\Validation\ValidationException $e, $request) {
+        if ($request->is('api/*')) {
+            return response()->json([
+                'message' => 'Validation Error',
+                'errors' => $e->errors(), // Laravel provides this structure out-of-the-box
+            ], 422);
+        }
+    });
       }
 }

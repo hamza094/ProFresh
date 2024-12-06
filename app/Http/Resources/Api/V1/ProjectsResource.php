@@ -70,7 +70,7 @@ class ProjectsResource extends JsonResource
      * }
      */
         'links'=>[
-          'self'=>"/api/v1/".$this->slug,
+          'self'=>"/api/v1/projects/".$this->slug,
         ],
       ];
     }
