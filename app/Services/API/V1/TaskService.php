@@ -54,9 +54,11 @@ class TaskService
    {
     Gate::authorize('archive-task', $task);
  
-    if(!$request->validated()){
-       return response()->json(['Field missing in task'], 400);
-    } 
+      if (!$request->validated()) {
+        throw ValidationException::withMessages([
+            'task' => ['Field missing in task'],
+        ]);
+    }
   }
 
   public function sendNotification($project)

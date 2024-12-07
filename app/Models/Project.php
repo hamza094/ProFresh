@@ -135,6 +135,8 @@ class Project extends Model
 
     public function tasksReachedItsLimit()
     {
+        $this->loadCount('tasks');
+        
         return $this->tasks_count == config('app.project.taskLimit');
     }
 
