@@ -196,7 +196,7 @@ class TaskTest extends TestCase
         'task' => $task->id
     ]));
 
-       $this->putJson($task->path(), [
+      $response= $this->putJson($task->path(), [
       'title' => 'updated task',
     ])->assertJsonValidationErrors([
         'task' => 'Task is archived. Activate the task to proceed.'

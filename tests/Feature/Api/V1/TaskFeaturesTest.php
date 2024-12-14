@@ -14,13 +14,13 @@ class TaskFeaturesTest extends TestCase
 {
       use RefreshDatabase,ProjectSetup;
     /**
-     * A basic feature test example.
+     * Feature test.
      *
      * @return void
      */
 
     /** @test */
-   public function members_assign_to_task()
+   public function members_assign_to_task_and_pervent_duplication()
    {
       $task=$this->project->addTask('test task');
 
@@ -37,45 +37,35 @@ class TaskFeaturesTest extends TestCase
               'message' => 'Task assigned to member Successfully',
             ]);
 
-        $this->assertCount(1, $user->notifications);
-
         $this->assertDatabaseHas('task_user', [
             'task_id' => $task->id,
             'user_id' => $user->id,
         ]);
 
-        $task->assignee()->attach($user->id);
+        $this->assertCount(1, $user->notifications);
 
+        // Attempt to reassign the same member to the task
         $this->assignMembersToTask($task, $members)
               ->assertStatus(422)
               ->assertJsonValidationErrors(['members' => 'One or more users are already assigned to the task.']);
     }
 
     /** @test */
-    public function unassign_a_member_from_a_task()
+    public function it_unassigns_a_member_from_a_task_and_handles_invalid_requests()
     {
         $task=$this->project->addTask('test task');
-
         $task->assignee()->attach($this->user);
 
-        $response= $this->patchJson(route('task.unassign', [
-        'project' => $this->project->slug,
-        'task' => $task->id,
-    ]), ['member' => $this->user->id])
+        $this->unassignMemberFromTask($task, $this->user->id)
         ->assertSuccessful()
-        ->assertJson([
-            'message' => 'Task member Unassigned',
-        ]);
+        ->assertJson(['message' => 'Task member Unassigned']);
 
         $this->assertDatabaseMissing('task_user', [
             'task_id' => $task->id,
             'user_id' => $this->user->id,
         ]);
 
-     $response= $this->patchJson(route('task.unassign', [
-        'project' => $this->project->slug,
-        'task' => $task->id,
-    ]), ['member' => $this->user->id])
+       $this->unassignMemberFromTask($task, $this->user->id)
         ->assertStatus(422)
         ->assertJsonValidationErrors(['member' => 'The selected user is not a current member of task.']);
     }
@@ -107,9 +97,7 @@ class TaskFeaturesTest extends TestCase
 
      $user=User::factory()->create();
 
-     $this->project->members()->attach($user);
-
-     $user->members()->updateExistingPivot($this->project,['active'=>true]);
+     $this->project->activeMembers()->attach($user);
 
       Sanctum::actingAs(
        $user,
@@ -121,18 +109,17 @@ class TaskFeaturesTest extends TestCase
    /** @test */
    public function auth_user_can_search_project_members()
    { 
-      $user = User::factory()->create();
+      $user = User::factory()->create(['name' => 'test_user']);
 
       $task=Task::factory()->create(['project_id'=>$this->project->id]);
 
       $this->project->members()->attach($user->id, ['active' => true]);
 
-      $searchTerm=$user->username;
-
-     $response = $this->getJson(route('task.members.search',
-      ['project' => $this->project->slug,
-      'task'=>$task->id]),
-    ['search' => $searchTerm])->assertSuccessful();
+     $response = $this->getJson(route('task.members.search',[
+        'project' => $this->project->slug,
+      'task'=>$task->id
+  ]),['search' => 'test'])
+        ->assertSuccessful();
 
      $this->assertCount(1, $response->json());
    }
@@ -144,5 +131,14 @@ class TaskFeaturesTest extends TestCase
         'task' => $task->id,
     ]), ['members' => $members]);
    }
+
+
+  protected function unassignMemberFromTask(Task $task, int $memberId)
+  {
+    return $this->patchJson(route('task.unassign', [
+        'project' => $this->project->slug,
+        'task' => $task->id,
+    ]), ['member' => $memberId]);
+  }
 
 }

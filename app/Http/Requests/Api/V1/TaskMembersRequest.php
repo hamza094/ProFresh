@@ -26,6 +26,11 @@ class TaskMembersRequest extends FormRequest
     public function rules()
     {
         return [
+        /**
+        * 
+        * - Prevents assigning a task to users who are already assigned.
+        * - Ensures tasks can only be assigned to active members of the project.
+        */ 
         'members' => ['required',
          'array',
           'min:1',

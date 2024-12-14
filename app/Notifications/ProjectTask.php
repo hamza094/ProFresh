@@ -5,6 +5,8 @@ namespace App\Notifications;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Notification;
+use App\Models\User;
+use App\Models\Project;
 use Illuminate\Notifications\Messages\BroadcastMessage;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
@@ -13,12 +15,13 @@ class ProjectTask extends Notification implements ShouldBroadcast
     use Queueable;
 
     protected $project;
+    protected $user;
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct($project,$user)
+    public function __construct(Project $project,User $user)
     {
       $this->project=$project;
       $this->user=$user;
@@ -34,8 +37,6 @@ class ProjectTask extends Notification implements ShouldBroadcast
     {
       return ['database','broadcast'];
     }
-
-
 
     /**
      * Get the array representation of the notification.
@@ -60,5 +61,4 @@ class ProjectTask extends Notification implements ShouldBroadcast
       'link'=>$this->project->path()
     ]);
   }
-
 }

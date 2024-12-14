@@ -50,7 +50,6 @@ class TaskController extends ApiController
    * 
    * This endpoint allows creating a new task related to a specific project.
   */ 
-
   public function store(Project $project,TaskRequest $request,TaskService $taskService): JsonResponse
   {
     $this->authorize('access',$project);
@@ -83,7 +82,7 @@ class TaskController extends ApiController
       return new TaskResource($task);
     }
 
-    /**
+   /**
    * Update a Task
    * 
    * This endpoint allows you to update the details of a specific task associated with a given project.

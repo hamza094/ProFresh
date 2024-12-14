@@ -9,11 +9,11 @@ use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Messages\BroadcastMessage;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-class TaskAssigned extends Notification implements ShouldBroadcast
+class TaskAssigned extends Notification implements ShouldQueue,ShouldBroadcast
 {
     use Queueable;
 
-    protected $task;
+    protected $taskTitle;
     protected $project;
     protected $user;
 
@@ -22,8 +22,11 @@ class TaskAssigned extends Notification implements ShouldBroadcast
      *
      * @return void
      */
-    public function __construct($task,$project,$user){
-        $this->task=$task;
+    public function __construct($taskTitle,$project,$user)
+    {
+        $this->afterCommit();
+
+        $this->taskTitle=$taskTitle;
         $this->project=$project;
         $this->user=$user;
 
@@ -50,7 +53,7 @@ class TaskAssigned extends Notification implements ShouldBroadcast
     {
         return (new MailMessage)
                    ->from('ProFresh@live.com', 'ProFresh')
-                    ->line($this->user->name.' has assigned you a task: "'.$this->task->title. '" This is regarding the project '. $this->project->name)
+                    ->line($this->user->name.' has assigned you a task: "'.$this->taskTitle. '" This is regarding the project '. $this->project->name)
                     ->action('Notification Action', url('/'))
                     ->line('Thank you for using our application!');
     }
@@ -64,7 +67,7 @@ class TaskAssigned extends Notification implements ShouldBroadcast
     public function toArray($notifiable)
     {
         return [
-          'message'=>'has assigned you a task: "'.$this->task->title. '" This is regarding the project '. $this->project->name,
+          'message'=>'has assigned you a task: "'.$this->taskTitle. '" This is regarding the project '. $this->project->name,
           'notifier' =>$this->user,
           'link'=>$this->project->path()
         ];
@@ -73,7 +76,7 @@ class TaskAssigned extends Notification implements ShouldBroadcast
     public function toBroadcast($notifiable)
     {
       return new BroadcastMessage([
-         'message'=>'has assigned you a task: "'.$this->task->title. '" This is regarding the project '. $this->project->name,
+         'message'=>'has assigned you a task: "'.$this->taskTitle. '" This is regarding the project '. $this->project->name,
           'notifier' =>$this->user->name,
           'link'=>$this->project->path()
     ]);

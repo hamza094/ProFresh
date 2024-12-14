@@ -16,6 +16,10 @@ class UserTasksResource extends JsonResource
      * @param  \Illuminate\Http\Request  $request
      * @return array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable
      */
+
+   /**
+   * @mixin \App\Models\Task
+   */
     public function toArray($request)
     {
         return [

@@ -4,6 +4,7 @@ namespace App\Http\Requests\Api\V1;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use App\Models\Project;
 use Illuminate\Validation\ValidationException;
 
 
@@ -21,8 +22,10 @@ class TaskRequest extends FormRequest
 
     protected function prepareForValidation(): void
     {
-     $project = $this->route('project');
 
+     /** @var Project $project */
+     $project = $this->route('project');
+       
       throw_if($project->tasksReachedItsLimit(),
       ValidationException::withMessages(
         ['tasks'=>'Project tasks reached their limit'])

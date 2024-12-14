@@ -95,15 +95,15 @@ class AppServiceProvider extends ServiceProvider
         });*/
 
 
-        /**
-         * Paginate a standard Laravel Collection.
-         *
-         * @param int $perPage
-         * @param int $total
-         * @param int $page
-         * @param string $pageName
-         * @return array
-         */
+         /**
+     * Paginate a standard Laravel Collection.
+     *
+     * @param int $perPage
+     * @param int|null $total
+     * @param int|null $page
+     * @param string $pageName
+     * @return \App\Services\Api\V1\PaginationService
+     */
 
          Collection::macro('paginate', function ($perPage, $total = null, $page = null, $pageName = 'page') {
                   $page = $page ?: PaginationService::resolveCurrentPage($pageName);

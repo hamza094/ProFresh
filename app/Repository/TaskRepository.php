@@ -6,11 +6,14 @@ use App\Models\Task;
 use App\Models\Project;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Benchmark;
 
 class TaskRepository
 {
   public function searchMembers(Request $request,Project $project,Task $task): Collection
   {
+    //Check with load test
+
     $searchTerm = $request->input('search');   
 
       return $project->activeMembers()
@@ -29,6 +32,7 @@ class TaskRepository
       ->take(5)
       ->get();
    }
+
   }
 
 ?>

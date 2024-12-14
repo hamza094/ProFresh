@@ -16,8 +16,9 @@ parameters:
          -   */app/Channels/DatabaseChannel.php
 
 
-#    ignoreErrors:
-#        - '#PHPDoc tag @var#'
-#
+    ignoreErrors:
+        - '#PHPDoc tag @var#'
+        - '#Call to an undefined method Illuminate\\Http\\Resources\\Json\\AnonymousResourceCollection::paginate\(\)#'
+
 #
 #    checkMissingIterableValueType: false

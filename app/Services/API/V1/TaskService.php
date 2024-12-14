@@ -16,10 +16,15 @@ use App\Notifications\ProjectTask;
 use Illuminate\Validation\ValidationException;
 use F9Web\ApiResponseHelpers;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Notification;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use App\Services\Api\V1\PaginationService;
 
 class TaskService
 { 
     use ApiResponseHelpers;
+
 
   public function getTasksData(Project $project, bool $isArchived): array
     {
@@ -76,7 +81,7 @@ class TaskService
     ->select('id', 'name', 'email')
     ->get();
 
-    $usersToNotify->each->notify(new TaskAssigned($task, $project, auth()->user()));
+    Notification::send($usersToNotify, new TaskAssigned($task->title, $project, auth()->user()));
   }  
 }
 

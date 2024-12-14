@@ -11,7 +11,5 @@ interface Paddle
   public function subscriptionUsersList(
        UserSubscriptionData $subscriptionData
     ): DataCollection;
-
-
-
+  
 }

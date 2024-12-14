@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Enums\TaskStatus as TaskStatusEnum;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Task extends Model
@@ -45,17 +46,17 @@ class Task extends Model
       return $this->belongsTo(Project::class);
    }
 
-    public function owner()
+    public function owner(): BelongsTo
     {
      return $this->belongsTo(User::class,'user_id');
     }
 
-   public function assignee()
+   public function assignee(): BelongsToMany
    {
      return $this->belongsToMany(User::class);
    }
 
-     public function status()
+     public function status(): BelongsTo
     {
       return $this->belongsTo(TaskStatus::class, 'status_id');
     }

@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Facades\Redis;
 use Cviebrock\EloquentSluggable\Sluggable;
 use App\Enums\ScoreValue;
@@ -106,7 +107,7 @@ class Project extends Model
         return $this->members()->attach($user);
     }
 
-    public function members()
+    public function members(): BelongsToMany 
     {
         return $this->belongsToMany(User::class, 'project_members')
                     ->withPivot('active')->withTimestamps();
@@ -136,7 +137,6 @@ class Project extends Model
     public function tasksReachedItsLimit()
     {
         $this->loadCount('tasks');
-        
         return $this->tasks_count == config('app.project.taskLimit');
     }
 
