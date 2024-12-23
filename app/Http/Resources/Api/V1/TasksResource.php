@@ -4,6 +4,7 @@ namespace App\Http\Resources\Api\V1;
 
 use Carbon\Carbon;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Str;
 
 /**
  * @mixin \App\Models\Task
@@ -29,9 +30,9 @@ class TasksResource extends JsonResource
          /**
           * Task Title
           * 
-          * @example "the rise of plant"
+          * @example "The rise of plant"
           */ 
-         'title'=>$this->title,
+         'title'=>Str::ucfirst($this->title),
 
          /**
           * TaskStatus Resource
@@ -41,12 +42,16 @@ class TasksResource extends JsonResource
          /**
          * Task due at at user timezone
          * 
-         * @example '9th December 2024 3:25:pm'
+         * @example '19th December 2024 3:25:pm'
          */
          'due_at'=>$this->when($this->due_at,fn()=>
             \Timezone::convertToLocal(Carbon::parse($this->due_at))),
-         
-         'created_at'=>$this->created_at,
+          /**
+         * Task created date time
+         * 
+         * @example 'Dec 15th 24'
+         */
+         'created_at'=>$this->created_at->isoFormat('MMMM Do YYYY, h:mm:ss a'),
 
         /**
          * Links related to the project.

@@ -5,6 +5,8 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use App\Models\Task;
 use App\Actions\TaskDueAction;
+use Illuminate\Support\Facades\Log;
+
 
 class TaskNotify extends Command
 {
@@ -28,18 +30,36 @@ class TaskNotify extends Command
      */
     public function handle()
     {
-        $tasks = Task::dueForNotifications()
-            ->with('assignee', 'project')
-            ->get();
+        Task::dueForNotifications()
+        ->with([
+            'assignee:id,name',
+            'project:id,name,slug',
+        ])
+        ->chunk(50, fn($tasks) => $this->processTasks($tasks));
 
+         $this->info('Task notifications sent successfully.');
+    }
+
+    /**
+ * Process each task in the chunk.
+ *
+ * @param  \Illuminate\Database\Eloquent\Collection  $tasks
+ * @return void
+ */
+   private function processTasks($tasks)
+   {
     foreach ($tasks as $task) {
-        if ($this->taskDueAction->shouldNotify($task)) {
-            $this->taskDueAction->sendNotification($task);
+        try {
+            if ($this->taskDueAction->shouldNotify($task)) {
+                $this->taskDueAction->sendNotification($task);
+            }
+        } catch (\Exception $e) {
+            Log::error('Failed to process task notification', [
+                'task_id' => $task->id,
+                'error' => $e->getMessage(),
+            ]);
         }
     }
-
-    $this->info('Task notifications sent successfully.');
-    
-    }
+}
 
 }

@@ -46,6 +46,8 @@ class TaskNotifyTest extends TestCase
         ->assertSuccessful();
     
        Notification::assertSentTo($user,TaskDue::class);
+
+       $this->assertEquals($task->fresh()->notify_sent,1);
     }
 
 

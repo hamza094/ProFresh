@@ -10,8 +10,8 @@ const state = {
 };
 
 const mutations = {
-setTasks(state,tasksData) {
-    state.tasks = tasksData.tasks;
+setTasks(state,tasks) {
+    state.tasks = tasks;
   },
   setMessage(state,message) {
     state.message = message;
@@ -20,6 +20,12 @@ setTasks(state,tasksData) {
     const index = state.tasks.data.findIndex(task => task.id === taskId);
     if (index !== -1) {
       state.tasks.data.splice(index, 1);
+    }
+  },
+   updateTask(state, updatedTask) {
+    const index = state.tasks.data.findIndex(task => task.id === updatedTask.id);
+    if (index !== -1) {
+      state.tasks.data.splice(index, 1, updatedTask);
     }
   },
 
@@ -45,7 +51,7 @@ const actions = {
     fetchTasks({ commit }, { slug, page }) {
        return axios.get(`/api/v1/projects/${slug}/tasks?page=${page}`)
         .then(response => {
-          commit('setTasks', { page, tasks: response.data.tasksData});
+          commit('setTasks', response.data.tasksData);
           commit('setMessage', response.data.message);
         }).catch(error=>{
         commit('setTasks', { page, tasks: { data: [], links: {}, meta: {} } });

@@ -22,12 +22,31 @@
                   <template>
                       <span v-for="member in task.members" class="task-member-container" :key="member.id">
 
-                    <router-link :to="`/user/${member.id}/profile`" class="task-member mr-1" target="_blank">{{ member.name.charAt(0) }}</router-link>
+                    <router-link 
+                   :to="`/user/${member.uuid}/profile`" 
+                    class="task-member mr-1" 
+                    target="_blank">
 
-                    <span class="task-member-username">{{ member.username }}
+                   <!-- Avatar Image -->
+                <img 
+                     v-if="member.avatar" 
+                    :src="member.avatar" 
+                    :alt="member.name" 
+                    class="task-member_avatar"
+                />
+
+           <span v-else class="task-member_name">
+              {{ member.name.charAt(0) }}
+            </span>
+               </router-link>
+
+                    <span class="task-member-username">
+                      <!-- {{member.username}} -->
+
                      <span class="unassign-cross" @click="unassignMember(task.id,member.id)">&times;</span>
                     </span>
                     </span>
+
                   </template>  
                 </p>
                 <span class="text-danger font-italic" v-if="errors?.member" v-text="errors?.member"></span>
@@ -38,6 +57,10 @@
           				<p v-if="task.notified"><small><b>Notified: </b> </small>{{task.notified}} </p>
 
           				<p v-if="task.due_at"><small><b>Days Left: </b>{{this.remainingTime}}  </small> </p>
+
+                  <p><small><b>Task Created At:</b> {{task.created_at}}</small></p>
+
+                  <p v-if="task.updated_at"><small><b>Task Updated At:</b> {{task.updated_at}}</small></p>
 
                 </div>
 
@@ -68,13 +91,13 @@
           			</ul>
 
           			<ul class="task-option_features">
+                  
           				<li>
           				<button class="btn btn-sm btn-outline-primary btn-block member-dropdown" @click.prevent="toggleMemberPop">
           					<i class="fas fa-user-alt pr-1"></i> <b>Members</b>
           				</button>
                 
                 <TaskMembers :slug="slug" :taskId="task.id" v-show=memberPop></TaskMembers>
-
           			</li>
 
           			<li>
@@ -173,7 +196,7 @@ created() {
 
   methods: {
   ...mapMutations('task',['removeTaskFromState',
-    'pushArchivedTask','removeArchivedTask']),
+    'pushArchivedTask','removeArchivedTask','updateTask']),
 
   ...mapMutations('SingleTask',['setErrors','updateTaskStatus','updateTaskDue','unassignTaskMember','setForm']),
 
@@ -185,6 +208,7 @@ created() {
       this.$vToastify.success(response.data.message);
         this.setErrors([]);
         this.updateTaskStatus(response.data.task.status);
+        this.updateTask(response.data.task);
     })
     .catch(error => {
       ErrorHandling(this,error);

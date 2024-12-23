@@ -2,8 +2,9 @@
 
 namespace App\Http\Resources\Api\V1;
 use App\Http\Resources\Api\V1\TaskStatusResource;
-use App\Http\Resources\Api\V1\UsersResource;
+use App\Http\Resources\Api\V1\Task\TaskMemberResource;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Str;
 use Carbon\Carbon;
 
 /**
@@ -24,11 +25,11 @@ class TaskResource extends JsonResource
        return [
          'id'=>$this->id,
          /**
-          * Task Id
+          * Task Title
           * 
-          * @example "the rise of plant"
+          * @example "The rise of plant"
           */ 
-         'title'=>$this->title,
+         'title'=>Str::ucfirst($this->title),
          /**
           * Task Description
           * 
@@ -41,7 +42,7 @@ class TaskResource extends JsonResource
           * @example 1
           */ 
 
-         'status_id'=>$this->status_id,
+         //'status_id'=>$this->status_id,
 
          /**
           * TaskStatus Resource
@@ -53,7 +54,7 @@ class TaskResource extends JsonResource
          */
          'members' => $this->when(
             $showRoute,
-            fn () => UsersResource::collection($this->whenLoaded('assignee'))
+            fn () => TaskMemberResource::collection($this->whenLoaded('assignee'))
         ),
 
         /**
@@ -73,12 +74,31 @@ class TaskResource extends JsonResource
          * 
          * @example '9th December 2024 3:25:pm'
          */
-
          'due_at'=>$this->when($this->due_at,fn()=>
             \Timezone::convertToLocal(Carbon::parse($this->due_at))),
-         
-         'created_at'=>$this->created_at,
-         'updated_at'=>$this->updated_at,
+
+         /**
+         * Task created at utc timezone
+         * 
+         * @example 'December 4th 2024, 11:41:34 am'
+         */
+         'created_at'=>$this->formatDate($this->created_at),
+
+
+         /**
+         * Task updated at utc timezone if its present
+         * 
+         * @example 'December 10th 2024, 9:41:34 am'
+         */
+         'updated_at'=>$this->when(
+          $this->updated_at->isAfter($this->created_at),
+          fn() => $this->formatDate($this->updated_at),
+      )
        ];
     }
+
+   private function formatDate($date): string
+   {
+     return $date->isoFormat('MMMM Do YYYY, h:mm:ss a');
+   }
 }

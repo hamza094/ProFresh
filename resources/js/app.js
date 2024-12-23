@@ -68,6 +68,10 @@ Vue.filter('date',function(data){
    return  moment(data).format("MMM Do YY");
 })
 
+Vue.filter('shortDate', function (value) { 
+  return moment(value, 'MMMM Do YYYY, h:mm:ss a').format('MMM Do YY');
+});
+
 Vue.filter('reciept_date',function(data){
    return  moment(data).format("MMM Do YYYY");
 })

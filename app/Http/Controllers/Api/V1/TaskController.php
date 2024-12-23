@@ -82,7 +82,7 @@ class TaskController extends ApiController
       return new TaskResource($task);
     }
 
-   /**
+  /**
    * Update a Task
    * 
    * This endpoint allows you to update the details of a specific task associated with a given project.
@@ -95,6 +95,10 @@ class TaskController extends ApiController
     $this->authorize('taskaccess',$task);
    
     $task->update($request->validated());
+
+    if ($request->safe()->has('status_id')) {
+        $task->load('status');
+    }
 
       return response()->json([
        'message' => 'Task Updated Successfully',

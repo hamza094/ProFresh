@@ -21,7 +21,7 @@ class ProjectTask extends Notification implements ShouldBroadcast
      *
      * @return void
      */
-    public function __construct(Project $project,User $user)
+    public function __construct($project,$user)
     {
       $this->project=$project;
       $this->user=$user;

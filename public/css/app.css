@@ -983,6 +983,10 @@ p {
 
 .task-modal_title {
   font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: 0.1rem;
+  color: #4c4a4a;
+  cursor: pointer;
 }
 
 .task-modal_close {
@@ -1016,9 +1020,8 @@ p {
 }
 
 .task-member {
+  margin-right: 0.2rem;
   display: inline-block;
-  background-color: #12344D;
-  color: white;
   border-radius: 50%;
   width: 30px;
   height: 30px;
@@ -1027,21 +1030,40 @@ p {
   text-decoration: none;
 }
 
+.task-member_avatar {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
+.task-member_name {
+  background-color: #12344D;
+  color: white;
+  display: inline-block;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  text-align: center;
+  line-height: 30px;
+}
+
 .task-member:hover {
   text-decoration: none;
   color: white;
 }
 
+.task-member_username {
+  font-size: 14px;
+  color: #333;
+}
+
 .task-member-container {
   display: inline-block;
   text-align: center;
-  margin-right: 10px;
+  margin-right: 8.8px;
   /* Adjust the margin as needed */
-}
-
-.task-member-username {
-  font-size: 14px;
-  color: #333;
 }
 
 .task-description {

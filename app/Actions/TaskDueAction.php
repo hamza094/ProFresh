@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Actions;
 
@@ -11,9 +12,7 @@ class TaskDueAction
 {
     public function shouldNotify(Task $task): bool
     {
-        $type = $task->notified;
-
-        $minutes = TaskDueNotifies::getPeriodInMinutes($type);
+        $minutes = TaskDueNotifies::getPeriodInMinutes($task->notified);
 
         if ($minutes !== null) {
             $notificationTime = $task->due_at->subMinutes($minutes);
@@ -24,7 +23,7 @@ class TaskDueAction
         return false;
     }
 
-    public function sendNotification(Task $task)
+    public function sendNotification(Task $task): void
     {
 
         DB::transaction(function () use ($task) {

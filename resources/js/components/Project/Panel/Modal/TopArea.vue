@@ -46,6 +46,8 @@ export default {
   methods: {
   ...mapMutations('SingleTask',['setErrors','updateTaskTitle','setForm']),
 
+  ...mapMutations('task',['updateTask']),
+
    updateTitle(id, task) {
        if (this.form.title === this.task.title) {
          return  this.$vToastify.warning('No changes made.');
@@ -57,6 +59,7 @@ export default {
         this.editing = false;
         this.setErrors([]);
         this.updateTaskTitle(response.data.task.title);
+        this.updateTask(response.data.task);
     })
     .catch(error => {
         ErrorHandling(this,error);

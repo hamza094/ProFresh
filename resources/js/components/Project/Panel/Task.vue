@@ -5,12 +5,14 @@
       <i class="fas fa-angle-down float-right"></i></a></span>
   </div>
 
-  <!--Task -->
+  <!--Task Section-->
     <div class="collapse" id="taskProject">
      <!-- <SubscriptionCheck> -->
     <div class="card card-body">
       <div v-if="!access">Only the project owner and members are allowed to access this feature.</div>
       <div v-if="access">
+
+    <!-- Add new Task -->
     <div class="task-add">
       <form class="" @submit.prevent="add">
         <div class="form-group">
@@ -19,34 +21,41 @@
         </div>
   </form>
     </div>
+
           <p class="task-list_heading"> {{this.message}}
     <div v-if="tasks" class="task-list">
         <span class="float-right">
           <a v-on:click.prevent="archiveTasks" class="panel-list_item">
           <i class="fas fa-tasks"></i>
          </a>
-    </span>
+    </span> 
   </p> 
-       <div v-for="(task,index) in tasks.data" :key="task.id">
+
+  <!-- Tasks Lists --> 
+       <section v-for="(task,index) in tasks.data" :key="task.id">
          <div class="card task-card_style" @click="openModal(task)">
           <div v-if="task.status" class="task-card_border" :style="{ 
             borderColor: task.status.color 
         }"></div>
           <div class="card-body task-card_body">
             <span>{{task.title}}</span>
-            <span class="float-right mt-4"><small><i class="far fa-clock"></i>:{{task.created_at | date}}</small></span>
+            <span class="float-right mt-4"><small><i class="far fa-clock"> </i> {{task.created_at | shortDate}}</small></span>
           </div>
         </div>
-      </div>
+      </section>
+
+      <!-- Task Modal -->
        <modal name="task-modal" height="auto" :scrollable="true"
       width="65%" class="model-desin" :clickToClose=false @modal-closed="closeModal">
         <TaskModal :slug="slug" :state="state"></TaskModal @modal-closed="closeModal">
     </modal>
+
 	<pagination :data="tasks" @pagination-change-page="getResults"></pagination>
+
 </div>
     </div>
   </div>
-</SubscriptionCheck>
+<!--</SubscriptionCheck>-->
     </div>
 </div>
 </template>
@@ -58,9 +67,7 @@
     components:{TaskModal},
     props:['slug','access'],
     data() {
-      return {
-        currentTasks: [],
-        
+      return {        
         task_score:2,
         state:'active',
         form:{
@@ -85,6 +92,7 @@
         const slug = this.$route.params.slug;
         this.fetchTasks({ slug, page });
     },
+
       archiveTasks() {
         const panel1Handle = this.$showPanel({
           component: 'archive-tasks',
@@ -101,6 +109,7 @@
 
             });
           },
+
      openModal(task) {
       this.$Progress.start();
       axios.get('/api/v1/projects/'+this.slug+'/tasks/'+task.id)
@@ -112,6 +121,7 @@
           this.$Progress.fail();
        });
     },
+
      add(){
        axios.post('/api/v1/projects/'+this.slug+'/tasks',this.form)
           .then(response=>{
@@ -124,6 +134,7 @@
             this.$vToastify.warning(error.response.data.message);
        });
     },
+
     closeModal() {
       this.setTask([]);
   },

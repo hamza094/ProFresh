@@ -35,6 +35,11 @@ class TaskMemberResource extends JsonResource
           'name'=>$this->name,
 
           /**
+           *  @example berry 
+          * */
+          'username'=>$this->username,
+
+          /**
            *  @example user@example.com
           * */
           'email'=>$this->email,

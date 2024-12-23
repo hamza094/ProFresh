@@ -34,6 +34,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('tasks:notify')
          ->withoutOverlapping()
          ->runInBackground()
+         ->everyTwoMinutes()
          ->when(function () {
             return Task::dueForNotifications()
                     ->count() > 0;

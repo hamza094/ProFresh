@@ -2,7 +2,7 @@
 	 <div class="member-dropdown_item">
       <p class="text-center m-1"><small><b>Assign Task To Member</b></small></p>
 
-      <input type="text" placeholder="Search Members" class="form-control" v-model="form.search" name="member" autocomplete="off">
+      <input type="text" placeholder="Search members by name or username" class="form-control" v-model="form.search" name="member" autocomplete="off">
 
       <div v-if="hasError('members')">
         <span class="text-danger font-italic" v-for="error in getErrors('members')" :key="error">*{{ error }}</span>

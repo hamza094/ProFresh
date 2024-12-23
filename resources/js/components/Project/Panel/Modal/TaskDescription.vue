@@ -18,7 +18,7 @@
       </div>
             <div v-else>
 
-              <p v-if="task.description" class="task-description_content" @click="openDescriptionForm(task.id,task)" v-html="task.description"></p>
+              <p v-if="task.description" class="task-description_content-link" @click="openDescriptionForm(task.id,task)" v-html="task.description"></p>
 
               <div v-else="task.description">
               <p class="task-description_content">Sorry! currently no task description present. <a class="task-description_content-link" @click="openDescriptionForm(task.id,task)"> Click here to add description</a>
