@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Http\Controllers\Api\V1;
 
@@ -7,7 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\Project;
 use App\Models\Task;
 use App\Models\User;
-use App\Services\Api\V1\TaskService;
+use App\Services\Api\V1\Task\TaskFeatureService;
 use App\Repository\TaskRepository;
 use App\Http\Resources\Api\V1\TaskResource;
 use App\Http\Requests\Api\V1\TaskMembersRequest;
@@ -19,10 +20,9 @@ use Illuminate\Validation\ValidationException;
 use App\Rules\TaskAssigneeMember;
 use Illuminate\Http\JsonResponse;
 
+
 class TaskFeaturesController extends Controller
 {
-    use ApiResponseHelpers;
-
     /** Assign Task to Project Member(s)
      * 
       * This endpoint allows assigning a task to one or more members of the project.  
@@ -30,24 +30,16 @@ class TaskFeaturesController extends Controller
      * ### Authorization:
      * - Ensures the task belongs to a project
      * - Access is restricted to:
-     *    - The task assigned members
      *   - The task owner.
      *   - The project owner
      * */
-    public function assign(Project $project,Task $task,TaskMembersRequest $request,TaskService $service)
+    public function assign(Project $project,Task $task,TaskMembersRequest $request,TaskFeatureService $service)
     {
         Gate::authorize('archive-task', $task);
 
        $members=$request->validated(['members']);
 
-       DB::transaction(function () use ($task, $members, $service, $request, $project) {
-
-       $task->assignee()->attach($members);
-
-       $service->notifyAssignees($request,$task,$project);
-       });
-
-        $task->load('assignee');
+       $service->assignMembers($task, $members,$project);
 
         return response()->json([
           'message' => 'Task assigned to member Successfully',
@@ -62,7 +54,6 @@ class TaskFeaturesController extends Controller
       * ### Authorization:
      * - Ensures the task belongs to a project
      * - Access is restricted to:
-     *    - The task assigned members
      *   - The task owner.
      *   - The project owner
      * */
@@ -100,17 +91,15 @@ class TaskFeaturesController extends Controller
      * ### Authorization:
      - Ensures the task belongs to a project
      * - Access is restricted to:
+     *   - The task assigned members
      *   - The task owner.
      *   - The project owner
      * */ 
-    public function archive(Project $project,Task $task)
+    public function archive(Project $project,Task $task,TaskFeatureService $service)
     {
       Gate::authorize('archive-task', $task);
 
-      DB::transaction(function () use ($task) {     
-        $task->delete();
-        $task->activities()->update(['is_hidden' => true]);
-      });
+       $service->archiveTask($task);
 
        return response()->json([
          'message' => 'Project task archived successfully',
@@ -128,15 +117,13 @@ class TaskFeaturesController extends Controller
      * ### Authorization:
      - Ensures the task belongs to a project
      * - Access is restricted to:
+     *   - - The task assigned members
      *   - The task owner.
      *   - The project owner.
      * */
-     public function unarchive(Project $project,Task $task)
+     public function unarchive(Project $project,Task $task,TaskFeatureService $service)
      {
-        DB::transaction(function () use ($task) { 
-        $task->restore();
-        $task->activities()->update(['is_hidden' => false]);
-        });
+        $service->unarchiveTask($task);
 
        return response()->json([
          'message' => 'Project task unArchived successfully',
@@ -156,11 +143,36 @@ class TaskFeaturesController extends Controller
      *   - The project owner
      * */
     public function search(Project $project,Task $task,Request $request,TaskRepository $repository)
-    { 
+    {
+        Gate::authorize('archive-task', $task);
+ 
       $searchResults = $repository->searchMembers($request,$project,$task);
 
       return TaskMemberResource::collection($searchResults);
     }
+
+     /**
+   * Delete a Task
+   * 
+   * This endpoint allows you to delete a specific  task associated with a project.
+   * 
+  ** **Authorization:** 
+ * - The user must have appropriate permissions to access and delete the task.
+ *
+ *  **Functionality:**
+ * - Deletes all associated activities of the task.
+ * - Permanently removes the task from the database (force delete). 
+*/
+  public function remove(Project $project,Task $task,TaskFeatureService $service)
+  {
+    if(!$task->trashed()){
+          abort(403,'Task must be trashed to perform this action');
+    }
+
+    $service->removeTask($task);  
+
+    return response()->json(204);
+  }
 }
 
 

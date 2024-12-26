@@ -112,28 +112,45 @@ Route::apiResource('/conversations',ConversationController::class)->only(['store
 });
 
 Route::apiResource('/tasks', TaskController::class)
+->except(['destroy'])
 ->withTrashed()
 ->middleware('subscription');
 
 Route::controller(TaskFeaturesController::class)
 ->name('task.')
 ->prefix('tasks/{task}')
-->group(function(){
+->group(function(){ 
 
-Route::middleware(['can:taskallow,task'])->group(function () {    
-Route::patch('assign','assign')->name('assign')->withTrashed();
-Route::patch('unassign','unassign')->name('unassign')->withTrashed();
-});
+Route::middleware(['can:manage,task'])->group(function () {
 
-Route::middleware(['can:taskaccess,task'])->group(function () {
-Route::delete('archive','archive')->name('archive')
+Route::patch('assign','assign')
+    ->name('assign')
     ->withTrashed();
-Route::get('unarchive','unarchive')->name('unarchive')
+
+Route::patch('unassign','unassign')
+        ->name('unassign')
         ->withTrashed();
-  Route::get('member/search', [TaskFeaturesController::class,'search'])->name('members.search');      
+
+Route::delete('/remove','remove')
+   ->name('remove')
+   ->withTrashed(); 
+
 });
 
+Route::middleware(['can:access,task'])->group(function () {
+Route::delete('archive','archive')
+    ->name('archive')
+    ->withTrashed();
+
+Route::get('unarchive','unarchive')
+      ->name('unarchive')
+        ->withTrashed();
+
+  Route::get('member/search')
+      ->name('members.search');      
+});
 })->middleware('subscription');
+
 
 Route::controller(InvitationController::class)->group(function(){
   Route::post('invitations','store')->name('send.invitation')->can('manage','project');

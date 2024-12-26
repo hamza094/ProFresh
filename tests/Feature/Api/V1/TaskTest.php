@@ -176,17 +176,6 @@ class TaskTest extends TestCase
    
 
    /** @test */
-   public function allowed_user_can_delete_task()
-   {
-     $task=Task::factory()->for($this->project)->create();
-
-      $this->deleteJson($task->path())->assertNoContent();
-
-     $this->assertModelMissing($task);
-   }
-
-
-   /** @test */
    public function task_gate_check()
    { 
       $task=Task::factory()->for($this->project)->create();

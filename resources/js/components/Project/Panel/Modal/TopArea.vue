@@ -53,7 +53,7 @@ export default {
          return  this.$vToastify.warning('No changes made.');
       }
       
-   axios.put(url(this.slug, id),{ title: this.form.title })
+   axios.put(url(this.slug, id),{ title: this.form.title },{ useProgress: true })
     .then(response => {
       this.$vToastify.success(response.data.message);
         this.editing = false;

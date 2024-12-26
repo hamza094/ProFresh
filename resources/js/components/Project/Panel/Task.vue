@@ -111,19 +111,19 @@
           },
 
      openModal(task) {
-      this.$Progress.start();
-      axios.get('/api/v1/projects/'+this.slug+'/tasks/'+task.id)
+      //this.$Progress.start();
+      axios.get('/api/v1/projects/'+this.slug+'/tasks/'+task.id,{ useProgress: true })
           .then(response=>{
-          this.$Progress.finish();
+          //this.$Progress.finish();
             this.setTask(response.data);
             this.$modal.show('task-modal');
           }).catch(error=>{
-          this.$Progress.fail();
+          //this.$Progress.fail();
        });
     },
 
      add(){
-       axios.post('/api/v1/projects/'+this.slug+'/tasks',this.form)
+       axios.post('/api/v1/projects/'+this.slug+'/tasks',this.form,{ useProgress: true })
           .then(response=>{
               this.$vToastify.success("Project Task added");
               this.form.title="";

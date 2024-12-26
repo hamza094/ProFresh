@@ -59,7 +59,7 @@ export default {
       if (this.form.description === this.task.description) {
          return  this.$vToastify.warning('No changes made.');
       }
-     axios.put(url(this.slug, id),{description: this.form.description })
+     axios.put(url(this.slug, id),{description: this.form.description },{ useProgress: true })
     .then(response => {
       this.$vToastify.success(response.data.message);
         this.edit = false;

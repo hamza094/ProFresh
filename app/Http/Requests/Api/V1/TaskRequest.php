@@ -32,12 +32,8 @@ class TaskRequest extends FormRequest
        );
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array
-     */
-      public function rules()
+
+    public function rules()
     {
         $project=$this->project;
 

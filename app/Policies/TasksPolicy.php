@@ -21,14 +21,14 @@ class TasksPolicy
       return null; 
    }
 
-    public function taskaccess(User $user,Task $task)
+    public function access(User $user,Task $task)
     {
        return  $user->is($task->owner) || $user->is($task->project->user) || $task->assignee->contains($user->id) 
                ? Response::allow()
                : Response::deny("Access restricted to project, task owner, and assigned members");
     }
 
-    public function taskallow(User $user,Task $task)
+    public function manage(User $user,Task $task)
     {
        return  $user->is($task->owner) || $user->is($task->project->user) 
                ? Response::allow()

@@ -6,6 +6,7 @@
 
 require('./bootstrap');
 
+import axios from 'axios';
 import Vue from 'vue';
 import Vuex from 'vuex';
 import VueBus from 'vue-bus';
@@ -108,6 +109,34 @@ const options = {
   autoFinish:false
 }
 Vue.use(VueProgressBar, options)
+
+axios.interceptors.request.use(config => {
+  if (config.useProgress) {
+    Vue.prototype.$Progress.start();
+  }
+  return config;
+}, error => {
+  if (error.config && error.config.useProgress) {
+    Vue.prototype.$Progress.fail();
+  }
+  return Promise.reject(error);
+});
+
+axios.interceptors.response.use(response => {
+  if (response.config.useProgress) {
+    Vue.prototype.$Progress.finish();
+  }
+  return response;
+}, error => {
+  if (error.config && error.config.useProgress) {
+    Vue.prototype.$Progress.fail();
+  }
+  return Promise.reject(error);
+});
+
+Vue.prototype.$axios = axios;
+
+axios.defaults.useProgress = false;
 
 const components = [    ['project-button', './components/ProjectButton.vue'],
   ['archive-tasks', './components/Project/Panel/ArchiveTasks.vue'],

@@ -203,7 +203,7 @@ created() {
     ...mapActions({fetchTasks: 'task/fetchTasks'}),
 
    changeStatus(statusId,task,id){
-         axios.put(url(this.slug, id),{status_id:statusId})
+         axios.put(url(this.slug, id),{status_id:statusId},{ useProgress: true })
     .then(response => {
       this.$vToastify.success(response.data.message);
         this.setErrors([]);
@@ -217,7 +217,7 @@ created() {
 
     taskDue(id,task){
       axios.put(url(this.slug, id),
-        {due_at:this.form.due_at,notified:this.form.notified})
+        {due_at:this.form.due_at,notified:this.form.notified},{ useProgress: true })
     .then(response => {
       const taskData = response.data.task;
       this.$vToastify.success(response.data.message);
@@ -243,7 +243,7 @@ created() {
     unassignMember(taskId,memberId){
       axios.patch(url(this.slug, taskId)+'/unassign',{
               member:memberId,
-          }).then(response=>{
+          },{ useProgress: true }).then(response=>{
             this.unassignTaskMember(response.data.member.id);
             this.$vToastify.success(response.data.message);
             this.setErrors([]);
@@ -252,7 +252,7 @@ created() {
           });
     },
     archive(task,taskId){
-    	axios.delete(url(this.slug, taskId)+'/archive')
+    	axios.delete(url(this.slug, taskId)+'/archive',{ useProgress: true })
           .then(response=>{
             this.$vToastify.warning(response.data.message);
             this.removeTaskFromState(taskId);
@@ -264,7 +264,7 @@ created() {
           });
     },
      unArchive(task,taskId){
-      axios.get(url(this.slug, taskId)+'/unarchive')
+      axios.get(url(this.slug, taskId)+'/unarchive',{ useProgress: true })
           .then(response=>{
             this.$vToastify.success(response.data.message);
             this.removeArchivedTask(taskId);
@@ -276,10 +276,12 @@ created() {
           });
     },
     trash(task,taskId){
-    	axios.delete(url(this.slug, taskId)+'/delete')
+    	axios.delete(url(this.slug, taskId)+'/remove',{ useProgress: true })
           .then(response=>{
-            this.$vToastify.success(response.data.message);
+            console.log(response);
+            this.$vToastify.success("Task deleted successfully");
             this.removeArchivedTask(taskId);
+            modalClose(this);
           }).catch(error=>{
             ErrorHandling(this,error);
           });

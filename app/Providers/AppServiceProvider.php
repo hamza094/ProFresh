@@ -20,6 +20,8 @@ use Dedoc\Scramble\Support\Generator\OpenApi;
 use Dedoc\Scramble\Support\Generator\SecurityScheme;
 use Illuminate\Routing\Route;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Response;
+
 
 class AppServiceProvider extends ServiceProvider
 {

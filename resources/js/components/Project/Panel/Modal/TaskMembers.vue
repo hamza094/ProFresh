@@ -100,7 +100,7 @@ removeMember(member,id){
 
         axios.patch(url(this.slug, taskId)+'/assign',{
               members:memberIds,
-          }).then(response=>{
+          },{ useProgress: true }).then(response=>{
             this.assignSuccessfull(response);
           }).catch(error=>{
             ErrorHandling(this,error);

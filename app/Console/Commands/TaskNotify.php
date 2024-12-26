@@ -28,7 +28,7 @@ class TaskNotify extends Command
      *
      * @return int
      */
-    public function handle()
+    public function handle(): int
     {
         Task::dueForNotifications()
         ->with([
@@ -38,6 +38,8 @@ class TaskNotify extends Command
         ->chunk(50, fn($tasks) => $this->processTasks($tasks));
 
          $this->info('Task notifications sent successfully.');
+
+         return 0;
     }
 
     /**

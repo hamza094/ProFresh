@@ -113,7 +113,7 @@ class Project extends Model
                     ->withPivot('active')->withTimestamps();
     }
 
-    public function activeMembers()
+    public function activeMembers(): BelongsToMany
     {
         return $this
               ->members()

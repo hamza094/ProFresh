@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\Project;
 use App\Models\Task;
 use Illuminate\Support\Facades\DB;
-use App\Services\Api\V1\TaskService;
+use App\Services\Api\V1\Task\TaskService;
 use App\Http\Resources\Api\V1\TaskResource;
 use App\Http\Resources\Api\V1\TasksResource;
 use App\Http\Controllers\Api\ApiController;
@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Gate;
 use Auth;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Validation\ValidationException;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 class TaskController extends ApiController
@@ -75,7 +76,7 @@ class TaskController extends ApiController
    */
     public function show(Project $project,Task $task)
     {
-      $this->authorize('access',$project);
+      $this->authorize('access',$task);
 
       $task->load(['status','assignee']); 
 
@@ -92,7 +93,7 @@ class TaskController extends ApiController
   {
     $taskService->checkValidation($request,$task);
 
-    $this->authorize('taskaccess',$task);
+    $this->authorize('access',$task);
    
     $task->update($request->validated());
 
@@ -105,29 +106,4 @@ class TaskController extends ApiController
        'task' => new TaskResource($task),
       ], 200); 
   }
-
-
-   /**
-   * Delete a Task
-   * 
-   * This endpoint allows you to delete a specific  task associated with a project.
-   * 
-  ** **Authorization:** 
- * - The user must have appropriate permissions to access and delete the task.
- *
- *  **Functionality:**
- * - Deletes all associated activities of the task.
- * - Permanently removes the task from the database (force delete). 
-*/
-  public function destroy(Project $project,Task $task)
-  {
-    $this->authorize('taskallow',$task);
-
-     $task->activities()->delete();
-
-     $task->forceDelete();  
-
-    return response()->json(['message'=>'Task deleted successfully'], 204);
-  }
-
 }

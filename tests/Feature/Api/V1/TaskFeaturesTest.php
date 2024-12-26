@@ -48,7 +48,7 @@ class TaskFeaturesTest extends TestCase
         $this->assignMembersToTask($task, $members)
               ->assertStatus(422)
               ->assertJsonValidationErrors(['members' => 'One or more users are already assigned to the task.']);
-    }
+        }
 
     /** @test */
     public function it_unassigns_a_member_from_a_task_and_handles_invalid_requests()
@@ -122,6 +122,27 @@ class TaskFeaturesTest extends TestCase
         ->assertSuccessful();
 
      $this->assertCount(1, $response->json());
+   }
+
+    /** @test */
+   public function allowed_user_can_remove_archived_task_from_database()
+   {
+     $task = Task::factory()->for($this->project)->create();
+
+    $this->deleteJson(route('task.archive', [
+        'project' => $this->project->slug,
+        'task' => $task->id
+    ]));
+
+    $this->assertSoftDeleted($task);
+
+    $this->deleteJson(route('task.remove', [
+        'project' => $this->project->slug,
+        'task' => $task->id
+    ]));
+
+    $this->assertModelMissing($task);
+
    }
 
     protected function assignMembersToTask(Task $task, array $members)
