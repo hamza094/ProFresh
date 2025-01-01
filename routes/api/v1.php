@@ -163,11 +163,9 @@ Route::apiResource('/meetings',ZoomMeetingController::class);
 
 });
 
-
+ Route::get('users/search',[InvitationController::class,'search'])->name('users.search');
 
 Route::apiResource('/users',UserController::class);
-
-Route::get('users/search', [InvitationController::class,'search']);
 
 //Dashboard Routes
 Route::get('/user/projects',[ProjectDashboardController::class,'userprojects']);

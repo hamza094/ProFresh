@@ -38,12 +38,32 @@
 
     <div class="invite" v-if="access">
       <p><b>Project Invitations:</b></p>
-       <input type="text" placeholder="Search user for invitation" class="form-control" v-model="query">
+
+       <input type="text"
+        placeholder="Search user for invitation" class="form-control"
+        v-model="query"
+        @input="searchUsers"
+        />
+
        <div class="invite-list">
-        <ul v-if="results.length > 0 && query">
-          <li v-for="result in results.slice(0,5)" :key="result.id">
-              <div @click.prevent="inviteUser(result.url)">{{result.title}} ({{result.searchable.email}})</div>
-          </li>
+
+        <ul>
+
+        <li v-if="isLoading" class="  loading-spinner-container">
+          <div class="loading-spinner"></div>
+        </li>
+
+         <!-- Show "no users found" message -->
+        <li v-else-if="!isLoading && query && results.length === 0">
+          No users found.
+        </li>
+
+        <!-- Show user results -->
+        <li v-else-if="results.length > 0 && query" v-for="result in results.slice(0, 5)" :key="result.id">
+          <div @click.prevent="inviteUser(result.url)">
+            {{ result.name }} ({{ result.email }})
+          </div>
+        </li>
         </ul>
       </div>
     </div>
@@ -86,25 +106,28 @@
 <script>
 import { mapMutations } from 'vuex';
 import SubscriptionCheck from '../../SubscriptionChecker.vue';
+import { debounce } from 'lodash';
 
 export default{
     components:{SubscriptionCheck},
   props:['slug','notes','members','owner','access','ownerLogin'],
-  watch: {
-  query(after, before) {
-    this.searchUsers();
-  },
-},
   data(){
     return{
       form:{
         notes:"",
       },
       query: null,
+      isLoading: false,
       results: [],
       errors:{},
     }
   },
+   watch:{
+      'query': debounce(function(newQuery) {
+      this.searchUsers(newQuery);
+    }, 500),
+    },
+
   methods:{
         ...mapMutations('project',['updateNotes','noteScore','updateScore','detachMember']),
 
@@ -135,13 +158,26 @@ export default{
        document.getElementById('focus-target').focus();
     });
     },
-    searchUsers() {
+
+    searchUsers(query) 
+    {
+      if (!this.query) {
+        this.results = [];
+        return;
+      }
+      this.isLoading = true;
+
     axios.get('/api/v1/users/search', { params: { query: this.query } })
-   .then(response => this.results = response.data)
+   .then(response => {
+    this.results = response.data;
+  })
    .catch(error => {
-     this.$vToastify.warning(error.response.data.error);
-   });
+      this.$vToastify.warning(error.response.data.error);
+   }).finally(() => {
+        this.isLoading = false;
+    });
  },
+
   inviteUser(user){
       axios.post('/api/v1/projects/'+this.slug+'/invitations',{
       email:user,

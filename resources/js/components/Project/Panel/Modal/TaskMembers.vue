@@ -64,7 +64,8 @@ export default {
     },
   methods: {
     ...mapMutations('SingleTask',['setErrors','updateTaskMembers']),
-  	  performSearch(searchTerm) {
+
+  performSearch(searchTerm) {
     axios.get(`/api/v1/projects/${this.slug}/tasks/${this.taskId}/member/search`, {
         params: { search: this.form.search}
     })

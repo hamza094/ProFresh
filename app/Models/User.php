@@ -8,8 +8,6 @@ use Illuminate\Contracts\Auth\CanResetPassword;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Support\Facades\Redis;
-use Spatie\Searchable\Searchable;
-use Spatie\Searchable\SearchResult;
 use Illuminate\Support\Str;
 use Laravel\Paddle\Billable;
 use App\Enums\OAuthProvider;
@@ -19,7 +17,7 @@ use App\Jobs\QueuedPasswordResetJob;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Spatie\Permission\Traits\HasRoles;
 
-class User extends Authenticatable implements Searchable, MustVerifyEmail
+class User extends Authenticatable implements MustVerifyEmail
 {
     use HasFactory, Notifiable, Billable, HasApiTokens,HasRoles;
     
@@ -128,12 +126,6 @@ class User extends Authenticatable implements Searchable, MustVerifyEmail
     public function info()
     {
        return $this->hasOne(UserInfo::class);
-    }
-
-    public function getSearchResult(): SearchResult
-    {
-       $url=$this->email;
-      return new SearchResult($this, $this->name, $url);
     }
 
    public function members($active = false)

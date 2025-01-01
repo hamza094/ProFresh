@@ -78,6 +78,7 @@ class AppServiceProvider extends ServiceProvider
         'api/v1/data',
         'api/v1/tasksdata',
         'api/v1/user/projects',
+        'api/v1/users/search',
     ];
 
     return Str::startsWith($route->uri, 'api/v1') && 

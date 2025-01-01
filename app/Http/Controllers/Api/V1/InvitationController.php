@@ -10,7 +10,9 @@ use Illuminate\Http\JsonResponse;
 use App\Services\Api\V1\InvitationService;
 use App\Http\Controllers\Api\ApiController;
 use App\Http\Resources\Api\V1\ProjectsResource;
+use App\Http\Resources\Api\V1\Task\TaskMemberResource;
 use Auth;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class InvitationController extends ApiController
 {
@@ -32,11 +34,11 @@ class InvitationController extends ApiController
      * @param  int  $project
      * @return \Illuminate\Http\Request
      */
-  public function search(Request $request): JsonResponse
+  public function search(Project $project,Request $request): AnonymousResourceCollection
   {
-    $results = $this->invitationService->memberSearch($request);
+    $results = $this->invitationService->usersSearch($project,$request);
 
-    return response()->json($results);
+    return TaskMemberResource::collection($results);
    }
 
      /**

@@ -115,7 +115,7 @@ class TaskFeaturesTest extends TestCase
 
       $this->project->members()->attach($user->id, ['active' => true]);
 
-     $response = $this->getJson(route('task.members.search',[
+    $response = $this->getJson(route('task.members.search',[
         'project' => $this->project->slug,
       'task'=>$task->id
   ]),['search' => 'test'])
@@ -142,7 +142,6 @@ class TaskFeaturesTest extends TestCase
     ]));
 
     $this->assertModelMissing($task);
-
    }
 
     protected function assignMembersToTask(Task $task, array $members)

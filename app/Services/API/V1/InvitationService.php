@@ -16,6 +16,7 @@ use App\Helpers\ProjectHelper;
 use Illuminate\Support\Collection;
 use F9Web\ApiResponseHelpers;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Validation\ValidationException;
 
 class InvitationService
@@ -99,17 +100,17 @@ class InvitationService
     ]);
   }
 
-  public function memberSearch($request): Collection
+  public function usersSearch(Project $project,Request $request): Collection
   {
-    $query = $request->input('query');
+    $searchTerm = $request->input('query');
 
-    if (!$query) {
-        return collect();
-    } 
+    $users = User::query()
+        ->whereAny(['name', 'email'], 'LIKE', '%' . $searchTerm . '%')
+        ->select('uuid','name','email')
+        ->limit(5)
+        ->get();
 
-    return (new Search())
-      ->registerModel(User::class, ['name', 'email'])
-      ->search($query);
+         return $users;
   }
 
   protected function recordActivity($project,$user,$msg)

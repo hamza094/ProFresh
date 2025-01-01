@@ -85,7 +85,7 @@ var render = function render() {
     }
   }, [_vm._v("x")])])]), _vm._v(" "), _c("div", {
     staticClass: "panel-top_content"
-  }, [_vm.archivedTasks.length > 0 ? _c("div", _vm._l(_vm.archivedTasks, function (task, index) {
+  }, [_vm.archivedTasks && _vm.archivedTasks.length > 0 ? _c("div", _vm._l(_vm.archivedTasks, function (task, index) {
     return _c("div", {
       key: task.id
     }, [_c("div", {
