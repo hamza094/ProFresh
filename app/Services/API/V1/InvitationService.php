@@ -23,14 +23,12 @@ class InvitationService
 {
   use ApiResponseHelpers;
 
-  public function sendInvitation($user,$project): JsonResponse
+  public function sendInvitation(User $user,Project $project): void
   {
+    $this->validateInvitation($project,$user);
+
+    DB::beginTransaction();
     try{
-
-      $this->validateInvitation($project,$user);
-
-      DB::beginTransaction();
-
       $project->invite($user);
 
       $this->recordActivity($project,$user,'sent_invitation_member');
@@ -38,18 +36,12 @@ class InvitationService
       $user->notify(new ProjectInvitation($project));
 
       DB::commit();
-
-      return $this->respondWithSuccess([
-        'message'=>"Project invitation sent to ".$user->name,
-        'project'=>new ProjectsResource($project)
-      ]);
-
     }catch(\Exception $ex){
-
       DB::rollBack();
 
       throw $ex;
     }
+
    }
 
   public function acceptInvitation(Project $project): JsonResponse
@@ -121,7 +113,7 @@ class InvitationService
    protected function validateInvitation($project,$user): void
    {
      throw_if(
-       $project->members->contains($user->id),
+       $project->members()->where('user_id', $user->id)->exists(),
        ValidationException::withMessages([
         'invitation'=>'Project invitation already sent to a user.'
       ])

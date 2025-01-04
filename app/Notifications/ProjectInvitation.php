@@ -8,8 +8,7 @@ use Illuminate\Notifications\Notification;
 use Illuminate\Notifications\Messages\BroadcastMessage;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-
-class ProjectInvitation extends Notification implements ShouldBroadcast
+class ProjectInvitation extends Notification implements ShouldQueue,ShouldBroadcast
 {
     use Queueable;
 
@@ -35,7 +34,6 @@ class ProjectInvitation extends Notification implements ShouldBroadcast
     {
         return ['database','broadcast'];
     }
-
 
     /**
      * Get the array representation of the notification.

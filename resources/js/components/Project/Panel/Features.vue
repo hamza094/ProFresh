@@ -60,7 +60,7 @@
 
         <!-- Show user results -->
         <li v-else-if="results.length > 0 && query" v-for="result in results.slice(0, 5)" :key="result.id">
-          <div @click.prevent="inviteUser(result.url)">
+          <div @click.prevent="inviteUser(result.email)">
             {{ result.name }} ({{ result.email }})
           </div>
         </li>
@@ -178,19 +178,29 @@ export default{
     });
  },
 
-  inviteUser(user){
+  inviteUser(userEmail){
       axios.post('/api/v1/projects/'+this.slug+'/invitations',{
-      email:user,
-     }).then(response=>{
+      email:userEmail,
+     },{ useProgress: true }).then(response=>{
        this.query='';
        this.results='';
        this.$vToastify.success(response.data.message);
    }).catch(error=>{
        this.query='';
        this.results='';
-       this.$vToastify.warning(error.response.data.error);
+
+      const errors = error.response?.data?.errors;
+      
+      if (error.response?.status === 422 && errors) {
+        Object.values(errors).flat().forEach(message => {
+          this.$vToastify.warning(message);
+        });
+      } else {
+        this.$vToastify.warning(error.response?.data?.error || "An unexpected error occurred.");
+      }
    })
  },
+
  removeMember(id,member){
    var self = this;
     this.sweetAlert('Yes, Remove Member').then((result) => {

@@ -39,14 +39,26 @@ class InvitationTest extends TestCase
 
       $response=$this->postJson($this->project->path().'/invitations',[
             'email'=>$invitedUser->email
-          ])->assertUnprocessable()
+          ])
+      ->assertUnprocessable()
             ->assertJsonValidationErrors('invitation');
 
-        $response=$this->postJson($this->project->path().
-            '/invitations',
+        $response=$this->postJson($this->project->path().'/invitations',
             ['email'=>$this->project->user->email])
         ->assertUnprocessable()
         ->assertJsonValidationErrors('invitation');
+    }
+
+    /** @test */
+    public function it_allows_valid_email()
+    {
+        $user = User::factory()->create(['email' => 'valid@example.com']);
+
+        $response = $this->postJson($this->project->path().'/invitations',
+           ['email' => $user->email]);
+
+        $response->assertStatus(200);
+        $response->assertJsonMissingValidationErrors(['email']);
     }
 
     /** @test */
