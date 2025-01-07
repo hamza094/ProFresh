@@ -2,64 +2,77 @@
 
 namespace App\Notifications;
 
+use App\Models\Project;
+use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Notification;
 use Illuminate\Notifications\Messages\BroadcastMessage;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-class AcceptInvitation extends Notification implements ShouldBroadcast
+class AcceptInvitation extends Notification implements ShouldQueue,ShouldBroadcast
 {
     use Queueable;
 
-    protected $project;
+    protected Project $project;
     protected $user;
 
     /**
      * Create a new notification instance.
      *
-     * @return void
      */
-    public function __construct($project,$user)
+    public function __construct(Project $project,$user)
     {
         $this->project=$project;
         $this->user=$user;
     }
 
-    /**
+     /**
      * Get the notification's delivery channels.
      *
-     * @param  mixed  $notifiable
-     * @return array
+     * @param mixed $notifiable
+     * @return array<string> The channels through which the notification is delivered.
      */
-    public function via($notifiable)
+    public function via(mixed $notifiable) :array
     {
         return ['database','broadcast'];
     }
 
-
-    /**
-     * Get the array representation of the notification.
+     /**
+     * Prepare the notification data.
      *
-     * @param  mixed  $notifiable
-     * @return array
+     * @return array<string, mixed> The notification data.
      */
-    public function toArray($notifiable)
+    private function notificationData(): array
     {
         return [
-          'message'=>'accepted the invitation of your project '. $this->project->name,
-          'notifier' =>$this->user,
-          'link'=>$this->project->path()
+            'message' => 'accepted the invitation of your project ' . $this->project->name,
+            'notifier' => $this->user,
+            'link' => $this->project->path()
         ];
     }
 
-   public function toBroadcast($notifiable)
+
+     /**
+     * Get the array representation of the notification.
+     *
+     * @param mixed $notifiable
+     * @return array<string, mixed> The notification data.
+     */
+    public function toArray(mixed $notifiable): array
+    {
+        return $this->notificationData();
+    }
+
+    /**
+     * Get the broadcast representation of the notification.
+     *
+     * @param mixed $notifiable
+     * @return BroadcastMessage The broadcast notification data.
+     */
+   public function toBroadcast(mixed $notifiable): BroadcastMessage 
   {
-    return new BroadcastMessage([
-      'message'=>'accepted the invitation of your project '. $this->project->name,
-      'notifier' =>$this->user,
-      'link'=>$this->project->path()
-     ]);
+     return new BroadcastMessage($this->notificationData());
   }
 
 }

@@ -4,7 +4,11 @@ namespace App\Http\Resources\Api\V1;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 use App\Http\Resources\Api\V1\UsersResource;
+use Illuminate\Http\Request;
 
+/**
+ * @mixin \App\Models\Project
+ */
 class ProjectInvitaionResource extends JsonResource
 {
     /**
@@ -13,7 +17,7 @@ class ProjectInvitaionResource extends JsonResource
      * @param  \Illuminate\Http\Request  $request
      * @return array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable
      */
-    public function toArray($request)
+    public function toArray(Request $request): array
     {
         return [
         'id'=>$this->id,    

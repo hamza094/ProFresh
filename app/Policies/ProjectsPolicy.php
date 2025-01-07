@@ -30,20 +30,28 @@ class ProjectsPolicy
       return null; 
    }
 
-    public function manage(User $user, Project $project)
+    public function manage(User $user, Project $project): bool
     {
         return $user->is($project->user);
     }
 
-    public function access(User $user, Project $project)
+    public function access(User $user, Project $project): Response
     {
         return $user->is($project->user) || $project->activeMembers->contains($user->id) 
                ? Response::allow()
                : Response::deny("Only Project's owner and members are allowed to access this feature.");
     }
 
-    public function zoomAuthorize(User $user, Project $project)
+    public function zoomAuthorize(User $user, Project $project): bool
     {
       $user->is($project->user) && ! $user->isConnectedToZoom();
     }
+
+    public function canAcceptInvitation(User $user, Project $project): bool
+   {
+    return $project->members()
+        ->where('user_id', $user->id)
+        ->wherePivot('active', false)
+        ->exists();
+   }
 }

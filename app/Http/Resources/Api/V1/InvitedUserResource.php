@@ -3,7 +3,11 @@
 namespace App\Http\Resources\Api\V1;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Http\Request;
 
+/**
+ * @mixin \App\Models\User
+ */
 class InvitedUserResource extends JsonResource
 {
     /**
@@ -12,7 +16,7 @@ class InvitedUserResource extends JsonResource
      * @param  \Illuminate\Http\Request  $request
      * @return array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable
      */
-    public function toArray($request)
+    public function toArray(Request $request): array
     {
         return [
           /**

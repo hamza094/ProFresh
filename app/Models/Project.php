@@ -53,7 +53,7 @@ class Project extends Model
         return 'slug';
     }
 
-    public function path()
+    public function path(): string
     {
         return "/api/v1/projects/{$this->slug}";
     }
@@ -102,9 +102,9 @@ class Project extends Model
         return $this->tasks()->createManyQuietly($tasks);
     }
 
-    public function invite(User $user)
+    public function invite(User $user): void
     {
-        return $this->members()->attach($user);
+        $this->members()->attach($user);
     }
 
     public function members(): BelongsToMany 
@@ -120,7 +120,7 @@ class Project extends Model
               ->wherePivot('active', true);
     }
 
-    public function asignees()
+    public function asignees(): BelongsToMany
     {
         return $this
         ->belongsToMany(User::class, 'project_members')

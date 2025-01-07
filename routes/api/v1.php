@@ -153,10 +153,19 @@ Route::get('unarchive','unarchive')
 
 
 Route::controller(InvitationController::class)->group(function(){
-  Route::post('invitations','store')->name('send.invitation')->can('manage','project');
-  Route::get('remove/{user}','remove')->can('manage','project');
-  Route::get('/accept-invitation','accept')->name('accept.invitation');
-  Route::get('/ignore','ignore');
+  Route::post('invitations','invite')
+  ->name('send.invitation')
+  ->can('manage','project');
+
+  Route::get('accept-invitation','accept')
+  ->name('accept.invitation')
+  ->can('canAcceptInvitation', 'project');
+
+    Route::get('reject-invitation','reject')
+      ->can('canAcceptInvitation', 'project');
+
+  Route::get('remove/member/{user}','remove')
+       ->can('manage','project');
 });
 
 Route::apiResource('/meetings',ZoomMeetingController::class);

@@ -151,9 +151,9 @@ class RecordActivityTest extends TestCase
   {
     $user=User::factory()->create();
 
-     $this->project->members()->attach($user);
+     $this->project->members()->attach($user,['active'=>true]);
 
-     $this->getJson($this->project->path().'/remove/'.$user->id);
+     $this->getJson($this->project->path().'/remove/member/'.$user->uuid);
 
     $this->assertEquals('remove_project_member',$this->project->activities->last()->description);
   }

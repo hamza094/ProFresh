@@ -16,6 +16,7 @@ use App\Helpers\ProjectHelper;
 use Illuminate\Support\Collection;
 use F9Web\ApiResponseHelpers;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Validation\ValidationException;
 
@@ -44,26 +45,20 @@ class InvitationService
 
    }
 
-  public function acceptInvitation(Project $project): JsonResponse
-  {
-    try{
 
+  public function acceptInvitation(Project $project): void
+  {
     $user=Auth::user();
 
     DB::beginTransaction();  
 
-    $user->members()->updateExistingPivot($project,['active'=>true]);
+    try{
 
+    $this->activateMembership($project, $user);
     $this->recordActivity($project,$user,'accept_invitation_member');
-
-    $project->user->notify(new AcceptInvitation($project,$user->toArray()));
+    $project->user->notify(new AcceptInvitation($project,$user));
 
      DB::commit();
-
-    return $this->respondWithSuccess([
-      'message'=>"You have accepted Project invitation",
-      'project'=>new ProjectsResource($project)
-    ]);
 
     }catch(\Exception $ex){
 
@@ -73,25 +68,24 @@ class InvitationService
     }
   }
 
-  public function removeMember($user,$project): JsonResponse
-  {
-    DB::transaction(function () use ($project, $user) {
 
-    $project->activities->whereIn('subject_id', $user->id)
-            ->each->delete();
+  public function removeMember(User $user,Project $project): void
+  {
+    $this->validateRemoval($project,$user);
+
+    DB::transaction(function () use ($project,$user){
+    $project->activities->whereIn('subject_id', [$user->id])->each->delete();
 
     $project->members()->detach($user);
 
     $this->recordActivity($project,$user,'remove_project_member');
-
   });
 
-    return $this->respondWithSuccess([
-      'message'=>"Member {$user->name} has been removed from the project",
-      'user'=>new UsersResource($user),
-    ]);
   }
 
+  /**
+ * @return \Illuminate\Database\Eloquent\Collection<int, \App\Models\User>
+ */
   public function usersSearch(Project $project,Request $request): Collection
   {
     $searchTerm = $request->input('query');
@@ -105,12 +99,17 @@ class InvitationService
          return $users;
   }
 
-  protected function recordActivity($project,$user,$msg)
+  protected function recordActivity(Project $project,User $user,string $msg): void
   {
     $project->recordActivity($msg,$user->name.'/_/'.$user->id);
   }
 
-   protected function validateInvitation($project,$user): void
+  protected function activateMembership(Project $project,Authenticatable $user): void
+  {
+    $user->members()->updateExistingPivot($project, ['active' => true]);
+  }
+
+   protected function validateInvitation(Project $project,User $user): void
    {
      throw_if(
        $project->members()->where('user_id', $user->id)->exists(),
@@ -125,7 +124,17 @@ class InvitationService
         'invitation'=>"Can't send an invitation to the project owner."
       ])
     );
-  } 
+  }
+
+  protected function validateRemoval(Project $project, User $user): void
+  {
+    if (!$project->activeMembers()->where('user_id', $user->id)->exists()) {
+        throw ValidationException::withMessages([
+            'user' => 'This user is not an active member of the project.',
+        ]);
+    }
+}
+
 }
 
 ?>
