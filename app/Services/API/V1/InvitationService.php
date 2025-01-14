@@ -5,25 +5,19 @@ use Auth;
 use App\Models\User;
 use App\Models\Project;
 use Illuminate\Http\Request;
-use Spatie\Searchable\Search;
 use App\Notifications\ProjectInvitation;
 use App\Notifications\AcceptInvitation;
-use App\Http\Resources\Api\V1\ProjectInvitaionResource;
 use App\Http\Resources\Api\V1\ProjectsResource;
 use App\Http\Resources\Api\V1\UsersResource;
 use Illuminate\Support\Facades\DB;
-use App\Helpers\ProjectHelper;
 use Illuminate\Support\Collection;
-use F9Web\ApiResponseHelpers;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Contracts\Auth\Authenticatable;
-use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Database\Eloquent\Collection as EloquentCollection;
+
 
 class InvitationService
 {
-  use ApiResponseHelpers;
-
   public function sendInvitation(User $user,Project $project): void
   {
     $this->validateInvitation($project,$user);
@@ -74,13 +68,26 @@ class InvitationService
     $this->validateRemoval($project,$user);
 
     DB::transaction(function () use ($project,$user){
-    $project->activities->whereIn('subject_id', [$user->id])->each->delete();
 
     $project->members()->detach($user);
 
     $this->recordActivity($project,$user,'remove_project_member');
   });
-
+  }
+ 
+  
+ /**
+ * Get the pending members for the given project.
+ *
+ * @param \App\Models\Project $project
+ * @return \Illuminate\Database\Eloquent\Collection<int, \App\Models\User>
+ */
+  public function pendingMembers(Project $project) : EloquentCollection
+  {
+    return $project->members()
+        ->wherePivot('active', false)
+        ->withPivot('created_at')
+        ->get();
   }
 
   /**
@@ -98,6 +105,34 @@ class InvitationService
 
          return $users;
   }
+
+   /**
+     * Reject an invitation for a user.
+     *
+     * @param Project $project
+     * @param User $user
+     * @return void
+     */
+    public function rejectInvitation(Project $project, User $user): void
+    {
+      $project->members()->detach($user);
+    }
+
+     /**
+     * Cancel an invitation for a user as a project owner.
+     *
+     * @param Project $project
+     * @param User $user
+     * @return void
+     */
+    public function cancelInvitation(Project $project, User $user): void
+    {
+        if($user->cannot('canAcceptInvitation', $project)){
+            abort(403);
+          }
+
+        $project->members()->detach($user);
+    }
 
   protected function recordActivity(Project $project,User $user,string $msg): void
   {

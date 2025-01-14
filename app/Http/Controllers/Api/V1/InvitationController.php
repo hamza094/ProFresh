@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Api\V1;
 
 use Illuminate\Http\Request;
 use App\Models\User;
-use Spatie\Searchable\Search;
 use App\Models\Project;
 use Illuminate\Http\JsonResponse;
 use App\Services\Api\V1\InvitationService;
@@ -55,7 +54,7 @@ class InvitationController extends ApiController
  *   - **Validation Error:** Throw an error if a project invitation has already been sent to the user.
  * 
  * ### Authorization:
- * - This action can only be performed by the project owner, enforced via policy checks.
+ * - This action can only be performed by the project owner
  * 
  */
    public function invite(Project $project,InvitationUsersRequest $request): JsonResponse
@@ -113,20 +112,48 @@ class InvitationController extends ApiController
  *
  * This endpoint allows an invited user to reject a project invitation.
  * 
- * ### Functionality:
- * - Removes the user's association with the project, effectively canceling the invitation.
- * 
  * ### Authorization:
  * - Ensures only the user who was invited can perform this action.
  */
    public function reject(Project $project): JsonResponse
    {
-     $user = Auth::user();
+      $user = Auth::user();
 
-      $project->members()->detach($user);
+      $this->invitationService->rejectInvitation($project, $user);
 
       return response()->json([
-        'message'=>'You have rejected the project request to join',
+        'message' => 'You have rejected the invitation to join the project.',
+        'project'=>new ProjectsResource($project),
+        'user'=>new InvitedUserResource($user),
+      ],200);
+   }
+
+   /**
+ * Cancel Project Invitation
+ *
+ * This endpoint allows the project owner to cancel a user's pending project invitation
+ *
+ * ### Authorization:
+ * - Only the project owner is authorized to perform this action.
+ *
+ * #### Error (403 Forbidden):
+ *
+ * Returned if the authenticated user is not authorized to manage the project or if the user doesn't have a pending invitation.
+ *
+ * ```json
+ * {
+ *   "message": "This action is unauthorized."
+ * }
+ * ```
+ */
+   public function cancel(Project $project,User $user): JsonResponse
+   {
+      $this->authorize('manage', $project);
+
+      $this->invitationService->cancelInvitation($project, $user);
+
+      return response()->json([
+        'message' => 'You have canceled the invitation for '. $user->name. ' to join the project.',
         'project'=>new ProjectsResource($project),
         'user'=>new InvitedUserResource($user),
       ],200);
@@ -157,6 +184,32 @@ class InvitationController extends ApiController
     } catch (ValidationException $ex) {
         return response()->json(['error' => $ex->getMessage()], 422);
     }
+   }
+
+/**
+ * Get Pending Project Invitations
+ *
+ * This endpoint retrieves a list of users who have been invited to a specific project but have not yet accepted the invitation.
+ *
+ * ### Authorization:
+ * - Only the project owner is authorized to perform this action.
+ *
+ */
+   public function pending(Project $project): JsonResponse
+   {
+      $members=$this->invitationService->pendingMembers($project);
+
+        if ($members->isEmpty()) {
+        return response()->json([
+            'message' => 'No pending project invitation requests found.',
+            'pending_invitations' => [],
+        ], 200);
+    }
+
+        return response()->json([
+            'message' => "List of project pending member requests",
+            'pending_invitations' =>InvitedUserResource::Collection($members),
+      ], 200); 
    }
 
 }

@@ -58,9 +58,6 @@ Route::post('start','start')->name('start');
 Route::post('ended','ended')->name('ended');
 
 });
-
-
-
   
 Route::middleware(['auth:sanctum'/*,\App\Http\Middleware\TrackLastActiveAt::class*/])->group(function () {
 Route::get('/webhooks/zoom/meetings/{meeting}',[ZoomController::class,'event']);
@@ -161,11 +158,18 @@ Route::controller(InvitationController::class)->group(function(){
   ->name('accept.invitation')
   ->can('canAcceptInvitation', 'project');
 
-    Route::get('reject-invitation','reject')
-      ->can('canAcceptInvitation', 'project');
+  Route::get('reject/invitation','reject')
+  ->can('canAcceptInvitation', 'project');
+
+  Route::get('cancel/invitation/users/{user}','cancel')
+  ->name('projects.cancel-invitation');
 
   Route::get('remove/member/{user}','remove')
        ->can('manage','project');
+
+  Route::get('pending/invitations','pending')
+       ->can('manage','project')
+       ->name('project.pending.invitation');
 });
 
 Route::apiResource('/meetings',ZoomMeetingController::class);

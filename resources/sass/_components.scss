@@ -797,19 +797,14 @@ margin-left: 1rem;
       }
     }
     &-detail{
-      width: auto;
-      vertical-align: top;
-      display: inline-flex;
-      justify-content : center;
-      margin-top: 1.5rem;
-      margin-left: 2rem;
+     padding: 1rem;
+    border: 1px solid #f0f0f0;
+    border-radius: 0.5rem;
+    background-color: #f9f9f9;
     }
   }
 }
-.project_members-detail img,p{
-  margin: auto;
-   display: block
-}
+
 #paper {
 	color:#FFF;
 	font-size:20px;

@@ -11,6 +11,9 @@ const state = {
     updateUserAvatar(state, avatar) {
       state.userAvatar = avatar;
     },
+    setInvitations(state,invitaions) {
+    state.invitations = invitaions;
+  },
     updateInvitations(state, projectId) {
       const index = state.invitations.findIndex(project => project.id === projectId);
       if (index !== -1) {

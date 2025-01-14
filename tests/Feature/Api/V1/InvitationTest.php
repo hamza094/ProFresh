@@ -99,13 +99,40 @@ class InvitationTest extends TestCase
       public function authorized_user_can_reject_project_invitation()
       {
         $invitedUser = User::factory()->create();
+
         $this->project->invite($invitedUser);
 
         Sanctum::actingAs($invitedUser);
 
-        $this->getJson($this->project->path().'/reject-invitation')
-         ->assertJson([
-            'message'=>"You have rejected the project request to join",
+        $response=$this->getJson($this->project->path().'/reject/invitation')
+        ->assertJson([
+            'message'=>"You have rejected the invitation to join the project.",
+            'project'=>['id'=>$this->project->id]
+          ]);
+
+        $this->assertDatabaseMissing('project_members', [
+          "project_id" => $this->project->id,
+           "user_id" =>$invitedUser->id
+        ]);
+      }
+
+       /** @test */
+      public function project_owner_can_cancel_project_invitation()
+      {
+        $invitedUser = User::factory()->create();
+
+        $response=$this->getJson(route('projects.cancel-invitation', 
+          ['project' => $this->project, 'user' => $invitedUser
+        ]))
+        ->assertForbidden();
+
+        $this->project->invite($invitedUser);
+
+        $response=$this->getJson(route('projects.cancel-invitation', 
+          ['project' => $this->project, 'user' => $invitedUser
+        ]))
+        ->assertJson([
+            'message'=>'You have canceled the invitation for '. $invitedUser->name. ' to join the project.',
             'project'=>['id'=>$this->project->id]
           ]);
 
@@ -132,5 +159,41 @@ class InvitationTest extends TestCase
             "user_id" => $memberUser->id
         ]);
       }
+
+       /** @test */
+      public function project_owner_can_view_pending_member_invitations()
+      {
+        $pendingUsers=User::factory()->count(3)->create();
+
+        $this->project
+        ->members()
+        ->attach($pendingUsers,['active'=>false]);
+
+          $response=$this->getJson($this->project->path().'/pending/invitations');
+
+          $response->assertStatus(200)
+        ->assertJsonStructure([
+            'message',
+            'pending_invitations' => [
+                '*' => [
+                    'uuid',
+                    'name',
+                    'username',
+                    'email',
+                    'invitation_sent_at',
+                    'links' => [
+                        'self',
+                    ],
+                ],
+            ],
+        ])
+        ->assertJson([
+            'message' => 'List of project pending member requests',
+        ]);
+
+    // Assert the count of pending invitations
+    $this->assertCount(3, $response->json('pending_invitations'));
+
+    }
 
 }

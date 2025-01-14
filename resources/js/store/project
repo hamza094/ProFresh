@@ -26,7 +26,7 @@ const mutations = {
       state.project.notes = notes
     },
     detachMember(state,memberId){
-      const index = state.project.members.findIndex(member => member.id === memberId);
+      const index = state.project.members.findIndex(member => member.uuid === memberId);
       if (index !== -1) {
         state.project.members.splice(index, 1);
       }

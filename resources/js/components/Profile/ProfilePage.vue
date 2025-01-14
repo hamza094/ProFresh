@@ -113,7 +113,8 @@ export default{
 
 	methods:{
     ...mapMutations('profile',['updateUser', 'updateUserAvatar',
-      'updateInvitations']),
+      'updateInvitations',
+      'setInvitations']),
    
         loadUser(){
          axios.get('/api/v1/users/'+this.$route.params.id).
@@ -122,6 +123,7 @@ export default{
           this.updateUser(user);
           this.updateUserAvatar(user.avatar);
           this.updateInvitations(user.invited_projects);  
+          this.setInvitations(user.invited_projects);
           this.owner = (this.user.id === this.auth);
          }).catch(error=>{
            console.log(error.response.data.errors);

@@ -76,14 +76,13 @@
       </div>
 
       <div class="collapse" id="memberProject">
-
         <div class="row">
-        <div v-for="member in members" :key="member.id">
-          <div class="project_members-detail">
-               <router-link :to="'/user/'+member.id+'/profile'">
-                   <img v-if="member.avatar" :src="member.avatar" alt="">
+        <div v-for="member in members" :key="member.id" class="col-6">
+          <div class="project_members-detail text-center">
+               <router-link :to="'/user/'+member.uuid+'/profile'">
+                   <img v-if="member.avatar" :src="member.avatar" alt="" class="img-fluid rounded-circle">
                    <p>
-                    <span v-if="member.id == owner.id" 
+                    <span v-if="member.uuid == owner.uuid" 
                     class="badge badge-success">project owner
                     </span>
                     <br>
@@ -93,11 +92,53 @@
                    </p>
                    <p></p>
                </router-link>
-              <a v-if="ownerLogin && member.id !== owner.id"  rel="" role="button" @click.prevent="removeMember(member.id,member)">x</a>
+              <a v-if="ownerLogin && member.uuid !== owner.uuid"  rel="" role="button" @click.prevent="removeMember(member.uuid,member)" class="text-danger">Remove</a>
               </div>
         </div>
       </div>
 </div>
+    </div>
+
+    <div class="project_members">
+      <div class="task-top">
+        <p><b>Pending Members</b><a data-toggle="collapse" href="#pendingMembers" role="button" aria-expanded="false" aria-controls="pendingMembers">
+          <i class="fas fa-angle-down float-right"></i></a></p>
+      </div>
+
+      <div class="collapse" id="pendingMembers">
+    <div class="row">
+        <!-- Check if pendingMembers array is not empty -->
+        <template v-if="pendingMembers.length">
+            <div v-for="member in pendingMembers" :key="member.id" class="col-6">
+                <div class="project_members-detail text-center">
+                    <router-link :to="'/user/' + member.uuid + '/profile'">
+                        <img v-if="member.avatar" :src="member.avatar" class="img-fluid rounded-circle" alt="">
+                        <p>
+                            <span>{{ member.name }}</span>
+                            <br>
+                            <span>({{ member.username }})</span>
+                        </p>
+                        <p></p>
+                    </router-link>
+                    <span>{{member.invitation_sent_at}}</span>
+                    <br>
+                    <a v-if="ownerLogin && member.uuid !== owner.uuid" 
+                       rel="" 
+                       role="button" 
+                       @click.prevent="cancelRequest(member.uuid, member)" class="text-danger">Cancel</a>
+                </div>
+            </div>
+        </template>
+        
+        <!-- Show a message when no members are found -->
+        <template v-else>
+            <div class="col-12 text-center">
+                <p>No pending or invited members found.</p>
+            </div>
+        </template>
+    </div>
+</div>
+
     </div>
 </div>
 
@@ -120,12 +161,17 @@ export default{
       isLoading: false,
       results: [],
       errors:{},
+      pendingMembers:[],
     }
   },
    watch:{
       'query': debounce(function(newQuery) {
       this.searchUsers(newQuery);
     }, 500),
+    },
+
+    created(){
+      this.loadPendingRequests();
     },
 
   methods:{
@@ -205,15 +251,49 @@ export default{
    var self = this;
     this.sweetAlert('Yes, Remove Member').then((result) => {
   if (result.value) {
-  axios.get('/api/v1/projects/'+this.slug+'/remove/'+id).then(response=>{
-      this.detachMember(memberId);
+  axios.get('/api/v1/projects/'+this.slug+'/remove/member/'+id,{ useProgress: true }).then(response=>{
+      this.detachMember(response.data.user.uuid);
       self.$vToastify.info(response.data.message);
 }).catch(error=>{
-      swal.fire("Failed!","There was  an errors","warning");
+       this.$vToastify.warning(
+          error.response?.data?.error || "Failed to remove the member. Try again."
+        );
   });
  }
  })
- }
+ },
+
+ cancelRequest(userId) {
+  this.sweetAlert("Yes, cancel request").then((result) => {
+    if (!result.value) return;
+
+    axios
+      .get(`/api/v1/projects/${this.slug}/cancel/invitation/users/${userId}`, { useProgress: true })
+      .then((response) => {
+        this.pendingMembers = this.pendingMembers.filter(
+          (pendingMember) => pendingMember.uuid !== userId
+        );
+        this.$vToastify.info(response.data.message);
+      })
+      .catch((error) => {
+        this.$vToastify.warning(
+          error.response?.data?.message || "Failed to cancel the request. Try again."
+        );
+      });
+  });
+},
+
+ loadPendingRequests(){
+     axios.get(`/api/v1/projects/${this.slug}/pending/invitations`)
+       .then(response=>{
+       this.pendingMembers=response.data.pending_invitations;
+   }).catch(error=>{
+    this.$vToastify.warning(
+      error.response?.data?.message || "Failed to load pending invitations."
+    );
+   })
+ },
+
   },
 }
 </script>

@@ -59,13 +59,15 @@ export default{
   },
 
   rejectInvitation(slug){
-       axios.get('/api/v1/projects/'+slug+'/ignore',{
+       axios.get('/api/v1/projects/'+slug+'/reject/invitation',{
            }).then(response=>{
           this.$vToastify.info(response.data.message);
           this.updateInvitations(response.data.project.id);
            }).catch(error=>{
-                this.$vToastify.warning("Error! Try Again");
-            });
+          this.$vToastify.warning(
+          error.response?.data?.message || "Failed to reject the request. Try again."
+        );
+        });
   },
     }
 

@@ -4,6 +4,7 @@ namespace App\Http\Resources\Api\V1;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 /**
  * @mixin \App\Models\User
@@ -26,14 +27,32 @@ class InvitedUserResource extends JsonResource
           'uuid'=>$this->uuid,
 
           /**
-           *  @example berry 
+           *  @example Berry Allen 
           * */
           'name'=>$this->name,
+
+          /**
+           * User's username
+           *  @example berry
+          * */
+          'username'=>$this->username,
 
           /**
            *  @example user@example.com
           * */
           'email'=>$this->email,
+          
+          /**
+           * User's avatar path
+           * @example 'https://eu.ui-avatars.com/api/?name=Prof. Jonas Miller DVM'
+           * */
+          'avatar' => $this->when($this->avatar,
+                                fn()=>$this->avatar_path),
+
+       'invitation_sent_at' => $this->when(
+        $request->routeIs('project.pending.invitation') && $this->pivot,
+        fn() => Carbon::parse($this->pivot->created_at)->format('M j, Y \a\t g:i A')
+    ),
 
        /**
         * Links related to the user.

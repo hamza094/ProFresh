@@ -7,6 +7,7 @@ use App\Http\Resources\Api\V1\ActivityResource;
 use App\Http\Resources\Api\V1\ConversationResource;
 use App\Http\Resources\Api\V1\UsersResource;
 use App\Http\Resources\Api\V1\StageResource;
+use App\Http\Resources\Api\V1\InvitedUserResource;
 use Carbon\Carbon;
 
 /**
@@ -119,7 +120,7 @@ class ProjectResource extends JsonResource
         /**
          * List of active project members.
         */
-        'members' => $this->when($showRoute && $this->relationLoaded('activeMembers'), fn () => UsersResource::collection($this->activeMembers)),
+        'members' => $this->when($showRoute && $this->relationLoaded('activeMembers'), fn () =>InvitedUserResource::collection($this->activeMembers)),
 
 
         /**
