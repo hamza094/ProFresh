@@ -17,18 +17,18 @@ class NewMessage implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-     public $conversation;
-     public $project;
+     public Conversation $conversation;
+     public int $projectId;
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct(Conversation $conversation,Project $project)
+    public function __construct(Conversation $conversation,int $projectId)
     {
         $this->conversation = $conversation;
-        $this->project = $project;
+        $this->projectId = $projectId;
     }
 
     /**
@@ -37,12 +37,17 @@ class NewMessage implements ShouldBroadcast
      * @return \Illuminate\Broadcasting\Channel|array
      */
 
-    public function broadcastOn()
+    public function broadcastOn(): PrivateChannel
     {
-      return new PrivateChannel('conversations.'.$this->project->slug);
+      return new PrivateChannel('project'.$this->projectId.'conversations');
     }
-
-    public function broadcastWith()
+ 
+    /**
+    * Get the data to broadcast.
+    *
+    * @return array<string, mixed>
+    */
+    public function broadcastWith(): array
     {
       return (new ConversationResource($this->conversation))
               ->resolve();

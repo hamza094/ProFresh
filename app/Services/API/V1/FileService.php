@@ -9,13 +9,16 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Spatie\ImageOptimizer\OptimizerChainFactory;
 
 class FileService
 {
     
-public function store($id, string $fileInputName, string $fileType): string
+// Stores a file in S3 and returns its public URL
+
+public function store(int $id, string $fileInputName, string $fileType): string
 {
     $file = request()->file($fileInputName);
 
@@ -28,23 +31,14 @@ public function store($id, string $fileInputName, string $fileType): string
     $folderName = $this->getFolderName($fileType);
     $fileName = $this->getGeneratedFileName($id, $file);
 
-    // optimize the image before uploading it
-    $optimizerChain = OptimizerChainFactory::create();
-    $optimizerChain->optimize($file->path());
+    // If the file is an image, optimize it before uploading
+    $this->optimizeFile($file);
 
-    $s3Disk = Storage::disk('s3');
+    return $this->uploadFileToS3($folderName, $file, $fileName);
 
-    try {
-        $path = $s3Disk->putFileAs($folderName, $file, $fileName, 'public');
-    } catch (\Exception $e) {
-        throw ValidationException::withMessages([
-                'file' => 'Error uploading file',
-            ]);
-    }
-
-    return $s3Disk->url($path);
  }
 
+   /* Returns the appropriate folder name for the file type.*/
    private static function getFolderName(string $fileType): string
    {
      return match ($fileType) {
@@ -53,11 +47,35 @@ public function store($id, string $fileInputName, string $fileType): string
           default => throw new \InvalidArgumentException('Invalid file type'),
         };
     }
-
-   private function getGeneratedFileName($id, UploadedFile $file): string
+   
+    /*Generates a unique file name for the file using the project id and file hash.*/
+   private function getGeneratedFileName(int $id, UploadedFile $file): string
     {
         return $id . '_' . $file->hashName();
     }
+
+    private function optimizeFile(UploadedFile $file): void
+  {
+    OptimizerChainFactory::create()->optimize($file->path());
+  }
+
+
+  private function uploadFileToS3(string $folderName, UploadedFile $file, string $fileName): string
+  {
+    $s3Disk = Storage::disk(config('filesystems.cloud'));
+
+    try {
+        $path = $s3Disk->putFileAs($folderName, $file, $fileName, 'public');
+    } catch (\Exception $e) {
+        Log::error('File upload failed', ['error' => $e->getMessage()]);
+        throw ValidationException::withMessages(['file' => 'Error uploading file']);
+    }
+       dd($s3Disk->url($path));
+       
+    return $s3Disk->url($path);
+  }
+
+
 
     public function deleteFile($user){
 

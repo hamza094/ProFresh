@@ -20,21 +20,37 @@ class Conversation extends Model
        return $this->belongsTo(User::class);
    }
 
-    public function mentionedUsers()
-    {
-      preg_match_all('/@([\w\-]+)/', $this->message, $matches);
+    public function mentionedUsers(): array
+   {
+    // Extract usernames from the message
+    preg_match_all('/@([\w.\-]+)/', $this->message ?? '', $matches);
 
-      return $matches[1];
-    }
+    // Find the UUIDs of mentioned users
+       return $matches[1] ?? [];
+   }
 
-    public function setMessageAttribute($message)
-    {
-      $this->attributes['message'] = preg_replace(
-            '/@([\w\-]+)/',
-             '<a href="/user/$1/profile" target="_blank">$0</a>',
-            $message
-      );
-    }
+public function setMessageAttribute($message): void
+{
+    $this->attributes['message'] = preg_replace_callback(
+        '/@([\w.\-]+)/',
+        function ($matches) {
+            $username = htmlspecialchars($matches[1], ENT_QUOTES, 'UTF-8');
+
+            // Check if user exists and get their UUID
+            $user = User::where('username', $username)->first();
+            if ($user) {
+                $url = route('user.profile', ['uuid' => $user->uuid]); // Dynamic URL with UUID
+                return "<a href=\"$url\" target=\"_blank\">@{$username}</a>";
+            }
+
+            // Return plain mention if user doesn't exist
+            return "@{$username}";
+        },
+        $message ?? ''
+    );
+}
+
+
 }
 
 

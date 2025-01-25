@@ -5,6 +5,8 @@ namespace Tests\Feature\Api\V1;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use App\Traits\ProjectSetup;
+use App\Events\NewMessage;
+use Illuminate\Support\Facades\Event;
 use App\Services\Api\V1\FileService;
 use App\Models\User;
 use App\Models\Conversation;
@@ -20,6 +22,8 @@ class ConversationTest extends TestCase
     /** @test */
     public function allowed_user_participates_in_project_chat()
     {
+      Event::fake();
+
       $message='random chat conversation';
 
       $response=$this->postJson($this->project->path().'/conversations',['message'=>$message,
@@ -27,6 +31,8 @@ class ConversationTest extends TestCase
 
         $this->assertDatabaseHas('conversations',[
           'message'=>$message]);
+
+      Event::assertDispatched(NewMessage::class);
     }
 
     /** @test */
@@ -43,9 +49,11 @@ class ConversationTest extends TestCase
     {
       Storage::fake('s3');
 
-      $file=UploadedFile::fake()->image('file.jpg');
+      $file=UploadedFile::fake()->image('file.jpg')->size(700);
 
-      $response=$this->postJson($this->project->path().'/conversations',['file'=>$file,
+      $response=$this->postJson($this->project->path().'/conversations',[
+        'message'=>'abra ka dabra',
+        'file'=>$file,
         'user_id' => $this->user->id])->assertOk();
 
       $uploadedFile='conversations/'.$this->project->id.'_'.$file->hashName();

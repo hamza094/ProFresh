@@ -12,7 +12,6 @@ use App\Http\Middleware\VerifyZoomWebhook;
 
 use App\Http\Controllers\Api\V1\Zoom\ZoomTokenController;
 
-
 use App\Http\Controllers\Api\V1\
 {
   ProjectController,
@@ -104,8 +103,9 @@ Route::controller(MessageController::class)->group(function(){
 
 
 //Chat Conversation Routes
-Route::apiResource('/conversations',ConversationController::class)->only(['store','destroy'])
-    ->middleware('subscription');
+Route::apiResource('/conversations',ConversationController::class)
+     ->only(['store','destroy']);
+    //->middleware('subscription');
 });
 
 Route::apiResource('/tasks', TaskController::class)

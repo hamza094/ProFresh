@@ -5,9 +5,11 @@ namespace Tests\Unit;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Notification;
+use App\Notifications\UserMentioned;
 use App\Models\Conversation;
 use App\Models\User;
-
+use App\Models\Project;
 
 class MentionedUserTest extends TestCase
 {

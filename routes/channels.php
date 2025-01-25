@@ -32,10 +32,10 @@ Broadcast::channel('activities', function ($user) {
       return true;
 });
 
-Broadcast::channel('conversations.{slug}', function ($user,$slug) {
+Broadcast::channel('project.{id}.conversations', function ($user,$slug) {
 
-    $project=Project::with('user')->where('slug',$slug)
-             ->firstOrFail();
+    $project=Project::with('user')
+              ->findOrFail($id);
 
     if($user->can('access',$project)){
         return true;

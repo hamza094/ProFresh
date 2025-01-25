@@ -24,8 +24,8 @@ class ConversationRequest extends FormRequest
     public function rules()
     {
         return [
-            'message'=>'sometimes|required',
-            'file'=>'sometimes|required|file|max:999',
+            'message'=>'string|sometimes|required_without:file',
+            'file'=>'sometimes|required_without:message|file|size:700|mimes:jpg,png,pdf,docx|mimetypes:image/jpeg,image/png,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document',
         ];
     }
 }

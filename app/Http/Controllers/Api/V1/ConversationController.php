@@ -3,12 +3,11 @@
 namespace App\Http\Controllers\Api\V1;
 
 use Illuminate\Http\Request;
-use App\Events\NewMessage;
 use App\Events\DeleteConversation;
 use App\Models\Project;
 use App\Models\User;
+use Illuminate\Support\Facades\Storage;
 use App\Models\Conversation;
-use F9Web\ApiResponseHelpers;
 use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Api\ApiController;
 use App\Http\Requests\Api\V1\ConversationRequest;
@@ -16,28 +15,34 @@ use App\Services\Api\V1\ConversationService;
 
 class ConversationController extends ApiController
 {
-    use ApiResponseHelpers;
+
+    private ConversationService $conversationService;
+
     /**
-     * Realtime project group conversation.
+    * Service For Conversation Feature
+    *
+    * App\Service\Api\V1\ConversationService
+    */
+  public function __construct(ConversationService $conversationService)
+  {
+    $this->conversationService=$conversationService;
+  }
+
+    /**
+     * Store project group conversation.
      *
-     * @param  int  $project
-     * @return \Illuminate\Http\Response
      */
     public function store(Project $project,
-                          ConversationRequest $request)
+                          ConversationRequest $request): JsonResponse
     {
-      $conversationService = new ConversationService();
+      $this->authorize('access',$project);
       
-      $conversation=$conversationService->storeConversation($request,$project);
-          
-       NewMessage::dispatch($conversation,$project);
+      $this->conversationService->storeConversation($request,$project);
 
-       $conversationService->userMentioned($conversation,$project);
-
-       return $this->respondWithSuccess([
+       return response()->json([
         'message'=>'New conversation added to. '.$project->name,
         'path'=>$project->path()
-      ]);
+      ],200);
     }
 
     public function destroy(Project $project,Conversation $conversation)
@@ -48,8 +53,16 @@ class ConversationController extends ApiController
 
       DeleteConversation::dispatch($conversation,$project);
 
+      if($conversation->has('file'){
+         Storage::disk('s3')->delete($conversation->file);
+      })
+
       $conversation->delete();
 
-      return $this->respondNoContent();
+      return response()->json([
+        'message'=>'Project Conversation deleted successfully',
+        'path'=>$project->path()
+      ],204);
+
     }
 }
