@@ -26,17 +26,19 @@ class ConversationService
     $this->fileService=$fileService;
   }
 
-  public function storeConversation(ConversationRequest $request,Project $project): void
+  public function storeConversation(ConversationRequest $request,Project $project)
   {
     $data = $this->prepareConversationData($request, $project);
 
     $conversation = $this->createConversation($project, $data);
      
      // Fire the NewMessage event
-     NewMessage::dispatch($conversation,$project->id);
+     NewMessage::dispatch($conversation,$project->slug);
 
      //Send Notification if user mentioned
      $this->userMentioned($conversation,$project);
+
+    return $conversation;
   }
 
   /**

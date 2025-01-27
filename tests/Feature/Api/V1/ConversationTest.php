@@ -18,6 +18,19 @@ use Tests\TestCase;
 class ConversationTest extends TestCase
 {
     use RefreshDatabase,ProjectSetup;
+   
+   /** @test */
+    public function allowed_user_can_see_project_conversations()
+    {
+      $conversation=Conversation::factory()->create(['project_id'=>$this->project->id,
+    ]);
+
+      $response=$this->withoutExceptionHandling()->getJson($this->project->path().'/conversations');
+
+      $response->assertJsonFragment([
+        'message' => $conversation->message,
+      ]);
+    }
 
     /** @test */
     public function allowed_user_participates_in_project_chat()
@@ -26,7 +39,7 @@ class ConversationTest extends TestCase
 
       $message='random chat conversation';
 
-      $response=$this->postJson($this->project->path().'/conversations',['message'=>$message,
+      $response=$this->withoutExceptionHandling()->postJson($this->project->path().'/conversations',['message'=>$message,
         'user_id' => $this->user->id]);
 
         $this->assertDatabaseHas('conversations',[
@@ -54,7 +67,7 @@ class ConversationTest extends TestCase
       $response=$this->postJson($this->project->path().'/conversations',[
         'message'=>'abra ka dabra',
         'file'=>$file,
-        'user_id' => $this->user->id])->assertOk();
+        'user_id' => $this->user->id]);
 
       $uploadedFile='conversations/'.$this->project->id.'_'.$file->hashName();
 

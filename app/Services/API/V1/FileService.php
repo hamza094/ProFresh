@@ -70,12 +70,8 @@ public function store(int $id, string $fileInputName, string $fileType): string
         Log::error('File upload failed', ['error' => $e->getMessage()]);
         throw ValidationException::withMessages(['file' => 'Error uploading file']);
     }
-       dd($s3Disk->url($path));
-       
     return $s3Disk->url($path);
   }
-
-
 
     public function deleteFile($user){
 

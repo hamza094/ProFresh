@@ -122,15 +122,6 @@ class ProjectResource extends JsonResource
         */
         'members' => $this->when($showRoute && $this->relationLoaded('activeMembers'), fn () =>InvitedUserResource::collection($this->activeMembers)),
 
-
-        /**
-         * Limited list of project chat conversations.
-        */
-        'conversations' => $this->when(
-            $showRoute,
-            fn () => ConversationResource::collection($this->whenLoaded('conversations')->take(25))
-        ),
-
         /**
          * Limited list of recent project activities.
         */

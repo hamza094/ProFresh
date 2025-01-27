@@ -104,7 +104,7 @@ Route::controller(MessageController::class)->group(function(){
 
 //Chat Conversation Routes
 Route::apiResource('/conversations',ConversationController::class)
-     ->only(['store','destroy']);
+     ->only(['store','destroy','index']);
     //->middleware('subscription');
 });
 

@@ -26,6 +26,10 @@ class ConversationResource extends JsonResource
 
         'created_at'=>$this->created_at
                 ->format(config('app.date_formats.exact')),
+                
+        'links'=>[
+          'project_link'=>'api/v1/'.$this->project->slug,
+        ]        
      ]; 
     }
 }

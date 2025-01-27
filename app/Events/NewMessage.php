@@ -18,17 +18,17 @@ class NewMessage implements ShouldBroadcast
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
      public Conversation $conversation;
-     public int $projectId;
+     public string $projectSlug;
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct(Conversation $conversation,int $projectId)
+    public function __construct(Conversation $conversation,string $projectSlug)
     {
         $this->conversation = $conversation;
-        $this->projectId = $projectId;
+        $this->projectSlug = $projectSlug;
     }
 
     /**
@@ -39,7 +39,7 @@ class NewMessage implements ShouldBroadcast
 
     public function broadcastOn(): PrivateChannel
     {
-      return new PrivateChannel('project'.$this->projectId.'conversations');
+      return new PrivateChannel('project'.$this->projectSlug.'conversations');
     }
  
     /**

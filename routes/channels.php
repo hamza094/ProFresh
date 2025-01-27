@@ -32,10 +32,10 @@ Broadcast::channel('activities', function ($user) {
       return true;
 });
 
-Broadcast::channel('project.{id}.conversations', function ($user,$slug) {
+Broadcast::channel('project.{slug}/conversations', function ($user,$slug) {
 
-    $project=Project::with('user')
-              ->findOrFail($id);
+    $project=Project::with('user')->where('slug',$slug)
+             ->firstOrFail();
 
     if($user->can('access',$project)){
         return true;
@@ -51,15 +51,6 @@ Broadcast::channel('deleteConversation.{slug}', function ($user,$slug) {
     }
 });
 
-Broadcast::channel('meetingStatus.{id}', function ($user, $id) {
-    $meeting = Meeting::find($id);
-    $project = $meeting->project; 
-    
-    return $meeting && ($user->id === $meeting->user_id || 
-                        $user->id === $project->user_id || 
-                        $project->activeMembers->contains($user->id));
-});
-
 Broadcast::channel('typing.{slug}', function ($user,$slug){
 
     $project=Project::with('user')->where('slug',$slug)
@@ -70,8 +61,6 @@ Broadcast::channel('typing.{slug}', function ($user,$slug){
     }
 });
 
-
-
 Broadcast::channel('chatroom.{slug}', function ($user,$slug){
 
     $project=Project::with('user')->where('slug',$slug)
@@ -80,4 +69,13 @@ Broadcast::channel('chatroom.{slug}', function ($user,$slug){
     if($user->can('access',$project)){
         return $user;
     }
+});
+
+Broadcast::channel('meetingStatus.{id}', function ($user, $id) {
+    $meeting = Meeting::find($id);
+    $project = $meeting->project; 
+    
+    return $meeting && ($user->id === $meeting->user_id || 
+                        $user->id === $project->user_id || 
+                        $project->activeMembers->contains($user->id));
 });
