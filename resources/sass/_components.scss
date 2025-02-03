@@ -1187,11 +1187,10 @@ padding-bottom: .2rem;
    width: 10rem;
   }
   &-emotion{
-    font-size: 1rem;
-    margin-left: .2rem;
-    &:hover{
-      cursor:pointer;
-    };
+    right: 10px;
+    top: 65%;
+    transform: translateY(-50%);
+    cursor: pointer;
   }
   &-message{
     font-size: 1rem;
@@ -1313,10 +1312,22 @@ padding-bottom: .2rem;
   padding-top: .2rem;
 }
 
-.emojiModal{
-    position: absolute;
-    bottom: 170px;
-    z-index: 2;
+.emoji-slide-enter-active,
+.emoji-slide-leave-active {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); /* Smoother easing */
+}
+
+.emoji-slide-enter,
+.emoji-slide-leave-to {
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+.emoji-modal {
+  position: absolute;
+  top: 2px;
+  right: 0;
+  z-index: 1000;
 }
 
 .invitation{
@@ -1458,4 +1469,31 @@ button.gnuIjg {
   100% {
     transform: rotate(360deg);
   }
+}
+
+.inputfile {
+  display: none;
+}
+
+// File upload button styling
+.file-upload-label {
+  cursor: pointer;
+  font-size: 20px;
+  color: black;
+  margin-right: 10px;
+  transition: color 0.3s ease;
+
+  &:hover {
+    color: gray;
+  }
+}
+
+// File name and close button styling
+.file-name {
+  font-size: 14px;
+}
+
+.file-close-btn {
+  font-size: 12px;
+  line-height: 1;
 }

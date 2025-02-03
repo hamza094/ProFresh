@@ -29,7 +29,7 @@ class Conversation extends Model
        return $matches[1] ?? [];
    }
 
-public function setMessageAttribute($message): void
+/*public function setMessageAttribute($message): void
 {
     $this->attributes['message'] = preg_replace_callback(
         '/@([\w.\-]+)/',
@@ -39,7 +39,7 @@ public function setMessageAttribute($message): void
             // Check if user exists and get their UUID
             $user = User::where('username', $username)->first();
             if ($user) {
-                $url = route('user.profile', ['uuid' => $user->uuid]); // Dynamic URL with UUID
+                $url = route('users.show', ['uuid' => $user->uuid]); // Dynamic URL with UUID
                 return "<a href=\"$url\" target=\"_blank\">@{$username}</a>";
             }
 
@@ -48,7 +48,7 @@ public function setMessageAttribute($message): void
         },
         $message ?? ''
     );
-}
+}*/
 
 
 }

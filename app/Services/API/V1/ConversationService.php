@@ -31,6 +31,8 @@ class ConversationService
     $data = $this->prepareConversationData($request, $project);
 
     $conversation = $this->createConversation($project, $data);
+
+    dd($conversation);
      
      // Fire the NewMessage event
      NewMessage::dispatch($conversation,$project->slug);

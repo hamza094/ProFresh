@@ -12,6 +12,7 @@ import stage from "./stage"
 import status from "./status"
 import roles from "./roles"
 import meeting from "./meeting"
+import conversations from "./conversations"
 
 Vue.use(Vuex)
 
@@ -29,6 +30,7 @@ export default new Vuex.Store({
      stage,
      status,
      roles,
-     meeting
+     meeting,
+     conversations
   }
 })

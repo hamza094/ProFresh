@@ -120,16 +120,16 @@
 						</div>
 					</div>
 					<br>
-					<Stage :slug="project.slug" :projectstage='project.stage' :postponed_reason="project.postponed_reason"
+				<!--	<Stage :slug="project.slug" :projectstage='project.stage' :postponed_reason="project.postponed_reason"
 					 :stage_updated="project.stage_updated_at" :get_stage="this.getStage" :access="permission.access">
-				</Stage>
+				</Stage> -->
 				<br>
 				<hr>
 				<h3>RECENT ACTIVITIES</h3>
 				<div class="row">
-					<RecentActivities 
+				<!--	<RecentActivities 
 					:activities="project.activities" :slug="project.slug" :name="project.name">
-					</RecentActivities>
+					</RecentActivities> -->
 					<div class="col-md-5">
 						<div class="project-info">
 							<div class="project-info_socre">
@@ -147,8 +147,8 @@
 						</div>
 						<br>
 						<hr>
-						<Meeting :projectSlug="this.project.slug" :projectMeetings="this.project.meetings" :notAuthorize="this.project.ownerNotAuthorized"
-						:members="project.members"></Meeting>
+					<!--	<Meeting :projectSlug="this.project.slug" :projectMeetings="this.project.meetings" :notAuthorize="this.project.ownerNotAuthorized"
+						:members="project.members"></Meeting> -->
 					</div>
 				</div>
 			</div>
@@ -157,10 +157,10 @@
 		<div class="col-md-4 side_panel">
 			Project Side Panel
 			<br>
-			<Task :slug="project.slug" :tasks="tasks" :access="permission.access" :projectMembers="this.project.members"></Task>
+		<!--	<Task :slug="project.slug" :tasks="tasks" :access="permission.access" :projectMembers="this.project.members"></Task> -->
 			<hr>
-			<PanelFeatues :slug="project.slug" :notes="project.notes"
-			:members="project.members" :owner="user" :access="permission.access" :ownerLogin="permission.owner"></PanelFeatues>
+		<!--	<PanelFeatues :slug="project.slug" :notes="project.notes"
+			:members="project.members" :owner="user" :access="permission.access" :ownerLogin="permission.owner"></PanelFeatues> -->
 			<hr>
 			<div>
             <p><b>Online Users For Chat</b></p>
@@ -347,21 +347,6 @@ export default{
 		  });
 		},
 
-		listenForNewMessage() {
-      Echo.private(`conversations.${this.getProjectSlug()}`)
-        .listen('NewMessage', (e) => {
-          this.project.conversations.push(e);
-      });
-    },
-
-    listenToDeleteConversation(){
-      Echo.private(`deleteConversation.${this.getProjectSlug()}`)
-        .listen('DeleteConversation', (e) => {
-        this.project.conversations.splice(this.project.conversations.indexOf(e),1);
-        this.$vToastify.success("conversation deleted");       
-      });
-    },
-
     connectToEcho(){
       Echo.join(`chatroom.${this.getProjectSlug()}`)
         .here(members => {
@@ -391,8 +376,6 @@ export default{
   },
 
     mounted(){
-      this.listenForNewMessage();
-			this.listenToDeleteConversation();
 			this.listenForActivity();
       this.path=this.getProjectSlug();
       this.connectToEcho();

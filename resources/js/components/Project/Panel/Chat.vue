@@ -4,21 +4,21 @@
 
  <p><b><i>Start Group chat with project Members</i></b></p>
 
-      <SubscriptionCheck>
+<!-- <SubscriptionCheck> -->
 <div class="card chat-card mb-5">
-<div class="card-header text-white bg-primary" id="accordion">
+<div class="card-header d-flex align-items-center justify-content-between bg-primary text-white" id="accordion">
 
-  <span>
-    <i class="fas fa-comment-alt"></i>
-     Group chat  
-     <span v-if="conversations" class="badge badge-secondary">
-     {{conversations.length}}
-   </span> messages
-   </span> 
+  <div class="d-flex align-items-center">
+      <i class="fas fa-comment-alt mr-2"></i>
+      <span>Group Chat</span>
+      <span v-if="conversations.length" class="badge badge-light ml-2">{{ conversations.length }}</span>
+      <span class="ml-1">messages</span>
+    </div> 
 
     <a type="button" class="btn btn-default btn-xs float-right" data-toggle="collapse" :href="'#collapseOne-' + slug">
      <i class="fas fa-angle-down"></i>
-    </a>     
+    </a>   
+
     </div>
 
   <div class="collapse" :id="'collapseOne-' + slug">
@@ -27,7 +27,7 @@
       <!-- Chat Message -->
 
       <ul class="chat">
-      <li v-for="(conversation,index) in conversations" :key="index">
+      <li v-for="(conversation,index) in conversations.data" :key="index">
       <div class="chat-body clearfix">
       <div class="header">
 
@@ -45,7 +45,7 @@
         </p>
 
         <p v-if="conversation.file" class="mt-2">
-          <span v-if="conversation.file.includes('.png' || '.jpeg' || '.jpg')"><img
+          <span v-if="isImage(conversation.file)"><img
           :src="conversation.file" class="chat-image" alt=""></span>
 
           <span v-else>
@@ -79,8 +79,17 @@
             <div class="card-footer gioj">
               
           <div class="chat-floating">
-        <Picker :data="emojiIndex" v-if="emojiModal" set="twitter" @select="showEmoji" title="Pick your emoji…"
-        class="emojiModal" :showPreview="false"/>
+        <transition name="emoji-slide" mode="out-in">
+      <Picker
+        v-if="emojiModal"
+        :data="emojiIndex"
+        set="twitter"
+        @select="showEmoji"
+        title="Pick your emoji…"
+        class="emoji-modal"
+        :showPreview="false"
+      />
+    </transition>
     </div>
 
       <!-- Chat with mentionable user functionality -->   
@@ -88,9 +97,37 @@
        <Mentionable :keys="['@']" :items="items" offset="6"
         insert-space @open="onOpen" @apply="onApply">
 
-        <textarea class="form-control mb-2" placeholder="Type your message here..." v-model="message" autofocus @keypress.enter.exact.prevent="send()"
-        @keydown="isTyping" row="1">
+        <div class="position-relative w-100">
+        <textarea 
+        class="form-control mb-2" 
+        placeholder="Type your message here..." 
+        v-model="message" 
+        autofocus 
+        @keypress.enter.exact.prevent="send()"
+        @keydown="isTyping" 
+        row="1">
         </textarea>
+
+      <i class="far fa-grin chat-emotion position-absolute" @click="toggleEmojiModal">
+      </i>
+    </div>
+        
+<div class="d-flex align-items-center">
+    <!-- Attach File Button -->
+    <button @click="openFilePicker" class="btn btn-light">
+        <i class="fas fa-paperclip"></i> Attach File
+    </button>
+
+    <!-- Show Selected File Name with Delete Option -->
+    <div v-if="file" class="ml-2 d-flex align-items-center">
+        <i class="fas fa-file-alt mr-1"></i> 
+        <span class="file-name">{{ fileName }}</span>
+        <button @click="removeFile" class="btn btn-sm text-danger p-0 ml-2 file-close-btn">✖</button>
+    </div>
+
+    <!-- Hidden File Input -->
+    <input type="file" ref="fileInput" class="d-none" @change="fileUpload">
+</div>
 
     <template #no-result>
       <div class="dim">
@@ -110,18 +147,17 @@
       </div>
     </template>
   </Mentionable>
+    <p> 
+    <button 
+    class="btn btn-primary btn-sm float-right mb-2" 
+    id="btn-chat" 
+    @click.prevent="send()">Send</button>
+    </p>
 
-     <p> <span class="input-group-btn">
-          <i class="far fa-grin chat-emotion" @click="chatEmotion()"></i>
-
-    <button class="btn btn-primary btn-sm" id="btn-chat" @click.prevent="send()">Send</button>
-
-   </span>
-       <input type="file" name="file" ref="file" class="inputfile btn btn-sm mt-2" value="upload file" @change="fileUpload()" accept="image/jpeg,image/png,application/pdf"/></p>
    </div>
    </div>
    </div>
-         </SubscriptionCheck>
+        <!-- </SubscriptionCheck>-->
     <vue-progress-bar></vue-progress-bar>
 </div>
 </template>
@@ -142,24 +178,27 @@ import { Mentionable } from 'vue-mention'
 import { Picker, EmojiIndex } from "emoji-mart-vue-fast";
 import SubscriptionCheck from '../../SubscriptionChecker.vue';
 
-let emojiIndex = new EmojiIndex(data);
-
 export default {
   components:{Picker,Mentionable,SubscriptionCheck},
-    props:['conversations','slug','users','auth'],
+    props:['slug','users','auth'],
     data() {
       return {
-      emojiIndex: emojiIndex,
+      emojiIndex: new EmojiIndex(data),
       message: '',
       typing: false,
       emojiModal:false,
       user:this.auth,
+      fileName: '',
       file:'',
       items: [],
+      conversations:[],
     };
     },
 
   methods: {
+    isImage(file) {
+    return /\.(png|jpg|jpeg)$/i.test(file);
+  },
     async   onOpen (key) {
       this.items = key === '@' ? this.users : '';
     },
@@ -170,68 +209,108 @@ export default {
        
     },
      showEmoji(emoji) {
-      if(!emoji) return false;
-      this.message = !this.message ? emoji.native :
-       this.message + emoji.native;
+      if(!emoji) return;
+       this.message += emoji.native;
     },
 
-  fileUpload(){
-    this.file=this.$refs.file.files[0];
+    openFilePicker() {
+        this.$refs.fileInput.click(); // Open file picker when button is clicked
+    },
 
-    let formData = new FormData()
-    formData.append("file", this.file);
-    this.$Progress.start();
-    this.$vToastify.info('Be patient file uploading');
+    fileUpload(event) {
+        this.file = event.target.files[0];
+        if (this.file) {
+            this.fileName = this.file.name;
+        }
+    },
 
-    axios.post('/api/v1/projects/'+this.slug+'/conversations',formData).then(response=>{
-        this.$Progress.finish();
-        this.$vToastify.success("File Uploaded");
-
-      }).catch(error=> {
-        this.$vToastify.error("Failed to upload a file.");
-        this.$Progress.fail();
-      })
+    removeFile() {
+        this.file = null;
+        this.fileName = "";
+        this.$refs.fileInput.value = ""; // Clear input field
     },
 
   send() {
-    if(this.message.length !== 0){
-    axios.post('/api/v1/projects/'+this.slug+'/conversations', {message: this.message})
+    if(this.message.length === 0 && !this.file ){
+      this.$vToastify.warning("Please enter a message or upload a file.");
+      return;
+    }
+    
+    let formData = new FormData();
+  formData.append("message", this.message || "");
+  if (this.file) {
+    formData.append("file", this.file);
+  }
+
+    axios.post('/api/v1/projects/'+this.slug+'/conversations', formData,{ useProgress: true })
     .then((response) => {
       this.message = '';
+      this.file = null;
+      //this.listenForNewMessage();
     }).catch(error=>{
-      this.$vToastify.warning("Error! Try Again");
+    this.$vToastify.error("Failed to send message.");
     });
-  }
+  
     },
     
     deleteConversation(id,index){
-      axios.delete('/api/v1/projects/'+this.slug+'/conversations/'+id)
+      axios.delete('/api/v1/projects/'+this.slug+'/conversations/'+id,{ useProgress: true })
       .then(response=>{
-         this.$vToastify.info("Wait a sec..");
+         this.$vToastify.info("Conversation deleted sucessfully");
+         //this.listenToDeleteConversation();
       }).catch(error=>{
-        this.$vToastify.warning("Task deletion failed");
+        this.$vToastify.warning("Conversation deletion failed");
       })
     },
 
   isTyping() {
-  let channel = Echo.private('typing.'+this.getProjectSlug());
+  Echo.private(`typing.${this.slug}`).whisper('typing-indicator', {
+    user: this.auth,
+    typing: true,
+  });
 
-  let _this = this;
+  if (this.typingTimeout) clearTimeout(this.typingTimeout);
+  this.typingTimeout = setTimeout(() => {
+    this.typing = false;
+  }, 1000);
+},
 
-  setTimeout(function() {
-    channel.whisper('typing-indicator', {
-      user:_this.$store.state.currentUser.user,
-        typing: true,
-    });
-  }, 300);
-  },
+  toggleEmojiModal() {
+      this.emojiModal = !this.emojiModal;
+    },
 
-  chatEmotion(){
-    this.emojiModal= !this.emojiModal;
-  },
+  loadConversations() {
+    return axios
+        .get('/api/v1/projects/'+this.slug+`/conversations`)
+        .then(response => {
+            this.conversations = response.data;
+        })
+        .catch(error => {
+          console.log(error);
+            this.conversations=[];
+        });
+},
+    listenForNewMessage() {
+      Echo.private(`conversations.${this.slug}`)
+        .listen('NewMessage', (e) => {
+          if (!this.conversations.find((conv) => conv.id === e.id)) {
+          this.conversations.push(e);
+        }
+      });
+    },
+
+    listenToDeleteConversation(){
+      Echo.private(`deleteConversation.${this.slug}`)
+        .listen('DeleteConversation', (e) => {
+        this.conversations.splice(this.conversations.indexOf(e),1);
+        this.$vToastify.success("conversation deleted");
+      });
+    },
   },
 
     created(){
+
+    this.loadConversations();
     let _this = this;
 
   Echo.private('typing.'+this.getProjectSlug())

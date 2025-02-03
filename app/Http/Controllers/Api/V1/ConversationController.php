@@ -33,12 +33,24 @@ class ConversationController extends ApiController
   {
      $this->authorize('access',$project);
 
-     $conversations=$project->conversations()
-     ->with('user')
-     ->latest()
-     ->get();
+      $conversations = [];
 
-     return ConversationResource::Collection($conversations)->paginate(10);
+    // Using chunkById to process data in chunks of 100
+    $project->conversations()
+        ->with('user')
+        ->orderBy('id') // Ensure we process conversations in order by ID
+        ->chunkById(100, function ($chunk) use (&$conversations) {
+            // Merge the chunk of conversations with the $conversations array
+            foreach ($chunk as $conversation) {
+                // Add each conversation as a formatted ConversationResource
+                $conversations[] = new ConversationResource($conversation);
+            }
+        });
+
+    // Return the collected conversations
+    return response()->json([
+        'data' => $conversations,
+    ]);
   }
 
     /**
@@ -55,7 +67,7 @@ class ConversationController extends ApiController
       $conversation->load('user');
 
       return response()->json([
-      'message' => 'Conversation added Successfully',
+      'message' => 'New Conversation added Successfully',
       'conversation'=>new ConversationResource($conversation),
       ], 201); 
     }

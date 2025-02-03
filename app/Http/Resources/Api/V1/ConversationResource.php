@@ -25,11 +25,11 @@ class ConversationResource extends JsonResource
         'user'=>new InvitedUserResource($this->whenLoaded('user')),
 
         'created_at'=>$this->created_at
-                ->format(config('app.date_formats.exact')),
+                ->diffForHumans(),
                 
-        'links'=>[
+        /*'links'=>[
           'project_link'=>'api/v1/'.$this->project->slug,
-        ]        
+        ]*/        
      ]; 
     }
 }

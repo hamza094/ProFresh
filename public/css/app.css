@@ -1271,11 +1271,9 @@
 }
 
 .chat-emotion {
-  font-size: 1rem;
-  margin-left: 0.2rem;
-}
-
-.chat-emotion:hover {
+  right: 10px;
+  top: 65%;
+  transform: translateY(-50%);
   cursor: pointer;
 }
 
@@ -1404,10 +1402,23 @@
   padding-top: 0.2rem;
 }
 
-.emojiModal {
+.emoji-slide-enter-active,
+.emoji-slide-leave-active {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  /* Smoother easing */
+}
+
+.emoji-slide-enter,
+.emoji-slide-leave-to {
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+.emoji-modal {
   position: absolute;
-  bottom: 170px;
-  z-index: 2;
+  top: 2px;
+  right: 0;
+  z-index: 1000;
 }
 
 .invitation {
@@ -1547,6 +1558,31 @@ button.gnuIjg {
   100% {
     transform: rotate(360deg);
   }
+}
+
+.inputfile {
+  display: none;
+}
+
+.file-upload-label {
+  cursor: pointer;
+  font-size: 20px;
+  color: black;
+  margin-right: 10px;
+  transition: color 0.3s ease;
+}
+
+.file-upload-label:hover {
+  color: gray;
+}
+
+.file-name {
+  font-size: 14px;
+}
+
+.file-close-btn {
+  font-size: 12px;
+  line-height: 1;
 }
 
 .padding-0 {

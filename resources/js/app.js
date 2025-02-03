@@ -81,6 +81,10 @@ Vue.filter('datetime',function(data){
    return  moment(data).format("MMM Do YY h:mm:ss a");
 })
 
+Vue.filter('msgTime',function(data){
+   return  moment(data).calendar();
+})
+
 Vue.use(VCalendar, {
   componentPrefix: 'vc',               
 });
