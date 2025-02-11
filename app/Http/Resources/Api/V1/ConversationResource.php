@@ -24,6 +24,8 @@ class ConversationResource extends JsonResource
 
         'user'=>new InvitedUserResource($this->whenLoaded('user')),
 
+        /*'mentioned_users' => $this->when($mentionedUsers->isNotEmpty(), $mentionedUsers),*/
+
         'created_at'=>$this->created_at
                 ->diffForHumans(),
                 

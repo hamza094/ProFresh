@@ -20,6 +20,7 @@ class FileService
 
 public function store(int $id, string $fileInputName, string $fileType): string
 {
+
     $file = request()->file($fileInputName);
 
     if (!$file) {
@@ -56,20 +57,23 @@ public function store(int $id, string $fileInputName, string $fileType): string
 
     private function optimizeFile(UploadedFile $file): void
   {
+    if (strpos($file->getMimeType(), 'image/') === 0) 
+    {
     OptimizerChainFactory::create()->optimize($file->path());
+    }
   }
 
 
   private function uploadFileToS3(string $folderName, UploadedFile $file, string $fileName): string
   {
-    $s3Disk = Storage::disk(config('filesystems.cloud'));
-
+    $s3Disk = Storage::disk('s3');
+    
     try {
         $path = $s3Disk->putFileAs($folderName, $file, $fileName, 'public');
     } catch (\Exception $e) {
-        Log::error('File upload failed', ['error' => $e->getMessage()]);
-        throw ValidationException::withMessages(['file' => 'Error uploading file']);
+        throw ValidationException::withMessages([ 'File upload failed: ' . $e->getMessage()]);
     }
+   
     return $s3Disk->url($path);
   }
 

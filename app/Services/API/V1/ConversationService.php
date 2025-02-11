@@ -11,6 +11,7 @@ use App\Services\Api\V1\FileService;
 use App\Notifications\UserMentioned;
 use App\Http\Requests\Api\V1\ConversationRequest;
 use Illuminate\Support\Facades\Notification;
+use Illuminate\Support\Facades\Log;
 
 class ConversationService 
 {
@@ -26,21 +27,27 @@ class ConversationService
     $this->fileService=$fileService;
   }
 
+  /**
+ * Stores a new conversation and dispatches events and notifications.
+ */
   public function storeConversation(ConversationRequest $request,Project $project)
   {
+    try{
     $data = $this->prepareConversationData($request, $project);
 
     $conversation = $this->createConversation($project, $data);
 
-    dd($conversation);
+    $conversation->load('user'); 
      
      // Fire the NewMessage event
-     NewMessage::dispatch($conversation,$project->slug);
+     //NewMessage::dispatch($conversation,$project->slug);
 
-     //Send Notification if user mentioned
      $this->userMentioned($conversation,$project);
 
     return $conversation;
+   }catch(\Exception $e){
+     Log::error('Error storing conversation: ' . $e->getMessage());
+   }
   }
 
   /**
@@ -48,7 +55,11 @@ class ConversationService
  */    
   private function prepareConversationData(ConversationRequest $request, Project $project): array
   {
-    $data = $request->safe()->only(['message']);
+    $data=[];
+
+    if ($request->has('message')){
+          $data = $request->safe()->only(['message']);
+    }
 
     // Check if a file is present in the request and process the upload
     if ($request->has('file')) {
@@ -67,18 +78,21 @@ class ConversationService
 
   public function userMentioned(Conversation $conversation,Project $project): void
   {
+    if (!$conversation->message) return;
 
-    $mentionedUsers = $conversation->mentionedUsers();
+    $mentionedUsers = $conversation->mentionedUsersData();
 
-    if (empty($mentionedUsers) || !$conversation->message) {
-        return;
-    }
-
-    $mentionedUsers = User::whereIn('username', $mentionedUsers)
-        ->where('id', '<>', auth()->id())
-        ->get();
-
+    if ($mentionedUsers->isEmpty()) return;
+    
+    try {
     Notification::send($mentionedUsers, new UserMentioned(auth()->user(),$project));
+    }catch(\Exception $e){
+        Log::error('Failed to send notifications', [
+                    'error' => $e->getMessage(),
+                    'users' => $users->pluck('id')->toArray(),
+        ]);
+    }
+    
   }
 }
 

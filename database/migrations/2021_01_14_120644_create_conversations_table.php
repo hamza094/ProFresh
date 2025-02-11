@@ -15,13 +15,17 @@ class CreateConversationsTable extends Migration
     {
         Schema::create('conversations', function (Blueprint $table) {
             $table->id();
-            $table->text('message',1000)->nullable();
-            $table->string('file',999)->nullable();
+            $table->text('message')
+                  ->nullable()
+                  ->charset('utf8mb4')
+                  ->collation('utf8mb4_unicode_ci');
+            $table->string('file')->nullable();
             $table->foreignId('user_id')
-                  ->constrained();
+                  ->constrained()
+                  ->cascadeOnDelete();
             $table->foreignId('project_id')
-                  ->cascadeOnDelete()
-                  ->constrained();
+                   ->constrained()
+                  ->cascadeOnDelete();
             $table->timestamps();
         });
     }

@@ -24,8 +24,17 @@ class ConversationRequest extends FormRequest
     public function rules()
     {
         return [
-            'message'=>'string|sometimes|required_without:file',
-            'file'=>'sometimes|required_without:message|file|size:700|mimes:jpg,png,pdf,docx|mimetypes:image/jpeg,image/png,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+            'message' => 'required_without:file|string|min:2|max:1000',
+                        
+            'file' => 'required_without:message|file|max:700|mimes:jpg,png,pdf,docx',
         ];
     }
+
+    public function messages()
+   {
+    return [
+        'message.required_without' => 'A message is required if no file is uploaded.',
+        'file.required_without' => 'A file is required if no message is provided.',
+    ];
+   }
 }

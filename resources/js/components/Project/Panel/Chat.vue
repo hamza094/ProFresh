@@ -95,9 +95,10 @@
       <!-- Chat with mentionable user functionality -->   
 
        <Mentionable :keys="['@']" :items="items" offset="6"
-        insert-space @open="onOpen" @apply="onApply">
+        insert-space @open="handleOpen" @apply="handleApply">
 
         <div class="position-relative w-100">
+
         <textarea 
         class="form-control mb-2" 
         placeholder="Type your message here..." 
@@ -138,12 +139,8 @@
     <template #item-@="{ item }">
       <div class="user">
          <img :src="item.avatar" alt="User Avatar" class="mention-user"/> 
-         <span class="dim">
-          {{ item.name }}
-        </span> 
-        <span class="dim">
-          ({{ item.username }})
-        </span>
+         <span class="dim">{{ item.name }}</span> 
+        <span class="dim">({{ item.username }})</span>
       </div>
     </template>
   </Mentionable>
@@ -151,7 +148,10 @@
     <button 
     class="btn btn-primary btn-sm float-right mb-2" 
     id="btn-chat" 
-    @click.prevent="send()">Send</button>
+    @click.prevent="send()"
+    >
+    Send
+    </button>
     </p>
 
    </div>
@@ -180,7 +180,7 @@ import SubscriptionCheck from '../../SubscriptionChecker.vue';
 
 export default {
   components:{Picker,Mentionable,SubscriptionCheck},
-    props:['slug','users','auth'],
+    props:['slug','members','owner','auth'],
     data() {
       return {
       emojiIndex: new EmojiIndex(data),
@@ -192,22 +192,31 @@ export default {
       file:'',
       items: [],
       conversations:[],
+      errors:[],
+      users: [...this.members, this.owner]
     };
     },
+
+  computed: {
+    isSendDisabled() {
+        return this.message.trim().length === 0 && !this.file;
+    }
+  },
 
   methods: {
     isImage(file) {
     return /\.(png|jpg|jpeg)$/i.test(file);
   },
-    async   onOpen (key) {
-      this.items = key === '@' ? this.users : '';
+
+    async   handleOpen(key) {
+      this.items = key === '@' ? this.users : [];
     },
 
-     async onApply (item, key) {
-       this.message=this.message+'@'+item.username;
-        this.message=this.message.replace('@undefined','');
-       
+    async handleApply(item, key) {
+       this.message= `${this.message}@${item.username}`;
+       this.message=this.message.replace('@undefined','');
     },
+
      showEmoji(emoji) {
       if(!emoji) return;
        this.message += emoji.native;
@@ -235,9 +244,12 @@ export default {
       this.$vToastify.warning("Please enter a message or upload a file.");
       return;
     }
-    
+
     let formData = new FormData();
-  formData.append("message", this.message || "");
+    if(this.message){
+       formData.append("message",this.message);
+    }
+
   if (this.file) {
     formData.append("file", this.file);
   }
@@ -246,11 +258,16 @@ export default {
     .then((response) => {
       this.message = '';
       this.file = null;
-      //this.listenForNewMessage();
     }).catch(error=>{
-    this.$vToastify.error("Failed to send message.");
+     if (error.response && error.response.data.errors) {
+            this.errors = error.response.data.errors; // Store errors
+            Object.values(this.errors).forEach(err => {
+                this.$vToastify.warning(err[0]); // Show each error as a toast
+            });
+        } else {
+            this.$vToastify.error("Failed to send message.");
+        }
     });
-  
     },
     
     deleteConversation(id,index){
@@ -289,14 +306,19 @@ export default {
           console.log(error);
             this.conversations=[];
         });
-},
-    listenForNewMessage() {
-      Echo.private(`conversations.${this.slug}`)
+  },
+
+  listenForNewMessage() {
+      console.log('event started');
+      Echo.private(`project.${this.slug}.conversations`)
         .listen('NewMessage', (e) => {
-          if (!this.conversations.find((conv) => conv.id === e.id)) {
-          this.conversations.push(e);
+          console.log('event fired');
+          if (!this.conversations.data.find((conv) => conv.id === e.id)) {
+          this.conversations.data.push(e);
         }
-      });
+      }).error((error) => {
+            console.error('Echo error:', error);
+        });
     },
 
     listenToDeleteConversation(){
@@ -309,8 +331,10 @@ export default {
   },
 
     created(){
-
     this.loadConversations();
+
+    this.listenForNewMessage();
+
     let _this = this;
 
   Echo.private('typing.'+this.getProjectSlug())

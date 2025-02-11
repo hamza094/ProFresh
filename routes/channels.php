@@ -32,7 +32,7 @@ Broadcast::channel('activities', function ($user) {
       return true;
 });
 
-Broadcast::channel('project.{slug}/conversations', function ($user,$slug) {
+Broadcast::channel('project.{slug}.conversations', function ($user,$slug) {
 
     $project=Project::with('user')->where('slug',$slug)
              ->firstOrFail();
@@ -40,6 +40,8 @@ Broadcast::channel('project.{slug}/conversations', function ($user,$slug) {
     if($user->can('access',$project)){
         return true;
     }
+
+    return true;
 });
 
 Broadcast::channel('deleteConversation.{slug}', function ($user,$slug) {

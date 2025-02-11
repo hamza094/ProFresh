@@ -92,10 +92,13 @@ class NotificationsTest extends TestCase
 
       $owner=$this->project->user;
 
-      $response=$this->postJson($this->project->path().'/conversations',['message'=>'random chat conversation with @thanos844',
+      $response=$this->withoutExceptionHandling()
+         ->postJson($this->project->path().'/conversations',['message'=>'random chat conversation with @thanos844',
         'user_id' => $user->id]);
 
       Notification::assertSentTo($user, UserMentioned::class);
+
+        Notification::assertCount(1);
     }
 
 

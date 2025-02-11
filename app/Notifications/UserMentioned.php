@@ -22,7 +22,7 @@ class UserMentioned extends Notification implements ShouldBroadcast,ShouldQueue
      *
      * @return void
      */
-    public function __construct($user,Project $project)
+    public function __construct(User $user,Project $project)
     {
         $this->user=$user;
         $this->project=$project;

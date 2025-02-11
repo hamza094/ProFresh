@@ -169,7 +169,7 @@
 
 			<hr>
 			<Chat :slug="project.slug" 
-			:conversations="project.conversations" :users="project.members" :auth="this.auth"></Chat>
+			:conversations="project.conversations" :members="project.members" :owner="this.user" :auth="this.auth"></Chat>
 		</div>
 	</div>
 </div>

@@ -39,7 +39,7 @@ class NewMessage implements ShouldBroadcast
 
     public function broadcastOn(): PrivateChannel
     {
-      return new PrivateChannel('project'.$this->projectSlug.'conversations');
+      return new PrivateChannel('project.' . $this->projectSlug . '.conversations');
     }
  
     /**

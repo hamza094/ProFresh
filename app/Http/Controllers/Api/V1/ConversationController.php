@@ -64,8 +64,6 @@ class ConversationController extends ApiController
       
       $conversation=$this->conversationService->storeConversation($request,$project);
 
-      $conversation->load('user');
-
       return response()->json([
       'message' => 'New Conversation added Successfully',
       'conversation'=>new ConversationResource($conversation),
