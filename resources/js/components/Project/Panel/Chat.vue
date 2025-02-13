@@ -58,7 +58,7 @@
             <i>{{conversation.created_at}}</i>
           </span>
 
-          <button v-if="auth.id == conversation.user.id" class="btn btn-link btn-sm" @click.prevent="deleteConversation(conversation.id,index)">Delete</button>
+          <button v-if="auth.uuid === conversation.user.uuid" class="btn btn-link btn-sm" @click.prevent="deleteConversation(conversation.id,index)">Delete</button>
 
           <button v-else class="btn btn-link btn-sm disabled">Delete</button>
 
@@ -274,9 +274,8 @@ export default {
       axios.delete('/api/v1/projects/'+this.slug+'/conversations/'+id,{ useProgress: true })
       .then(response=>{
          this.$vToastify.info("Conversation deleted sucessfully");
-         //this.listenToDeleteConversation();
       }).catch(error=>{
-        this.$vToastify.warning("Conversation deletion failed");
+        this.$vToastify.warning("Failed to delete project conversation");
       })
     },
 
@@ -324,16 +323,22 @@ export default {
     listenToDeleteConversation(){
       Echo.private(`deleteConversation.${this.slug}`)
         .listen('DeleteConversation', (e) => {
-        this.conversations.splice(this.conversations.indexOf(e),1);
+        const index = this.conversations.data.findIndex(c => c.id === e.conversation_id);
+          if (index !== -1) {
+            this.conversations.data.splice(index, 1);
+          }
         this.$vToastify.success("conversation deleted");
       });
     },
+
   },
 
     created(){
     this.loadConversations();
 
     this.listenForNewMessage();
+
+    this.listenToDeleteConversation();
 
     let _this = this;
 

@@ -11,14 +11,14 @@ use Illuminate\Broadcasting\PresenceChannel;
 use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
-//use Illuminate\Queue\SerializesModels;
+use Illuminate\Queue\SerializesModels;
 
 class DeleteConversation implements ShouldBroadcast
 {
-    use Dispatchable, InteractsWithSockets;// SerializesModels;
+    use Dispatchable, InteractsWithSockets,SerializesModels;
 
-    public $conversation;
-    public $project;
+    public int $conversationId;
+    public string $projectSlug;
 
 
     /**
@@ -26,10 +26,10 @@ class DeleteConversation implements ShouldBroadcast
      *
      * @return void
      */
-    public function __construct(Conversation $conversation,Project $project)
+    public function __construct(int $conversationId, string $projectSlug)
     {
-       $this->conversation = $conversation;
-       $this->project = $project;
+       $this->conversationId = $conversationId;
+       $this->projectSlug = $projectSlug;
     }
 
     /**
@@ -39,12 +39,13 @@ class DeleteConversation implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-      return new PrivateChannel('deleteConversation.'.$this->project->slug);
+      return new PrivateChannel('deleteConversation.'.$this->projectSlug);
     }
 
     public function broadcastWith()
     {
-      return (new ConversationResource($this->conversation))
-              ->resolve();
+      return [
+            'conversation_id' => $this->conversationId
+        ];
     }
 }

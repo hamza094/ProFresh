@@ -3,10 +3,8 @@
 namespace App\Http\Controllers\Api\V1;
 
 use Illuminate\Http\Request;
-use App\Events\DeleteConversation;
 use App\Models\Project;
 use App\Models\User;
-use Illuminate\Support\Facades\Storage;
 use App\Models\Conversation;
 use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Api\ApiController;
@@ -70,24 +68,15 @@ class ConversationController extends ApiController
       ], 201); 
     }
 
-    public function destroy(Project $project,Conversation $conversation)
+    public function destroy(Project $project,Conversation $conversation): JsonResponse 
     {
-      if(auth()->id() !== $conversation->user->id){
-        return $this->respondForbidden("Not allowed to perform action");
-      }
+      $this->authorize('delete', $conversation);
 
-      DeleteConversation::dispatch($conversation,$project);
-
-      /*if($conversation->has('file'){
-         Storage::disk('s3')->delete($conversation->file);
-      })*/
-
-      $conversation->delete();
+      $this->conversationService->deleteConversation($conversation, $project);
 
       return response()->json([
         'message'=>'Project Conversation deleted successfully',
         'path'=>$project->path()
       ],204);
-
     }
 }

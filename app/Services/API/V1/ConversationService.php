@@ -10,6 +10,8 @@ use App\Events\NewMessage;
 use App\Services\Api\V1\FileService;
 use App\Notifications\UserMentioned;
 use App\Http\Requests\Api\V1\ConversationRequest;
+use Illuminate\Support\Facades\Storage;
+use App\Events\DeleteConversation;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Log;
 
@@ -40,7 +42,7 @@ class ConversationService
     $conversation->load('user'); 
      
      // Fire the NewMessage event
-     //NewMessage::dispatch($conversation,$project->slug);
+     NewMessage::dispatch($conversation,$project->slug);
 
      $this->userMentioned($conversation,$project);
 
@@ -92,8 +94,29 @@ class ConversationService
                     'users' => $users->pluck('id')->toArray(),
         ]);
     }
-    
   }
+
+  public function deleteConversation(Conversation $conversation, Project $project): void
+  {
+      DeleteConversation::dispatch($conversation->id, $project->slug);
+
+      // Need updated and use laravel 11 defered function
+        $this->deleteFileIfExists($conversation->file);
+
+        $conversation->delete();
+  }
+
+    private function deleteFileIfExists(?string $filePath): void
+    {
+        if ($filePath) {
+            try{
+        Storage::disk('s3')->delete(ltrim(parse_url($filePath, PHP_URL_PATH), '/'));
+    }catch(\Exception $e){
+     Log::error("S3 file deletion error", ['file' => $filePath, 'error' => $e->getMessage()]);
+    }
+    }
+    }
+    
 }
 
 ?>

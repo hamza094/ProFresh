@@ -77,14 +77,19 @@ class ConversationTest extends TestCase
     /** @test */
     public function allowed_user_can_delete_conversation()
     {
+      Storage::fake('s3');
+
       $conversation=Conversation::factory()->create([
        'project_id'=>$this->project->id,
-       'user_id'=>$this->user->id
+       'user_id'=>$this->user->id,
+       'file'=>UploadedFile::fake()->image('photo1.jpg'),
       ]);
 
       $response=$this->deleteJson($this->project->path().'/conversations/'.$conversation->id);
 
       $this->assertModelMissing($conversation);
+
+      Storage::disk('s3')->assertMissing('photo1.jpg');
     }
 
 
