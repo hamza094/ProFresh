@@ -147,8 +147,8 @@
 						</div>
 						<br>
 						<hr>
-					<!--	<Meeting :projectSlug="this.project.slug" :projectMeetings="this.project.meetings" :notAuthorize="this.project.ownerNotAuthorized"
-						:members="project.members"></Meeting> -->
+						<!--<Meeting :projectSlug="this.project.slug" :projectMeetings="this.project.meetings" :notAuthorize="this.project.ownerNotAuthorized"
+						:members="project.members"></Meeting>--> 
 					</div>
 				</div>
 			</div>
@@ -159,13 +159,13 @@
 			<br>
 		<!--	<Task :slug="project.slug" :tasks="tasks" :access="permission.access" :projectMembers="this.project.members"></Task> -->
 			<hr>
-		<!--	<PanelFeatues :slug="project.slug" :notes="project.notes"
-			:members="project.members" :owner="user" :access="permission.access" :ownerLogin="permission.owner"></PanelFeatues> -->
+			<!--<PanelFeatues :slug="project.slug" :notes="project.notes"
+			:members="project.members" :owner="user" :access="permission.access" :ownerLogin="permission.owner"></PanelFeatues>--> 
 			<hr>
 			<div>
             <p><b>Online Users For Chat</b></p>
             <p v-for="user in  chatusers">{{user.name}} <span class="chat-circle"></span> </p>
-            </div>
+        </div>
 
 			<hr>
 			<Chat :slug="project.slug" 
@@ -353,11 +353,13 @@ export default{
           this.chatusers = members;
         })
          .joining(auth => {
-          this.chatusers.push(auth);
+           if (!this.chatusers.some(user => user.id === auth.id)) {
+          this.chatusers = [...this.chatusers, auth];
           this.$vToastify.info(`${auth.name} joined project conversation`);
+        }
         })
          .leaving(auth => {
-          this.chatusers.splice(this.chatusers.indexOf(auth), 1);
+          this.chatusers = this.chatusers.filter(user => user.id !== auth.id);
           this.$vToastify.info(`${auth.name} leave project conversation`);
         });
       },
@@ -370,9 +372,6 @@ export default{
     console.log('eventliten');
 });
       },
-      unarchiveTask(){
-
-      }
   },
 
     mounted(){

@@ -65,7 +65,7 @@
           </div>
           </li>
           <span v-if="typing" class="help-block" style="font-style: italic;">
-              💬  @{{ user.name }} is typing...
+              💬  @{{ user?.name || "Someone"  }} is typing...
           </span>
           <span v-else class="help-block" style="font-style: italic;">
                 💬
@@ -177,6 +177,7 @@ import data from "emoji-mart-vue-fast/data/all.json";
 import { Mentionable } from 'vue-mention'
 import { Picker, EmojiIndex } from "emoji-mart-vue-fast";
 import SubscriptionCheck from '../../SubscriptionChecker.vue';
+import { debounce } from 'lodash';
 
 export default {
   components:{Picker,Mentionable,SubscriptionCheck},
@@ -187,7 +188,8 @@ export default {
       message: '',
       typing: false,
       emojiModal:false,
-      user:this.auth,
+      typingTimeout: null,
+      user:null,
       fileName: '',
       file:'',
       items: [],
@@ -208,7 +210,7 @@ export default {
     return /\.(png|jpg|jpeg)$/i.test(file);
   },
 
-    async   handleOpen(key) {
+    async handleOpen(key) {
       this.items = key === '@' ? this.users : [];
     },
 
@@ -279,17 +281,12 @@ export default {
       })
     },
 
-  isTyping() {
-  Echo.private(`typing.${this.slug}`).whisper('typing-indicator', {
-    user: this.auth,
-    typing: true,
-  });
-
-  if (this.typingTimeout) clearTimeout(this.typingTimeout);
-  this.typingTimeout = setTimeout(() => {
-    this.typing = false;
-  }, 1000);
-},
+   isTyping: _.debounce(function () {
+      Echo.private(`typing.${this.slug}`).whisper("typing-indicator", {
+        user: this.auth,
+        typing: true,
+      });
+    }, 500), // Only fires every 500ms
 
   toggleEmojiModal() {
       this.emojiModal = !this.emojiModal;
@@ -308,7 +305,6 @@ export default {
   },
 
   listenForNewMessage() {
-      console.log('event started');
       Echo.private(`project.${this.slug}.conversations`)
         .listen('NewMessage', (e) => {
           console.log('event fired');
@@ -331,28 +327,29 @@ export default {
       });
     },
 
+    listenToWhisperEvent(){
+      Echo.private(`typing.${this.slug}`)
+         .listenForWhisper('typing-indicator', (e) => {
+        this.user = e.user;
+        this.typing = e.typing;
+
+      // remove is typing indicator after 0.3s
+      setTimeout(()=> {
+        this.typing = false
+      }, 3000);
+    });
+    },
+
   },
 
     created(){
     this.loadConversations();
 
+    this.listenToWhisperEvent();
+
     this.listenForNewMessage();
 
     this.listenToDeleteConversation();
-
-    let _this = this;
-
-  Echo.private('typing.'+this.getProjectSlug())
-    .listenForWhisper('typing-indicator', (e) => {
-      this.user = e.user;
-      this.typing = e.typing;
-
-      // remove is typing indicator after 0.9s
-      setTimeout(function() {
-        _this.typing = false
-      }, 900);
-    });
-
   },
 }
 </script> 

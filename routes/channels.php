@@ -54,8 +54,7 @@ Broadcast::channel('deleteConversation.{slug}', function ($user,$slug) {
 });
 
 Broadcast::channel('typing.{slug}', function ($user,$slug){
-
-    $project=Project::with('user')->where('slug',$slug)
+    $project=Project::where('slug',$slug)
              ->firstOrFail();
 
     if($user->can('access',$project)){
@@ -65,7 +64,7 @@ Broadcast::channel('typing.{slug}', function ($user,$slug){
 
 Broadcast::channel('chatroom.{slug}', function ($user,$slug){
 
-    $project=Project::with('user')->where('slug',$slug)
+    $project=Project::where('slug',$slug)
              ->firstOrFail();
 
     if($user->can('access',$project)){
