@@ -27,7 +27,7 @@ class ConversationController extends ApiController
     $this->conversationService=$conversationService;
   }
 
-  public function index(Project $project)
+  public function index(Project $project): JsonResponse 
   {
      $this->authorize('access',$project);
 

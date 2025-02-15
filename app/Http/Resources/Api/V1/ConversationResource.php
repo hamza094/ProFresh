@@ -5,15 +5,18 @@ namespace App\Http\Resources\Api\V1;
 use Illuminate\Http\Resources\Json\JsonResource;
 use App\Http\Resources\Api\V1\InvitedUserResource;
 
+/**
+ * @mixin \App\Models\Conversation
+ */
 class ConversationResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable
+     * @return array<string, mixed>
      */
-    public function toArray($request)
+    public function toArray($request): array
     {
       return [
         'id'=>$this->id,

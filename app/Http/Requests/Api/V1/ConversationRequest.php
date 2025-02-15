@@ -21,7 +21,7 @@ class ConversationRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             'message' => 'required_without:file|string|min:2|max:1000',
@@ -30,7 +30,7 @@ class ConversationRequest extends FormRequest
         ];
     }
 
-    public function messages()
+    public function messages(): array
    {
     return [
         'message.required_without' => 'A message is required if no file is uploaded.',
