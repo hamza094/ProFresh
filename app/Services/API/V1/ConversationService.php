@@ -32,7 +32,7 @@ class ConversationService
   /**
  * Stores a new conversation and dispatches events and notifications.
  */
-  public function storeConversation(ConversationRequest $request,Project $project)
+  public function storeConversation(ConversationRequest $request,Project $project): ?Conversation
   {
     try{
     $data = $this->prepareConversationData($request, $project);
@@ -91,7 +91,7 @@ class ConversationService
     }catch(\Exception $e){
         Log::error('Failed to send notifications', [
                     'error' => $e->getMessage(),
-                    'users' => $users->pluck('id')->toArray(),
+                    'users' => $mentionedUsers->pluck('id')->toArray(),
         ]);
     }
   }
@@ -109,8 +109,9 @@ class ConversationService
     private function deleteFileIfExists(?string $filePath): void
     {
         if ($filePath) {
-            try{
-        Storage::disk('s3')->delete(ltrim(parse_url($filePath, PHP_URL_PATH), '/'));
+      try{
+        $path = parse_url($filePath, PHP_URL_PATH) ?: '';
+        Storage::disk('s3')->delete(ltrim($path, '/'));
     }catch(\Exception $e){
      Log::error("S3 file deletion error", ['file' => $filePath, 'error' => $e->getMessage()]);
     }

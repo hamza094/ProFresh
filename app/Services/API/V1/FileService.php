@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Str;
+use App\Models\User;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Spatie\ImageOptimizer\OptimizerChainFactory;
@@ -77,8 +78,7 @@ public function store(int $id, string $fileInputName, string $fileType): string
     return $s3Disk->url($path);
   }
 
-    public function deleteFile($user){
-
+    public function deleteFile(User $user){
      DB::transaction(function () use ($user) {
 
      $filePath=Str::after($user->avatar,'.com/');
@@ -87,7 +87,6 @@ public function store(int $id, string $fileInputName, string $fileType): string
 
      $user->update(['avatar_path' => null]);
      });
-
     }
 
 }
