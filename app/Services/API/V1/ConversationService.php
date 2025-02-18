@@ -39,7 +39,7 @@ class ConversationService
 
     $conversation = $this->createConversation($project, $data);
 
-    $conversation->load('user'); 
+    $conversation->load(['user','project:id,slug']); 
      
      // Fire the NewMessage event
      NewMessage::dispatch($conversation,$project->slug);

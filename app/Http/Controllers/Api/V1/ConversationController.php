@@ -9,6 +9,7 @@ use App\Models\Conversation;
 use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Api\ApiController;
 use App\Http\Requests\Api\V1\ConversationRequest;
+use App\Repository\Api\V1\ConversationRepository;
 use App\Services\Api\V1\ConversationService;
 use App\Http\Resources\Api\V1\ConversationResource;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
@@ -27,25 +28,12 @@ class ConversationController extends ApiController
     $this->conversationService=$conversationService;
   }
 
-  public function index(Project $project): JsonResponse 
+  public function index(Project $project,ConversationRepository $repository): JsonResponse 
   {
      $this->authorize('access',$project);
+     
+     $conversations = $repository->getProjectConversations($project);
 
-      $conversations = [];
-
-    // Using chunkById to process data in chunks of 100
-    $project->conversations()
-        ->with('user')
-        ->orderBy('id') // Ensure we process conversations in order by ID
-        ->chunkById(100, function ($chunk) use (&$conversations) {
-            // Merge the chunk of conversations with the $conversations array
-            foreach ($chunk as $conversation) {
-                // Add each conversation as a formatted ConversationResource
-                $conversations[] = new ConversationResource($conversation);
-            }
-        });
-
-    // Return the collected conversations
     return response()->json([
         'data' => $conversations,
     ]);

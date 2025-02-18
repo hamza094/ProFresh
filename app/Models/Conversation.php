@@ -33,12 +33,13 @@ class Conversation extends Model
        return $this->belongsTo(User::class);
     }
 
-    /** @var array<int, string> $mentionedUsers */
-    public function mentionedUsers(): array
+    public function setMessageAttribute($message)
     {
-     preg_match_all('/@([a-zA-Z][\w.-]*)/', $this->message ?? '', $matches);
-
-     return array_unique($matches[1] ?? []);
+      $this->attributes['message'] = preg_replace(
+            '/@([\w\-]+)/',
+             '<a href="/user/$1/profile" target="_blank">$0</a>',
+            $message
+      );
     }
 
     public function mentionedUsersData(): Collection 
@@ -46,7 +47,7 @@ class Conversation extends Model
         return empty($this->mentionedUsers()) 
         ? collect() 
         : User::whereIn('username', $this->mentionedUsers())
-            ->select('id', 'name', 'username')
+            ->select('uuid','name', 'username')
             ->get();
     }
 

@@ -21,20 +21,31 @@ class ConversationResource extends JsonResource
       return [
         'id'=>$this->id,
 
-        'message'=>$this->whenNotNull($this->message),
+        'message'=>$this->formatMentions($this->message),
 
         'file'=>$this->whenNotNull($this->file),
 
         'user'=>new InvitedUserResource($this->whenLoaded('user')),
 
-        /*'mentioned_users' => $this->when($mentionedUsers->isNotEmpty(), $mentionedUsers),*/
-
         'created_at'=>$this->created_at
                 ->diffForHumans(),
                 
-        /*'links'=>[
-          'project_link'=>'api/v1/'.$this->project->slug,
-        ]*/        
+        'links'=>[
+          'project_link'=>$this->project->path(),
+        ]        
      ]; 
     }
+
+    private function formatMentions(?string $message): ?string
+  {
+    if (!$message) {
+        return null;
+    }
+
+    /*return preg_replace(
+        '/@([a-zA-Z][\w.-]*)/', // Match usernames
+        '<a href="/user/$1/profile" target="_blank">@$1</a>', // Replace with hyperlink
+        e($message) // Escape HTML to prevent XSS
+    );*/
+ }
 }
