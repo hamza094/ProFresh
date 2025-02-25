@@ -19,7 +19,7 @@ use App\Http\Resources\Api\V1\Task\TaskMemberResource;
 use Illuminate\Validation\ValidationException;
 use App\Rules\TaskAssigneeMember;
 use Illuminate\Http\JsonResponse;
-
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class TaskFeaturesController extends Controller
 {
@@ -33,7 +33,7 @@ class TaskFeaturesController extends Controller
      *   - The task owner.
      *   - The project owner
      * */
-    public function assign(Project $project,Task $task,TaskMembersRequest $request,TaskFeatureService $service)
+    public function assign(Project $project,Task $task,TaskMembersRequest $request,TaskFeatureService $service): JsonResponse
     {
         Gate::authorize('archive-task', $task);
 
@@ -57,7 +57,7 @@ class TaskFeaturesController extends Controller
      *   - The task owner.
      *   - The project owner
      * */
-    public function unassign(Project $project,Task $task,Request $request)
+    public function unassign(Project $project,Task $task,Request $request): JsonResponse
     {       
         Gate::authorize('archive-task', $task);
 
@@ -95,7 +95,7 @@ class TaskFeaturesController extends Controller
      *   - The task owner.
      *   - The project owner
      * */ 
-    public function archive(Project $project,Task $task,TaskFeatureService $service)
+    public function archive(Project $project,Task $task,TaskFeatureService $service): JsonResponse
     {
       Gate::authorize('archive-task', $task);
 
@@ -121,7 +121,7 @@ class TaskFeaturesController extends Controller
      *   - The task owner.
      *   - The project owner.
      * */
-     public function unarchive(Project $project,Task $task,TaskFeatureService $service)
+     public function unarchive(Project $project,Task $task,TaskFeatureService $service): JsonResponse
      {
         $service->unarchiveTask($task);
 
@@ -142,7 +142,7 @@ class TaskFeaturesController extends Controller
      *   - The task owner.
      *   - The project owner
      * */
-    public function search(Project $project,Task $task,Request $request,TaskRepository $repository)
+    public function search(Project $project,Task $task,Request $request,TaskRepository $repository): AnonymousResourceCollection
     {
         Gate::authorize('archive-task', $task);
  
@@ -163,7 +163,7 @@ class TaskFeaturesController extends Controller
  * - Deletes all associated activities of the task.
  * - Permanently removes the task from the database (force delete). 
 */
-  public function remove(Project $project,Task $task,TaskFeatureService $service)
+  public function remove(Project $project,Task $task,TaskFeatureService $service): JsonResponse
   {
     if(!$task->trashed()){
           abort(403,'Task must be trashed to perform this action');

@@ -3,6 +3,7 @@
 namespace App\Http\Resources\Api\V1;
 
 use Illuminate\Support\Str;
+use Illuminate\Support\Arr;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class ActivityResource extends JsonResource
@@ -11,16 +12,29 @@ class ActivityResource extends JsonResource
      * Transform the resource into an array.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable
+     * @return array<string, mixed>
      */
-    public function toArray($request)
+    public function toArray($request): array
     {
         return [
           'description' => $this->{$this->description}(),
           'time' => $this->created_at->diffForHumans(),
-        'subject_id' => $this->subject_type === "App\\Models\\Task" ? ($this->subject ? $this->subject->id : null) : $this->subject_type,
+        'subject_id' => $this->getSubjectId(),
           'user'=>$this->user,
         ];
+    }
+
+     /**
+     * Get subject ID based on type.
+     *
+     * @return mixed
+     */
+    protected function getSubjectId()
+    {
+        if ($this->subject_type === "App\\Models\\Task") {
+            return optional($this->subject)->id;
+        }
+        return $this->subject_type;
     }
 
   protected function created_project()
@@ -28,42 +42,38 @@ class ActivityResource extends JsonResource
       return 'Project created';
   }
 
-  protected function updated_project()
+  protected function updated_project(): string
   {
-    if(key($this->changes['after']) == 'stage_id')
-    {
-      return 'Project stage updated';
-    }
+    $updatedKey = key(Arr::get($this->changes, 'after', [])) ?? '';
 
-    if(key($this->changes['after']) == 'deleted_at')
-    {
-      return 'Projet back alive';
-    }
-
-      return 'Project'.' '.key($this->changes['after']).' '.'updated';
+        return match ($updatedKey) {
+            'stage_id' => 'Project stage updated',
+            'deleted_at' => 'Project back alive',
+            default => 'Project ' . $updatedKey . ' updated'
+        };
   }
 
-  protected function deleted_project()
+  protected function deleted_project(): string
   {
       return 'Project abandoned';
   }
 
-  protected function restored_project()
+  protected function restored_project(): string
   {
       return 'Project restores back';
   }
 
-  protected function created_task()
+  protected function created_task(): string
   {
-      if ($this->subject && $this->subject->body) {
+       if ($this->subject && $this->subject->body) {
         return 'Task'.' '.Str::limit($this->subject->body, 17, '..').' '.'added';
     }
     return 'Task added';
   }
 
-  protected function updated_task()
+  protected function updated_task(): string
   {
-    $task = $this->subject;
+      $task = $this->subject;
     $updatedKey = key($this->changes['after']);
     $taskName = Str::limit($task->body, 17, '..');
 
@@ -74,29 +84,29 @@ class ActivityResource extends JsonResource
     return "Task '$taskName' body updated";
   }
 
-  protected function deleted_task()
+  protected function deleted_task(): string
   {
     return 'Task archived from the project';
   }
 
-  protected function created_message()
+  protected function created_message(): string
   {
-    $status = $this->subject->delivered_at == null ? 'scheduled' : 'sent';
+    $status = optional($this->subject)->delivered_at === null ? 'scheduled' : 'sent';
 
-    return 'Message ' . Str::limit($this->subject->message, 17, '..') . ' ' . $status;
+    return 'Message ' . Str::limit(optional($this->subject)->message ?? '', 17, '..') . ' ' . $status;
   }
 
-  protected function sent_invitation_member()
+  protected function sent_invitation_member(): string
   {
     return 'Project invitation sent to'.' '.$this->info;
   }
 
-  protected function accept_invitation_member()
+  protected function accept_invitation_member(): string
   {
     return 'Project invitation accepted by'.' '.$this->info;
   }
 
-  protected function remove_project_member()
+  protected function remove_project_member(): string
   {
     return 'Project member'.' '.$this->info.' '.' removed';
   }

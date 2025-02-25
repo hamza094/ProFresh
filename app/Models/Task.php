@@ -33,8 +33,13 @@ class Task extends Model
         }
     });
   }
-
-  //protected static $recordableEvents = ['created','updated'];
+ 
+  /**
+     * The events that should be recorded.
+     *
+     * @var array
+  */
+  protected static $recordableEvents = ['created','updated','deleted'];
 
   public function path()
     {

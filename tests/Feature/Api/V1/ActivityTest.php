@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\Api\V1;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -12,33 +12,33 @@ class ActivityTest extends TestCase
     use RefreshDatabase,ProjectSetup;
 
     /** @test */
-    public function filter_by_project_specified()
+    public function it_filters_activities_by_project_specified()
     {
       $task=$this->project->addTask('test task');
 
       $response=$this->getJson($this->project->path().'/activities')->assertOk();
 
       $data = $response->json()['data'];
+      
       $this->assertCount(2,$data);
       $this->assertEquals($data[0]['description'],'Project created');
       $this->assertEquals($data[1]['description'],'Task '.$task->body. 'added');
     }
 
     /** @test */
-    public function filter_by_tasks()
+    public function it_filters_activities_by_tasks()
     {
       $task=$this->project->addTask('test task');
 
       $response=$this->getJson($this->project->path().'/activities?tasks=1')
         ->assertJsonCount(1,['data'])
        ->assertOk();
-
-
+       
       $this->assertEquals($response->json()['data'][0]['description'],'Task '.$task->body. 'added');
     }
 
     /** @test */
-    public function filter_by_auth_user()
+    public function it_filters_activities_by_authenticated_user()
     {
       $task=$this->project->addTask('test task');
 
@@ -48,7 +48,7 @@ class ActivityTest extends TestCase
     }
 
     /** @test */
-    public function show_error_when_no_related_activities_found()
+    public function it_shows_error_when_no_related_activities_are_found()
     {
       $task=$this->project->addTask('test task');
 

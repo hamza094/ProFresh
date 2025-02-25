@@ -15,7 +15,7 @@
        <span class="page-top_arrow"> > </span>
        <span>
        Activities >
-       <span class="ml-2">{{this.current}}</span>
+       <span class="ml-2">{{this.currentTitle}}</span>
        </span>
        </span>
        </div>
@@ -44,39 +44,18 @@
                        <p>Search Related Activities:</p>
                      </div>
                      <div class="card-body activity-search">
-                       <ul>
-
-                         <li>
-                            <a href="" class="activity-icon_secondary" 
-                           :class="{Activityfont:status == 'all'}"
-                           @click.prevent="allActivities"><i class="fas fa-layer-group activity-icon_secondary mr-3" ></i>All Activities</a>
-                        </li>
-
-                         <li>
-                            <a href="" class=" 'activity-icon_purple"
-                            :class="{Activityfont:status == 'my'}"
-                             @click.prevent="myActivities"><i class="fas fa-user activity-icon_purple mr-3"></i> My Activities</a>
-                        </li>
-
-                         <li>
-                            <a href="" class="activity-icon_green" 
-                            :class="{Activityfont:status == 'project'}"
-                             @click.prevent="projectActivities"><i class="far fa-star activity-icon_green mr-3"></i> Project Activities</a>
-                        </li>
-
-                         <li>
-                            <a href="" class="activity-icon_primary"
-                            :class="{Activityfont:status == 'task'}" 
-                             @click.prevent="taskActivities()"><i class="fas fa-tasks activity-icon_primary mr-3"></i> Task Activities</a>
-                        </li>
-
-                        <li>
-                            <a href="" class="activity-icon_danger"
-                            :class="{Activityfont:status == 'member'}" 
-                            @click.prevent="memberActivities()">
-                            <i class="fas fa-tasks activity-icon_danger mr-3"></i> Member Activities</a>
-                        </li>
-                       </ul>
+        <ul>
+        <li v-for="activity in activityTypes" :key="activity.status">
+        <a 
+            href="#" 
+            :class="['activity-icon_' + activity.color, { Activityfont: status === activity.status }]"
+            @click.prevent="fetchActivities(activity)"
+        >
+            <i :class="['fas', activity.icon, 'mr-3', 'activity-icon_' + activity.color]"></i> 
+            {{ activity.label }}
+        </a>
+    </li>                 
+    </ul>
                        
                      </div>
                     </div>
@@ -90,15 +69,18 @@
     	</div>
     </template>
 <script>
-
+  import activityMixins from '@/mixins/activityMixins';
 
 export default{
+    mixins: [activityMixins],
     data(){
     return{
       	activities:{},
         status:'all',
         auth:this.$store.state.currentUser.user,
-        current:'',
+        currentTitle: 'All Project Activities',
+        currentQuery: '',
+        activityTypes: activityMixins.data().activityTypes
     };
     },
     methods:{
@@ -110,56 +92,30 @@ export default{
     activityColor(description) {
       return this.getColor(description);
     },
-
-    async getData(suffix){
-     await axios.get(`/api/v1/projects/${this.$route.params.slug}/activities${suffix}`).then(response=>{
-                 this.activities=response.data;
-            }).catch(error=>{
-               console.log(error.response.data.errors);
+      async getData(suffix) {
+        await axios.get(`/api/v1/projects/${this.$route.params.slug}/activities${suffix}`)
+            .then(response => {
+                this.activities = response.data;
+            })
+            .catch(error => {
+                console.log(error.response.data.errors);
             });
     },
 
-	getActivities(){
-	   this.getData('');
-       this.current = 'All Project Activities';
-	},
-
-    getResults(page = 1) {
-       this.getData(`?page=${page}`);
+    async fetchActivities(activity) {
+            this.status = activity.status;
+            this.currentTitle = activity.label;
+            this.currentQuery = activity.query;
+            this.getData(activity.query);
+        }
+        ,
+         getResults(page = 1) {
+            this.getData(`${this.currentQuery}&page=${page}`); 
+        }
     },
 
-    allActivities(){
-       this.status = "all";
-       this.getActivities();
+	mounted() {
+       this.fetchActivities(this.activityTypes[0]);
     },
-
-     myActivities(){
-       this.status = "my";
-       this.getData(`?mine=${this.auth.id}`);
-       this.current = 'My Project Activities';
-     },
-
-     projectActivities(){
-        this.status = "project";
-        this.getData('?specifics=1');
-        this.current = 'Project Specified Activities';
-     },
-
-     taskActivities(){
-        this.status = "task";
-        this.getData('?tasks=1');
-        this.current = 'Project Tasks Activities';
-     },
-
-     memberActivities(){
-       this.status = "member";
-       this.getData('?members=1');
-       this.current = 'Project Members Activities';
-     }
-    },
-
-	created(){
-       this.getActivities();
-	},
 }
 </script>

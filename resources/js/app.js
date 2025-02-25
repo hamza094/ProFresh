@@ -20,7 +20,6 @@ import errorHandling from './mixins/errorHandling';
 import currentStage from './mixins/currentStage';
 import popup from './mixins/popup';
 import conversation from './mixins/conversation';
-import activitiesDesign from './mixins/activitiesDesign';
 import Chart from 'chart.js';
 import 'animate.css';
 import "cropperjs/dist/cropper.css"
@@ -58,7 +57,6 @@ import store from "./store";
 Vue.mixin(alertNotice);
 Vue.mixin(currentStage);
 Vue.mixin(conversation);
-Vue.mixin(activitiesDesign);
 Vue.mixin(errorHandling);
 
 Vue.filter('time',function(data){

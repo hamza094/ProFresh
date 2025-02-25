@@ -1,48 +1,32 @@
 (window["webpackJsonp"] = window["webpackJsonp"] || []).push([[14],{
 
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Project/MeetingDetail.vue?vue&type=script&lang=js":
-/*!*******************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Project/MeetingDetail.vue?vue&type=script&lang=js ***!
-  \*******************************************************************************************************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ({
-  props: {
-    label: String,
-    value: [String, Number],
-    isEditing: Boolean
-  },
-  computed: {
-    statusBadgeClass: function statusBadgeClass() {
-      return this.value === 'Started' ? 'badge badge-success' : '';
-    }
-  }
-});
-
-/***/ }),
-
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Project/ViewModal.vue?vue&type=script&lang=js":
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Project/FormGroup.vue?vue&type=script&lang=js":
 /*!***************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Project/ViewModal.vue?vue&type=script&lang=js ***!
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Project/FormGroup.vue?vue&type=script&lang=js ***!
   \***************************************************************************************************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['id', 'label', 'error']
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Project/MeetingModal.vue?vue&type=script&lang=js":
+/*!******************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Project/MeetingModal.vue?vue&type=script&lang=js ***!
+  \******************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
-/* harmony import */ var _MeetingDetail_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./MeetingDetail.vue */ "./resources/js/components/Project/MeetingDetail.vue");
-/* harmony import */ var _utils_meetingUtils__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../utils/meetingUtils */ "./resources/js/utils/meetingUtils.js");
+/* harmony import */ var _FormGroup_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./FormGroup.vue */ "./resources/js/components/Project/FormGroup.vue");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
-function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
-function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
-function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
-function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
-function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
 function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
 function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
@@ -50,142 +34,74 @@ function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" 
 function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 
 
-
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
-    MeetingDetail: _MeetingDetail_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
+    FormGroup: _FormGroup_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
-  props: ['projectSlug', 'notAuthorize', 'members'],
+  props: ['projectSlug'],
   data: function data() {
     return {
-      meeting: [],
-      isEditing: false,
-      errors: {},
-      loader: false,
-      loading: false,
-      loaderId: null,
-      auth: this.$store.state.currentUser.user,
       form: {
-        meeting_id: '',
         topic: '',
         agenda: '',
-        start_time: '',
-        duration: '',
         join_before_host: '',
-        timezone: '',
-        password: ''
-      }
+        duration: '',
+        start_time: '',
+        timezone: 'UTC'
+      },
+      errors: {},
+      loading: false,
+      loaderId: null
     };
   },
-  created: function created() {
-    this.$bus.$on('view-meeting-modal', this.getMeeting);
+  mounted: function mounted() {
+    this.$bus.on('open-meeting-modal', this.openMeetingModal);
   },
-  beforeDestroy: function beforeDestroy() {
-    this.$bus.$off('view-meeting-modal', this.getMeeting);
+  destroyed: function destroyed() {
+    this.$bus.off('open-meeting-modal', this.openMeetingModal);
   },
-  methods: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapMutations"])('meeting', {
-    updateMeetingInState: 'meetingUpdate',
-    removeMeetingFromState: 'removeMeetingFromState'
-  })), {}, {
-    emitInitializeMeting: function emitInitializeMeting(action, meeting) {
-      this.$bus.$emit('initialize-meeting', action, meeting);
-      this.meetingModalClose();
-    },
-    canStartMeeting: function canStartMeeting(meeting) {
-      return Object(_utils_meetingUtils__WEBPACK_IMPORTED_MODULE_2__["canStartMeeting"])(meeting, this.auth, !this.notAuthorize);
-    },
-    canJoinMeeting: function canJoinMeeting(meeting) {
-      return Object(_utils_meetingUtils__WEBPACK_IMPORTED_MODULE_2__["canJoinMeeting"])(meeting, this.auth, this.members);
-    },
-    updateMeeting: function updateMeeting(id) {
+  methods: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapMutations"])('meeting', ['addMeeting'])), {}, {
+    createMeeting: function createMeeting() {
       var _this = this;
-      this.initiliazeUpdateMeeting();
-      var filteredForm = this.filterForm();
-      axios.patch("/api/v1/projects/".concat(this.projectSlug, "/meetings/").concat(id), filteredForm).then(function (response) {
-        _this.meeting = response.data.meeting;
-        _this.updateMeetingInState(_this.meeting);
+      this.initializeMeetingCreation();
+      axios.post("/api/v1/projects/".concat(this.projectSlug, "/meetings"), this.form).then(function (response) {
+        _this.$bus.emit('get-results');
         _this.$vToastify.success(response.data.message);
-        _this.meetingEditClose();
+        _this.modalClose();
       })["catch"](function (error) {
         _this.handleErrorResponse(error);
       })["finally"](function () {
-        _this.setLoading('', 'stop');
+        _this.$vToastify.stopLoader(_this.loaderId);
         _this.loading = false;
       });
     },
-    deleteMeeting: function deleteMeeting(meeting) {
-      var _this2 = this;
-      this.setLoading('Deleting meeting, please wait...', 'start');
-      this.loader = true;
-      axios["delete"]("/api/v1/projects/".concat(this.projectSlug, "/meetings/").concat(meeting)).then(function (response) {
-        _this2.meetingModalClose();
-        _this2.removeMeetingFromState(meeting);
-        _this2.$vToastify.success(response.data.message);
-      })["catch"](function (error) {
-        _this2.$vToastify.error('Meeting deletion failed');
-      })["finally"](function () {
-        _this2.setLoading('', 'stop');
-        _this2.loader = false;
-      });
-    },
-    getMeeting: function getMeeting(meetingId) {
-      var _this3 = this;
-      this.$modal.show('ViewMeeting');
-      axios.get("/api/v1/projects/".concat(this.projectSlug, "/meetings/").concat(meetingId)).then(function (response) {
-        _this3.meeting = response.data;
-        _this3.form.agenda = _this3.meeting.agenda;
-      })["catch"](function (error) {
-        _this3.$vToastify.error('Meeting Loading failed');
-      });
-    },
-    meetingEdit: function meetingEdit() {
-      this.isEditing = true;
-    },
-    meetingEditClose: function meetingEditClose() {
-      this.isEditing = false;
-      this.form = {};
-      this.errors = {};
-      this.form.agenda = this.meeting.agenda;
-    },
-    meetingModalClose: function meetingModalClose() {
-      this.$modal.hide('ViewMeeting');
-      this.meeting = [];
-    },
-    filterForm: function filterForm() {
-      return Object.fromEntries(Object.entries(this.form).filter(function (_ref) {
-        var _ref2 = _slicedToArray(_ref, 2),
-          key = _ref2[0],
-          value = _ref2[1];
-        return value !== null && value !== '';
-      }));
-    },
-    initiliazeUpdateMeeting: function initiliazeUpdateMeeting() {
-      this.form.meeting_id = this.meeting.meeting_id;
-      this.form.start_time = this.convertToISO(this.form.start_time);
-      this.errors = {};
+    initializeMeetingCreation: function initializeMeetingCreation() {
+      this.booleanJoinBeforeHost();
+      this.loaderId = this.$vToastify.loader('Creating meeting, please wait...');
       this.loading = true;
-      this.setLoading('Updating meeting, please wait...', 'start');
+      this.errors = {};
     },
-    setLoading: function setLoading(message, action) {
-      if (action === 'start') {
-        this.loaderId = this.$vToastify.loader(message);
-      } else {
-        this.$vToastify.stopLoader(this.loaderId);
-        this.loaderId = null;
-      }
+    booleanJoinBeforeHost: function booleanJoinBeforeHost() {
+      return this.form.join_before_host = this.form.join_before_host === 'true';
     },
-    convertToISO: function convertToISO(date) {
-      return date ? new Date(date).toISOString() : date;
+    openMeetingModal: function openMeetingModal() {
+      console.log('Meeting ID:', meetingId); // Ensure it's a number
+      this.$modal.show('MeetingModal');
+    },
+    modalClose: function modalClose() {
+      this.$modal.hide('MeetingModal');
+      this.errors = {};
+      this.form = Object.assign({}, this.$options.data().form);
     }
   })
 });
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Project/MeetingDetail.vue?vue&type=template&id=9fba0d0a&scoped=true":
-/*!*****************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib/loaders/templateLoader.js??ref--6!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Project/MeetingDetail.vue?vue&type=template&id=9fba0d0a&scoped=true ***!
-  \*****************************************************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Project/FormGroup.vue?vue&type=template&id=59603b2a":
+/*!*************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib/loaders/templateLoader.js??ref--6!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Project/FormGroup.vue?vue&type=template&id=59603b2a ***!
+  \*************************************************************************************************************************************************************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -196,13 +112,19 @@ __webpack_require__.r(__webpack_exports__);
 var render = function render() {
   var _vm = this,
     _c = _vm._self._c;
-  return _c("li", [_c("b", [_vm._v(_vm._s(_vm.label) + ": ")]), _vm._v(" "), _vm._t("default", function () {
-    return [_c("span", {
-      staticClass: "meeting_item"
-    }, [_c("span", {
-      "class": _vm.statusBadgeClass
-    }, [_vm._v(_vm._s(_vm.value))])])];
-  })], 2);
+  return _c("div", {
+    staticClass: "form-group"
+  }, [_c("label", {
+    staticClass: "label-name",
+    attrs: {
+      "for": _vm.id
+    }
+  }, [_vm._v(_vm._s(_vm.label))]), _vm._v(" "), _vm._t("default"), _vm._v(" "), _vm.error ? _c("span", {
+    staticClass: "text-danger font-italic",
+    domProps: {
+      textContent: _vm._s(_vm.error[0])
+    }
+  }) : _vm._e()], 2);
 };
 var staticRenderFns = [];
 render._withStripped = true;
@@ -210,10 +132,10 @@ render._withStripped = true;
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Project/ViewModal.vue?vue&type=template&id=2f3d50d2":
-/*!*************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib/loaders/templateLoader.js??ref--6!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Project/ViewModal.vue?vue&type=template&id=2f3d50d2 ***!
-  \*************************************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Project/MeetingModal.vue?vue&type=template&id=06e4b51a":
+/*!****************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib/loaders/templateLoader.js??ref--6!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Project/MeetingModal.vue?vue&type=template&id=06e4b51a ***!
+  \****************************************************************************************************************************************************************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -227,7 +149,7 @@ var render = function render() {
   return _c("div", [_c("modal", {
     staticClass: "model-desin",
     attrs: {
-      name: "ViewMeeting",
+      name: "MeetingModal",
       height: "auto",
       scrollable: true,
       width: "40%",
@@ -235,18 +157,40 @@ var render = function render() {
     }
   }, [_c("div", {
     staticClass: "edit-border-top p-3"
-  }, [_vm.meeting.status === "Started" ? _c("div", {
-    staticClass: "glowing-dot"
-  }) : _vm._e(), _vm._v(" "), _c("div", {
+  }, [_c("div", {
     staticClass: "edit-border-bottom"
   }, [_c("div", {
     staticClass: "panel-top_content"
   }, [_c("span", {
-    staticClass: "meeting_heading"
-  }, [_vm._v(_vm._s(_vm.meeting.topic))]), _vm._v(" "), _vm.isEditing ? _c("div", {
-    staticClass: "form-group row"
+    staticClass: "panel-heading"
+  }, [_vm._v("Create A New Project Meeting")]), _vm._v(" "), _c("span", {
+    staticClass: "panel-exit float-right",
+    attrs: {
+      role: "button"
+    },
+    on: {
+      click: function click($event) {
+        $event.preventDefault();
+        return _vm.modalClose.apply(null, arguments);
+      }
+    }
+  }, [_vm._v("x")])])]), _vm._v(" "), _c("div", {
+    staticClass: "panel-form"
+  }, [_c("form", {
+    on: {
+      submit: function submit($event) {
+        $event.preventDefault();
+        return _vm.createMeeting();
+      }
+    }
   }, [_c("div", {
-    staticClass: "col-md-9"
+    staticClass: "panel-top_content"
+  }, [_c("FormGroup", {
+    attrs: {
+      id: "topic",
+      label: "Topic:",
+      error: _vm.errors.topic
+    }
   }, [_c("input", {
     directives: [{
       name: "model",
@@ -256,7 +200,10 @@ var render = function render() {
     }],
     staticClass: "form-control",
     attrs: {
-      placeholder: "Edit meeting title"
+      type: "text",
+      id: "topic",
+      name: "topic",
+      placeholder: "Title for meeting"
     },
     domProps: {
       value: _vm.form.topic
@@ -267,37 +214,13 @@ var render = function render() {
         _vm.$set(_vm.form, "topic", $event.target.value);
       }
     }
-  }), _vm._v(" "), _vm.errors.topic ? _c("span", {
-    staticClass: "text-danger font-italic",
-    domProps: {
-      textContent: _vm._s(_vm.errors.topic[0])
-    }
-  }) : _vm._e()])]) : _vm._e(), _vm._v(" "), !_vm.isEditing ? _c("span", {
-    staticClass: "panel-exit float-right",
+  })]), _vm._v(" "), _c("FormGroup", {
     attrs: {
-      role: "button"
-    },
-    on: {
-      click: function click($event) {
-        $event.preventDefault();
-        return _vm.meetingModalClose.apply(null, arguments);
-      }
+      id: "agenda",
+      label: "Agenda:",
+      error: _vm.errors.agenda
     }
-  }, [_vm._v("x")]) : _vm._e()])]), _vm._v(" "), _vm.meeting ? _c("div", {
-    staticClass: "meeting"
-  }, [_c("ul", {
-    staticClass: "meeting_list"
-  }, [!_vm.isEditing ? _c("meeting-detail", {
-    attrs: {
-      label: "Meeting ID",
-      value: _vm.meeting.meeting_id
-    }
-  }) : _vm._e(), _vm._v(" "), _c("meeting-detail", {
-    attrs: {
-      label: "Agenda",
-      isEditing: _vm.isEditing
-    }
-  }, [!_vm.isEditing ? [_c("span", [_vm._v(_vm._s(_vm.meeting.agenda))])] : [_c("textarea", {
+  }, [_c("textarea", {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -305,6 +228,11 @@ var render = function render() {
       expression: "form.agenda"
     }],
     staticClass: "form-control",
+    attrs: {
+      name: "agenda",
+      rows: "3",
+      placeholder: "Enter meeting agenda here"
+    },
     domProps: {
       value: _vm.form.agenda
     },
@@ -314,42 +242,106 @@ var render = function render() {
         _vm.$set(_vm.form, "agenda", $event.target.value);
       }
     }
-  }), _vm._v(" "), _vm.errors.agenda ? _c("span", {
-    staticClass: "text-danger font-italic",
-    domProps: {
-      textContent: _vm._s(_vm.errors.agenda[0])
-    }
-  }) : _vm._e()]], 2), _vm._v(" "), _c("meeting-detail", {
+  })]), _vm._v(" "), _c("FormGroup", {
     attrs: {
-      label: "Start Time",
-      isEditing: _vm.isEditing
+      id: "password",
+      label: "Password:",
+      error: _vm.errors.password
     }
-  }, [!_vm.isEditing ? [_c("span", [_vm._v(_vm._s(_vm.meeting.start_time))])] : [_c("datetime", {
+  }, [_c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.form.password,
+      expression: "form.password"
+    }],
+    staticClass: "form-control",
     attrs: {
-      type: "datetime",
-      value: _vm.meeting.start_time,
-      "value-zone": "local",
-      zone: "local",
-      format: "YYYY-MM-DD HH:mm:ss"
+      type: "password",
+      id: "password",
+      name: "password",
+      place: "Enter unique meeting passcode"
     },
-    model: {
-      value: _vm.form.start_time,
-      callback: function callback($$v) {
-        _vm.$set(_vm.form, "start_time", $$v);
-      },
-      expression: "form.start_time"
-    }
-  }), _vm._v(" "), _vm.errors.start_time ? _c("span", {
-    staticClass: "text-danger font-italic",
     domProps: {
-      textContent: _vm._s(_vm.errors.start_time[0])
+      value: _vm.form.password
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.$set(_vm.form, "password", $event.target.value);
+      }
     }
-  }) : _vm._e()]], 2), _vm._v(" "), _c("meeting-detail", {
+  })]), _vm._v(" "), _c("FormGroup", {
     attrs: {
-      label: "Meeting Duration",
-      isEditing: _vm.isEditing
+      id: "join_before_host",
+      label: "Join Before Host:",
+      error: _vm.errors.join_before_host
     }
-  }, [!_vm.isEditing ? [_c("span", [_vm._v(_vm._s(_vm.meeting.duration) + " Minutes")])] : [_c("select", {
+  }, [_c("div", {
+    staticClass: "form-check form-check-inline"
+  }, [_c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.form.join_before_host,
+      expression: "form.join_before_host"
+    }],
+    staticClass: "form-check-input",
+    attrs: {
+      type: "radio",
+      id: "joinBefore",
+      name: "join_before_host",
+      value: "true"
+    },
+    domProps: {
+      checked: _vm._q(_vm.form.join_before_host, "true")
+    },
+    on: {
+      change: function change($event) {
+        return _vm.$set(_vm.form, "join_before_host", "true");
+      }
+    }
+  }), _vm._v(" "), _c("label", {
+    staticClass: "form-check-label",
+    attrs: {
+      "for": "join_before"
+    }
+  }, [_vm._v("Yes")])]), _vm._v(" "), _c("div", {
+    staticClass: "form-check form-check-inline"
+  }, [_c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.form.join_before_host,
+      expression: "form.join_before_host"
+    }],
+    staticClass: "form-check-input",
+    attrs: {
+      type: "radio",
+      id: "joinAfter",
+      name: "join_before_host",
+      value: "false"
+    },
+    domProps: {
+      checked: _vm._q(_vm.form.join_before_host, "false")
+    },
+    on: {
+      change: function change($event) {
+        return _vm.$set(_vm.form, "join_before_host", "false");
+      }
+    }
+  }), _vm._v(" "), _c("label", {
+    staticClass: "form-check-label",
+    attrs: {
+      "for": "joinAfter"
+    }
+  }, [_vm._v("No")])])]), _vm._v(" "), _c("FormGroup", {
+    attrs: {
+      id: "duration",
+      label: "Duration:",
+      error: _vm.errors.duration
+    }
+  }, [_c("select", {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -389,210 +381,46 @@ var render = function render() {
     attrs: {
       value: "45"
     }
-  }, [_vm._v("45 minutes")])]), _vm._v(" "), _vm.errors.duration ? _c("span", {
-    staticClass: "text-danger font-italic",
-    domProps: {
-      textContent: _vm._s(_vm.errors.duration[0])
-    }
-  }) : _vm._e()]], 2), _vm._v(" "), !_vm.isEditing ? _c("meeting-detail", {
+  }, [_vm._v("45 minutes")])])]), _vm._v(" "), _c("FormGroup", {
     attrs: {
-      label: "Status",
-      value: _vm.meeting.status
+      id: "start_time",
+      label: "Start Time:",
+      error: _vm.errors.start_time
     }
-  }) : _vm._e(), _vm._v(" "), !_vm.isEditing && _vm.meeting.owner ? _c("meeting-detail", {
+  }, [_c("datetime", {
     attrs: {
-      label: "Created By",
-      value: _vm.meeting.owner.name
-    }
-  }) : _vm._e(), _vm._v(" "), !_vm.isEditing ? _c("meeting-detail", {
-    attrs: {
-      label: "Created At",
-      value: _vm.meeting.created_at
-    }
-  }) : _vm._e(), _vm._v(" "), _c("meeting-detail", {
-    attrs: {
-      label: "Timezone",
-      isEditing: _vm.isEditing
-    }
-  }, [!_vm.isEditing ? [_c("span", [_vm._v(_vm._s(_vm.meeting.timezone))])] : [_c("input", {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: _vm.form.timezone,
-      expression: "form.timezone"
-    }],
-    staticClass: "form-control",
-    domProps: {
-      value: _vm.form.timezone
+      type: "datetime",
+      "value-zone": "local",
+      zone: "local"
     },
-    on: {
-      input: function input($event) {
-        if ($event.target.composing) return;
-        _vm.$set(_vm.form, "timezone", $event.target.value);
-      }
+    model: {
+      value: _vm.form.start_time,
+      callback: function callback($$v) {
+        _vm.$set(_vm.form, "start_time", $$v);
+      },
+      expression: "form.start_time"
     }
-  }), _vm._v(" "), _vm.errors.timezone ? _c("span", {
-    staticClass: "text-danger font-italic",
-    domProps: {
-      textContent: _vm._s(_vm.errors.timezone[0])
-    }
-  }) : _vm._e()]], 2), _vm._v(" "), _c("meeting-detail", {
-    attrs: {
-      label: "Password",
-      isEditing: _vm.isEditing
-    }
-  }, [!_vm.isEditing ? [_c("span", [_vm._v(_vm._s(_vm.meeting.password))])] : [_c("input", {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: _vm.form.password,
-      expression: "form.password"
-    }],
-    staticClass: "form-control",
-    domProps: {
-      value: _vm.form.password
-    },
-    on: {
-      input: function input($event) {
-        if ($event.target.composing) return;
-        _vm.$set(_vm.form, "password", $event.target.value);
-      }
-    }
-  }), _vm._v(" "), _vm.errors.password ? _c("span", {
-    staticClass: "text-danger font-italic",
-    domProps: {
-      textContent: _vm._s(_vm.errors.password[0])
-    }
-  }) : _vm._e()]], 2), _vm._v(" "), !_vm.isEditing ? _c("meeting-detail", {
-    attrs: {
-      label: "Updated At",
-      value: _vm.meeting.updated_at
-    }
-  }) : _vm._e(), _vm._v(" "), _c("meeting-detail", {
-    attrs: {
-      label: "Join Before Host",
-      isEditing: _vm.isEditing
-    }
-  }, [!_vm.isEditing ? [_c("span", [_vm._v(_vm._s(_vm.meeting.join_before_host))])] : [_c("div", {
-    staticClass: "form-check form-check-inline"
-  }, [_c("input", {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: _vm.form.join_before_host,
-      expression: "form.join_before_host"
-    }],
-    staticClass: "form-check-input",
-    attrs: {
-      type: "radio",
-      id: "joinBefore",
-      name: "joinBeforeHost"
-    },
-    domProps: {
-      value: true,
-      checked: _vm._q(_vm.form.join_before_host, true)
-    },
-    on: {
-      change: function change($event) {
-        return _vm.$set(_vm.form, "join_before_host", true);
-      }
-    }
-  }), _vm._v(" "), _c("label", {
-    staticClass: "form-check-label",
-    attrs: {
-      "for": "joinBefore"
-    }
-  }, [_vm._v("Yes")])]), _vm._v(" "), _c("div", {
-    staticClass: "form-check form-check-inline"
-  }, [_c("input", {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: _vm.form.join_before_host,
-      expression: "form.join_before_host"
-    }],
-    staticClass: "form-check-input",
-    attrs: {
-      type: "radio",
-      id: "joinAfter",
-      name: "joinBeforeHost"
-    },
-    domProps: {
-      value: false,
-      checked: _vm._q(_vm.form.join_before_host, false)
-    },
-    on: {
-      change: function change($event) {
-        return _vm.$set(_vm.form, "join_before_host", false);
-      }
-    }
-  }), _vm._v(" "), _c("label", {
-    staticClass: "form-check-label",
-    attrs: {
-      "for": "joinAfter"
-    }
-  }, [_vm._v("No")])]), _vm._v(" "), _c("br"), _vm._v(" "), _vm.errors.join_before_host ? _c("span", {
-    staticClass: "text-danger font-italic",
-    domProps: {
-      textContent: _vm._s(_vm.errors.join_before_host[0])
-    }
-  }) : _vm._e(), _vm._v(" "), _c("br")]], 2), _vm._v(" "), !_vm.isEditing && Object.keys(_vm.meeting).length > 0 ? _c("li", [_vm.canStartMeeting(_vm.meeting) ? _c("button", {
-    staticClass: "btn btn-secondary btn-sm",
+  })], 1)], 1), _vm._v(" "), _c("div", {
+    staticClass: "panel-bottom"
+  }, [_c("div", {
+    staticClass: "panel-top_content float-left"
+  }), _vm._v(" "), _c("div", {
+    staticClass: "panel-top_content float-right"
+  }, [_c("button", {
+    staticClass: "btn panel-btn_close",
     on: {
       click: function click($event) {
         $event.preventDefault();
-        return _vm.emitInitializeMeting("start", _vm.meeting);
+        return _vm.modalClose.apply(null, arguments);
       }
     }
-  }, [_vm._v("Start Meeting As Owner")]) : _vm.canJoinMeeting(_vm.meeting) ? _c("button", {
-    staticClass: "btn btn-secondary btn-sm",
-    on: {
-      click: function click($event) {
-        $event.preventDefault();
-        return _vm.emitInitializeMeting("join", _vm.meeting);
-      }
-    }
-  }, [_vm._v("Join Meeting")]) : _vm._e()]) : _vm._e()], 1), _vm._v(" "), Object.keys(_vm.meeting).length > 0 ? _c("div", {
-    staticClass: "mt-3"
-  }, [!_vm.isEditing ? _c("div", [_c("button", {
-    staticClass: "btn btn-danger float-right mb-3",
+  }, [_vm._v("Cancel")]), _vm._v(" "), _c("button", {
+    staticClass: "btn panel-btn_save",
     attrs: {
-      disabled: _vm.loader
-    },
-    on: {
-      click: function click($event) {
-        if (!$event.type.indexOf("key") && _vm._k($event.keyCode, "pervent", undefined, $event.key, undefined)) return null;
-        return _vm.deleteMeeting(_vm.meeting.id);
-      }
-    }
-  }, [_vm._v(_vm._s(_vm.loader ? "Deleting..." : "Delete"))]), _vm._v(" "), _c("button", {
-    staticClass: "btn btn-primary float-left mb-3",
-    on: {
-      click: function click($event) {
-        if (!$event.type.indexOf("key") && _vm._k($event.keyCode, "pervent", undefined, $event.key, undefined)) return null;
-        return _vm.meetingEdit();
-      }
-    }
-  }, [_vm._v("Edit")])]) : _c("div", [_c("button", {
-    staticClass: "btn btn-info float-right mb-3",
-    on: {
-      click: function click($event) {
-        if (!$event.type.indexOf("key") && _vm._k($event.keyCode, "pervent", undefined, $event.key, undefined)) return null;
-        return _vm.meetingEditClose();
-      }
-    }
-  }, [_vm._v("Close")]), _vm._v(" "), _c("button", {
-    staticClass: "btn btn-primary float-left mb-3",
-    attrs: {
+      type: "submit",
       disabled: _vm.loading
-    },
-    on: {
-      click: function click($event) {
-        if (!$event.type.indexOf("key") && _vm._k($event.keyCode, "pervent", undefined, $event.key, undefined)) return null;
-        return _vm.updateMeeting(_vm.meeting.id);
-      }
     }
-  }, [_vm._v(_vm._s(_vm.loading ? "Saving..." : "Save"))])])]) : _vm._e()]) : _vm._e()])])], 1);
+  }, [_vm._v(_vm._s(_vm.loading ? "Creating..." : "Create"))])])])])])])])], 1);
 };
 var staticRenderFns = [];
 render._withStripped = true;
@@ -600,153 +428,17 @@ render._withStripped = true;
 
 /***/ }),
 
-/***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Project/MeetingDetail.vue?vue&type=style&index=0&id=9fba0d0a&scoped=true&lang=css":
-/*!**************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Project/MeetingDetail.vue?vue&type=style&index=0&id=9fba0d0a&scoped=true&lang=css ***!
-  \**************************************************************************************************************************************************************************************************************************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
-// imports
-
-
-// module
-exports.push([module.i, "\r\n/* your styles here */\r\n", ""]);
-
-// exports
-
-
-/***/ }),
-
-/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Project/MeetingDetail.vue?vue&type=style&index=0&id=9fba0d0a&scoped=true&lang=css":
-/*!******************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/style-loader!./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Project/MeetingDetail.vue?vue&type=style&index=0&id=9fba0d0a&scoped=true&lang=css ***!
-  \******************************************************************************************************************************************************************************************************************************************************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-
-var content = __webpack_require__(/*! !../../../../node_modules/css-loader??ref--6-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--6-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./MeetingDetail.vue?vue&type=style&index=0&id=9fba0d0a&scoped=true&lang=css */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Project/MeetingDetail.vue?vue&type=style&index=0&id=9fba0d0a&scoped=true&lang=css");
-
-if(typeof content === 'string') content = [[module.i, content, '']];
-
-var transform;
-var insertInto;
-
-
-
-var options = {"hmr":true}
-
-options.transform = transform
-options.insertInto = undefined;
-
-var update = __webpack_require__(/*! ../../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
-
-if(content.locals) module.exports = content.locals;
-
-if(false) {}
-
-/***/ }),
-
-/***/ "./resources/js/components/Project/MeetingDetail.vue":
-/*!***********************************************************!*\
-  !*** ./resources/js/components/Project/MeetingDetail.vue ***!
-  \***********************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _MeetingDetail_vue_vue_type_template_id_9fba0d0a_scoped_true__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./MeetingDetail.vue?vue&type=template&id=9fba0d0a&scoped=true */ "./resources/js/components/Project/MeetingDetail.vue?vue&type=template&id=9fba0d0a&scoped=true");
-/* harmony import */ var _MeetingDetail_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./MeetingDetail.vue?vue&type=script&lang=js */ "./resources/js/components/Project/MeetingDetail.vue?vue&type=script&lang=js");
-/* empty/unused harmony star reexport *//* harmony import */ var _MeetingDetail_vue_vue_type_style_index_0_id_9fba0d0a_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./MeetingDetail.vue?vue&type=style&index=0&id=9fba0d0a&scoped=true&lang=css */ "./resources/js/components/Project/MeetingDetail.vue?vue&type=style&index=0&id=9fba0d0a&scoped=true&lang=css");
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
-
-
-
-
-
-
-/* normalize component */
-
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
-  _MeetingDetail_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"],
-  _MeetingDetail_vue_vue_type_template_id_9fba0d0a_scoped_true__WEBPACK_IMPORTED_MODULE_0__["render"],
-  _MeetingDetail_vue_vue_type_template_id_9fba0d0a_scoped_true__WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
-  false,
-  null,
-  "9fba0d0a",
-  null
-  
-)
-
-/* hot reload */
-if (false) { var api; }
-component.options.__file = "resources/js/components/Project/MeetingDetail.vue"
-/* harmony default export */ __webpack_exports__["default"] = (component.exports);
-
-/***/ }),
-
-/***/ "./resources/js/components/Project/MeetingDetail.vue?vue&type=script&lang=js":
-/*!***********************************************************************************!*\
-  !*** ./resources/js/components/Project/MeetingDetail.vue?vue&type=script&lang=js ***!
-  \***********************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_MeetingDetail_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./MeetingDetail.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Project/MeetingDetail.vue?vue&type=script&lang=js");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_MeetingDetail_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__["default"]); 
-
-/***/ }),
-
-/***/ "./resources/js/components/Project/MeetingDetail.vue?vue&type=style&index=0&id=9fba0d0a&scoped=true&lang=css":
-/*!*******************************************************************************************************************!*\
-  !*** ./resources/js/components/Project/MeetingDetail.vue?vue&type=style&index=0&id=9fba0d0a&scoped=true&lang=css ***!
-  \*******************************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_MeetingDetail_vue_vue_type_style_index_0_id_9fba0d0a_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/style-loader!../../../../node_modules/css-loader??ref--6-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--6-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./MeetingDetail.vue?vue&type=style&index=0&id=9fba0d0a&scoped=true&lang=css */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Project/MeetingDetail.vue?vue&type=style&index=0&id=9fba0d0a&scoped=true&lang=css");
-/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_MeetingDetail_vue_vue_type_style_index_0_id_9fba0d0a_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_MeetingDetail_vue_vue_type_style_index_0_id_9fba0d0a_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_MeetingDetail_vue_vue_type_style_index_0_id_9fba0d0a_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_MeetingDetail_vue_vue_type_style_index_0_id_9fba0d0a_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-
-
-/***/ }),
-
-/***/ "./resources/js/components/Project/MeetingDetail.vue?vue&type=template&id=9fba0d0a&scoped=true":
-/*!*****************************************************************************************************!*\
-  !*** ./resources/js/components/Project/MeetingDetail.vue?vue&type=template&id=9fba0d0a&scoped=true ***!
-  \*****************************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_MeetingDetail_vue_vue_type_template_id_9fba0d0a_scoped_true__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??ref--6!../../../../node_modules/vue-loader/lib??vue-loader-options!./MeetingDetail.vue?vue&type=template&id=9fba0d0a&scoped=true */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Project/MeetingDetail.vue?vue&type=template&id=9fba0d0a&scoped=true");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_MeetingDetail_vue_vue_type_template_id_9fba0d0a_scoped_true__WEBPACK_IMPORTED_MODULE_0__["render"]; });
-
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_MeetingDetail_vue_vue_type_template_id_9fba0d0a_scoped_true__WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
-
-
-
-/***/ }),
-
-/***/ "./resources/js/components/Project/ViewModal.vue":
+/***/ "./resources/js/components/Project/FormGroup.vue":
 /*!*******************************************************!*\
-  !*** ./resources/js/components/Project/ViewModal.vue ***!
+  !*** ./resources/js/components/Project/FormGroup.vue ***!
   \*******************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _ViewModal_vue_vue_type_template_id_2f3d50d2__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ViewModal.vue?vue&type=template&id=2f3d50d2 */ "./resources/js/components/Project/ViewModal.vue?vue&type=template&id=2f3d50d2");
-/* harmony import */ var _ViewModal_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ViewModal.vue?vue&type=script&lang=js */ "./resources/js/components/Project/ViewModal.vue?vue&type=script&lang=js");
+/* harmony import */ var _FormGroup_vue_vue_type_template_id_59603b2a__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./FormGroup.vue?vue&type=template&id=59603b2a */ "./resources/js/components/Project/FormGroup.vue?vue&type=template&id=59603b2a");
+/* harmony import */ var _FormGroup_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./FormGroup.vue?vue&type=script&lang=js */ "./resources/js/components/Project/FormGroup.vue?vue&type=script&lang=js");
 /* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
@@ -756,9 +448,9 @@ __webpack_require__.r(__webpack_exports__);
 /* normalize component */
 
 var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _ViewModal_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"],
-  _ViewModal_vue_vue_type_template_id_2f3d50d2__WEBPACK_IMPORTED_MODULE_0__["render"],
-  _ViewModal_vue_vue_type_template_id_2f3d50d2__WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  _FormGroup_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"],
+  _FormGroup_vue_vue_type_template_id_59603b2a__WEBPACK_IMPORTED_MODULE_0__["render"],
+  _FormGroup_vue_vue_type_template_id_59603b2a__WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
   false,
   null,
   null,
@@ -768,60 +460,109 @@ var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_
 
 /* hot reload */
 if (false) { var api; }
-component.options.__file = "resources/js/components/Project/ViewModal.vue"
+component.options.__file = "resources/js/components/Project/FormGroup.vue"
 /* harmony default export */ __webpack_exports__["default"] = (component.exports);
 
 /***/ }),
 
-/***/ "./resources/js/components/Project/ViewModal.vue?vue&type=script&lang=js":
+/***/ "./resources/js/components/Project/FormGroup.vue?vue&type=script&lang=js":
 /*!*******************************************************************************!*\
-  !*** ./resources/js/components/Project/ViewModal.vue?vue&type=script&lang=js ***!
+  !*** ./resources/js/components/Project/FormGroup.vue?vue&type=script&lang=js ***!
   \*******************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ViewModal_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./ViewModal.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Project/ViewModal.vue?vue&type=script&lang=js");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ViewModal_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__["default"]); 
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_FormGroup_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./FormGroup.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Project/FormGroup.vue?vue&type=script&lang=js");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_FormGroup_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 
-/***/ "./resources/js/components/Project/ViewModal.vue?vue&type=template&id=2f3d50d2":
+/***/ "./resources/js/components/Project/FormGroup.vue?vue&type=template&id=59603b2a":
 /*!*************************************************************************************!*\
-  !*** ./resources/js/components/Project/ViewModal.vue?vue&type=template&id=2f3d50d2 ***!
+  !*** ./resources/js/components/Project/FormGroup.vue?vue&type=template&id=59603b2a ***!
   \*************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_ViewModal_vue_vue_type_template_id_2f3d50d2__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??ref--6!../../../../node_modules/vue-loader/lib??vue-loader-options!./ViewModal.vue?vue&type=template&id=2f3d50d2 */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Project/ViewModal.vue?vue&type=template&id=2f3d50d2");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_ViewModal_vue_vue_type_template_id_2f3d50d2__WEBPACK_IMPORTED_MODULE_0__["render"]; });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_FormGroup_vue_vue_type_template_id_59603b2a__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??ref--6!../../../../node_modules/vue-loader/lib??vue-loader-options!./FormGroup.vue?vue&type=template&id=59603b2a */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Project/FormGroup.vue?vue&type=template&id=59603b2a");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_FormGroup_vue_vue_type_template_id_59603b2a__WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_ViewModal_vue_vue_type_template_id_2f3d50d2__WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_FormGroup_vue_vue_type_template_id_59603b2a__WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
 /***/ }),
 
-/***/ "./resources/js/utils/meetingUtils.js":
-/*!********************************************!*\
-  !*** ./resources/js/utils/meetingUtils.js ***!
-  \********************************************/
-/*! exports provided: shouldShowStartButton, shouldShowJoinButton */
+/***/ "./resources/js/components/Project/MeetingModal.vue":
+/*!**********************************************************!*\
+  !*** ./resources/js/components/Project/MeetingModal.vue ***!
+  \**********************************************************/
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "shouldShowStartButton", function() { return shouldShowStartButton; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "shouldShowJoinButton", function() { return shouldShowJoinButton; });
-function shouldShowStartButton(meeting, auth, notAuthorize) {
-  return !notAuthorize && meeting.owner.id === auth.id && meeting.status.toLowerCase() !== 'started';
-}
-function shouldShowJoinButton(meeting, auth, members) {
-  return meeting.owner.id !== auth.id && members.includes(auth);
-}
+/* harmony import */ var _MeetingModal_vue_vue_type_template_id_06e4b51a__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./MeetingModal.vue?vue&type=template&id=06e4b51a */ "./resources/js/components/Project/MeetingModal.vue?vue&type=template&id=06e4b51a");
+/* harmony import */ var _MeetingModal_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./MeetingModal.vue?vue&type=script&lang=js */ "./resources/js/components/Project/MeetingModal.vue?vue&type=script&lang=js");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _MeetingModal_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"],
+  _MeetingModal_vue_vue_type_template_id_06e4b51a__WEBPACK_IMPORTED_MODULE_0__["render"],
+  _MeetingModal_vue_vue_type_template_id_06e4b51a__WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/Project/MeetingModal.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/Project/MeetingModal.vue?vue&type=script&lang=js":
+/*!**********************************************************************************!*\
+  !*** ./resources/js/components/Project/MeetingModal.vue?vue&type=script&lang=js ***!
+  \**********************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_MeetingModal_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./MeetingModal.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Project/MeetingModal.vue?vue&type=script&lang=js");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_MeetingModal_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/Project/MeetingModal.vue?vue&type=template&id=06e4b51a":
+/*!****************************************************************************************!*\
+  !*** ./resources/js/components/Project/MeetingModal.vue?vue&type=template&id=06e4b51a ***!
+  \****************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_MeetingModal_vue_vue_type_template_id_06e4b51a__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??ref--6!../../../../node_modules/vue-loader/lib??vue-loader-options!./MeetingModal.vue?vue&type=template&id=06e4b51a */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Project/MeetingModal.vue?vue&type=template&id=06e4b51a");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_MeetingModal_vue_vue_type_template_id_06e4b51a__WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_MeetingModal_vue_vue_type_template_id_06e4b51a__WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
 
 /***/ })
 

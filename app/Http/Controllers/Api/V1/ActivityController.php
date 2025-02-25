@@ -17,10 +17,14 @@ class ActivityController extends Controller
 
   public function index(Project $project,ProjectRepository $repository)
   {
-    $activities = $repository->filterActivities($project->activities);
+    $activities = $repository->filterActivities(
+      $project->activities
+    );
 
     if($activities->isEmpty()){
-       return response()->json(['message'=>'No related activities found']);
+       return response()->json(
+        ['message'=>'No related activities found']
+        ,200);
     }
       
     return ActivityResource::collection($activities)->paginate(config('app.project.filters'));

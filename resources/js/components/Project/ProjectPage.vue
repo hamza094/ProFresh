@@ -127,9 +127,9 @@
 				<hr>
 				<h3>RECENT ACTIVITIES</h3>
 				<div class="row">
-				<!--	<RecentActivities 
+					<RecentActivities 
 					:activities="project.activities" :slug="project.slug" :name="project.name">
-					</RecentActivities> -->
+					</RecentActivities> 
 					<div class="col-md-5">
 						<div class="project-info">
 							<div class="project-info_socre">
@@ -157,7 +157,7 @@
 		<div class="col-md-4 side_panel">
 			Project Side Panel
 			<br>
-		<!--	<Task :slug="project.slug" :tasks="tasks" :access="permission.access" :projectMembers="this.project.members"></Task> -->
+			<Task :slug="project.slug" :tasks="tasks" :access="permission.access" :projectMembers="this.project.members"></Task> 
 			<hr>
 			<!--<PanelFeatues :slug="project.slug" :notes="project.notes"
 			:members="project.members" :owner="user" :access="permission.access" :ownerLogin="permission.owner"></PanelFeatues>--> 
@@ -210,6 +210,7 @@ export default{
 		 aboutEdit:false,
 		 projectname:'',
 		 projectabout:'',
+		 projectId:'',
 		 auth:this.$store.state.currentUser.user,
 		 conversations:[],
      chatusers:[],
@@ -228,6 +229,7 @@ export default{
       	this.show=true;
       this.projectname = this.project.name;
       this.projectabout = this.project.about;
+      this.projectId=this.project.id;
       this.members = this.project.members;
       this.meetings= this.project.meetings;
       this.archiveTask();
@@ -341,7 +343,7 @@ export default{
     },
 
 	  listenForActivity() {
-	    Echo.channel('activity')
+	    Echo.channel('activities/project/'.this.projectId)
 	      .listen('ActivityLogged', (e) => {
 		      this.project.activities.unshift(e);
 		  });
@@ -369,7 +371,6 @@ export default{
     if (this.project.activities.subject_id !== null) {
         this.project.activities = this.project.activities.filter(activity => activity.subject_id !== taskId);
     }
-    console.log('eventliten');
 });
       },
   },

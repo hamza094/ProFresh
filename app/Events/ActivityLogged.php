@@ -16,28 +16,34 @@ class ActivityLogged implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $activity;
+    public Activity $activity;
+    public int $projectId;
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct(Activity $activity)
+    public function __construct(Activity $activity,int $projectId)
     {
        $this->activity = $activity;
+      $this->projectId = $project->id;
     }
 
     /**
      * Get the channels the event should broadcast on.
-     *
-     * @return \Illuminate\Broadcasting\Channel|array
      */
-    public function broadcastOn()
+    public function broadcastOn(): Channel
     {
-       return new Channel('activity');
+       return new Channel('activities/project/'.$this->projectId);
     }
 
-    public function broadcastWith()
+
+     /**
+     * Get the data to broadcast.
+     * 
+     * @return array<string, int>
+     */
+    public function broadcastWith(): array
     {
        return (new ActivityResource($this->activity))->resolve();
     }

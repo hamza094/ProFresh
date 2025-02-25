@@ -24,13 +24,20 @@ Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
     return (int) $user->id === (int) $id;
 });
 
-Broadcast::channel('activity', function ($user) {
-      return true;
+Broadcast::channel('activities/projects/{id}', function ($user,$id) {
+      $project=Project::where('id',$id)
+             ->firstOrFail();
+
+    if($user->can('access',$project)){
+        return true;
+    }
+
+    return true;
 });
 
-Broadcast::channel('activities', function ($user) {
+/*Broadcast::channel('activities', function ($user) {
       return true;
-});
+});*/
 
 Broadcast::channel('project.{slug}.conversations', function ($user,$slug) {
 
@@ -41,7 +48,7 @@ Broadcast::channel('project.{slug}.conversations', function ($user,$slug) {
         return true;
     }
 
-    return true;
+    return false;
 });
 
 Broadcast::channel('deleteConversation.{slug}', function ($user,$slug) {

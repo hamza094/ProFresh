@@ -17,7 +17,10 @@
 </template>
 
 <script>
+  import activityMixins from '@/mixins/activityMixins';
+
   export default{
+    mixins: [activityMixins],
     props:['activities','slug','name'],
     data(){
        return{

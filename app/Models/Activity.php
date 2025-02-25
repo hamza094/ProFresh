@@ -15,16 +15,34 @@ class Activity extends Model
 
   protected $casts = ['changes' => 'array'];
 
+
+  /**
+   * Get the subject associated with the activity.
+   *
+   * @return MorphTo
+   */
   public function subject(): MorphTo
   {
     return $this->morphTo();
   }
 
+
+  /**
+     * Get the user who created the activity.
+     *
+     * @return BelongsTo<User, Activity>
+  */
   public function user(): BelongsTo
   {
     return $this->belongsTo(User::class);
   }
 
+
+  /**
+    * Get the project associated with the activity.
+    *
+    * @return BelongsTo<Project, Activity>
+  */
   public function project(): BelongsTo
   {
      return $this->belongsTo(Project::class);

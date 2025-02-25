@@ -4,11 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Traits\RecordActivity;
 
 class TaskStatus extends Model
 {
-    use HasFactory,RecordActivity;
+    use HasFactory;
 
     protected $guarded=[];
 

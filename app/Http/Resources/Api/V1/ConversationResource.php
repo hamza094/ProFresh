@@ -21,7 +21,7 @@ class ConversationResource extends JsonResource
       return [
         'id'=>$this->id,
 
-        'message'=>$this->formatMentions($this->message),
+        'message'=>$this->whenNotNull($this->message),
 
         'file'=>$this->whenNotNull($this->file),
 
@@ -36,16 +36,16 @@ class ConversationResource extends JsonResource
      ]; 
     }
 
-    private function formatMentions(?string $message): ?string
+    /*private function formatMentions(?string $message): ?string
   {
     if (!$message) {
         return null;
     }
 
-    /*return preg_replace(
+    return preg_replace(
         '/@([a-zA-Z][\w.-]*)/', // Match usernames
         '<a href="/user/$1/profile" target="_blank">@$1</a>', // Replace with hyperlink
         e($message) // Escape HTML to prevent XSS
-    );*/
- }
+    );
+  }*/
 }

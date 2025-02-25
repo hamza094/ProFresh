@@ -15,11 +15,11 @@ class CreateActivitiesTable extends Migration
     {
         Schema::create('activities', function (Blueprint $table) {
            $table->id();
-           $table->integer('user_id');
-           $table->unsignedInteger('project_id')->nullable();
+           $table->foreignId('user_id')->nullOnDelete();
+           $table->unsignedInteger('project_id')->nullable()->constrained()->cascadeOnDelete();
            $table->nullableMorphs('subject');
            $table->boolean('is_hidden')->default(false);
-           $table->text('changes')->nullable();
+           $table->json('changes')->nullable();
            $table->string('description');
            $table->string('info')->nullable();
            $table->timestamps();

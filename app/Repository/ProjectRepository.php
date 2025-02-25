@@ -6,16 +6,17 @@ use App\Models\Project;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 
-  /**
-   * Filter project activities.
-   *
-   * @param  $activities
-   */
 
 class ProjectRepository
 {
 
-  public function filterActivities(Collection $activities)
+  /**
+   * Filter project activities based on the request parameters.
+   *
+   * @param  Collection  $activities  The collection of activities to filter.
+   * @return Collection  The filtered collection of activities.
+   */
+  public function filterActivities(Collection $activities): Collection
   {
       $filters = [
         'specifics' => 'filterActivityByProjectSpecified',
@@ -32,51 +33,55 @@ class ProjectRepository
         $activities = $this->$method($activities);
     }
 
-     $activities = $activities->reject(function ($activity) {
-        return $activity['hidden'] === true;
-    });
-
     return $activities;
   }
 
+
    /**
-    * Filter activities by auth user.
-    *
-    * @param  $activities
-    */
-    protected function filterActivityByAuthUser($activities)
+   * Filter activities by authenticated user.
+   *
+   * @param Collection $activities
+   * @return Collection
+   */
+    protected function filterActivityByAuthUser($activities): Collection 
     { 
-      return $activities->where('user_id',request('mine'));
+      return $activities->where('user_id',auth()->id());
     }
 
-    /**
-    * Filter activities by project related task.
-    *
-    * @param  $activities
-    */
-    protected function filterActivityByTasks($activities)
+
+  /**
+   * Filter activities by project-related tasks.
+   *
+   * @param Collection $activities
+   * @return Collection
+   */
+    protected function filterActivityByTasks($activities): Collection
     {
-      return $activities->filter(fn($activity) => strpos($activity['description'], '_task') !== false);
+      return $activities->filter(fn($activity) => str_contains($activity['description'], '_task'));
     }
 
-    /**
-    * Filter activities by specified to project.
-    *
-    * @param  $activities
-    */
-    protected function filterActivityByProjectSpecified($activities)
-    {
-      return $activities->filter(fn($activity) => strpos($activity['description'], '_project') !== false);
-    }
 
     /**
-    * Filter activities by project members.
+    * Filter activities by project-specified.
     *
-    * @param  $activities
+    * @param Collection $activities
+    * @return Collection
     */
-    protected function filterActivityByMembers($activities)
+    protected function filterActivityByProjectSpecified($activities): Collection
     {
-      return $activities->filter(fn($activity) => strpos($activity['description'], '_member') !== false);
+      return $activities->filter(fn($activity) => str_contains($activity['description'], '_project'));
+    }
+
+
+  /**
+   * Filter activities by project-member releated.
+   *
+   * @param Collection $activities
+   * @return Collection
+   */
+    protected function filterActivityByMembers($activities): Collection
+    {
+      return $activities->filter(fn($activity) => str_contains($activity['description'], '_member'));
     }
 }
 

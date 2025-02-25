@@ -7,25 +7,29 @@ use App\Models\Project;
 use Illuminate\Support\Arr;
 use App\Events\ActivityLogged;
 use App\Events\DashboardActivity;
-use App\Events\Random;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 trait RecordActivity
 {
     /**
      * The project's old attributes.
      *
-     * @var array
-     */
-    public $oldAttributes = [];
+     * @var array<string, mixed>
+    */
+    private $oldAttributes = [];
+
+
     /**
-     * Boot the trait.
-     */
-    public static function bootRecordActivity()
+     * Boot the trait to record activity.
+    */
+    public static function bootRecordActivity(): void
     {
-        foreach (self::recordableEvents() as $event) {
+        foreach (static::recordableEvents() as $event) {
             static::$event(function ($model) use ($event) {
-                $model->recordActivity($model->activityDescription($event),'');
+                $model->recordActivity($model->activityDescription($event),null);
             });
+
             if ($event === 'updated') {
                 static::updating(function ($model) {
                     $model->oldAttributes = $model->getOriginal();
@@ -33,97 +37,105 @@ trait RecordActivity
             }
         }
     }
+
     /**
      * Get the description of the activity.
      *
-     * @param  string $description
+     * @param string $event
      * @return string
-     */
-    protected function activityDescription($description)
+    */
+    protected function activityDescription(string $event): string
     {
-        return "{$description}_" . strtolower(class_basename($this));
+       return "{$event}_" . strtolower(class_basename($this));
     }
+
     /**
      * Fetch the model events that should trigger activity.
      *
-     * @return array
-     */
-    protected static function recordableEvents()
+     * @return array<int, string>
+    */
+    protected static function recordableEvents(): array
     {
-        if (isset(static::$recordableEvents)) {
-            return static::$recordableEvents;
-        }
-        return ['created','updated','deleted'];
+        return static::$recordableEvents ?? ['created', 'updated', 'deleted'];
     }
+    
     /**
      * Record activity for a project.
      *
      * @param string $description
-     */
-    public function recordActivity($description,$info)
+     * @param string|null $info
+    */
+    public function recordActivity(string $description, ?string $info = null): void
     {
       $changes=$this->activityChanges();
-
-      if($changes){
-          if((Arr::exists($changes['before'], 'stage_updated_at'))){
-            return 'Already exist';
+      
+        if($changes && (Arr::exists($changes['before'], 'stage_updated_at'))){
+            return;
           }
-      }
+       
+      /** @var Activity $activity */ 
       $activity=$this->activities()->create([
-            'user_id' => auth()->id() ?: ($this->project ?? $this)->user->id,
+            'user_id' => $this->resolveUserId(),
             'description' => $description,
             'changes' => $this->activityChanges(),
             'project_id' => class_basename($this) === 'Project' ? $this->id : $this->project_id,
             'info'=>$info,
         ]);
 
-        $activity->load('user','project','subject');
+        $activity->load(['user','project','subject']);
 
-       if (strpos($description, '_stage') === false && strpos($description, '_taskstatus') === false) {
+       if (!preg_match('/_stage|_taskstatus/', $description)) {
            ActivityLogged::dispatch($activity);
         }
-
         //DashboardActivity::dispatch($activity);
     }
+
     /**
-     * The activity feed for the project.
+     * Resolve the user ID for the activity.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
-     */
-    public function activities($limit = true)
+     * @return int
+    */
+    private function resolveUserId(): int
     {
-        if ($this instanceof Project) {
-            return $this->hasMany(Activity::class)
-            ->where(function ($query) {
-                $query->where('is_hidden', false)
-                      ->orWhereNull('is_hidden');
-            })
-            ->with('user:id,name','subject')
-            ->latest();
-        }
-        return $this->morphMany(Activity::class, 'subject')
-        ->where(function ($query) {
-            $query->where('is_hidden', false)->orWhereNull('is_hidden');
-        })
-        ->with('user:id','subject')
-        ->latest();
+      return auth()->id() ?? ($this->project ?? $this)
+          ->user->id;
     }
+
     /**
-     * Fetch the changes to the model.
-     *
-     * @return array|null
-     */
-      protected function activityChanges()
+    * The activity feed for the project.
+    *
+    * @return \Illuminate\Database\Eloquent\Relations\HasMany|\Illuminate\Database\Eloquent\Relations\MorphMany<Activity>
+    */
+    public function activities(): HasMany|MorphMany
     {
-        if ($this->wasChanged()) {
-            return [
-                'before' => array_except(
+        $query = ($this instanceof Project)
+        ? $this->hasMany(Activity::class)
+        : $this->morphMany(Activity::class, 'subject');
+
+        return $query
+            ->where('is_hidden', false)
+            ->with(['user:id,name','subject'])
+            ->latest();
+    }
+
+    /**
+    * Fetch the changes to the model.
+    *
+    * @return array|null
+    */
+    protected function activityChanges(): ?array
+    {
+     if (!$this->wasChanged()) {
+         return null;
+       }
+
+        return [
+                'before' => Arr::except(
                     array_diff($this->oldAttributes, $this->getAttributes()), 'updated_at'
                 ),
-                'after' => array_except(
+                'after' => Arr::except(
                     $this->getChanges(), 'updated_at'
                 )
             ];
-        }
     }
 }

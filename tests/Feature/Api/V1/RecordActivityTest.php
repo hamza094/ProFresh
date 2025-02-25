@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\Api\V1;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -14,40 +14,49 @@ class RecordActivityTest extends TestCase
 {
   use RefreshDatabase,ProjectSetup;
 
+  // Since the project is automatically with ProjectSetup trait it should already have one activity
+
   /** @test */
   public function creating_a_project()
   {
-    $this->assertCount(1,$this->project->activities);
 
-    tap($this->project->activities->last(), function ($activity) {
-         $this->assertEquals('created_project',$activity->description);
-    });
+    $this->assertDatabaseHas('activities', [
+        'project_id'  => $this->project->id,
+        'description' => 'created_project',
+    ]);
+
+    $activity = $this->project->activities()->latest()->first();
+    
+    $this->assertEquals('created_project',$activity->description);
   }
 
    /** @test */
-   public function updating_a_project()
+   public function record_activity_on_updating_a_project()
    {
-     $initialName = $this->project->name;
-     $initialSlug = $this->project->slug;
+     $initialAttributes = $this->project->only(['name', 'slug']);
 
     $this->project->update(['name'=>'changed name']);
 
     $this->assertCount(2, $this->project->activities);
+
     $activity = $this->project->activities->last();
 
     $this->assertEquals('updated_project', $activity->description);
-    $this->assertEquals([
-        'before' => ['name' => $initialName, 'slug' => $initialSlug],
-        'after' =>  ['name' => 'changed name', 'slug' => $this->project->slug]
+
+     $this->assertEquals([
+        'before' => ['name' => $initialAttributes['name'], 'slug' => $initialAttributes['slug']],
+        'after'  => ['name' => 'changed name', 'slug' => $this->project->slug],
     ], $activity->changes);
 }
 
   /** @test */
-  public function remove_project_activities_on_deletion()
+  public function it_removes_project_activities_when_deleted()
   {
+    $this->assertCount(1, $this->project->activities);
+
      $this->project->forceDelete();
 
-     $this->assertCount(0,$this->project->activities);
+    $this->assertDatabaseMissing('activities', ['project_id' => $this->project->id]);
   }
 
   /** @test */
@@ -69,10 +78,15 @@ class RecordActivityTest extends TestCase
     $task = $this->project->addTask('Test Task');
 
     $this->assertCount(2, $this->project->activities);
+
     $activity = $this->project->activities->last();
 
+    $activity->refresh();
+
     $this->assertEquals('created_task', $activity->description);
+
     $this->assertInstanceOf(Task::class, $activity->subject);
+
     $this->assertEquals('Test Task', $activity->subject->title);
   }
 
@@ -80,15 +94,17 @@ class RecordActivityTest extends TestCase
    public function record_on_updating_task()
    {
      $task=$this->project->addTask('test task');
-     $title=$task->title;
 
      $this->putJson($task->path(), ['title' => 'changed']);
 
      $activity = $this->project->activities->last();
+
+     $activity->refresh();
+
      $this->assertEquals('updated_task',$activity->description);
 
      $this->assertEquals([
-          'before' => ['title' => $title],
+          'before' => ['title' => $task->title],
           'after' =>  ['title' => 'changed']
       ], $activity->changes);
   }
@@ -106,11 +122,16 @@ class RecordActivityTest extends TestCase
    }
 
    /** @test */
-   public function remove_project_task_activities_on_deletion()
+   public function remove_project_task_activities_on_archived_task_deletion()
    {
       $task=$this->project->addTask('test task');
 
-      $this->deleteJson($task->path());
+      $this->deleteJson(route('task.archive', [
+        'project' => $this->project->slug,
+        'task' => $task->id
+      ]));
+
+      $this->deleteJson($task->path().'/remove');
 
        tap($this->project->activities->last(), function ($activity) {
         $this->assertEquals('deleted_task', $activity->description);
@@ -119,7 +140,7 @@ class RecordActivityTest extends TestCase
 
 
   /** @test */
-  public function invitation_sent_to_user()
+  public function records_activity_when_invitation_sent_to_user()
   {
     $user=User::factory()->create();
 
@@ -133,7 +154,7 @@ class RecordActivityTest extends TestCase
   }
 
    /** @test */
-   public function user_accept_project_invitation()
+   public function records_activity_when_user_accepted_project_invitation()
    {
      $this->project->invite($user=User::factory()->create());
 
@@ -147,7 +168,7 @@ class RecordActivityTest extends TestCase
   }
 
   /** @test */
-  public function canceling_project_membership()
+  public function it_records_activity_when_a_project_member_is_removed()
   {
     $user=User::factory()->create();
 
@@ -159,7 +180,7 @@ class RecordActivityTest extends TestCase
   }
 
   /** @test */
-  public function record_on_message_creation()
+  public function it_records_activity_on_creating_message()
   {
     $response=$this->postJson($this->project->path().'/message',[
         'message'=>'this is project message',
