@@ -5,6 +5,7 @@ namespace App\Models;
 use Carbon\Carbon;
 use App\Traits\RecordActivity;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Model;
 
 class Message extends Model
@@ -22,7 +23,12 @@ class Message extends Model
       return $this->belongsTo(Project::class);
     }
 
-    public function users()
+     /**
+     * Get the users associated to message.
+     *
+     * @return BelongsToMany<User>
+     */
+    public function users(): BelongsToMany
     {
        return $this->belongsToMany(User::class);
     }

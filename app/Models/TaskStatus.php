@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Model;
 
 class TaskStatus extends Model
@@ -13,7 +15,7 @@ class TaskStatus extends Model
 
     protected $table = 'statuses';
 
-    protected static function boot()
+    protected static function boot(): void
     {
         parent::boot();
 
@@ -22,12 +24,22 @@ class TaskStatus extends Model
         });
     }
 
-    public function tasks()
+    /**
+     * Get all tasks associated to TaskStatus.
+     *
+     * @return HasMany<Task>
+     */
+    public function tasks(): HasMany
     {
         return $this->hasMany(Task::class, 'status_id');
     }
-
-    public function user()
+    
+    /**
+     * Get user who created TaskStatus.
+     *
+     * @return BelongsTo<User, TaskStatus>
+     */
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }

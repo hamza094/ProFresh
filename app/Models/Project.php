@@ -10,9 +10,13 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use App\Models\Task;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Support\Facades\Redis;
 use Cviebrock\EloquentSluggable\Sluggable;
+use Illuminate\Database\Eloquent\Builder;
 use App\Enums\ScoreValue;
+use Illuminate\Support\Collection;
 use Carbon\Carbon;
 use Auth;
 
@@ -24,21 +28,38 @@ class Project extends Model
     use Sluggable;
 
     protected $guarded = [];
+
     protected $dates = ['created_at'];
+
+    /**
+     * Project model cast properties.
+     *
+     * @var array<string,string>
+    */
     protected $casts = [
       'stage_updated_at' => 'datetime',
       'delivered_at' => 'datetime',
     ];
-
+    
+    /**
+     * The events that should be recorded.
+     *
+     * @var array<string>
+   */
     protected static $recordableEvents = ['created','updated','deleted','restored'];
+
+    
+    /**
+    * @var string
+    */
+    public static $status = "cold";
+
 
     /**
  * Return the sluggable configuration array for this model.
  *
  * @return array
  */
-    public static $status = "cold";
-
     public function sluggable(): array
     {
         return [
@@ -48,7 +69,7 @@ class Project extends Model
         ];
     }
 
-    public function getRouteKeyName()
+    public function getRouteKeyName(): string
     {
         return 'slug';
     }
@@ -57,13 +78,18 @@ class Project extends Model
     {
         return "/api/v1/projects/{$this->slug}";
     }
-
+    
+    /**
+     * Get user associated to the project.
+     *
+     * @return BelongsTo<User, Project>
+     */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
-    protected static function boot()
+    protected static function boot(): void
     {
         parent::boot();
         static::forceDeleted(function ($project) {
@@ -71,22 +97,37 @@ class Project extends Model
         });
     }
 
+    /**
+     * Get stage associated to the project.
+     *
+     * @return BelongsTo<Stage, Project>
+     */
     public function stage(): BelongsTo
     {
         return $this->belongsTo(Stage::class);
     }
 
+    /**
+     * Get tasks releated to the project.
+     *
+     * @return HasMany<Task>
+     */
     public function tasks(): HasMany
     {
         return $this->hasMany(Task::class)->latest();
     }
 
-    public function messages()
+    /**
+     * Get project messages.
+     *
+     * @return HasMany<Message>
+     */
+    public function messages(): HasMany
     {
         return $this->hasMany(Message::class);
     }
 
-    public function addTask($tasks)
+    public function addTask(Task $tasks): Task
     {
         return $this->tasks()->create([
           'title' => $tasks,
@@ -106,13 +147,23 @@ class Project extends Model
     {
         $this->members()->attach($user);
     }
-
+    
+    /**
+     * Get the project members.
+     *
+     * @return BelongsToMany<User>
+     */
     public function members(): BelongsToMany 
     {
         return $this->belongsToMany(User::class, 'project_members')
                     ->withPivot('active')->withTimestamps();
     }
-
+    
+    /**
+     * Get project active members.
+     *
+     * @return BelongsToMany<User>
+     */
     public function activeMembers(): BelongsToMany
     {
         return $this
@@ -120,6 +171,11 @@ class Project extends Model
               ->wherePivot('active', true);
     }
 
+    /**
+     * Get the project active members.
+     *
+     * @return BelongsToMany<User>
+     */
     public function asignees(): BelongsToMany
     {
         return $this
@@ -128,19 +184,23 @@ class Project extends Model
         ->select(['users.id', 'users.name', 'users.email']);
     }
 
-
-    public function conversations()
+   /**
+     * Get chat conversations releated to the project.
+     *
+     * @return HasMany<Conversation>
+     */
+    public function conversations(): HasMany
     {
         return $this->hasMany(Conversation::class);
     }
 
-    public function tasksReachedItsLimit()
+    public function tasksReachedItsLimit(): bool
     {
         $this->loadCount('tasks');
         return $this->tasks_count == config('app.project.taskLimit');
     }
 
-    public function score()
+    public function score(): int
     {
         //$this->loadCount(['tasks', 'activeMembers']);
         $scoreAction = new ScoreAction($this);
@@ -149,19 +209,19 @@ class Project extends Model
         return $total;
     }
 
-    public function updateStatus($total)
+    public function updateStatus(int $total): void
     {
         if ($total >= ScoreValue::Hot_Score) {
             static::$status = "hot";
         }
     }
 
-    public function getStatusAttribute()
+    public function getStatusAttribute(): string
     {
         return static::$status;
     }
 
-    public function scopePastAbandonedLimit($query)
+    public function scopePastAbandonedLimit(Builder $query)
     {
         $abandonedLimit = config('app.project.abandonedLimit');
 
@@ -169,7 +229,12 @@ class Project extends Model
                ->subDays($abandonedLimit));
     }
 
-    public function scheduledMessages()
+    /**
+     * Get all scheduled messages releated to project
+     * 
+     * @return Collection<int, Message>
+     */ 
+    public function scheduledMessages(): Collection
     {
         return $this
         ->messages()
@@ -185,17 +250,22 @@ class Project extends Model
         return $this->activities()->take(5);
     }
 
-    public function state()
+    public function state(): string
     {
         return $this->deleted_at ? 'trashed' : 'active';
     }
 
-    public function getStateAttribute()
+    public function getStateAttribute(): string
     {
         return $this->deleted_at ? 'trashed' : 'active';
     }
-
-    public function meetings()
+    
+    /**
+     * Get meetings releated to the project.
+     *
+     * @return HasMany<Meeting>
+     */ 
+    public function meetings(): HasMany
     {
         return $this->hasMany(Meeting::class);
     }

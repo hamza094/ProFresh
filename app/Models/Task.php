@@ -5,6 +5,7 @@ namespace App\Models;
 use Carbon\Carbon;
 use App\Traits\RecordActivity;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 use App\Enums\TaskStatus as TaskStatusEnum;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -25,7 +26,7 @@ class Task extends Model
 
   protected $deletedAt = 'archived_at';
 
-  protected static function booted()
+  protected static function booted(): void
   {
     static::creating(function ($task) {
         if (!$task->status_id) {
@@ -37,35 +38,55 @@ class Task extends Model
   /**
      * The events that should be recorded.
      *
-     * @var array
+     * @var array<string>
   */
   protected static $recordableEvents = ['created','updated','deleted'];
 
-  public function path()
+  public function path(): string
     {
       return "/api/v1/projects/{$this->project->slug}/tasks/{$this->id}";
     }
 
+    /**
+     * Get project associated to the task.
+     *
+     * @return BelongsTo<Project, Task>
+     */
     public function project(): BelongsTo
     {
       return $this->belongsTo(Project::class);
-   }
+    }
 
+    /**
+     * Get user who created task.
+     *
+     * @return BelongsTo<User, Task>
+     */
     public function owner(): BelongsTo
     {
      return $this->belongsTo(User::class,'user_id');
     }
 
-   public function assignee(): BelongsToMany
-   {
-     return $this->belongsToMany(User::class);
-   }
+    /**
+     * Get the task assignees.
+     *
+     * @return BelongsToMany<User>
+     */
+    public function assignee(): BelongsToMany
+    {
+      return $this->belongsToMany(User::class);
+    }
 
-     public function status(): BelongsTo
+    /**
+     * Get status associated to the task.
+     *
+     * @return BelongsTo<TaskStatus, Task>
+    */
+    public function status(): BelongsTo
     {
       return $this->belongsTo(TaskStatus::class, 'status_id');
     }
-
+    
     public function scopeArchived($query)
     {
         return $query->onlyTrashed()->with('status')->get();

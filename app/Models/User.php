@@ -8,6 +8,7 @@ use Illuminate\Contracts\Auth\CanResetPassword;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Support\Facades\Redis;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Str;
 use Laravel\Paddle\Billable;
 use App\Enums\OAuthProvider;
@@ -16,6 +17,8 @@ use App\Jobs\QueuedVerifyEmailJob;
 use App\Jobs\QueuedPasswordResetJob;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Spatie\Permission\Traits\HasRoles;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -23,12 +26,15 @@ class User extends Authenticatable implements MustVerifyEmail
     
     protected $guarded = [];
 
-    public function guardName(): string { return 'sanctum'; }
+    public function guardName(): string 
+    { 
+        return 'sanctum'; 
+    }
 
     public function getRouteKeyName(): string
-   {
-     return 'uuid';
-   }
+    {
+      return 'uuid';
+    }
 
 
     //protected $appends = ['LastSeen'];
@@ -53,7 +59,7 @@ class User extends Authenticatable implements MustVerifyEmail
     /**
      * The attributes that should be hidden for arrays.
      *
-     * @var array
+     * @var array<int, string>
      */
     protected $hidden = [
         'password',
@@ -68,7 +74,7 @@ class User extends Authenticatable implements MustVerifyEmail
     /**
      * The attributes that should be cast to native types.
      *
-     * @var array
+     * @var array<string, string>
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
@@ -81,7 +87,7 @@ class User extends Authenticatable implements MustVerifyEmail
          'zoom_expires_at' => 'datetime',
     ];
 
-     protected static function boot()
+     protected static function boot(): void
     {
         parent::boot();
 
@@ -91,24 +97,29 @@ class User extends Authenticatable implements MustVerifyEmail
         });
     }
 
-    public function sendEmailVerificationNotification()
+    public function sendEmailVerificationNotification(): void
    {
        //dispactches the job to the queue passing it this User object
         QueuedVerifyEmailJob::dispatch($this);
    }
 
-   public function sendPasswordResetNotification($token)
+   public function sendPasswordResetNotification($token): void
    {
        //dispactches the job to the queue passing it this User object
        QueuedPasswordResetJob::dispatch($this,$token);
    }
 
-    public function path()
+    public function path(): string
     {
         return "/api/v1/users/{$this->id}";
     }
 
-    public function projects()
+    /**
+     * Get projects created by user.
+     *
+     * @return HasMany<Project>
+     */ 
+    public function projects(): HasMany
     {
        return $this->hasMany(Project::class);
     }
@@ -118,19 +129,35 @@ class User extends Authenticatable implements MustVerifyEmail
            return $redis->get('last_active_' . $this->id);
     }*/
 
-    public function conversations()
+    
+    /**
+    * Get all conversation associated by user
+    *
+    * @return HasMany<Conversation>
+    */
+    public function conversations():HasMany
     {
       return $this->hasMany(Conversation::class);
     }
 
-    public function info()
+     /**
+    * Get user profile information
+    *
+    * @return HasOne<UserInfo>
+    */
+    public function info(): HasOne
     {
        return $this->hasOne(UserInfo::class);
     }
 
-   public function members($active = false)
-   {
-    return $this->belongsToMany(Project::class, 'project_members')
+    /**
+     * Get projects which user is member of.
+     *
+     * @return BelongsToMany<Project>
+     */
+    public function members($active = false): BelongsToMany
+    {
+     return $this->belongsToMany(Project::class, 'project_members')
         ->withTimestamps()
         ->wherePivot('active', $active)
         ->withTimestamps();
@@ -141,17 +168,22 @@ class User extends Authenticatable implements MustVerifyEmail
       return  $this->lastseen();
     }*/
 
-    public function getAvatarAttribute()
+    public function getAvatarAttribute(): string|bool
     {
         return $this->avatar_path ?: false;
     }
 
-    public function messages()
+    /**
+    * Get all messages created by user
+    *
+    * @return belongsToMany<Message>
+    */
+    public function messages(): BelongsToMany
     {
       return $this->belongsToMany(Message::class);
     }
 
-    public function isSubscribed()
+    public function isSubscribed(): bool
     {
         return true;
       /*return $this->subscribed('monthly') || 
@@ -159,7 +191,7 @@ class User extends Authenticatable implements MustVerifyEmail
              $this->isAdmin();*/
     }
 
-    public function subscribedPlan()
+    public function subscribedPlan(): string
     {
       return collect(['monthly', 'yearly'])
         ->first(function ($plan) {
@@ -167,7 +199,7 @@ class User extends Authenticatable implements MustVerifyEmail
         }, '');
     }
 
-    public function hasGracePeriod()
+    public function hasGracePeriod(): bool
     {
      return
       (
@@ -177,17 +209,27 @@ class User extends Authenticatable implements MustVerifyEmail
         ($this->subscribed('yearly') && $this->subscription('yearly')->onGracePeriod());
     }
 
-    public function tasks()
+    /**
+    * Get all tasks created by the user
+    *
+    * @return HasMany<Task>
+    */
+    public function tasks(): HasMany
     {
       return $this->hasMany(Task::class);
     }
 
-    public function assigned()
+    /**
+    * Get tasks assigned to user
+    *
+    * @return BelongsToMany<Task>
+    */
+    public function assigned(): BelongsToMany
     {
       return $this->belongsToMany(Task::class);
     }
 
-    public function isAdmin()
+    public function isAdmin(): bool
     {
         return $this->hasRole('Admin');
 
@@ -204,16 +246,21 @@ class User extends Authenticatable implements MustVerifyEmail
         $this->save();
   }
 
-   public function isConnectedToZoom(): bool
-   {
+    public function isConnectedToZoom(): bool
+    {
        return $this->zoom_access_token
        && $this->zoom_refresh_token
        && $this->zoom_expires_at;
     }
 
-   public function meetings()
-   {
+     /**
+     * Get meetings created by user.
+     *
+     * @return HasMany<Meeting>
+     */ 
+    public function meetings(): HasMany
+    {
       return $this->hasMany(Meeting::class); 
-   } 
+    } 
 
 }

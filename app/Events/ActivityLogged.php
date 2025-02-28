@@ -26,7 +26,7 @@ class ActivityLogged implements ShouldBroadcast
     public function __construct(Activity $activity,int $projectId)
     {
        $this->activity = $activity;
-      $this->projectId = $project->id;
+      $this->projectId = $projectId;
     }
 
     /**

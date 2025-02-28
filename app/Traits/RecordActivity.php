@@ -85,7 +85,7 @@ trait RecordActivity
         $activity->load(['user','project','subject']);
 
        if (!preg_match('/_stage|_taskstatus/', $description)) {
-           ActivityLogged::dispatch($activity);
+           ActivityLogged::dispatch($activity,class_basename($this) === 'Project' ? $this->id : $this->project_id,);
         }
         //DashboardActivity::dispatch($activity);
     }
