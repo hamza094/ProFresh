@@ -120,9 +120,9 @@
 						</div>
 					</div>
 					<br>
-				<!--	<Stage :slug="project.slug" :projectstage='project.stage' :postponed_reason="project.postponed_reason"
+					<Stage :slug="project.slug" :projectstage='project.stage' :postponed_reason="project.postponed_reason"
 					 :stage_updated="project.stage_updated_at" :get_stage="this.getStage" :access="permission.access">
-				</Stage> -->
+				</Stage> 
 				<br>
 				<hr>
 				<h3>RECENT ACTIVITIES</h3>
@@ -159,8 +159,8 @@
 			<br>
 			<Task :slug="project.slug" :tasks="tasks" :access="permission.access" :projectMembers="this.project.members"></Task> 
 			<hr>
-			<!--<PanelFeatues :slug="project.slug" :notes="project.notes"
-			:members="project.members" :owner="user" :access="permission.access" :ownerLogin="permission.owner"></PanelFeatues>--> 
+			<PanelFeatues :slug="project.slug" :notes="project.notes"
+			:members="project.members" :owner="user" :access="permission.access" :ownerLogin="permission.owner"></PanelFeatues> 
 			<hr>
 			<div>
             <p><b>Online Users For Chat</b></p>
@@ -232,10 +232,10 @@ export default{
       this.projectId=this.project.id;
       this.members = this.project.members;
       this.meetings= this.project.meetings;
+      this.listenForActivity();
       this.archiveTask();
     })
     .catch(error => {
-    	console.log(this.auth);
       console.log(error.response.data.errors);
     });
     },
@@ -343,8 +343,9 @@ export default{
     },
 
 	  listenForActivity() {
-	    Echo.channel('activities/project/'.this.projectId)
+	    Echo.channel("activities.project." + this.projectId)
 	      .listen('ActivityLogged', (e) => {
+	      	console.log("Received activity:", e);
 		      this.project.activities.unshift(e);
 		  });
 		},
@@ -376,7 +377,6 @@ export default{
   },
 
     mounted(){
-			this.listenForActivity();
       this.path=this.getProjectSlug();
       this.connectToEcho();
     },

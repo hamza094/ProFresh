@@ -29,8 +29,8 @@ class FeatureService
             'postponed_reason' => $this->getPostponedReason($project, $data),
             'stage_updated_at' => now(),
     ]);
-
-        });
+            
+    });
 
         return $project;
     }

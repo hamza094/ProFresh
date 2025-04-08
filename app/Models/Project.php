@@ -127,10 +127,10 @@ class Project extends Model
         return $this->hasMany(Message::class);
     }
 
-    public function addTask(Task $tasks): Task
+    public function addTask(string $title): Task
     {
         return $this->tasks()->create([
-          'title' => $tasks,
+          'title' => $title,
           'user_id' => auth()->id(),
           'status_id' => 1,
         ]);

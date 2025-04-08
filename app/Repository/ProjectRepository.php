@@ -81,7 +81,14 @@ class ProjectRepository
    */
     protected function filterActivityByMembers($activities): Collection
     {
-      return $activities->filter(fn($activity) => str_contains($activity['description'], '_member'));
+      $types = [
+        'invitation_sent',
+        'invitation_accepted',
+        'member_removed',
+    ];
+
+    return $activities->filter(fn($activity) => in_array($activity['description'], $types));
+    
     }
 }
 

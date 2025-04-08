@@ -61,4 +61,5 @@ class ProjectTask extends Notification implements ShouldBroadcast
       'link'=>$this->project->path()
     ]);
   }
+  
 }

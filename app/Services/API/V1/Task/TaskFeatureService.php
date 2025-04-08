@@ -43,9 +43,7 @@ class TaskFeatureService
     {
         DB::transaction(function () use ($task) {
             $task->delete();
-            $task->activities()->update(['is_hidden' => true]);
         });
-
     }
 
       public function unarchiveTask(Task $task): void
@@ -61,10 +59,7 @@ class TaskFeatureService
     }    
 
   public function removeTask(Task $task): void
-  {
-     DB::transaction(function () use ($task) { 
-     $task->activities()->delete();
-     $task->forceDelete();
-     });
+  { 
+     $task->forceDelete();  
   }  
 }

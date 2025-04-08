@@ -33,6 +33,11 @@ class Task extends Model
             $task->status_id = 1; 
         }
     });
+
+    static::forceDeleting(function ($task) {
+        $task->activities()->delete();
+    });
+
   }
  
   /**

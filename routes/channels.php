@@ -24,7 +24,7 @@ Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
     return (int) $user->id === (int) $id;
 });
 
-Broadcast::channel('activities/projects/{id}', function ($user,$id) {
+Broadcast::channel('activities.project.{id}', function ($user,$id) {
       $project=Project::where('id',$id)
              ->firstOrFail();
 
@@ -32,12 +32,8 @@ Broadcast::channel('activities/projects/{id}', function ($user,$id) {
         return true;
     }
 
-    return true;
+    return false;
 });
-
-/*Broadcast::channel('activities', function ($user) {
-      return true;
-});*/
 
 Broadcast::channel('project.{slug}.conversations', function ($user,$slug) {
 

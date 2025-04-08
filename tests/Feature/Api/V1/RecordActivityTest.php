@@ -54,6 +54,8 @@ class RecordActivityTest extends TestCase
   {
     $this->assertCount(1, $this->project->activities);
 
+      $this->project->delete();
+
      $this->project->forceDelete();
 
     $this->assertDatabaseMissing('activities', ['project_id' => $this->project->id]);
@@ -150,7 +152,7 @@ class RecordActivityTest extends TestCase
 
     $this->assertCount(2,$this->project->activities);
 
-    $this->assertEquals('sent_invitation_member',$this->project->activities->last()->description);
+    $this->assertEquals('invitation_sent',$this->project->activities->last()->description);
   }
 
    /** @test */
@@ -164,7 +166,7 @@ class RecordActivityTest extends TestCase
 
     $this->getJson($this->project->path().'/accept-invitation');
 
-    $this->assertEquals('accept_invitation_member',$this->project->activities->last()->description);
+    $this->assertEquals('invitation_accepted',$this->project->activities->last()->description);
   }
 
   /** @test */
@@ -176,7 +178,7 @@ class RecordActivityTest extends TestCase
 
      $this->getJson($this->project->path().'/remove/member/'.$user->uuid);
 
-    $this->assertEquals('remove_project_member',$this->project->activities->last()->description);
+    $this->assertEquals('member_removed',$this->project->activities->last()->description);
   }
 
   /** @test */

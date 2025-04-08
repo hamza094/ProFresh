@@ -6,11 +6,10 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use App\Traits\RecordActivity;
 
 class Stage extends Model
 {
-    use HasFactory, RecordActivity;
+    use HasFactory;
 
     protected $guarded=[];
 

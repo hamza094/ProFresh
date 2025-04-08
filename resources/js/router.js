@@ -144,7 +144,7 @@ let router = new Router({
             beforeEnter: auth,
           },
           {
-            path: "/user/:id/profile",
+            path: "/user/:uuid/profile",
             component: Profile,
             name: "Profile",
             beforeEnter: auth,

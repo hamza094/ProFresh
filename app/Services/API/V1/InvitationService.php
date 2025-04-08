@@ -26,7 +26,7 @@ class InvitationService
     try{
       $project->invite($user);
 
-      $this->recordActivity($project,$user,'sent_invitation_member');
+      $this->recordActivity($project,$user,'invitation_sent');
 
       $user->notify(new ProjectInvitation($project));
 
@@ -49,7 +49,7 @@ class InvitationService
     try{
 
     $this->activateMembership($project, $user);
-    $this->recordActivity($project,$user,'accept_invitation_member');
+    $this->recordActivity($project,$user,'invitation_accepted');
     $project->user->notify(new AcceptInvitation($project,$user));
 
      DB::commit();
@@ -71,7 +71,7 @@ class InvitationService
 
     $project->members()->detach($user);
 
-    $this->recordActivity($project,$user,'remove_project_member');
+    $this->recordActivity($project,$user,'member_removed');
   });
   }
  
@@ -136,7 +136,7 @@ class InvitationService
 
   protected function recordActivity(Project $project,User $user,string $msg): void
   {
-    $project->recordActivity($msg,$user->name.'/_/'.$user->id);
+    $project->recordActivity($msg,[$user->id]);
   }
 
   protected function activateMembership(Project $project,Authenticatable $user): void

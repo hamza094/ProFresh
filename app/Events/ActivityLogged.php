@@ -25,7 +25,7 @@ class ActivityLogged implements ShouldBroadcast
      */
     public function __construct(Activity $activity,int $projectId)
     {
-       $this->activity = $activity;
+      $this->activity = $activity;
       $this->projectId = $projectId;
     }
 
@@ -34,7 +34,7 @@ class ActivityLogged implements ShouldBroadcast
      */
     public function broadcastOn(): Channel
     {
-       return new Channel('activities/project/'.$this->projectId);
+      return new Channel('activities.project.'. $this->projectId);
     }
 
 
@@ -45,6 +45,14 @@ class ActivityLogged implements ShouldBroadcast
      */
     public function broadcastWith(): array
     {
-       return (new ActivityResource($this->activity))->resolve();
+      return (new ActivityResource($this->activity))->resolve();
     }
+   
+    /**
+   * The name of the queue on which to place the  broadcasting job.
+   */
+   public function broadcastQueue(): string
+   {
+     return 'activities';
+   }
 }

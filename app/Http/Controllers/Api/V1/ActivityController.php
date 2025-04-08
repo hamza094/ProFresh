@@ -27,7 +27,7 @@ class ActivityController extends Controller
         ,200);
     }
       
-    return ActivityResource::collection($activities)->paginate(config('app.project.filters'));
+    return ActivityResource::collection($activities)->paginate(10);
    }
   }
 

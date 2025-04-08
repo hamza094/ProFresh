@@ -9,6 +9,8 @@ use App\Events\ActivityLogged;
 use App\Events\DashboardActivity;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Support\Facades\RateLimiter;
+use Illuminate\Support\Str;
 
 trait RecordActivity
 {
@@ -27,7 +29,7 @@ trait RecordActivity
     {
         foreach (static::recordableEvents() as $event) {
             static::$event(function ($model) use ($event) {
-                $model->recordActivity($model->activityDescription($event),null);
+                $model->recordActivity($model->activityDescription($event),[]);
             });
 
             if ($event === 'updated') {
@@ -60,35 +62,76 @@ trait RecordActivity
     }
     
     /**
-     * Record activity for a project.
-     *
-     * @param string $description
-     * @param string|null $info
+    * Create the activity log entry in the database.
+    *
+    * @param string $description
+    * @param array $affectedUserIds
+    * @return Activity
     */
-    public function recordActivity(string $description, ?string $info = null): void
+    public function recordActivity(string $description, array $affectedUserIds = []): void
     {
-      $changes=$this->activityChanges();
-      
-        if($changes && (Arr::exists($changes['before'], 'stage_updated_at'))){
-            return;
-          }
-       
-      /** @var Activity $activity */ 
-      $activity=$this->activities()->create([
-            'user_id' => $this->resolveUserId(),
-            'description' => $description,
-            'changes' => $this->activityChanges(),
-            'project_id' => class_basename($this) === 'Project' ? $this->id : $this->project_id,
-            'info'=>$info,
-        ]);
+        $activity = $this->createActivityLog($description, $affectedUserIds);
 
-        $activity->load(['user','project','subject']);
-
-       if (!preg_match('/_stage|_taskstatus/', $description)) {
-           ActivityLogged::dispatch($activity,class_basename($this) === 'Project' ? $this->id : $this->project_id,);
+        if ($this->shouldBroadcast($description)) {
+          $this->rateLimitedBroadcast($activity);
         }
+
         //DashboardActivity::dispatch($activity);
     }
+
+    /**
+    * Create the activity log entry in the database.
+    *
+    * @param string $description
+    * @param array $affectedUserIds
+    * @return Activity
+    */
+    protected function createActivityLog(string $description, array $affectedUserIds): Activity
+   {
+      $projectId = $this->resolveProjectId();
+
+      $activity = $this->activities()->create([
+        'user_id'        => $this->resolveUserId(),
+        'description'    => $description,
+        'changes'        => $this->activityChanges(),
+        'project_id'     => $projectId,
+        'affected_users' => $affectedUserIds,
+    ]);
+
+    return $activity->loadMissing(['subject', 'user']);
+   }
+
+   /**
+    * Determine if the activity should be broadcast.
+   */
+  protected function shouldBroadcast(string $description): bool
+  {
+    $skipKeywords = ['_stage', '_taskstatus', '_message','_sent','_accepted','_removed'];
+
+    return !Str::contains($description, $skipKeywords);
+  }
+
+  /**
+   * Perform broadcast under rate limiting.
+   */
+  protected function rateLimitedBroadcast(Activity $activity): void
+  {
+    RateLimiter::attempt(
+        'broadcast-activity:' . auth()->id(),
+        5,
+        fn () => ActivityLogged::dispatch($activity, $activity->project_id)
+    );
+  }
+
+   /**
+    * Resolve the project ID depending on the model.
+    *
+    * @return int|null
+    */
+   protected function resolveProjectId(): ?int
+   {
+    return class_basename($this) === 'Project' ? $this->id : $this->project_id;
+   }
 
     /**
      * Resolve the user ID for the activity.
@@ -113,8 +156,7 @@ trait RecordActivity
         : $this->morphMany(Activity::class, 'subject');
 
         return $query
-            ->where('is_hidden', false)
-            ->with(['user:id,name','subject'])
+            ->with(['user:id,name,uuid','subject' => fn ($query) => $query->withTrashed()])
             ->latest();
     }
 
