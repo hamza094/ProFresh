@@ -14,18 +14,16 @@ class AcceptInvitation extends Notification implements ShouldQueue,ShouldBroadca
 {
     use Queueable;
 
-    protected Project $project;
-    protected $user;
-
     /**
      * Create a new notification instance.
      *
      */
-    public function __construct(Project $project,$user)
-    {
-        $this->project=$project;
-        $this->user=$user;
-    }
+    public function __construct(
+      protected string $projectName,
+      protected string $projectPath,
+      protected array $notifierData
+    )
+    {}
 
      /**
      * Get the notification's delivery channels.
@@ -46,9 +44,9 @@ class AcceptInvitation extends Notification implements ShouldQueue,ShouldBroadca
     private function notificationData(): array
     {
         return [
-            'message' => 'accepted the invitation of your project ' . $this->project->name,
-            'notifier' => $this->user,
-            'link' => $this->project->path()
+            'message' => 'accepted the invitation of your project ' . $this->projectName,
+            'notifier' => $this->notifierData,
+            'link' => $this->projectPath
         ];
     }
 

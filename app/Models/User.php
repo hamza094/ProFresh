@@ -263,4 +263,14 @@ class User extends Authenticatable implements MustVerifyEmail
       return $this->hasMany(Meeting::class); 
     } 
 
+    public function getNotifierData(): array
+    {
+    return [
+        'uuid'         => $this->uuid,
+        'name'         => $this->name,
+        'username'     => $this->username,
+        'avatar_path'  => $this->avatar_path,
+    ];
+    }
+
 }

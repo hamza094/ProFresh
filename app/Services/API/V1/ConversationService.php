@@ -47,8 +47,13 @@ class ConversationService
      $this->userMentioned($conversation,$project);
 
     return $conversation;
+    
    }catch(\Exception $e){
-     Log::error('Error storing conversation: ' . $e->getMessage());
+      Log::error('Error storing conversation', [
+        'message' => $e->getMessage(),
+        'trace' => $e->getTraceAsString()
+      ]);
+      return null;
    }
   }
 
@@ -87,7 +92,14 @@ class ConversationService
     if ($mentionedUsers->isEmpty()) return;
     
     try {
-    Notification::send($mentionedUsers, new UserMentioned(auth()->user(),$project));
+    Notification::send($mentionedUsers, 
+      new UserMentioned(
+        $project->name,
+        $project->path(),
+        auth()->user()->getNotifierData(),
+        $project)
+    );
+
     }catch(\Exception $e){
         Log::error('Failed to send notifications', [
                     'error' => $e->getMessage(),

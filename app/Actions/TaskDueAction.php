@@ -25,13 +25,20 @@ class TaskDueAction
 
     public function sendNotification(Task $task): void
     {
-
         DB::transaction(function () use ($task) {
             $task->notify_sent = true;
             $task->saveQuietly();
 
             foreach ($task->assignee as $user) {
-                $user->notify(new TaskDue($task, $task->owner, $task->project));
+                $user->notify(
+                    new TaskDue(
+                        $task->due_at,
+                        $task->title,
+                        $task->notified, 
+                        $task->owner->getNotifierData(), 
+                        $task->project->name,
+                        $task->project->path()
+                    ));
             }
         });
     }

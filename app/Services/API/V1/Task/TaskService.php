@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use App\Actions\NotificationAction;
 use App\Models\TaskStatus;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Database\Eloquent\Builder;
 use App\Models\Project;
 use App\Models\Task;
 use App\Models\User;
@@ -47,7 +48,7 @@ class TaskService
       return 'Project ' . ($isArchived ? 'Archived' : 'Active') . ' Tasks';
     }
 
-   public function checkValidation($request,$task)
+   public function checkValidation($request,$task): void
    {
     Gate::authorize('archive-task', $task);
  
@@ -58,14 +59,17 @@ class TaskService
     }
   }
 
-  public function sendNotification($project)
+  public function sendNotification($project): void
   {
-    $user = auth()->user()->toArray();
+    $notifier = auth()->user()->getNotifierData();
 
     NotificationAction::send(
-          new ProjectTask($project,$user),$project);
+          new ProjectTask(
+            $project->name,
+            $project->path(),
+            $notifier
+          ),$project);
   }
-
 
 }
 

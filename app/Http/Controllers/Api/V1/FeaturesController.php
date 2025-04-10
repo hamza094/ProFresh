@@ -7,7 +7,6 @@ use App\Models\Project;
 use Illuminate\Http\Request;
 use App\Services\Api\V1\FeatureService;
 use App\Http\Resources\Api\V1\StageResource;
-use App\Notifications\ProjectUpdated;
 use App\Http\Resources\Api\V1\ProjectResource;
 use App\Http\Resources\Api\V1\ProjectStageResource;
 use F9Web\ApiResponseHelpers;

@@ -85,18 +85,16 @@ class NotificationsTest extends TestCase
   {
     Notification::fake();
 
-    $user=User::factory(['username'=>'thanos844'])
+    $newUser=User::factory(['username'=>'thanos844'])
           ->create();
  
-      $this->addMember($this->project,$user);
+      $this->addMember($this->project,$newUser);
 
-      $owner=$this->project->user;
-
-      $response=$this->withoutExceptionHandling()
+      $response=$this
          ->postJson($this->project->path().'/conversations',['message'=>'random chat conversation with @thanos844',
-        'user_id' => $user->id]);
+        'user_id' => $this->user->id]);
 
-      Notification::assertSentTo($user, UserMentioned::class);
+      Notification::assertSentTo($newUser, UserMentioned::class);
 
         Notification::assertCount(1);
     }

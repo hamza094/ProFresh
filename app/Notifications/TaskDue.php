@@ -8,36 +8,40 @@ use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use Illuminate\Notifications\Messages\BroadcastMessage;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
+use Carbon\Carbon;
 
 class TaskDue extends Notification implements ShouldQueue,ShouldBroadcast
 {
     use Queueable;
-    
-    protected $task;
-    protected $user;
-    protected $project;
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct($task,$user,$project)
-    {
-        $this->task=$task;
-        $this->user=$user;
-        $this->project=$project;
-    }
-
+    public function __construct(
+       protected Carbon $dueDate,
+       protected string $taskTitle,
+       protected string $notifiedOption,
+       protected array $notifierData,
+       protected string $projectName,
+       protected string $projectPath
+    ){}
+    
     /**
      * Get the notification's delivery channels.
      *
      * @param  mixed  $notifiable
      * @return array
      */
-    public function via($notifiable)
+    public function via($notifiable): array
     {
         return ['mail','database','broadcast'];
+    }
+
+     private function notificationMessage(): string
+    {
+        return "Your task '{$this->taskTitle}' due '{$this->dueDate}' is approaching. You selected to be notified '{$this->notifiedType}'.";
     }
 
     /**
@@ -46,35 +50,41 @@ class TaskDue extends Notification implements ShouldQueue,ShouldBroadcast
      * @param  mixed  $notifiable
      * @return \Illuminate\Notifications\Messages\MailMessage
      */
-    public function toMail($notifiable)
+    public function toMail($notifiable): MailMessage
     {
         return (new MailMessage)
-                ->line("Your task '{$this->task->title}' due '{$this->task->due_at}' is approaching. You are getting this mail because you selected to be notified '{$this->task->notified}'. Keep an eye on your task.")
-                ->action('Notification Action', url(env('APP_URL') . "/projects/" . $this->project->path()))
+                ->line($this->notificationMessage())
+                ->action('View Task', url(env('APP_URL') . "/projects/" . $this->project->path()))
                 ->line('Thank you for using our application!');
     }
 
+    
     /**
      * Get the array representation of the notification.
      *
-     * @param  mixed  $notifiable
-     * @return array
+     * @param mixed $notifiable
+     * @return array<string, mixed> The notification data.
      */
-    public function toArray($notifiable)
+    public function toArray($notifiable): array
     {
         return [
-          'message'=>"Your task '{$this->task->title}' due '{$this->task->due_at}' is approaching. You are getting this mail because you selected to be notified '{$this->task->notified}'. Keep an eye on your task.",
-          'notifier' =>$this->user,
-          'link'=>$this->project->path()
+          'message'=>$this->notificationMessage(),
+          'notifier' =>$this->notifierData,
+          'link'=>$this->projectPath()
         ];
     }
 
-    public function toBroadcast($notifiable)
+    
+    /**
+     * Get the broadcast representation of the notification.
+     *
+     * @param mixed $notifiable
+     * @return BroadcastMessage The broadcast notification data.
+     */
+    public function toBroadcast($notifiable): BroadcastMessage
     {
-      return new BroadcastMessage([
-         'message'=>"Your task '{$this->task->title}' due '{$this->task->due_at}' is approaching. You are getting this mail because you selected to be notified '{$this->task->notified}'. Keep an eye on your task.",
-          'notifier' =>$this->user->name,
-          'link'=>$this->project->path()
-    ]);
+        return new BroadcastMessage(
+            $this->toArray($notifiable)
+        );
   }
 }

@@ -3,7 +3,6 @@
 namespace App\Actions;
 
 use Illuminate\Http\Request;
-use App\Notifications\ProjectUpdated;
 use Illuminate\Support\Facades\Route;
 
 class NotificationAction 

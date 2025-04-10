@@ -39,7 +39,7 @@ class ConversationTest extends TestCase
 
       $message='random chat conversation';
 
-      $response=$this->withoutExceptionHandling()->postJson($this->project->path().'/conversations',['message'=>$message,
+      $response=$this->postJson($this->project->path().'/conversations',['message'=>$message,
         'user_id' => $this->user->id]);
 
         $this->assertDatabaseHas('conversations',[

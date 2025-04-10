@@ -24,10 +24,14 @@ class ProjectService
         return;
       }
 
-     $user = auth()->user()->toArray();
+     $notifier = auth()->user()->getNotifierData();
 
      NotificationAction::send(
-           new ProjectUpdated($project,$user),$project);
+           new ProjectUpdated(
+            $project->name,
+            $project->path(),
+            $notifier
+          ),$project);
    }
 }
 

@@ -65,7 +65,7 @@ class ActivityResource extends JsonResource
 
     return $updatedKey === 'deleted_at'
         ? 'Project has been restored'
-        : 'Project ' . Str::headline($key) . ' updated';
+        : 'Project ' . Str::headline($updatedKey) . ' updated';
   }
 
   protected function deleted_project(): string

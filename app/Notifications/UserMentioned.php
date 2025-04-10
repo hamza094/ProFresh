@@ -14,19 +14,17 @@ class UserMentioned extends Notification implements ShouldBroadcast,ShouldQueue
 {
     use Queueable;
 
-    protected User $user;
-    protected Project $project;
-
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct(User $user,Project $project)
-    {
-        $this->user=$user;
-        $this->project=$project;
-    }
+    public function __construct( 
+      protected string $projectName,
+      protected string $projectPath,
+      protected array $notifierData
+     )
+    {}
 
     /**
      * Get the notification's delivery channels.
@@ -47,9 +45,9 @@ class UserMentioned extends Notification implements ShouldBroadcast,ShouldQueue
     private function notificationData(): array
     {
         return [
-          'message'=>'mentioned you in '. $this->project->name.' '.'group chat',
-          'notifier' =>$this->user,
-          'link'=>$this->project->path()
+          'message'=>'mentioned you in '. $this->projectName.' '.'group chat',
+          'notifier' =>$this->notifierData,
+          'link'=>$this->projectPath
         ];
     }
 

@@ -13,16 +13,15 @@ class ProjectInvitation extends Notification implements ShouldQueue,ShouldBroadc
 {
     use Queueable;
 
-    protected Project $project;
-
     /**
      * Create a new notification instance.
      *
      */
-    public function __construct(Project $project)
-    {
-        $this->project=$project;
-    }
+    public function __construct(
+      protected string $projectName,
+      protected string $projectPath,
+      protected array $notifierData
+     ){}
 
      /**
      * Get the notification's delivery channels.
@@ -43,9 +42,9 @@ class ProjectInvitation extends Notification implements ShouldQueue,ShouldBroadc
     private function notificationData(): array
     {
         return [
-          'message'=>'Sent you a project '. $this->project->name.' invitation',
-          'notifier' =>$this->project->user,
-          'link'=>$this->project->path()
+          'message' => 'Sent you a project '. $this->projectName.' invitation',
+          'notifier' => $this->notifierData,
+          'link' => $this->projectPath
         ];
     }
 

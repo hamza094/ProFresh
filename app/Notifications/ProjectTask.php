@@ -10,56 +10,71 @@ use App\Models\Project;
 use Illuminate\Notifications\Messages\BroadcastMessage;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-class ProjectTask extends Notification implements ShouldBroadcast
+class ProjectTask extends Notification implements ShouldQueue,ShouldBroadcast
 {
     use Queueable;
 
-    protected $project;
-    protected $user;
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct($project,$user)
-    {
-      $this->project=$project;
-      $this->user=$user;
-    }
+    public function __construct(
+      protected string $projectName,
+      protected string $projectPath,
+      protected array $notifierData
+    )
+    {}
 
     /**
      * Get the notification's delivery channels.
      *
-     * @param  mixed  $notifiable
-     * @return array
+     * @param mixed $notifiable
+     * @return array<string> The channels through which the notification is delivered.
      */
-    public function via($notifiable)
+    public function via($notifiable): array
     {
       return ['database','broadcast'];
     }
 
     /**
-     * Get the array representation of the notification.
-     *
-     * @param  mixed  $notifiable
-     * @return array
-     */
-    public function toArray($notifiable)
+    * Prepare the notification data.
+    *
+    * @return array<string, mixed> The notification data.
+    */
+    private function notificationData(): array
     {
         return [
-          'message'=>'Added a new task to the project '. $this->project->name,
-          'notifier' =>$this->user,
-          'link'=>$this->project->path()
+          'message'=>'Added a new task to the project '. $this->projectName,
+          'notifier' =>$this->notifierData,
+          'link'=>$this->projectPath
         ];
     }
 
-    public function toBroadcast($notifiable)
+    
+    /**
+     * Get the array representation of the notification.
+     *
+     * @param mixed $notifiable
+     * @return array<string, mixed> The notification data.
+     */
+    public function toArray($notifiable): array
     {
-    return new BroadcastMessage([
-      'message'=>'Added a new task to the project '. $this->project->name,
-      'notifier' =>$this->user,
-      'link'=>$this->project->path()
-    ]);
-  }
+      return $this->notificationData();
+    }
+
+
+     /**
+     * Get the broadcast representation of the notification.
+     *
+     * @param mixed $notifiable
+     * @return BroadcastMessage The broadcast notification data.
+     */
+    public function toBroadcast($notifiable):BroadcastMessage 
+    {
+      return new BroadcastMessage(
+        $this->notificationData()
+      );
+    }
   
 }

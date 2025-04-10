@@ -12,7 +12,6 @@ use App\Models\Project;
 use App\Models\Task;
 use App\Models\User;
 use Auth;
-use App\Notifications\ProjectTask;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\Notification;
 
@@ -36,7 +35,13 @@ class TaskFeatureService
     ->select('id', 'name', 'email')
     ->get();
 
-    Notification::send($usersToNotify, new TaskAssigned($task->title, $project, auth()->user()));
+    Notification::send($usersToNotify, 
+        new TaskAssigned(
+            $task->title,
+            $project->name,
+            $project->path(),
+            auth()->user()->getNotifierData()
+        ));
   }
 
     public function archiveTask(Task $task): void

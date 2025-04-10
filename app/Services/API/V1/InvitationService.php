@@ -15,7 +15,6 @@ use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 
-
 class InvitationService
 {
   public function sendInvitation(User $user,Project $project): void
@@ -28,7 +27,11 @@ class InvitationService
 
       $this->recordActivity($project,$user,'invitation_sent');
 
-      $user->notify(new ProjectInvitation($project));
+      $user->notify(new ProjectInvitation(
+        $project->name,
+        $project->path(),
+        $project->user->getNotifierData()
+      ));
 
       DB::commit();
     }catch(\Exception $ex){
@@ -49,8 +52,15 @@ class InvitationService
     try{
 
     $this->activateMembership($project, $user);
+
     $this->recordActivity($project,$user,'invitation_accepted');
-    $project->user->notify(new AcceptInvitation($project,$user));
+
+    $project->user->notify(
+      new AcceptInvitation(
+        $project->name,
+        $project->path(),
+        $user->getNotifierData()
+      ));
 
      DB::commit();
 
