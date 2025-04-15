@@ -4,19 +4,44 @@
 
             <a href="#"  data-toggle="dropdown" class="notification">
                <i class="far fa-bell notification-icon"></i>
-               <span v-if="notifications.length" class="notification-count">{{notifications.length}}</span>
+               <span v-if="notifications.length" class="notification-count"></span>
             </a>
-            <ul class="dropdown-menu notify-link  dropdown-menu-right rt">
-                <li v-for="notification in notifications" :key="notification.id" v-if="notifications.length">
+            <ul class="dropdown-menu  dropdown-menu-right rt">
+            <div class="notify-link">
+             <li class="notification-header">Notifications</li>
+                <li v-if="!notifications.length" class="mt-2 mr-4 ml-4">No new notifications</li>
 
-            <router-link :to="(notification.data.link).slice(7)" >
-                <a class="dropdown-item" @click="markAsRead(notification)">
-                <b>{{notification.data.notifier.name}}</b> {{getPostBody(notification)}}
-                </a>  
-            </router-link>
+                <li v-for="notification in notifications" :key="notification.id" class="notification-list dropdown-item" 
+                :class="{ 'notification-unread': !notification.read_at }">
+
+              <router-link 
+              :to="(notification.link).slice(7)"
+               @click.native="markAsRead(notification)"
+                class="notification-wrapper"
+                >
+                <img 
+                     v-if="notification.notifier.avatar" 
+                    :src="notification.notifier.avatar" 
+                    :alt="notification.notifier.name" 
+                    class="notification_avatar"
+                />
+             <div class="notification-content">
+      <div class="notification-message">
+        <strong>{{ notification.notifier.name }}</strong>
+         {{ notification.message }}
+        <span v-if="!notification.read_at" class="notification-unread_dot"></span>
+      </div>
+        <small class="notification-time"><i>{{ notification.created_at }}</i></small>
+    </div>
+           </router-link> 
 
          </li>
-              <li v-if="!notifications.length" class="mt-2 mr-4 ml-4">No new notifications</li>
+         <li v-if="notifications.length" class="notification-footer">
+  <router-link to="/notifications" class="notification-footer_view-all-links">
+    Show All Notifications
+  </router-link>
+</li>
+</div>
             </ul>
         </li>
    </div>
@@ -42,13 +67,16 @@ export default{
       },
     methods:{
       fetchNotifications() {
-           axios.get('/api/v1/users/' + this.user.id + '/notifications')
-             .then(response => this.notifications = response.data);
+           axios.get('/api/v1/users/' + this.user.uuid + '/notifications')
+             .then(response =>{
+                this.notifications = response.data;
+                console.log(this.notifications);
+            });
        },
         markAsRead(notification)
         {
-          axios.delete('/api/v1/users/'+this.user.id+'/notifications/'+notification.id).then(response => {
-                this.notifications.splice(notification, 1);
+          axios.delete('/api/v1/users/'+this.user.uuid+'/notifications/'+notification.id).then(response => {
+            notification.read_at = new Date().toISOString();
             });
           },
         listenNotifications()
@@ -62,7 +90,8 @@ export default{
 
         getPostBody(notification)
         {
-         let body = this.stripTags(notification.data.message);
+         let body = this.stripTags(notification.message);
+
          return body.slice(0, 40) + (body.length > 40 ? '...' : '');
         },
 

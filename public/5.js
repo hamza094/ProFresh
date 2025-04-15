@@ -29,25 +29,25 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     fetchNotifications: function fetchNotifications() {
       var _this = this;
-      axios.get('/api/v1/users/' + this.user.id + '/notifications').then(function (response) {
-        return _this.notifications = response.data;
+      axios.get('/api/v1/users/' + this.user.uuid + '/notifications').then(function (response) {
+        _this.notifications = response.data;
+        console.log(_this.notifications);
       });
     },
     markAsRead: function markAsRead(notification) {
-      var _this2 = this;
-      axios["delete"]('/api/v1/users/' + this.user.id + '/notifications/' + notification.id).then(function (response) {
-        _this2.notifications.splice(notification, 1);
+      axios["delete"]('/api/v1/users/' + this.user.uuid + '/notifications/' + notification.id).then(function (response) {
+        notification.read_at = new Date().toISOString();
       });
     },
     listenNotifications: function listenNotifications() {
-      var _this3 = this;
+      var _this2 = this;
       Echo["private"]('App.Models.User.' + this.user.id).notification(function (notification) {
-        _this3.$vToastify.success("You have one new notification");
-        _this3.fetchNotifications();
+        _this2.$vToastify.success("You have one new notification");
+        _this2.fetchNotifications();
       });
     },
     getPostBody: function getPostBody(notification) {
-      var body = this.stripTags(notification.data.message);
+      var body = this.stripTags(notification.message);
       return body.slice(0, 40) + (body.length > 40 ? '...' : '');
     },
     stripTags: function stripTags(text) {
@@ -84,26 +84,54 @@ var render = function render() {
     staticClass: "far fa-bell notification-icon"
   }), _vm._v(" "), _vm.notifications.length ? _c("span", {
     staticClass: "notification-count"
-  }, [_vm._v(_vm._s(_vm.notifications.length))]) : _vm._e()]), _vm._v(" "), _c("ul", {
-    staticClass: "dropdown-menu notify-link dropdown-menu-right rt"
-  }, [_vm._l(_vm.notifications, function (notification) {
-    return _vm.notifications.length ? _c("li", {
-      key: notification.id
-    }, [_c("router-link", {
-      attrs: {
-        to: notification.data.link.slice(7)
+  }) : _vm._e()]), _vm._v(" "), _c("ul", {
+    staticClass: "dropdown-menu dropdown-menu-right rt"
+  }, [_c("div", {
+    staticClass: "notify-link"
+  }, [_c("li", {
+    staticClass: "notification-header"
+  }, [_vm._v("Notifications")]), _vm._v(" "), !_vm.notifications.length ? _c("li", {
+    staticClass: "mt-2 mr-4 ml-4"
+  }, [_vm._v("No new notifications")]) : _vm._e(), _vm._v(" "), _vm._l(_vm.notifications, function (notification) {
+    return _c("li", {
+      key: notification.id,
+      staticClass: "notification-list dropdown-item",
+      "class": {
+        "notification-unread": !notification.read_at
       }
-    }, [_c("a", {
-      staticClass: "dropdown-item",
-      on: {
+    }, [_c("router-link", {
+      staticClass: "notification-wrapper",
+      attrs: {
+        to: notification.link.slice(7)
+      },
+      nativeOn: {
         click: function click($event) {
           return _vm.markAsRead(notification);
         }
       }
-    }, [_c("b", [_vm._v(_vm._s(notification.data.notifier.name))]), _vm._v(" " + _vm._s(_vm.getPostBody(notification)) + "\n             ")])])], 1) : _vm._e();
-  }), _vm._v(" "), !_vm.notifications.length ? _c("li", {
-    staticClass: "mt-2 mr-4 ml-4"
-  }, [_vm._v("No new notifications")]) : _vm._e()], 2)])]);
+    }, [notification.notifier.avatar ? _c("img", {
+      staticClass: "notification_avatar",
+      attrs: {
+        src: notification.notifier.avatar,
+        alt: notification.notifier.name
+      }
+    }) : _vm._e(), _vm._v(" "), _c("div", {
+      staticClass: "notification-content"
+    }, [_c("div", {
+      staticClass: "notification-message"
+    }, [_c("strong", [_vm._v(_vm._s(notification.notifier.name))]), _vm._v("\n         " + _vm._s(notification.message) + "\n        "), !notification.read_at ? _c("span", {
+      staticClass: "notification-unread_dot"
+    }) : _vm._e()]), _vm._v(" "), _c("small", {
+      staticClass: "notification-time"
+    }, [_c("i", [_vm._v(_vm._s(notification.created_at))])])])])], 1);
+  }), _vm._v(" "), _vm.notifications.length ? _c("li", {
+    staticClass: "notification-footer"
+  }, [_c("router-link", {
+    staticClass: "notification-footer_view-all-links",
+    attrs: {
+      to: "/notifications"
+    }
+  }, [_vm._v("\n    Show All Notifications\n  ")])], 1) : _vm._e()], 2)])])]);
 };
 var staticRenderFns = [];
 render._withStripped = true;

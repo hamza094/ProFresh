@@ -46,8 +46,7 @@ class InvitedUserResource extends JsonResource
            * User's avatar path
            * @example 'https://eu.ui-avatars.com/api/?name=Prof. Jonas Miller DVM'
            * */
-          'avatar' => $this->when($this->avatar,
-                                fn()=>$this->avatar_path),
+          'avatar' => $this->when(!empty($this->avatar_path), fn () => $this->avatar_path),
 
        'invitation_sent_at' => $this->when(
         $request->routeIs('project.pending.invitation') && $this->pivot,
@@ -61,7 +60,7 @@ class InvitedUserResource extends JsonResource
         * }
         */
           'links'=>[
-            'self' => "/api/v1/users".$this->uuid,
+            'self' => "/api/v1/users/".$this->uuid,
           ]
 
         ];

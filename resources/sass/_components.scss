@@ -601,7 +601,7 @@ ul{
     display: contents;
 
     li{
-      padding-top: .5rem;
+      padding-top:.5rem;
       padding-bottom: .5rem;
       padding-left: 1rem;
       font-size: .8rem;
@@ -1109,15 +1109,15 @@ padding-bottom: .2rem;
 .notification{
   position: absolute;
   &-icon{
-    font-size: 1rem;
+    font-size: 1.1rem;
   }
   &-count{
     position: relative;
-    bottom: 31px;
-    right: -7px;
+    bottom: 27px;
+    right: -11px;
     border-radius: 50%;
-    height: 18px;
-    width: 18px;
+    height: 10px;
+    width: 10px;
     display: flex !important;
     align-items: center;
     justify-content: center;
@@ -1126,16 +1126,91 @@ padding-bottom: .2rem;
     font-size: 0.65rem;
     font-weight: 700;
   }
+    &-wrapper {
+    display: flex;
+    align-items: flex-start;
+    text-decoration: none !important;
+    color: #282828;
+    gap: 10px;
+  }
+   &_avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 10px;
+  }
+  &-list{
+    margin-bottom:.2rem;
+    width: 22rem !important;
+    white-space: normal !important;
+    word-break: break-word;
+    overflow-wrap: break-word;
+  }
+   &-content {
+    flex: 1;
+  }
+
+  &-message {
+    font-size: 0.85rem;
+    line-height: 1.2;
+  }
+  &-time{
+    font-size: 0.75rem;
+    margin-top: 5px;
+    display: block;
+  }
+  &-footer{
+       padding: 0.5rem;
+       text-align: center;
+       border-top: 1px solid #eee;
+    &_view-all-link{
+      font-weight: 500;
+      font-size: 0.85rem;
+      color: $color-secondary;
+      text-decoration: none;
+        &:hover{
+          text-decoration: underline;
+        }
+    }
+  }
+  &-header{
+     font-weight: 600;
+  padding: 0.65rem 1rem;
+  font-size: 0.95rem;
+  border-bottom: 1px solid #eaeaea;
+  background-color: #f9f9f9;
+  color: #333;
+  margin-bottom: .2rem;
+  }
+  &-unread{
+    background-color: #e1e3e5 !important;
+    font-weight: 500 !important;
+    &_dot{
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    background-color: #007bff; // or any primary color
+    border-radius: 50%;
+    margin-left: 6px;
+    vertical-align: middle;
+    }
+  }
 }
 
 .notify-link{
+    max-height: 24rem;
+  overflow-y: auto;
+  padding-right: 0.5rem;
+   background-color: white;
     a{
+        color: #282828;
         &:hover{
             text-decoration: none !important;
+            color:#282828;
         }
-
-
     }
+
 }
 
 .rt{

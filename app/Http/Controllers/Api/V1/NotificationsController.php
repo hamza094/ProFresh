@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\V1;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Api\ApiController;
+use App\Http\Resources\Api\V1\NotificationResource;
 use App\Models\User;
 use Auth;
 
@@ -15,7 +16,13 @@ class NotificationsController extends ApiController
      */
   public function index(){
     
-    return Auth::user()->notifications()->whereNull('read_at')->latest()->take(5)->get();
+    $notifications = Auth::user()
+      ->notifications()
+       ->latest()
+       ->take(15)
+       ->get();
+
+       return NotificationResource::collection($notifications);
   }
 
   /**

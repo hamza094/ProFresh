@@ -1194,16 +1194,16 @@
 }
 
 .notification-icon {
-  font-size: 1rem;
+  font-size: 1.1rem;
 }
 
 .notification-count {
   position: relative;
-  bottom: 31px;
-  right: -7px;
+  bottom: 27px;
+  right: -11px;
   border-radius: 50%;
-  height: 18px;
-  width: 18px;
+  height: 10px;
+  width: 10px;
   display: flex !important;
   align-items: center;
   justify-content: center;
@@ -1213,8 +1213,102 @@
   font-weight: 700;
 }
 
+.notification-wrapper {
+  display: flex;
+  align-items: flex-start;
+  text-decoration: none !important;
+  color: #282828;
+  gap: 10px;
+}
+
+.notification_avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  -o-object-fit: cover;
+     object-fit: cover;
+  margin-right: 10px;
+}
+
+.notification-list {
+  margin-bottom: 0.2rem;
+  width: 22rem !important;
+  white-space: normal !important;
+  word-break: break-word;
+  overflow-wrap: break-word;
+}
+
+.notification-content {
+  flex: 1;
+}
+
+.notification-message {
+  font-size: 0.85rem;
+  line-height: 1.2;
+}
+
+.notification-time {
+  font-size: 0.75rem;
+  margin-top: 5px;
+  display: block;
+}
+
+.notification-footer {
+  padding: 0.5rem;
+  text-align: center;
+  border-top: 1px solid #eee;
+}
+
+.notification-footer_view-all-link {
+  font-weight: 500;
+  font-size: 0.85rem;
+  color: #12344D;
+  text-decoration: none;
+}
+
+.notification-footer_view-all-link:hover {
+  text-decoration: underline;
+}
+
+.notification-header {
+  font-weight: 600;
+  padding: 0.65rem 1rem;
+  font-size: 0.95rem;
+  border-bottom: 1px solid #eaeaea;
+  background-color: #f9f9f9;
+  color: #333;
+  margin-bottom: 0.2rem;
+}
+
+.notification-unread {
+  background-color: #e1e3e5 !important;
+  font-weight: 500 !important;
+}
+
+.notification-unread_dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  background-color: #007bff;
+  border-radius: 50%;
+  margin-left: 6px;
+  vertical-align: middle;
+}
+
+.notify-link {
+  max-height: 24rem;
+  overflow-y: auto;
+  padding-right: 0.5rem;
+  background-color: white;
+}
+
+.notify-link a {
+  color: #282828;
+}
+
 .notify-link a:hover {
   text-decoration: none !important;
+  color: #282828;
 }
 
 .rt {
