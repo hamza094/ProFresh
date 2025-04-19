@@ -20,7 +20,7 @@
 </template>
 
 <script>
-  import activityMixins from '@/mixins/activityMixins';
+  import activityMixins from '../../mixins/activityMixins';
 
   export default{
     mixins: [activityMixins],

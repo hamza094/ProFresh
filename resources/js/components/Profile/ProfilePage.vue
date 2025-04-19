@@ -84,8 +84,8 @@
 </template>
 
 <script>
-  import EditProfile from './Edit'
-  import UserAvatar from './Avatar'
+  import EditProfile from './Edit.vue'
+  import UserAvatar from './Avatar.vue'
   import ProjectInvitation from './ProjectInvitation.vue'
   import FeatureDropdown from '../FeatureDropdown.vue';
   import { permission } from '../../auth';

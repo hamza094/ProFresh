@@ -3,25 +3,25 @@ import Router from "vue-router";
 
 Vue.use(Router);
 
-import Home from './components/Home';
-import Register from './components/Authentication/Register';
-import Login from './components/Authentication/Login';
-import OAuth from './components/Authentication/OAuth';
-import ZoomAuth from './components/Authentication/ZoomAuth';
-import Dashboard from './components/Dashboard/Dashboard';
-import ForgotPassword from './components/Authentication/ForgotPassword';
-import ResetPassword from './components/Authentication/ResetPassword';
-import VerifyPassword from './components/Authentication/VerifyPassword';
-import ProjectPage from './components/Project/ProjectPage';
-import Activities from './components/Project/Activities';
-import Projects from './components/Projects';
-import Profile from './components/Profile/ProfilePage';
-import Subscription from './components/Subscription';
-import AdminPanel from './components/Admin/Dashboard';
-import ProjectPanel from './components/Admin/Projects';
-import TaskPanel from './components/Admin/Tasks';
-import UserPanel from './components/Admin/Users';
-import NotFound from './components/Error';
+import Home from './components/Home.vue';
+import Register from './components/Authentication/Register.vue';
+import Login from './components/Authentication/Login.vue';
+import OAuth from './components/Authentication/OAuth.vue';
+import ZoomAuth from './components/Authentication/ZoomAuth.vue';
+import Dashboard from './components/Dashboard/Dashboard.vue';
+import ForgotPassword from './components/Authentication/ForgotPassword.vue';
+import ResetPassword from './components/Authentication/ResetPassword.vue';
+import VerifyPassword from './components/Authentication/VerifyPassword.vue';
+import ProjectPage from './components/Project/ProjectPage.vue';
+import Activities from './components/Project/Activities.vue';
+import Projects from './components/Projects.vue';
+import Profile from './components/Profile/ProfilePage.vue';
+import Subscription from './components/Subscription.vue';
+import AdminPanel from './components/Admin/Dashboard.vue';
+import ProjectPanel from './components/Admin/Projects.vue';
+import TaskPanel from './components/Admin/Tasks.vue';
+import UserPanel from './components/Admin/Users.vue';
+import NotFound from './components/Error.vue';
 
 const guest = (to, from, next) => {
   const token = localStorage.getItem("token");

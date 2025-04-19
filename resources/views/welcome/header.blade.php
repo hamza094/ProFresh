@@ -14,16 +14,14 @@
 
     <link rel="shortcut icon" type="image/png" href="{{mix('img/profresh.png')}}">
 
-    <!-- Scripts -->
-    <script src="{{ mix('js/app.js') }}" defer></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
 
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
 
-    <!-- Styles -->
-    <link href="{{ mix('css/app.css') }}" rel="stylesheet">
+    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+
 </head>
 <body>
                     <nav class="navbar navbar-expand-md navbar-light bg-light" id="app">

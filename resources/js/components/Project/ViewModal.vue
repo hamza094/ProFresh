@@ -153,7 +153,7 @@
 <script>
   import { mapState, mapMutations, mapActions } from 'vuex';
   import MeetingDetail from './MeetingDetail.vue';
-    import { canStartMeeting, canJoinMeeting  } from '../../utils/meetingUtils';
+  import { shouldShowStartButton, shouldShowJoinButton  } from '../../utils/meetingUtils';
 
 export default{
   components: {
@@ -204,11 +204,11 @@ export default{
     },
 
     canStartMeeting(meeting) {
-      return canStartMeeting(meeting, this.auth, !this.notAuthorize);
+      return shouldShowStartButton(meeting, this.auth, !this.notAuthorize);
     },
 
     canJoinMeeting(meeting) {
-      return canJoinMeeting(meeting, this.auth, this.members);
+      return shouldShowJoinButton(meeting, this.auth, this.members);
     },
 
     updateMeeting(id){

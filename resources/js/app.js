@@ -4,7 +4,8 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-require('./bootstrap');
+import'./bootstrap';
+import '../sass/app.scss';
 
 import axios from 'axios';
 import Vue from 'vue';
@@ -14,6 +15,7 @@ import VTooltip from 'v-tooltip';
 import VueSlideoutPanel from 'vue2-slideout-panel';
 import VModal from 'vue-js-modal';
 import moment from 'moment';
+import momenttz from 'moment-timezone';
 import "emoji-mart-vue-fast/css/emoji-mart.css";
 import alertNotice from './mixins/alertNotice';
 import errorHandling from './mixins/errorHandling';
@@ -40,15 +42,15 @@ Vue.use(VModal);
 Vue.use(Datetime)
 
 Vue.component('datetime', Datetime);
-const VueUploadComponent = require('vue-upload-component')
+import VueUploadComponent from 'vue-upload-component'
 Vue.component('file-upload', VueUploadComponent)
 
 import { VueSpinners } from '@saeris/vue-spinners'
 
 Vue.use(VueSpinners)
 
-window.momenttz = require('moment-timezone');
-window.moment = require('moment');
+window.momenttz = momenttz;
+window.moment = moment;
 window.swal=swal;
 
 import router from './router.js'
@@ -155,7 +157,8 @@ components.forEach(([name, path]) => {
   Vue.component(name, () => import(`${path}`).then(m => m.default))
 });
 
-Vue.component('pagination', require('laravel-vue-pagination'));
+import LaravelVuePagination from 'laravel-vue-pagination';
+Vue.component('pagination', LaravelVuePagination);
 
 const app = new Vue({
     el: '#app',
