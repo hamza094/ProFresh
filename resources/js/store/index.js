@@ -13,6 +13,7 @@ import status from "./status"
 import roles from "./roles"
 import meeting from "./meeting"
 import conversations from "./conversations"
+import notifications from "./notifications"
 
 Vue.use(Vuex)
 
@@ -31,6 +32,7 @@ export default new Vuex.Store({
      status,
      roles,
      meeting,
-     conversations
+     conversations,
+     notifications
   }
 })

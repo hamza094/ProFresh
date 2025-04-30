@@ -37,10 +37,8 @@ use App\Http\Controllers\Api\V1\
 | API V1 Routes
 |--------------------------------------------------------------------------*/
 
-Route::controller(OAuthController::class)->group(function () {
-    Route::get('/auth/redirect/{provider}', 'redirect')->name('oauth.redirect');
-    Route::get('/auth/callback/{provider}', 'callback')->name('oauth.callback');
-}); 
+Route::get('/auth/redirect/{provider}', [OAuthController::class, 'redirect'])->name('oauth.redirect');
+Route::get('/auth/callback/{provider}', [OAuthController::class, 'callback'])->name('oauth.callback');
 
 // Zoom Webhooks
 Route::controller(ZoomController::class)
@@ -185,15 +183,21 @@ Route::get('/user/projects',[ProjectDashboardController::class,'userprojects']);
 
 Route::group(['prefix' => 'users/{user}'], function() {
 
-Route::get('/notifications', [NotificationsController::class,'index']);
-
-Route::delete('/notifications/{notification}', [NotificationsController::class,'destroy']);
-
 Route::patch('/avatar_remove',[AvatarController::class,'removeAvatar']);
 
 Route::post('/avatar', [AvatarController::class,'avatar'])
        ->name('user.avatar');
 });
+
+Route::controller(NotificationsController::class)
+    ->prefix('notifications')
+    ->name('notifications.')
+    ->group(function () {
+        Route::get('/', 'index')->name('index');
+        Route::get('/mark-all-read', 'markAllAsRead')->name('markAllAsRead');
+        Route::patch('/{notification}/status', 'updateStatus')->name('updateStatus');
+        Route::delete('/{notification}', 'destroy')->name('destroy');
+    });
 
 Route::controller(SubscriptionController::class)
 ->prefix('user')

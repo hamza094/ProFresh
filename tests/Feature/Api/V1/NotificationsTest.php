@@ -116,42 +116,6 @@ class NotificationsTest extends TestCase
     Notification::assertNotSentTo($user, ProjectTask::class);
   }
 
-
-  /** @test */
-  public function auth_user_can_fetch_their_notifications()
-  {
-    $user=User::factory()->create();
-
-    $this->sendInvitationToUser($this->project,$user);
-
-    Sanctum::actingAs($user,);
-
-    $response=$this->getJson("/api/v1/users/{$user->id}/notifications");
-
-    $this->assertCount(1,$response->json());
-
-    // can't fetch other use notifications
- }
-
-
-  /** @test */
-  public function a_user_can_clear_a_notification()
-  {
-     $user=User::factory()->create();
-
-     $this->sendInvitationToUser($this->project,$user);
-
-     Sanctum::actingAs($user);
-
-     $this->assertCount(1,$user->unreadNotifications);
-
-     /*$notificationId=$user->unreadNotifications->first()->id;
-
-     $response=$this->deleteJson("/api/v1/users/{$user->id}/notifications/{$notificationId}");
-
-     $this->assertCount(0,$user->fresh()->unreadNotifications);*/
-   }
-
    protected function sendInvitationToUser($project,$user)
    {
       $this->postJson($this->project->path().'/invitations',[

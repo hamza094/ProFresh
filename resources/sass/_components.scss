@@ -1146,6 +1146,9 @@ padding-bottom: .2rem;
     white-space: normal !important;
     word-break: break-word;
     overflow-wrap: break-word;
+     &:active{
+          text-decoration: none;
+    }
   }
    &-content {
     flex: 1;
@@ -1196,6 +1199,15 @@ padding-bottom: .2rem;
     vertical-align: middle;
     }
   }
+  &-user_content{
+    a{
+      color: #282828;
+      &:hover{
+          text-decoration: none !important;
+          color:#282828;
+      }
+  }
+  }
 }
 
 .notify-link{
@@ -1210,7 +1222,6 @@ padding-bottom: .2rem;
             color:#282828;
         }
     }
-
 }
 
 .rt{

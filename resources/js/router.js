@@ -22,6 +22,7 @@ import ProjectPanel from './components/Admin/Projects.vue';
 import TaskPanel from './components/Admin/Tasks.vue';
 import UserPanel from './components/Admin/Users.vue';
 import NotFound from './components/Error.vue';
+import UserNotification from './components/UserNotification.vue';
 
 const guest = (to, from, next) => {
   const token = localStorage.getItem("token");
@@ -153,6 +154,12 @@ let router = new Router({
             path: "/subscriptions",
             component: Subscription,
             name: "Subscription",
+            beforeEnter: auth,
+          },
+          {
+            path: '/user-notifications',
+            component: UserNotification,
+            name: 'UserNotification',
             beforeEnter: auth,
           },
     ]

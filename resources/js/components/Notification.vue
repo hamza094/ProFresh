@@ -4,7 +4,7 @@
 
             <a href="#"  data-toggle="dropdown" class="notification">
                <i class="far fa-bell notification-icon"></i>
-               <span v-if="notifications.length" class="notification-count"></span>
+               <span v-if="hasUnreadNotifications" class="notification-count"></span>
             </a>
             <ul class="dropdown-menu  dropdown-menu-right rt">
             <div class="notify-link">
@@ -37,7 +37,7 @@
 
          </li>
          <li v-if="notifications.length" class="notification-footer">
-  <router-link to="/notifications" class="notification-footer_view-all-links">
+  <router-link to="/user-notifications" class="notification-footer_view-all-links">
     Show All Notifications
   </router-link>
 </li>
@@ -51,7 +51,6 @@
 export default{
     data(){
         return{
-            notifications:false
         }
     },
      created(){
@@ -59,47 +58,33 @@ export default{
         this.listenNotifications();
     },
     computed: {
-      user:{
-        get(){
-          return this.$store.state.currentUser.user
-        }
-      },
-      },
-    methods:{
-      fetchNotifications() {
-           axios.get('/api/v1/users/' + this.user.uuid + '/notifications')
-             .then(response =>{
-                this.notifications = response.data;
-                console.log(this.notifications);
-            });
-       },
-        markAsRead(notification)
-        {
-          axios.delete('/api/v1/users/'+this.user.uuid+'/notifications/'+notification.id).then(response => {
-            notification.read_at = new Date().toISOString();
-            });
-          },
-        listenNotifications()
-        {
-          Echo.private('App.Models.User.'+this.user.id)
-              .notification( notification => {
-                this.$vToastify.success("You have one new notification");
-                this.fetchNotifications();
-          });
+        notifications() {
+            return this.$store.state.notifications.notifications.data;
+            
         },
-
-        getPostBody(notification)
-        {
-         let body = this.stripTags(notification.message);
-
-         return body.slice(0, 40) + (body.length > 40 ? '...' : '');
+        hasUnreadNotifications() {
+          return this.notifications.some(notification => !notification.read_at);
         },
-
-        stripTags(text)
-        {
-         return text.replace(/(<([^>]+)>)/ig, '');
-        }
+        user:{
+            get(){
+                return this.$store.state.currentUser.user
+            }
+        },
+    },
+    methods: {
+        fetchNotifications() {
+            this.$store.dispatch('fetchNotifications');
+        },
+        markAsRead(notification) {
+            this.$store.dispatch('markAsRead', notification);
+        },
+        listenNotifications() {
+            Echo.private(`App.Models.User.${this.user.id}`)
+                .notification(notification => {
+                    this.$vToastify.success("You have one new notification");
+                    this.$store.commit('addNotification', notification);
+                });
+        },
     }
-
 }
 </script>
