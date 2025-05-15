@@ -2,14 +2,20 @@
 
 namespace App\Interfaces;
 
-use App\Collections\Paddle\DataCollection;
-use App\DataTransferObjects\Paddle\UserSubscriptionData;
-use App\DataTransferObjects\Paddle\Data;
+use App\Models\User;
 
 interface Paddle
 {
-  public function subscriptionUsersList(
-       UserSubscriptionData $subscriptionData
-    ): DataCollection;
+    public function subscribe(User $user, string $plan): mixed;
+
+    /**
+     * @return array{message: string}
+     */
+    public function swap(User $user, string $plan): array;
+
+    /**
+     * @return array{message: string}
+     */
+    public function cancel(User $user, string $plan): array;
   
 }

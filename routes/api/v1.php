@@ -102,8 +102,8 @@ Route::controller(MessageController::class)->group(function(){
 
 //Chat Conversation Routes
 Route::apiResource('/conversations',ConversationController::class)
-     ->only(['store','destroy','index']);
-    //->middleware('subscription');
+     ->only(['store','destroy','index'])
+    ->middleware('subscription');
 });
 
 Route::apiResource('/tasks', TaskController::class)

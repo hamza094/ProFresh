@@ -4,6 +4,8 @@ namespace App\Providers;
 
 use App\Interfaces\Zoom;
 use App\Services\Api\V1\Zoom\ZoomService;
+use App\Interfaces\Paddle;
+use App\Services\Api\V1\Paddle\SubscriptionService;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Eloquent\Model;
@@ -13,7 +15,7 @@ use App\Services\Api\V1\SendSmsService;
 use Illuminate\Support\Collection;
 use App\Services\Api\V1\PaginationService;
 use Opcodes\LogViewer\Facades\LogViewer;
-use App\Interfaces\Paddle;
+use App\Interfaces\PaddleApi;
 use App\Services\Api\V1\Admin\Integration\PaddleService;
 use Dedoc\Scramble\Scramble;
 use Dedoc\Scramble\Support\Generator\OpenApi;
@@ -39,10 +41,7 @@ class AppServiceProvider extends ServiceProvider
           SendSmsService::class
          );
 
-       $this->app->bind(
-         abstract: Paddle::class,
-         concrete: fn (): Paddle => new PaddleService()
-        );
+       $this->app->bind(Paddle::class, SubscriptionService::class);
 
         $this->app->bind(Zoom::class, ZoomService::class);
 

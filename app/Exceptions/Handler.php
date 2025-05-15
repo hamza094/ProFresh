@@ -56,37 +56,38 @@ class Handler extends ExceptionHandler
 
           });
 
-         $this->renderable(function (NotFoundHttpException $e, $request) {
-            if($request->is('api/*')){
-              return response()->json([
-                  'message' => 'Sorry Record not found.'
-              ], 404);
-            }
-      });
+    $this->renderable(function (NotFoundHttpException $e, $request) {
+      if($request->is('api/*')){
+        return response()->json([
+          'message' => 'Sorry Record not found.'
+        ], 404);
+      }
+    });
 
-       $this->renderable(function (HttpException $e, $request) {
+  $this->renderable(function (HttpException $e, $request) {
   if ($request->is('api/*')) {
     return response()->json([
       'message' => $e->getMessage(),
     ], $e->getStatusCode());
   }
-});
+ });
 
-$this->renderable(function (MethodNotAllowedHttpException $e, $request) {
-  if ($request->is('api/*')) {
-    return response()->json([
-      'message' => 'The HTTP method used for the request is not allowed.',
-    ], 405);
+ $this->renderable(function (MethodNotAllowedHttpException $e, $request) {
+   if ($request->is('api/*')) {
+     return response()->json([
+       'message' => 'The HTTP method used for the request is not allowed.',
+     ], 405);
+   }
+ });
+   
+$this->renderable(function (\Illuminate\Validation\ValidationException $e, $request) {
+       if ($request->is('api/*')) {
+           return response()->json([
+               'message' => 'Validation Error',
+               'errors' => $e->errors(),
+           ], 422);
+       }
+   });
+
   }
-}); 
-
-     $this->renderable(function (\Illuminate\Validation\ValidationException $e, $request) {
-        if ($request->is('api/*')) {
-            return response()->json([
-                'message' => 'Validation Error',
-                'errors' => $e->errors(), // Laravel provides this structure out-of-the-box
-            ], 422);
-        }
-    });
-      }
 }

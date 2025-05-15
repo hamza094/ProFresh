@@ -5,7 +5,7 @@
         <!-- Project Notes Section -->
         <p><b>Add Project Note:</b></p>
 
-<!-- <SubscriptionCheck> -->
+ <SubscriptionCheck>
 
     <form v-if="access" 
     id="paper"
@@ -30,7 +30,7 @@
          v-text="this.notes"
           readonly>
     </textarea>
-<!-- </SubscriptionCheck> -->
+ </SubscriptionCheck> 
     <br>
 </div>
     </div>

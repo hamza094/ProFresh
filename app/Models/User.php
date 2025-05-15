@@ -185,10 +185,9 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function isSubscribed(): bool
     {
-        return true;
-      /*return $this->subscribed('monthly') || 
+      return $this->subscribed('monthly') || 
              $this->subscribed('yearly') || 
-             $this->isAdmin();*/
+             $this->isAdmin();
     }
 
     public function subscribedPlan(): string

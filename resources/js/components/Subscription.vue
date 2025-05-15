@@ -28,7 +28,7 @@
     <div class="card text-center">
     <div class="card-body">
     <p class="card-title subscription_heading">Monthly Subscription</p>
-      <p class="card-text"><span class="subscription_value">$10
+      <p class="card-text"><span class="subscription_value">$12
       </span> / <span>monthly</span>
       </p>
       <button class="btn btn-block btn-primary" @click="subscribe('monthly')"  :disabled="isIframeOpen || isOpeningIframe">Subscribe</button>

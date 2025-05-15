@@ -7,7 +7,7 @@
 
   <!--Task Section-->
     <div class="collapse" id="taskProject">
-     <!-- <SubscriptionCheck> -->
+      <SubscriptionCheck> 
     <div class="card card-body">
       <div v-if="!access">Only the project owner and members are allowed to access this feature.</div>
       <div v-if="access">
@@ -55,14 +55,14 @@
 </div>
     </div>
   </div>
-<!--</SubscriptionCheck>-->
+</SubscriptionCheck>
     </div>
 </div>
 </template>
 <script>
   import TaskModal from './Modal.vue';
   import { mapMutations, mapActions, mapState } from 'vuex';
-  //import SubscriptionCheck from '../../SubscriptionChecker.vue';
+  import SubscriptionCheck from '../../SubscriptionChecker.vue';
   export default {
     components:{TaskModal},
     props:['slug','access'],

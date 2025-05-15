@@ -4,23 +4,26 @@ namespace App\Http\Resources\Api\V1;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
+/**
+ * @mixin \App\Models\User
+ */
 class SubscriptionResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable
+     * @return array<string, mixed>
      */
-    public function toArray($request)
+    public function toArray($request): array
     {
         return [
-        $this->mergeWhen($this->isSubscribed(), [
-          'subscribed' => true,
-          'plan' => $this->subscribedPlan(),
-      ]),
-      'grace_period' => $this->when($this->hasGracePeriod(), true),
-      'receipts' => $this->receipts,
-      ];
+            $this->mergeWhen($this->isSubscribed(), [
+                'subscribed' => true,
+                'plan' => $this->subscribedPlan(),
+            ]),
+            'grace_period' => $this->when($this->hasGracePeriod(), true),
+            'receipts' => $this->receipts,
+        ];
     }
 }

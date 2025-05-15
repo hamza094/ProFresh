@@ -4,7 +4,7 @@
 
  <p><b><i>Start Group chat with project Members</i></b></p>
 
-<!-- <SubscriptionCheck> -->
+ <SubscriptionCheck> 
 <div class="card chat-card mb-5">
 <div class="card-header d-flex align-items-center justify-content-between bg-primary text-white" id="accordion">
 
@@ -157,7 +157,7 @@
    </div>
    </div>
    </div>
-        <!-- </SubscriptionCheck>-->
+         </SubscriptionCheck>
     <vue-progress-bar></vue-progress-bar>
 </div>
 </template>
