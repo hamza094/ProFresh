@@ -25,7 +25,6 @@ import conversation from './mixins/conversation';
 import Chart from 'chart.js';
 import 'animate.css';
 import "cropperjs/dist/cropper.css"
-import swal from 'sweetalert2';
 import VueToastify from "vue-toastify";
 import { Datetime } from 'vue-datetime';
 // You need a specific loader for CSS files
@@ -51,7 +50,6 @@ Vue.use(VueSpinners)
 
 window.momenttz = momenttz;
 window.moment = moment;
-window.swal=swal;
 
 import router from './router.js'
 import store from "./store";

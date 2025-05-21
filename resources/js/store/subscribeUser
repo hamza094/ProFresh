@@ -33,7 +33,7 @@ const mutations = {
     state.errors=data;
   },
   setSubscription(state,data){
-    state.subscription=data;
+    state.subscription=data || {};
   },
 };
 

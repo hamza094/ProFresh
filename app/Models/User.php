@@ -185,28 +185,47 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function isSubscribed(): bool
     {
-      return $this->subscribed('monthly') || 
-             $this->subscribed('yearly') || 
-             $this->isAdmin();
+      return $this->subscribed('ProFresh');
     }
 
-    public function subscribedPlan(): string
+    public function subscribedPlan()
     {
-      return collect(['monthly', 'yearly'])
-        ->first(function ($plan) {
-            return $this->subscribed($plan);
-        }, '');
+       $subscription = $this->subscription('ProFresh');
+
+       if(!$subscription){
+        return 'Not Subscribed';
+       }
+
+    if ($subscription->paddle_plan === (int)config('services.paddle.monthly')) {
+        return 'monthly';
+    }
+
+    if ($subscription->paddle_plan === (int)config('services.paddle.yearly')) {
+        return 'yearly';
+    }
+
+    return 'Unknown';
     }
 
     public function hasGracePeriod(): bool
     {
-     return
-      (
-        $this->subscribed('monthly')
-         && $this->subscription('monthly')->onGracePeriod())
-        ||
-        ($this->subscribed('yearly') && $this->subscription('yearly')->onGracePeriod());
+       if($this->subscription('ProFresh') && $this->subscription('ProFresh')->onGracePeriod())
+       {
+        return true;
+       }
+       return false;
+     }
+
+     public function payment()
+{
+    $subscription = $this->subscription('ProFresh');
+
+    if (!$subscription) {
+        return 'No active subscription';
     }
+
+    return $subscription->nextPayment();
+  }
 
     /**
     * Get all tasks created by the user

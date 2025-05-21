@@ -1,8 +1,11 @@
+import Swal from 'sweetalert2';
+import 'sweetalert2/dist/sweetalert2.min.css';
+
 export default{
     methods:{
 
   sweetAlert($message){
-    return swal.fire({
+    return Swal.fire({
       title: 'Are you sure?',
       text: "You can be able to revert this!",
       type: 'warning',
@@ -22,7 +25,7 @@ export default{
        this.$vToastify.success(response.data.message);
       self.$router.push('/dashboard');
      }).catch(error=>{
-       swal.fire("Failed!","There was something wrong.","warning");
+       Swal.fire("Failed!","There was something wrong.","warning");
       });
     }
    })

@@ -3,6 +3,7 @@
 namespace App\Http\Resources\Api\V1;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use App\Http\Resources\Api\V1\ReceiptResource;
 
 /**
  * @mixin \App\Models\User
@@ -22,8 +23,13 @@ class SubscriptionResource extends JsonResource
                 'subscribed' => true,
                 'plan' => $this->subscribedPlan(),
             ]),
-            'grace_period' => $this->when($this->hasGracePeriod(), true),
-            'receipts' => $this->receipts,
+            
+            'grace_period' => $this->when(
+                $this->hasGracePeriod(), true),
+
+            'receipts' => $this->when($this->isSubscribed(), fn () => ReceiptResource::collection($this->receipts)),
+
+            'next_payment'=>$this->payment(),
         ];
     }
 }
