@@ -3,6 +3,7 @@
 namespace App\Http\Resources\Api\V1;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use Carbon\Carbon;
 
 class ReceiptResource extends JsonResource
 {
@@ -16,7 +17,7 @@ class ReceiptResource extends JsonResource
     {
         return [
           'id' => $this->id,
-          'created_at'=>$this->created_at->isoFormat('MMMM Do YYYY, h:mm:ss a'),
+          'created_at'=>\Timezone::convertToLocal(Carbon::parse($this->created_at)),
           'currency'=>$this->currency,
           'quantity'=>$this->quantity,
           'receipt_url'=>$this->receipt_url,

@@ -16,7 +16,7 @@ class SubscriptionTest extends TestCase
     public function it_throws_exception_for_already_subscribed_user()
     {
         $user = Mockery::mock(User::class);
-        $user->shouldReceive('subscribed')->with('monthly')->andReturn(true);
+        $user->shouldReceive('subscribedPlan')->andReturn('monthly');
 
         $service = new SubscriptionService();
 
@@ -44,13 +44,13 @@ class SubscriptionTest extends TestCase
     public function it_throws_exception_for_canceling_a_non_subscribed_plan()
     {
         $user = Mockery::mock(User::class);
-        $user->shouldReceive('subscribed')->with('monthly')->andReturn(false);
+        $user->shouldReceive('subscribedPlan')->andReturn('monthly');
 
         $service = new SubscriptionService();
 
         $this->expectException(SubscriptionException::class);
         $this->expectExceptionMessage('You are not subscribed to this plan.');
 
-        $service->cancel($user, 'monthly');
+        $service->cancel($user, 'yearly');
     }
 }

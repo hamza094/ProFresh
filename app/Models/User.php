@@ -19,10 +19,11 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use App\Traits\HasSubscription;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use HasFactory, Notifiable, Billable, HasApiTokens,HasRoles;
+    use HasFactory, Notifiable, Billable, HasApiTokens, HasRoles, HasSubscription;
     
     protected $guarded = [];
 
@@ -182,50 +183,6 @@ class User extends Authenticatable implements MustVerifyEmail
     {
       return $this->belongsToMany(Message::class);
     }
-
-    public function isSubscribed(): bool
-    {
-      return $this->subscribed('ProFresh');
-    }
-
-    public function subscribedPlan()
-    {
-       $subscription = $this->subscription('ProFresh');
-
-       if(!$subscription){
-        return 'Not Subscribed';
-       }
-
-    if ($subscription->paddle_plan === (int)config('services.paddle.monthly')) {
-        return 'monthly';
-    }
-
-    if ($subscription->paddle_plan === (int)config('services.paddle.yearly')) {
-        return 'yearly';
-    }
-
-    return 'Unknown';
-    }
-
-    public function hasGracePeriod(): bool
-    {
-       if($this->subscription('ProFresh') && $this->subscription('ProFresh')->onGracePeriod())
-       {
-        return true;
-       }
-       return false;
-     }
-
-     public function payment()
-{
-    $subscription = $this->subscription('ProFresh');
-
-    if (!$subscription) {
-        return 'No active subscription';
-    }
-
-    return $subscription->nextPayment();
-  }
 
     /**
     * Get all tasks created by the user

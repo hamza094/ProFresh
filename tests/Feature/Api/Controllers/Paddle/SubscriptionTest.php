@@ -63,19 +63,7 @@ class SubscriptionTest extends TestCase
     {
         $this->withoutMiddleware(CheckSubscription::class);
 
-        $user = User::first();
-
         $plan = 'yearly';
-
-        // Create a partial mock of the user and simulate that he is subscribed to 'yearly'
-        $partialMock = \Mockery::mock($user)->makePartial();
-        $partialMock->shouldReceive('subscribed')
-                    ->with($plan)
-                    ->andReturn(true);
-
-        // Bind the partial mock as the current user
-        $this->be($partialMock);
-
         $response = $this->getJson('/api/v1/user/subscription/'.$plan.'/cancel');
 
         $response->assertStatus(200)

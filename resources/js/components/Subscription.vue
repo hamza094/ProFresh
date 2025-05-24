@@ -12,7 +12,10 @@
 
         <!-- Grace period alert -->
         <div v-if="subscription.grace_period" class="alert alert-primary" role="alert">
-          <i class="fas fa-exclamation-circle"></i> Alert: Your subscription has been canceled, and you are currently in the grace period. Please note that during this time, you still have access to all subscription benefits.
+          <i class="fas fa-exclamation-circle"></i> Alert: Your subscription has been canceled, and you are currently in the grace period.which is valid till <b>{{subscription.grace_period_ends_at}}</b> Please note that during this time, you still have access to all subscription benefits.
+        </div>
+        <div v-if="subscription" class="alert alert-success" role="alert">
+          <i class="fas fa-exclamation-circle"> </i> You have created ProFresh Subscription <b> {{subscription.created_at}}</b>
         </div>
 
         <!-- Subscription actions (swap/cancel) -->
@@ -106,8 +109,8 @@
       </div>
 
       <!-- Receipts section -->
-      <div class="row" v-if="hasReceipts">
-        <div class="col-md-6">
+      <div class="row">
+        <div v-if="hasReceipts" class="col-md-6">
           <h3>Receipts</h3>
           <div class="card">
             <div class="card-body">
@@ -123,14 +126,21 @@
             </div>
           </div>
         </div>
-        <div class="col-md-6">
+        <div v-else class="col-md-6">
+          <h3>Receipts</h3>
+          <div class="alert alert-info">
+            Your receipts will appear here after your first payment is processed.
+          </div>
+        </div>
+        <div class="col-md-6" v-if="subscription.next_payment">
           <h3>Important Notice !</h3>
-           <div v-if="subscription.next_payment" class="alert alert-primary mt-2" role="alert">
+           <div class="alert alert-primary mt-2" role="alert">
           <p>Your Next payment is scheduled on <b>{{subscription.next_payment.date | reciept_date}}</b> with an amount of <b>{{subscription.next_payment.amount}}</b> {{subscription.next_payment.currency}}</p>
           <ul>
-            <li>Changing plans to monthly will only work after your yearly subscription past</li>
-            <li>On canceling subscription you wont't charge next billing cycle but you'll enjoy grace period</li>
-          </ul>
+        <li>
+           If you cancel your subscription, you will not be charged for the next billing cycle, but you will continue to have access until the end of your current period (grace period).
+         </li>
+        </ul>
         </div>
         </div>
       </div>
@@ -225,12 +235,19 @@ export default {
     async swap(plan) {
       const result = await this.sweetAlert('Switch to ' + plan + ' plan');
       if (result.value) {
+        this.$Progress.start();
         try {
           const response = await axios.get(`/api/v1/user/subscription/swap/${plan}`);
-          this.setSubscription(response.data.subscription); 
+          this.setSubscription(response.data.subscription);
           this.$vToastify.success(response.data.message);
+          // Wait 5 seconds, then refresh subscription data once
+          setTimeout(() => {
+            this.fetchSubscription();
+          }, 5000);
         } catch (error) {
           this.showError(error);
+        } finally {
+          this.$Progress.finish();
         }
       }
     },
@@ -240,13 +257,18 @@ export default {
       const plan = this.subscription.plan;
       const result = await this.sweetAlert('Yes, Cancel Subscription');
       if (result.value) {
+        this.$Progress.start();
         try {
           const response = await axios.get(`/api/v1/user/subscription/${plan}/cancel`);
           this.setSubscription(response.data.subscription); 
           this.$vToastify.info(response.data.message);
         } catch (error) {
           this.showError(error);
+          this.$Progress.fail();
         }
+        finally {
+        this.$Progress.finish();
+      }
       }
     },
 

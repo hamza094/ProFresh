@@ -110,8 +110,9 @@ export default {
     methods: {
       ...mapActions('subscribeUser',['userLogout']),
      signOut(){
-       this.$store.dispatch('currentUser/logoutUser');
-       this.userLogout();
+       this.$store.dispatch('currentUser/logoutUser').then(() => {
+         this.userLogout();
+       });
     },
     },
 }

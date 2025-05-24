@@ -9,6 +9,10 @@ use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvi
 use App\Events\UserLogin;
 use App\Listeners\SaveUserTimezone;
 use Illuminate\Support\Facades\Event;
+use Laravel\Paddle\Events\WebhookReceived;
+use App\Listeners\PaddleEventListener;
+use Laravel\Paddle\Events\WebhookHandled;
+use App\Listeners\PaddleErrorListener;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -18,6 +22,12 @@ class EventServiceProvider extends ServiceProvider
      * @var array<string, array<int, string>>
      */
     protected $listen = [
+       WebhookReceived::class => [
+            PaddleEventListener::class,
+        ],
+         WebhookHandled::class => [
+        PaddleErrorListener::class,
+    ],
         Registered::class => [
           SendEmailVerificationNotification::class,
       ],

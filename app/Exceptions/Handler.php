@@ -8,6 +8,7 @@ use Illuminate\Validation\ValidationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
+use Laravel\Paddle\Exceptions\PaddleException as LaravelPaddleException;
 use Throwable;
 
 
@@ -89,5 +90,12 @@ $this->renderable(function (\Illuminate\Validation\ValidationException $e, $requ
        }
    });
 
+        $this->renderable(function (LaravelPaddleException $e, $request) {
+            if ($request->is('api/*')) {
+                return response()->json([
+                    'message' => 'A payment error occurred: ' . $e->getMessage(),
+                ], 422);
+            }
+        });
   }
 }
