@@ -10,7 +10,7 @@ use App\Models\Meeting;
 use App\Traits\ProjectSetup;
 use Tests\TestCase;
 
-class UpdateTest extends TestCase
+class UpdateMeetingTest extends TestCase
 {
    use ProjectSetup,RefreshDatabase,InteractsWithZoom;
     

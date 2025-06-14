@@ -70,7 +70,7 @@ class TaskDue extends Notification implements ShouldQueue,ShouldBroadcast
         return [
           'message'=>$this->notificationMessage(),
           'notifier' =>$this->notifierData,
-          'link'=>$this->projectPath()
+          'link'=>$this->projectPath
         ];
     }
 

@@ -21,18 +21,18 @@ class StartMeetingWebhook implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    private string $meetingId;
-    private string $startTime;
+    public string $meeting_id;
+    public string $start_time;
 
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct(array $payload)
+    public function __construct(array $data)
     {
-        $this->meetingId = $payload['object']['id'];
-        $this->startTime = $payload['object']['start_time'];
+        $this->meeting_id = $data['meeting_id'];
+        $this->start_time = $data['start_time'];
     }
 
     /**
@@ -46,12 +46,16 @@ class StartMeetingWebhook implements ShouldQueue
 
             $meeting = $this->getMeeting();
 
-            $this->validateStatus($meeting);
+            if (!$this->validateStatus($meeting)) {
+                 return;
+           }
+
             $this->updateMeetingStatus($meeting);
+
             $this->sendNotifications($meeting);
 
         } catch (ModelNotFoundException $e) {
-        Log::channel('webhook')->error("Meeting with ID {$this->meetingId} not found in the database.");
+        Log::channel('webhook')->error("Meeting with ID {$this->meeting_id} not found in the database.");
             throw $e;
 
     } catch (\Exception $e) {
@@ -62,7 +66,7 @@ class StartMeetingWebhook implements ShouldQueue
 
     private function getMeeting(): Meeting
     {
-       return Meeting::where('meeting_id', $this->meetingId)->firstOrFail();
+       return Meeting::where('meeting_id', $this->meeting_id)->firstOrFail();
     }
 
     private function updateMeetingStatus(Meeting $meeting): void
@@ -74,26 +78,37 @@ class StartMeetingWebhook implements ShouldQueue
 
     private function sendNotifications(Meeting $meeting): void
     {
-        $project = $meeting->project()->with('asignees')->firstOrFail();
-
-        $user= $meeting->project->user;
-
+        $project = $meeting->project()->with(['asignees','user'])->firstOrFail();
+        $user = $project->user;
         $members = $project->asignees;
 
-        Notification::send($members, new MeetingStarted($project, $meeting, $this->startTime, $user));
+        $notificationData = [
+            'project_name' => $project->name,
+            'project_slug' => $project->slug,
+            'project_path' => $project->path(),
+            'meeting_topic' => $meeting->topic,
+            'meeting_timezone' => $meeting->timezone,
+            'meeting_join_url' => $meeting->join_url,
+            'start_time' => $this->start_time,
+            'notifier' => $user->getNotifierData(),
+        ];
+
+        Notification::send($members, new MeetingStarted($notificationData));
     }
 
-    private function validateStatus($meeting)
+    private function validateStatus($meeting): bool
     {
        if($meeting->status === MeetingState::START->value){
-            return Log::channel('webhook')->info("Meeting already started for meeting_id: {$this->meetingId}");
+            Log::channel('webhook')->info("Meeting already started for meeting_id: {$this->meeting_id}");
+          return false;
         }
+        return true;
     }
 
     public function failed(Throwable $exception)
     {
         Log::error('Meeting Started webhook job failed', [
-            'meeting_id' => $this->meetingId,
+            'meeting_id' => $this->meeting_id,
             'error' => $exception->getMessage(),
             'trace' => $exception->getTraceAsString(),
         ]);

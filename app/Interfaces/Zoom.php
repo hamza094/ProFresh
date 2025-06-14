@@ -18,7 +18,7 @@ interface Zoom
  AuthorizationCallbackDetails $callbackDetails
  ): AccessTokenDetails;
 
-  public function createMeeting(array $validated,User $user): Meeting;
+public function createMeeting(array $validated,User $user): Meeting;
 
 public function updateMeeting(array $validated,User $user);
 

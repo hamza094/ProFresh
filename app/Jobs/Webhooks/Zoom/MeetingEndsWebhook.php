@@ -22,20 +22,20 @@ class MeetingEndsWebhook implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    private $meetingId;
-    private $startTime;
-    private $endTime;
+    public string $meeting_id;
+    public ?string $start_time;
+    public ?string $end_time;
 
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct(array $payload)
+    public function __construct(array $data)
     {
-        $this->meetingId = $payload['object']['id'];
-        $this->startTime = $payload['object']['start_time'];
-        $this->endTime = $payload['object']['end_time'];
+        $this->meeting_id = $data['meeting_id'];
+        $this->start_time = $data['start_time'] ?? null;
+        $this->end_time = $data['end_time'] ?? null;
     }
 
     /**
@@ -45,60 +45,68 @@ class MeetingEndsWebhook implements ShouldQueue
      */
     public function handle()
     {
-        try{
+        try {
             $meeting = $this->getMeeting();
 
-            $this->validateStatus($meeting);
+            if (!$this->validateStatus($meeting)) {
+                return;
+            }
+
             $this->updateMeetingStatus($meeting);
             $this->sendNotifications($meeting);
-
         } catch (ModelNotFoundException $e) {
-
-              Log::channel('webhook')->error("Meeting with ID {$this->meetingId} not found in the database.");
+            Log::channel('webhook')->error("Meeting with ID {$this->meeting_id} not found in the database.");
             throw $e;
-
-    } catch (\Exception $e) {
-        Log::channel('webhook')->error("Error processing meeting ending webhook: " . $e->getMessage(), ['exception' => $e]);
-       throw $e;
-    }
+        } catch (\Exception $e) {
+            Log::channel('webhook')->error("Error processing meeting ending webhook: " . $e->getMessage(), ['exception' => $e]);
+            throw $e;
+        }
     }
 
     private function getMeeting(): Meeting
     {
-        return Meeting::where('meeting_id', $this->meetingId)->firstOrFail();
-    }
-
-    private function validateStatus($meeting)
-    {
-       if($meeting->status === MeetingState::ENDS->value){
-            return Log::channel('webhook')->info("Meeting already ended for meeting_id: {$this->meetingId}");
-        }
+        return Meeting::where('meeting_id', $this->meeting_id)->firstOrFail();
     }
 
     private function updateMeetingStatus(Meeting $meeting): void
     {
         $meeting->update(['status' => MeetingState::ENDS->value]);
-
         event(new MeetingStatusUpdate($meeting));
     }
 
     private function sendNotifications(Meeting $meeting): void
     {
-        $project = $meeting->project()->with('asignees')->firstOrFail();
-
-        $user= $meeting->project->user;
-
+        $project = $meeting->project()->with(['asignees','user'])->firstOrFail();
+        $user = $project->user;
         $members = $project->asignees;
 
-        $endAt = Carbon::parse($this->endTime)->format('F j, Y g:i A');
+        $notificationData = [
+            'project_name' => $project->name,
+            'project_slug' => $project->slug,
+            'project_path' => $project->path(),
+            'meeting_topic' => $meeting->topic,
+            'meeting_timezone' => $meeting->timezone,
+            'start_time' => $this->start_time,
+            'end_time' => $this->end_time,
+            'notifier' => $user->getNotifierData(),
+        ];
 
-        Notification::send($members, new MeetingEnded($project,$meeting,$this->startTime,$endAt,$user));
+        Notification::send($members, new MeetingEnded($notificationData));
+    }
+
+    private function validateStatus($meeting): bool
+    {
+        if ($meeting->status === MeetingState::ENDS->value) {
+            Log::channel('webhook')->info("Meeting already ended for meeting_id: {$this->meeting_id}");
+            return false;
+        }
+        return true;
     }
 
     public function failed(Throwable $exception)
     {
         Log::error('Meeting Ended webhook job failed', [
-            'meeting_id' => $this->meetingId,
+            'meeting_id' => $this->meeting_id,
             'error' => $exception->getMessage(),
             'trace' => $exception->getTraceAsString(),
         ]);

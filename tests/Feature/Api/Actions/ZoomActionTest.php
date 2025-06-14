@@ -4,6 +4,7 @@ namespace Tests\Feature\Api\Actions;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Facades\Config;
 use App\Actions\ZoomAction;
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
@@ -18,6 +19,10 @@ class ZoomActionTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
+
+        Config::set('services.zoom.client_id', 'fake-key');
+
+        Config::set('services.zoom.client_secret', 'fake-secret');
 
         $this->sdkKey = config('services.zoom.client_id');
 

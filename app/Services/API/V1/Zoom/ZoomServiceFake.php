@@ -84,7 +84,7 @@ final class ZoomServiceFake implements Zoom
 
  }
 
- public function updateMeeting(array $validated,User $user)
+ public function updateMeeting(array $validated,User $user): \Illuminate\Http\JsonResponse
  {
     if(isset($this->failureException)) {
       throw $this->failureException;
@@ -94,7 +94,7 @@ final class ZoomServiceFake implements Zoom
 
  }
 
-  public function deleteMeeting(int $meetingId,User $user)
+  public function deleteMeeting(int $meetingId,User $user): \Illuminate\Http\JsonResponse
   {
     if(isset($this->failureException)) {
       throw $this->failureException;
@@ -103,7 +103,8 @@ final class ZoomServiceFake implements Zoom
     return response()->json(204);  
  }
 
-   public function getZakToken($user){
+   public function getZakToken($user): string
+   {
      $token="zak&token";
      return  $token;
    }

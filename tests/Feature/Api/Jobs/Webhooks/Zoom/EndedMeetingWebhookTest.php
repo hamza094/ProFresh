@@ -25,39 +25,44 @@ class EndedMeetingWebhookTest extends TestCase
         Notification::fake();
         Event::fake();
 
-        $meeting=Meeting::factory()->create([
-          'meeting_id'=>813,
-          'project_id'=>$this->project->id,
-          'user_id'=>$this->user->id,
-          'status'=>'waiting',
+        $meeting = Meeting::factory()->create([
+            'meeting_id' => 813,
+            'project_id' => $this->project->id,
+            'user_id' => $this->user->id,
+            'status' => 'waiting',
         ]);
 
-         $users = User::factory()->count(2)->create()->each(fn($user) => 
-        $this->inviteAndActivateUser($this->project, $user)
-      );
+        $users = User::factory()->count(2)->create()->each(fn($user) =>
+            $this->inviteAndActivateUser($this->project, $user)
+        );
 
-         $fixture = File::json(
-        path: base_path('tests/Fixtures/Webhooks/Zoom/meeting_ended.json'),
-        flags: JSON_THROW_ON_ERROR,
-    );
+        $fixture = File::json(
+            path: base_path('tests/Fixtures/Webhooks/Zoom/meeting_ended.json'),
+            flags: JSON_THROW_ON_ERROR,
+        );
 
-        $payload = $fixture['payload'];  
+        $object = $fixture['payload']['object'];
+        $meetingId = (string)$object['id'];
+        $startTime = $object['start_time'] ?? null;
+        $endTime = $object['end_time'] ?? null;
 
-        $job = new MeetingEndsWebhook(payload: $payload);
+        $job = new MeetingEndsWebhook([
+            'meeting_id' => $meetingId,
+            'start_time' => $startTime,
+            'end_time' => $endTime,
+        ]);
 
         $job->handle();
 
-    $this->assertEquals('ended', $meeting->fresh()->status);
+        $this->assertEquals('ended', $meeting->fresh()->status);
 
-    Event::assertDispatched(function (MeetingStatusUpdate $event) use ($meeting) {
-    return $event->meeting->id === $meeting->id;
-  });
+        Event::assertDispatched(function (MeetingStatusUpdate $event) use ($meeting) {
+            return $event->meeting->id === $meeting->id;
+        });
 
-     Notification::assertSentTo($users, MeetingEnded::class, function ($notification, $channels) use ($payload) {
-        return $notification->meeting->meeting_id === $payload['object']['id']
-            && $channels === ['mail', 'database', 'broadcast'];
-    });
-
+        Notification::assertSentTo($users, MeetingEnded::class, function ($notification, $channels) {
+            return $channels === ['mail', 'database', 'broadcast'];
+        });
     }
 
     private function inviteAndActivateUser($project, $user)

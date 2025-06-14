@@ -16,29 +16,34 @@ class ProcessMeetingUpdateWebhookTest extends TestCase
      * A basic feature test example.
      *
      * @return void
-     */
+     *
 
     /** @test */
     public function zoom_meeting_can_be_updated()
     {
-        $meeting=Meeting::factory()->create([
-          'meeting_id'=>813,
-          'topic'=>'shining in the sky'
+        $meeting = Meeting::factory()->create([
+            'meeting_id' => 813,
+            'topic' => 'shining in the sky'
         ]);
 
         $fixture = File::json(
-        path: base_path('tests/Fixtures/Webhooks/Zoom/meeting_update.json'),
-        flags: JSON_THROW_ON_ERROR,
-    );
+            path: base_path('tests/Fixtures/Webhooks/Zoom/meeting_update.json'),
+            flags: JSON_THROW_ON_ERROR,
+        );
 
-        $payload = $fixture['payload'];  
+        $object = $fixture['payload']['object'];
+        $meetingId = $object['id'];
+        $updateData = collect($object)->except(['id', 'uuid'])->toArray();
 
-        $job = new UpdateMeetingWebhook(payload: $payload);
+        $job = new UpdateMeetingWebhook([
+            'meeting_id' => $meetingId,
+            'update_data' => $updateData
+        ]);
 
         $job->handle();
 
         $this->assertSame(
-            expected: $job->payload['object']['topic'],
+            expected: $updateData['topic'],
             actual: $meeting->fresh()->topic,
         );
     }

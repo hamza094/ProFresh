@@ -14,24 +14,17 @@ class MeetingEnded extends Notification implements ShouldBroadcast
 {
     use Queueable;
 
-    protected $project;
-    public $meeting;
-    protected $start_time;
-    protected $endAt;
-    protected $user;
+    protected array $data;
 
     /**
      * Create a new notification instance.
      *
+     * @param array $data
      * @return void
      */
-    public function __construct($project,$meeting,$start_time,$endAt,$user)
+    public function __construct(array $data)
     {
-        $this->project = $project;
-        $this->meeting = $meeting;
-        $this->start_time = Carbon::parse($start_time)->format('d F \a\t H:i:s');
-        $this->endAt = $endAt;
-        $this->user = $user;
+        $this->data = $data;
     }
 
     /**
@@ -40,9 +33,19 @@ class MeetingEnded extends Notification implements ShouldBroadcast
      * @param  mixed  $notifiable
      * @return array
      */
-    public function via($notifiable)
+    public function via($notifiable): array
     {
         return ['mail','database','broadcast'];
+    }
+
+    private function formattedStartTime(): string
+    {
+        return $this->data['start_time'] ? Carbon::parse($this->data['start_time'])->format('d F \\a\\t H:i:s') : '';
+    }
+
+    private function formattedEndTime(): string
+    {
+        return $this->data['end_time'] ? Carbon::parse($this->data['end_time'])->format('d F \\a\\t H:i:s') : '';
     }
 
     /**
@@ -51,27 +54,27 @@ class MeetingEnded extends Notification implements ShouldBroadcast
      * @param  mixed  $notifiable
      * @return \Illuminate\Notifications\Messages\MailMessage
      */
-    public function toMail($notifiable)
+    public function toMail($notifiable): MailMessage
     {
         return (new MailMessage)
-            ->subject('Meeting Ended: ' . $this->meeting->topic)
+            ->subject('Meeting Ended: ' . $this->data['meeting_topic'])
             ->markdown('mail.meeting.ended', [
-                'projectName' => $this->project->name,
-                'projectLink' => $this->project->slug,
-                'meetingTopic' => $this->meeting->topic,
-                'userName'=> $this->user->name,
-                'startTime' => $this->start_time,
-                'timezone' => $this->meeting->timezone,
-                'endTime' => $this->endAt,
+                'projectName' => $this->data['project_name'],
+                'projectLink' => $this->data['project_slug'],
+                'meetingTopic' => $this->data['meeting_topic'],
+                'userName'=> $this->data['notifier']['name'],
+                'startTime' => $this->formattedStartTime(),
+                'endTime' => $this->formattedEndTime(),
+                'timezone' => $this->data['meeting_timezone'],
             ]);
     }
 
-    public function toBroadcast($notifiable) :BroadcastMessage
+    public function toBroadcast($notifiable): BroadcastMessage
     {
-      return new BroadcastMessage([
-        'message' => 'Project ' . $this->project->name . ' Meeting ' . $this->meeting->topic . ' ended at ' . $this->endAt . ' ' . $this->meeting->timezone,
-       'notifier' =>$this->user,
-       'link'=>$this->project->path()
+        return new BroadcastMessage([
+            'message' => 'Project ' . $this->data['project_name'] . ' Meeting ' . $this->data['meeting_topic'] . ' ended at ' . $this->formattedEndTime() . ' ' . $this->data['meeting_timezone'],
+            'notifier' => $this->data['notifier'],
+            'link' => $this->data['project_path'],
         ]);
     }
 
@@ -81,12 +84,12 @@ class MeetingEnded extends Notification implements ShouldBroadcast
      * @param  mixed  $notifiable
      * @return array
      */
-    public function toArray($notifiable)
+    public function toArray($notifiable): array
     {
         return [
-            'message' => 'Project ' . $this->project->name . ' Meeting ' . $this->meeting->topic . ' ended at ' . $this->endAt . ' ' . $this->meeting->timezone,
-       'notifier' =>$this->user,
-       'link'=>$this->project->path()
+            'message' => 'Project ' . $this->data['project_name'] . ' Meeting ' . $this->data['meeting_topic'] . ' ended at ' . $this->formattedEndTime() . ' ' . $this->data['meeting_timezone'],
+            'notifier' => $this->data['notifier'],
+            'link' => $this->data['project_path'],
         ];
     }
 }

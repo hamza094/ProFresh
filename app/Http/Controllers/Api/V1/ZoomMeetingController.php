@@ -13,7 +13,6 @@ use App\Http\Requests\Api\V1\Zoom\MeetingStoreRequest;
 use App\Http\Resources\Api\V1\Zoom\MeetingResource;
 use App\Services\Api\V1\MeetingService;
 use App\Interfaces\Zoom;
-use F9Web\ApiResponseHelpers;
 use DateTime;
 use Illuminate\Support\Facades\Cache;
 use App\Models\Project;
@@ -22,117 +21,85 @@ use App\Services\Api\V1\ExceptionService;
 use Illuminate\Http\JsonResponse;
 use App\Exceptions\Integrations\Zoom\ZoomException;
 
-
 class ZoomMeetingController extends Controller
 {
-  use ApiResponseHelpers;
-
-  protected $exceptionService;
+    protected $exceptionService;
 
     public function __construct(ExceptionService $exceptionService)
     {
         $this->exceptionService = $exceptionService;
     }
 
+    public function index(Project $project, Request $request, MeetingService $meetingService): JsonResponse
+    {
+        $this->authorize('access', $project);
 
-  public function index(Project $project,Request $request,MeetingService $meetingService): JsonResponse
-  {
-     $this->authorize('access', $project);
+        $isPrevious = ($request->query('request') === 'previous');
 
-    $isPrevious = ($request->query('request') === 'previous') ? true : false;
+        $meetingsData = $meetingService->getMeetingsData($project, $isPrevious);
 
-    $meetingsData = $meetingService->getMeetingsData($project, $isPrevious);
+        return response()->json([
+            'success' => true,
+            'message' => $meetingsData['message'],
+            'meetingsData' => $meetingsData['meetingsData']
+        ], 200);
+    }
 
-    return $this->respondWithSuccess($meetingsData);
-  }
+    public function show(Project $project, Meeting $meeting): JsonResponse
+    {
+        $this->authorize('access', $project);
+        $meeting->load(['user']);
+        return response()->json(['success' => true, 'data' => new MeetingResource($meeting)], 200);
+    }
 
-  public function show(Project $project,Meeting $meeting)
-  {
-    $this->authorize('access', $project);
+    public function store(Zoom $zoom, Project $project, MeetingStoreRequest $request): JsonResponse
+    {
+        $this->authorize('manage', $project);
 
-    $meeting->load(['user']);
+        $user = auth()->user();
 
-    return new MeetingResource($meeting);
-  }
+        $projectMeeting = DB::transaction(function () use ($zoom, $project, $user, $request) {
+            $meeting = $zoom->createMeeting($request->validated(), $user);
+            $meetingArray = (array) $meeting + ['user_id' => $user->id];
+            return $project->meetings()->create($meetingArray);
+        });
 
-  public function store(Zoom $zoom,Project $project,MeetingStoreRequest $request): JsonResponse
-  {    
-    $this->authorize('manage', $project);
-     
-    $user=auth()->user();
+        return response()->json([
+            'message' => 'Meeting Created Successfully',
+            'meeting' => new MeetingResource($projectMeeting),
+        ], 201);
+    }
 
-    try {
-      $meeting = $zoom->createMeeting($request->validated(), $user);
+    public function update(Zoom $zoom, Project $project, Meeting $meeting, MeetingUpdateRequest $request): JsonResponse
+    {
+        $this->authorize('manage', $project);
 
-        $meetingArray = (array) $meeting + ['user_id' => $user->id];
-   
-        $projectMeeting=$project->meetings()->create($meetingArray);
-
-        return $this->respondCreated([
-          'message' => 'Meeting Created Successfully',
-          'meeting' => new MeetingResource($projectMeeting),
-        ]);
-
-   }catch(ZoomException $exception){
-      return $this->exceptionService->handleZoom($exception);
-   }        
-  }
-
-  public function update(Zoom $zoom,Project $project,Meeting $meeting,MeetingUpdateRequest $request){
-
-    $this->authorize('manage', $project);
-
-    DB::beginTransaction();
-
-    try {
-
-        $meeting->update($request->validated());
-
-        $zoom->updateMeeting($request->validated(), auth()->user());
-        
-        $meeting->save();
-
-         DB::commit();
+        DB::transaction(function () use ($zoom, $meeting, $request) {
+            $meeting->update($request->validated());
+            $zoom->updateMeeting($request->validated(), auth()->user());
+        });
 
         $meeting->load(['user']);
 
-        return $this->respondWithSuccess([
+        return response()->json([
             'message' => 'Meeting Updated Successfully',
             'meeting' => new MeetingResource($meeting),
-        ]);
-
-    } catch (\Exception $exception) {
-        DB::rollBack();
-
-        return $this->exceptionService->handleZoom($exception);
-      }     
+        ], 200);
     }
 
-  public function destroy(Zoom $zoom,Project $project,Meeting $meeting)
+    public function destroy(Zoom $zoom, Project $project, Meeting $meeting): JsonResponse
     {
-      $this->authorize('manage', $project);
+        $this->authorize('manage', $project);
 
-      $meetingId=$meeting->meeting_id;
+        $meetingId = $meeting->meeting_id;
 
-      DB::beginTransaction();
+        DB::transaction(function () use ($zoom, $meeting, $meetingId) {
+            $meeting->delete();
+            $zoom->deleteMeeting($meetingId, auth()->user());
+        });
 
-    try {
-        $meeting->delete();
-
-        $zoom->deleteMeeting($meetingId,auth()->user());
-
-         DB::commit();
-
-        return $this->respondWithSuccess([
+        return response()->json([
             'message' => 'Meeting Deleted Successfully',
-      ]);
-
-    } catch (\Exception $exception) {
-        DB::rollBack();
-
-        return $this->exceptionService->handleZoom($exception);
-      } 
-
+        ], 200);
     }
-
 }

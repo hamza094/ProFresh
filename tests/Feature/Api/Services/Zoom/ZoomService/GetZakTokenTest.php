@@ -33,7 +33,7 @@ class GetZakTokenTest extends TestCase
 
         $user = $this->userCreate(now()->addWeek());
 
-        (new ZoomService())->getZakToken($user);
+       $service = (new ZoomService())->getZakToken($user);
 
         Saloon::assertSent(static fn(GetZakToken $request): bool =>
      $request->resolveEndpoint() === 'users/me/token?type=zak' && $request->getMethod() === Method::GET);

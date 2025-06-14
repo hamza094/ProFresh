@@ -7,12 +7,10 @@ use App\Models\Meeting;
 use App\Models\User;
 use Auth;
 use App\Http\Resources\Api\V1\Zoom\MeetingResource;
-use F9Web\ApiResponseHelpers;
 use Illuminate\Http\JsonResponse;
 
 class MeetingService
 { 
-  use ApiResponseHelpers;
   
   public function getMeetingsData(Project $project, bool $isPrevious): array
     {

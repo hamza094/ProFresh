@@ -16,7 +16,7 @@ class DeleteMeetingWebhook implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    public $payload;
+    public $meeting_id;
 
     /**
      * Create a new job instance.
@@ -26,9 +26,9 @@ class DeleteMeetingWebhook implements ShouldQueue
 
     public $tries = 2;
 
-    public function __construct(array $payload)
+    public function __construct(array $data)
     {
-        $this->payload = $payload;
+        $this->meeting_id = $data['meeting_id'];
     }
 
     /**
@@ -36,25 +36,19 @@ class DeleteMeetingWebhook implements ShouldQueue
      *
      * @return void
      */
-    public function handle()
+    public function handle(): void
     {
-        $meetingId = $this->payload['object']['id'];
-
         try {
+            $meeting = Meeting::where('meeting_id', $this->meeting_id)->firstOrFail();
 
-        $meeting = Meeting::where('meeting_id', $meetingId)->firstOrFail();
+            $meeting->delete();
 
-          $meeting->delete();
-
-        Log::channel('webhook')->info('Meeting deleted successfully', ['meeting_id' => $meetingId]);
-
-       } catch (ModelNotFoundException $e) {
-
-        Log::channel('webhook')->info('Meeting not available in database', ['meeting_id' => $meetingId]);
-
-        throw new ModelNotFoundException('Meeting not available in database', 0, $e);
-
-   }
+            Log::channel('webhook')->info('Meeting deleted successfully', ['meeting_id' => $this->meeting_id]);
+        } catch (ModelNotFoundException $e) {
+            Log::channel('webhook')->info('Meeting not available in database', ['meeting_id' => $this->meeting_id]);
+            
+            throw new ModelNotFoundException('Meeting not available in database', 0, $e);
+        }
     }
 
     public function failed(\Exception $exception)

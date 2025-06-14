@@ -22,7 +22,7 @@ class MeetingDeleteTest extends TestCase
     /** @test */
     public function meeting_can_be_deleted_in_zoom()
     {
-        $meetingId=12378;
+    $meetingId=12378;
 
     Saloon::fake([
        '/meetings/'.$meetingId => MockResponse::make(body:'Meeting deleted.',status: 204),

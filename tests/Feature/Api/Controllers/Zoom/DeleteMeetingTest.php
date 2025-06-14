@@ -25,7 +25,7 @@ class DeleteMeetingTest extends TestCase
 
         $meetingId=$meeting->id;
         
-        $this->withoutExceptionHandling()->deleteJson('/api/v1/projects/'.$this->project->slug.'/meetings/'.$meeting->id);
+        $this->deleteJson('/api/v1/projects/'.$this->project->slug.'/meetings/'.$meeting->id);
 
          $this->assertModelMissing($meeting);
     }
@@ -43,7 +43,7 @@ public function database_changes_are_rolled_back_if_meeting_delete_fails()
          new ZoomException('Test error message')
         );
 
-     $response=$this->withoutExceptionHandling()->deleteJson('/api/v1/projects/'.$this->project->slug.'/meetings/'.$meeting->id);
+     $response=$this->deleteJson('/api/v1/projects/'.$this->project->slug.'/meetings/'.$meeting->id);
 
     $response->assertStatus(400);
 

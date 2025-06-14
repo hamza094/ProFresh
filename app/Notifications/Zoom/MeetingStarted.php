@@ -4,33 +4,26 @@ namespace App\Notifications\Zoom;
 
 use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use Illuminate\Notifications\Messages\BroadcastMessage;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
-use App\Channels\DatabaseChannel;
 
 class MeetingStarted extends Notification implements ShouldBroadcast
 {
     use Queueable;
 
-    protected $project;
-    public $meeting;
-    protected $start_time;
-    protected $user;
+    protected array $data;
 
     /**
      * Create a new notification instance.
      *
+     * @param array $data
      * @return void
      */
-    public function __construct($project, $meeting, $start_time, $user)
+    public function __construct(array $data)
     {
-        $this->project = $project;
-        $this->meeting = $meeting;
-        $this->user = $user;
-        $this->start_time = Carbon::parse($start_time)->format('d F \a\t H:i:s');
+        $this->data = $data;
     }
 
     /**
@@ -39,9 +32,19 @@ class MeetingStarted extends Notification implements ShouldBroadcast
      * @param  mixed  $notifiable
      * @return array
      */
-    public function via($notifiable)
+    public function via($notifiable): array
     {
         return ['mail','database','broadcast'];
+    }
+
+    /**
+     * Get the formatted start time for the meeting.
+     *
+     * @return string
+     */
+    private function formattedStartTime(): string
+    {
+        return Carbon::parse($this->data['start_time'])->format('d F \\a\\t H:i:s');
     }
 
     /**
@@ -50,27 +53,29 @@ class MeetingStarted extends Notification implements ShouldBroadcast
      * @param  mixed  $notifiable
      * @return \Illuminate\Notifications\Messages\MailMessage
      */
-    public function toMail($notifiable)
+    public function toMail($notifiable): MailMessage
     {
+        $formattedStartTime = $this->formattedStartTime();
         return (new MailMessage)
-            ->subject('Meeting Started: ' . $this->meeting->topic)
+            ->subject('Meeting Started: ' . $this->data['meeting_topic'])
             ->markdown('mail.meeting.started', [
-                'projectName' => $this->project->name,
-                'projectLink' => $this->project->slug,
-                'meetingTopic' => $this->meeting->topic,
-                'userName'=> $this->user->name,
-                'joinUrl'=> $this->meeting->join_url,
-                'startTime' => $this->start_time,
-                'timezone' => $this->meeting->timezone
+                'projectName' => $this->data['project_name'],
+                'projectLink' => $this->data['project_slug'],
+                'meetingTopic' => $this->data['meeting_topic'],
+                'userName'=> $this->data['notifier']['name'],
+                'joinUrl'=> $this->data['meeting_join_url'],
+                'startTime' => $formattedStartTime,
+                'timezone' => $this->data['meeting_timezone']
             ]);
     }
 
-    public function toBroadcast($notifiable) :BroadcastMessage
+    public function toBroadcast($notifiable): BroadcastMessage
     {
-      return new BroadcastMessage([
-        'message' => 'Project ' . $this->project->name . ' Meeting ' . $this->meeting->topic . ' started at ' . $this->start_time . ' ' . $this->meeting->timezone,
-       'notifier' =>$this->user,
-       'link'=>$this->project->path()
+        $formattedStartTime = $this->formattedStartTime();
+        return new BroadcastMessage([
+            'message' => 'Project ' . $this->data['project_name'] . ' Meeting ' . $this->data['meeting_topic'] . ' started at ' . $formattedStartTime . ' ' . $this->data['meeting_timezone'],
+            'notifier' => $this->data['notifier'],
+            'link' => $this->data['project_path'],
         ]);
     }
 
@@ -80,12 +85,13 @@ class MeetingStarted extends Notification implements ShouldBroadcast
      * @param  mixed  $notifiable
      * @return array
      */
-    public function toDatabase($notifiable)
+    public function toDatabase($notifiable): array
     {
+        $formattedStartTime = $this->formattedStartTime();
         return [
-         'message' => 'Project ' . $this->project->name . ' Meeting ' . $this->meeting->topic . ' started at ' . $this->start_time . ' ' . $this->meeting->timezone,
-       'notifier' =>$this->user,
-       'link'=>$this->project->path()
+            'message' => 'Project ' . $this->data['project_name'] . ' Meeting ' . $this->data['meeting_topic'] . ' started at ' . $formattedStartTime . ' ' . $this->data['meeting_timezone'],
+            'notifier' => $this->data['notifier'],
+            'link' => $this->data['project_path'],
         ];
     }
 }

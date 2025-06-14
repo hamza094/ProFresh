@@ -10,7 +10,7 @@ use App\Traits\ProjectSetup;
 use Carbon\Carbon;
 use Tests\TestCase;
 
-class StoreTest extends TestCase
+class StoreMeetingTest extends TestCase
 {
     use InteractsWithZoom,ProjectSetup,RefreshDatabase;
     /**

@@ -16,16 +16,18 @@ class UpdateMeetingWebhook implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    public $payload;
+    public $meeting_id;
+    public $update_data;
 
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct(array $payload)
+    public function __construct(array $data)
     {
-        $this->payload = $payload;
+        $this->meeting_id = $data['meeting_id'];
+        $this->update_data = $data['update_data'];
     }
 
     /**
@@ -33,39 +35,34 @@ class UpdateMeetingWebhook implements ShouldQueue
      *
      * @return void
      */
-    public function handle()
+    public function handle(): void
     {
-        $meetingId = $this->payload['object']['id'];
-        $updateData = $this->payload['object'];
-        unset($updateData['id'], $updateData['uuid']);
+        $meeting = Meeting::where('meeting_id', $this->meeting_id)->first();
 
-        $meeting = Meeting::where('meeting_id', $meetingId)->first();
-
-        if ($meeting) {
-                $isUpdated = $this->isMeetingUpdated($meeting, $updateData);
-
-                if ($isUpdated) {
-                    $meeting->update($updateData);
-                    Log::channel('webhook')->info('Meeting updated via webhook', ['meeting_id' => $meetingId]);
-                } else {
-                    Log::channel('webhook')->info('Same data nothing to update', ['meeting_id' => $meetingId]);
-                }
-        } else {
-            Log::channel('webhook')->warning('Meeting not found', ['meeting_id' => $meetingId]);
-        }
+    if (!$meeting) {
+        Log::channel('webhook')->warning('Meeting not found', ['meeting_id' => $this->meeting_id]);
+        return;
     }
 
-    private function isMeetingUpdated($meeting, $updateData)
-    {
-        foreach ($updateData as $key => $value) {
-            if ($meeting->$key != $value) {
-                return true;
-            }
+    if ($this->isMeetingUpdated($meeting, $this->update_data)) {
+        $meeting->update($this->update_data);
+        Log::channel('webhook')->info('Meeting updated via webhook', ['meeting_id' => $this->meeting_id]);
+    } else {
+        Log::channel('webhook')->info('Same data nothing to update', ['meeting_id' => $this->meeting_id]);
+    }
+}
+
+private function isMeetingUpdated($meeting, $updateData): bool
+{
+    foreach ($updateData as $key => $value) {
+        if ($meeting->$key !== $value) {
+            return true;
         }
+    }
         return false;
     }
 
-    public function failed(\Exception $exception)
+    public function failed(\Exception $exception): void
     {
         Log::channel('webhook')->error('Update Meeting webhook job failed', [
             'error' => $exception->getMessage(),

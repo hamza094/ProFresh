@@ -23,49 +23,49 @@ class ProcessMeetingDeleteTest extends TestCase
     /** @test */
     public function zoom_meeting_can_be_deleted()
     {
-        $meeting=Meeting::factory()->create([
-          'meeting_id'=>813,
+        $meeting = Meeting::factory()->create([
+            'meeting_id' => 813,
         ]);
 
-         $fixture = File::json(
-        path: base_path('tests/Fixtures/Webhooks/Zoom/meeting_delete.json'),
-        flags: JSON_THROW_ON_ERROR,
-    );
+        $fixture = File::json(
+            path: base_path('tests/Fixtures/Webhooks/Zoom/meeting_delete.json'),
+            flags: JSON_THROW_ON_ERROR,
+        );
 
-        $payload = $fixture['payload'];  
+        $object = $fixture['payload']['object'];
+        $meetingId = $object['id'];
 
-        $job = new DeleteMeetingWebhook(payload: $payload);
+        $job = new DeleteMeetingWebhook(['meeting_id' => $meetingId]);
 
         $job->handle();
 
-         $this->assertModelMissing($meeting);
-
+        $this->assertModelMissing($meeting);
     }
 
     /** @test */
     public function throw_exception_if_meeting_not_found()
     {
-        $meeting=Meeting::factory()->create([
-          'meeting_id'=>413,
+        $meeting = Meeting::factory()->create([
+            'meeting_id' => 413,
         ]);
 
-       $fixture = File::json(
-        path: base_path('tests/Fixtures/Webhooks/Zoom/meeting_delete.json'),
-        flags: JSON_THROW_ON_ERROR,
-    );
+        $fixture = File::json(
+            path: base_path('tests/Fixtures/Webhooks/Zoom/meeting_delete.json'),
+            flags: JSON_THROW_ON_ERROR,
+        );
 
-        $payload = $fixture['payload'];  
+        $object = $fixture['payload']['object'];
+        $meetingId = $object['id'];
 
-        $job = new DeleteMeetingWebhook(payload: $payload);
+        $job = new DeleteMeetingWebhook(['meeting_id' => $meetingId]);
 
         $this->assertDatabaseHas('meetings', [
-        'meeting_id' => 413,
+            'meeting_id' => 413,
         ]);
 
-       $this->assertThrows(
-        fn() => $job->handle(),
-        \Illuminate\Database\Eloquent\ModelNotFoundException::class
-    );
-
+        $this->assertThrows(
+            fn() => $job->handle(),
+            \Illuminate\Database\Eloquent\ModelNotFoundException::class
+        );
     }
 }

@@ -6,7 +6,7 @@ use App\Http\Controllers\Api\Auth\OAuthController;
 
 use App\Http\Controllers\Api\OAuth\ZoomAuthController;
 
-use App\Http\Controllers\Api\V1\Webhooks\ZoomController;
+use App\Http\Controllers\Api\V1\Webhooks\ZoomWebhookController;
 
 use App\Http\Middleware\VerifyZoomWebhook;
 
@@ -41,7 +41,7 @@ Route::get('/auth/redirect/{provider}', [OAuthController::class, 'redirect'])->n
 Route::get('/auth/callback/{provider}', [OAuthController::class, 'callback'])->name('oauth.callback');
 
 // Zoom Webhooks
-Route::controller(ZoomController::class)
+Route::controller(ZoomWebhookController::class)
 ->middleware(VerifyZoomWebhook::class)
 ->prefix('webhooks/zoom/meetings')
 ->as('webhooks.meetings.')

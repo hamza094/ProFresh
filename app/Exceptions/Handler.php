@@ -10,7 +10,10 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Laravel\Paddle\Exceptions\PaddleException as LaravelPaddleException;
 use Throwable;
-
+use App\Exceptions\Integrations\Zoom\ZoomException;
+use App\Exceptions\Integrations\Zoom\NotFoundException;
+use App\Exceptions\Integrations\Zoom\UnauthorizedException;
+use Saloon\RateLimitPlugin\Exceptions\RateLimitReachedException;
 
 class Handler extends ExceptionHandler
 {
@@ -95,6 +98,38 @@ $this->renderable(function (\Illuminate\Validation\ValidationException $e, $requ
                 return response()->json([
                     'message' => 'A payment error occurred: ' . $e->getMessage(),
                 ], 422);
+            }
+        });
+
+        $this->renderable(function (ZoomException $e, $request) {
+            if ($request->is('api/*')) {
+                return response()->json([
+                    'error' => $e->getMessage() ?: 'Zoom error',
+                ], 400);
+            }
+        });
+
+        $this->renderable(function (NotFoundException $e, $request) {
+            if ($request->is('api/*')) {
+                return response()->json([
+                    'error' => $e->getMessage() ?: 'Resource not found',
+                ], 404);
+            }
+        });
+
+        $this->renderable(function (UnauthorizedException $e, $request) {
+            if ($request->is('api/*')) {
+                return response()->json([
+                    'error' => $e->getMessage() ?: 'Unauthorized',
+                ], 403);
+            }
+        });
+
+        $this->renderable(function (RateLimitReachedException $e, $request) {
+            if ($request->is('api/*')) {
+                return response()->json([
+                    'error' => 'Rate limit exceeded. Please try again in ' . $e->getLimit()->getRemainingSeconds() . ' seconds.'
+                ], 429);
             }
         });
   }
