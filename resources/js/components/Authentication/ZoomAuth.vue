@@ -1,47 +1,52 @@
 <template>
   <div class="container">
-  <div class="text-center mt-5">
-    <h3>Thank you for your patience. We are currently setting up your Zoom credentials</h3>
-    <div class="d-flex mt-3 justify-content-center align-items-center">
-      <ring-loader :color=this.color :size="100" />
+    <div class="text-center mt-5">
+      <h3>Thank you for your patience. We are currently setting up your Zoom credentials</h3>
+      <div class="d-flex mt-3 justify-content-center align-items-center">
+        <ring-loader :color="color" :size="100" />
+      </div>
     </div>
   </div>
-</div>
 </template>
 
 <script>
-    import { mapState} from 'vuex';
+import { mapState } from 'vuex';
 export default {
   name: 'ZoomAuth',
   data() {
     return {
-     color:'#301934' 
+      color: '#301934',
+      loading: false
     }
   },
-  props: {
-    
-  },
-   computed: {
-      ...mapState('currentUser',['user']),
+  computed: {
+    ...mapState('currentUser', ['user']),
   },
   methods: {
-    zoomAuth(){
+    zoomAuth() {
+      if (this.loading) return;
+      this.loading = true;
       const code = this.$route.query.code;
-      const state = this.$route.query.state; 
+      const state = this.$route.query.state;
 
-  axios.get(`/api/v1/oauth/zoom/callback?code=${code}&state=${state}`)
-    .then(response => {
-      this.$router.push(`/user/${this.user.id}/profile`);
-      this.$vToastify.success(response.data.success);    
-    })
-    .catch(error => {
-        this.$router.push('/home');
-        this.$vToastify.warning(error.response.data.error);    
-    });
+      axios.get(`/api/v1/oauth/zoom/callback?code=${code}&state=${state}`)
+        .then(response => {
+          this.$router.push(`/user/${this.user.uuid}/profile`);
+          this.$vToastify.success(response.data.success);
+        })
+        .catch(error => {
+          this.$router.push('/home');
+          this.$vToastify.warning(
+            error?.response?.data?.error || 'An error occurred during Zoom authentication.'
+          );
+        })
+        .finally(() => {
+          this.loading = false;
+        });
     },
   },
   mounted() {
-      this.zoomAuth();
+    this.zoomAuth();
   }
 }
 </script>

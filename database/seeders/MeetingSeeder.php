@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use App\Models\Project;
+use App\Models\Meeting;
 
 class MeetingSeeder extends Seeder
 {
@@ -13,6 +15,12 @@ class MeetingSeeder extends Seeder
      */
     public function run()
     {
-        //
+        // For each project, create 30 meetings
+        Project::all()->each(function ($project) {
+            Meeting::factory()->count(30)->create([
+                'project_id' => $project->id,
+                'user_id' => $project->user_id, // or assign randomly if needed
+            ]);
+        });
     }
 }

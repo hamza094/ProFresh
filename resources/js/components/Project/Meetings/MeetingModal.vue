@@ -11,6 +11,7 @@
             <span class="panel-exit float-right" role="button" @click.prevent="modalClose">x</span>
         </div>
     </div>
+    
         <div class="panel-form">
 <form class="" @submit.prevent="createMeeting()">
   <div class="panel-top_content">
@@ -75,7 +76,7 @@
 
 <script>
   import { mapState, mapMutations, mapActions } from 'vuex';
-  import FormGroup from './FormGroup.vue';
+  import FormGroup from './../FormGroup.vue';
 
 export default{
   components: { FormGroup },
@@ -145,7 +146,6 @@ export default{
     },
 
      openMeetingModal() {
-       console.log('Meeting ID:', meetingId); // Ensure it's a number
       this.$modal.show('MeetingModal');
     },
 

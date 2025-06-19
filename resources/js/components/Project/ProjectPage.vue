@@ -147,8 +147,8 @@
 						</div>
 						<br>
 						<hr>
-						<!--<Meeting :projectSlug="this.project.slug" :projectMeetings="this.project.meetings" :notAuthorize="this.project.ownerNotAuthorized"
-						:members="project.members"></Meeting>--> 
+						<Meeting :projectSlug="this.project.slug" :projectMeetings="this.project.meetings" :notAuthorize="this.project.ownerNotAuthorized"
+						:members="project.members"></Meeting>
 					</div>
 				</div>
 			</div>
@@ -183,7 +183,7 @@
 </template>
 <script>
 	import Status from './Status.vue'
-	import Meeting from './Meeting.vue'
+	import Meeting from './Meetings/Meeting.vue'
 	import Stage from './Stage.vue'
 	import Task from './Panel/Task.vue'
 	import PanelFeatues from './Panel/Features.vue'

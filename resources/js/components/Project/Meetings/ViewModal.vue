@@ -2,10 +2,10 @@
 <div>
   <modal name="ViewMeeting" height="auto" :scrollable="true" width="40%"
      class="model-desin"
-    :clickToClose=false >
+    :clickToClose="false" >
 
     <div class="edit-border-top p-3">
-      <div v-if="meeting.status === 'Started'" class="glowing-dot"></div>
+      <div v-if="meeting.status === STATUS_STARTED" class="glowing-dot"></div>
 
      <div class="edit-border-bottom">
 
@@ -19,11 +19,11 @@
         </div>
       </div>
 
-        <span v-if="!isEditing" class="panel-exit float-right" role="button" @click.prevent="meetingModalClose">x</span>
+        <span v-if="!isEditing" class="panel-exit float-right" role="button" aria-label="Close" @click.prevent="meetingModalClose">x</span>
         </div>
 
     </div>
-    <div v-if="meeting" class="meeting">
+    <div v-if="meeting && Object.keys(meeting).length > 0" class="meeting">
     <ul class="meeting_list">
 
     <meeting-detail v-if="!isEditing" label="Meeting ID" :value="meeting.meeting_id" />
@@ -121,9 +121,9 @@
       </meeting-detail>
 
        <li v-if="!isEditing && Object.keys(meeting).length > 0">
-          <button v-if="canStartMeeting(meeting)" class="btn btn-secondary btn-sm" @click.prevent="emitInitializeMeting('start',meeting)">Start Meeting As Owner</button>
+          <button v-if="canStartMeeting(meeting)" class="btn btn-secondary btn-sm" @click.prevent="emitInitializeMeeting('start',meeting)">Start Meeting As Owner</button>
         
-          <button v-else-if="canJoinMeeting(meeting)" class="btn btn-secondary btn-sm" @click.prevent="emitInitializeMeting('join',meeting)">Join Meeting</button>
+          <button v-else-if="canJoinMeeting(meeting)" class="btn btn-secondary btn-sm" @click.prevent="emitInitializeMeeting('join',meeting)">Join Meeting</button>
 
         </li>
 
@@ -131,13 +131,13 @@
 
     <div v-if="Object.keys(meeting).length > 0" class="mt-3">
     <div v-if="!isEditing">
-    <button class="btn btn-danger float-right mb-3" @click.pervent="deleteMeeting(meeting.id)" :disabled="loader">{{ loader ? 'Deleting...' : 'Delete' }}</button>
-    <button class="btn btn-primary float-left mb-3" @click.pervent="meetingEdit()">Edit</button>
+    <button class="btn btn-danger float-right mb-3" @click.prevent="deleteMeeting(meeting.id)" :disabled="loader">{{ loader ? 'Deleting...' : 'Delete' }}</button>
+    <button class="btn btn-primary float-left mb-3" @click.prevent="meetingEdit()">Edit</button>
   </div>
 
   <div v-else>
-    <button class="btn btn-info float-right mb-3" @click.pervent="meetingEditClose()">Close</button>
-    <button class="btn btn-primary float-left mb-3" @click.pervent="updateMeeting(meeting.id)" :disabled="loading">{{ loading ? 'Saving...' : 'Save' }}</button>
+    <button class="btn btn-info float-right mb-3" @click.prevent="meetingEditClose()">Close</button>
+    <button class="btn btn-primary float-left mb-3" @click.prevent="updateMeeting(meeting.id)" :disabled="loading">{{ loading ? 'Saving...' : 'Save' }}</button>
   </div>
 </div>
 
@@ -149,56 +149,61 @@
 
 </template>
 
-
 <script>
-  import { mapState, mapMutations, mapActions } from 'vuex';
-  import MeetingDetail from './MeetingDetail.vue';
-  import { shouldShowStartButton, shouldShowJoinButton  } from '../../utils/meetingUtils';
+import { mapMutations } from 'vuex';
+import MeetingDetail from './MeetingDetail.vue';
+import { shouldShowStartButton, shouldShowJoinButton } from '../../../utils/meetingUtils';
+// Import your datetime component if needed
+// import Datetime from 'vue-datetime';
 
-export default{
+const STATUS_STARTED = 'Started';
+
+export default {
   components: {
-    MeetingDetail
+    MeetingDetail,
+    // Datetime
+  },
+  props: {
+    projectSlug: { type: String, required: true },
+    notAuthorize: { type: Boolean, default: false },
+    members: { type: Array, default: () => [] }
+  },
+  data() {
+    return {
+      meeting: {},
+      isEditing: false,
+      errors: {},
+      loader: false,
+      loading: false,
+      loaderId: null,
+      auth: this.$store.state.currentUser.user,
+      form: {
+        meeting_id: '',
+        topic: '',
+        agenda: '',
+        start_time: '',
+        duration: '',
+        join_before_host: '',
+        timezone: '',
+        password: '',
+      }
+    };
+  },
+  created() {
+    this.$bus.$on('view-meeting-modal', this.getMeeting);
   },
 
-	props:['projectSlug','notAuthorize','members'],
+  beforeDestroy() {
+    this.$bus.$off('view-meeting-modal', this.getMeeting);
+  },
 
-    data() {	
-     return{
-      meeting:[],
-        isEditing: false,
-        errors:{},
-        loader:false,
-        loading:false,
-        loaderId: null,
-        auth:this.$store.state.currentUser.user,
-        form:{
-          meeting_id:'',
-          topic:'',
-          agenda:'',
-          start_time:'',
-          duration:'',
-          join_before_host:'',
-          timezone:'',
-          password:'',
-        }
-     };
-     },
-
-   created(){
-    this.$bus.$on('view-meeting-modal', this.getMeeting);
-    },
-
-    beforeDestroy(){
-     this.$bus.$off('view-meeting-modal', this.getMeeting);
-    },
-
-    methods:{
-      ...mapMutations('meeting', {
+  methods: {
+    ...mapMutations('meeting', {
       updateMeetingInState: 'meetingUpdate',
       removeMeetingFromState: 'removeMeetingFromState',
     }),
 
-    emitInitializeMeting(action, meeting) {
+    emitInitializeMeeting(action, meeting) {
       this.$bus.$emit('initialize-meeting', action, meeting);
       this.meetingModalClose();
     },
@@ -211,14 +216,12 @@ export default{
       return shouldShowJoinButton(meeting, this.auth, this.members);
     },
 
-    updateMeeting(id){
-      this.initiliazeUpdateMeeting();
-
+    updateMeeting(id) {
+      this.initializeUpdateMeeting();
       const filteredForm = this.filterForm();
-
-      axios.patch(`/api/v1/projects/${this.projectSlug}/meetings/${id}`,filteredForm)
+      axios.patch(`/api/v1/projects/${this.projectSlug}/meetings/${id}`, filteredForm)
         .then(response => {
-          this.meeting=response.data.meeting;
+          this.meeting = response.data.meeting;
           this.updateMeetingInState(this.meeting);
           this.$vToastify.success(response.data.message);
           this.meetingEditClose();
@@ -227,30 +230,29 @@ export default{
           this.handleErrorResponse(error);
         }).finally(() => {
           this.setLoading('', 'stop');
-          this.loading=false;
-      });
+          this.loading = false;
+        });
     },
 
-    deleteMeeting(meeting){
+    deleteMeeting(meeting) {
       this.setLoading('Deleting meeting, please wait...', 'start');
-
       this.loader = true;
-
-     axios.delete(`/api/v1/projects/${this.projectSlug}/meetings/${meeting}`)
+      axios.delete(`/api/v1/projects/${this.projectSlug}/meetings/${meeting}`)
         .then(response => {
           this.meetingModalClose();
           this.removeMeetingFromState(meeting);
           this.$vToastify.success(response.data.message);
         })
         .catch(error => {
-          this.$vToastify.error('Meeting deletion failed');
+          const msg = error.response && error.response.data && error.response.data.message ? error.response.data.message : 'Meeting deletion failed';
+          this.$vToastify.error(msg);
         }).finally(() => {
           this.setLoading('', 'stop');
-          this.loader=false;
+          this.loader = false;
       });
     },
-
-    getMeeting(meetingId){
+    
+    getMeeting(meetingId) {
       this.$modal.show('ViewMeeting');
       axios.get(`/api/v1/projects/${this.projectSlug}/meetings/${meetingId}`)
         .then(response => {
@@ -258,7 +260,8 @@ export default{
           this.form.agenda=this.meeting.agenda;
         })
         .catch(error => {
-          this.$vToastify.error('Meeting Loading failed');
+          const msg = error.response && error.response.data && error.response.data.message ? error.response.data.message : 'Meeting Loading failed';
+          this.$vToastify.error(msg);
         });
     },
 
@@ -275,11 +278,12 @@ export default{
 
     meetingModalClose(){
            this.$modal.hide('ViewMeeting');
-           this.meeting=[];
+           this.meeting={};
     },
 
     filterForm() {
-      return Object.fromEntries(Object.entries(this.form).filter(([key, value]) => value !== null && value !== ''));
+      // Only filter out null/undefined, not false/0
+      return Object.fromEntries(Object.entries(this.form).filter(([key, value]) => value !== null && value !== undefined && value !== ''));
     },
 
     initiliazeUpdateMeeting()

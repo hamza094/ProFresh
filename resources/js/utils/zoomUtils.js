@@ -18,19 +18,21 @@ export async function fetchTokens(action, role, meetingId, toastify) {
   ]);
 }
 
-export async function setupAndJoinMeeting(action, meeting, jwt_token, zak_token, auth) {
+export async function setupAndJoinMeeting(action, meeting, jwt_token, zak_token, auth, toastify) {
   const client = ZoomMtgEmbedded.createClient();
-
   const meetingSDKElement = document.getElementById('meetingSDKElement');
   client.init({
     zoomAppRoot: meetingSDKElement,
     language: 'en-US',
-    patchJsMedia: true, 
+    patchJsMedia: true,
     leaveOnPageUnload: true
   });
 
+  // Use correct env var for your build tool
+  const sdkKey = import.meta.env.VITE_ZOOM_SDK_KEY;
+
   const meetingConfig = {
-    sdkKey: process.env.MIX_ZOOM_SDK_KEY,
+    sdkKey: sdkKey,
     signature: jwt_token,
     meetingNumber: meeting.meeting_id,
     password: meeting.password,
@@ -41,5 +43,10 @@ export async function setupAndJoinMeeting(action, meeting, jwt_token, zak_token,
     meetingConfig.zak = zak_token;
   }
 
-  await client.join(meetingConfig);
+  try {
+    await client.join(meetingConfig);
+  } catch (err) {
+    if (toastify) toastify.error('Failed to join meeting. Please try again.');
+    throw err;
+  }
 }

@@ -117,7 +117,7 @@ export default{
       'setInvitations']),
    
         loadUser(){
-         axios.get('/api/v1/users/'+this.$route.params.id).
+         axios.get('/api/v1/users/'+this.$route.params.uuid).
          then(response=>{
           const user = response.data.user;
           this.updateUser(user);

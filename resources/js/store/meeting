@@ -1,3 +1,4 @@
+
 const state = {
   meetings:{
     data: [],
@@ -22,15 +23,18 @@ setMeetings(state,meetingsData) {
   setMessage(state,message) {
     state.message = message;
   },
+
   removeMeetingFromState(state, meetingId){
     const index = state.meetings.data.findIndex(meeting => meeting.id === meetingId);
     if (index !== -1) {
       state.meetings.data.splice(index, 1);
     }
   },
+
    addMeeting(state, meeting) {
     state.meetings.data.unshift(meeting);
   },
+
   meetingUpdate(state, updatedMeeting) {
     const index = state.meetings.data.findIndex(meeting => meeting.id === updatedMeeting.id);
     if (index !== -1) {
@@ -48,8 +52,8 @@ const actions = {
         commit('setMessage', response.data.message);
       })
       .catch(error => {
-        commit('setMeetings', { data: [], links: {}, meta: {} });
-        commit('setMessage', 'Failed to load project meetings');
+        commit('setMeetings', { meetings: { data: [], links: {}, meta: {} } });
+        commit('setMessage', error.response?.data?.message || 'Failed to load project meetings');
       });
   },
    updateMeetingStatus({ commit }, { id, status }) {
