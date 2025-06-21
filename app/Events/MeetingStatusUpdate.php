@@ -14,7 +14,10 @@ use App\Models\Meeting;
 
 class MeetingStatusUpdate implements ShouldBroadcast
 {
-    public $meeting;
+    /**
+     * @var \App\Models\Meeting
+     */
+    public Meeting $meeting;
 
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
@@ -25,8 +28,7 @@ class MeetingStatusUpdate implements ShouldBroadcast
      */
     public function __construct(Meeting $meeting)
     {
-        $this->meeting=$meeting;
-
+        $this->meeting = $meeting;
     }
 
     public function broadcastOn()
@@ -39,7 +41,10 @@ class MeetingStatusUpdate implements ShouldBroadcast
      *
      * @return \Illuminate\Broadcasting\Channel|array
      */
-    public function broadcastWith()
+    /**
+     * @return array<string, mixed>
+     */
+    public function broadcastWith(): array
     {
         return (new MeetingsResource($this->meeting))
               ->resolve();

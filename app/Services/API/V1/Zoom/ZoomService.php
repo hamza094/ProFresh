@@ -120,6 +120,9 @@ final class ZoomService implements Zoom
         );
     }
 
+    /**
+     * @param array<string, mixed> $validated
+     */
     public function createMeeting(array $validated, User $user): Meeting
     {
         if (!$user->isConnectedToZoom()) 
@@ -132,6 +135,9 @@ final class ZoomService implements Zoom
             ->dtoOrFail();
     }
 
+    /**
+     * @param array<string, mixed> $validated
+     */
     public function updateMeeting(array $validated, User $user): SaloonResponse
     {
         if (!$user->isConnectedToZoom()) 

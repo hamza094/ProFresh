@@ -16,16 +16,20 @@ class DeleteMeetingWebhook implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
+    /**
+     * @var int|string
+     */
     public $meeting_id;
 
     /**
-     * Create a new job instance.
-     *
-     * @return void
+     * @var int
      */
-
     public $tries = 2;
 
+    /**
+     * @param array<string, mixed> $data
+     * @return void
+     */
     public function __construct(array $data)
     {
         $this->meeting_id = $data['meeting_id'];
@@ -51,7 +55,10 @@ class DeleteMeetingWebhook implements ShouldQueue
         }
     }
 
-    public function failed(\Exception $exception)
+    /**
+     * @return void
+     */
+    public function failed(\Exception $exception): void
     {
         Log::channel('webhook')->error('Delete Meeting webhook job failed', [
             'error' => $exception->getMessage(),
@@ -59,6 +66,9 @@ class DeleteMeetingWebhook implements ShouldQueue
         ]);
     }
 
+    /**
+     * @return array<int, int>
+     */
     public function backoff(): array
     {
       return [5, 30];

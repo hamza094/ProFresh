@@ -36,6 +36,9 @@ class GetAccessTokenRequest extends Request implements HasBody
         return $this->oauthConfig->getTokenEndpoint();
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function defaultBody(): array
     {
         return [

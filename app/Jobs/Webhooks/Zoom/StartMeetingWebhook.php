@@ -25,8 +25,7 @@ class StartMeetingWebhook implements ShouldQueue
     public string $start_time;
 
     /**
-     * Create a new job instance.
-     *
+     * @param array<string, mixed> $data
      * @return void
      */
     public function __construct(array $data)
@@ -96,7 +95,10 @@ class StartMeetingWebhook implements ShouldQueue
         Notification::send($members, new MeetingStarted($notificationData));
     }
 
-    private function validateStatus($meeting): bool
+    /**
+     * @param \App\Models\Meeting $meeting
+     */
+    private function validateStatus(\App\Models\Meeting $meeting): bool
     {
        if($meeting->status === MeetingState::START->value){
             Log::channel('webhook')->info("Meeting already started for meeting_id: {$this->meeting_id}");
@@ -105,7 +107,10 @@ class StartMeetingWebhook implements ShouldQueue
         return true;
     }
 
-    public function failed(Throwable $exception)
+    /**
+     * @return void
+     */
+    public function failed(\Throwable $exception): void
     {
         Log::error('Meeting Started webhook job failed', [
             'meeting_id' => $this->meeting_id,

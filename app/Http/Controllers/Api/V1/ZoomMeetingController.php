@@ -23,6 +23,9 @@ use App\Exceptions\Integrations\Zoom\ZoomException;
 
 class ZoomMeetingController extends Controller
 {
+    /**
+     * @var \App\Services\Api\V1\ExceptionService
+     */
     protected $exceptionService;
 
     public function __construct(ExceptionService $exceptionService)

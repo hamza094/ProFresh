@@ -24,6 +24,9 @@ class UpdateMeeting extends Request implements HasBody
      */
     protected Method $method = Method::PATCH;
 
+    /**
+     * @param array<string, mixed> $validated
+     */
      public function __construct(
        private readonly array $validated,
     ) {}
@@ -36,6 +39,9 @@ class UpdateMeeting extends Request implements HasBody
         return '/meetings/'.$this->validated['meeting_id'];
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     protected function defaultBody(): array
     {
         return array_filter([
@@ -51,6 +57,9 @@ class UpdateMeeting extends Request implements HasBody
         });
     }
 
+    /**
+     * @return array<int, \Saloon\RateLimitPlugin\Limit>
+     */
     protected function resolveLimits(): array
     {
       return [

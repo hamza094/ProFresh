@@ -8,6 +8,9 @@ use App\Http\Resources\Api\V1\UsersResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Carbon\Carbon;
 
+  /**
+  * @mixin \App\Models\Task
+  */
 class UserTasksResource extends JsonResource
 {
     /**
@@ -16,10 +19,6 @@ class UserTasksResource extends JsonResource
      * @param  \Illuminate\Http\Request  $request
      * @return array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable
      */
-
-   /**
-   * @mixin \App\Models\Task
-   */
     public function toArray($request)
     {
         return [

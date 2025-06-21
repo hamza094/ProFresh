@@ -33,11 +33,17 @@ class CreateMeeting extends Request implements HasBody
         return '/users/me/meetings';
     }
 
+    /**
+     * @param array<string, mixed> $validated
+     */
      public function __construct(
       private readonly array $validated,
     ) {}
 
-      protected function defaultBody(): array
+    /**
+     * @return array<string, mixed>
+     */
+    protected function defaultBody(): array
     {
       return [
         'topic'=> $this->validated['topic'],
@@ -54,6 +60,9 @@ class CreateMeeting extends Request implements HasBody
         return Meeting::fromResponse($response->json());
     }
 
+    /**
+     * @return array<int, \Saloon\RateLimitPlugin\Limit>
+     */
     protected function resolveLimits(): array
     {
       return [

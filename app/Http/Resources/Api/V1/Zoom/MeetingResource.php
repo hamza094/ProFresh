@@ -7,15 +7,18 @@ use Illuminate\Support\Str;
 use App\Http\Resources\Api\V1\UsersResource;
 use Carbon\Carbon;
 
+/**
+ * @mixin \App\Models\Meeting
+ */
 class MeetingResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable
+     * @return array<string, mixed>
      */
-    public function toArray($request)
+    public function toArray($request): array
     {
         return [
            'id'=>$this->id,

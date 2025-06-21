@@ -15,52 +15,61 @@ use App\Interfaces\Zoom;
 use Faker\Generator;
 use App\Models\User;
 
+/**
+ * @template TKey of array-key
+ * @template TValue
+ */
 final class ZoomServiceFake implements Zoom
 {
-	private ZoomException $failureException;
-    private Generator $faker;
+    /**
+     * @var Collection<int, array<string, mixed>>
+     */
     public Collection $meetingsToCreate;
-	public string $authorizationUrl;
+    public string $authorizationUrl;
     public string $state;
     public string $codeVerifier;
+    private ?ZoomException $failureException = null;
 
     public function __construct()
     {
-       $this->meetingsToCreate = new Collection();
-    } 
+        $this->meetingsToCreate = new Collection();
+    }
 
     public function getAuthRedirectDetails(): AuthorizationRedirectDetails
     {
-      return new AuthorizationRedirectDetails(
-          authorizationUrl: $this->authorizationUrl,
-          state: $this->state,
-          codeVerifier: $this->codeVerifier,
- );
-
- }
-
- public function authorize(
-   AuthorizationCallbackDetails $callbackDetails
-   ): AccessTokenDetails {
-
-    if (isset($this->failureException)) {
-         throw $this->failureException;
+        return new AuthorizationRedirectDetails(
+            authorizationUrl: $this->authorizationUrl,
+            state: $this->state,
+            codeVerifier: $this->codeVerifier,
+        );
     }
 
-    return new AccessTokenDetails(
-        accessToken: 'access-token-here',
-        refreshToken: 'refresh-token-here',
-        expiresAt: now()->addWeek()->toDateTimeImmutable(),
-    );
- }
+    public function authorize(
+        AuthorizationCallbackDetails $callbackDetails
+    ): AccessTokenDetails {
+        if (isset($this->failureException)) {
+            throw $this->failureException;
+        }
+        return new AccessTokenDetails(
+            accessToken: 'access-token-here',
+            refreshToken: 'refresh-token-here',
+            expiresAt: now()->addWeek()->toDateTimeImmutable(),
+        );
+    }
 
-  public function shouldFailWithException(ZoomException $exception): self
- {
-      $this->failureException = $exception;
-      return $this;
- }
+    /**
+     * @return self<array-key, array<string, mixed>>
+     */
+    public function shouldFailWithException(ZoomException $exception): self
+    {
+        $this->failureException = $exception;
+        return $this;
+    }
 
-  public function buildAuthorizationUrlUsing(
+    /**
+     * @return self<array-key, array<string, mixed>>
+     */
+    public function buildAuthorizationUrlUsing(
         string $authorizationUrl,
         string $state,
         string $codeVerifier
@@ -69,85 +78,78 @@ final class ZoomServiceFake implements Zoom
         $this->state = $state;
         $this->codeVerifier = $codeVerifier;
         return $this;
- }
-
- public function createMeeting(array $validated,User $user): Meeting
- {  
-
-    if(isset($this->failureException)) {
-      throw $this->failureException;
     }
 
-    $this->meetingsToCreate->push($validated);
-
-    return $this->fakeMeeting();
-
- }
-
- public function updateMeeting(array $validated,User $user): \Illuminate\Http\JsonResponse
- {
-    if(isset($this->failureException)) {
-      throw $this->failureException;
+    /**
+     * @param array<string, mixed> $validated
+     */
+    public function createMeeting(array $validated, User $user): Meeting
+    {
+        if (isset($this->failureException)) {
+            throw $this->failureException;
+        }
+        $this->meetingsToCreate->push($validated);
+        return $this->fakeMeeting();
     }
 
-    return response()->json(204);  
-
- }
-
-  public function deleteMeeting(int $meetingId,User $user): \Illuminate\Http\JsonResponse
-  {
-    if(isset($this->failureException)) {
-      throw $this->failureException;
+    /**
+     * @param array<string, mixed> $validated
+     */
+    public function updateMeeting(array $validated, User $user): \Illuminate\Http\JsonResponse
+    {
+        if (isset($this->failureException)) {
+            throw $this->failureException;
+        }
+        return response()->json(204);
     }
 
-    return response()->json(204);  
- }
+    public function deleteMeeting(int $meetingId, User $user): \Illuminate\Http\JsonResponse
+    {
+        if (isset($this->failureException)) {
+            throw $this->failureException;
+        }
+        return response()->json(204);
+    }
 
-   public function getZakToken($user): string
-   {
-     $token="zak&token";
-     return  $token;
-   }
+    public function getZakToken(User $user): string
+    {
+        $token = "zak&token";
+        return $token;
+    }
 
-   private function fakeMeeting(): Meeting
- {
-    $faker = app(Generator::class);
-    //$topic ??= $faker->word;
-    //$agenda ??= $faker->sentence;
+    private function fakeMeeting(): Meeting
+    {
+        $faker = app(Generator::class);
+        return new Meeting(
+            meeting_id: 1234,
+            topic: 'Topic Of Meeting',
+            agenda: 'this is the agenda of meeting',
+            created_at: '2024-05-18 18:00:07',
+            duration: 30,
+            start_time: '2024-05-27 18:00:07',
+            start_url: 'https://zoom.us/s/1234567890?pwd=yourpassword',
+            join_url: 'https://zoom.us/j/1234567890?pwd=yourpassword',
+            status: 'waiting',
+            timezone: 'UTC',
+            password: 'herpku',
+            join_before_host: false,
+        );
+    }
 
-    return new Meeting(
-        meeting_id: 1234,
-        topic: 'Topic Of Meeting',
-        agenda: 'this is the agenda of meeting',
-        created_at:'2024-05-18 18:00:07',
-        duration: 30,
-        start_time:'2024-05-27 18:00:07',
-        start_url:'https://zoom.us/s/1234567890?pwd=yourpassword', 
-        join_url:'https://zoom.us/j/1234567890?pwd=yourpassword',
-        status: 'waiting',
-        timezone: 'UTC',
-        password: 'herpku',
-        join_before_host:false,
-      );
- }
+    public function assertNoMeetingsCreated(): void
+    {
+        Assert::assertEmpty($this->meetingsToCreate, 'Meeting was not created.');
+    }
 
-  public function assertNoMeetingsCreated(): void
-  {
-    Assert::assertEmpty($this->meetingsToCreate,'Meeting was not created.');
-  }
-
-public function assertMeetingCreated(string $topic,
- bool $agenda,int $duration): void 
-{
-   $meetingIsToBeCreated = $this->meetingsToCreate
-    ->where('topic', $topic)
-    ->where('agenda', $agenda)
-    ->where('duration', $duration)
-    ->isNotEmpty();
-
- Assert::assertTrue($meetingIsToBeCreated,'Meetings were created.');
-}
-
+    public function assertMeetingCreated(string $topic, string $agenda, int $duration): void
+    {
+        $meetingIsToBeCreated = $this->meetingsToCreate
+            ->where('topic', $topic)
+            ->where('agenda', $agenda)
+            ->where('duration', $duration)
+            ->isNotEmpty();
+        Assert::assertTrue($meetingIsToBeCreated, 'Meetings were created.');
+    }
 }
 
 

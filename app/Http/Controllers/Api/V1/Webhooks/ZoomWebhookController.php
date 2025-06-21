@@ -18,6 +18,7 @@ class ZoomWebhookController extends Controller
     {
         $object = $request->input('payload.object');
 
+        /** @var array<string, mixed> $object */
         UpdateMeetingWebhook::dispatch([
             'meeting_id' => $object['id'],
             'update_data' => collect($object)->except(['id', 'uuid'])->toArray()

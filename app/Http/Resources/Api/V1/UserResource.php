@@ -7,6 +7,9 @@ use App\Http\Resources\Api\V1\UserInfoResource;
 use App\Http\Resources\Api\V1\ProjectInvitaionResource;
 use App\Http\Resources\Api\V1\Admin\RolesResource;
 
+/**
+ * @mixin \App\Models\User
+ */
 class UserResource extends JsonResource
 {
     /**

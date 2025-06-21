@@ -14,12 +14,15 @@ class MeetingEnded extends Notification implements ShouldBroadcast
 {
     use Queueable;
 
+    /**
+     * @var array<string, mixed>
+     */
     protected array $data;
 
     /**
      * Create a new notification instance.
      *
-     * @param array $data
+     * @param array<string, mixed> $data
      * @return void
      */
     public function __construct(array $data)
@@ -31,7 +34,7 @@ class MeetingEnded extends Notification implements ShouldBroadcast
      * Get the notification's delivery channels.
      *
      * @param  mixed  $notifiable
-     * @return array
+     * @return array<int, string>
      */
     public function via($notifiable): array
     {
@@ -69,6 +72,9 @@ class MeetingEnded extends Notification implements ShouldBroadcast
             ]);
     }
 
+    /**
+     * @param mixed $notifiable
+     */
     public function toBroadcast($notifiable): BroadcastMessage
     {
         return new BroadcastMessage([
@@ -82,7 +88,7 @@ class MeetingEnded extends Notification implements ShouldBroadcast
      * Get the array representation of the notification.
      *
      * @param  mixed  $notifiable
-     * @return array
+     * @return array<string, mixed>
      */
     public function toArray($notifiable): array
     {

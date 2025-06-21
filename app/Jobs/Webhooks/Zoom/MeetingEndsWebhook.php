@@ -27,8 +27,7 @@ class MeetingEndsWebhook implements ShouldQueue
     public ?string $end_time;
 
     /**
-     * Create a new job instance.
-     *
+     * @param array<string, mixed> $data
      * @return void
      */
     public function __construct(array $data)
@@ -94,7 +93,10 @@ class MeetingEndsWebhook implements ShouldQueue
         Notification::send($members, new MeetingEnded($notificationData));
     }
 
-    private function validateStatus($meeting): bool
+    /**
+     * @param \App\Models\Meeting $meeting
+     */
+    private function validateStatus(\App\Models\Meeting $meeting): bool
     {
         if ($meeting->status === MeetingState::ENDS->value) {
             Log::channel('webhook')->info("Meeting already ended for meeting_id: {$this->meeting_id}");
@@ -103,7 +105,10 @@ class MeetingEndsWebhook implements ShouldQueue
         return true;
     }
 
-    public function failed(Throwable $exception)
+    /**
+     * @return void
+     */
+    public function failed(\Throwable $exception): void
     {
         Log::error('Meeting Ended webhook job failed', [
             'meeting_id' => $this->meeting_id,

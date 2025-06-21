@@ -39,7 +39,10 @@ class VerifyZoomWebhook
 
      private function isTimestampInvalid(?string $timestamp): bool
     {
-        return abs(time() - $timestamp) > 300;
+        if (!is_numeric($timestamp)) {
+            return true;
+        }
+        return abs(time() - (int)$timestamp) > 300;
     }
 
     private function isSignatureValid(string $providedSignature, string $timestamp, Request $request): bool

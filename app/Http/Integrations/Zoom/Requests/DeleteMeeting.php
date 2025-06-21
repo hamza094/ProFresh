@@ -15,7 +15,7 @@ class DeleteMeeting extends Request
 {
     use HasRateLimits;
 
-       public function __construct(
+    public function __construct(
        private readonly int $meetingId,
     ) {}
 
@@ -32,6 +32,9 @@ class DeleteMeeting extends Request
         return '/meetings/'.$this->meetingId;
     }
 
+    /**
+     * @return array<int, \Saloon\RateLimitPlugin\Limit>
+     */
     protected function resolveLimits(): array
     {
       return [

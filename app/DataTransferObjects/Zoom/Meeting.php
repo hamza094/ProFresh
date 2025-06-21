@@ -25,6 +25,9 @@ final class Meeting
 
  ) {}
 
+   /**
+    * @param array<string, mixed> $response
+    */
    public static function fromResponse(array $response): static
   {
    return new static(

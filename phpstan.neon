@@ -14,6 +14,10 @@ parameters:
          -   */app/Paypal/Paypal.php
          -   */app/Paypal/PaypalAgreement.php
          -   */app/Channels/DatabaseChannel.php
+         -   */app/Http/Controllers/Api/V1/Admin/*
+         -   */app/Repository/Admin/*
+         -   */app/Http/Resources/Api/V1/Admin/*
+
 
 
     ignoreErrors:

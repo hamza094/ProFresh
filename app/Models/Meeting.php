@@ -14,9 +14,7 @@ class Meeting extends Model
     protected $guarded=[];
 
     /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
+     * @var array<int, string>
      */
     protected $hidden = [
         'password',
@@ -25,9 +23,7 @@ class Meeting extends Model
     ];
 
     /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
+     * @var array<string, string>
      */
     protected $casts = [
         'password' => 'encrypted',
@@ -35,21 +31,35 @@ class Meeting extends Model
         'start_url'=>'encrypted',
     ];
 
-
-    public function user(){
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\User, self>
+     */
+    public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
         return $this->belongsTo(User::class);
     }
 
-    
-    public function project(){
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Project, self>
+     */
+    public function project(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
         return $this->belongsTo(Project::class);
     }
 
+    /**
+     * @param Builder<\App\Models\Meeting> $query
+     * @return Builder<\App\Models\Meeting>
+     */
     public function scopePrevious(Builder $query): Builder
     {
         return $query->where('start_time', '<', Carbon::now());
     }
 
+    /**
+     * @param Builder<\App\Models\Meeting> $query
+     * @return Builder<\App\Models\Meeting>
+     */
     public function scopeScheduled(Builder $query): Builder
     {
         return $query->where('start_time', '>=', Carbon::now());

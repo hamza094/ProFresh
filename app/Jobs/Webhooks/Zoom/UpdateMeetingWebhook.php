@@ -16,12 +16,18 @@ class UpdateMeetingWebhook implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
+    /**
+     * @var int|string
+     */
     public $meeting_id;
+
+    /**
+     * @var array<string, mixed>
+     */
     public $update_data;
 
     /**
-     * Create a new job instance.
-     *
+     * @param array<string, mixed> $data
      * @return void
      */
     public function __construct(array $data)
@@ -52,13 +58,17 @@ class UpdateMeetingWebhook implements ShouldQueue
     }
 }
 
-private function isMeetingUpdated($meeting, $updateData): bool
-{
-    foreach ($updateData as $key => $value) {
-        if ($meeting->$key !== $value) {
-            return true;
+    /**
+     * @param \App\Models\Meeting $meeting
+     * @param array<string, mixed> $updateData
+     */
+    private function isMeetingUpdated(\App\Models\Meeting $meeting, array $updateData): bool
+    {
+        foreach ($updateData as $key => $value) {
+            if ($meeting->$key !== $value) {
+                return true;
+            }
         }
-    }
         return false;
     }
 
@@ -70,6 +80,9 @@ private function isMeetingUpdated($meeting, $updateData): bool
         ]);
     }
 
+    /**
+     * @return array<int, int>
+     */
     public function backoff(): array
     {
       return [5, 30];

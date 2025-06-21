@@ -31,12 +31,14 @@ class GetRefreshTokenRequest extends Request implements HasBody
     /**
      * The endpoint for the request
      */
-
     public function resolveEndpoint(): string
     {
         return $this->oauthConfig->getTokenEndpoint();
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function defaultBody(): array
     {
         return [
