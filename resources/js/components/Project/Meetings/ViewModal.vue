@@ -120,16 +120,16 @@
         </template>
       </meeting-detail>
 
-       <li v-if="!isEditing && Object.keys(meeting).length > 0">
-          <button v-if="canStartMeeting(meeting)" class="btn btn-secondary btn-sm" @click.prevent="emitInitializeMeeting('start',meeting)">Start Meeting As Owner</button>
+       <li v-if="!isEditing">
+          <button v-if="canStartMeeting(meeting, auth, notAuthorize)" class="btn btn-secondary btn-sm" @click.prevent="emitInitializeMeeting('start',meeting)">Start Meeting As Owner</button>
         
-          <button v-else-if="canJoinMeeting(meeting)" class="btn btn-secondary btn-sm" @click.prevent="emitInitializeMeeting('join',meeting)">Join Meeting</button>
+          <button v-else-if="canJoinMeeting(meeting, auth, members)" class="btn btn-secondary btn-sm" @click.prevent="emitInitializeMeeting('join',meeting)">Join Meeting</button>
 
         </li>
 
     </ul>
 
-    <div v-if="Object.keys(meeting).length > 0" class="mt-3">
+    <div class="mt-3">
     <div v-if="!isEditing">
     <button class="btn btn-danger float-right mb-3" @click.prevent="deleteMeeting(meeting.id)" :disabled="loader">{{ loader ? 'Deleting...' : 'Delete' }}</button>
     <button class="btn btn-primary float-left mb-3" @click.prevent="meetingEdit()">Edit</button>
@@ -153,21 +153,14 @@
 import { mapMutations } from 'vuex';
 import MeetingDetail from './MeetingDetail.vue';
 import { shouldShowStartButton, shouldShowJoinButton } from '../../../utils/meetingUtils';
-// Import your datetime component if needed
-// import Datetime from 'vue-datetime';
 
 const STATUS_STARTED = 'Started';
 
 export default {
   components: {
     MeetingDetail,
-    // Datetime
   },
-  props: {
-    projectSlug: { type: String, required: true },
-    notAuthorize: { type: Boolean, default: false },
-    members: { type: Array, default: () => [] }
-  },
+  props: ['projectSlug','members','notAuthorize'],
   data() {
     return {
       meeting: {},
@@ -189,6 +182,7 @@ export default {
       }
     };
   },
+
   created() {
     this.$bus.$on('view-meeting-modal', this.getMeeting);
   },
@@ -208,12 +202,12 @@ export default {
       this.meetingModalClose();
     },
 
-    canStartMeeting(meeting) {
-      return shouldShowStartButton(meeting, this.auth, !this.notAuthorize);
+    canStartMeeting(meeting, auth, notAuthorize) {
+      return shouldShowStartButton(meeting, auth, notAuthorize);
     },
 
-    canJoinMeeting(meeting) {
-      return shouldShowJoinButton(meeting, this.auth, this.members);
+    canJoinMeeting(meeting, auth, members) {
+      return shouldShowJoinButton(meeting, auth, members);
     },
 
     updateMeeting(id) {
@@ -253,13 +247,16 @@ export default {
     },
     
     getMeeting(meetingId) {
-      this.$modal.show('ViewMeeting');
+      this.$Progress.start();
       axios.get(`/api/v1/projects/${this.projectSlug}/meetings/${meetingId}`)
         .then(response => {
-          this.meeting=response.data;
+          this.meeting=response.data.data;
           this.form.agenda=this.meeting.agenda;
+          this.$Progress.finish();
+          this.$modal.show('ViewMeeting');
         })
         .catch(error => {
+          this.$Progress.finish();
           const msg = error.response && error.response.data && error.response.data.message ? error.response.data.message : 'Meeting Loading failed';
           this.$vToastify.error(msg);
         });

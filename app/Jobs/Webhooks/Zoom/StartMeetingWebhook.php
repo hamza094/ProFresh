@@ -119,6 +119,4 @@ class StartMeetingWebhook implements ShouldQueue
         ]);
     }
 
-
-
 }
