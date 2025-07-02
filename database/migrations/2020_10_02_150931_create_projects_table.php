@@ -21,9 +21,9 @@ class CreateProjectsTable extends Migration
             $table->mediumText("about");
             $table->foreignId('user_id')->constrained()
                   ->onDelete('cascade');
-            $table->foreignIdFor(Stage::class)
-                  ->nullOnDelete()
-                  ->constrained();
+            $table->foreignIdFor(Stage::class)->nullable()
+                  ->constrained()
+                  ->nullOnDelete();
             $table->text('notes')->nullable();
             $table->string('postponed_reason')->nullable();
             $table->softDeletes();

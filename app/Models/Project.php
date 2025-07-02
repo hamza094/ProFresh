@@ -47,7 +47,6 @@ class Project extends Model
      * @var array<string>
    */
     protected static $recordableEvents = ['created','updated','deleted','restored'];
-
     
     /**
     * @var string
@@ -268,6 +267,25 @@ class Project extends Model
     public function meetings(): HasMany
     {
         return $this->hasMany(Meeting::class);
+    }
+
+    public static function bootRecordActivity(): void
+    {
+        foreach (static::recordableEvents() as $event) {
+            static::$event(function ($model) use ($event) {
+                // Only record activity on soft delete, not force delete
+                if ($event === 'deleted' && method_exists($model, 'isForceDeleting') && $model->isForceDeleting()) {
+                    return;
+                }
+                $model->recordActivity($model->activityDescription($event), []);
+            });
+
+            if ($event === 'updated') {
+                static::updating(function ($model) {
+                    $model->oldAttributes = $model->getOriginal();
+                });
+            }
+        }
     }
 
 }

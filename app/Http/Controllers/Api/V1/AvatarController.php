@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Api\V1;
 use Illuminate\Http\Request;
 use App\Models\Project;
 use App\Models\User;
-use F9Web\ApiResponseHelpers;
 use Illuminate\Http\JsonResponse;
 use App\Services\Api\V1\FileService;
 use App\Http\Requests\Api\V1\UserRequest;
@@ -16,45 +15,59 @@ use App\Enums\FileType;
 
 class AvatarController extends ApiController
 {
-  use ApiResponseHelpers;
+    /**
+     * Uploads and updates the user's avatar.
+     *
+     * @param User $user
+     * @param Request $request
+     * @param FileService $service
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function avatar(User $user, Request $request, FileService $service): JsonResponse
+    {
+        $this->authorize('owner', $user);
 
-  public function avatar(User $user, Request $request,FileService $service)
-  {
-    $this->authorize('owner', $user);
+        $request->validate([
+            'avatar' => [
+                'required', 'image', 'max:700', 'mimes:jpeg,png,jpg'
+            ]
+        ]);
 
-    $this->validate(request(), [
-    'avatar'=>[
-        'required', 'image','mimes:jpeg,png,jpg'
-      ]]);
+      $user_path = $service->store($user->uuid,'avatar',FileType::AVATAR);
 
-    $user_path=$service->store($user->id,'avatar',FileType::AVATAR);
+        $user->update(['avatar_path' => $user_path]);
 
-    $user->update(['avatar_path'=>$user_path]);
-
-    return $this->respondWithSuccess([
-      'message'=>'Avatar Updated Successfully',
-      'avatar'=>$user->avatar_path,
-      'path'=>$user->path(),
-    ]);
-  }
-
-  public function removeAvatar(User $user,FileService $service): JsonResponse
-  {
-    $this->authorize('owner', $user);
-
-    if (!$user->avatar) {
-       return $this->respondError('User does not have an avatar');
+        return response()->json([
+            'message' => 'Avatar Updated Successfully',
+            'avatar' => $user->avatar_path,
+            'path' => $user->path(),
+        ], 200);
     }
 
-    try {
-     
-    $service->deleteFile($user);
+    /**
+     * Removes the user's avatar and returns a JSON response.
+     *
+     * @param User $user
+     * @param FileService $service
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function removeAvatar(User $user, FileService $service): JsonResponse
+    {
+        $this->authorize('owner', $user);
 
-    return $this->respondWithSuccess(['message'=>'User avatar has been removed']);
+        if (!$user->avatar) {
+            return response()->json([
+                'message' => 'User does not have an avatar'
+            ], 404);
+        }
 
-    } catch (S3Exception $e) {
-       return $this->respondError($e->getMessage());
+        $service->deleteFile($user);
+
+        return response()->json([
+            'message' => 'User avatar has been removed',
+            'path' => $user->path(),
+        ], 200);
+       
     }
-  }
 
 }

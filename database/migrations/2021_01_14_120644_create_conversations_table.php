@@ -21,8 +21,9 @@ class CreateConversationsTable extends Migration
                   ->collation('utf8mb4_unicode_ci');
             $table->string('file')->nullable();
             $table->foreignId('user_id')
+                  ->nullable()
                   ->constrained()
-                  ->cascadeOnDelete();
+                  ->nullOnDelete();
             $table->foreignId('project_id')
                    ->constrained()
                   ->cascadeOnDelete();

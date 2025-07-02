@@ -19,21 +19,21 @@ class UserRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array
+     * @return array<string, array<int, \Illuminate\Contracts\Validation\Rule>|string>
      */
-    public function rules()
+    public function rules(): array
     {
-      return [
-       'name' => 'required',
-       'email' => 'required',
-       'username'=> 'required|alpha_dash:ascii',
-       'mobile' => 'nullable',
-       'company' => 'nullable',
-       'bio' => 'nullable|max:1500',
-       'address' => 'nullable|max:150',
-       'position' => 'nullable',
-       'current_password'=>['nullable','sometimes','current_password','required_with:password'],
-       'password'=>['nullable','sometimes','required_with:current_password',Password::min(8)->mixedCase()->numbers()]
+        return [
+            'name' => ['sometimes', 'required', 'string', 'max:30'],
+            'email' => ['sometimes', 'required', 'email', 'max:100'],
+            'username' => ['sometimes', 'required', 'alpha_dash:ascii', 'max:30'],
+            'mobile' => ['sometimes', 'nullable', 'digits_between:7,15'],
+            'company' => ['sometimes', 'nullable', 'string', 'max:100'],
+            'bio' => ['sometimes', 'nullable', 'string', 'max:1500'],
+            'address' => ['sometimes', 'nullable', 'string', 'max:150'],
+            'position' => ['sometimes', 'nullable', 'string', 'max:100'],
+            'current_password' => ['sometimes', 'current_password', 'required_with:password'],
+            'password' => ['sometimes', 'required_with:current_password', Password::default()],
         ];
     }
 
@@ -41,6 +41,10 @@ class UserRequest extends FormRequest
     {
       return [
          'current_password.current_password' => 'The given password does not match to current password.',
+          'password.mixed' => 'The password must include both uppercase and lowercase letters.',
+          'password.letters' => 'The password must contain at least one letter.',
+          'password.symbols' => 'The password must include at least one special character (symbol).',
+          'password.numbers' => 'The password must contain at least one number.',
         ];
     }
 }

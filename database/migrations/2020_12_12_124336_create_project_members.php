@@ -15,8 +15,8 @@ class CreateProjectMembers extends Migration
     {
         Schema::create('project_members', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('project_id');
-            $table->integer('user_id');
+            $table->foreignId('project_id')->constrained()->onDelete('cascade');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->boolean('active')->default(0);
             $table->timestamps();
 

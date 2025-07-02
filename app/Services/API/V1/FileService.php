@@ -19,9 +19,8 @@ class FileService
     
 // Stores a file in S3 and returns its public URL
 
-public function store(int $id, string $fileInputName, string $fileType): string
+public function store(int|string $id, string $fileInputName, string $fileType): string
 {
-
     $file = request()->file($fileInputName);
 
     if (!$file) {
@@ -51,7 +50,7 @@ public function store(int $id, string $fileInputName, string $fileType): string
     }
    
     /*Generates a unique file name for the file using the project id and file hash.*/
-   private function getGeneratedFileName(int $id, UploadedFile $file): string
+   private function getGeneratedFileName(int|string $id, UploadedFile $file): string
     {
         return $id . '_' . $file->hashName();
     }
@@ -78,15 +77,37 @@ public function store(int $id, string $fileInputName, string $fileType): string
     return $s3Disk->url($path);
   }
 
-    public function deleteFile(User $user){
-     DB::transaction(function () use ($user) {
+    /**
+     * Deletes the user's avatar file from S3 and clears the avatar_path.
+     * Handles both int and string (UUID) user IDs.
+     *
+     * @param User $user
+     * @return void
+     * @throws \Exception
+     */
+    public function deleteFile(User $user): void
+    {
+        DB::transaction(function () use ($user) {
+            // Use avatar_path if available, fallback to avatar (for legacy)
+            $avatarUrl = $user->avatar_path ?? $user->avatar;
+            if (!$avatarUrl) {
+                return;
+            }
 
-     $filePath=Str::after($user->avatar,'.com/');
+            // Extract the S3 file path robustly
+            $parsed = parse_url($avatarUrl);
+            $filePath = ltrim($parsed['path'] ?? '', '/');
+            if (!$filePath) {
+                // If parsing fails, fallback to Str::after
+                $filePath = \Illuminate\Support\Str::after($avatarUrl, '.com/');
+            }
 
-     Storage::disk('s3')->delete($filePath);
+            if ($filePath) {
+                Storage::disk('s3')->delete($filePath);
+            }
 
-     $user->update(['avatar_path' => null]);
-     });
+            $user->update(['avatar_path' => null]);
+        });
     }
 
 }

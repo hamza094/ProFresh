@@ -14,7 +14,7 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        //
+        \App\Console\Commands\UserProfileDelete::class,
     ];
 
     /**
@@ -47,6 +47,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('backup:run')->daily()->at('01:30');
 
         $schedule->command('telescope:prune --hours=10')->daily();
+        $schedule->command('user:profile-delete')->daily();
     }
 
     /**

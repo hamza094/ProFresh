@@ -8,8 +8,10 @@ use Illuminate\Support\Facades\Hash;
 use App\Mail\PasswordUpdate;
 use Illuminate\Support\Facades\Mail;
 use App\Services\Api\V1\UserService;
+use Spatie\Permission\Models\Role;
 use App\Traits\ProjectSetup;
 use Laravel\Sanctum\Sanctum;
+use App\Actions\DeleteProfileAction;
 use App\Models\Project;
 use App\Models\User;
 use App\Models\UserInfo;
@@ -41,37 +43,50 @@ class UserTest extends TestCase
      /** @test */
     public function auth_user_can_get_his_data()
     {
-      $response=$this->getJson($this->user->path())
-                     ->assertSee($this->user->name);
+        $response = $this->getJson($this->user->path());
+
+        $response->assertStatus(200)
+                 ->assertJsonFragment([
+                     'id' => $this->user->id,
+                     'name' => $this->user->name,
+                     'email' => $this->user->email,
+                 ]);
     }
 
     /** 
     * @test 
     * @dataProvider dataProvider 
     */
-    public function owner_can_update_his_data($newName,$newUsername, $newEmail, $newCompany, $newMobile)
+    public function owner_can_update_his_data($newName, $newUsername, $newEmail, $newCompany, $newMobile)
     {
-      UserInfo::factory()->for($this->user)->create();
+        UserInfo::factory()->for($this->user)->create();
 
-      $this->patchJson($this->user->path(), [
-        'name' => $newName,
-        'email' => $newEmail,
-        'username' => $newUsername,
-        'company' => $newCompany,
-        'mobile' => $newMobile,
-    ]);
+        $response = $this->patchJson($this->user->path(), [
+            'name' => $newName,
+            'email' => $newEmail,
+            'username' => $newUsername,
+            'company' => $newCompany,
+            'mobile' => $newMobile,
+        ]);
 
-      $this->assertDatabaseHas('users', [
-        'id' => $this->user->id,
-        'name' => $newName,
-        'email' => $newEmail,
-    ])
-      ->assertDatabaseHas('user_infos', [
-        'user_id' => $this->user->id,
-        'company' => $newCompany,
-        'mobile' => $newMobile,
-     ]);
-  }
+        $response->assertStatus(200)
+                 ->assertJsonFragment([
+                     'name' => $newName,
+                     'email' => $newEmail,
+                     'username' => $newUsername,
+                 ]);
+
+        $this->assertDatabaseHas('users', [
+            'id' => $this->user->id,
+            'name' => $newName,
+            'email' => $newEmail,
+        ])
+        ->assertDatabaseHas('user_infos', [
+            'user_id' => $this->user->id,
+            'company' => $newCompany,
+            'mobile' => $newMobile,
+        ]);
+    }
 
     /** @test */
     public function it_can_update_user_password()
@@ -102,14 +117,50 @@ class UserTest extends TestCase
       $mailable->assertSeeInHtml($time);
     }
 
+  /** @test */
+  public function user_can_delete_his_profile()
+  {
+    $this->deleteJson('api/v1/users/'.$this->user->uuid);
+
+    $this->assertSoftDeleted($this->user);
+
+    // If projects are soft deleted on user delete:
+    $this->assertSoftDeleted($this->project);
+  }
+
     /** @test */
-    public function user_can_delete_his_profile()
+    public function it_permanently_deletes_user_and_handles_projects_after_15_days()
     {
-      $this->deleteJson('api/v1/users/'.$this->user->id);
+        Role::findOrCreate('Admin', 'sanctum');
 
-      $this->assertModelMissing($this->user);
+        // Create a user and soft delete them 16 days ago
+        $user = User::factory()->create(['deleted_at' => now()->subDays(16)]);
+        $admin = User::factory()->create();
+        $admin->assignRole('Admin');
 
-      $this->assertModelMissing($this->project);
+        $projectNoMembers = Project::factory()->create(['user_id' => $user->id]);
+      
+        $projectWithMembers = Project::factory()->create(['user_id' => $user->id]);
+        $projectWithMembers->members()->attach($admin->id);
+
+        (new DeleteProfileAction())->execute();
+
+        $this->assertDatabaseMissing('users', ['id' => $user->id]);
+        
+        $this->assertDatabaseMissing('projects', ['id' => $projectNoMembers->id]);
+  
+        $projectWithMembersFresh = Project::withTrashed()->find($projectWithMembers->id);
+        $this->assertNotNull($projectWithMembersFresh);
+        $this->assertSoftDeleted('projects', ['id' => $projectWithMembers->id]);
+        $this->assertEquals($admin->id, $projectWithMembersFresh->user_id);
+    }
+
+    /** @test */
+    public function test_user_profile_delete_command_runs()
+    {
+      $this->artisan('user:profile-delete')
+        ->expectsOutput('User profile deletion process completed.')
+        ->assertExitCode(0);
     }
 
   public function dataProvider(): array

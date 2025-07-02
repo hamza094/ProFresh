@@ -29,7 +29,16 @@ trait RecordActivity
     {
         foreach (static::recordableEvents() as $event) {
             static::$event(function ($model) use ($event) {
-                $model->recordActivity($model->activityDescription($event),[]);
+                // Only record activity on soft delete, not force delete, for Project model
+                if (
+                    $event === 'deleted' &&
+                    class_basename($model) === 'Project' &&
+                    method_exists($model, 'isForceDeleting') &&
+                    $model->isForceDeleting()
+                ) {
+                    return;
+                }
+                $model->recordActivity($model->activityDescription($event), []);
             });
 
             if ($event === 'updated') {

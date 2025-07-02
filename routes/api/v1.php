@@ -177,6 +177,7 @@ Route::apiResource('/meetings',ZoomMeetingController::class);
  Route::get('users/search',[InvitationController::class,'search'])->name('users.search');
 
 Route::apiResource('/users',UserController::class);
+Route::delete('/users/{user}/force', [UserController::class, 'forceDestroy'])->name('users.forceDestroy');
 
 //Dashboard Routes
 Route::get('/user/projects',[ProjectDashboardController::class,'userprojects']);

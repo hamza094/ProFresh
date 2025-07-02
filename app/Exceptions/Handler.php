@@ -10,6 +10,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Laravel\Paddle\Exceptions\PaddleException as LaravelPaddleException;
 use Throwable;
+use Aws\S3\Exception\S3Exception;
 use App\Exceptions\Integrations\Zoom\ZoomException;
 use App\Exceptions\Integrations\Zoom\NotFoundException;
 use App\Exceptions\Integrations\Zoom\UnauthorizedException;
@@ -132,5 +133,14 @@ $this->renderable(function (\Illuminate\Validation\ValidationException $e, $requ
                 ], 429);
             }
         });
+
+        $this->renderable(function (S3Exception $e, $request) {
+            if ($request->is('api/*')) {
+                return response()->json([
+                    'message' => 'S3 Error: ' . $e->getMessage(),
+                ], 500);
+            }
+        });
+        
   }
 }

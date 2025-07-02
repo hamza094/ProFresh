@@ -15,8 +15,8 @@ class MessageUser extends Migration
     {
       Schema::create('message_user', function (Blueprint $table){
         $table->id();
-        $table->unsignedInteger('message_id');
-        $table->integer('user_id');
+        $table->foreignId('message_id')->constrained()->onDelete('cascade');
+        $table->foreignId('user_id')->constrained()->onDelete('cascade');
       });
     }
 

@@ -20,10 +20,11 @@ use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use App\Traits\HasSubscription;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use HasFactory, Notifiable, Billable, HasApiTokens, HasRoles, HasSubscription;
+    use HasFactory, Notifiable, Billable, HasApiTokens, HasRoles, HasSubscription, SoftDeletes;
     
     protected $guarded = [];
 
@@ -47,14 +48,22 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array
      */
 
-      /*protected static function boot()
+      protected static function boot()
     {
         parent::boot();
-        static::deleting(function ($user) {
-            $user->projects->each->forceDelete();
 
+        static::creating(function ($user) {
+            $user->uuid = (string) Str::uuid();
         });
-    }*/
+        
+        static::deleting(function ($user) {
+          $user->projects()->delete();
+        });
+
+        static::forceDeleting(function ($user) {
+            $user->notifications()->delete();
+        });
+    }
 
 
     /**
@@ -88,15 +97,6 @@ class User extends Authenticatable implements MustVerifyEmail
          'zoom_expires_at' => 'datetime',
     ];
 
-     protected static function boot(): void
-    {
-        parent::boot();
-
-        // Automatically create a UUID for 'user_id'
-        static::creating(function ($user) {
-            $user->uuid = (string) Str::uuid();
-        });
-    }
 
     public function sendEmailVerificationNotification(): void
    {
@@ -112,7 +112,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function path(): string
     {
-        return "/api/v1/users/{$this->id}";
+        return "/api/v1/users/{$this->uuid}";
     }
 
     /**
@@ -159,7 +159,6 @@ class User extends Authenticatable implements MustVerifyEmail
     public function members($active = false): BelongsToMany
     {
      return $this->belongsToMany(Project::class, 'project_members')
-        ->withTimestamps()
         ->wherePivot('active', $active)
         ->withTimestamps();
     }

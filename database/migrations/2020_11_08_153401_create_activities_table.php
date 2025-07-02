@@ -16,10 +16,14 @@ class CreateActivitiesTable extends Migration
         Schema::create('activities', function (Blueprint $table) {
            $table->id();
            $table->foreignId('user_id')
-                 ->nullOnDelete();
+           ->nullable()
+           ->constrained()
+            ->nullOnDelete();
 
            $table->foreignId('project_id')
-               ->nullable();
+               ->nullable()
+               ->constrained()
+               ->nullOnDelete();
 
            $table->nullableMorphs('subject');
            $table->boolean('is_hidden')

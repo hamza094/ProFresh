@@ -13,6 +13,8 @@ use Laravel\Paddle\Events\WebhookReceived;
 use App\Listeners\PaddleEventListener;
 use Laravel\Paddle\Events\WebhookHandled;
 use App\Listeners\PaddleErrorListener;
+use App\Events\PasswordUpdateEvent;
+use App\Listeners\SendPasswordUpdateEmail;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -33,6 +35,9 @@ class EventServiceProvider extends ServiceProvider
       ],
       UserLogin::class => [
         SaveUserTimezone::class,
+    ],
+      PasswordUpdateEvent::class => [
+        SendPasswordUpdateEmail::class,
     ],
       'App\Events\DashboardActivity' => [],
      'App\Events\ActivityLogged' => [],

@@ -19,7 +19,7 @@ class UserAvatarTest extends TestCase
     {
         parent::setUp();
          // create a user
-        $user=User::factory()->create([
+        $user = User::factory()->create([
              'email'=>'johndoe@example.org',
              'password'=>Hash::make('testpassword'),
              'name'=>'jon doe',
@@ -33,25 +33,25 @@ class UserAvatarTest extends TestCase
     
     /** @test */
     public function a_valid_avatar_must_be_provided(){
-      $user=User::first();
+      $user = User::first();
 
-       $this->postJson(route('user.avatar', ['user' => $user->id]),['avatar' => 'not-an-image'])->assertUnprocessable();
+       $this->postJson(route('user.avatar', ['user' => $user->uuid]),['avatar' => 'not-an-image'])->assertUnprocessable();
     }
 
     /** @test */
-    public function authorize_user_may_add_avatar_to_project()
+    public function authorize_user_may_add_avatar_to_his_profile()
     {
-      $user=User::first();
+      $user = User::first();
 
         Storage::fake('s3');
 
-        $file=UploadedFile::fake()->image('avatar.jpg');
+        $file = UploadedFile::fake()->image('avatar.jpg');
 
-        $response=$this->withoutExceptionHandling()->postJson('api/v1/users/'.$user->id.'/avatar',[
-            'avatar'=>$file,
+        $response = $this->withoutExceptionHandling()->postJson('api/v1/users/'.$user->uuid.'/avatar', [
+            'avatar' => $file,
         ])->assertSuccessful();
 
-        $uploadedFile='avatars/'.$user->id.'_'.$file->hashName();
+        $uploadedFile = 'avatars/'.$user->uuid.'_'.$file->hashName();
 
         Storage::disk('s3')->assertExists($uploadedFile);
     }
@@ -69,7 +69,7 @@ class UserAvatarTest extends TestCase
           'avatar_path' => $file
         ]);
 
-        $response=$this->patchJson('api/v1/users/'.$user->id.'/avatar_remove');
+        $response=$this->patchJson('api/v1/users/'.$user->uuid.'/avatar_remove');
 
         $response
         ->assertJson([
@@ -80,12 +80,12 @@ class UserAvatarTest extends TestCase
 
         Storage::disk('s3')->assertMissing($file);
 
-        $response=$this->patchJson('api/v1/users/'.$user->id.'/avatar_remove');
+        $response=$this->patchJson('api/v1/users/'.$user->uuid.'/avatar_remove');
 
         $response
         ->assertJson([
-            'error' => 'User does not have an avatar',
-        ])->assertStatus(400);
+            'message' => 'User does not have an avatar',
+        ])->assertStatus(404);
     }
 
 }
