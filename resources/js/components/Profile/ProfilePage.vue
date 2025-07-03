@@ -76,7 +76,10 @@
         </div>
       </div>
   <hr>
-<div v-if="owner">  
+<div v-if="owner">
+<UserTokens></UserTokens>  
+<br>
+<hr>
 <ProjectInvitation :projects="invitations"></ProjectInvitation>
 </div>
 </div>
@@ -87,13 +90,14 @@
   import EditProfile from './Edit.vue'
   import UserAvatar from './Avatar.vue'
   import ProjectInvitation from './ProjectInvitation.vue'
+  import UserTokens from './UserTokens.vue'
   import FeatureDropdown from '../FeatureDropdown.vue';
   import { permission } from '../../auth';
   import { mapState, mapMutations } from 'vuex';
 
 
 export default{
-  components: {EditProfile,UserAvatar,ProjectInvitation,FeatureDropdown},
+  components: {EditProfile,UserAvatar,ProjectInvitation,FeatureDropdown,UserTokens},
 	data(){
 		return{
       auth:this.$store.state.currentUser.user.id,

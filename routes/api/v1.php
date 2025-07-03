@@ -31,6 +31,7 @@ use App\Http\Controllers\Api\V1\
   TaskStatusController,
   TaskFeaturesController,
   ZoomMeetingController,
+  TokenController,
 };
 /*
 |--------------------------------------------------------------------------
@@ -60,7 +61,16 @@ Route::middleware(['auth:sanctum'/*,\App\Http\Middleware\TrackLastActiveAt::clas
 Route::get('/webhooks/zoom/meetings/{meeting}',[ZoomController::class,'event']);
  Route::get('/user/token',[ZoomTokenController::class,'getUserToken']);
 
- Route::get('/user/jwt/token',[ZoomTokenController::class,'getJwtToken']);   
+ Route::get('/user/jwt/token',[ZoomTokenController::class,'getJwtToken']);
+ 
+    Route::controller(TokenController::class)
+        ->prefix('api-tokens')
+        ->name('api-tokens.')
+        ->group(function () {
+            Route::get('/', 'index')->name('index');
+            Route::post('/', 'store')->name('store');
+            Route::delete('/{token}', 'destroy')->name('destroy');
+        });
 
 Route::controller(ProjectDashboardController::class)->group(function(){
  Route::get('/data','data');

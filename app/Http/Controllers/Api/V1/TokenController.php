@@ -1,0 +1,71 @@
+<?php
+
+namespace App\Http\Controllers\Api\V1;
+
+use App\Http\Resources\Api\V1\TokenResource;
+use Carbon\Carbon;
+use App\Http\Requests\Api\V1\UserTokenRequest;
+use App\Http\Controllers\Controller;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
+
+class TokenController extends Controller
+{
+    /**
+     * List all personal access tokens for the authenticated user.
+     */
+    public function index(): JsonResponse
+    {
+        $tokens = auth()->user()->tokens;
+
+        return response()->json([
+            'tokens' => TokenResource::collection($tokens)
+        ], 200);
+    }
+
+    /**
+     * Create a new personal access token for the authenticated user.
+     */
+    public function store(UserTokenRequest $request): JsonResponse
+    {
+        $data = $request->validated();
+
+        $token = auth()->user()->createToken(
+            $data['name'],
+            ['*'],
+            Carbon::parse($data['expires_at'] ?? null)
+        );
+
+        return response()->json([
+            'token' => $token->plainTextToken,
+            'token_resource' => new TokenResource($token->accessToken),
+            'message' => 'Token created successfully.'
+        ], 201);
+    }
+
+    /**
+     * Delete a personal access token by ID for the authenticated user.
+     */
+    public function destroy($tokenId): JsonResponse
+    {
+        $user = auth()->user();
+        $tokenId = (int) $tokenId;
+        $currentToken = $user->currentAccessToken();
+
+        if (!$currentToken) {
+            return response()->json(['message' => 'No current access token found.'], 403);
+        }
+
+        if ($currentToken->id === $tokenId) {
+            return response()->json([
+                'message' => 'Cannot delete the current session token via this route.'
+            ], 403);
+        }
+
+        $deleted = $user->tokens()->where('id', $tokenId)->delete();
+
+        return $deleted
+            ? response()->json(['message' => 'Token deleted.'], 200)
+            : response()->json(['message' => 'Token not found.'], 404);
+    }
+}
