@@ -14,6 +14,12 @@ use App\Models\User;
 
 class UserController extends ApiController
 {
+    /**
+     * List all users
+     *
+     * This endpoint returns a list of all users in the application.
+     *
+     */
     public function index(): JsonResponse
     {
         $users = User::all();
@@ -23,6 +29,12 @@ class UserController extends ApiController
         ], 200);
     }
 
+    /**
+     * Show user details
+     *
+     * Get detailed information for a specific user.
+     *
+     */
     public function show(User $user): JsonResponse
     {
         $user->loadMissing('members.user', 'roles');
@@ -33,7 +45,13 @@ class UserController extends ApiController
         ], 200);
     }
 
-    public function update(UserRequest $request, User $user, UserService $userService): JsonResponse
+    /**
+     * Update user
+     *
+     * Update the specified user's information. Only the owner can update their data.
+    *
+   */
+    public function update(UserRequest $request, User $user, UserService $userService)
     {
         $this->authorize('owner', $user);
 
@@ -45,6 +63,12 @@ class UserController extends ApiController
         ], 200);
     }
 
+    /**
+     * Soft delete user
+     *
+     * Soft delete the specified user. Only the owner can delete their account.  * This will also soft delete all projects owned by the user*.
+     *
+     */
     public function destroy(User $user): JsonResponse
     {
         $this->authorize('owner', $user);
@@ -56,6 +80,12 @@ class UserController extends ApiController
         ], 200);
     }
 
+    /**
+     * Force delete user
+     *
+     * Permanently delete the specified user .
+     *
+     */
     public function forceDestroy(User $user): JsonResponse
     {
         $getUser = User::withTrashed()->findOrFail($user);

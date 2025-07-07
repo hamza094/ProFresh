@@ -186,7 +186,7 @@ Route::apiResource('/meetings',ZoomMeetingController::class);
 
  Route::get('users/search',[InvitationController::class,'search'])->name('users.search');
 
-Route::apiResource('/users',UserController::class);
+Route::apiResource('/users',UserController::class)->except(['store']);
 Route::delete('/users/{user}/force', [UserController::class, 'forceDestroy'])->name('users.forceDestroy');
 
 //Dashboard Routes

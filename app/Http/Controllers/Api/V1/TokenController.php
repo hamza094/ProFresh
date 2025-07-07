@@ -11,8 +11,12 @@ use Illuminate\Http\Request;
 
 class TokenController extends Controller
 {
+
     /**
-     * List all personal access tokens for the authenticated user.
+     * List all personal access tokens
+     *
+     * This endpoint returns all personal access tokens for the authenticated user.
+     *
      */
     public function index(): JsonResponse
     {
@@ -23,8 +27,11 @@ class TokenController extends Controller
         ], 200);
     }
 
+
     /**
-     * Create a new personal access token for the authenticated user.
+     * Create a new personal access token
+     *
+     * This endpoint creates a new personal access token for the authenticated user.
      */
     public function store(UserTokenRequest $request): JsonResponse
     {
@@ -44,7 +51,10 @@ class TokenController extends Controller
     }
 
     /**
-     * Delete a personal access token by ID for the authenticated user.
+     * Delete a personal access token
+     *
+     * This endpoint deletes a personal access token by ID for the authenticated user. Cannot delete the current session token via this route.
+     *
      */
     public function destroy($tokenId): JsonResponse
     {

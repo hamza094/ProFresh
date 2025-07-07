@@ -24,7 +24,18 @@ class UserTokenRequest extends FormRequest
     public function rules()
     {
         return [
+            /*
+             * @example "My API Token"
+             */
             'name' => 'required|string|max:255',
+
+            /*
+             * @example "2025-12-31 23:59:59"
+             * 
+             * The expiry date of the token (Y-m-d H:i:s).
+             * 
+             * Must not be more than 180 days from now.
+             */
             'expires_at' => [
                 'nullable',
                 'date',
