@@ -1,5 +1,8 @@
 # 🚀 ProFresh - Real-Time Project Management Application
 
+[![License](https://img.shields.io/github/license/hamza094/ProFresh)](LICENSE) [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=hamza094_ProFresh&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=hamza094_ProFresh)
+
+
 ProFresh is a simple and easy-to-use project management tool that helps you create, manage, and track your projects. It's the perfect tool for streamlining your project management process and achieving your goals efficiently.
 
 # ⚙️ Features
@@ -15,8 +18,8 @@ ProFresh is a simple and easy-to-use project management tool that helps you crea
 - ☁️ Amazon S3 Storage.
 - 📢 Real-time and Scheduling Notifications
 - 👤 User Profile.
-- 📈 Project Dashboard (Need Adjustments).
-- 💳 Stripe and Paypal Subscriptions (Not Implemented Yet).
+- 📈 Project Dashboard 
+- 💳 Stripe and Paypal Subscriptions 
 - 🔑 Social Login.
 - 💻 Admin Panel
 
@@ -26,8 +29,5 @@ ProFresh is a simple and easy-to-use project management tool that helps you crea
 - [Experience fully functional task features in action! ✅📋](https://twitter.com/h_ik04/status/1706709214130041070) 
 - [Sending and scheduling Mail and SMS to project members 📧📱](https://twitter.com/h_ik04/status/1552968426355732480)
 
-
-# ⚠️ Please Note: 
-  ProFresh is currently in the development phase, and I'm working hard to bring more features and documentation to this project. Stay tuned for updates. Thanks 🙏
 
 
