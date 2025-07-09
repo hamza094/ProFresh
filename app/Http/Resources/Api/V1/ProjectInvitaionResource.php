@@ -20,14 +20,53 @@ class ProjectInvitaionResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-        'id'=>$this->id,    
-        'name'=>$this->name,
-        'status'=>$this->status,
-        'slug'=>$this->slug,
-        'invitation_sent_at'=>$this->pivot->created_at->format(config('app.date_formats.exact')),
-        'user'=>new UsersResource($this->whenLoaded('user')),
-        'created_at'=>$this->created_at->diffforHumans(),
-        'path'=>$this->path(),
+            /**
+             * Project ID
+             * @example 1
+             */
+            'id' => $this->id,
+
+            /**
+             * Project name
+             * @example "My Project"
+             */
+            'name' => $this->name,
+
+            /**
+             * Invitation status (e.g. pending, accepted, rejected)
+             * @example "pending"
+             */
+            'status' => $this->status,
+
+            /**
+             * Project slug
+             * @example "my-project"
+             */
+            'slug' => $this->slug,
+
+            /**
+             * Date/time when the invitation was sent (formatted)
+             * @example "2025-07-09 14:00:00"
+             */
+            'invitation_sent_at' => $this->pivot->created_at->format(config('app.date_formats.exact')),
+
+            /**
+             * Project owner details
+             * @example {"uuid":176890,"name":"Owner Name",...}
+             */
+            'owner' => new UsersResource($this->whenLoaded('user')),
+
+            /**
+             * Project creation date (human readable)
+             * @example "2 days ago"
+             */
+            'created_at' => $this->created_at->diffforHumans(),
+
+            /**
+             * Project API path
+             * @example "/api/v1/my-project"
+             */
+            'path' => $this->path(),
         ];
     }
 }

@@ -24,7 +24,6 @@ class UsersResource extends JsonResource
         ];
     }*/
         return [
-            'id'=>$this->id,
           /**
            * User Uuid
            *  @example 9b8ea076-6d80-4076-8a01-73b94f4c0bc3

@@ -20,6 +20,7 @@ use Carbon\Carbon;
 
 class UserTest extends TestCase
 {
+
   use RefreshDatabase,ProjectSetup;
 
     /**
@@ -117,6 +118,7 @@ class UserTest extends TestCase
       $mailable->assertSeeInHtml($time);
     }
 
+
   /** @test */
   public function user_can_delete_his_profile()
   {
@@ -155,6 +157,7 @@ class UserTest extends TestCase
         $this->assertEquals($admin->id, $projectWithMembersFresh->user_id);
     }
 
+
     /** @test */
     public function test_user_profile_delete_command_runs()
     {
@@ -175,4 +178,5 @@ class UserTest extends TestCase
       ],
     ];
   }
+  
 }

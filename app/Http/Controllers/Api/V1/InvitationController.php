@@ -194,6 +194,17 @@ class InvitationController extends ApiController
  * ### Authorization:
  * - Only the project owner is authorized to perform this action.
  *
+ *  * @response 200 {
+ *   "message": "List of project pending member requests",
+ *   "pending_invitations": [
+ *     {
+ *       "id": 1,
+ *       "name": "Jane Doe",
+ *       "email": "jane@example.com"
+ *     }
+ *   ]
+ * }
+ * 
  */
    public function pending(Project $project): JsonResponse
    {

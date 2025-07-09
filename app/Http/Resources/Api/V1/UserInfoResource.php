@@ -18,11 +18,35 @@ class UserInfoResource extends JsonResource
     public function toArray($request)
     {
         return [
-          'mobile'=>$this->mobile,
-          'company'=>$this->company,
-          'position'=>$this->position,
-          'bio'=>$this->bio,
-          'address'=>$this->address,
+            /**
+             * User's mobile phone number
+             * @example 1234567890
+             */
+            'mobile' => $this->mobile,
+
+            /**
+             * Company the user is associated with
+             * @example Acme Inc.
+             */
+            'company' => $this->company,
+
+            /**
+             * User's job position or title
+             * @example Developer
+             */
+            'position' => $this->position,
+
+            /**
+             * User's biography or profile description
+             * @example A short bio.
+             */
+            'bio' => $this->bio,
+
+            /**
+             * User's address
+             * @example 123 Main St, City, Country
+             */
+            'address' => $this->address,
         ];
     }
 }

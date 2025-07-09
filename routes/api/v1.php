@@ -32,6 +32,7 @@ use App\Http\Controllers\Api\V1\
   TaskFeaturesController,
   ZoomMeetingController,
   TokenController,
+  UserInvitationsController,
 };
 /*
 |--------------------------------------------------------------------------
@@ -71,6 +72,9 @@ Route::get('/webhooks/zoom/meetings/{meeting}',[ZoomController::class,'event']);
             Route::post('/', 'store')->name('store');
             Route::delete('/{token}', 'destroy')->name('destroy');
         });
+
+    Route::get('/me/invitations', [UserInvitationsController::class, 'myInvitations'])
+        ->name('user.invitations');
 
 Route::controller(ProjectDashboardController::class)->group(function(){
  Route::get('/data','data');

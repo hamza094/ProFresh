@@ -80,7 +80,7 @@
 <UserTokens></UserTokens>  
 <br>
 <hr>
-<ProjectInvitation :projects="invitations"></ProjectInvitation>
+<ProjectInvitation></ProjectInvitation>
 </div>
 </div>
 	</div>

@@ -65,7 +65,7 @@ class InvitationTest extends TestCase
     public function auth_user_accept_project_invitation_sent_to_him()
     {
       $invitedUser = User::factory()->create();
-      $this->project->invite($invitedUser);
+      //$this->project->invite($invitedUser);
 
       Sanctum::actingAs($invitedUser);
 

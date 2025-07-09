@@ -40,7 +40,7 @@ class InvitedUserResource extends JsonResource
           /**
            *  @example user@example.com
           * */
-          //'email'=>$this->email,
+          'email'=>$this->email,
           
           /**
            * User's avatar path

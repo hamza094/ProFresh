@@ -37,7 +37,7 @@ class UserController extends ApiController
      */
     public function show(User $user): JsonResponse
     {
-        $user->loadMissing('members.user', 'roles');
+        $user->loadMissing('roles');
 
         return response()->json([
             'message' => 'User Data',
