@@ -1,33 +1,54 @@
+![Profreshhero](https://github.com/user-attachments/assets/cd84d035-76b3-437b-8d89-096f8bbb0d41)
+
+
 # 🚀 ProFresh - Real-Time Project Management Application
 
 [![License](https://img.shields.io/github/license/hamza094/ProFresh)](LICENSE) [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=hamza094_ProFresh&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=hamza094_ProFresh)
 
 
-ProFresh is a simple and easy-to-use project management tool that helps you create, manage, and track your projects. It's the perfect tool for streamlining your project management process and achieving your goals efficiently.
+<b>ProFresh is a simple and easy-to-use project management tool that helps you create, manage, and track your projects. It's the perfect tool for streamlining your project management process and achieving your goals efficiently.</b>
+
 
 # ⚙️ Features
 
-- 💼 Project CRUD.
-- 📊 Features like Excel Export, SMS, Mail, and Notes...
-- 🎯 Project Score.
-- 📝 Project Tasks.
-- 🚀 Project Stage
-- 🚦 Project Activity Feed.
-- 💌 Project Invitations and Members.
-- 💬 Project Real-Time Group Chat with Image and Emoji Attachment.
-- ☁️ Amazon S3 Storage.
-- 📢 Real-time and Scheduling Notifications
-- 👤 User Profile.
-- 📈 Project Dashboard 
-- 💳 Stripe and Paypal Subscriptions 
-- 🔑 Social Login.
-- 💻 Admin Panel
+## 📂 Project Management
+- **Project CRUD** (create, update, delete, archive)  
+- **Project Stages** & **Activity Feed**  
+- **Project Dashboard** with analytics  
 
-🔥 Demo Links
-- [Explore the real-time project group chat feature in action! 👥💬](https://twitter.com/h_ik04/status/1603334048213893121)
-- [Send real-time notifications seamlessly! 📩🚀](https://twitter.com/h_ik04/status/1580147516191940608)
-- [Experience fully functional task features in action! ✅📋](https://twitter.com/h_ik04/status/1706709214130041070) 
-- [Sending and scheduling Mail and SMS to project members 📧📱](https://twitter.com/h_ik04/status/1552968426355732480)
+## 🤝 Collaboration
+- **Invitations & Members** management  
+- **Real‑time Group Chat** & **Video Calls (Zoom Integration)**  
+- **Notes**, **Document/Photo Uploads**  
+
+## 🔔 Notifications & Scheduling
+- **Real‑time** & **Scheduled** notifications (SMS, Email)  
+- **Task Reminders**  
+
+## 🔗 Integrations
+- **Excel Export**  
+- **Amazon S3** file storage  
+- **API‑first** design (REST endpoints)  
+
+## 🔐 Security & Accounts
+- **User Profiles** & **Subscriptions**  
+- **Social Login** (Google, Facebook, etc.)  
+- **Two‑Factor Authentication** 
+
+## 🔥 Live Demos
+
+- **Group Chat**: [Watch real‑time project chat 👥💬](https://twitter.com/h_ik04/status/1603334048213893121)  
+- **Notifications**: [See live email & SMS notifications 📩🚀](https://twitter.com/h_ik04/status/1580147516191940608)  
+- **Task Workflow**: [Explore task features in action ✅📋](https://twitter.com/h_ik04/status/1706709214130041070)  
+- **Mail & SMS Scheduling**: [Demo scheduled messaging 📧📱](https://twitter.com/h_ik04/status/1552968426355732480)  
 
 
+<h3>Contribute<h3>
+    <hr>
+<p>Do you want to lend a hand? That’s great! We accept contributions from everyone, regardless of form.<p>
+<p>Here are some of the things you can do to help.</p>
+
+<h5> Contribute as a community </h5>
+<p>Unlike Fight Club, the best way to help is to actually talk about ProFresh as much as you can in blog posts and articles, or on social media.
+You can answer questions in the issue tracker to help other community members.</p>
 
