@@ -52,3 +52,17 @@
 <p>Unlike Fight Club, the best way to help is to actually talk about ProFresh as much as you can in blog posts and articles, or on social media.
 You can answer questions in the issue tracker to help other community members.</p>
 
+
+<h3> Contact </h3>
+
+<a href="https://github.com/hamza094">Hamza Ikram (hamza094)</a>
+
+<p>We are also fortunate to have an amazing <a href="https://github.com/hamza094/ProFresh/graphs/contributors">community of developers </a> who help us greatly.</p>
+
+<h3> Thank you, open source </h3>
+Monica makes use of numerous open-source projects and we are deeply grateful. We hope that by offering Monica as a free, open-source project, we can help others in the same way these programs have helped us.
+
+<h3> License </h3>
+Copyright © 2020–2025
+
+Licensed under the <a href="https://github.com/hamza094/ProFresh/blob/master/LICENSE">AGPL License</a>.
