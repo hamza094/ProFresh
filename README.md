@@ -55,6 +55,15 @@ ProFresh is an open‑source single‑page web application built with a Laravel 
 <p>Unlike Fight Club, the best way to help is to actually talk about ProFresh as much as you can in blog posts and articles, or on social media.
 You can answer questions in the issue tracker to help other community members.</p>
 
+<h5> Contribute as a developer </h5>
+<ul>
+<li> Read our Contribution Guide. </li>
+<li> Install the developer version locally so you can start contributing. </li>
+<li> Look for issues labelled ‘Bugs’ if you are looking to have an immediate impact on Monica. </li>
+<li> Look for issues labelled ‘Help Wanted’. These are issues that you can solve relatively easily. </li>
+<li> Look for issues labelled ’Good First Issue’. These issues are for people who want to contribute, but try to work on a small feature first. </li>
+<li> If you are an advanced developer, you can try to tackle issues labelled ‘Feature Requests’. These are harder to do and will require a lot of back-and-forth with the repository administrator to make sure we are going to the right direction with the product. </li>
+</ul>
 
 <h3> Contact </h3>
 
