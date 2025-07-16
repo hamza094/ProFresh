@@ -6,10 +6,9 @@
 [![License](https://img.shields.io/github/license/hamza094/ProFresh)](LICENSE) [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=hamza094_ProFresh&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=hamza094_ProFresh)
 
 
-<b>ProFresh is a simple and easy-to-use project management tool that helps you create, manage, and track your projects. It's the perfect tool for streamlining your project management process and achieving your goals efficiently.</b>
-
 <h3> Introduction </h3>
 ProFresh is an open‑source single‑page web application built with a Laravel API backend and Vue.js frontend, bringing project planning, task tracking, and team communication together in one place. It’s designed to organize your projects, coordinate your team, and keep every detail in perfect sync.
+ProFresh is a simple and easy-to-use project management tool that helps you create, manage, and track your projects. It's the perfect tool for streamlining your project management process and achieving your goals efficiently.
 
 
 # ⚙️ Features
@@ -46,23 +45,23 @@ ProFresh is an open‑source single‑page web application built with a Laravel 
 - **Mail & SMS Scheduling**: [Demo scheduled messaging 📧📱](https://twitter.com/h_ik04/status/1552968426355732480)  
 
 
-<h3>Contribute<h3>
+<h3>Contribute</h3>
     <hr>
 <p>Do you want to lend a hand? That’s great! We accept contributions from everyone, regardless of form.<p>
 <p>Here are some of the things you can do to help.</p>
 
-<h5> Contribute as a community </h5>
+<h3> Contribute as a community </h3>
 <p>Unlike Fight Club, the best way to help is to actually talk about ProFresh as much as you can in blog posts and articles, or on social media.
 You can answer questions in the issue tracker to help other community members.</p>
 
-<h5> Contribute as a developer </h5>
+<h3> Contribute as a developer </h3>
 <ul>
-<li> Read our Contribution Guide. </li>
-<li> Install the developer version locally so you can start contributing. </li>
-<li> Look for issues labelled ‘Bugs’ if you are looking to have an immediate impact on Monica. </li>
-<li> Look for issues labelled ‘Help Wanted’. These are issues that you can solve relatively easily. </li>
-<li> Look for issues labelled ’Good First Issue’. These issues are for people who want to contribute, but try to work on a small feature first. </li>
-<li> If you are an advanced developer, you can try to tackle issues labelled ‘Feature Requests’. These are harder to do and will require a lot of back-and-forth with the repository administrator to make sure we are going to the right direction with the product. </li>
+<li> Read our <a href="https://profresh.gitbook.io/profresh-docs/developers/contributing-guide">Contribution Guide</a>. </li>
+<li> Install <a href="https://profresh.gitbook.io/profresh-docs/developers/setup-local-development">the developer version locally </a> so you can start contributing. </li>
+<li> Look for <a href="https://github.com/hamza094/ProFresh/issues?q=state%3Aopen%20label%3Abug">issues labelled ‘Bugs’</a> if you are looking to have an immediate impact on Monica. </li>
+<li> Look for <a href="https://github.com/hamza094/ProFresh/issues?q=state%3Aopen%20label%3A%22help%20wanted%22">issues labelled ‘Help Wanted’</a>. These are issues that you can solve relatively easily. </li>
+<li> Look for <a href="https://github.com/hamza094/ProFresh/issues?q=state%3Aopen%20label%3A%22good%20first%20issue%22">issues labelled ’Good First Issue’</a>. These issues are for people who want to contribute, but try to work on a small feature first. </li>
+<li> If you are an advanced developer, you can try to tackle <a href="https://github.com/hamza094/ProFresh/issues?q=state%3Aopen%20label%3A%22feature%20request%22">issues labelled ‘Feature Requests’</a>. These are harder to do and will require a lot of back-and-forth with the repository administrator to make sure we are going to the right direction with the product. </li>
 </ul>
 
 <h3> Contact </h3>
