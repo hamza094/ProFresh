@@ -59,7 +59,7 @@ You can answer questions in the issue tracker to help other community members.</
 <ul>
 <li> Read our <a href="https://profresh.gitbook.io/profresh-docs/developers/contributing-guide">Contribution Guide</a>. </li>
 <li> Install <a href="https://profresh.gitbook.io/profresh-docs/developers/setup-local-development">the developer version locally </a> so you can start contributing. </li>
-<li> Look for <a href="https://github.com/hamza094/ProFresh/issues?q=state%3Aopen%20label%3Abug">issues labelled ‘Bugs’</a> if you are looking to have an immediate impact on Monica. </li>
+<li> Look for <a href="https://github.com/hamza094/ProFresh/issues?q=state%3Aopen%20label%3Abug">issues labelled ‘Bugs’</a> if you are looking to have an immediate impact on ProFresh. </li>
 <li> Look for <a href="https://github.com/hamza094/ProFresh/issues?q=state%3Aopen%20label%3A%22help%20wanted%22">issues labelled ‘Help Wanted’</a>. These are issues that you can solve relatively easily. </li>
 <li> Look for <a href="https://github.com/hamza094/ProFresh/issues?q=state%3Aopen%20label%3A%22good%20first%20issue%22">issues labelled ’Good First Issue’</a>. These issues are for people who want to contribute, but try to work on a small feature first. </li>
 <li> If you are an advanced developer, you can try to tackle <a href="https://github.com/hamza094/ProFresh/issues?q=state%3Aopen%20label%3A%22feature%20request%22">issues labelled ‘Feature Requests’</a>. These are harder to do and will require a lot of back-and-forth with the repository administrator to make sure we are going to the right direction with the product. </li>
@@ -72,7 +72,7 @@ You can answer questions in the issue tracker to help other community members.</
 <p>We are also fortunate to have an amazing <a href="https://github.com/hamza094/ProFresh/graphs/contributors">community of developers </a> who help us greatly.</p>
 
 <h3> Thank you, open source </h3>
-Monica makes use of numerous open-source projects and we are deeply grateful. We hope that by offering Monica as a free, open-source project, we can help others in the same way these programs have helped us.
+ProFresh makes use of numerous open-source projects and we are deeply grateful. We hope that by offering ProFresh as a free, open-source project, we can help others in the same way these programs have helped us.
 
 <h3> License </h3>
 Copyright © 2020–2025
