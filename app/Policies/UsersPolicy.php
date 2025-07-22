@@ -29,7 +29,7 @@ class UsersPolicy
       return null; 
    }
 
-    public function owner(User $user)
+    public function owner(User $user): bool
     {
        return $user->is(auth()->user());
     }

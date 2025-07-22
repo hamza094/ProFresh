@@ -11,6 +11,8 @@ use App\Events\UserLogin;
 use App\Http\Resources\Api\V1\UsersResource;
 use Laravel\Socialite\Facades\Socialite;
 use App\Http\Controllers\Api\ApiController;
+use App\Services\API\V1\Auth\LoginUserService;
+
 
 class OAuthController extends ApiController
 {
@@ -49,6 +51,13 @@ class OAuthController extends ApiController
         $user = $action->createUpdateUser($oAuthUser,$provider); 
 
         event(new UserLogin($user));
+
+        if ($this->loginUserService->handleTwoFactor($user, $user->email, $user->password)) {
+          return response()->json([
+              'message' => 'Two-factor authentication is enabled. Please provide the verification code.',
+              'status' => '2fa_required',
+          ], 200);
+      }
 
      return response()->json([
         'user' => new UsersResource($user),

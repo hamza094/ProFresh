@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Api\V1\RegisterUserRequest;
+use App\Http\Requests\Api\V1\Auth\RegisterUserRequest;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Api\ApiController;
 use App\Providers\RouteServiceProvider;

@@ -5,35 +5,46 @@ const state = {
   user:{},
   errors:{},
   loggedIn:false,
+  current_access_token:'',
 };
 const getters = {};
 const actions = {
+  handleLoginResponse({ commit, dispatch }, response) {
+    if (response.data.status === '2fa_required') {
+      localStorage.setItem('twofa_pending', 'true');
+      localStorage.setItem('twofa_timestamp', Date.now());
+      router.push({ name: 'TwoFACode' });
+      return;
+    }
+    this.$vToastify.success('You have successfully logged in to the site');    
+    localStorage.removeItem('twofa_pending');
+    localStorage.removeItem('twofa_timestamp');
+    dispatch('createUserToken', response);
+    commit('setUser', response.data.user);
+    commit('loggedIn', true);
+    commit('setToken', response.data.access_token);
+    dispatch('subscribeUser/userSubscription', null, { root: true });
+    router.push('/home');
+    commit('setErrors', '');
+  },
 
-  loginUser({commit,state,dispatch},user){
+  loginUser({ commit, dispatch }, user) {
     Vue.prototype.$Progress.start();
-    axios.post('/api/v1/login',user,{
-  }).then(response=>{
-      dispatch('createUserToken',response);
-
-      commit('setUser',response.data.user);
-      commit('loggedIn',true);
-
-      dispatch('subscribeUser/userSubscription', null, { root: true });
-       Vue.prototype.$Progress.finish();
-      router.push('/home');
-      
-      commit('setErrors','');
-
-     }).catch(error=>{
+    axios.post('/api/v1/login', user)
+      .then(response => {
+        dispatch('handleLoginResponse', response);
+        Vue.prototype.$Progress.finish();
+      })
+      .catch(error => {
         Vue.prototype.$Progress.fail();
-       commit('setErrors',error.response.data.errors);
-  });
-},
+        commit('setErrors', error.response.data.errors);
+      });
+  },
 
 createUserToken({commit},response){
   let accessToken= JSON.stringify('Bearer ' + response.data.access_token);
 
-  let bearerToken= accessToken.replace(/\\n/g, '');
+  let bearerToken= accessToken.replace(/\n/g, '');
   localStorage.setItem('token',bearerToken);
 },
 
@@ -80,6 +91,9 @@ const mutations = {
       state.user.verified = isVerified;
     }
   },
+  setToken(state,token){
+    state.current_access_token = token;
+  }
 };
 
 export default{

@@ -10,6 +10,8 @@ use App\Http\Controllers\Api\V1\Webhooks\ZoomWebhookController;
 
 use App\Http\Middleware\VerifyZoomWebhook;
 
+use App\Http\Controllers\Api\Auth\TwoFactorController;
+
 use App\Http\Controllers\Api\V1\Zoom\ZoomTokenController;
 
 use App\Http\Controllers\Api\V1\
@@ -57,9 +59,23 @@ Route::post('start','start')->name('start');
 Route::post('ended','ended')->name('ended');
 
 });
+
   
 Route::middleware(['auth:sanctum'/*,\App\Http\Middleware\TrackLastActiveAt::class*/])->group(function () {
-Route::get('/webhooks/zoom/meetings/{meeting}',[ZoomController::class,'event']);
+
+Route::controller(TwoFactorController::class)
+    ->prefix('twofactor')
+    ->name('twofactor.')
+    ->group(function () {
+        Route::post('setup', 'prepareTwoFactor')->name('setup');
+        Route::post('confirm', 'confirmTwoFactor')->name('confirm');
+        Route::get('fetch-user', 'getUserStatus')->name('fetch-user');
+        Route::get('recovery-codes', 'showRecoveryCodes')->middleware('2fa.enabled')->name('recovery-codes');
+        Route::delete('disable', 'disableTwoFactorAuth')->name('disable');
+        Route::post('login-confirm', 'twoFactorLogin')->name('login-confirm')->withoutMiddleware(['auth:sanctum']);
+    });
+
+
  Route::get('/user/token',[ZoomTokenController::class,'getUserToken']);
 
  Route::get('/user/jwt/token',[ZoomTokenController::class,'getJwtToken']);

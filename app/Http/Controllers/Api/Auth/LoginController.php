@@ -11,62 +11,64 @@ use Illuminate\Validation\ValidationException;
 use App\Http\Resources\Api\V1\UsersResource;
 use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Api\ApiController;
+use App\Http\Requests\Api\V1\Auth\LoginUserRequest;
+use App\Services\API\V1\Auth\LoginUserService;
 
 class LoginController extends ApiController
 {
+    protected $loginUserService;
 
-  /**
-   * @unauthenticated
- * Login User.
- *
- * This method authenticates the user using provided credentials
- * and returns an API token upon successful login.
- */
-
-public function login(Request $request)
-{
-    $request->validate([
-        'email' => 'required|email',
-        /**
-            *
-             * @example Berry@04
-             */
-        'password' => 'required'
-    ]);
-
-    $user = User::where('email', $request->email)->first();
-
-    if (! $user || ! Hash::check($request->password, $user->password)) {
-        throw ValidationException::withMessages([
-            'email' => ['The provided credentials are incorrect.'],
-        ]);
+    public function __construct(LoginUserService $loginUserService)
+    {
+        $this->loginUserService = $loginUserService;
     }
 
-    UserLogin::dispatchIf(!$user->timezone, $user);
+    /**
+     * @unauthenticated
+     * 
+     * Login User.
+     *
+     * This method authenticates the user using provided credentials
+     * and returns an API token upon successful login.
+     */
+    public function login(LoginUserRequest $request)
+    {
+        if(session('2fa_login')){
+            session()->forget('2fa_login');
+        }
 
-    return response()->json([
-      'message'=> 'User authenticated successfully',
-      'user' => new UsersResource($user),
-      'access_token' => $user->createToken(
-        'Api Token for ' . $user->email,
-        ['*'],
-        now()->addMonth())->plainTextToken
-    ], 
-    200);
-}
-   
+        $user = $this->loginUserService->attemptLogin($request->email, $request->password);
+
+        UserLogin::dispatchIf(!$user->timezone, $user);
+
+        if ($this->loginUserService->handleTwoFactor($user, $request->email, $request->password)) {
+            return response()->json([
+                'message' => 'Two-factor authentication is enabled. Please provide the verification code.',
+                'status' => '2fa_required',
+            ], 200);
+        }
+
+        return response()->json([
+            'message'=> 'User authenticated successfully',
+            'user' => new UsersResource($user),
+            'status' => 'success',
+            'access_token' => $user->createToken(
+                'Api Token for ' . $user->email,
+                ['*'],
+                now()->addMonth())->plainTextToken,
+        ], 200);
+    }
 
     /** Logout User 
      * 
      * Signs out the user and destroy's the API token.
      * */
-   public function logout(Request $request)
-   {
-       $request->user()->currentAccessToken()->delete();
+    public function logout(Request $request)
+    {
+        $request->user()->currentAccessToken()->delete();
 
-       return response()->json(['message'=>'User logout successfully'], 200);
-
-   }
+        return response()->json(['message'=>'User logout successfully'], 200);
+    }
 }
 
 ?>

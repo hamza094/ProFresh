@@ -65,32 +65,29 @@
 </template>
 
 <script>
-  import { mapState, mapMutations, mapActions } from 'vuex';
+  import { mapActions } from 'vuex';
 
 export default {
-	data(){
-		return{
-			 user:{
-              email:'',
-              password:'',
-              remember:''
-            }
-		};
-	},
-  computed:{
-    errors:{
-      get(){
-        return this.$store.state.currentUser.errors
+  data(){
+    return{
+      user:{
+        email:'',
+        password:'',
+        remember:''
       }
+    };
+  },
+  computed:{
+    errors(){
+      return this.$store.state.currentUser.errors
     }
   },
-
-	methods:{
-
+  methods:{
+    ...mapActions('currentUser', ['loginUser']),
     login(){
-      this.$store.dispatch('currentUser/loginUser',this.user);
+      this.loginUser(this.user);
     },
-      loginWithProvider(provider){
+    loginWithProvider(provider){
       axios.get(`api/v1/auth/redirect/${provider}`)
         .then(response => {
            window.location.href = response.data.redirect_url;
@@ -99,11 +96,10 @@ export default {
           console.error(error);
         });
     },
-    },
-      beforeRouteLeave(to, from, next) {
+  },
+  beforeRouteLeave(to, from, next) {
     this.$store.commit('currentUser/clearErrors');
     next();
   },
 }
-
 </script>

@@ -21,10 +21,12 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use App\Traits\HasSubscription;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Laragear\TwoFactor\TwoFactorAuthentication;
+use Laragear\TwoFactor\Contracts\TwoFactorAuthenticatable;
 
-class User extends Authenticatable implements MustVerifyEmail
+class User extends Authenticatable implements MustVerifyEmail,TwoFactorAuthenticatable
 {
-    use HasFactory, Notifiable, Billable, HasApiTokens, HasRoles, HasSubscription, SoftDeletes;
+    use HasFactory, Notifiable, Billable, HasApiTokens, HasRoles, HasSubscription, SoftDeletes,TwoFactorAuthentication;
     
     protected $guarded = [];
 

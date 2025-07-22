@@ -14,6 +14,9 @@ use App\Events\PasswordUpdateEvent;
 class UserService
 {
 
+  /**
+   * @param array<string, mixed> $data
+   */
   public function updateUser(User $user, array $data): void
   {
     DB::transaction(function () use ($user, $data) {
@@ -30,7 +33,7 @@ class UserService
     });
   }
 
-  public function updatePassword(User $user, $password): void
+  public function updatePassword(User $user, string $password): void
   {
     try {
       $user->password = Hash::make($password);

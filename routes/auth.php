@@ -6,7 +6,7 @@ use App\Http\Controllers\Api\Auth\{
   RegisterController,
   LoginController,
   ResetPasswordController,
-  VerificationController
+  VerificationController,
 };
 /*
 |--------------------------------------------------------------------------
@@ -48,6 +48,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     ->name('verification.resend');
 
   Route::post('logout', [LoginController::class, 'logout'])->name('auth.logout');
+
 
 });
 

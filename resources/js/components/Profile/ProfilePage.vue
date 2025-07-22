@@ -77,6 +77,7 @@
       </div>
   <hr>
 <div v-if="owner">
+  <TwoFactorAuth></TwoFactorAuth>
 <UserTokens></UserTokens>  
 <br>
 <hr>
@@ -91,16 +92,17 @@
   import UserAvatar from './Avatar.vue'
   import ProjectInvitation from './ProjectInvitation.vue'
   import UserTokens from './UserTokens.vue'
+  import TwoFactorAuth from './TwoFactorAuth.vue'
   import FeatureDropdown from '../FeatureDropdown.vue';
   import { permission } from '../../auth';
   import { mapState, mapMutations } from 'vuex';
 
 
 export default{
-  components: {EditProfile,UserAvatar,ProjectInvitation,FeatureDropdown,UserTokens},
+  components: {EditProfile,UserAvatar,ProjectInvitation,FeatureDropdown,UserTokens,TwoFactorAuth},
 	data(){
 		return{
-      auth:this.$store.state.currentUser.user.id,
+      auth:this.$store.state.currentUser.user.uuid,
       owner:false,
       featurePop:false,
 		};
@@ -116,9 +118,7 @@ export default{
     },
 
 	methods:{
-    ...mapMutations('profile',['updateUser', 'updateUserAvatar',
-      'updateInvitations',
-      'setInvitations']),
+    ...mapMutations('profile',['updateUser', 'updateUserAvatar',]),
    
         loadUser(){
          axios.get('/api/v1/users/'+this.$route.params.uuid).
@@ -126,9 +126,7 @@ export default{
           const user = response.data.user;
           this.updateUser(user);
           this.updateUserAvatar(user.avatar);
-          this.updateInvitations(user.invited_projects);  
-          this.setInvitations(user.invited_projects);
-          this.owner = (this.user.id === this.auth);
+          this.owner = (this.user.uuid === this.auth);
          }).catch(error=>{
            console.log(error.response.data.errors);
          });

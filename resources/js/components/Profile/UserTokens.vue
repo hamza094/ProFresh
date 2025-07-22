@@ -139,7 +139,6 @@ export default {
     },
     loadTokens() {
       this.loading = true;
-      this.$Progress.start();
       axios.get('/api/v1/api-tokens')
         .then(res => {
           this.tokens = res.data.tokens;
@@ -149,7 +148,6 @@ export default {
         })
         .finally(() => {
           this.loading = false;
-          this.$Progress.finish();
         });
     },
     createToken() {

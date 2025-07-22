@@ -6,6 +6,7 @@ Vue.use(Router);
 import Home from './components/Home.vue';
 import Register from './components/Authentication/Register.vue';
 import Login from './components/Authentication/Login.vue';
+import TwoFACode from './components/Authentication/TwoFACode.vue';
 import OAuth from './components/Authentication/OAuth.vue';
 import ZoomAuth from './components/Authentication/ZoomAuth.vue';
 import Dashboard from './components/Dashboard/Dashboard.vue';
@@ -24,21 +25,49 @@ import UserPanel from './components/Admin/Users.vue';
 import NotFound from './components/Error.vue';
 import UserNotification from './components/UserNotification.vue';
 
+
 const guest = (to, from, next) => {
   const token = localStorage.getItem("token");
   if (!token) {
-   return next();
+    return next();
   }
-   return next('/home');
- };
+  return next('/home');
+};
 
 const auth = (to, from, next) => {
   const token = localStorage.getItem("token");
   if (token) {
     return next();
   }
-    return next('/login');
- }
+  return next('/login');
+};
+
+// 2FA guard: only allow if twofa_pending is set and not logged in
+const twofaGuard = (to, from, next) => {
+  const token = localStorage.getItem("token");
+  const twofaPending = localStorage.getItem("twofa_pending");
+  const twofaTimestamp = localStorage.getItem("twofa_timestamp");
+
+  // Check if 2FA session is expired
+  if (twofaTimestamp) {
+    const now = Date.now();
+    const fiveMinutes = 5 * 60 * 1000;
+    if ((now - twofaTimestamp) > fiveMinutes) {
+      // Clear expired 2FA session
+      localStorage.removeItem("twofa_pending");
+      localStorage.removeItem("twofa_timestamp");
+      return next('/login');
+    }
+  }
+
+  if (!token && twofaPending === "true") {
+    return next();
+  }
+  if (token) {
+    return next('/home');
+  }
+  return next('/login');
+};
 
 let router = new Router({
     mode: 'history',
@@ -101,6 +130,12 @@ let router = new Router({
             component: Login,
             name: 'Login',
             beforeEnter: guest,
+        },
+        {
+            path: '/2fa/code',
+            component: TwoFACode,
+            name: 'TwoFACode',
+            beforeEnter: twofaGuard,
         },
         {
             path: '/forgot-password',

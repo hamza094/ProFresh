@@ -1,0 +1,5 @@
+{
+    "terminal.integrated.shellIntegration.enabled": true,
+    "git.decorations.enabled": false,
+    "git.requireGitUserConfig": true
+}
