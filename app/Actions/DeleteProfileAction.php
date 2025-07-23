@@ -4,6 +4,7 @@ namespace App\Actions;
 
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
+use App\Models\Project;
 
 class DeleteProfileAction
 {
@@ -42,7 +43,7 @@ class DeleteProfileAction
      * Force delete the project if it has no members.
      * @return bool True if project was deleted, false otherwise.
      */
-    private function permanentDeleteProject($project): bool
+    private function permanentDeleteProject(Project $project): bool
     {
         if ($project->members()->count() === 0) {
             $project->forceDelete();
@@ -51,7 +52,7 @@ class DeleteProfileAction
         return false;
     }
 
-    private function findAdminForProject($project, $excludeUserId): ?User
+    private function findAdminForProject(Project $project, int $excludeUserId): ?User
     {
         return $project->members()
             ->whereHas('roles', fn($q) => $q->where('name', 'Admin'))

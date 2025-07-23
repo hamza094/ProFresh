@@ -51,7 +51,7 @@ class UserController extends ApiController
      * Update the specified user's information. Only the owner can update their data.
     *
    */
-    public function update(UserRequest $request, User $user, UserService $userService)
+    public function update(UserRequest $request, User $user, UserService $userService): JsonResponse
     {
         $this->authorize('owner', $user);
 

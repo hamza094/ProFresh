@@ -16,6 +16,13 @@ use App\Services\API\V1\Auth\LoginUserService;
 
 class OAuthController extends ApiController
 {
+    protected LoginUserService $loginUserService;
+
+    public function __construct(LoginUserService $loginUserService)
+    {
+        $this->loginUserService = $loginUserService;
+    }
+
     /** 
      * @unauthenticated
      * Get OAuth redirect url

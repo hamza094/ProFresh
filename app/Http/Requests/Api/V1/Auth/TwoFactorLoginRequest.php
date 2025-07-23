@@ -111,8 +111,8 @@ class TwoFactorLoginRequest extends FormRequest
 
     /**
      * Check if session data is valid and not expired
-     * 
-     * @param array $creds
+     *
+     * @param array<string, mixed> $creds
      * @return bool
      */
     private function isValidSessionData(array $creds): bool

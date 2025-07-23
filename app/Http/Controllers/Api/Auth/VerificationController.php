@@ -9,6 +9,7 @@ use App\Models\User;
 use Illuminate\Auth\Events\Verified;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Http\JsonResponse;
 
 
 class VerificationController extends ApiController
@@ -25,7 +26,7 @@ class VerificationController extends ApiController
    /**
  * Mark the user's email address as verified.
  */
-public function verify(Request $request, User $user)
+public function verify(Request $request, User $user): JsonResponse
 {
     if (! URL::hasValidSignature($request)) {
         return response()->json([
@@ -51,7 +52,7 @@ public function verify(Request $request, User $user)
 /**
  * Resend the email verification notification.
  */
-public function resend(Request $request)
+public function resend(Request $request): JsonResponse
 {
     $user = auth()->user();
 

@@ -56,16 +56,18 @@ class TokenController extends Controller
      * This endpoint deletes a personal access token by ID for the authenticated user. Cannot delete the current session token via this route.
      *
      */
-    public function destroy($tokenId): JsonResponse
+    public function destroy(int $tokenId): JsonResponse
     {
         $user = auth()->user();
         $tokenId = (int) $tokenId;
         $currentToken = $user->currentAccessToken();
 
+        // @phpstan-ignore-next-line
         if (!$currentToken) {
             return response()->json(['message' => 'No current access token found.'], 403);
         }
 
+        /** @var \Laravel\Sanctum\PersonalAccessToken $currentToken */
         if ($currentToken->id === $tokenId) {
             return response()->json([
                 'message' => 'Cannot delete the current session token via this route.'

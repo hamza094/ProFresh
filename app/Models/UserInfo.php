@@ -18,9 +18,9 @@ class UserInfo extends Model
     protected $touches = ['user'];
 
    /**
-     * Get the user who associated to the userinfp.
+     * Get the user who is associated to the userinfo.
      *
-     * @return BelongsTo<User, User::info>
+     * @return BelongsTo<User, UserInfo>
      */ 
    public function user(): BelongsTo
    {

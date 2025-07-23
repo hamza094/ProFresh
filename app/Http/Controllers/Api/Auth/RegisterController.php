@@ -43,7 +43,8 @@ class RegisterController extends ApiController
     * Registers a new user and returns the user API resource.
     */
 
-    public function register(RegisterUserRequest $request){
+    public function register(RegisterUserRequest $request): JsonResponse
+    {
 
       $validatedData = $request->validated();
 

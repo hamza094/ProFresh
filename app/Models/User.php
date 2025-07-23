@@ -158,7 +158,7 @@ class User extends Authenticatable implements MustVerifyEmail,TwoFactorAuthentic
      *
      * @return BelongsToMany<Project>
      */
-    public function members($active = false): BelongsToMany
+    public function members(bool $active = false): BelongsToMany
     {
      return $this->belongsToMany(Project::class, 'project_members')
         ->wherePivot('active', $active)
@@ -239,6 +239,9 @@ class User extends Authenticatable implements MustVerifyEmail,TwoFactorAuthentic
       return $this->hasMany(Meeting::class); 
     } 
 
+    /**
+    * @return array<string, mixed>
+    */
     public function getNotifierData(): array
     {
     return [

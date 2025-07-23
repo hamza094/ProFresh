@@ -44,7 +44,7 @@ class ProjectsPolicy
 
     public function zoomAuthorize(User $user, Project $project): bool
     {
-      $user->is($project->user) && ! $user->isConnectedToZoom();
+      return $user->is($project->user) && ! $user->isConnectedToZoom();
     }
 
     public function canAcceptInvitation(User $user, Project $project): bool

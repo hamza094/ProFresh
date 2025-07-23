@@ -17,9 +17,9 @@ class PasswordUpdate extends Mailable implements ShouldQueue
      *
      * @return void
      */
-    protected $time;
+    protected string $time;
 
-    public function __construct($time)
+    public function __construct(string $time)
     {
       $this->time=$time;
     }

@@ -9,7 +9,7 @@ use Illuminate\Support\Collection;
 
 class ScoreAction
 { 
-  private $project;
+  private Project $project;
 
   public function __construct(Project $project)
   {

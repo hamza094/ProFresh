@@ -16,7 +16,7 @@ use App\Services\API\V1\Auth\LoginUserService;
 
 class LoginController extends ApiController
 {
-    protected $loginUserService;
+    protected LoginUserService $loginUserService;
 
     public function __construct(LoginUserService $loginUserService)
     {
@@ -31,7 +31,7 @@ class LoginController extends ApiController
      * This method authenticates the user using provided credentials
      * and returns an API token upon successful login.
      */
-    public function login(LoginUserRequest $request)
+    public function login(LoginUserRequest $request): JsonResponse
     {
         if(session('2fa_login')){
             session()->forget('2fa_login');
@@ -63,10 +63,13 @@ class LoginController extends ApiController
      * 
      * Signs out the user and destroy's the API token.
      * */
-    public function logout(Request $request)
+    public function logout(Request $request): JsonResponse
     {
-        $request->user()->currentAccessToken()->delete();
-
+        /** @var \Laravel\Sanctum\PersonalAccessToken|null $currentToken */
+        $currentToken = $request->user()->currentAccessToken();
+        if ($currentToken) {
+            $currentToken->delete();
+        }
         return response()->json(['message'=>'User logout successfully'], 200);
     }
 }

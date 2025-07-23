@@ -13,6 +13,7 @@ use App\Http\Requests\Api\V1\Auth\ConfirmTwoFactorRequest;
 use App\Http\Requests\Api\V1\Auth\TwoFactorLoginRequest;
 use App\Http\Requests\Api\V1\Auth\DisableTwoFactorRequest;
 use Illuminate\Http\JsonResponse;
+use App\Enums\TwoFactorStatus;
 
 /**
  * Two-Factor Authentication Controller
@@ -33,7 +34,7 @@ class TwoFactorController extends Controller
         $user = $request->user();
 
         if ($user->hasTwoFactorEnabled()) {
-            return response()->json(['status' => 'enabled']);
+            return response()->json(['status' => TwoFactorStatus::ENABLED->value]);
         }
 
         $pending = $user->twoFactorAuth()->whereNull('enabled_at')->first();
@@ -43,11 +44,11 @@ class TwoFactorController extends Controller
                 'qr_code' => $pending->toQr(),
                 'uri'     => $pending->toUri(),
                 'string'  => $pending->toString(),
-                'status'  => 'in_progress',
+                'status'  => TwoFactorStatus::IN_PROGRESS->value,
             ]);
         }
 
-        return response()->json(['status' => 'disabled']);
+        return response()->json(['status' => TwoFactorStatus::DISABLED->value]);
     }
 
 
@@ -66,7 +67,7 @@ class TwoFactorController extends Controller
             'qr_code' => $secret->toQr(),
             'uri'     => $secret->toUri(),
             'string'  => $secret->toString(),
-            'status'  => 'in_progress',
+            'status'  => TwoFactorStatus::IN_PROGRESS->value,
         ], 200);
     }
 
@@ -81,9 +82,9 @@ class TwoFactorController extends Controller
         $user = $request->user();
 
         return response()->json([
-            'message' => 'success',
+            'message' => TwoFactorStatus::SUCCESS->value,
             'recoveryCodes' => $user->getRecoveryCodes(),
-            'status' => 'enabled',
+            'status' => TwoFactorStatus::ENABLED->value,
         ]);
     }
 
@@ -104,7 +105,7 @@ class TwoFactorController extends Controller
         return response()->json([
             'message' => 'User authenticated successfully',
             'user' => new UsersResource($user),
-            'status' => 'success',
+            'status' => TwoFactorStatus::SUCCESS->value,
             'access_token' => $user->createToken(
                 'Api Token for ' . $user->email,
                 ['*'],
@@ -125,7 +126,7 @@ class TwoFactorController extends Controller
         $recoveryCodes = $request->user()->generateRecoveryCodes();
 
         return response()->json([
-            'message' => 'success',
+            'message' => TwoFactorStatus::SUCCESS->value,
             'recoveryCodes' => $recoveryCodes,
         ]);
     }
@@ -142,7 +143,7 @@ class TwoFactorController extends Controller
         
         return response()->json([
             'message' => 'Two-Factor Authentication has been disabled!',
-            'status' => 'disabled',
+            'status' => TwoFactorStatus::DISABLED->value,
         ]);
     }
 }

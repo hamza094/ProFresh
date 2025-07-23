@@ -24,7 +24,7 @@ class UserProfileDelete extends Command
     /**
      * Execute the console command.
      */
-    public function handle()
+    public function handle(): int
     {
         (new DeleteProfileAction())->execute();
         $this->info('User profile deletion process completed.');

@@ -27,7 +27,7 @@ class UserHasRegistered
     /**
      * Get the channels the event should broadcast on.
      *
-     * @return \Illuminate\Broadcasting\Channel|array
+     * @return \Illuminate\Broadcasting\Channel|array<int, \Illuminate\Broadcasting\Channel>
      */
     public function broadcastOn()
     {

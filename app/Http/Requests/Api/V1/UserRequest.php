@@ -19,7 +19,7 @@ class UserRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string, array<int, \Illuminate\Contracts\Validation\Rule>|string>
+     * @return array<string, mixed>
      */
     public function rules(): array
     {
@@ -76,7 +76,10 @@ class UserRequest extends FormRequest
         ];
     }
 
-     public function messages()
+    /**
+     * @return array<string, string>
+     */
+    public function messages()
     {
       return [
          'current_password.current_password' => 'The given password does not match to current password.',

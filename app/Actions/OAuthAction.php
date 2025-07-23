@@ -7,10 +7,11 @@ use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
+use Laravel\Socialite\Contracts\User as SocialiteUser;
 
 class OAuthAction
 {
-  public function createUpdateUser($oAuthUser,$provider)
+  public function createUpdateUser(SocialiteUser $oAuthUser, string $provider): User
   {
     $user = User::where('email', $oAuthUser->getEmail())->first();
 
