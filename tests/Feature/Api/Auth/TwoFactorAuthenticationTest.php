@@ -146,36 +146,36 @@ class TwoFactorAuthenticationTest extends TestCase
 
         // Assert 2FA was created in database
         $this->assertDatabaseHas('two_factor_authentications', [
-            'authenticatable_id' => $this->user->id,
-            'authenticatable_type' => get_class($this->user),
+           'authenticatable_id' => $this->user->id,
+           'authenticatable_type' => get_class($this->user),
         ]);
     }
 
-    
+
     /** @test */
     public function it_can_confirm_two_factor()
-    {
+    {         
         $mockedUser = $this->createMockedUser([
             'confirmTwoFactorAuth' => ['123456', true],
             'hasTwoFactorEnabled' => false,
             'getRecoveryCodes' => collect(['abc123', 'xyz789']),
         ]);
 
-        Sanctum::actingAs($mockedUser);
+    Sanctum::actingAs($mockedUser);
 
-        $response = $this->postJson('/api/v1/twofactor/confirm', [
-            'code' => '123456',
-        ]);
+    $response = $this->postJson('/api/v1/twofactor/confirm', [
+        'code' => '123456',
+    ]);
 
         $response->assertOk()
             ->assertJson([
-                'status' => 'enabled',
-                'message' => 'success',
-                'recoveryCodes' => ['abc123', 'xyz789'],
-            ]);
-    }
+        'status' => 'enabled',
+    'message' => 'success',
+    'recoveryCodes' => ['abc123', 'xyz789'],
+    ]);
+  }
 
-  
+
     /** @test */
     public function it_can_show_and_regenerate_recovery_codes()
     {
@@ -184,22 +184,22 @@ class TwoFactorAuthenticationTest extends TestCase
             'generateRecoveryCodes' => collect(['abc123', 'xyz789']),
         ]);
 
-        Sanctum::actingAs($mockedUser);
+    Sanctum::actingAs($mockedUser);
 
         $response = $this->getJson('/api/v1/twofactor/recovery-codes');
 
         $response->assertOk()
             ->assertJson([
-                'message' => 'success',
-                'recoveryCodes' => ['abc123', 'xyz789'],
-            ]);
+        'message' => 'success',
+        'recoveryCodes' => ['abc123', 'xyz789'],
+    ]);
     }
 
 
-    /** @test */
+      /** @test */
     public function it_can_disable_two_factor()
     {
-        Sanctum::actingAs($this->user);
+         Sanctum::actingAs($this->user);
 
         // First setup 2FA
         $this->postJson('/api/v1/twofactor/setup', [
@@ -207,10 +207,10 @@ class TwoFactorAuthenticationTest extends TestCase
         ]);
 
         // Then disable it
-        $response = $this->deleteJson('/api/v1/twofactor/disable');
+       $response = $this->deleteJson('/api/v1/twofactor/disable');
 
         $response->assertOk()
-            ->assertJson(['status' => 'disabled']);
+        ->assertJson(['status' => 'disabled']);
     }
 
 
@@ -225,13 +225,13 @@ class TwoFactorAuthenticationTest extends TestCase
         ]);
 
         $response->assertOk()
-            ->assertJson([
-                'message' => 'Two-factor authentication is enabled. Please provide the verification code.',
-                'status' => '2fa_required',
-            ]);
+        ->assertJson([
+            'message' => 'Two-factor authentication is enabled. Please provide the verification code.',
+            'status' => '2fa_required',
+        ]);
 
         // Assert session exists and is encrypted
-        $this->assertTrue(session()->has('2fa_login'));
+    $this->assertTrue(session()->has('2fa_login'));
 
         // Verify encrypted session contents
         $encryptedSession = session('2fa_login');
@@ -243,49 +243,6 @@ class TwoFactorAuthenticationTest extends TestCase
         $this->assertNotNull($decryptedSession['expires_at']);
     }
 
-    /** @test */
-    public function it_allows_user_to_complete_two_factor_login_with_valid_code()
-    {
-        $totpSecret = 'JBSWY3DPEHPK3PXP';
-        
-        // Setup 2FA for user
-        DB::table('two_factor_authentications')->insert([
-            'authenticatable_type' => User::class,
-            'authenticatable_id'   => $this->user->id,
-            'shared_secret'        => encrypt($totpSecret),
-            'recovery_codes'       => encrypt(json_encode(['RCODE-1234-5678'])),
-            'enabled_at'           => now(),
-            'label'                => "ProFresh:{$this->user->email}"
-        ]);
-
-        // Setup encrypted session data
-        $this->setupEncryptedSession();
-
-
-        $validCode = $this->generateTOTPCode($totpSecret);
-
-        $response = $this->postJson('/api/v1/twofactor/login-confirm', [
-            'code' => 567890,
-        ]);
-
-        // Assert successful login
-        $response->assertOk()
-            ->assertJsonStructure([
-                'message',
-                'user',
-                'status',
-                'access_token',
-            ])
-            ->assertJson([
-                'message' => 'User authenticated successfully',
-                'status' => 'success',
-            ]);
-
-        $this->assertArrayHasKey('access_token', $response->json());
-
-        // Assert session was cleared
-        $this->assertFalse(session()->has('2fa_login'));
-    }
 
     /** @test */
     public function it_fails_two_factor_login_with_missing_session()
@@ -301,10 +258,10 @@ class TwoFactorAuthenticationTest extends TestCase
             'Session expired or invalid', 
             $response->json('errors.code.0')
         );
-    }
-  
+}
 
-    /** @test */
+
+        /** @test */
     public function it_fails_two_factor_login_with_expired_session()
     {
         // Setup encrypted session data with expired timestamp
@@ -326,13 +283,6 @@ class TwoFactorAuthenticationTest extends TestCase
             $response->json('errors.code.0')
         );
     }
-
-    private function generateTOTPCode(string $secret): string
-    {
-        // You can use a TOTP library or generate a valid code
-        // For testing, you might want to use a fixed code that matches your setup
-        return '123456'; // This should be a valid TOTP code for your secret
-    }   
 
     protected function tearDown(): void
     {

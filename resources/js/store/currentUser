@@ -9,14 +9,7 @@ const state = {
 };
 const getters = {};
 const actions = {
-  handleLoginResponse({ commit, dispatch }, response) {
-    if (response.data.status === '2fa_required') {
-      localStorage.setItem('twofa_pending', 'true');
-      localStorage.setItem('twofa_timestamp', Date.now());
-      router.push({ name: 'TwoFACode' });
-      return;
-    }
-    this.$vToastify.success('You have successfully logged in to the site');    
+  finalizeLogin({ commit, dispatch }, { response, vm, toastMsg }) {
     localStorage.removeItem('twofa_pending');
     localStorage.removeItem('twofa_timestamp');
     dispatch('createUserToken', response);
@@ -24,8 +17,23 @@ const actions = {
     commit('loggedIn', true);
     commit('setToken', response.data.access_token);
     dispatch('subscribeUser/userSubscription', null, { root: true });
-    router.push('/home');
+    if (vm && vm.$router) {
+      if (toastMsg) vm.$vToastify.success(toastMsg);
+      vm.$router.push('/home');
+    } else {
+      router.push('/home');
+    }
     commit('setErrors', '');
+  },
+
+  handleLoginResponse({ commit, dispatch }, response) {
+    if (response.data.status === '2fa_required') {
+      localStorage.setItem('twofa_pending', 'true');
+      localStorage.setItem('twofa_timestamp', Date.now());
+      router.push({ name: 'TwoFACode' });
+      return;
+    }
+    dispatch('finalizeLogin', { response });
   },
 
   loginUser({ commit, dispatch }, user) {
@@ -36,9 +44,19 @@ const actions = {
         Vue.prototype.$Progress.finish();
       })
       .catch(error => {
-        Vue.prototype.$Progress.fail();
+      Vue.prototype.$Progress.fail();
+        console.log(error);
         commit('setErrors', error.response.data.errors);
-      });
+    });
+  },
+
+  async twoFactorLogin({ commit, dispatch }, { code, vm }) {
+    try {
+      const res = await axios.post('/api/v1/twofactor/login-confirm', { code });
+      dispatch('finalizeLogin', { response: res, vm, toastMsg: '2FA successfully verified.' });
+    } catch (e) {
+      throw e;
+    }
   },
 
 createUserToken({commit},response){

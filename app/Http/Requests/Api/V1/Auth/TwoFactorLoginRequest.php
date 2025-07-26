@@ -50,7 +50,8 @@ class TwoFactorLoginRequest extends FormRequest
     public function withValidator($validator): void
     {
         $validator->after(function ($validator) {
-            $this->validateTwoFactorSession($validator);
+             $code = $this->input('code'); 
+            $this->validateTwoFactorSession($validator,$code);
         });
     }
 
@@ -60,21 +61,21 @@ class TwoFactorLoginRequest extends FormRequest
      * @param \Illuminate\Validation\Validator $validator
      * @return void
      */
-    private function validateTwoFactorSession($validator): void
+    private function validateTwoFactorSession($validator,$code): void
     {
         // Get user from encrypted session data
         $user = $this->getUserFromSession();
         
         if (!$user) {
             $this->addSessionError($validator);
-            return;
-        }
+                return;
+            }
 
         // Validate 2FA code
-        if (!$user->confirmTwoFactorAuth($this->code)) {
+        if (!$user->validateTwoFactorCode($code)) {
             $this->addCodeError($validator);
-            return;
-        }
+                return;
+            }
 
         // Attach user to request for controller use
         $this->setUserResolver(fn() => $user);
@@ -154,6 +155,6 @@ class TwoFactorLoginRequest extends FormRequest
      */
     private function addCodeError($validator): void
     {
-        $validator->errors()->add('code', 'Invalid code provided.');
+                $validator->errors()->add('code', 'Invalid code provided.');
     }
 }
