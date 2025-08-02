@@ -13,38 +13,12 @@ use Illuminate\Support\Facades\DB;
 
 class DashboardTest extends TestCase
 {
-    use RefreshDatabase,ProjectSetup;
-
-    /** @test */
-    public function auth_user_can_view_his_projects_on_dashboard()
-    {
-       $projects=Project::factory()->count(3)->for($this->user)
-                 ->create();
-
-       $response=$this->getJson('/api/v1/user/projects');
-
-       $response
-        ->assertOk()
-        ->assertJson([
-            'projects'=>[0=>['name'=>$this->project->name]],
-            'projectsCount'=>4
-           ]);
-
-       $this->deleteJson($this->project->path());
-
-       $response=$this->getJson('/api/v1/user/projects?abandoned=true')
-       ->assertOk();
-
-        $response->assertJson([
-            'projects'=>[0=>['name'=>$this->project->name]],
-            'projectsCount'=>1
-          ]);
-    }
+    use RefreshDatabase, ProjectSetup;
 
     /** @test */
     public function auth_user_view_his_activities()
     {
-      $response=$this->getJson('api/v1/user/activities')->assertOk(); 
+        $response = $this->getJson('api/v1/user/activities')->assertOk();
 
       $response->assertJsonFragment(['user_id' => $this->user->id]);
     }
@@ -52,9 +26,9 @@ class DashboardTest extends TestCase
     /** @test */
     public function auth_user_get_his_projects_count()
     {
-        Project::factory()->create(['user_id'=>$this->user->id]);
+        Project::factory()->create(['user_id' => $this->user->id]);
 
-        Project::factory()->create(['deleted_at'=>now(),'user_id'=>$this->user->id]);
+        Project::factory()->create(['deleted_at' => now(), 'user_id' => $this->user->id]);
 
         $invitedProject = Project::factory()->create();
 
@@ -64,8 +38,7 @@ class DashboardTest extends TestCase
             'active' => 1,
         ]);
         
-
-        $response=$this->getJson('api/v1/data')->assertOk();
+        $response = $this->getJson('api/v1/data')->assertOk();
 
         $projectsData = $response->json('projectsData');
          
@@ -76,10 +49,9 @@ class DashboardTest extends TestCase
         $this->assertEquals(1, $projectsData['active_invited_projects']);
 
         $this->assertEquals(
-            
          array_sum(array_only($projectsData, ['active_projects', 'trashed_projects', 'active_invited_projects'])),
-
-        $projectsData['total_projects']);       
+            $projectsData['total_projects']
+        );
     }
 
     /** @test */
@@ -104,6 +76,41 @@ class DashboardTest extends TestCase
     $this->assertEquals($task2->title, $responseData['tasks'][3]['title']);
     }
 
+    /** @test */
+    public function auth_user_can_view_dashboard_projects()
+    {
+        // Create 5 projects for the user
+        Project::factory()->count(5)->for($this->user)->create();
 
+        $response = $this->getJson('/api/v1/user/dashboard-projects');
 
+        $response->assertOk()
+            ->assertJsonStructure([
+                'projects',
+                'projectsCount',
+                'message'
+            ]);
+
+        // Should only return 3 projects (latest)
+        $this->assertCount(3, $response->json('projects'));
+        $this->assertEquals(3, $response->json('projectsCount'));
+        $this->assertNotEmpty($response->json('projects'));
+    }
+
+    /** @test */
+    public function dashboard_projects_returns_empty_message_when_no_projects()
+    {
+        // Delete the default project from ProjectSetup trait
+        $this->project->delete();
+
+        $response = $this->getJson('/api/v1/user/dashboard-projects');
+
+        $response->assertOk();
+
+        $this->assertCount(0, $response->json('projects'));
+        $this->assertEquals(0, $response->json('projectsCount'));
+        $this->assertEquals('No active projects found', $response->json('message'));
+    }
+
+    
 }

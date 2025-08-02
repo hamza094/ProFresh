@@ -73,10 +73,6 @@ class AppServiceProvider extends ServiceProvider
         'api/v1/oauth/zoom',
         'api/v1/user/token',
         'api/v1/user/jwt/token',
-        'api/v1/user/activities',
-        'api/v1/data',
-        'api/v1/tasksdata',
-        'api/v1/user/projects',
         'api/v1/users/search',
     ];
 

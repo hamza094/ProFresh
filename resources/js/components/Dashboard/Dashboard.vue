@@ -2,17 +2,11 @@
 	<div>
      <div class="page-top">Welcome To Your Dashboard</div>
      	<div class="dashboard-project m-4">
-     		<p class="dashboard-heading float-left"><b>Total
-                <span>{{projectState}} Projects:</span>
-								{{projectsCount}}
-            </b></p>
+     		<p class="dashboard-heading float-left"><b>Recent Active Projects</b></p>
      			<span class="float-right">
-
-     			<button class="btn btn-sm btn-primary" @click.prevent="activeProjects">Active Projects</button>
-
-     			<button class="btn btn-sm btn-success" @click.prevent="memberProjects">Projects Member</button>
-
-                <button class="btn btn-sm btn-danger" @click.prevent="abandonedProjects">Abandoned Projects</button>
+     			<router-link to="/projects" class="btn btn-sm btn-primary">
+     				<i class="fas fa-list"></i> View All Projects
+     			</router-link>
              	</span>
      	</div>
         <br><br>
@@ -20,23 +14,31 @@
      		<div class="row">
 				<div v-if="message" class="m-3">
 				<h5>
-				<b>{{message}} in {{projectState}} Projects</b>
+				<b>{{message}}</b>
 			    </h5>
 				</div>
 
-     			<div class="col-md-4" v-for="project in projects">
+     			<div class="col-md-4" v-for="project in projects" :key="project.id">
 					<router-link :to="'/projects/'+project.slug" class="dashboard-link">
-     			<div class="dashboard-projects mt-5">
-                    <span class="float-right">
-					<b>{{projectState}}</b>
-					</span>
-     			<p class="mt-3">{{project.name}}</p>
-     			<p>Project Stage: <span v-text="stage(project)">
-     			</span></p>
-     			<p>Project Status:
-				    <span> {{project.status}}</span>
-				</p>
-				<p>Created At: {{project.created_at}}</p>
+     			<div class="dashboard-projects mt-5 active-projects">
+                    <div class="project-status">
+					<b>Active</b>
+					</div>
+                    <div class="project-title">{{project.name}}</div>
+                    <div class="project-info">
+                        <div class="info-item">
+                            <span class="info-label">Stage:</span>
+                            <span class="info-value">{{ project.stage.name }}</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Status:</span>
+                            <span class="info-value">{{project.status}}</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Created:</span>
+                            <span class="info-value">{{project.created_at}}</span>
+                        </div>
+                    </div>
      		</div>
                 </router-link>
      			</div>
@@ -85,8 +87,7 @@ export default{
 
     data(){
     return{
-	    projects: {},
-        projectState: "",
+	    projects: [],
         projectsCount: 0,
         message: '',
         activities:[],		
@@ -120,35 +121,18 @@ export default{
            console.log(error);
          });
       },  
-      activeProjects(){
-        axios.get(this.url()).
+      loadDashboardProjects(){
+        axios.get('/api/v1/user/dashboard-projects').
             then(({data})=>(this.getData(data)));
-            this.projectState = "Active";
       },
-      memberProjects(){
-        axios.get(this.url()+'?member=true').
-            then(({data})=>(this.getData(data)));
-	        this.projectState = "Member";
-      },
-      abandonedProjects(){
-         axios.get(this.url()+'?abandoned=true').
-            then(({data})=>(this.getData(data)));
-			this.projectState="Abandoned";
-      },
-			url(){
-				return '/api/v1/user/projects';
-			},
 			getData(data){
-				this.projects=data.projects,
-				this.projectsCount=data.projectsCount,
-				this.message=data.message;
-			},
-			 stage(project){
-			   return this.currentStage(project.stage,project.completed);
+				this.projects = data.projects;
+				this.projectsCount = data.projectsCount;
+				this.message = data.message;
 			},
     },
     mounted(){
-        this.activeProjects();
+        this.loadDashboardProjects();
         this.calendarData();
     }
 }

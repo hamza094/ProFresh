@@ -61,7 +61,7 @@ class ProjectsResource extends JsonResource
        * The human-readable creation date of the project.
        * @example "2 hours ago"
      */
-        'created_at'=>$this->created_at,
+        'created_at'=>$this->created_at->diffForHumans(),
 
           /**
      * Links related to the project.

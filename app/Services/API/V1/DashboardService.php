@@ -1,64 +1,75 @@
 <?php
+
 namespace App\Services\Api\V1;
 
 use App\Http\Resources\Api\V1\ProjectsResource;
 use Illuminate\Http\Request;
-use F9Web\ApiResponseHelpers;
-use Illuminate\Http\JsonResponse;
 use App\Repository\DashBoardRepository;
+use App\Models\User;
+use Illuminate\Support\Collection;
 use Auth;
+use App\Models\Project;
 
 class DashboardService
 {
-  use ApiResponseHelpers;
+    protected DashBoardRepository $dashboardRepository;
 
-  protected $dashboardRepository;
-
-   public function __construct(DashBoardRepository $dashboardRepository)
-   {
+    public function __construct(DashBoardRepository $dashboardRepository)
+    {
         $this->dashboardRepository = $dashboardRepository;
-   }
-
-  public function getUserProjects()
-  {
-     $user = Auth::user();
-
-     $projects = $this->filterProjects($user);
-                    
-     return $this->respondWithSuccess([
-      'projects'=>ProjectsResource::collection($projects->load('stage')),
-      'projectsCount'=>$projects->count(),
-       'message' => $projects->isEmpty() ? 'Sorry No Projects Found' : '',
-      ]);
-  }
-
-     private function filterProjects($user)
-     {
-       switch (true) {
-         case request()->filled('member'):
-            return $user->members(true)->get();
-
-         case request()->filled('abandoned'):
-            return $user->projects()->onlyTrashed()->get();
-
-         default:
-            return $user->projects()->get();
-      }
-     }
-
-   public function fetchData()
-   {
-      $data = [];
-       
-    $data = $this->dashboardRepository->fetchData();
-
-    $data['active_invited_projects'] = (int) $data['active_invited_projects'];
-    $data['total_projects'] = (int) $data['total_projects'];
-    $data['active_projects'] = (int) $data['active_projects'];
-    $data['trashed_projects'] = (int) $data['trashed_projects'];
-
-       return $data;
     }
 
+    public function getUserProjects($request)
+    {
+        $user = Auth::user();
+
+        return $this->filterProjects($user,$request);
     }
-?>
+
+    public function getDashboardProjects()
+    {
+        $user = Auth::user();
+        
+        return $user->projects()
+            ->with('stage')
+            ->latest()
+            ->take(3)
+            ->get();
+    }
+
+    private function filterProjects(User $user,$request): Collection
+    {
+        $filters = $this->getFilters($request);
+
+        // Start with the appropriate base query using ProjectQueryBuilder
+        $query = $filters['member'] 
+            ? $user->members(true)
+            : $user->projects();
+
+        return $query
+            ->with(['stage', 'user'])
+            ->when($filters['abandoned'], fn($query) => $query->trashed())
+            ->when($filters['search'], fn($query) => $query->search($filters['search']))
+            ->sortBy($filters['sort'])
+            ->get();
+    }
+
+    private function getFilters($request): array
+    {
+        return [
+            'search' => $request->validated('search'),
+            'sort' => $request->validated('sort', 'latest'),
+            'member' => $request->validated('member', false),
+            'abandoned' => $request->validated('abandoned', false),
+        ];
+    }
+
+    public function fetchData(): array
+    {
+        $data = $this->dashboardRepository->fetchData();
+
+        return collect($data)
+            ->map(fn($value) => (int) $value)
+            ->toArray();
+    }
+}

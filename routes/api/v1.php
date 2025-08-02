@@ -96,6 +96,8 @@ Route::controller(ProjectDashboardController::class)->group(function(){
  Route::get('/data','data');
  Route::get('/tasksdata','tasksData')->name('tasks.data');
  Route::get('/user/activities','activities');
+ Route::get('/user/dashboard-projects','dashboardProjects');
+Route::get('/user/projects','userProjects')->name('user.projects');
 })->middleware(['can:owner','user']);
 
 //Return All Stages
@@ -209,8 +211,6 @@ Route::apiResource('/meetings',ZoomMeetingController::class);
 Route::apiResource('/users',UserController::class)->except(['store']);
 Route::delete('/users/{user}/force', [UserController::class, 'forceDestroy'])->name('users.forceDestroy');
 
-//Dashboard Routes
-Route::get('/user/projects',[ProjectDashboardController::class,'userprojects']);
 
 Route::group(['prefix' => 'users/{user}'], function() {
 

@@ -239,6 +239,7 @@ return [
       'taskLimit' => '18',
       'abandonedLimit'=>'90',
       'filters'=>'10',
+      'items_limit' => '6',
     ],
 
    'date_formats' => [

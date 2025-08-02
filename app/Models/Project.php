@@ -19,6 +19,7 @@ use App\Enums\ScoreValue;
 use Illuminate\Support\Collection;
 use Carbon\Carbon;
 use Auth;
+use App\QueryBuilder\ProjectQueryBuilder;
 
 class Project extends Model
 {
@@ -71,6 +72,14 @@ class Project extends Model
     public function getRouteKeyName(): string
     {
         return 'slug';
+    }
+
+    /**
+     * Create a new Eloquent query builder for the model.
+     */
+    public function newEloquentBuilder($query): ProjectQueryBuilder
+    {
+        return new ProjectQueryBuilder($query);
     }
 
     public function path(): string
@@ -220,19 +229,11 @@ class Project extends Model
         return static::$status;
     }
 
-    public function scopePastAbandonedLimit(Builder $query)
-    {
-        $abandonedLimit = config('app.project.abandonedLimit');
-
-        $query->where('deleted_at', '<', Carbon::now()
-               ->subDays($abandonedLimit));
-    }
-
     /**
      * Get all scheduled messages releated to project
      * 
-     * @return Collection<int, Message>
-     */ 
+     * @return Collection<int, Message> 
+     */
     public function scheduledMessages(): Collection
     {
         return $this
