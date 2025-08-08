@@ -17,18 +17,15 @@ use App\Http\Resources\Api\V1\ProjectsResource;
 use App\Http\Resources\Api\V1\UserTasksResource;
 use Carbon\Carbon;
 use App\Http\Requests\Api\V1\DashboardProjectRequest;
+use App\Repository\DashBoardRepository;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Pagination\LengthAwarePaginator;
 
-
 class ProjectDashboardController extends Controller
 {
-    private $dashboardService;
-
-    public function __construct(DashboardService $dashboardService)
-    {
-        $this->dashboardService = $dashboardService;
-    }
+    public function __construct(
+        private readonly DashboardService $dashboardService
+    ) {}
 
     /**
      * Get paginated list of user's projects with filters
@@ -46,12 +43,11 @@ class ProjectDashboardController extends Controller
             'projects' => ProjectsResource::collection($projects)->paginate(config('app.project.items_limit')),
             'projectsCount' => $projects->count(),
             'message' => $projects->isEmpty() ? 'Sorry No Projects Found' : '',
-        ], 200);
+        ]);
     }
 
     /**
      * Get recent active projects
-     * 
      */
     public function dashboardProjects(): JsonResponse
     {
@@ -63,15 +59,13 @@ class ProjectDashboardController extends Controller
             'projects' => $projectsResource,
             'projectsCount' => $projects->count(),
             'message' => $projects->isEmpty() ? 'No active projects found' : '',
-        ], 200);
+        ]);
     }
-
 
     /**
      * Get user project activities
-     * 
      */
-    public function activities()
+    public function activities(): AnonymousResourceCollection
     {
         $activities = Activity::query()
             ->where('user_id', auth()->id())
@@ -83,23 +77,25 @@ class ProjectDashboardController extends Controller
         return UserActivitiesResource::collection($activities);
     }
 
+    public function chartData(Request $request,DashBoardRepository $dashboardRepository): JsonResponse
+    {        
+        $data = $dashboardRepository->getProjectStats($request);
 
-    public function data(Request $request): JsonResponse
-    {
-        $data = $this->dashboardService->fetchData();
-
-        return response()->json(['projectsData' => $data]);
+        return response()->json([
+          'success' => true,
+           'message' => 'Project stats fetched successfully.',
+           'data' => $data,
+        ]);
     }
 
-    public function tasksData(UserTasksDataRepository $repository, Request $request)
+    public function tasksData(UserTasksDataRepository $repository, Request $request): JsonResponse
     {
         $tasks = $repository->getTasks(auth()->id(), $request);
-
         $appliedFilters = $repository->appliedFilters($request);
 
-        return [
+        return response()->json([
             'tasks' => UserTasksResource::collection($tasks),
             'applied_filters' => $appliedFilters,
-        ];
+        ]);
     }
 }

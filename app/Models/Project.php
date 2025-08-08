@@ -289,4 +289,15 @@ class Project extends Model
         }
     }
 
+    public function scopeCreatedIn($query, $year = null, $month = null)
+   {
+    if ($year) {
+        $query->whereYear('projects.created_at', $year);
+        if ($month) {
+            $query->whereMonth('projects.created_at', $month);
+        }
+    }
+    return $query;
+   }
+
 }

@@ -93,7 +93,7 @@ Route::controller(TwoFactorController::class)
         ->name('user.invitations');
 
 Route::controller(ProjectDashboardController::class)->group(function(){
- Route::get('/data','data');
+ Route::get('dashboard/chart-data','chartData')->name('dashboard.chart-data');
  Route::get('/tasksdata','tasksData')->name('tasks.data');
  Route::get('/user/activities','activities');
  Route::get('/user/dashboard-projects','dashboardProjects');

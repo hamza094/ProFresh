@@ -22,14 +22,12 @@ class DashboardService
     public function getUserProjects($request)
     {
         $user = Auth::user();
-
-        return $this->filterProjects($user,$request);
+        return $this->filterProjects($user, $request);
     }
 
     public function getDashboardProjects()
     {
         $user = Auth::user();
-        
         return $user->projects()
             ->with('stage')
             ->latest()
@@ -37,15 +35,12 @@ class DashboardService
             ->get();
     }
 
-    private function filterProjects(User $user,$request): Collection
+    private function filterProjects(User $user, $request): Collection
     {
         $filters = $this->getFilters($request);
-
-        // Start with the appropriate base query using ProjectQueryBuilder
         $query = $filters['member'] 
             ? $user->members(true)
             : $user->projects();
-
         return $query
             ->with(['stage', 'user'])
             ->when($filters['abandoned'], fn($query) => $query->trashed())
@@ -64,12 +59,5 @@ class DashboardService
         ];
     }
 
-    public function fetchData(): array
-    {
-        $data = $this->dashboardRepository->fetchData();
 
-        return collect($data)
-            ->map(fn($value) => (int) $value)
-            ->toArray();
-    }
 }
