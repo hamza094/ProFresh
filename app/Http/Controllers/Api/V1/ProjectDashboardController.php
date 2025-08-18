@@ -17,9 +17,11 @@ use App\Http\Resources\Api\V1\ProjectsResource;
 use App\Http\Resources\Api\V1\UserTasksResource;
 use Carbon\Carbon;
 use App\Http\Requests\Api\V1\DashboardProjectRequest;
+use App\Http\Requests\Api\V1\UserActivitiesRequest;
 use App\Repository\DashBoardRepository;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\Cache;
 
 class ProjectDashboardController extends Controller
 {
@@ -64,15 +66,20 @@ class ProjectDashboardController extends Controller
 
     /**
      * Get user project activities
+     *
+     * @param UserActivitiesRequest $request
+     * @param DashBoardRepository $repository
+     * @return AnonymousResourceCollection
      */
-    public function activities(): AnonymousResourceCollection
+    public function activities(UserActivitiesRequest $request, DashBoardRepository $repository): AnonymousResourceCollection
     {
-        $activities = Activity::query()
-            ->where('user_id', auth()->id())
-            ->with(['subject', 'project' => function ($query) {
-                $query->withTrashed();
-            }, 'project.stage'])
-            ->get();
+        $dateRange = $request->getDateRange();
+        
+        $activities = $repository->getUserActivities(
+            auth()->id(),
+            $dateRange['start_date'],
+            $dateRange['end_date']
+        );
 
         return UserActivitiesResource::collection($activities);
     }

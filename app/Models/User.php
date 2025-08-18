@@ -132,6 +132,10 @@ class User extends Authenticatable implements MustVerifyEmail,TwoFactorAuthentic
            return $redis->get('last_active_' . $this->id);
     }*/
 
+    public function activities()
+   {
+     return $this->hasMany(Activity::class);
+   }
     
     /**
     * Get all conversation associated by user

@@ -152,6 +152,20 @@ class ActivityResource extends JsonResource
     return 'Project members removed from the project';
   }
 
+  protected function created_meeting()
+  {
+    return "Meeting {$this->subject->topic} created";
+
+  }
+
+  protected function updated_meeting(){
+    return "Meeting {$this->subject->topic} updated";
+  }
+
+  protected function deleted_meeting(){
+    return "Meeting deleted from the project";
+  }
+
   protected function loadAffectedUsers(): array
   {
     if (empty($this->affected_users) || !is_array($this->affected_users)) {

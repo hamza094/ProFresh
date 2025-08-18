@@ -26,7 +26,7 @@ class TaskFactory extends Factory
     public function definition()
     {
         return [
-        'title'=>$this->faker->catchPhrase,
+        'title' => $this->faker->text(55),
         'user_id'=>User::factory(),
         'project_id'=>Project::factory(),
         'description'=>$this->faker->text($maxNbChars = 250),

@@ -29,7 +29,6 @@ import VueToastify from "vue-toastify";
 import { Datetime } from 'vue-datetime';
 // You need a specific loader for CSS files
 import 'vue-datetime/dist/vue-datetime.css';
-import VCalendar from 'v-calendar';
 import PortalVue from 'portal-vue';
 
 Vue.use(PortalVue);
@@ -82,10 +81,6 @@ Vue.filter('datetime',function(data){
 Vue.filter('msgTime',function(data){
    return  moment(data).calendar();
 })
-
-Vue.use(VCalendar, {
-  componentPrefix: 'vc',               
-});
 
 import { Settings } from 'luxon'
 Settings.defaultLocale = 'en'

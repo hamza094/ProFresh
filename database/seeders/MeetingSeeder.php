@@ -15,9 +15,9 @@ class MeetingSeeder extends Seeder
      */
     public function run()
     {
-        // For each project, create 30 meetings
+        // For each project, create 5 meetings
         Project::all()->each(function ($project) {
-            Meeting::factory()->count(30)->create([
+            Meeting::factory()->count(5)->create([
                 'project_id' => $project->id,
                 'user_id' => $project->user_id, // or assign randomly if needed
             ]);

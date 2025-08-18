@@ -4,14 +4,15 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Traits\RecordActivity;
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
 
 class Meeting extends Model
 {
-    use HasFactory;
+    use RecordActivity, HasFactory;
 
-    protected $guarded=[];
+    protected $guarded = [];
 
     /**
      * @var array<int, string>

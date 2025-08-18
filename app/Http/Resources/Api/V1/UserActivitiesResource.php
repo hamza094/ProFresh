@@ -14,131 +14,182 @@ class UserActivitiesResource extends JsonResource
      * @param  \Illuminate\Http\Request  $request
      * @return array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable
      */
-    public function toArray($request)
-    {
-        return [
-            'description' => $this->{$this->description}(),
-            'project' => $this->whenLoaded('project') ? new ProjectsResource($this->project) : null,
-           //'time' => $this->created_at,
-            'time' => Carbon::create(now()->year, rand(1, 12), rand(1, 28)),
-           'subject_id' => $this->subject_type === "App\\Models\\Task" ? ($this->subject ? $this->subject->id : null) : $this->subject_type,
-           'color' => $this->color(),
-           'user_id'=>$this->user_id,
-        ];
+  public function toArray($request)
+  {
+    return [
+      'id' => $this->id,
+      'description' => method_exists($this, $this->description) 
+        ? $this->{$this->description}() 
+        : $this->description,
+      'project' => $this->whenLoaded('project') && $this->project ? new ProjectsResource($this->project) : null,
+      'created_at' => $this->created_at?->format('Y-m-d H:i:s'),
+      'subject' => $this->getSubjectDetails(),
+      'color' => $this->color(),
+      'user_id' => $this->user_id,
+    ];
+  }
+  
+  /*protected function getSubjectDetails(): array
+  {
+    if ($this->relationLoaded('subject') && $this->subject) {
+      return [
+        'id' => $this->subject->id ?? null,
+        'type' => class_basename($this->subject),
+        'name' => $this->subject->name ?? ($this->subject->title ?? null),
+      ];
     }
+    return [];
+  }*/
 
-    protected function created_project()
+   protected function getSubjectDetails(): array
     {
-      return "Project {$this->project->name} created";
-    }
+    return [
+        'type' => class_basename($this->subject_type),
+        'id' => optional($this->subject)->id,
+    ];
+   }  
+
+  protected function created_project()
+  {
+    return $this->project
+      ? "Project {$this->project->name} created"
+      : "Project (deleted) created";
+  }
 
     protected function updated_project()
     {
-      if(key($this->changes['after']) == 'stage_id')
-      {
-        return "Project {$this->project->name} stage updated";
-      }
+        if (!$this->project) {
+            return "Project (deleted) updated";
+        }
 
-      if(key($this->changes['after']) == 'deleted_at')
-      {
-        return "Projet {$this->project->name} back alive";
-      }
+        if (empty($this->changes) || !isset($this->changes['after'])) {
+            return "Project {$this->project->name} updated";
+        }
 
-      return 'Project '. $this->project->name .key($this->changes['after']).' '.'updated';
+        $changesAfter = $this->changes['after'] ?? [];
+        $updatedKey = key($changesAfter);
+
+        if ($updatedKey === 'stage_id') {
+            return "Project {$this->project->name} stage changed";
+        }
+
+        if ($updatedKey === 'deleted_at') {
+            return "Project {$this->project->name} was archived";
+        }
+
+        return "Project {$this->project->name} " . ($updatedKey ?? '') . " updated";
     }
 
   protected function deleted_project()
   {
-      return "Project abandoned";
+    return $this->project
+      ? "Project {$this->project->name} archived"
+      : "Project (deleted) archived";
   }
 
   protected function restored_project()
   {
-      return "Project {$this->project->name} restores back";
+    return $this->project
+      ? "Project {$this->project->name} restored"
+      : "Project (deleted) restored";
   }
 
   protected function created_task()
   {
-      if ($this->subject && $this->subject->title) {
-        return 'Task'.' '.Str::limit($this->subject->title, 12, '..').' '.'added in '. $this->project->name;
+    if ($this->subject && $this->subject->title) {
+      $projectName = $this->project ? $this->project->name : '(deleted)';
+      return 'Task '.Str::limit($this->subject->title, 12, '..').' added in '.$projectName;
     }
-    return "Task added in {$this->project->name}";
+    $projectName = $this->project ? $this->project->name : '(deleted)';
+    return "Task added in {$projectName}";
   }
 
   protected function updated_task()
   {
     $task = $this->subject;
-    $updatedKey = key($this->changes['after']);
-    $taskName = Str::limit($task->title, 12, '..');
+    $updatedKey = isset($this->changes['after']) ? key($this->changes['after']) : null;
+    $taskTitle = $task && $task->title ? Str::limit($task->title, 12, '..') : '(deleted)';
+    $projectName = $this->project ? $this->project->name : '(deleted)';
 
-    if ($updatedKey === 'completed') {
-        return "Task '$taskName' status updated in {$this->project->name}";
+    if ($updatedKey === 'status_id') {
+      return "Task '$taskTitle' status updated in {$projectName}";
     }
 
-    return "Task '$taskName' body updated in {$this->project->name}";
+    return "Task '$taskTitle' " . ($updatedKey ? Str::headline($updatedKey) : '') . " updated in project {$projectName}";
   }
 
   protected function deleted_task()
   {
-    return "Task archived from {$this->project->name}";
+    $projectName = $this->project ? $this->project->name : '(deleted)';
+    if (!$this->subject) {
+      return "One Task has been removed from the project {$projectName}";
+    }
+    $taskTitle = Str::limit($this->subject->title, 17, '...');
+    return "Task '$taskTitle' archived from the project {$projectName}";
   }
 
   protected function created_message()
   {
-    $status = $this->subject->delivered_at == null ? 'scheduled' : 'sent';
-
-    return 'Message ' . Str::limit($this->subject->message, 12, '..') . ' ' . $status;
+    $status = ($this->subject && property_exists($this->subject, 'delivered_at') && $this->subject->delivered_at == null) ? 'scheduled' : 'sent';
+    $message = $this->subject && property_exists($this->subject, 'message') ? Str::limit($this->subject->message, 12, '..') : '';
+    return 'Message ' . $message . ' ' . $status;
   }
 
   protected function sent_invitation_member()
   {
-    return "Project {$this->project->name} invitation sent to {$this->info}";
+    $projectName = $this->project ? $this->project->name : '(deleted)';
+    return "Project {$projectName} invitation sent to a member";
+  }
+
+  protected function invitation_accepted(): string
+  {
+    $projectName = $this->project ? $this->project->name : '(deleted)';
+    return "Project {$projectName} invitation accepted";
   }
 
   protected function accept_invitation_member()
   {
-    return "Project {$this->project->name} invitation accepted by {$this->info}";
+    $projectName = $this->project ? $this->project->name : '(deleted)';
+    return "Project {$projectName} invitation accepted";
   }
 
   protected function remove_project_member()
   {
-    return "Project {$this->project->name} member {$this->info} removed";
+    $projectName = $this->project ? $this->project->name : '(deleted)';
+    return "Project {$projectName} member removed";
   }
 
-    protected function updated_taskstatus(){
-     $label = $this->subject->label;
-    return "Updated Task Status with label '$label'";
+  protected function created_meeting()
+  {
+    $projectName = $this->project ? $this->project->name : '(deleted)';
+    $topic = $this->subject && property_exists($this->subject, 'topic') ? $this->subject->topic : '';
+    return "Meeting {$topic} created in project {$projectName}";
   }
 
-   protected function created_taskstatus(){
-    return "Created new Task Status";
+  protected function updated_meeting()
+  {
+    $projectName = $this->project ? $this->project->name : '(deleted)';
+    $topic = $this->subject && property_exists($this->subject, 'topic') ? $this->subject->topic : '';
+    return "Meeting {$topic} updated in project {$projectName}";
   }
 
-   protected function deleted_taskstatus(){
-    return "Deleted Task status";
-  }
-
-  protected function updated_stage(){
-     $name = $this->subject->name;
-    return "Updated Stage with name '$name'";
-  }
-
-   protected function created_stage(){
-    return "Created new Stage";
-  }
-
-   protected function deleted_stage(){
-    return "Deleted Stage";
+  protected function deleted_meeting()
+  {
+    $projectName = $this->project ? $this->project->name : '(deleted)';
+    return "Meeting deleted from project {$projectName}";
   }
 
   protected function color()
   {
-    if (Str::startsWith($this->{$this->description}(), 'Project')) {
-        return 'purple';
-    } elseif (Str::startsWith($this->{$this->description}(), 'Task')) {
-        return 'yellow';
+    $desc = method_exists($this, $this->description) ? $this->{$this->description}() : '';
+    if (Str::startsWith($desc, 'Project')) {
+      return 'purple';
+    } elseif (Str::startsWith($desc, 'Task')) {
+      return 'yellow';
+    } elseif (Str::startsWith($desc, 'Meeting')) {
+      return 'red';
     } else {
-        return 'green';
+      return 'green';
     }
   }
   

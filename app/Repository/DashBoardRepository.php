@@ -11,6 +11,9 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
+use App\Models\Activity;
+use Illuminate\Support\Facades\Cache;
+
 class DashBoardRepository
 {
     
@@ -53,8 +56,34 @@ return [
     'member_projects' => (int) ($result->member_projects ?? 0),
     'total_projects' => (int) (($result->active_projects ?? 0) + ($result->trashed_projects ?? 0) + ($result->member_projects ?? 0))
 ];
+}
 
-       
+    /**
+     * Get user activities for a specific date range
+     *
+     * @param int $userId
+     * @param Carbon $startDate
+     * @param Carbon $endDate
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function getUserActivities(int $userId, Carbon $startDate, Carbon $endDate)
+    {
+        $cacheKey = "activities_{$userId}_{$startDate->format('Ymd')}_{$endDate->format('Ymd')}";
+
+        return Cache::remember($cacheKey, now()->addSeconds(60), function () use ($userId, $startDate, $endDate) {
+            return Activity::query()
+                ->where('user_id', $userId)
+                ->whereBetween('created_at', [$startDate, $endDate])
+                ->with([
+                    'subject',
+                    'project' => function ($query) {
+                        $query->withTrashed();
+                    },
+                    'project.stage'
+                ])
+                ->orderBy('created_at')
+                ->get();
+        });
     }
 
     /*public function fetchTaskStatistics(): object
