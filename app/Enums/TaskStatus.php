@@ -4,10 +4,38 @@ namespace App\Enums;
 
 class TaskStatus
 {
-    const PENDING = 'pending';
+    // Database status IDs - keep these in sync with your seed/data
+    const PENDING = 1;
+    const IN_PROGRESS = 2;
+    const UNDER_REVIEW = 3;
     const COMPLETED = 4;
-    const OVERDUE = 'overdue';
-    const REMAINING = 'remaining';
+    const CANCELLED = 5;
+
+    /**0
+     * All known status IDs
+     */
+    public static function all(): array
+    {
+        return [
+            self::PENDING,
+            self::IN_PROGRESS,
+            self::UNDER_REVIEW,
+            self::COMPLETED,
+            self::CANCELLED,
+        ];
+    }
+
+    /**
+     * Statuses considered active (not completed/cancelled)
+     */
+    public static function active(): array
+    {
+        return [
+            self::PENDING,
+            self::IN_PROGRESS,
+            self::UNDER_REVIEW,
+        ];
+    }
 }
 
 

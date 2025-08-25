@@ -2,57 +2,71 @@
 namespace App\Repository;
 
 use App\Models\Task;
+use App\Http\Requests\Api\V1\UserTasksRequest;
+use Illuminate\Support\Collection;
+use Illuminate\Database\Eloquent\Builder;
 
 class UserTasksDataRepository
 {
-    public function getTasks($userId, $request)
+    public function getTasks(int $userId, UserTasksRequest $request): Collection
     {
-       return Task::where(function ($query) use ($userId,$request) {
-      $this->applyUserCreatedFilter($query, $userId, $request);
-      $this->applyTaskAssignedFilter($query, $userId, $request);
-    })
-   ->when($request->completed, fn ($query)=> 
-       $query->where('user_id', $userId)->completed())
+        $validated = $request->validated();
 
-    ->when($request->overdue, fn ($query) =>
-        $query->where('user_id', $userId)->overdue())
-
-   ->when($request->remaining, fn ($query)=> 
-        $query->where('user_id', $userId)->remaining())
-
-    ->with(['project' => fn ($q) => $q->withTrashed(), 'status', 'assignee:id,name'])
-    ->get();
-
+        $query = Task::query();
+        
+        // Apply user context filters with explicit logic
+        $this->applyUserContextFilters($query, $userId, $validated);
+        
+        return $query
+            ->when($validated['completed'] ?? false, fn($q) => $q->completed())
+            ->when($validated['overdue'] ?? false, fn($q) => $q->overdue())
+            ->when($validated['remaining'] ?? false, fn($q) => $q->remaining())
+            ->with([
+                'project' => fn($q) => $q->withTrashed(),
+                'status', 
+                'assignee' => fn($q) => $q->with('roles:id,name')
+            ])
+            ->get();
     }
 
-    protected function applyUserCreatedFilter($query, $userId, $request)
-   {
-     if ($request->user_created) {
-         $query->where('user_id', $userId);
-     }
-   }
+    protected function applyUserContextFilters(Builder $query, int $userId, array $validated): void
+    {
+        $created = $validated['user_created'] ?? false;
+        $assigned = $validated['task_assigned'] ?? false;
 
-   protected function applyTaskAssignedFilter($query, $userId, $request)
-   {
-     if ($request->task_assigned) {
-        $query->orWhereHas('assignee', fn ($subquery) => $subquery->where('users.id', $userId));
-    }
-   }
-
-   public function appliedFilters($request)
-   {
-    return collect([
-        'user_created' => 'Filter by Created',
-        'task_assigned' => 'Filter by Assigned',
-        'completed' => 'Filter by Completed',
-        'overdue' => 'Filter by Overdue',
-        'remaining' => 'Filter by Remaining',
-    ])->only(array_keys($request->all()))
-        ->values()->toArray();
+        if ($created && $assigned) {
+            // Both filters: tasks created by user OR assigned to user
+            $query->where(function ($q) use ($userId) {
+                $q->where('user_id', $userId)
+                  ->orWhereHas('assignee', fn($sub) => $sub->where('users.id', $userId));
+            });
+        } elseif ($created) {
+            $query->where('user_id', $userId);
+        } elseif ($assigned) {
+            $query->whereHas('assignee', fn($sub) => $sub->where('users.id', $userId));
+        } else {
+            // No explicit user context filters - default to user's tasks (created OR assigned)
+            $query->where(function ($q) use ($userId) {
+                $q->where('user_id', $userId)
+                  ->orWhereHas('assignee', fn($sub) => $sub->where('users.id', $userId));
+            });
+        }
     }
 
+    public function appliedFilters(UserTasksRequest $request): array
+    {
+        $labels = [
+            'user_created' => 'Filter by Created',
+            'task_assigned' => 'Filter by Assigned',
+            'completed' => 'Filter by Completed',
+            'overdue' => 'Filter by Overdue',
+            'remaining' => 'Filter by Remaining',
+        ];
 
+        $enabled = collect($request->validated())
+            ->filter(fn ($v) => filter_var($v, FILTER_VALIDATE_BOOLEAN))
+            ->keys();
 
- }
-
-?>
+        return collect($labels)->only($enabled)->values()->all();
+    }
+}
