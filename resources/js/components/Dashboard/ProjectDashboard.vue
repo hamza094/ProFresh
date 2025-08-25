@@ -52,10 +52,21 @@
             <div class="col-md-6">
             <ProjectChart> </ProjectChart>
             </div>
-    <div class="col-md-6">
-    <p><b>Your Activity Calender</b></p>
-    <ActivityCalendar />
-  </div>    
+            <div class="col-md-6">
+            <ActivityCalendar />
+            </div>
+            </div>
+            </div>
+
+            <div class="dashboard-project_info m-5">
+        <p class="float-left"><b>Your Tasks Info</b></p>
+        <br>
+        <div class="row">
+            <div class="col-md-6">
+            <TasksData> </TasksData>
+            </div>
+            <div class="col-md-6">
+            </div>
             </div>
             </div>
         </div>

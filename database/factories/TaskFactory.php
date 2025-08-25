@@ -5,7 +5,7 @@ namespace Database\Factories;
 use App\Models\Task;
 use App\Models\User;
 use App\Models\Project;
-use App\Models\TaskStatus;
+use App\Enums\TaskStatus as TaskStatusEnum;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -30,7 +30,7 @@ class TaskFactory extends Factory
         'user_id'=>User::factory(),
         'project_id'=>Project::factory(),
         'description'=>$this->faker->text($maxNbChars = 250),
-        'status_id'=>1
+        'status_id'=>TaskStatusEnum::PENDING
         ];
     }
 
@@ -55,7 +55,7 @@ class TaskFactory extends Factory
     {
        return $this->state(function (array $attributes) {
         return [
-            'status_id'=>4,
+            'status_id'=>TaskStatusEnum::COMPLETED,
             'due_at' => Carbon::now()->addDays($this->faker->numberBetween(1, 5)),
         ];
     });
@@ -65,7 +65,7 @@ class TaskFactory extends Factory
     {
        return $this->state(function (array $attributes) {
         return [
-            'status_id'=>2,
+            'status_id'=>TaskStatusEnum::IN_PROGRESS,
             'due_at' => Carbon::now()->addDays($this->faker->numberBetween(5, 30)),
         ];
     });

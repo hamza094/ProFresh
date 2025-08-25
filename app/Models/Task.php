@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\QueryBuilder\TaskQueryBuilder;
 
 class Task extends Model
 {
@@ -47,6 +48,14 @@ class Task extends Model
   */
   protected static $recordableEvents = ['created','updated','deleted'];
 
+  /**
+   * Create a new Eloquent query builder for the model.
+   */
+  public function newEloquentBuilder($query): TaskQueryBuilder
+  {
+      return new TaskQueryBuilder($query);
+  }
+
   public function path(): string
     {
       return "/api/v1/projects/{$this->project->slug}/tasks/{$this->id}";
@@ -82,6 +91,12 @@ class Task extends Model
       return $this->belongsToMany(User::class);
     }
 
+    public function assigneeBasic(): BelongsToMany
+  {
+    return $this->belongsToMany(User::class)
+        ->select('users.id', 'users.name'); // no roles
+  }
+
     /**
      * Get status associated to the task.
      *
@@ -92,43 +107,8 @@ class Task extends Model
       return $this->belongsTo(TaskStatus::class, 'status_id');
     }
     
-    public function scopeArchived($query)
+    public function state(): string
     {
-        return $query->onlyTrashed()->with('status')->get();
-    }
-
-    public function scopeActive($query)
-    {
-        return $query->with('status')->get();
-    }
-
-    public function scopeDueForNotifications($query){
-       $query
-        ->whereNotNull(['notified','due_at'])
-        ->where('due_at', '>=', now())
-        ->where('notify_sent', false);
-    }
-
-    public function state(){
-      return $this->deleted_at ? 'trashed' : 'active';
-   }
-
-    public function scopeCompleted($query)
-    {
-        return $query->where('status_id', TaskStatusEnum::COMPLETED);
-    }
-
-     // Scope for remaining tasks
-    public function scopeRemaining($query)
-    {
-        return $query->where('due_at', '>=', now())
-                     ->where('status_id', '!=', TaskStatusEnum::COMPLETED);
-    }
-
-    // Scope for overdue tasks
-    public function scopeOverdue($query)
-    {
-        return $query->where('due_at', '<', now())
-                     ->where('status_id', '!=', TaskStatusEnum::COMPLETED);
+        return $this->deleted_at ? 'trashed' : 'active';
     }
 }

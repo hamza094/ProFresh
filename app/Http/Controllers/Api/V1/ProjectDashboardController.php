@@ -18,10 +18,10 @@ use App\Http\Resources\Api\V1\UserTasksResource;
 use Carbon\Carbon;
 use App\Http\Requests\Api\V1\DashboardProjectRequest;
 use App\Http\Requests\Api\V1\UserActivitiesRequest;
+use App\Http\Requests\Api\V1\UserTasksRequest;
 use App\Repository\DashBoardRepository;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Pagination\LengthAwarePaginator;
-use Illuminate\Support\Facades\Cache;
 
 class ProjectDashboardController extends Controller
 {
@@ -95,14 +95,17 @@ class ProjectDashboardController extends Controller
         ]);
     }
 
-    public function tasksData(UserTasksDataRepository $repository, Request $request): JsonResponse
+    public function tasksData(UserTasksDataRepository $repository, UserTasksRequest $request): JsonResponse
     {
         $tasks = $repository->getTasks(auth()->id(), $request);
         $appliedFilters = $repository->appliedFilters($request);
 
         return response()->json([
-            'tasks' => UserTasksResource::collection($tasks),
-            'applied_filters' => $appliedFilters,
+            'data' => UserTasksResource::collection($tasks),
+            'meta' => [
+                'applied_filters' => $appliedFilters,
+                'total' => $tasks->count(),
+            ],
         ]);
     }
 }

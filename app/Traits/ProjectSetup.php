@@ -12,6 +12,7 @@ trait ProjectSetup
 
    public $project;
    public $user;
+   public $status;
 
    protected function setUp(): void{
 

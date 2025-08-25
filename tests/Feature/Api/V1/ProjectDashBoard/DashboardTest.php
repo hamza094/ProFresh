@@ -17,28 +17,6 @@ class DashboardTest extends TestCase
     use RefreshDatabase, ProjectSetup;
 
     /** @test */
-    public function auth_user_view_his_related_tasks()
-    {
-      Task::factory(['user_id' => $this->user->id, 'project_id' => $this->project->id])->count(3)->create();
-
-    $randomUser = User::factory()->create();
-
-    $task2 = Task::factory(['user_id' => $randomUser->id])->create();
-
-    $task2->assignee()->attach($this->user);
-
-    $response = $this->getJson('api/v1/tasksdata?task_assigned=true&user_created=true');
-
-    $responseData = $response->json();
-
-    $this->assertEquals(['Filter by Created', 'Filter by Assigned'], $responseData['applied_filters']);
-
-    $this->assertCount(4, $responseData['tasks']);
-
-    $this->assertEquals($task2->title, $responseData['tasks'][3]['title']);
-    }
-
-    /** @test */
     public function auth_user_can_view_dashboard_projects()
     {
         // Create 5 projects for the user

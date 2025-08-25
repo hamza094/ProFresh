@@ -17,12 +17,12 @@ class UsersResource extends JsonResource
      */
     public function toArray($request)
     {
-       /*if ($request->is('api/v1/tasksdata')) {
+       if ($request->is('api/v1/tasksdata')) {
         return [
-          'id'=>$this->id,
+          'uuid'=>$this->uuid,
           'name'=>$this->name,
         ];
-    }*/
+    }
         return [
           /**
            * User Uuid
