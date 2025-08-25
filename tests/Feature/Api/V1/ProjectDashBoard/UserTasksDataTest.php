@@ -238,5 +238,4 @@ class UserTasksDataTest extends TestCase
         $this->assertCount(2, $responseData['data']);
         $this->assertEquals(2, $responseData['meta']['total']);
     }
-
 }
