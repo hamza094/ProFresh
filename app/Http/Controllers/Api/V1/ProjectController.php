@@ -14,6 +14,7 @@ use App\Repository\ProjectRepository;
 use App\Http\Resources\Api\V1\ProjectResource;
 use App\Http\Resources\Api\V1\ProjectsResource;
 use App\Http\Controllers\Api\ApiController;
+use App\Repository\ProjectInsightsRepository;
 use Illuminate\Support\Facades\DB;
 use F9Web\ApiResponseHelpers;
 use Illuminate\Http\JsonResponse;
@@ -132,6 +133,28 @@ class ProjectController extends ApiController
       return $this->respondWithSuccess([
         'message'=>"Project deleted successfully"
       ]);
+   }
+
+   /**
+    * Get project-specific KPIs and insights
+    * 
+    * Returns detailed metrics and actionable insights for a specific project
+    * including health score, completion rate, overdue tasks, and engagement metrics
+    */
+   public function insights(Project $project, ProjectInsightsRepository $repository): JsonResponse
+   {
+       $this->authorize('access', $project);
+
+       $kpis = $repository->getProjectKPIs($project, auth()->id());
+       $insights = $repository->getProjectInsights($project, auth()->id());
+
+       return response()->json([
+           'success' => true,
+           'data' => [
+               'kpis' => $kpis,
+               'insights' => $insights,
+           ],
+       ]);
    }
    
 }

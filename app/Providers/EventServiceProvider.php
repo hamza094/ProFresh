@@ -15,6 +15,8 @@ use Laravel\Paddle\Events\WebhookHandled;
 use App\Listeners\PaddleErrorListener;
 use App\Events\PasswordUpdateEvent;
 use App\Listeners\SendPasswordUpdateEmail;
+use App\Models\Project;
+use App\Models\Task;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -54,10 +56,8 @@ class EventServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot()
+    public function boot(): void
     {
         parent::boot();
-
-        //
     }
 }

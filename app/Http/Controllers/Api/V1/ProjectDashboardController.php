@@ -3,30 +3,26 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Collection;
 use Illuminate\Http\Request;
-use App\Models\User;
-use App\Models\Task;
-use App\Models\Project;
-use App\Models\Activity;
 use Illuminate\Http\JsonResponse;
 use App\Repository\UserTasksDataRepository;
 use App\Http\Resources\Api\V1\UserActivitiesResource;
 use App\Services\Api\V1\DashboardService;
 use App\Http\Resources\Api\V1\ProjectsResource;
 use App\Http\Resources\Api\V1\UserTasksResource;
-use Carbon\Carbon;
 use App\Http\Requests\Api\V1\DashboardProjectRequest;
 use App\Http\Requests\Api\V1\UserActivitiesRequest;
 use App\Http\Requests\Api\V1\UserTasksRequest;
 use App\Repository\DashBoardRepository;
+use App\Services\Api\V1\Dashboard\DashboardInsightsService;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 class ProjectDashboardController extends Controller
 {
     public function __construct(
-        private readonly DashboardService $dashboardService
+        private readonly DashboardService $dashboardService,
+        private readonly DashboardInsightsService $dashboardInsightsService
     ) {}
 
     /**
@@ -84,7 +80,7 @@ class ProjectDashboardController extends Controller
         return UserActivitiesResource::collection($activities);
     }
 
-    public function chartData(Request $request,DashBoardRepository $dashboardRepository): JsonResponse
+    public function chartData(Request $request, DashBoardRepository $dashboardRepository): JsonResponse
     {        
         $data = $dashboardRepository->getProjectStats($request);
 
@@ -106,6 +102,21 @@ class ProjectDashboardController extends Controller
                 'applied_filters' => $appliedFilters,
                 'total' => $tasks->count(),
             ],
+        ]);
+    }
+
+    /**
+     * Get dashboard KPIs (and actionable insights)
+     */
+    public function kpis(): JsonResponse
+    {
+        $userId = auth()->id();
+        $kpis = $this->dashboardInsightsService->getKPIs($userId);
+        $insights = $this->dashboardInsightsService->getActionableInsights($userId);
+
+        return response()->json([
+            'kpis' => $kpis,
+            'insights' => $insights,
         ]);
     }
 }

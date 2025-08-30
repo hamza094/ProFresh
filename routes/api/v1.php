@@ -94,6 +94,7 @@ Route::controller(TwoFactorController::class)
 
 Route::controller(ProjectDashboardController::class)->group(function(){
  Route::get('dashboard/chart-data','chartData')->name('dashboard.chart-data');
+ Route::get('dashboard/insights','getInsights')->name('dashboard.insights');
  Route::get('/tasksdata','tasksData')->name('tasks.data');
  Route::get('/user/activities','activities');
  Route::get('/user/dashboard-projects','dashboardProjects');
@@ -109,6 +110,8 @@ Route::apiResource('/projects', ProjectController::class)->except(['show']);
 //Project Route Prefix
 Route::group(['prefix' => 'projects/{project}'], function() {
 Route::get('/',[ProjectController::class,'show'])->name('projects.show')->withTrashed();
+
+Route::get('/insights',[ProjectController::class,'insights'])->name('projects.insights');
 
 Route::get('/delete',[ProjectController::class,'delete'])->can('manage','project');
 Route::get('/restore',[ProjectController::class,'restore'])->withTrashed()->can('manage','project');

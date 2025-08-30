@@ -14,16 +14,16 @@ class ScoreAction
   public function __construct(Project $project)
   {
     $this->project = $project;
+    // Ensure counts are loaded for optimal performance
+    $this->project->loadCount(['tasks', 'activeMembers']);
   }
 
   public function calculateTotal(): int
   {  
     $total = 0;
-
     $total += $this->taskScore();
     $total += $this->notesScore();
     $total += $this->membersScore();
-
     return $total;
   }
    
@@ -34,15 +34,13 @@ class ScoreAction
 
   private function notesScore(): int
   {
-    return $this->project->notes !== null ? ScoreValue::Note : 0;
+    return !empty($this->project->notes) ? ScoreValue::Note : 0;
   }
 
   private function membersScore(): int
   {
-    return $this->project
-          ->active_members_count * ScoreValue::Members;
+    return $this->project->active_members_count * ScoreValue::Members;
   }
-
 }
 
 ?>
