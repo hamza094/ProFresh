@@ -48,4 +48,56 @@ return [
             'portfolio_healthy_title' => 'Portfolio Healthy',
         ],
     ],
+
+    // Project-specific KPI and insight configurations
+    'project' => [
+        'kpi' => [
+            'health_status' => [
+                'excellent' => 80,
+                'good' => 60,
+                'warning' => 40,
+            ],
+            'completion_rate_status' => [
+                'excellent' => 90,
+                'good' => 70,
+                'warning' => 40,
+            ],
+        ],
+        'statuses' => [
+            'overdue' => [
+                'warning_max' => 2,
+            ],
+            'engagement' => [
+                'hot_threshold' => 21,
+                'warm_threshold' => 15,
+            ],
+            'upcoming_risk' => [
+                'warning_max' => 2,
+            ],
+        ],
+        'insights' => [
+            'health' => [
+                'excellent_threshold' => 90,
+                'critical_threshold' => 40,
+            ],
+            'overdue' => [
+                'high_priority_threshold' => 3,
+            ],
+            'engagement' => [
+                'high_threshold' => 21,
+                'low_threshold' => 10,
+            ],
+        ],
+        'labels' => [
+            'kpis' => [
+                'health' => 'Project Health',
+                'completion_rate' => 'Completion Rate',
+                'overdue_count' => 'Overdue Tasks',
+                'team_engagement' => 'Team Engagement',
+                'upcoming_risk' => 'Upcoming Risk',
+                'communication_rate' => 'Communication Activity',
+                'stage_progress' => 'Stage Progress',
+            ],
+        ],
+    ],
 ];

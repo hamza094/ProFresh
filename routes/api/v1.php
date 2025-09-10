@@ -35,6 +35,7 @@ use App\Http\Controllers\Api\V1\
   ZoomMeetingController,
   TokenController,
   UserInvitationsController,
+  ProjectInsightsController
 };
 /*
 |--------------------------------------------------------------------------
@@ -111,7 +112,7 @@ Route::apiResource('/projects', ProjectController::class)->except(['show']);
 Route::group(['prefix' => 'projects/{project}'], function() {
 Route::get('/',[ProjectController::class,'show'])->name('projects.show')->withTrashed();
 
-Route::get('/insights',[ProjectController::class,'insights'])->name('projects.insights');
+Route::get('/insights',[ProjectInsightsController::class,'index'])->name('projects.insights');
 
 Route::get('/delete',[ProjectController::class,'delete'])->can('manage','project');
 Route::get('/restore',[ProjectController::class,'restore'])->withTrashed()->can('manage','project');
