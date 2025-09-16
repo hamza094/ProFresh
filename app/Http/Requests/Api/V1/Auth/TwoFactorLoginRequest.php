@@ -155,6 +155,6 @@ class TwoFactorLoginRequest extends FormRequest
      */
     private function addCodeError($validator): void
     {
-                $validator->errors()->add('code', 'Invalid code provided.');
+        $validator->errors()->add('code', 'Invalid code provided.');
     }
 }

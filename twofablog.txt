@@ -1,0 +1,84 @@
+TwoFactor blog
+
+well in laravel there are many ways to implement two factor auth but i'll walk through how i implement two factor api in my open source project profresh api layer ill just walk you through to the backend layer of its implementation im using larager ill atttach the link of repo for you to check both backend and frontend code 
+as this is for the backend ill hopefully that you fully knowledge of sanctum i dont go to small point just straight into its implementation
+for test you can also see its into its repo
+first install laragear im using laravel 1o so i install its 2nd version for version 3 its more or less a same code you can check its documentation 
+first lests see the two factor congtroller code 
+
+when user select two factor auth it hists api with the following controler code
+
+ public function prepareTwoFactor(PrepareTwoFactorRequest $request): JsonResponse
+    {
+        $user = $request->user();
+        $secret = $user->createTwoFactorAuth();
+
+        return response()->json([
+            'qr_code' => $secret->toQr(),
+            'uri'     => $secret->toUri(),
+            'string'  => $secret->toString(),
+            'status'  => TwoFactorStatus::IN_PROGRESS->value,
+        ], 200);
+    }
+
+    (check PrepareTwoFactorRequest form request for its validation it just contain basic validation to ask user current password and check that if validtaion is not already enabled)
+
+    we get user make two factor in pending state and return response with qr code the qr code is generate 
+    next once the user scan qr code get auth (you can use google authy for that) enter its code in form then hit enter the following code execute 
+
+public function confirmTwoFactor(ConfirmTwoFactorRequest $request): JsonResponse
+    {
+        $user = $request->user();
+
+        return response()->json([
+            'message' => TwoFactorStatus::SUCCESS->value,
+            'recoveryCodes' => $user->getRecoveryCodes(),
+            'status' => TwoFactorStatus::ENABLED->value,
+        ]);
+    }
+
+    its just confirm user two factor and make status enable 
+    here is the enum class 
+
+
+namespace App\Enums;
+
+enum TwoFactorStatus: string
+{
+    case ENABLED = 'enabled';
+    case IN_PROGRESS = 'in_progress';
+    case DISABLED = 'disabled';
+    case TWO_FA_REQUIRED = '2fa_required';
+    case SUCCESS = 'success';
+} 
+
+
+it has has Confirm Two factor request which do the basic but importnat validation check
+
+for now the user two factor auth is enabaled 
+
+you can show recovery code like this 
+public function showRecoveryCodes(Request $request): JsonResponse
+    {
+        $recoveryCodes = $request->user()->generateRecoveryCodes();
+
+        return response()->json([
+            'message' => TwoFactorStatus::SUCCESS->value,
+            'recoveryCodes' => $recoveryCodes,
+        ]);
+    }
+
+    and disable two auth like this 
+     public function disableTwoFactorAuth(DisableTwoFactorRequest $request): JsonResponse
+    {
+        $request->user()->disableTwoFactorAuth();
+        
+        return response()->json([
+            'message' => 'Two-Factor Authentication has been disabled!',
+            'status' => TwoFactorStatus::DISABLED->value,
+        ]);
+    }
+
+    it also contains DisableTwo factor check which do minimal validation check 
+
+    

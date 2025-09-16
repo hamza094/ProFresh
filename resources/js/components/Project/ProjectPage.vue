@@ -18,7 +18,7 @@
 						<div class="row">
 							<div class="col-md-2">
 								<Status :projectName='project.name' :start="project.created_at" :stage="project.stage"
-								:completed="this.project.completed" :status="this.status" :score="this.project.score">
+								:completed="this.project.completed" :status="this.status" :score="this.project.score" :project="this.project">
 							</Status>
 						</div>
 						<div class="col-md-10">

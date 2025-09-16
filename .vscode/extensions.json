@@ -1,0 +1,14 @@
+{
+  // Recommended lightweight extensions for this Laravel project
+  "recommendations": [
+    "bmewburn.vscode-intelephense-client",
+    "editorconfig.editorconfig",
+    "amiralizadeh9480.laravel-extra-intellisense"
+  ],
+  // Explicitly avoid heavier general-purpose cloud / container tooling here
+  "unwantedRecommendations": [
+    "ms-vscode.azure-account",
+    "ms-azuretools.vscode-docker",
+    "github.vscode-pull-request-github"
+  ]
+}

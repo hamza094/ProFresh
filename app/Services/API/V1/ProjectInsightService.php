@@ -62,11 +62,6 @@ final class ProjectInsightService
      */
     public function getInsights(Project $project, int $userId, array $sections = ['all']): array
     {
-        // Only return insights if user is a member
-        if (!$project->members()->where('user_id', $userId)->exists()) {
-            return [];
-        }
-
         $metrics = $this->repository->getProjectInsights($project, $sections);
         return $this->buildInsights($metrics, $sections);
     }
