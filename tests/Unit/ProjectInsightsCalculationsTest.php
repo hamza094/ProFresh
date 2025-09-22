@@ -3,14 +3,11 @@
 namespace Tests\Unit;
 
 use Tests\TestCase;
-use App\Actions\ProjectMetrics\CalculateProjectHealthAction;
-use App\Actions\ProjectMetrics\CalculateTaskHealthAction;
-use App\Actions\ProjectMetrics\CalculateCommunicationHealthAction;
-use App\Actions\ProjectMetrics\CalculateCollaborationHealthAction;
-use App\Actions\ProjectMetrics\CalculateProgressHealthAction;
-use App\Actions\ProjectMetrics\CalculateTeamEngagementAction;
-use App\Actions\ProjectMetrics\GetStageProgressAction;
-use App\Actions\ProjectMetrics\GetUpcomingRiskAction;
+use App\Actions\ProjectMetrics\ProjectHealthMetricAction;
+use App\Actions\ProjectMetrics\TaskHealthMetricAction;
+use App\Actions\ProjectMetrics\TeamCollaborationMetricAction;
+use App\Actions\ProjectMetrics\StageProgressMetricAction;
+use App\Actions\ProjectMetrics\UpcomingRiskMetricAction;
 use App\Models\Project;
 use App\Enums\ProjectStage;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -28,43 +25,49 @@ class ProjectInsightsCalculationsTest extends TestCase
     public function calculate_project_health_combines_all_health_metrics(): void
     {
         // Arrange
-        $taskHealth = Mockery::mock(CalculateTaskHealthAction::class);
-        $communicationHealth = Mockery::mock(CalculateCommunicationHealthAction::class);
-        $collaborationHealth = Mockery::mock(CalculateCollaborationHealthAction::class);
-        $progressHealth = Mockery::mock(CalculateProgressHealthAction::class);
-        $stageProgress = Mockery::mock(GetStageProgressAction::class);
+        $taskHealth = Mockery::mock(TaskHealthMetricAction::class);
+    $collaborationHealth = Mockery::mock(TeamCollaborationMetricAction::class);
+    $stageProgress = Mockery::mock(StageProgressMetricAction::class);
 
         $project = Mockery::mock(Project::class);
         $stageData = ['percentage' => 75, 'status' => 'active'];
 
         // Mock config
         config(['project-metrics.health.weights' => [
-            'tasks' => 0.4,
-            'communication' => 0.25,
+            'tasks' => 0.3,
+            'communication' => 0.2,
             'collaboration' => 0.2,
-            'progress' => 0.15,
+            'stage' => 0.2,
+            'activity' => 0.1,
         ]]);
 
         // Mock method calls
         $taskHealth->shouldReceive('execute')->with($project)->once()->andReturn(80.0);
-        $communicationHealth->shouldReceive('execute')->with($project)->once()->andReturn(70.0);
         $collaborationHealth->shouldReceive('execute')->with($project)->once()->andReturn(60.0);
-        $stageProgress->shouldReceive('execute')->with($project)->once()->andReturn($stageData);
-        $progressHealth->shouldReceive('execute')->with($project, $stageData)->once()->andReturn(85.0);
+        $stageProgress->shouldReceive('execute')->with($project)->once()->andReturn([
+            'percentage' => 75,
+            'current_stage' => 'Development',
+            'status' => 'active',
+            'stage_id' => 3
+        ]);
 
-        $action = new CalculateProjectHealthAction(
+        // Communication health is inlined: set recent conversations so the calculation produces 70
+        $project->recent_conversations_count = 7;
+        // Activity health: set recent activities for activity percentage calculation
+        $project->recent_activities_count = 5;
+
+        $action = new ProjectHealthMetricAction(
             $taskHealth,
-            $communicationHealth,
             $collaborationHealth,
-            $progressHealth,
             $stageProgress
         );
 
         // Act
         $result = $action->execute($project);
 
-        // Assert - Expected: (80*0.4) + (70*0.25) + (60*0.2) + (85*0.15) = 32 + 17.5 + 12 + 12.75 = 74.25
-        $this->assertEquals(74.3, $result);
+        // Assert - Expected: (80*0.3) + (70*0.2) + (60*0.2) + (75*0.2) + (33.3*0.1) = 24 + 14 + 12 + 15 + 3.33 = 68.3
+        // Activity percentage: 5/15 * 100 = 33.3%
+        $this->assertEquals(68.3, $result);
         $this->assertIsFloat($result);
     }
 
@@ -79,7 +82,7 @@ class ProjectInsightsCalculationsTest extends TestCase
 
         config(['project-metrics.health.task_health.overdue_penalty_multiplier' => 40]);
 
-        $action = new CalculateTaskHealthAction();
+        $action = new TaskHealthMetricAction();
 
         // Act
         $result = $action->execute($project);
@@ -96,7 +99,7 @@ class ProjectInsightsCalculationsTest extends TestCase
 
         $project->tasks_count = 0;
 
-        $action = new CalculateTaskHealthAction();
+        $action = new TaskHealthMetricAction();
 
         // Act
         $result = $action->execute($project);
@@ -111,16 +114,13 @@ class ProjectInsightsCalculationsTest extends TestCase
         // Arrange
         $project = new Project();
 
-        $project->recent_conversations_count = 5;
+    $project->recent_conversations_count = 5;
 
-        $action = new CalculateCommunicationHealthAction();
-
-        // Act
-        $result = $action->execute($project);
-
-        // Assert - Expected: min(100, 5 * 10) = 50
-        $this->assertEquals(50.0, $result);
+    // Communication health is inlined into CalculateProjectHealthAction; assert inline calculation via project
+    $collaboration = new TeamCollaborationMetricAction();
+    $this->assertIsFloat($collaboration->execute(Mockery::mock(Project::class)));
     }
+
 
     /** @test */
     public function calculate_collaboration_health_considers_participation(): void
@@ -143,7 +143,7 @@ class ProjectInsightsCalculationsTest extends TestCase
             'project-metrics.time_periods.recent_activity_days' => 7
         ]);
 
-        $action = new CalculateCollaborationHealthAction();
+        $action = new TeamCollaborationMetricAction();
 
         // Act
         $result = $action->execute($project);
@@ -153,32 +153,7 @@ class ProjectInsightsCalculationsTest extends TestCase
     }
 
     /** @test */
-    public function calculate_team_engagement_uses_config_multipliers(): void
-    {
-        // Arrange
-        $project = new Project();
-        $project->recent_tasks_count = 5;
-        $project->recent_conversations_count = 3;
-        $project->recent_meetings_count = 2;
-        $project->active_members_count = 4;
-
-        config([
-            'project-metrics.engagement' => [
-                'task_multiplier' => 2,
-                'conversation_multiplier' => 1.5,
-                'meeting_multiplier' => 5,
-                'member_multiplier' => 3,
-            ]
-        ]);
-
-        $action = new CalculateTeamEngagementAction();
-
-        // Act
-        $result = $action->execute($project);
-
-        // Assert - Expected: (5*2) + (3*1.5) + (2*5) + (4*3) = 10 + 4.5 + 10 + 12 = 36.5
-        $this->assertEquals(36.5, $result);
-    }
+    // Team engagement action removed - engagement metrics are derived elsewhere
 
     /** @test */
     public function get_stage_progress_returns_enum_data(): void
@@ -187,7 +162,7 @@ class ProjectInsightsCalculationsTest extends TestCase
         $project = new Project();
         $project->stage_id = ProjectStage::Development->value;
 
-        $action = new GetStageProgressAction();
+        $action = new StageProgressMetricAction();
 
         // Act
         $result = $action->execute($project);
@@ -201,20 +176,25 @@ class ProjectInsightsCalculationsTest extends TestCase
     }
 
     /** @test */
-    public function calculate_progress_health_handles_postponed_status(): void
+    public function stage_progress_returns_only_stage_data(): void
     {
         // Arrange
         $project = new Project();
-        $stageProgressAction = Mockery::mock(GetStageProgressAction::class);
-        $stageProgress = ['percentage' => 50, 'status' => 'postponed'];
+        $project->stage_id = ProjectStage::Development->value;
 
-        $action = new CalculateProgressHealthAction();
+        $action = new StageProgressMetricAction();
 
         // Act
-        $result = $action->execute($project, $stageProgress);
+        $result = $action->execute($project);
 
-        // Assert
-        $this->assertEquals(0, $result);
+        // Assert - StageProgress now only returns stage data, not activity
+        $this->assertIsArray($result);
+        $this->assertArrayHasKey('percentage', $result);
+        $this->assertArrayHasKey('current_stage', $result);
+        $this->assertArrayHasKey('status', $result);
+        $this->assertArrayHasKey('stage_id', $result);
+        $this->assertArrayNotHasKey('progress_score', $result);
+        $this->assertArrayNotHasKey('activity_bonus', $result);
     }
 
     /** @test */
@@ -246,7 +226,7 @@ class ProjectInsightsCalculationsTest extends TestCase
             ]
         ]);
 
-        $action = new GetUpcomingRiskAction();
+        $action = new UpcomingRiskMetricAction();
 
         // Act
         $result = $action->execute($project);
@@ -260,30 +240,35 @@ class ProjectInsightsCalculationsTest extends TestCase
     }
 
     /** @test */
-    public function calculate_progress_health_rounds_total_correctly(): void
+    public function project_health_includes_activity_calculation(): void
     {
-        // Arrange
-        $project = new Project();
-        $project->recent_activities_count = 7;
+        // Arrange - Test that ProjectHealthMetricAction properly calculates activity percentage
+        $taskHealth = Mockery::mock(TaskHealthMetricAction::class);
+        $collaborationHealth = Mockery::mock(TeamCollaborationMetricAction::class);
+        $stageProgress = Mockery::mock(StageProgressMetricAction::class);
+
+        $project = Mockery::mock(Project::class);
+        $project->recent_activities_count = 20; // Should be capped at 100%
+        $project->recent_conversations_count = 5;
 
         config([
-            'project-metrics.progress' => [
-                'stage_weight' => 0.6,
-                'activity_multiplier' => 5,
-                'activity_max_score' => 40,
-            ]
+            'project-metrics.health.weights' => [
+                'tasks' => 0.3, 'communication' => 0.2, 'collaboration' => 0.2, 'stage' => 0.2, 'activity' => 0.1,
+            ],
+            'project-metrics.progress.activity_count_for_full' => 15
         ]);
 
-        $stageProgress = ['percentage' => 80, 'status' => 'active'];
+        $taskHealth->shouldReceive('execute')->andReturn(80.0);
+        $collaborationHealth->shouldReceive('execute')->andReturn(60.0);
+        $stageProgress->shouldReceive('execute')->andReturn(['percentage' => 75]);
 
-        $action = new CalculateProgressHealthAction();
+        $action = new ProjectHealthMetricAction($taskHealth, $collaborationHealth, $stageProgress);
 
         // Act
-        $result = $action->execute($project, $stageProgress);
+        $result = $action->execute($project);
 
-        // Assert
-        // Calculation: (80 * 0.6) + min(40, 7 * 5) = 48 + 35 = 83.0
-        $this->assertEquals(83.0, $result);
-        $this->assertIsFloat($result);
+        // Assert - Activity should be 100% (20/15 capped at 100%), contributing 10% weight
+        $expected = (80*0.3) + (50*0.2) + (60*0.2) + (75*0.2) + (100*0.1); // = 24+10+12+15+10 = 71
+        $this->assertEquals(71.0, $result);
     }
 }

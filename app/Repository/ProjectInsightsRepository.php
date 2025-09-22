@@ -1,40 +1,75 @@
+
 <?php
 
 namespace App\Repository;
 
 use App\Models\Project;
 use App\Data\ProjectMetricsDto;
-use App\Actions\ProjectMetrics\CalculateProjectHealthAction;
-use App\Actions\ProjectMetrics\CalculateTeamEngagementAction;
-use App\Actions\ProjectMetrics\GetStageProgressAction;
-use App\Actions\ProjectMetrics\GetUpcomingRiskAction;
-use App\Actions\ProjectMetrics\CalculateCollaborationHealthAction;
-use App\Actions\ProjectMetrics\CalculateProgressScoreAction;
+use App\Actions\ProjectMetrics\ProjectHealthMetricAction;
+use App\Actions\ProjectMetrics\TaskHealthMetricAction;
+use App\Actions\ProjectMetrics\StageProgressMetricAction;
+use App\Actions\ProjectMetrics\UpcomingRiskMetricAction;
+use App\Actions\ProjectMetrics\TeamCollaborationMetricAction;
+use Carbon\CarbonInterface;
 
 class ProjectInsightsRepository
 {
+    // Centralized config constants with defaults
+    private const DEFAULT_RECENT_ACTIVITY_DAYS = 7;
+    private const DEFAULT_COLLABORATION_ACTIVITY_DAYS = 30;
+    private const DEFAULT_MEETING_LOOKBACK_DAYS = 14;
+    private const DEFAULT_CONVERSATION_LOOKBACK_DAYS = 7;
+    private const DEFAULT_RISK_ASSESSMENT_HOURS = 48;
+    private const DEFAULT_TASK_INACTIVITY_DAYS = 5;
+
+    // Section to count mappings - centralized configuration
+    private const SECTION_COUNT_MAPPINGS = [
+        'health' => ['tasks', 'communication', 'collaboration', 'activity'],
+        'task-health' => ['tasks'],
+        'collaboration' => ['collaboration'],
+        'risk' => ['risk'],
+        'stage' => [],
+    ];
+
+    /**
+     * @param ProjectHealthMetricAction $projectHealthAction
+     * @param TaskHealthMetricAction $taskHealthAction
+     * @param StageProgressMetricAction $stageProgressAction
+     * @param UpcomingRiskMetricAction $upcomingRiskAction
+     * @param TeamCollaborationMetricAction $collaborationHealthAction
+     */
     public function __construct(
-        private CalculateProjectHealthAction $projectHealthAction,
-        private CalculateTeamEngagementAction $teamEngagementAction,
-        private GetStageProgressAction $stageProgressAction,
-        private GetUpcomingRiskAction $upcomingRiskAction,
-        private CalculateCollaborationHealthAction $collaborationHealthAction,
-        private CalculateProgressScoreAction $progressScoreAction
+        private ProjectHealthMetricAction $projectHealthAction,
+        private TaskHealthMetricAction $taskHealthAction,
+        private StageProgressMetricAction $stageProgressAction,
+        private UpcomingRiskMetricAction $upcomingRiskAction,
+        private TeamCollaborationMetricAction $collaborationHealthAction
     ) {}
     public function getProjectInsights(Project $project, array $sections = ['all']): ProjectMetricsDto
     {
-        // Load all required counts in a single query
+        // Load all required counts in a single optimized query
         $this->loadAllRequiredCounts($project, $sections);
         
         return new ProjectMetricsDto(
-            health: $this->shouldInclude('health', $sections) ? $this->projectHealthAction->execute($project) : null,
-            completionRate: $this->shouldInclude('completion', $sections) ? $this->getCompletionRate($project) : null,
-            overdueCount: $this->shouldInclude('overdue', $sections) ? $this->getOverdueCount($project) : null,
-            teamEngagement: $this->shouldInclude('engagement', $sections) ? $this->teamEngagementAction->execute($project) : null,
-            upcomingRisk: $this->shouldInclude('risk', $sections) ? $this->upcomingRiskAction->execute($project) : null,
-            stageProgress: $this->shouldInclude('stage', $sections) ? $this->stageProgressAction->execute($project) : null,
-            collaborationScore: $this->shouldInclude('collaboration', $sections) ? $this->collaborationHealthAction->execute($project) : null,
-            progressScore: $this->shouldInclude('progress', $sections) ? $this->progressScoreAction->execute($project) : null,
+            ...collect([
+                'health' => fn() => $this->projectHealthAction->execute($project),
+                'taskHealth' => fn() => $this->taskHealthAction->execute($project),
+                'upcomingRisk' => fn() => $this->upcomingRiskAction->execute($project),
+                'stageProgress' => fn() => $this->stageProgressAction->execute($project),
+                'collaborationScore' => fn() => $this->collaborationHealthAction->execute($project),
+            ])
+            ->filter(fn($action, $key) => $this->shouldInclude(
+                match($key) {
+                    'taskHealth' => 'task-health',
+                    'upcomingRisk' => 'risk',
+                    'stageProgress' => 'stage',
+                    'collaborationScore' => 'collaboration',
+                    default => $key
+                }, 
+                $sections
+            ))
+            ->map(fn($action) => $action())
+            ->toArray()
         );
     }
 
@@ -43,75 +78,136 @@ class ProjectInsightsRepository
      */
     private function loadAllRequiredCounts(Project $project, array $sections): void
     {
-        $counts = [];
+        // Capture a single timestamp for consistent time windows across all queries
+        $now = now();
+
+        // Build counts map using the captured timestamp
+        $countsToLoad = $this->buildCountsMap($sections, $now);
         
-        // Health and completion metrics
-        if ($this->shouldInclude('health', $sections) || 
-            $this->shouldInclude('completion', $sections) || 
-            $this->shouldInclude('overdue', $sections)) {
-            $counts = array_merge($counts, [
-                'tasks',
+        if (!empty($countsToLoad)) {
+            $project->loadCount($countsToLoad);
+        }
+
+        // Compute additional aggregates that cannot be expressed via loadCount,
+        // e.g. COUNT(DISTINCT user_id) for recent participants
+        if ($this->shouldInclude('collaboration', $sections) || $this->shouldInclude('health', $sections)) {
+            $activityDays = $this->getConfigValue('time_periods.collaboration_activity_days', self::DEFAULT_COLLABORATION_ACTIVITY_DAYS);
+
+            $recentParticipants = $project->activities()
+                ->where('created_at', '>=', (clone $now)->subDays($activityDays))
+                ->distinct('user_id')
+                ->count('user_id'); // count distinct user_id
+
+            // Expose as an attribute to keep consumer code unchanged
+            $project->setAttribute('recent_participants_count', $recentParticipants);
+        }
+    }
+
+    /**
+     * Build the map of counts to load based on requested sections
+     *
+    * @param array<string> $sections
+    * @return array<int|string, mixed>
+     */
+    private function buildCountsMap(array $sections, CarbonInterface $now): array
+    {
+        $requiredCountTypes = collect($sections)
+            ->when(in_array('all', $sections), fn($c) => $c->merge(array_keys(self::SECTION_COUNT_MAPPINGS)))
+            ->reject(fn($s) => $s === 'all')
+            ->flatMap(fn($section) => self::SECTION_COUNT_MAPPINGS[$section] ?? [])
+            ->unique()
+            ->all();
+
+        $map = collect($requiredCountTypes)
+            ->mapWithKeys(fn($type) => $this->getCountQueriesByType($type, $now))
+            ->all();
+
+        // Dev-time guard: detect accidental duplicate keys
+        if (config('app.debug')) {
+            $keys = array_keys($map);
+            if (count($keys) !== count(array_unique($keys))) {
+                throw new \LogicException('Duplicate count keys detected in ProjectInsightsRepository::buildCountsMap');
+            }
+        }
+
+        return $map;
+    }
+
+    /**
+     * Get count queries by type using match expression
+     *
+    * @param string $type
+    * @return array<int|string, mixed>
+     */
+    private function getCountQueriesByType(string $type, CarbonInterface $now): array
+    {
+        // Precompute config values once per type for clarity and to avoid repeated lookups
+        $conversationDays = $this->getConfigValue('time_periods.conversation_lookback_days', self::DEFAULT_CONVERSATION_LOOKBACK_DAYS);
+        $meetingDays = $this->getConfigValue('time_periods.meeting_lookback_days', self::DEFAULT_MEETING_LOOKBACK_DAYS);
+        $collabActivityDays = $this->getConfigValue('time_periods.collaboration_activity_days', self::DEFAULT_COLLABORATION_ACTIVITY_DAYS);
+        $recentActivityDays = $this->getConfigValue('time_periods.recent_activity_days', self::DEFAULT_RECENT_ACTIVITY_DAYS);
+        $riskHours = $this->getConfigValue('time_periods.risk_assessment_hours', self::DEFAULT_RISK_ASSESSMENT_HOURS);
+        $inactivityDays = $this->getConfigValue('time_periods.task_inactivity_days', self::DEFAULT_TASK_INACTIVITY_DAYS);
+
+        return match($type) {
+            'tasks' => [
+                'tasks' => fn($q) => $q->withTrashed(),
+                'tasks as active_tasks_count' => fn($q) => $q->whereNull('archived_at'),
                 'tasks as completed_tasks_count' => fn($q) => $q->completed(),
                 'tasks as overdue_tasks_count' => fn($q) => $q->overdue(),
-            ]);
-        }
-        
-        // Engagement metrics
-        if ($this->shouldInclude('engagement', $sections) || $this->shouldInclude('health', $sections)) {
-            $counts = array_merge($counts, [
-                'tasks as recent_tasks_count' => fn($q) => $q->where('updated_at', '>=', now()->subDays(7)),
-                'conversations as recent_conversations_count' => fn($q) => $q->where('updated_at', '>=', now()->subDays(7)),
-            ]);
-        }
-        
-        // Collaboration metrics
-        if ($this->shouldInclude('collaboration', $sections) || 
-            $this->shouldInclude('engagement', $sections) || 
-            $this->shouldInclude('health', $sections)) {
-            $counts = array_merge($counts, [
-                'activeMembers as active_members_count',
-                'meetings as recent_meetings_count' => fn($q) => $q->where('created_at', '>=', now()->subDays(14)),
-            ]);
-        }
-        
-        // Activity metrics for health calculation and progress
-        if ($this->shouldInclude('health', $sections) || $this->shouldInclude('progress', $sections)) {
-            $counts = array_merge($counts, [
-                'activities as recent_activities_count' => fn($q) => $q->where('created_at', '>=', now()->subDays(config('project-metrics.time_periods.recent_activity_days', 7))),
-            ]);
-        }
-        
-        // Single database query for all required counts
-        if (!empty($counts)) {
-            // Remove duplicates while preserving keys
-            $counts = array_unique($counts, SORT_REGULAR);
-            $project->loadCount($counts);
-        }
+                'tasks as abandoned_tasks_count' => fn($q) => $q->onlyTrashed(),
+            ],
+            'communication' => [
+                'conversations as recent_conversations_count' => fn($q) => $q
+                    ->where('updated_at', '>=', (clone $now)->subDays($conversationDays)),
+            ],
+            'collaboration' => [
+                // Make associative to avoid numeric key in merged map
+                'activeMembers as active_members_count' => fn($q) => $q,
+                'meetings as recent_meetings_count' => fn($q) => $q->where(
+                    'created_at', 
+                    '>=', 
+                    (clone $now)->subDays($meetingDays)
+                ),
+
+            ],
+            'activity' => [
+                'activities as recent_activities_count' => fn($q) => $q
+                    ->where('created_at', '>=', (clone $now)->subDays($recentActivityDays)),
+            ],
+            'risk' => [
+                'tasks as tasks_due_soon_count' => fn($q) => $q->dueSoon($riskHours),
+                'tasks as tasks_at_risk_count' => fn($q) => $q
+                    ->dueSoon($riskHours)
+                    ->whereDoesntHave('activities', fn($subQuery) => 
+                        $subQuery->where('created_at', '>=', (clone $now)->subDays($inactivityDays))
+                    ),
+            ],
+            default => [],
+        };
+    }
+
+    /**
+     * Get config value with fallback
+     *
+     * @param string $key
+     * @param mixed $default
+     * @return mixed
+     */
+    private function getConfigValue(string $key, mixed $default): mixed
+    {
+        return config("project-metrics.{$key}", $default);
     }
 
     /**
      * Check if a section should be included in the response
+     *
+     * @param string $section
+     * @param array<string> $sections
+     * @return bool
      */
     private function shouldInclude(string $section, array $sections): bool
     {
         return in_array('all', $sections) || in_array($section, $sections);
-    }
-
-    /**
-     * Simple data retrieval methods - no business logic
-     */
-    private function getCompletionRate(Project $project): float
-    {
-        $tasksCount = $project->tasks_count ?? 0;
-        $completedCount = $project->completed_tasks_count ?? 0;
-        
-        return $tasksCount > 0 
-            ? round(($completedCount / $tasksCount) * 100, 1) 
-            : 0.0;
-    }
-
-    private function getOverdueCount(Project $project): int
-    {
-        return $project->overdue_tasks_count ?? 0;
     }
 }

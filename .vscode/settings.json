@@ -63,7 +63,9 @@
     "vendor": true,
     "public/packages": true,
     "storage": true,
-    "bootstrap/cache": true
+    "bootstrap/cache": true,
+    "**/bootstrap/cache/**": true,
+    "**/public/build/**": true
   },
 
   // Expand watcher excludes with additional heavy dirs
@@ -73,7 +75,9 @@
     "**/storage/**": true,
     "**/.git/**": true,
     "public/packages/**": true,
-    "bootstrap/cache/**": true
+    "bootstrap/cache/**": true,
+     "**/public/build/**": true
+
   },
 
   // UI & editor lightweight tweaks
@@ -92,13 +96,16 @@
 
   // NPM script scanning off
   "npm.autoDetect": "off",
+  
 
   // PHP Intelephense performance (respects user memory limits)
-  "intelephense.files.maxMemory": 1024,
+   "intelephense.environment.memoryLimit": 512,
   "intelephense.files.exclude": [
+    "**/node_modules/**",
     "**/vendor/**",
     "**/storage/**",
-    "**/public/packages/**",
-    "**/bootstrap/cache/**"
+    "**/.git/**",
+    "**/bootstrap/cache/**",
+    "**/public/build/**"
   ]
 }

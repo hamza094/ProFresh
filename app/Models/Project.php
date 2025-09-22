@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use App\Traits\RecordActivity;
-use App\Actions\ScoreAction;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Model;
@@ -206,22 +205,6 @@ class Project extends Model
     {
         $this->loadCount('tasks');
         return $this->tasks_count == config('app.project.taskLimit');
-    }
-
-    public function score(): int
-    {
-        //$this->loadCount(['tasks', 'activeMembers']);
-        $scoreAction = new ScoreAction($this);
-        $total = $scoreAction->calculateTotal();
-        $this->updateStatus($total);
-        return $total;
-    }
-
-    public function updateStatus(int $total): void
-    {
-        if ($total >= ScoreValue::Hot_Score) {
-            static::$status = "hot";
-        }
     }
 
     public function getStatusAttribute(): string

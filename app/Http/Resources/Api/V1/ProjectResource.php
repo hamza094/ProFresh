@@ -55,7 +55,7 @@ class ProjectResource extends JsonResource
          * The total score associated with the project.
          * @example 5
         */
-          'score' => $this->score(),
+          'score' => ,
 
         /**
          * Date when the project was created, displayed in a human-readable format.

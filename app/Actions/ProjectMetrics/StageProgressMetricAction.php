@@ -5,7 +5,7 @@ namespace App\Actions\ProjectMetrics;
 use App\Models\Project;
 use App\Enums\ProjectStage;
 
-class GetStageProgressAction
+class StageProgressMetricAction
 {
     public function execute(Project $project): array
     {

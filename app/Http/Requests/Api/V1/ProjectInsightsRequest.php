@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace App\Http\Requests\Api\V1;
 
 use Illuminate\Foundation\Http\FormRequest;
-
+use Illuminate\Validation\Rule;
 use Illuminate\Support\Arr;
 
 class ProjectInsightsRequest extends FormRequest
@@ -13,7 +13,7 @@ class ProjectInsightsRequest extends FormRequest
      * Valid sections for insights API
      */
     public const VALID_SECTIONS = [
-        'completion', 'health', 'overdue', 'engagement', 'collaboration', 'risk', 'stage', 'progress', 'all'
+        'health', 'task-health', 'collaboration', 'risk', 'stage', 'all'
     ];
     /**
      * Authorize the request: user must be authenticated and a member of the project
@@ -28,24 +28,11 @@ class ProjectInsightsRequest extends FormRequest
      */
     public function rules(): array
     {
-        $sections = implode(',', self::VALID_SECTIONS);
+        $in = Rule::in(self::VALID_SECTIONS);
         return [
-            'sections' => 'sometimes|array',
-            'sections.*' => "string|in:$sections",
-            'section' => "sometimes|string|in:$sections",
-        ];
-    }
-
-    /**
-     * Custom error messages for validation
-     */
-    public function messages(): array
-    {
-        $valid = implode(', ', self::VALID_SECTIONS);
-        return [
-            'sections.array' => 'Sections must be an array. Use sections[]=value format.',
-            'sections.*.in' => "Invalid section. Valid sections are: $valid.",
-            'section.in' => "Invalid section. Valid sections are: $valid.",
+            'sections' => ['sometimes', 'array'],
+            'sections.*' => ['string', $in],
+            'section' => ['sometimes', 'string', $in],
         ];
     }
 
@@ -54,24 +41,15 @@ class ProjectInsightsRequest extends FormRequest
      */
     public function getSections(): array
     {
+        // Prefer route parameter, then single 'section' input, then 'sections' array
         if ($this->route('section')) {
             return [$this->route('section')];
         }
-        return $this->validated()['sections'] ?? ['all'];
-    }
-
-    /**
-     * Custom validator logic for additional checks
-     */
-    public function withValidator($validator): void
-    {
-        $validator->after(function ($validator) {
-            // Validate project existence
-            $project = $this->route('project');
-            if (!$project) {
-                $validator->errors()->add('project', 'Project not found.');
-            }
-        });
+        $validated = $this->validated();
+        if (isset($validated['section'])) {
+            return [$validated['section']];
+        }
+        return $validated['sections'] ?? ['all'];
     }
 
     /**

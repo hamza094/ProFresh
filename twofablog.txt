@@ -1,3 +1,216 @@
+Adding Two‑Factor Authentication (2FA) to a Laravel API (Laragear + Sanctum)
+
+I recently wired up Two‑Factor Authentication (2FA) for the Profresh API. There are a few ways to do 2FA in Laravel, but I chose the Laragear 2FA package because it’s simple, well‑documented, and plays nicely with Sanctum.
+
+This post shows exactly how I implemented it on the backend: endpoints to enable/confirm/disable 2FA, recovery codes, and a secure login flow that requires the one‑time code when 2FA is enabled.
+
+Who this is for
+- You’re building a JSON API with Laravel 10 and Sanctum.
+- You’re comfortable with basic auth flows and Form Requests.
+- You want a clean, minimal 2FA setup without re‑inventing OTP math.
+
+What we’ll build
+1) Turn on 2FA for a user (generate secret + QR, confirm with a 6‑digit code, show recovery codes)
+2) Require 2FA on login if the user has it enabled (short‑lived session handoff, then issue a Sanctum token)
+
+Package
+- Laragear 2FA (v2 for Laravel 10). For Laravel 11, use the v3 docs — the code is very similar.
+
+---
+
+1) Enable 2FA for a user
+
+First, the user opts‑in. We generate a secret, return a QR, and mark the process in progress. The user scans the QR in Google Authenticator/Authy/etc. and then confirms with a 6‑digit code.
+
+Controller: prepare
+
+    public function prepareTwoFactor(PrepareTwoFactorRequest $request): \Illuminate\Http\JsonResponse
+    {
+        $user = $request->user();
+        $secret = $user->createTwoFactorAuth();
+
+        return response()->json([
+            'qr_code' => $secret->toQr(),
+            'uri'     => $secret->toUri(),
+            'string'  => $secret->toString(),
+            'status'  => \App\Enums\TwoFactorStatus::IN_PROGRESS->value,
+        ], 200);
+    }
+
+The request class (PrepareTwoFactorRequest) does the basics: ensure the user enters their current password and that 2FA isn’t already enabled.
+
+Controller: confirm
+
+    public function confirmTwoFactor(ConfirmTwoFactorRequest $request): \Illuminate\Http\JsonResponse
+    {
+        $user = $request->user();
+
+        return response()->json([
+            'message' => \App\Enums\TwoFactorStatus::SUCCESS->value,
+            'recoveryCodes' => $user->getRecoveryCodes(),
+            'status' => \App\Enums\TwoFactorStatus::ENABLED->value,
+        ]);
+    }
+
+Enum for clarity
+
+    enum TwoFactorStatus: string
+    {
+        case ENABLED = 'enabled';
+        case IN_PROGRESS = 'in_progress';
+        case DISABLED = 'disabled';
+        case TWO_FA_REQUIRED = '2fa_required';
+        case SUCCESS = 'success';
+    }
+
+Recovery codes endpoint (optional but recommended)
+
+    public function showRecoveryCodes(\Illuminate\Http\Request $request): \Illuminate\Http\JsonResponse
+    {
+        $recoveryCodes = $request->user()->generateRecoveryCodes();
+
+        return response()->json([
+            'message' => \App\Enums\TwoFactorStatus::SUCCESS->value,
+            'recoveryCodes' => $recoveryCodes,
+        ]);
+    }
+
+Disable 2FA
+
+    public function disableTwoFactorAuth(\App\Http\Requests\Api\V1\Auth\DisableTwoFactorRequest $request): \Illuminate\Http\JsonResponse
+    {
+        $request->user()->disableTwoFactorAuth();
+        return response()->json([
+            'message' => 'Two-Factor Authentication has been disabled!',
+            'status' => \App\Enums\TwoFactorStatus::DISABLED->value,
+        ]);
+    }
+
+---
+
+2) Enforce 2FA at login (the secure way)
+
+Here’s the flow that feels good for APIs:
+1) User submits email/password.
+2) If 2FA is disabled → return a Sanctum token like normal.
+3) If 2FA is enabled → create a short‑lived, encrypted session marker and return 2fa_required.
+4) User submits the 6‑digit code to a dedicated endpoint.
+5) If the code is valid → clear the marker and issue the Sanctum token.
+
+Controller: login (excerpt)
+
+    public function login(LoginUserRequest $request): \Illuminate\Http\JsonResponse
+    {
+        if (session('2fa_login')) {
+            session()->forget('2fa_login');
+        }
+
+        $user = $this->loginUserService->attemptLogin($request->email, $request->password);
+
+        \App\Events\UserLogin::dispatchIf(!$user->timezone, $user);
+
+        if ($this->loginUserService->handleTwoFactor($user)) {
+            return response()->json([
+                'message' => 'Two-factor authentication is enabled. Please provide the verification code.',
+                'status' => \App\Enums\TwoFactorStatus::TWO_FA_REQUIRED->value,
+            ], 200);
+        }
+
+        return response()->json([
+            'message' => 'User authenticated successfully',
+            'user' => new \App\Http\Resources\UsersResource($user),
+            'status' => \App\Enums\TwoFactorStatus::SUCCESS->value,
+            'access_token' => $user->createToken(
+                'Api Token for ' . $user->email,
+                ['*'],
+                now()->addMonth()
+            )->plainTextToken,
+        ], 200);
+    }
+
+Service: only store what you need (no plaintext password)
+
+    public function handleTwoFactor($user): bool
+    {
+        if ($user->hasTwoFactorEnabled()) {
+            session(['2fa_login' => encrypt([
+                'user_id' => $user->id,
+                'expires_at' => now()->addMinutes(5),
+            ])]);
+            return true;
+        }
+        return false;
+    }
+
+Confirm the login with the OTP
+
+TwoFactorLoginRequest validates a 6‑digit code and checks the short‑lived session marker. On success, it authenticates the request’s user for issuing a token. Sketch of the rules:
+
+    public function rules(): array
+    {
+        return [
+            'code' => ['required', 'digits:6'],
+        ];
+    }
+
+    public function withValidator($validator): void
+    {
+        $validator->after(function ($validator) {
+            $this->validateTwoFactorSession($validator, $this->input('code'));
+        });
+    }
+
+Controller: finalize and issue token
+
+    public function twoFactorLogin(\App\Http\Requests\Api\V1\Auth\TwoFactorLoginRequest $request): \Illuminate\Http\JsonResponse
+    {
+        $user = $request->user();
+
+        // Clear the 2FA session after successful login
+        session()->forget('2fa_login');
+
+        return response()->json([
+            'message' => 'User authenticated successfully',
+            'user' => new \App\Http\Resources\UsersResource($user),
+            'status' => \App\Enums\TwoFactorStatus::SUCCESS->value,
+            'access_token' => $user->createToken(
+                'Api Token for ' . $user->email,
+                ['*'],
+                now()->addMonth()
+            )->plainTextToken,
+        ], 200);
+    }
+
+Routes
+
+    Route::controller(\App\Http\Controllers\Api\TwoFactorController::class)
+        ->prefix('twofactor')
+        ->name('twofactor.')
+        ->group(function () {
+            Route::post('setup', 'prepareTwoFactor')->name('setup');
+            Route::post('confirm', 'confirmTwoFactor')->name('confirm');
+            Route::get('fetch-user', 'getUserStatus')->name('fetch-user');
+            Route::get('recovery-codes', 'showRecoveryCodes')->middleware('2fa.enabled')->name('recovery-codes');
+            Route::delete('disable', 'disableTwoFactorAuth')->name('disable');
+            Route::post('login-confirm', 'twoFactorLogin')
+                ->name('login-confirm')
+                ->middleware('throttle:6,1')
+                ->withoutMiddleware(['auth:sanctum']);
+        });
+
+Notes that saved me time
+- Throttle the login-confirm endpoint to slow down brute force on the OTP.
+- Keep the 2FA session marker short‑lived (I use 5 minutes) and encrypted. Don’t stash plaintext passwords.
+- If codes are always “invalid,” check server time sync and the user’s device time.
+- If the session marker isn’t found, confirm your session driver and CORS/cookies configuration for your SPA.
+
+Should this be one post or two?
+I kept everything in one place because the whole story is pretty short once you see it. If you prefer to break it up, a natural split is:
+- Part 1: Setup & confirm 2FA (+ recovery codes, disable)
+- Part 2: Secure login with 2FA (session handoff, request validation, token issuance)
+
+That’s it. If you want to see this in a real codebase, check the Profresh repository. If you run into something odd, ping me — I probably tripped over the same thing.
+
 TwoFactor blog
 
 well in laravel there are many ways to implement two factor auth but i'll walk through how i implement two factor api in my open source project profresh api layer ill just walk you through to the backend layer of its implementation im using larager ill atttach the link of repo for you to check both backend and frontend code 
@@ -81,4 +294,114 @@ public function showRecoveryCodes(Request $request): JsonResponse
 
     it also contains DisableTwo factor check which do minimal validation check 
 
+    this will complete your two factor setup but you need 
+    to secure your login when user login and its two factor enabled 
+    now we implement its methadology 
+    first you need to check if user two factor enabled in login controller
+     public function login(LoginUserRequest $request): JsonResponse
+    {
+        if(session('2fa_login')){
+            session()->forget('2fa_login');
+        }
+
+        $user = $this->loginUserService->attemptLogin($request->email, $request->password);
+
+        UserLogin::dispatchIf(!$user->timezone, $user);
+
+        if ($this->loginUserService->handleTwoFactor($user, $request->email, $request->password)) {
+            return response()->json([
+                'message' => 'Two-factor authentication is enabled. Please provide the verification code.',
+                'status' => '2fa_required',
+            ], 200);
+        }
+        
+
+        return response()->json([
+            'message'=> 'User authenticated successfully',
+            'user' => new UsersResource($user),
+            'status' => 'success',
+            'access_token' => $user->createToken(
+                'Api Token for ' . $user->email,
+                ['*'],
+                now()->addMonth())->plainTextToken,
+        ], 200);
+    }
+
+    if user twofactor login we use loginUserService class otherwise carry on traditional login
+    if twofactor enable then we setup two factor session 
+        public function handleTwoFactor($user, $email, $password)
+    {
+        if ($user->hasTwoFactorEnabled()) {
+            session(['2fa_login' => encrypt([
+                'email' => $email,
+                'password' => $password,
+                'expires_at' => now()->addMinutes(5)
+            ])]);
+            return true;
+        }
+        return false;
+    }
+
+and redirect user to two factor login controller
+
+    here is twofactor login controller 
+
+       public function twoFactorLogin(TwoFactorLoginRequest $request): JsonResponse
+    {
+        $user = $request->user();
+        
+        // Clear the 2FA session after successful login
+        session()->forget('2fa_login');
+        
+        return response()->json([
+            'message' => 'User authenticated successfully',
+            'user' => new UsersResource($user),
+            'status' => TwoFactorStatus::SUCCESS->value,
+            'access_token' => $user->createToken(
+                'Api Token for ' . $user->email,
+                ['*'],
+                now()->addMonth()
+            )->plainTextToken,
+        ], 200);
+    }
+
+    here we see we setup TwoFactorLoginRequest 
+
+    first we validate code 
+    public function rules(): array
+    {
+        return [
+            'code' => [
+                'required',
+                'digits:6',
+            ],
+        ];
+    }
+
+     public function withValidator($validator): void
+    {
+        $validator->after(function ($validator) {
+             $code = $this->input('code'); 
+            $this->validateTwoFactorSession($validator,$code);
+        });
+    }
+
+    then we validate session
+    for full request class you can check request class code in github repo 
     
+    please feel free to reach out to me thanks
+    additinoly you can use middleware to your route provided by package
+    here is a complete route setup
+    Route::controller(TwoFactorController::class)
+    ->prefix('twofactor')
+    ->name('twofactor.')
+    ->group(function () {
+        Route::post('setup', 'prepareTwoFactor')->name('setup');
+        Route::post('confirm', 'confirmTwoFactor')->name('confirm');
+        Route::get('fetch-user', 'getUserStatus')->name('fetch-user');
+        Route::get('recovery-codes', 'showRecoveryCodes')->middleware('2fa.enabled')->name('recovery-codes');
+        Route::delete('disable', 'disableTwoFactorAuth')->name('disable');
+        Route::post('login-confirm', 'twoFactorLogin')->name('login-confirm')->withoutMiddleware(['auth:sanctum']);
+    });
+
+    for fronend check github repo TwoFaComponent.vue code 

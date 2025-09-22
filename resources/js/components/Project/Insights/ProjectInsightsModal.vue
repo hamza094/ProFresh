@@ -213,7 +213,8 @@ const ICON_MAP = {
   collaboration: 'fas fa-handshake',
   risk: 'fas fa-shield-alt',
   stage: 'fas fa-project-diagram',
-  progress: 'fas fa-chart-line'
+  progress: 'fas fa-chart-line',
+  abandonment: 'fas fa-archive'
 }
 const TYPE_ICONS = {
   critical: 'fas fa-exclamation-triangle',

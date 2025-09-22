@@ -6,26 +6,25 @@ use App\Models\Project;
 use App\Repository\ProjectInsightsRepository;
 use App\Data\ProjectMetricsDto;
 use App\Services\Insights\HealthInsightBuilder;
-use App\Services\Insights\ThresholdInsightBuilder;
+use App\Services\Insights\TaskHealthInsightBuilder;
+use App\Services\Insights\TeamCollaborationInsightBuilder;
 use App\Services\Insights\RiskInsightBuilder;
 use App\Services\Insights\StageInsightBuilder;
-use App\Services\Insights\OverdueInsightBuilder;
-use App\Services\Insights\CompletionInsightBuilder;
-use App\Services\Insights\ProgressInsightBuilder;
 
 final class ProjectInsightService
 {
+    /**
+     * @var array<string, callable(ProjectMetricsDto, ?Project): mixed>
+     */
     private array $insightBuilders;
 
     public function __construct(
         private ProjectInsightsRepository $repository,
         private HealthInsightBuilder $healthBuilder,
-        private ThresholdInsightBuilder $thresholdBuilder,
+        private TaskHealthInsightBuilder $taskHealthBuilder,
+        private TeamCollaborationInsightBuilder $collaborationBuilder,
         private RiskInsightBuilder $riskBuilder,
         private StageInsightBuilder $stageBuilder,
-        private OverdueInsightBuilder $overdueBuilder,
-        private CompletionInsightBuilder $completionBuilder,
-        private ProgressInsightBuilder $progressBuilder,
     ) {
         $this->setupBuilders();
     }
@@ -35,46 +34,46 @@ final class ProjectInsightService
      */
     private function setupBuilders(): void
     {
+        // Each builder receives the metrics DTO and an optional Project instance
         $this->insightBuilders = [
-            'completion' => fn(ProjectMetricsDto $m) => $this->completionBuilder->build($m->completionRate),
-            'health' => fn(ProjectMetricsDto $m) => $this->healthBuilder->build($m->health),
-            'overdue' => fn(ProjectMetricsDto $m) => $this->overdueBuilder->build($m->overdueCount, config('insights.overdue')),
-            'engagement' => fn(ProjectMetricsDto $m) => $this->thresholdBuilder->build(
-                $m->teamEngagement,
-                'engagement',
-                config('insights.engagement.thresholds'),
-                config('insights.engagement.messages')
-            ),
-            'collaboration' => fn(ProjectMetricsDto $m) => $this->thresholdBuilder->build(
+            'health' => fn(ProjectMetricsDto $m, ?Project $project = null) => $this->healthBuilder->build($m->health),
+            'task-health' => fn(ProjectMetricsDto $m, ?Project $project = null) => $this->taskHealthBuilder->build($m->taskHealth),
+            'collaboration' => fn(ProjectMetricsDto $m, ?Project $project = null) => $this->collaborationBuilder->build(
                 $m->collaborationScore,
-                'collaboration',
-                config('insights.collaboration.thresholds'),
-                config('insights.collaboration.messages')
+                ['details' => $this->getCollaborationDetails($project)]
             ),
-            'risk' => fn(ProjectMetricsDto $m) => $this->riskBuilder->build($m->upcomingRisk),
-            'stage' => fn(ProjectMetricsDto $m) => $this->stageBuilder->build($m->stageProgress),
-            'progress' => fn(ProjectMetricsDto $m) => $this->progressBuilder->build($m->progressScore),
+            'risk' => fn(ProjectMetricsDto $m, ?Project $project = null) => $this->riskBuilder->build($m->upcomingRisk),
+            'stage' => fn(ProjectMetricsDto $m, ?Project $project = null) => $this->stageBuilder->build($m->stageProgress),
         ];
     }
 
     /**
      * Get comprehensive project insights with actionable recommendations
+     *
+     * @param Project $project
+     * @param array<string> $sections
+     * @return array
      */
-    public function getInsights(Project $project, int $userId, array $sections = ['all']): array
+    public function getInsights(Project $project, array $sections = ['all']): array
     {
         $metrics = $this->repository->getProjectInsights($project, $sections);
-        return $this->buildInsights($metrics, $sections);
+        return $this->buildInsights($metrics, $sections, $project);
     }
 
     /**
      * Generate actionable insights based on project data
+     *
+     * @param ProjectMetricsDto $metrics
+     * @param array<string> $sections
+     * @param Project|null $project
+     * @return array
      */
-    private function buildInsights(ProjectMetricsDto $metrics, array $sections): array
+    private function buildInsights(ProjectMetricsDto $metrics, array $sections, ?Project $project = null): array
     {
         return collect($this->insightBuilders)
             ->filter(fn($builder, $section) => $this->shouldIncludeInsight($section, $sections))
             ->filter(fn($builder, $section) => $this->hasData($metrics, $section))
-            ->map(fn($builder) => $builder($metrics))
+            ->map(fn($builder) => $builder($metrics, $project))
             ->values()
             ->toArray();
     }
@@ -93,15 +92,28 @@ final class ProjectInsightService
     private function hasData(ProjectMetricsDto $metrics, string $section): bool
     {
         return match($section) {
-            'completion' => $metrics->completionRate !== null,
             'health' => $metrics->health !== null,
-            'overdue' => $metrics->overdueCount !== null,
-            'engagement' => $metrics->teamEngagement !== null,
+            'task-health' => $metrics->taskHealth !== null,
             'collaboration' => $metrics->collaborationScore !== null,
             'risk' => $metrics->upcomingRisk !== null,
             'stage' => $metrics->stageProgress !== null,
-            'progress' => $metrics->progressScore !== null,
             default => false,
         };
+    }
+
+    /**
+     * Extract collaboration details from project for insight building
+     */
+    private function getCollaborationDetails(?Project $project): array
+    {
+        if (!$project) {
+            return [];
+        }
+
+        return [
+            'member_count' => max(0, (int) ($project->active_members_count ?? 0)),
+            'meeting_count' => max(0, (int) ($project->recent_meetings_count ?? 0)),
+            'participant_count' => max(0, (int) ($project->recent_participants_count ?? 0)),
+        ];
     }
 }

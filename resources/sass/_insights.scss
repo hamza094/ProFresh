@@ -131,6 +131,11 @@
         color: white;
         box-shadow: 0 4px 12px rgba(#10b981, 0.25);
       }
+      &.abandonment {
+        background: linear-gradient(135deg, #ef4444, darken(#ef4444, 10%));
+        color: white;
+        box-shadow: 0 4px 12px rgba(#ef4444, 0.25);
+      }
     }
     
     .card-title {
