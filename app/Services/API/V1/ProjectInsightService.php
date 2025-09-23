@@ -54,8 +54,12 @@ final class ProjectInsightService
      * @param array<string> $sections
      * @return array
      */
-    public function getInsights(Project $project, array $sections = ['all']): array
+    public function getInsights(Project $project, array $sections = []): array
     {
+        if (empty($sections)) {
+            $sections = array_keys($this->insightBuilders);
+        }
+
         $metrics = $this->repository->getProjectInsights($project, $sections);
         return $this->buildInsights($metrics, $sections, $project);
     }
@@ -83,7 +87,7 @@ final class ProjectInsightService
      */
     private function shouldIncludeInsight(string $section, array $sections): bool
     {
-        return in_array('all', $sections) || in_array($section, $sections);
+        return in_array($section, $sections, true);
     }
 
     /**

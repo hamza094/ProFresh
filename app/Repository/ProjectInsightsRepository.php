@@ -1,6 +1,4 @@
-
 <?php
-
 namespace App\Repository;
 
 use App\Models\Project;
@@ -50,27 +48,24 @@ class ProjectInsightsRepository
         // Load all required counts in a single optimized query
         $this->loadAllRequiredCounts($project, $sections);
         
-        return new ProjectMetricsDto(
-            ...collect([
-                'health' => fn() => $this->projectHealthAction->execute($project),
-                'taskHealth' => fn() => $this->taskHealthAction->execute($project),
-                'upcomingRisk' => fn() => $this->upcomingRiskAction->execute($project),
-                'stageProgress' => fn() => $this->stageProgressAction->execute($project),
-                'collaborationScore' => fn() => $this->collaborationHealthAction->execute($project),
-            ])
-            ->filter(fn($action, $key) => $this->shouldInclude(
-                match($key) {
-                    'taskHealth' => 'task-health',
-                    'upcomingRisk' => 'risk',
-                    'stageProgress' => 'stage',
-                    'collaborationScore' => 'collaboration',
-                    default => $key
-                }, 
-                $sections
-            ))
-            ->map(fn($action) => $action())
-            ->toArray()
-        );
+        // Short form: map an ordered set of section => action closures to
+        // values (or null when that section isn't requested). This keeps the
+        // positional argument order required by ProjectMetricsDto while being
+        // more concise.
+        $actions = [
+            'health' => fn() => $this->projectHealthAction->execute($project),
+            'task-health' => fn() => $this->taskHealthAction->execute($project),
+            'risk' => fn() => $this->upcomingRiskAction->execute($project),
+            'stage' => fn() => $this->stageProgressAction->execute($project),
+            'collaboration' => fn() => $this->collaborationHealthAction->execute($project),
+        ];
+
+        $results = collect($actions)
+                    ->map(fn($closure, $section) => $this->shouldInclude($section, $sections) ? $closure() : null)
+                    ->values()
+                    ->all();
+
+        return new ProjectMetricsDto(...$results);
     }
 
     /**

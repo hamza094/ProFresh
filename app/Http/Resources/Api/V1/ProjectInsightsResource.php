@@ -17,7 +17,6 @@ class ProjectInsightsResource extends JsonResource
         $project = $this['project'];
         $insights = $this['insights'];
         $sections = $this['sections'];
-        $singleSection = $this['single_section'];
 
         return [
             'success' => true,
@@ -26,12 +25,9 @@ class ProjectInsightsResource extends JsonResource
                 'project_name' => $project->name,
                 'insights' => $insights,
                 'generated_at' => now()->toISOString(),
-                'section' => $singleSection,
-                'sections_requested' => $singleSection ? null : $sections,
+                'sections_requested' => $sections,
             ], fn($value) => $value !== null),
-            'message' => $singleSection
-                ? "Project {$singleSection} insights retrieved successfully"
-                : 'Project insights retrieved successfully',
+            'message' => 'Project insights retrieved successfully',
         ];
     }
 }

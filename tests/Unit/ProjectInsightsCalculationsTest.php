@@ -10,7 +10,6 @@ use App\Actions\ProjectMetrics\StageProgressMetricAction;
 use App\Actions\ProjectMetrics\UpcomingRiskMetricAction;
 use App\Models\Project;
 use App\Enums\ProjectStage;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Mockery;
 
 class ProjectInsightsCalculationsTest extends TestCase
@@ -29,8 +28,8 @@ class ProjectInsightsCalculationsTest extends TestCase
     $collaborationHealth = Mockery::mock(TeamCollaborationMetricAction::class);
     $stageProgress = Mockery::mock(StageProgressMetricAction::class);
 
-        $project = Mockery::mock(Project::class);
-        $stageData = ['percentage' => 75, 'status' => 'active'];
+    // Use a real Project instance for attribute assignments to avoid Mockery setAttribute errors
+    $project = new Project();
 
         // Mock config
         config(['project-metrics.health.weights' => [
@@ -77,6 +76,7 @@ class ProjectInsightsCalculationsTest extends TestCase
         // Arrange
         $project = new Project();
         $project->tasks_count = 10;
+        $project->active_tasks_count = 10; // active denominator used by new logic
         $project->completed_tasks_count = 6;
         $project->overdue_tasks_count = 3;
 
@@ -87,8 +87,10 @@ class ProjectInsightsCalculationsTest extends TestCase
         // Act
         $result = $action->execute($project);
 
-        // Assert - Expected: (6/10)*100 - (3/10)*40 = 60 - 12 = 48
-        $this->assertEquals(48.0, $result);
+        // Assert - New logic: overdue penalty uses non-completed active as denominator
+        // nonCompletedActive = 10 - 6 = 4; overdueRate = 3/4 = 75%; penalty = 0.75 * 40 = 30
+        // taskHealth = 60 - 30 = 30
+        $this->assertEquals(30.0, $result);
     }
 
     /** @test */
@@ -108,48 +110,28 @@ class ProjectInsightsCalculationsTest extends TestCase
         $this->assertEquals(0.0, $result);
     }
 
-    /** @test */
-    public function calculate_communication_health_multiplies_conversations(): void
-    {
-        // Arrange
-        $project = new Project();
-
-    $project->recent_conversations_count = 5;
-
-    // Communication health is inlined into CalculateProjectHealthAction; assert inline calculation via project
-    $collaboration = new TeamCollaborationMetricAction();
-    $this->assertIsFloat($collaboration->execute(Mockery::mock(Project::class)));
-    }
+    // Removed obsolete communication-only test; communication is covered in health composition tests
 
 
     /** @test */
     public function calculate_collaboration_health_considers_participation(): void
     {
-        // Arrange
-        $project = Mockery::mock(Project::class);
-        $project->active_members_count = 4;
-        $project->recent_meetings_count = 2;
-
-        $activities = Mockery::mock(HasMany::class);
-        $activities->shouldReceive('where->distinct->count')->andReturn(3);
-        $project->shouldReceive('activities')->andReturn($activities);
-
-        config([
-            'project-metrics.health.collaboration' => [
-                'member_score_multiplier' => 10,
-                'meeting_score_multiplier' => 15,
-                'participation_score_multiplier' => 50,
-            ],
-            'project-metrics.time_periods.recent_activity_days' => 7
-        ]);
+        // Arrange (use defaults from action):
+        // - member_score_per_person = 4 (cap 40)
+        // - meeting_score_per_meeting = 10 (cap 30)
+        // - participation_max_score = 30
+        $project = new Project();
+        $project->active_members_count = 4;      // member score = 4 * 4 = 16
+        $project->recent_meetings_count = 2;     // meeting score = 2 * 10 = 20
+        $project->recent_participants_count = 3; // participation = (3/4) * 30 = 22.5
 
         $action = new TeamCollaborationMetricAction();
 
         // Act
         $result = $action->execute($project);
 
-        // Assert - Expected: min(100, (4*10) + (2*15) + ((3/4)*50)) = min(100, 40+30+37.5) = 100
-        $this->assertEquals(100.0, $result);
+        // Assert - Expected total = 16 + 20 + 22.5 = 58.5
+        $this->assertEquals(58.5, $result);
     }
 
     /** @test */
@@ -200,43 +182,25 @@ class ProjectInsightsCalculationsTest extends TestCase
     /** @test */
     public function get_upcoming_risk_identifies_soon_due_tasks(): void
     {
-        // Arrange
-        $project = Mockery::mock(Project::class);
-        $tasks = Mockery::mock(HasMany::class);
-        
-        // Create mock task objects with activities method
-        $task1 = Mockery::mock();
-        $task1->id = 1;
-        $task1->shouldReceive('activities->where->exists')->andReturn(false);
-        
-        $task2 = Mockery::mock();
-        $task2->id = 2;
-        $task2->shouldReceive('activities->where->exists')->andReturn(false);
-        
-        $soonTasks = collect([$task1, $task2]);
-
-        $tasks->shouldReceive('dueSoon')->with(48)->andReturnSelf();
-        $tasks->shouldReceive('get')->andReturn($soonTasks);
-        $project->shouldReceive('tasks')->andReturn($tasks);
-
-        config([
-            'project-metrics.time_periods' => [
-                'risk_assessment_hours' => 48,
-                'task_inactivity_days' => 5
-            ]
-        ]);
+        // Arrange: UpcomingRiskMetricAction now reads precomputed counts from the project
+        $project = new Project();
+        $project->tasks_due_soon_count = 2;
+        $project->tasks_at_risk_count = 1;
 
         $action = new UpcomingRiskMetricAction();
 
         // Act
         $result = $action->execute($project);
 
-        // Assert
+        // Assert - shape: score, at_risk_count, due_soon_count
         $this->assertIsArray($result);
-        $this->assertArrayHasKey('count', $result);
-        $this->assertArrayHasKey('tasks', $result);
-        $this->assertEquals(2, $result['count']);
-        $this->assertEquals([1, 2], $result['tasks']);
+        $this->assertArrayHasKey('score', $result);
+        $this->assertArrayHasKey('at_risk_count', $result);
+        $this->assertArrayHasKey('due_soon_count', $result);
+        $this->assertEquals(2, $result['due_soon_count']);
+        $this->assertEquals(1, $result['at_risk_count']);
+        // atRisk/dueSoon = 1/2 => 50.0, severity boost for 1 => 1.0
+        $this->assertEquals(50.0, $result['score']);
     }
 
     /** @test */
@@ -247,9 +211,10 @@ class ProjectInsightsCalculationsTest extends TestCase
         $collaborationHealth = Mockery::mock(TeamCollaborationMetricAction::class);
         $stageProgress = Mockery::mock(StageProgressMetricAction::class);
 
-        $project = Mockery::mock(Project::class);
-        $project->recent_activities_count = 20; // Should be capped at 100%
-        $project->recent_conversations_count = 5;
+       // Use a real Project instance so attribute assignments work normally
+       $project = new Project();
+       $project->recent_activities_count = 20; // Should be capped at 100%
+       $project->recent_conversations_count = 5;
 
         config([
             'project-metrics.health.weights' => [
@@ -270,5 +235,19 @@ class ProjectInsightsCalculationsTest extends TestCase
         // Assert - Activity should be 100% (20/15 capped at 100%), contributing 10% weight
         $expected = (80*0.3) + (50*0.2) + (60*0.2) + (75*0.2) + (100*0.1); // = 24+10+12+15+10 = 71
         $this->assertEquals(71.0, $result);
+    }
+
+        /** @test */
+        public function stage_progress_completed_and_postponed_statuses(): void
+        {
+    $p = new Project(); 
+    $p->stage_id = ProjectStage::Completed->value;
+    $a = new StageProgressMetricAction();
+    $completed = $a->execute($p);
+    $this->assertEquals('completed', $completed['status']);
+
+    $p->stage_id = ProjectStage::Postponed->value;
+    $postponed = $a->execute($p);
+    $this->assertEquals('postponed', $postponed['status']);
     }
 }

@@ -25,7 +25,6 @@ class ProjectInsightsController extends Controller
     public function index(ProjectInsightsRequest $request, Project $project): ProjectInsightsResource
     {
         $sections = $request->getSections();
-        $singleSection = $request->route('section');
 
         $insights = $this->insightService->getInsights($project, $sections);
 
@@ -33,7 +32,6 @@ class ProjectInsightsController extends Controller
             'project' => $project,
             'insights' => $insights,
             'sections' => $sections,
-            'single_section' => $singleSection,
         ]);
     }
 }

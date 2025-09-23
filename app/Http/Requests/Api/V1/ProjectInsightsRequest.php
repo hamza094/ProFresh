@@ -5,63 +5,73 @@ namespace App\Http\Requests\Api\V1;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
-use Illuminate\Support\Arr;
 
 class ProjectInsightsRequest extends FormRequest
 {
-    /**
-     * Valid sections for insights API
-     */
     public const VALID_SECTIONS = [
-        'health', 'task-health', 'collaboration', 'risk', 'stage', 'all'
+        'health', 'task-health', 'collaboration', 'risk', 'stage',
     ];
-    /**
-     * Authorize the request: user must be authenticated and a member of the project
-     */
+
+    public const DEFAULT_SECTIONS = self::VALID_SECTIONS;
+
     public function authorize(): bool
     {
         return true;
     }
 
-    /**
-     * Validation rules for API request
-     */
+    protected function prepareForValidation(): void
+    {
+        $rawSections = $this->input('sections');
+
+        if ($rawSections === null) {
+            $this->merge(['sections' => self::DEFAULT_SECTIONS]);
+            return;
+        }
+
+        if (is_array($rawSections)) {
+            $this->merge(['sections' => $this->normalizeSectionsArray($rawSections)]);
+        }
+    }
+
+    private function normalizeSectionsArray(array $sections): array
+    {
+        return collect($sections)
+            ->map(fn($value) => is_scalar($value) ? trim((string) $value) : null)
+            ->filter(fn($value) => $value !== null && $value !== '')
+            ->unique(null, true)
+            ->values()
+            ->all();
+    }
+
     public function rules(): array
     {
         $in = Rule::in(self::VALID_SECTIONS);
+
         return [
             'sections' => ['sometimes', 'array'],
             'sections.*' => ['string', $in],
-            'section' => ['sometimes', 'string', $in],
         ];
     }
 
-    /**
-     * Get the validated sections with default fallback
-     */
     public function getSections(): array
     {
-        // Prefer route parameter, then single 'section' input, then 'sections' array
-        if ($this->route('section')) {
-            return [$this->route('section')];
-        }
-        $validated = $this->validated();
-        if (isset($validated['section'])) {
-            return [$validated['section']];
-        }
-        return $validated['sections'] ?? ['all'];
+        return $this->validated()['sections'] ?? self::DEFAULT_SECTIONS;
     }
 
     /**
-     * Prepare the data for validation
+     * Custom validation messages for the request.
+     *
+     * @return array<string,string>
      */
-    protected function prepareForValidation(): void
+    public function messages(): array
     {
-        // Accept both sections[]=value and repeated sections=value formats
-        if ($this->has('sections') && !is_array($this->sections)) {
-            $this->merge([
-                'sections' => Arr::wrap($this->input('sections'))
-            ]);
-        }
+        $allowed = implode(', ', self::VALID_SECTIONS);
+
+        return [
+            'sections.array' => 'The sections field must be an array. Use sections[]=health&sections[]=risk.',
+            'sections.*.string' => 'Each section must be a string.',
+            'sections.*.in' => "Invalid section selected. Allowed values: {$allowed}.",
+        ];
     }
+
 }
