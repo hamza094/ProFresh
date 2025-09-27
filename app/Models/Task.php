@@ -25,7 +25,7 @@ class Task extends Model
     'due_at' => 'datetime',
 ];
 
-  protected $deletedAt = 'archived_at';
+  // Use default SoftDeletes column 'deleted_at' (matches migrations)
 
   protected static function booted(): void
   {

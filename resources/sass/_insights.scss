@@ -16,17 +16,8 @@
   font-size: 1.2rem;
 }
 
-// Stat icon sizes and colors
-.stat-icon {
-  width: 48px;
-  height: 48px;
-  font-size: 1.2rem;
-  color: $color-white;
-  
-  &.health { background: $insight-health; }
-  &.completion { background: $insight-completion; }
-  &.overdue { background: $insight-overdue; }
-}
+// NOTE: removed deprecated stat-icon block (quick-stats removed).
+// Icon presentation is handled per-card in the .insight-detail-card header below.
 
 // Enhanced Insight Card Design
 .insight-detail-card {
@@ -96,21 +87,7 @@
         color: white;
         box-shadow: 0 4px 12px rgba($insight-health, 0.25);
       }
-      &.completion {
-        background: linear-gradient(135deg, $insight-completion, darken($insight-completion, 10%));
-        color: white;
-        box-shadow: 0 4px 12px rgba($insight-completion, 0.25);
-      }
-      &.overdue {
-        background: linear-gradient(135deg, $insight-overdue, darken($insight-overdue, 10%));
-        color: white;
-        box-shadow: 0 4px 12px rgba($insight-overdue, 0.25);
-      }
-      &.engagement {
-        background: linear-gradient(135deg, #6366f1, darken(#6366f1, 10%));
-        color: white;
-        box-shadow: 0 4px 12px rgba(#6366f1, 0.25);
-      }
+      // Keep only supported types: health, task-health, collaboration, risk, stage
       &.collaboration {
         background: linear-gradient(135deg, #8b5cf6, darken(#8b5cf6, 10%));
         color: white;
@@ -126,15 +103,11 @@
         color: white;
         box-shadow: 0 4px 12px rgba(#06b6d4, 0.25);
       }
-      &.progress {
-        background: linear-gradient(135deg, #10b981, darken(#10b981, 10%));
+      /* task-health uses the same token as the previous 'completion' visual style */
+      &.task-health {
+        background: linear-gradient(135deg, $insight-completion, darken($insight-completion, 10%));
         color: white;
-        box-shadow: 0 4px 12px rgba(#10b981, 0.25);
-      }
-      &.abandonment {
-        background: linear-gradient(135deg, #ef4444, darken(#ef4444, 10%));
-        color: white;
-        box-shadow: 0 4px 12px rgba(#ef4444, 0.25);
+        box-shadow: 0 4px 12px rgba($insight-completion, 0.25);
       }
     }
     

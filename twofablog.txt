@@ -2,7 +2,8 @@ Adding Two‑Factor Authentication (2FA) to a Laravel API (Laragear + Sanctum)
 
 I recently wired up Two‑Factor Authentication (2FA) for the Profresh API. There are a few ways to do 2FA in Laravel, but I chose the Laragear 2FA package because it’s simple, well‑documented, and plays nicely with Sanctum.
 
-This post shows exactly how I implemented it on the backend: endpoints to enable/confirm/disable 2FA, recovery codes, and a secure login flow that requires the one‑time code when 2FA is enabled.
+This post shows exactly how I implemented it on the backend: endpoints to enable/confirm/disable 2FA
+ recovery codes, and a secure login flow that requires the one‑time code when 2FA is enabled.
 
 Who this is for
 - You’re building a JSON API with Laravel 10 and Sanctum.
@@ -10,8 +11,8 @@ Who this is for
 - You want a clean, minimal 2FA setup without re‑inventing OTP math.
 
 What we’ll build
-1) Turn on 2FA for a user (generate secret + QR, confirm with a 6‑digit code, show recovery codes)
-2) Require 2FA on login if the user has it enabled (short‑lived session handoff, then issue a Sanctum token)
+1) Turn on 2FA for a user (generate secret + QR, confirm with a 6‑digit code)
+2) Require 2FA on login if the user has it enabled
 
 Package
 - Laragear 2FA (v2 for Laravel 10). For Laravel 11, use the v3 docs — the code is very similar.
@@ -24,7 +25,8 @@ First, the user opts‑in. We generate a secret, return a QR, and mark the proce
 
 Controller: prepare
 
-    public function prepareTwoFactor(PrepareTwoFactorRequest $request): \Illuminate\Http\JsonResponse
+
+    public function prepareTwoFactor(PrepareTwoFactorRequest $request): JsonResponse
     {
         $user = $request->user();
         $secret = $user->createTwoFactorAuth();
@@ -33,7 +35,7 @@ Controller: prepare
             'qr_code' => $secret->toQr(),
             'uri'     => $secret->toUri(),
             'string'  => $secret->toString(),
-            'status'  => \App\Enums\TwoFactorStatus::IN_PROGRESS->value,
+            'status'  => TwoFactorStatus::IN_PROGRESS->value,
         ], 200);
     }
 
@@ -57,14 +59,14 @@ Example request/response
 
 Controller: confirm
 
-    public function confirmTwoFactor(ConfirmTwoFactorRequest $request): \Illuminate\Http\JsonResponse
+    public function confirmTwoFactor(ConfirmTwoFactorRequest $request): JsonResponse
     {
         $user = $request->user();
 
         return response()->json([
-            'message' => \App\Enums\TwoFactorStatus::SUCCESS->value,
+            'message' => TwoFactorStatus::SUCCESS->value,
             'recoveryCodes' => $user->getRecoveryCodes(),
-            'status' => \App\Enums\TwoFactorStatus::ENABLED->value,
+            'status' => TwoFactorStatus::ENABLED->value,
         ]);
     }
 
@@ -91,12 +93,12 @@ Why an enum?
 
 Recovery codes endpoint (optional but recommended)
 
-    public function showRecoveryCodes(\Illuminate\Http\Request $request): \Illuminate\Http\JsonResponse
+    public function showRecoveryCodes(Request $request): JsonResponse
     {
         $recoveryCodes = $request->user()->generateRecoveryCodes();
 
         return response()->json([
-            'message' => \App\Enums\TwoFactorStatus::SUCCESS->value,
+            'message' => TwoFactorStatus::SUCCESS->value,
             'recoveryCodes' => $recoveryCodes,
         ]);
     }
@@ -113,12 +115,12 @@ Example response
 
 Disable 2FA
 
-    public function disableTwoFactorAuth(\App\Http\Requests\Api\V1\Auth\DisableTwoFactorRequest $request): \Illuminate\Http\JsonResponse
+    public function disableTwoFactorAuth(DisableTwoFactorRequest $request): JsonResponse
     {
         $request->user()->disableTwoFactorAuth();
         return response()->json([
             'message' => 'Two-Factor Authentication has been disabled!',
-            'status' => \App\Enums\TwoFactorStatus::DISABLED->value,
+            'status' => TwoFactorStatus::DISABLED->value,
         ]);
     }
 
@@ -145,7 +147,7 @@ Here’s the flow that feels good for APIs:
 
 Controller: login (excerpt)
 
-    public function login(LoginUserRequest $request): \Illuminate\Http\JsonResponse
+    public function login(LoginUserRequest $request): JsonResponse
     {
         if (session('2fa_login')) {
             session()->forget('2fa_login');
@@ -153,19 +155,19 @@ Controller: login (excerpt)
 
         $user = $this->loginUserService->attemptLogin($request->email, $request->password);
 
-        \App\Events\UserLogin::dispatchIf(!$user->timezone, $user);
+        UserLogin::dispatchIf(!$user->timezone, $user);
 
         if ($this->loginUserService->handleTwoFactor($user)) {
             return response()->json([
                 'message' => 'Two-factor authentication is enabled. Please provide the verification code.',
-                'status' => \App\Enums\TwoFactorStatus::TWO_FA_REQUIRED->value,
+                'status' => TwoFactorStatus::TWO_FA_REQUIRED->value,
             ], 200);
         }
 
         return response()->json([
             'message' => 'User authenticated successfully',
-            'user' => new \App\Http\Resources\UsersResource($user),
-            'status' => \App\Enums\TwoFactorStatus::SUCCESS->value,
+            'user' => new UsersResource($user),
+            'status' => TwoFactorStatus::SUCCESS->value,
             'access_token' => $user->createToken(
                 'Api Token for ' . $user->email,
                 ['*'],
@@ -222,7 +224,7 @@ What this does
 
 Controller: finalize and issue token
 
-    public function twoFactorLogin(\App\Http\Requests\Api\V1\Auth\TwoFactorLoginRequest $request): \Illuminate\Http\JsonResponse
+    public function twoFactorLogin(TwoFactorLoginRequest $request): JsonResponse
     {
         $user = $request->user();
 
@@ -231,8 +233,8 @@ Controller: finalize and issue token
 
         return response()->json([
             'message' => 'User authenticated successfully',
-            'user' => new \App\Http\Resources\UsersResource($user),
-            'status' => \App\Enums\TwoFactorStatus::SUCCESS->value,
+            'user' => new UsersResource($user),
+            'status' => TwoFactorStatus::SUCCESS->value,
             'access_token' => $user->createToken(
                 'Api Token for ' . $user->email,
                 ['*'],
@@ -247,7 +249,7 @@ What this does
 
 Routes
 
-    Route::controller(\App\Http\Controllers\Api\TwoFactorController::class)
+    Route::controller(TwoFactorController::class)
         ->prefix('twofactor')
         ->name('twofactor.')
         ->group(function () {
@@ -266,39 +268,6 @@ Why this setup
 - recovery-codes is protected with the package middleware so only users with 2FA enabled can call it.
 - login-confirm is throttled and intentionally bypasses auth:sanctum because the user isn’t fully authenticated yet; they’re proving possession of the OTP.
 
-Practical cURL examples (for testing)
-
-1) Prepare 2FA (logged-in user)
-
-        curl -X POST https://localhost:8000/api/twofactor/setup \
-            -H "Authorization: Bearer <token>" \
-            -H "Content-Type: application/json" \
-            -d '{"password": "<current_password>"}'
-
-2) Confirm 2FA
-
-        curl -X POST https://localhost:8000/api/twofactor/confirm \
-            -H "Authorization: Bearer <token>" \
-            -H "Content-Type: application/json" \
-            -d '{"code": "123456"}'
-
-3) Login (step 1)
-
-        curl -X POST https://localhost:8000/api/login \
-            -H "Content-Type: application/json" \
-            -d '{"email": "john@example.com", "password": "secret"}'
-
-    - If 2FA enabled, you’ll get:
-
-        { "message": "Two-factor authentication is enabled...", "status": "2fa_required" }
-
-4) Login confirm (step 2)
-
-        curl -X POST https://localhost:8000/api/twofactor/login-confirm \
-            -H "Content-Type: application/json" \
-            -d '{"code": "123456"}'
-
-    - On success you’ll get an access_token you can use in subsequent requests.
 
 Notes that saved me time
 - Throttle the login-confirm endpoint to slow down brute force on the OTP.
@@ -311,10 +280,11 @@ Extra safeguards
 - Don’t log OTP codes or the otpauth URI/secret in application logs.
 - Consider notifying users when 2FA is enabled/disabled on their account.
 
-Should this be one post or two?
-I kept everything in one place because the whole story is pretty short once you see it. If you prefer to break it up, a natural split is:
-- Part 1: Setup & confirm 2FA (+ recovery codes, disable)
-- Part 2: Secure login with 2FA (session handoff, request validation, token issuance)
 
 That’s it. If you want to see this in a real codebase, check the Profresh repository. If you run into something odd, ping me — I probably tripped over the same thing.
 
+here is the releated code files
+
+https://github.com/hamza094/ProFresh/blob/master/app/Http/Controllers/Api/Auth/TwoFactorController.php
+
+https://github.com/hamza094/ProFresh/tree/master/app/Http/Requests/Api/V1/Auth

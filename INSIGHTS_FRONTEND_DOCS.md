@@ -10,7 +10,6 @@ The Project Insights frontend implementation provides a comprehensive Vue.js-bas
 
 ```
 resources/js/components/Project/Insights/
-├── ProjectInsights.vue          # Main insights container component
 ├── InsightCard.vue             # Individual insight display component  
 ├── InsightFilters.vue          # Section filtering component
 └── ProjectInsightsPage.vue     # Standalone full-page insights view
@@ -32,30 +31,7 @@ resources/js/mixins/
 
 ## Component Documentation
 
-### ProjectInsights.vue
-
-**Purpose**: Main container component that orchestrates insights display and filtering.
-
-**Props**:
-- `project` (Object, required): Project data object
-- `compact` (Boolean, default: false): Whether to show compact view
-- `initialSections` (Array, default: ['all']): Initial sections to load
-
-**Key Features**:
-- API integration with loading states
-- Section filtering capabilities
-- Compact and full view modes
-- Responsive grid layout
-- Error handling with retry functionality
-
-**Usage**:
-```vue
-<ProjectInsights 
-  :project="project" 
-  :compact="false"
-  :initial-sections="['completion', 'health']"
-/>
-```
+> Note: `ProjectInsights.vue` component has been removed. Use the `ProjectInsightsModal` for full insights views or the `ProjectInsightsMixin`/`ProjectInsightsService` for inline health previews.
 
 ### InsightCard.vue
 
@@ -233,7 +209,7 @@ The components integrate with the existing SCSS architecture:
 Add to your Vue component imports:
 
 ```javascript
-import ProjectInsights from './components/Project/Insights/ProjectInsights.vue'
+// ProjectInsights component was removed; use ProjectInsightsModal or ProjectInsightsPage instead
 import ProjectInsightsPage from './components/Project/Insights/ProjectInsightsPage.vue'
 ```
 
@@ -273,15 +249,16 @@ Include the SCSS additions in your `_components.scss`:
 ```vue
 <template>
   <div class="project-dashboard">
-    <ProjectInsights :project="project" />
+  <!-- ProjectInsights was removed; use ProjectInsightsModal or inline health preview in Status.vue -->
+  <ProjectInsightsModal :project="project" />
   </div>
 </template>
 
 <script>
-import ProjectInsights from './components/Project/Insights/ProjectInsights.vue'
+import ProjectInsightsModal from './components/Project/Insights/ProjectInsightsModal.vue'
 
 export default {
-  components: { ProjectInsights },
+  components: { ProjectInsightsModal },
   data() {
     return {
       project: {
@@ -299,11 +276,7 @@ export default {
 ```vue
 <template>
   <div class="status-dropdown">
-    <ProjectInsights 
-      :project="project" 
-      :compact="true"
-      :initial-sections="['completion', 'health', 'overdue']"
-    />
+    <!-- Use ProjectInsightsModal or ProjectInsightsPage for full views; inline previews are available via Status.vue -->
   </div>
 </template>
 ```
@@ -355,11 +328,11 @@ export default {
 
 ```javascript
 import { mount } from '@vue/test-utils'
-import ProjectInsights from './ProjectInsights.vue'
+import ProjectInsightsModal from './components/Project/Insights/ProjectInsightsModal.vue'
 
-describe('ProjectInsights', () => {
-  it('renders insights correctly', () => {
-    const wrapper = mount(ProjectInsights, {
+describe('ProjectInsightsModal', () => {
+  it('renders insights modal correctly', () => {
+    const wrapper = mount(ProjectInsightsModal, {
       propsData: {
         project: { slug: 'test-project' }
       }

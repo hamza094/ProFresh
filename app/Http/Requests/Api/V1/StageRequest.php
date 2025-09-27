@@ -37,7 +37,7 @@ class StageRequest extends FormRequest
                          $fail("The selected stage must be different from the current project stage.");
                      }
                  },
-            ],
+        ],
 
           /**
            * @example null

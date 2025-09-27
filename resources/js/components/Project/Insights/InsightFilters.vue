@@ -48,65 +48,43 @@ export default {
       default: () => ['all']
     }
   },
-  data() {
-    return {
-      localActiveSections: [...this.activeSections]
-    }
-  },
-  watch: {
-    activeSections: {
-      handler(newSections) {
-        this.localActiveSections = [...newSections]
-      },
-      deep: true
-    }
-  },
   methods: {
     toggleSection(sectionKey) {
-      if (sectionKey === 'all') {
-        this.selectAll()
-        return
-      }
-      
-      // Remove 'all' if selecting specific sections
-      if (this.localActiveSections.includes('all')) {
-        this.localActiveSections = [sectionKey]
+      const current = Array.isArray(this.activeSections) ? [...this.activeSections] : ['all']
+
+      if (sectionKey === 'all') return this.emitChange(['all'])
+
+      let next
+      if (current.includes('all')) {
+        next = [sectionKey]
+      } else if (current.includes(sectionKey)) {
+        next = current.filter(k => k !== sectionKey)
+        if (next.length === 0) next = ['all']
       } else {
-        const index = this.localActiveSections.indexOf(sectionKey)
-        if (index > -1) {
-          this.localActiveSections.splice(index, 1)
-        } else {
-          this.localActiveSections.push(sectionKey)
-        }
-        
-        // If no sections selected, default to 'all'
-        if (this.localActiveSections.length === 0) {
-          this.localActiveSections = ['all']
-        }
+        next = [...current, sectionKey]
       }
-      
-      this.emitChange()
+
+      this.emitChange(next)
     },
     
     selectAll() {
-      this.localActiveSections = ['all']
-      this.emitChange()
+      this.emitChange(['all'])
     },
     
     clearAll() {
-      this.localActiveSections = []
-      this.emitChange()
+      // Clear behaves like selecting all (no filter)
+      this.emitChange(['all'])
     },
     
     isActive(sectionKey) {
-      if (sectionKey === 'all') {
-        return this.localActiveSections.includes('all')
-      }
-      return this.localActiveSections.includes(sectionKey) && !this.localActiveSections.includes('all')
+      const current = Array.isArray(this.activeSections) ? this.activeSections : ['all']
+      if (sectionKey === 'all') return current.includes('all')
+      return current.includes(sectionKey) && !current.includes('all')
     },
     
-    emitChange() {
-      this.$emit('filter-change', [...this.localActiveSections])
+    emitChange(next) {
+      const value = Array.isArray(next) ? next : (Array.isArray(this.activeSections) ? this.activeSections : ['all'])
+      this.$emit('filter-change', [...value])
     }
   }
 }

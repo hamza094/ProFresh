@@ -147,7 +147,8 @@ class ProjectInsightsRepository
         return match($type) {
             'tasks' => [
                 'tasks' => fn($q) => $q->withTrashed(),
-                'tasks as active_tasks_count' => fn($q) => $q->whereNull('archived_at'),
+                // Active = not soft-deleted
+                'tasks as active_tasks_count' => fn($q) => $q->whereNull('deleted_at'),
                 'tasks as completed_tasks_count' => fn($q) => $q->completed(),
                 'tasks as overdue_tasks_count' => fn($q) => $q->overdue(),
                 'tasks as abandoned_tasks_count' => fn($q) => $q->onlyTrashed(),

@@ -4,9 +4,6 @@ namespace App\Http\Controllers\Api\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\User;
-use Illuminate\Validation\ValidationException;
-use Illuminate\Support\Facades\Hash;
 use App\Http\Resources\Api\V1\UsersResource;
 use App\Http\Requests\Api\V1\Auth\PrepareTwoFactorRequest;
 use App\Http\Requests\Api\V1\Auth\ConfirmTwoFactorRequest;

@@ -19,7 +19,6 @@ import momenttz from 'moment-timezone';
 import "emoji-mart-vue-fast/css/emoji-mart.css";
 import alertNotice from './mixins/alertNotice';
 import errorHandling from './mixins/errorHandling';
-import currentStage from './mixins/currentStage';
 import popup from './mixins/popup';
 import conversation from './mixins/conversation';
 import Chart from 'chart.js';
@@ -54,7 +53,6 @@ import router from './router.js'
 import store from "./store";
 
 Vue.mixin(alertNotice);
-Vue.mixin(currentStage);
 Vue.mixin(conversation);
 Vue.mixin(errorHandling);
 
