@@ -4,21 +4,26 @@ namespace App\Actions\ProjectMetrics;
 
 use App\Models\Project;
 
+/**
+ * Composite Project Health calculation.
+ *
+ * Components (each expected 0–100):
+ * - tasks: TaskHealthMetricAction
+ * - communication: CommunicationHealthMetricAction
+ * - collaboration: TeamCollaborationMetricAction
+ * - stage: StageProgressMetricAction (percentage only)
+ * - activity: ActivityHealthMetricAction
+ *
+ * Weights are read from config('project-metrics.health.weights').
+ */
 class ProjectHealthMetricAction
 {
-    private const DEFAULT_COMMUNICATION_SCORE_PER_CONVERSATION = 10.0;
-    private const DEFAULT_COMMUNICATION_MAX_SCORE = 100.0;
-    private const DEFAULT_ACTIVITY_COUNT_FOR_FULL = 15;
-    private const DEFAULT_WEIGHT_TASKS = 0.3;
-    private const DEFAULT_WEIGHT_COMMUNICATION = 0.2;
-    private const DEFAULT_WEIGHT_COLLABORATION = 0.2;
-    private const DEFAULT_WEIGHT_STAGE = 0.15;
-    private const DEFAULT_WEIGHT_ACTIVITY = 0.15;
-
     public function __construct(
         private TaskHealthMetricAction $taskHealthAction,
         private TeamCollaborationMetricAction $collaborationHealthAction,
-        private StageProgressMetricAction $stageProgressAction
+        private StageProgressMetricAction $stageProgressAction,
+        private CommunicationHealthMetricAction $communicationHealthAction,
+        private ActivityHealthMetricAction $activityHealthAction
     ) {}
 
     public function execute(Project $project): float
@@ -26,10 +31,10 @@ class ProjectHealthMetricAction
         $weights = $this->getHealthWeights();
         
         $taskHealth = $this->taskHealthAction->execute($project);
-        $communicationHealth = $this->calculateCommunicationHealth($project);
+        $communicationHealth = $this->communicationHealthAction->execute($project);
         $collaborationHealth = $this->collaborationHealthAction->execute($project);
         $stagePercentage = $this->calculateStagePercentage($project);
-        $activityPercentage = $this->calculateActivityPercentage($project);
+        $activityPercentage = $this->activityHealthAction->execute($project);
 
         // Calculate final composite weighted health score
         $weightedScore = 
@@ -44,32 +49,18 @@ class ProjectHealthMetricAction
 
     private function getHealthWeights(): array
     {
-        $configWeights = config('project-metrics.health.weights', []);
-        
+        $weights = (array) config('project-metrics.health.weights', []);
+
         return [
-            'tasks' => (float) ($configWeights['tasks'] ?? self::DEFAULT_WEIGHT_TASKS),
-            'communication' => (float) ($configWeights['communication'] ?? self::DEFAULT_WEIGHT_COMMUNICATION),
-            'collaboration' => (float) ($configWeights['collaboration'] ?? self::DEFAULT_WEIGHT_COLLABORATION),
-            'stage' => (float) ($configWeights['stage'] ?? self::DEFAULT_WEIGHT_STAGE),
-            'activity' => (float) ($configWeights['activity'] ?? self::DEFAULT_WEIGHT_ACTIVITY),
+            'tasks' => (float) ($weights['tasks'] ?? 0.0),
+            'communication' => (float) ($weights['communication'] ?? 0.0),
+            'collaboration' => (float) ($weights['collaboration'] ?? 0.0),
+            'stage' => (float) ($weights['stage'] ?? 0.0),
+            'activity' => (float) ($weights['activity'] ?? 0.0),
         ];
     }
 
-    private function calculateCommunicationHealth(Project $project): float
-    {
-        $conversationCount = max(0, (int) ($project->recent_conversations_count ?? 0));
-        
-        $scorePerConversation = config(
-            'project-metrics.health.communication.score_per_conversation', 
-            self::DEFAULT_COMMUNICATION_SCORE_PER_CONVERSATION
-        );
-        $maxScore = config(
-            'project-metrics.health.communication.max_score', 
-            self::DEFAULT_COMMUNICATION_MAX_SCORE
-        );
-
-        return min($maxScore, $conversationCount * $scorePerConversation);
-    }
+    // Communication calculation moved to CommunicationHealthMetricAction
 
     private function calculateStagePercentage(Project $project): float
     {
@@ -79,23 +70,7 @@ class ProjectHealthMetricAction
         return $this->normalizePercentage($percentage);
     }
 
-    private function calculateActivityPercentage(Project $project): float
-    {
-        $activityCount = max(0, (int) ($project->recent_activities_count ?? 0));
-        
-        $fullActivityCount = config(
-            'project-metrics.progress.activity_count_for_full', 
-            self::DEFAULT_ACTIVITY_COUNT_FOR_FULL
-        );
-
-        if ($fullActivityCount <= 0) {
-            return 0.0;
-        }
-
-        $percentage = ($activityCount / $fullActivityCount) * 100.0;
-        
-        return $this->normalizePercentage($percentage);
-    }
+    // Activity calculation moved to ActivityHealthMetricAction
 
     private function normalizePercentage(float|int $value): float
     {

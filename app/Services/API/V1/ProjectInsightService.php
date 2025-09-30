@@ -5,11 +5,14 @@ namespace App\Services\Api\V1;
 use App\Models\Project;
 use App\Repository\ProjectInsightsRepository;
 use App\Data\ProjectMetricsDto;
+use App\Actions\ProjectMetrics\TaskHealthMetricAction;
 use App\Services\Insights\HealthInsightBuilder;
 use App\Services\Insights\TaskHealthInsightBuilder;
 use App\Services\Insights\TeamCollaborationInsightBuilder;
 use App\Services\Insights\RiskInsightBuilder;
 use App\Services\Insights\StageInsightBuilder;
+use App\Actions\ProjectMetrics\CommunicationHealthMetricAction;
+use App\Actions\ProjectMetrics\ActivityHealthMetricAction;
 
 final class ProjectInsightService
 {
@@ -20,6 +23,9 @@ final class ProjectInsightService
 
     public function __construct(
         private ProjectInsightsRepository $repository,
+        private TaskHealthMetricAction $taskHealthAction,
+        private CommunicationHealthMetricAction $communicationHealthAction,
+        private ActivityHealthMetricAction $activityHealthAction,
         private HealthInsightBuilder $healthBuilder,
         private TaskHealthInsightBuilder $taskHealthBuilder,
         private TeamCollaborationInsightBuilder $collaborationBuilder,
@@ -37,7 +43,11 @@ final class ProjectInsightService
         // Each builder receives the metrics DTO and an optional Project instance
         $this->insightBuilders = [
             'health' => fn(ProjectMetricsDto $m, ?Project $project = null) => $this->healthBuilder->build($m->health),
-            'task-health' => fn(ProjectMetricsDto $m, ?Project $project = null) => $this->taskHealthBuilder->build($m->taskHealth),
+
+            'task-health' => fn(ProjectMetricsDto $m, ?Project $project = null) => $this->taskHealthBuilder->build(
+                $m->taskHealth,
+                $project ? ['summary' => $this->taskHealthAction->summary($project)] : []
+            ),
             'collaboration' => fn(ProjectMetricsDto $m, ?Project $project = null) => $this->collaborationBuilder->build(
                 $m->collaborationScore,
                 ['details' => $this->getCollaborationDetails($project)]

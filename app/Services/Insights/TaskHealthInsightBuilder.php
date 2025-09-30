@@ -9,8 +9,8 @@ final class TaskHealthInsightBuilder implements InsightBuilderInterface
     private const EXCELLENT_THRESHOLD = 90;
     private const GOOD_THRESHOLD = 70;
     private const WARNING_THRESHOLD = 40;
-    private const HIGH_OVERDUE_THRESHOLD = 25;
-    private const HIGH_ABANDONMENT_THRESHOLD = 15;
+    private const HIGH_OVERDUE_THRESHOLD = 25;      // mirrors penalty for overdue in action
+    private const HIGH_ABANDONMENT_THRESHOLD = 15;  // mirrors penalty for abandonment in action
 
     public function build(mixed $input, array $context = []): array
     {
@@ -26,9 +26,10 @@ final class TaskHealthInsightBuilder implements InsightBuilderInterface
         $value = (float) max(0, min(100, $input));
         $summary = $context['summary'] ?? [];
 
+        $type = $this->determineInsightType($value, $summary);
         return [
-            'type' => $this->determineInsightType($value, $summary),
-            'title' => $this->generateTitle($value),
+            'type' => $type,
+            'title' => $this->generateTitle($type, $value, $summary),
             'message' => $this->generateMessage($value, $summary),
             'data' => ['value' => $value]
         ];
@@ -52,8 +53,21 @@ final class TaskHealthInsightBuilder implements InsightBuilderInterface
         };
     }
 
-    private function generateTitle(float $value): string
+    private function generateTitle(string $type, float $value, array $summary): string
     {
+        $overdueRate = (float) ($summary['overdue_rate'] ?? 0.0);
+        $abandonmentRate = (float) ($summary['abandonment_rate'] ?? 0.0);
+
+        if ($type === InsightType::CRITICAL->value) {
+            if ($overdueRate >= self::HIGH_OVERDUE_THRESHOLD) {
+                return 'High Overdue Tasks';
+            }
+            if ($abandonmentRate >= self::HIGH_ABANDONMENT_THRESHOLD) {
+                return 'High Task Abandonment';
+            }
+            return 'Critical Task Issues';
+        }
+
         return match (true) {
             $value >= self::EXCELLENT_THRESHOLD => 'Excellent Task Health',
             $value >= self::GOOD_THRESHOLD => 'Good Task Health',
@@ -67,45 +81,29 @@ final class TaskHealthInsightBuilder implements InsightBuilderInterface
         $completionRate = (float) ($summary['completion_rate'] ?? 0.0);
         $overdueRate = (float) ($summary['overdue_rate'] ?? 0.0);
         $abandonmentRate = (float) ($summary['abandonment_rate'] ?? 0.0);
+        $active = (int) ($summary['active_count'] ?? 0);
+        $completed = (int) ($summary['completed_count'] ?? 0);
+        $inProgress = (int) ($summary['in_progress_count'] ?? max(0, $active - $completed));
+        $overdue = (int) ($summary['overdue_count'] ?? 0);
+        $abandoned = (int) ($summary['abandoned_count'] ?? 0);
 
-        if ($value >= self::EXCELLENT_THRESHOLD) {
-            return sprintf('Task health: %.1f%% - Excellent task management with %d%% completion rate', 
-                $value, (int) $completionRate);
-        }
+        // Build a consistent details line every time
+        $details = sprintf(
+            'Task health: %.1f%%. Completion: %d%% (%d/%d). Overdue: %d%% of in-progress (%d of %d). Abandoned: %d%% (%d of %d total).',
+            $value, (int) $completionRate, $completed, $active, (int) $overdueRate, $overdue, $inProgress, (int) $abandonmentRate, $abandoned, ($active + $abandoned)
+        );
 
-        if ($value >= self::GOOD_THRESHOLD) {
-            return sprintf('Task health: %.1f%% - Good performance with %d%% completion rate', 
-                $value, (int) $completionRate);
-        }
-
-        // Identify and highlight the main issue
-        $primaryIssue = $this->identifyPrimaryIssue($overdueRate, $abandonmentRate, $completionRate);
-        
-        return match ($primaryIssue) {
-            'overdue' => sprintf('Task health: %.1f%% - %d%% of tasks are overdue, affecting productivity', 
-                $value, (int) $overdueRate),
-            'abandonment' => sprintf('Task health: %.1f%% - %d%% task abandonment rate indicates scope issues', 
-                $value, (int) $abandonmentRate),
-            'completion' => sprintf('Task health: %.1f%% - Only %d%% completion rate, review execution processes', 
-                $value, (int) $completionRate),
-            default => sprintf('Task health: %.1f%% - Multiple issues affecting task execution', $value),
-        };
-    }
-
-    private function identifyPrimaryIssue(float $overdueRate, float $abandonmentRate, float $completionRate): string
-    {
+        // Optionally prepend a brief issue highlight when thresholds are crossed
         if ($overdueRate >= self::HIGH_OVERDUE_THRESHOLD) {
-            return 'overdue';
+            return sprintf('High overdue. %s', $details);
         }
-        
         if ($abandonmentRate >= self::HIGH_ABANDONMENT_THRESHOLD) {
-            return 'abandonment';
+            return sprintf('High abandonment. %s', $details);
         }
-        
-        if ($completionRate < 50) {
-            return 'completion';
+        if ($completionRate < 45) {
+            return sprintf('Low completion. %s', $details);
         }
-        
-        return 'mixed';
+
+        return $details;
     }
 }

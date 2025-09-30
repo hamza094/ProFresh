@@ -16,17 +16,22 @@ class TaskHealthMetricAction
             return 0.0;
         }
 
-        $overduePenaltyMultiplier = config('project-metrics.health.task_health.overdue_penalty_multiplier', 40);
-        $abandonmentPenaltyMultiplier = config('project-metrics.health.task_health.abandonment_penalty_multiplier', 30);
-
         $completionRate = $this->computeCompletionRate($activeTasks, $completedCount);
+        $overdueRate      = $this->computeOverdueRate($activeTasks, $completedCount, $overdueCount);
+        $abandonmentRate  = $this->computeAbandonmentRate($totalTasks, $abandonedCount);
 
-        $overduePenalty = $this->computeOverduePenalty($activeTasks, $completedCount, $overdueCount, $overduePenaltyMultiplier);
+        $weights = [
+        'completion'   => 0.5,
+        'overdue'      => 0.3,
+        'abandonment'  => 0.2,
+    ];
 
-        $abandonmentPenalty = $this->computeAbandonmentPenalty($totalTasks, $abandonedCount, $abandonmentPenaltyMultiplier);
 
-        $taskHealth = $completionRate - $overduePenalty - $abandonmentPenalty;
-
+    $taskHealth =
+        ($completionRate * $weights['completion']) +
+        ((100 - $overdueRate) * $weights['overdue']) +
+        ((100 - $abandonmentRate) * $weights['abandonment']);
+ 
         return max(0, min(100, round($taskHealth, 1)));
     }
 
@@ -82,24 +87,6 @@ class TaskHealthMetricAction
         return ($abandonedCount / $totalTasks) * 100;
     }
 
-    /**
-     * Compute overdue penalty using non-completed active tasks as the denominator.
-     * Caps the overdue ratio at 1.0 to avoid excessive penalties.
-     */
-    private function computeOverduePenalty(int $activeTasks, int $completedCount, int $overdueCount, float $multiplier): float
-    {
-        $overdueRate = $this->computeOverdueRate($activeTasks, $completedCount, $overdueCount);
-        return ($overdueRate / 100) * $multiplier;
-    }
-
-    /**
-     * Compute abandonment penalty relative to total tasks (including abandoned)
-     */
-    private function computeAbandonmentPenalty(int $totalTasks, int $abandonedCount, float $multiplier): float
-    {
-        $abandonmentRate = $this->computeAbandonmentRate($totalTasks, $abandonedCount);
-        return ($abandonmentRate / 100) * $multiplier;
-    }
 
     /**
      * Public summary helper that returns task rates and counts.
@@ -108,13 +95,18 @@ class TaskHealthMetricAction
     public function summary(Project $project): array
     {
         [$total, $active, $completed, $overdue, $abandoned] = $this->getCountsFromProject($project);
+        $inProgress = max(0, $active - $completed);
 
         return [
             'completion_rate' => round($this->computeCompletionRate($active, $completed), 1),
             'overdue_rate' => round($this->computeOverdueRate($active, $completed, $overdue), 1),
             'abandonment_rate' => round($this->computeAbandonmentRate($total, $abandoned), 1),
+            'total_count' => $total,
             'active_count' => $active,
             'completed_count' => $completed,
+            'in_progress_count' => $inProgress,
+            'overdue_count' => $overdue,
+            'abandoned_count' => $abandoned,
         ];
     }
 }

@@ -12,22 +12,7 @@ use Carbon\CarbonInterface;
 
 class ProjectInsightsRepository
 {
-    // Centralized config constants with defaults
-    private const DEFAULT_RECENT_ACTIVITY_DAYS = 7;
-    private const DEFAULT_COLLABORATION_ACTIVITY_DAYS = 30;
-    private const DEFAULT_MEETING_LOOKBACK_DAYS = 14;
-    private const DEFAULT_CONVERSATION_LOOKBACK_DAYS = 7;
-    private const DEFAULT_RISK_ASSESSMENT_HOURS = 48;
-    private const DEFAULT_TASK_INACTIVITY_DAYS = 5;
-
-    // Section to count mappings - centralized configuration
-    private const SECTION_COUNT_MAPPINGS = [
-        'health' => ['tasks', 'communication', 'collaboration', 'activity'],
-        'task-health' => ['tasks'],
-        'collaboration' => ['collaboration'],
-        'risk' => ['risk'],
-        'stage' => [],
-    ];
+    // No class constants; defaults live in config/insights.php
 
     /**
      * @param ProjectHealthMetricAction $projectHealthAction
@@ -48,10 +33,7 @@ class ProjectInsightsRepository
         // Load all required counts in a single optimized query
         $this->loadAllRequiredCounts($project, $sections);
         
-        // Short form: map an ordered set of section => action closures to
-        // values (or null when that section isn't requested). This keeps the
-        // positional argument order required by ProjectMetricsDto while being
-        // more concise.
+
         $actions = [
             'health' => fn() => $this->projectHealthAction->execute($project),
             'task-health' => fn() => $this->taskHealthAction->execute($project),
@@ -86,7 +68,10 @@ class ProjectInsightsRepository
         // Compute additional aggregates that cannot be expressed via loadCount,
         // e.g. COUNT(DISTINCT user_id) for recent participants
         if ($this->shouldInclude('collaboration', $sections) || $this->shouldInclude('health', $sections)) {
-            $activityDays = $this->getConfigValue('time_periods.collaboration_activity_days', self::DEFAULT_COLLABORATION_ACTIVITY_DAYS);
+            $activityDays = $this->getConfigValue(
+                'time_periods.collaboration_activity_days',
+                (int) config('insights.time_periods.collaboration_activity_days', 30)
+            );
 
             $recentParticipants = $project->activities()
                 ->where('created_at', '>=', (clone $now)->subDays($activityDays))
@@ -106,10 +91,11 @@ class ProjectInsightsRepository
      */
     private function buildCountsMap(array $sections, CarbonInterface $now): array
     {
+        $sectionMappings = (array) config('insights.section_count_mappings', []);
         $requiredCountTypes = collect($sections)
-            ->when(in_array('all', $sections), fn($c) => $c->merge(array_keys(self::SECTION_COUNT_MAPPINGS)))
+            ->when(in_array('all', $sections), fn($c) => $c->merge(array_keys($sectionMappings)))
             ->reject(fn($s) => $s === 'all')
-            ->flatMap(fn($section) => self::SECTION_COUNT_MAPPINGS[$section] ?? [])
+            ->flatMap(fn($section) => $sectionMappings[$section] ?? [])
             ->unique()
             ->all();
 
@@ -137,12 +123,12 @@ class ProjectInsightsRepository
     private function getCountQueriesByType(string $type, CarbonInterface $now): array
     {
         // Precompute config values once per type for clarity and to avoid repeated lookups
-        $conversationDays = $this->getConfigValue('time_periods.conversation_lookback_days', self::DEFAULT_CONVERSATION_LOOKBACK_DAYS);
-        $meetingDays = $this->getConfigValue('time_periods.meeting_lookback_days', self::DEFAULT_MEETING_LOOKBACK_DAYS);
-        $collabActivityDays = $this->getConfigValue('time_periods.collaboration_activity_days', self::DEFAULT_COLLABORATION_ACTIVITY_DAYS);
-        $recentActivityDays = $this->getConfigValue('time_periods.recent_activity_days', self::DEFAULT_RECENT_ACTIVITY_DAYS);
-        $riskHours = $this->getConfigValue('time_periods.risk_assessment_hours', self::DEFAULT_RISK_ASSESSMENT_HOURS);
-        $inactivityDays = $this->getConfigValue('time_periods.task_inactivity_days', self::DEFAULT_TASK_INACTIVITY_DAYS);
+        $conversationDays = $this->getConfigValue('time_periods.conversation_lookback_days', (int) config('insights.time_periods.conversation_lookback_days', 14));
+        $meetingDays = $this->getConfigValue('time_periods.meeting_lookback_days', (int) config('insights.time_periods.meeting_lookback_days', 14));
+        $collabActivityDays = $this->getConfigValue('time_periods.collaboration_activity_days', (int) config('insights.time_periods.collaboration_activity_days', 30));
+        $recentActivityDays = $this->getConfigValue('time_periods.recent_activity_days', (int) config('insights.time_periods.recent_activity_days', 30));
+        $riskHours = $this->getConfigValue('time_periods.risk_assessment_hours', (int) config('insights.time_periods.risk_assessment_hours', 72));
+        $inactivityDays = $this->getConfigValue('time_periods.task_inactivity_days', (int) config('insights.time_periods.task_inactivity_days', 5));
 
         return match($type) {
             'tasks' => [
@@ -155,14 +141,14 @@ class ProjectInsightsRepository
             ],
             'communication' => [
                 'conversations as recent_conversations_count' => fn($q) => $q
-                    ->where('updated_at', '>=', (clone $now)->subDays($conversationDays)),
+                    ->where('created_at', '>=', (clone $now)->subDays($conversationDays)),
             ],
             'collaboration' => [
                 // Make associative to avoid numeric key in merged map
                 'activeMembers as active_members_count' => fn($q) => $q,
                 'meetings as recent_meetings_count' => fn($q) => $q->where(
-                    'created_at', 
-                    '>=', 
+                    'start_time',
+                    '>=',
                     (clone $now)->subDays($meetingDays)
                 ),
 
@@ -192,6 +178,9 @@ class ProjectInsightsRepository
      */
     private function getConfigValue(string $key, mixed $default): mixed
     {
+        // Prefer insights.php; fall back to project-metrics.php to preserve BC
+        $insights = config("insights.{$key}");
+        if ($insights !== null) return $insights;
         return config("project-metrics.{$key}", $default);
     }
 

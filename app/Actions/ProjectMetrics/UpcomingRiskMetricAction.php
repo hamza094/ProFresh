@@ -6,9 +6,6 @@ use App\Models\Project;
 
 class UpcomingRiskMetricAction
 {
-    private const DEFAULT_RISK_HOURS = 48;
-    private const DEFAULT_INACTIVITY_DAYS = 5;
-
     public function execute(Project $project): array
     {
         // Use pre-loaded counts from repository for consistency and performance

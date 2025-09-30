@@ -140,6 +140,27 @@ class ProjectInsightsApiTest extends TestCase
     }
 
     /** @test */
+    public function normalizes_sections_array_and_filters_duplicates(): void
+    {
+        $this->seedRealisticData($this->project, $this->user);
+        Sanctum::actingAs($this->user);
+
+        // sections with whitespace, duplicates, empty strings
+        $response = $this->getJson(
+            "/api/v1/projects/{$this->project->slug}/insights?sections[]=%20health%20&sections[]=&sections[]=task-health&sections[]=health"
+        );
+
+        $response->assertOk();
+        $data = $response->json('data');
+        // Expect normalized unique order as first-seen
+        $this->assertEquals(['health', 'task-health'], $data['sections_requested']);
+        $this->assertIsArray($data['insights']);
+        $this->assertNotEmpty($data['insights']);
+        // Ensure only requested sections are included
+        $this->assertCount(2, $data['insights']);
+    }
+
+    /** @test */
     public function requires_authentication(): void
     {
         // No actingAs here

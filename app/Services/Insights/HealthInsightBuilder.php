@@ -7,9 +7,9 @@ use App\Enums\InsightType;
 final class HealthInsightBuilder implements InsightBuilderInterface
 {
     private const EXCELLENT_THRESHOLD = 85;
-    private const GOOD_THRESHOLD = 70;
-    private const WARNING_THRESHOLD = 50;
-    private const CRITICAL_THRESHOLD = 30;
+    private const GOOD_THRESHOLD = 65;
+    private const WARNING_THRESHOLD = 45;
+    private const CRITICAL_THRESHOLD = 20;
 
     public function build(mixed $input, array $context = []): array
     {
@@ -56,15 +56,15 @@ final class HealthInsightBuilder implements InsightBuilderInterface
     {
         return match (true) {
             $score >= self::EXCELLENT_THRESHOLD => sprintf(
-                'Outstanding project performance at %.1f%%! Your project is excelling across all health metrics with strong task completion, active collaboration, and consistent progress.',
+                'Outstanding project performance at %.1f%%! Strong task completion, healthy communication, active collaboration, and consistent stage progress.',
                 $score
             ),
             $score >= self::GOOD_THRESHOLD => sprintf(
-                'Good project health at %.1f%%. Your project is performing well with solid fundamentals. Continue current practices to maintain momentum.',
+                'Good project health at %.1f%%. Solid task delivery with healthy communication and collaboration. Keep the pace to maintain momentum.',
                 $score
             ),
             $score >= self::WARNING_THRESHOLD => sprintf(
-                'Moderate project health at %.1f%%. Some areas need attention. Review task completion rates, team collaboration, and activity levels for improvement opportunities.',
+                'Moderate project health at %.1f%%. Some areas need attention—review task completion, communication, collaboration, and activity levels for improvements.',
                 $score
             ),
             $score >= self::CRITICAL_THRESHOLD => sprintf(

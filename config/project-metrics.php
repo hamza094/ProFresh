@@ -2,16 +2,19 @@
 
 return [
     'health' => [
-        'weights' => [
+                'weights' => [
           'tasks' => 0.3,
-          'communication' => 0.2, 
+          'communication' => 0.15, 
           'collaboration' => 0.2,
           'stage' => 0.2,
-          'activity' => 0.1,
+                    'activity' => 0.15,
+
         ],
-        'task_health' => [
-            'overdue_penalty_multiplier' => 40,
-            'abandonment_penalty_multiplier' => 30,
+        'communication' => [
+            // Score caps and scaling for conversation-derived communication health
+            'max_score' => 100.0,   // cap the communication score
+            'scale' => 15.0,        // multiplier applied to log growth
+            'log_base' => 2.0,      // base for logarithmic growth (must be > 1)
         ],
         'collaboration' => [
             // Component weights (should sum to 100)
@@ -20,25 +23,15 @@ return [
                 'meeting_activity' => 30,  // Recent meeting activity  
                 'participation' => 30,     // Member participation rate
             ],
-            
-            // Component maximums
-            'caps' => [
-                'member_max_score' => 40,
-                'meeting_max_score' => 30,
-                'participation_max_score' => 30,
-            ],
-            
-            // Scoring parameters
-            'member_score_per_person' => 4,  // 4 points per member (max 10 members = 40)
-            'meeting_score_per_meeting' => 10, // 10 points per meeting (max 3 = 30)
-            
-            // Thresholds for insights
-            'thresholds' => [
-                'excellent' => 85,
-                'good' => 70,
-                'warning' => 50,
-                'critical' => 30,
-            ],
+            // Ideal targets for 100% normalization
+            'ideal_team_size' => 8,
+            'ideal_meetings' => 3,
+            // Log base used for softer meeting growth (like communication curve)
+            'meeting_log_base' => 2.0,
+
+            // Small team behavior
+            'small_team_threshold' => 2,   // if members < threshold, cap the score
+            'small_team_cap' => 30.0,      // maximum score for very small teams
 
         ],
     ],
@@ -50,14 +43,7 @@ return [
         'task_inactivity_days' => 5,
     ],
     
-    'engagement' => [
-        'task_multiplier' => 2,
-        'conversation_multiplier' => 1.5,
-        'meeting_multiplier' => 5,
-        'member_multiplier' => 3,
-    ],
-    
     'progress' => [
-        'activity_count_for_full' => 15, // number of recent activities that count as 100%
+        'activity_count_for_full' => 75, // number of recent activities that count as 100%
     ],
 ];

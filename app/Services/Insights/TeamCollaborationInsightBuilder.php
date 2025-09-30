@@ -32,9 +32,9 @@ final class TeamCollaborationInsightBuilder implements InsightBuilderInterface
         $participationRate = $this->calculateParticipationRate($memberCount, $participantCount);
 
         return [
-            'type' => $this->determineInsightType($score, $participationRate),
-            'title' => $this->generateTitle($score),
-            'message' => $this->generateMessage($score, $memberCount, $meetingCount, $participationRate),
+            'type' => $type = $this->determineInsightType($score, $participationRate),
+            'title' => $this->generateTitle($score, $participationRate),
+            'message' => $this->generateMessage($score, $memberCount, $meetingCount, $participationRate, $participantCount),
             'data' => ['value' => $score]
         ];
     }
@@ -55,8 +55,11 @@ final class TeamCollaborationInsightBuilder implements InsightBuilderInterface
         };
     }
 
-    private function generateTitle(float $score): string
+    private function generateTitle(float $score, float $participationRate): string
     {
+        if ($participationRate < self::LOW_PARTICIPATION_THRESHOLD) {
+            return 'Low Team Participation';
+        }
         return match (true) {
             $score >= self::EXCELLENT_THRESHOLD => 'Excellent Team Collaboration',
             $score >= self::GOOD_THRESHOLD => 'Good Team Collaboration',
@@ -65,21 +68,56 @@ final class TeamCollaborationInsightBuilder implements InsightBuilderInterface
         };
     }
 
-    private function generateMessage(float $score, int $memberCount, int $meetingCount, float $participationRate): string
+    private function generateMessage(float $score, int $memberCount, int $meetingCount, float $participationRate, int $participantCount): string
     {
-        $participationPercent = (int) ($participationRate * 100);
-        $participantCount = (int) ($memberCount * $participationRate);
+    $participationPercent = (int) ($participationRate * 100);
+    $lookbackDays = $this->getMeetingLookbackDays();
+    $idealMeetings = $this->getIdealMeetings();
+    $participationDays = $this->getParticipationLookbackDays();
+
+        $participationDaysLabel = $this->pluralize($participationDays, 'day', 'days');
+        $meetingDaysLabel = $this->pluralize($lookbackDays, 'day', 'days');
+        $meetingsWord = $this->pluralize($meetingCount, 'meeting', 'meetings');
 
         if ($participationRate < self::LOW_PARTICIPATION_THRESHOLD) {
             return sprintf(
-                'Critical: Only %d%% participation (%d of %d members). Improve team engagement.',
-                $participationPercent, $participantCount, $memberCount
+                'Critical: Only %d%% participation (%d of %d) in last %d %s. Meetings: %d %s in last %d %s (ideal %d).',
+                $participationPercent, $participantCount, $memberCount, $participationDays, $participationDaysLabel, $meetingCount, $meetingsWord, $lookbackDays, $meetingDaysLabel, $idealMeetings
             );
         }
 
         return sprintf(
-            'Collaboration score: %.1f%% with %d%% team participation (%d of %d members).',
-            $score, $participationPercent, $participantCount, $memberCount
+            'Collaboration score: %.1f%%. Participation: %d%% (%d/%d) over last %d %s. Meetings: %d %s in last %d %s (ideal %d).',
+            $score, $participationPercent, $participantCount, $memberCount, $participationDays, $participationDaysLabel, $meetingCount, $meetingsWord, $lookbackDays, $meetingDaysLabel, $idealMeetings
         );
+    }
+
+    private function getMeetingLookbackDays(): int
+    {
+        // Prefer insights config (repository uses the same precedence), fallback to project-metrics, then 14
+        $insights = config('insights.time_periods.meeting_lookback_days');
+        if ($insights !== null) {
+            return (int) $insights;
+        }
+        return (int) config('project-metrics.time_periods.meeting_lookback_days', 14);
+    }
+
+    private function getIdealMeetings(): int
+    {
+        return (int) config('project-metrics.health.collaboration.ideal_meetings', 3);
+    }
+
+    private function getParticipationLookbackDays(): int
+    {
+        $insights = config('insights.time_periods.collaboration_activity_days');
+        if ($insights !== null) {
+            return (int) $insights;
+        }
+        return (int) config('project-metrics.time_periods.collaboration_activity_days', 30);
+    }
+
+    private function pluralize(int $count, string $singular, string $plural): string
+    {
+        return $count === 1 ? $singular : $plural;
     }
 }
