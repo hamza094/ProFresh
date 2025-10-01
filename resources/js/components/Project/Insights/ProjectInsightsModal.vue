@@ -83,12 +83,10 @@
       <!-- Footer -->
       <div class="insights-modal-footer d-flex justify-content-between align-items-center p-3 border-top bg-light" v-if="!loading && !error">
         <div>
-          <small v-if="metadata" class="text-muted d-flex align-items-center gap-3">
+          <small class="text-muted d-flex align-items-center gap-3">
             <i class="far fa-clock me-2"></i>
-            Generated {{ metadata.generated_at }}
-            <span v-if="metadata.sections && metadata.sections.length">
-              • Sections: {{ Array.isArray(metadata.sections) ? metadata.sections.join(', ') : metadata.sections }}
-            </span>
+            <span v-if="generatedAt">Generated {{ generatedAt }}</span>
+            <span v-if="sectionsRequested && sectionsRequested.length"> • Sections: {{ sectionsRequested.join(', ') }}</span>
           </small>
         </div>
         <div class="d-flex gap-2">
@@ -121,8 +119,9 @@ export default {
     return {
       loading: false,
       error: null,
-      insights: [],
-      metadata: null,
+  insights: [],
+  generatedAt: null,
+  sectionsRequested: [],
       activeSections: ['all'],
       availableSections: ProjectInsightsService.getAvailableSections()
     }
@@ -146,7 +145,8 @@ export default {
     handleClosed() {
       this.error = null
       this.insights = []
-      this.metadata = null
+      this.generatedAt = null
+      this.sectionsRequested = []
       this.activeSections = ['all']
     },
     async fetchInsights(bypassCache = false) {
@@ -154,13 +154,14 @@ export default {
       this.error = null
       try {
         // Treat empty or ['all'] as null so backend defaults apply
-        const current = Array.isArray(this.activeSections) ? this.activeSections.filter(Boolean) : []
-        const useSections = (!current.length || current.indexOf('all') !== -1) ? null : current
+    const current = Array.isArray(this.activeSections) ? this.activeSections.filter(Boolean) : []
+    const useSections = (!current.length || current.indexOf('all') !== -1) ? null : current
 
-  const result = await this.loadCurrentProjectInsights(useSections, !bypassCache)
-  // Service guarantees shape or throws; assign directly
-  this.insights = result.insights
-  this.metadata = result.metadata
+    const result = await this.loadCurrentProjectInsights(useSections, !bypassCache)
+    // Assign from flattened API response
+    this.insights = Array.isArray(result.insights) ? result.insights : []
+    this.generatedAt = result.generated_at || null
+    this.sectionsRequested = Array.isArray(result.sections_requested) ? result.sections_requested : (Array.isArray(useSections) ? useSections : [])
       } catch (e) {
         this.error = (e && e.message) || 'Failed to load project insights'
       } finally {

@@ -52,20 +52,25 @@ class ProjectInsightsService {
       const query = params ? `?${params.toString()}` : ''
       const url = `${BASE_URL}/projects/${slug}/insights${query}`
 
-      const { data } = await axios.get(url)
-      const d = data && data.data
-      if (data && data.success && d) {
-        const { project_name, project_id, sections_requested, generated_at } = d
-        const insights = Array.isArray(d.insights) ? d.insights : []
+      const { data: resp } = await axios.get(url)
+
+      // Expect flattened API response shape from ProjectInsightsResource:
+      // { success, project_id, project_name, insights, generated_at, sections_requested, message }
+      if (resp && resp.success) {
+        const insights = Array.isArray(resp.insights) ? resp.insights : []
+        const project_id = resp.project_id ?? null
+        const project_name = resp.project_name ?? null
+        const sections_requested = Array.isArray(resp.sections_requested) ? resp.sections_requested : normalized
+        const generated_at = resp.generated_at ?? null
+
         return {
           success: true,
           insights,
-          metadata: {
-            project: project_name ?? null,
-            project_id: project_id ?? null,
-            sections: Array.isArray(sections_requested) ? sections_requested : normalized,
-            generated_at: generated_at ?? null
-          }
+          project_id,
+          project_name,
+          sections_requested,
+          generated_at,
+          message: resp.message ?? null
         }
       }
 

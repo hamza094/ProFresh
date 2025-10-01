@@ -3,6 +3,8 @@
 namespace App\Http\Resources\Api\V1;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use App\Http\Resources\Api\V1\InsightResource;
+
 
 class ProjectInsightsResource extends JsonResource
 {
@@ -12,6 +14,10 @@ class ProjectInsightsResource extends JsonResource
      * @param  \Illuminate\Http\Request  $request
      * @return array
      */
+    /**
+     * Project insights API response resource
+     *
+     */
     public function toArray($request): array
     {
         $project = $this['project'];
@@ -19,14 +25,33 @@ class ProjectInsightsResource extends JsonResource
         $sections = $this['sections'];
 
         return [
+            /** 
+             * @example true
+             * */
             'success' => true,
-            'data' => array_filter([
-                'project_id' => $project->id,
-                'project_name' => $project->name,
-                'insights' => $insights,
-                'generated_at' => now()->toISOString(),
-                'sections_requested' => $sections,
-            ], fn($value) => $value !== null),
+
+            /**
+             * @example 4
+             * */
+            'project_id' => $project->id,
+
+            /**
+             * @example The Universal Dimension
+             * */
+            'project_name' => $project->name,
+
+            'insights' => InsightResource::collection($insights ?? []),
+
+            /**
+               * @example "2025-09-27T20:15:32Z"
+            */
+            'generated_at' => now()->toISOString(),
+
+            /**
+             * @example ['health']
+             * */
+            'sections_requested' => $sections,
+            
             'message' => 'Project insights retrieved successfully',
         ];
     }

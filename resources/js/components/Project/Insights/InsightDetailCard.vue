@@ -18,7 +18,7 @@
         </div>
       </div>
 
-      <p class="card-text text-muted">{{ getInsightMessage(insight) }}</p>
+      <p class="card-text text-muted"><b>{{ getInsightMessage(insight) }}</b></p>
 
       <div v-if="hasMetadata(insight)" class="insight-metadata d-flex flex-wrap gap-3 mb-3">
         <div v-if="insight.data.trend" class="metadata-item d-flex align-items-center">

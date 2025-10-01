@@ -60,7 +60,7 @@ export default {
     formatValue(insight) {
       const data = insight && insight.data
       if (!data) return '-'
-      if (typeof data.value === 'number') return isPercentBased(insight) ? Math.round(data.value) : Math.round(data.value * 100) / 100
+  if (typeof data.value === 'number') return isPercentBased(insight) ? Math.round(data.value) : Math.round(data.value * 100) / 100
       if (typeof data.count === 'number') return data.count
       if (typeof data.percentage === 'number') return Math.round(data.percentage)
       return '-'

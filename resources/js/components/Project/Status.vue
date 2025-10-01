@@ -61,7 +61,7 @@
                     <span class="display-6 fw-bold text-dark">{{ formatHealthValue(healthInsight) }}</span>
                     <span class="fs-6 text-muted ms-1">%</span>
                   </div>
-                  <p v-if="healthInsight.message" class="card-text text-muted small mb-0">{{ healthInsight.message }}</p>
+                  <p v-if="healthInsight.message" class="card-text text-muted small mb-0"><b>{{ healthInsight.message }}</b></p>
                 </div>
               </div>
 
@@ -176,13 +176,11 @@ export default {
 
       try {
 
-        const result = await this.loadCurrentProjectInsights(['health'])
-        if (!result || !result.success) throw new Error('Failed to load health insight')
+  const result = await this.loadCurrentProjectInsights(['health'])
+  if (!result || !result.success) throw new Error('Failed to load health insight')
 
-        const insights = Array.isArray(result.insights) ? result.insights : []
-
-        // prefer insight by exact type match
-        this.healthInsight = insights[0]
+  const insights = Array.isArray(result.insights) ? result.insights : []
+  this.healthInsight = insights[0] || null
       } catch (e) {
         this.healthError = (e && e.message) ? e.message : 'Failed to load health insight'
       } finally {
