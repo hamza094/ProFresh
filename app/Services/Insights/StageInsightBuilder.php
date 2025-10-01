@@ -10,6 +10,11 @@ final class StageInsightBuilder implements InsightBuilderInterface
     private const SUCCESS_THRESHOLD = 70;
     private const INFO_THRESHOLD = 40;
 
+    /**
+     * @param mixed $input
+     * @param array<string,mixed> $context
+     * @return array<string,mixed>
+     */
     public function build(mixed $input, array $context = []): array
     {
         if (!is_array($input) || !isset($input['percentage'])) {
@@ -102,35 +107,4 @@ final class StageInsightBuilder implements InsightBuilderInterface
         return sprintf('In %s stage (%.1f%% complete).', $stageLabel, $percentage);
     }
 
-    private function getStageSpecificTitleFromEnum(?ProjectStage $stageEnum, string $stageLabel, int|float $percentage): string
-    {
-        if ($stageEnum !== null) {
-            return match ($stageEnum) {
-                ProjectStage::Planning => 'Project Planning Phase',
-                ProjectStage::Design => 'Design & Architecture',
-                ProjectStage::Development => 'Active Development',
-                ProjectStage::Testing => 'Quality Assurance Phase',
-                ProjectStage::Delivery => 'Near Completion',
-                default => $percentage >= self::SUCCESS_THRESHOLD ? 'Good Progress' : ($percentage >= self::INFO_THRESHOLD ? 'Moderate Progress' : 'Early Stage'),
-            };
-        }
-
-        return $percentage >= self::SUCCESS_THRESHOLD ? 'Good Progress' : ($percentage >= self::INFO_THRESHOLD ? 'Moderate Progress' : 'Early Stage');
-    }
-
-    private function getStageSpecificMessageFromEnum(?ProjectStage $stageEnum, string $stageLabel, int|float $percentage): string
-    {
-        if ($stageEnum !== null) {
-            return match ($stageEnum) {
-                ProjectStage::Planning => "Project planning underway ({$percentage}% complete) - Defining requirements and scope",
-                ProjectStage::Design => "Design phase in progress ({$percentage}% complete) - Creating system architecture",
-                ProjectStage::Development => "Development phase active ({$percentage}% complete) - Building core functionality",
-                ProjectStage::Testing => "Testing phase underway ({$percentage}% complete) - Quality assurance and validation",
-                ProjectStage::Delivery => "Delivery preparation ({$percentage}% complete) - Finalizing for launch",
-                default => "In {$stageLabel} stage ({$percentage}% complete)",
-            };
-        }
-
-        return "In {$stageLabel} stage ({$percentage}% complete)";
-    }
 }

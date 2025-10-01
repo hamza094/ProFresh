@@ -11,6 +11,11 @@ final class HealthInsightBuilder implements InsightBuilderInterface
     private const WARNING_THRESHOLD = 45;
     private const CRITICAL_THRESHOLD = 20;
 
+    /**
+     * @param mixed $input
+     * @param array<string,mixed> $context
+     * @return array<string,mixed>
+     */
     public function build(mixed $input, array $context = []): array
     {
         if ($input === null || !is_numeric($input)) {

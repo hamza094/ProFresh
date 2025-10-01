@@ -38,7 +38,9 @@ class TaskHealthMetricAction
     /**
      * Extract counts from the project object and normalize to ints.
      * Returns: [total, active, completed, overdue, abandoned]
-     */
+    *
+    * @return list<int> [total, active, completed, overdue, abandoned]
+    */
     private function getCountsFromProject(Project $project): array
     {
         $total = (int) ($project->tasks_count ?? 0);
@@ -91,6 +93,19 @@ class TaskHealthMetricAction
     /**
      * Public summary helper that returns task rates and counts.
      * This keeps calculations centralized in the action and prevents duplication.
+     */
+    /**
+     * @return array{
+     *   completion_rate: float,
+     *   overdue_rate: float,
+     *   abandonment_rate: float,
+     *   total_count: int,
+     *   active_count: int,
+     *   completed_count: int,
+     *   in_progress_count: int,
+     *   overdue_count: int,
+     *   abandoned_count: int
+     * }
      */
     public function summary(Project $project): array
     {

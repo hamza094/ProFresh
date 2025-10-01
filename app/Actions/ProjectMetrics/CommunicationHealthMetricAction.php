@@ -34,6 +34,9 @@ class CommunicationHealthMetricAction
      *
      * Returns an associative array with keys: maxScore, scale, logBase.
      */
+    /**
+     * @return array{maxScore: float, scale: float, logBase: float}
+     */
     private function resolveCommunicationConfig(): array
     {
         $maxScore = (float) config('project-metrics.health.communication.max_score');

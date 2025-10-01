@@ -73,6 +73,11 @@ class TeamCollaborationMetricAction
         return $this->clampPercent($rate);
     }
 
+    /**
+     * Return normalized weight fractions for collaboration metric components.
+     *
+     * @return array{members: float, meetings: float, participation: float}
+     */
     private function weights(): array
     {
         $cfg = (array) config('project-metrics.health.collaboration.weights', []);

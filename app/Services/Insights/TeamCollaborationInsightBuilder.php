@@ -11,6 +11,11 @@ final class TeamCollaborationInsightBuilder implements InsightBuilderInterface
     private const WARNING_THRESHOLD = 40;
     private const LOW_PARTICIPATION_THRESHOLD = 0.3; // 30% participation rate
 
+    /**
+     * @param mixed $input
+     * @param array<string,mixed> $context
+     * @return array<string,mixed>
+     */
     public function build(mixed $input, array $context = []): array
     {
         if ($input === null || !is_numeric($input)) {

@@ -6,6 +6,10 @@ use App\Models\Project;
 
 class UpcomingRiskMetricAction
 {
+    /**
+     * @param Project $project
+     * @return array{score: float, at_risk_count: int, due_soon_count: int}
+     */
     public function execute(Project $project): array
     {
         // Use pre-loaded counts from repository for consistency and performance

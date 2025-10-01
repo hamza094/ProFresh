@@ -47,6 +47,15 @@ class ProjectHealthMetricAction
         return $this->normalizeScore($weightedScore);
     }
 
+    /**
+     * @return array{
+     *   tasks: float,
+     *   communication: float,
+     *   collaboration: float,
+     *   stage: float,
+     *   activity: float,
+     * }
+     */
     private function getHealthWeights(): array
     {
         $weights = (array) config('project-metrics.health.weights', []);

@@ -5,6 +5,10 @@ namespace App\QueryBuilder;
 use Illuminate\Database\Eloquent\Builder;
 use App\Enums\TaskStatus as TaskStatusEnum;
 
+/**
+ * @extends Builder<\App\Models\Task>
+ * @method $this onlyTrashed()
+ */
 class TaskQueryBuilder extends Builder
 {
     /**

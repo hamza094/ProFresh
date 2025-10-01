@@ -7,6 +7,14 @@ use App\Enums\ProjectStage;
 
 class StageProgressMetricAction
 {
+    /**
+     * @return array{
+     *   percentage: float|int,
+     *   current_stage: string,
+     *   status: string,
+     *   stage_id: int|null
+     * }
+     */
     public function execute(Project $project): array
     {
         $stageEnum = ProjectStage::tryFrom($project->stage_id);

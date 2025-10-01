@@ -33,6 +33,12 @@ class ProjectInsightsRequest extends FormRequest
         }
     }
 
+    /**
+     * Normalize a raw sections array to a cleaned list of strings
+     *
+     * @param array<int,mixed> $sections
+     * @return array<int,string>
+     */
     private function normalizeSectionsArray(array $sections): array
     {
         return collect($sections)
@@ -43,6 +49,9 @@ class ProjectInsightsRequest extends FormRequest
             ->all();
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function rules(): array
     {
         $in = Rule::in(self::VALID_SECTIONS);
@@ -53,6 +62,9 @@ class ProjectInsightsRequest extends FormRequest
         ];
     }
 
+    /**
+     * @return array<int,string>
+     */
     public function getSections(): array
     {
         return $this->validated()['sections'] ?? self::DEFAULT_SECTIONS;

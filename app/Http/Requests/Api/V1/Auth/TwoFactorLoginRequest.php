@@ -4,6 +4,7 @@ namespace App\Http\Requests\Api\V1\Auth;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Validation\Validator;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 
@@ -47,11 +48,11 @@ class TwoFactorLoginRequest extends FormRequest
      * @param \Illuminate\Validation\Validator $validator
      * @return void
      */
-    public function withValidator($validator): void
+    public function withValidator(Validator $validator): void
     {
-        $validator->after(function ($validator) {
-             $code = $this->input('code'); 
-            $this->validateTwoFactorSession($validator,$code);
+        $validator->after(function (Validator $validator) {
+            $code = $this->input('code');
+            $this->validateTwoFactorSession($validator, $code);
         });
     }
 
@@ -61,7 +62,11 @@ class TwoFactorLoginRequest extends FormRequest
      * @param \Illuminate\Validation\Validator $validator
      * @return void
      */
-    private function validateTwoFactorSession($validator,$code): void
+    /**
+     * @param Validator $validator
+     * @param string|null $code
+     */
+    private function validateTwoFactorSession(Validator $validator, ?string $code): void
     {
         // Get user from encrypted session data
         $user = $this->getUserFromSession();
@@ -142,7 +147,7 @@ class TwoFactorLoginRequest extends FormRequest
      * @param \Illuminate\Validation\Validator $validator
      * @return void
      */
-    private function addSessionError($validator): void
+    private function addSessionError(Validator $validator): void
     {
         $validator->errors()->add('code', 'Session expired or invalid. Please login again.');
     }
@@ -153,7 +158,7 @@ class TwoFactorLoginRequest extends FormRequest
      * @param \Illuminate\Validation\Validator $validator
      * @return void
      */
-    private function addCodeError($validator): void
+    private function addCodeError(Validator $validator): void
     {
         $validator->errors()->add('code', 'Invalid code provided.');
     }

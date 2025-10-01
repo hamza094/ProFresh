@@ -28,6 +28,10 @@ class ProjectInsightsRepository
         private UpcomingRiskMetricAction $upcomingRiskAction,
         private TeamCollaborationMetricAction $collaborationHealthAction
     ) {}
+    /**
+     * @param Project $project
+     * @param array<string> $sections
+     */
     public function getProjectInsights(Project $project, array $sections = ['all']): ProjectMetricsDto
     {
         // Load all required counts in a single optimized query
@@ -52,6 +56,10 @@ class ProjectInsightsRepository
 
     /**
      * Load all required counts in a single optimized query
+     */
+    /**
+     * @param Project $project
+     * @param array<string> $sections
      */
     private function loadAllRequiredCounts(Project $project, array $sections): void
     {
@@ -91,16 +99,26 @@ class ProjectInsightsRepository
      */
     private function buildCountsMap(array $sections, CarbonInterface $now): array
     {
+        /** @var array<string, array<string>> $sectionMappings */
         $sectionMappings = (array) config('insights.section_count_mappings', []);
+
+        /** @var array<int|string,string> $requiredCountTypes */
         $requiredCountTypes = collect($sections)
-            ->when(in_array('all', $sections), fn($c) => $c->merge(array_keys($sectionMappings)))
-            ->reject(fn($s) => $s === 'all')
-            ->flatMap(fn($section) => $sectionMappings[$section] ?? [])
+            ->when(in_array('all', $sections), function (\Illuminate\Support\Collection $c) use ($sectionMappings): \Illuminate\Support\Collection {
+                return $c->merge(array_keys($sectionMappings));
+            })
+            ->reject(function (string $s): bool { return $s === 'all'; })
+            ->flatMap(function (string $section) use ($sectionMappings): array {
+                return $sectionMappings[$section] ?? [];
+            })
             ->unique()
             ->all();
 
+        /** @var array<int|string,string> $requiredCountTypes */
         $map = collect($requiredCountTypes)
-            ->mapWithKeys(fn($type) => $this->getCountQueriesByType($type, $now))
+            ->mapWithKeys(function (string $type) use ($now): array {
+                return $this->getCountQueriesByType($type, $now);
+            })
             ->all();
 
         // Dev-time guard: detect accidental duplicate keys

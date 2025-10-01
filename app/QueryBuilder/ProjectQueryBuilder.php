@@ -5,6 +5,10 @@ namespace App\QueryBuilder;
 use Illuminate\Database\Eloquent\Builder;
 use Carbon\Carbon;
 
+/**
+ * @extends Builder<\App\Models\Project>
+ * @method $this onlyTrashed()
+ */
 class ProjectQueryBuilder extends Builder
 {
     /**

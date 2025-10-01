@@ -11,8 +11,7 @@ use App\Services\Insights\TaskHealthInsightBuilder;
 use App\Services\Insights\TeamCollaborationInsightBuilder;
 use App\Services\Insights\RiskInsightBuilder;
 use App\Services\Insights\StageInsightBuilder;
-use App\Actions\ProjectMetrics\CommunicationHealthMetricAction;
-use App\Actions\ProjectMetrics\ActivityHealthMetricAction;
+// Communication and activity metric actions are not used by this service; removed to satisfy static analysis
 
 final class ProjectInsightService
 {
@@ -24,8 +23,6 @@ final class ProjectInsightService
     public function __construct(
         private ProjectInsightsRepository $repository,
         private TaskHealthMetricAction $taskHealthAction,
-        private CommunicationHealthMetricAction $communicationHealthAction,
-        private ActivityHealthMetricAction $activityHealthAction,
         private HealthInsightBuilder $healthBuilder,
         private TaskHealthInsightBuilder $taskHealthBuilder,
         private TeamCollaborationInsightBuilder $collaborationBuilder,
@@ -60,9 +57,9 @@ final class ProjectInsightService
     /**
      * Get comprehensive project insights with actionable recommendations
      *
-     * @param Project $project
-     * @param array<string> $sections
-     * @return array
+    * @param Project $project
+    * @param array<string> $sections
+    * @return array<string,mixed>
      */
     public function getInsights(Project $project, array $sections = []): array
     {
@@ -77,10 +74,10 @@ final class ProjectInsightService
     /**
      * Generate actionable insights based on project data
      *
-     * @param ProjectMetricsDto $metrics
-     * @param array<string> $sections
-     * @param Project|null $project
-     * @return array
+    * @param ProjectMetricsDto $metrics
+    * @param array<string> $sections
+    * @param Project|null $project
+    * @return array<string,mixed>
      */
     private function buildInsights(ProjectMetricsDto $metrics, array $sections, ?Project $project = null): array
     {
@@ -94,6 +91,10 @@ final class ProjectInsightService
 
     /**
      * Check if insight should be included based on sections
+     */
+    /**
+     * @param string $section
+     * @param array<string> $sections
      */
     private function shouldIncludeInsight(string $section, array $sections): bool
     {
@@ -117,6 +118,10 @@ final class ProjectInsightService
 
     /**
      * Extract collaboration details from project for insight building
+     */
+    /**
+     * @param Project|null $project
+     * @return array<string,int|float>
      */
     private function getCollaborationDetails(?Project $project): array
     {

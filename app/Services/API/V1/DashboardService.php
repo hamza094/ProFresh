@@ -2,13 +2,11 @@
 
 namespace App\Services\Api\V1;
 
-use App\Http\Resources\Api\V1\ProjectsResource;
-use Illuminate\Http\Request;
+use App\Http\Requests\Api\V1\DashboardProjectRequest;
 use App\Repository\DashBoardRepository;
 use App\Models\User;
-use Illuminate\Support\Collection;
+use Illuminate\Database\Eloquent\Collection;
 use Auth;
-use App\Models\Project;
 
 class DashboardService
 {
@@ -19,15 +17,30 @@ class DashboardService
         $this->dashboardRepository = $dashboardRepository;
     }
 
-    public function getUserProjects($request)
+    /**
+    * @param DashboardProjectRequest $request
+    * @return Collection<int, \App\Models\Project>|null
+    */
+    public function getUserProjects(DashboardProjectRequest $request): ?Collection
     {
         $user = Auth::user();
+        if (! $user instanceof User) {
+            return null;
+        }
+
         return $this->filterProjects($user, $request);
     }
 
-    public function getDashboardProjects()
+    /**
+    * @return Collection<int, \App\Models\Project>
+    */
+    public function getDashboardProjects(): Collection
     {
         $user = Auth::user();
+        if (! $user instanceof User) {
+            return collect();
+        }
+
         return $user->projects()
             ->with('stage')
             ->latest()
@@ -35,21 +48,33 @@ class DashboardService
             ->get();
     }
 
-    private function filterProjects(User $user, $request): Collection
+    /**
+    * @param User $user
+    * @param DashboardProjectRequest $request
+    * @return Collection<int,\App\Models\Project>
+    */
+    private function filterProjects(User $user, DashboardProjectRequest $request): Collection
     {
         $filters = $this->getFilters($request);
         $query = $filters['member'] 
             ? $user->members(true)
             : $user->projects();
-        return $query
+        $results = $query
             ->with(['stage', 'user'])
             ->when($filters['abandoned'], fn($query) => $query->trashed())
             ->when($filters['search'], fn($query) => $query->search($filters['search']))
             ->sortBy($filters['sort'])
             ->get();
+
+        /** @var Collection<int, \App\Models\Project> $results */
+        return $results;
     }
 
-    private function getFilters($request): array
+    /**
+     * @param DashboardProjectRequest $request
+     * @return array<string,mixed>
+     */
+    private function getFilters(DashboardProjectRequest $request): array
     {
         return [
             'search' => $request->validated('search'),

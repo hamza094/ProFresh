@@ -12,6 +12,11 @@ final class TaskHealthInsightBuilder implements InsightBuilderInterface
     private const HIGH_OVERDUE_THRESHOLD = 25;      // mirrors penalty for overdue in action
     private const HIGH_ABANDONMENT_THRESHOLD = 15;  // mirrors penalty for abandonment in action
 
+    /**
+     * @param mixed $input
+     * @param array<string,mixed> $context
+     * @return array<string,mixed>
+     */
     public function build(mixed $input, array $context = []): array
     {
         if ($input === null || !is_numeric($input)) {
@@ -35,6 +40,11 @@ final class TaskHealthInsightBuilder implements InsightBuilderInterface
         ];
     }
 
+    /**
+     * @param float $value
+     * @param array<string,mixed> $summary
+     * @return string
+     */
     private function determineInsightType(float $value, array $summary): string
     {
         // Prioritize critical issues even with decent scores
@@ -53,6 +63,12 @@ final class TaskHealthInsightBuilder implements InsightBuilderInterface
         };
     }
 
+    /**
+     * @param string $type
+     * @param float $value
+     * @param array<string,mixed> $summary
+     * @return string
+     */
     private function generateTitle(string $type, float $value, array $summary): string
     {
         $overdueRate = (float) ($summary['overdue_rate'] ?? 0.0);
@@ -76,6 +92,11 @@ final class TaskHealthInsightBuilder implements InsightBuilderInterface
         };
     }
 
+    /**
+     * @param float $value
+     * @param array<string,mixed> $summary
+     * @return string
+     */
     private function generateMessage(float $value, array $summary): string
     {
         $completionRate = (float) ($summary['completion_rate'] ?? 0.0);

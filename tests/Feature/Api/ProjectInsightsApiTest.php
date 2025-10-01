@@ -59,30 +59,23 @@ class ProjectInsightsApiTest extends TestCase
         // Assert: Basic response structure
         $response->assertOk()
             ->assertJsonStructure([
-                'data' => [
-                    'project_id',
-                    'project_name',
-                    'insights' => [
-                        '*' => ['type', 'title', 'message', 'data']
-                    ],
-                    'sections_requested',
-                    'generated_at'
+                'success',
+                'project_id',
+                'project_name',
+                'insights' => [
+                    '*' => ['type', 'title', 'message', 'data']
                 ],
-                'message'
+                'sections_requested',
+                'generated_at',
+                'message',
             ]);
 
         // Assert: Key business logic
-        $data = $response->json('data');
+    $data = $response->json();
         $this->assertEquals($this->project->id, $data['project_id']);
         $this->assertEquals('Test Project', $data['project_name']);
         $this->assertNotEmpty($data['insights']);
-        // Verify each insight has basic structure (detailed content covered by unit tests)
-        foreach ($data['insights'] as $insight) {
-            $this->assertArrayHasKey('type', $insight);
-            $this->assertArrayHasKey('title', $insight);
-            $this->assertArrayHasKey('message', $insight);
-            $this->assertArrayHasKey('data', $insight);
-        }
+        // Basic structure is asserted above via assertJsonStructure
     }
 
     /** @test */
@@ -95,21 +88,27 @@ class ProjectInsightsApiTest extends TestCase
 
         // Act: Request only health and task-health sections
         $response = $this
-            ->withoutExceptionHandling()->getJson("/api/v1/projects/{$this->project->slug}/insights?sections[]=health&sections[]=task-health");
+            ->getJson("/api/v1/projects/{$this->project->slug}/insights?sections[]=health&sections[]=task-health");
 
             // Assert
-        $response->assertOk();
+        $response->assertOk()
+            ->assertJsonStructure([
+                'success',
+                'project_id',
+                'project_name',
+                'insights' => [
+                    '*' => ['type', 'title', 'message', 'data']
+                ],
+                'sections_requested',
+                'generated_at',
+                'message',
+            ]);
 
-        $data = $response->json('data');
+    $data = $response->json();
         $this->assertEquals(['health', 'task-health'], $data['sections_requested']);
         $this->assertIsArray($data['insights']);
         $this->assertNotEmpty($data['insights']);
-        foreach ($data['insights'] as $insight) {
-            $this->assertArrayHasKey('type', $insight);
-            $this->assertArrayHasKey('title', $insight);
-            $this->assertArrayHasKey('message', $insight);
-            $this->assertArrayHasKey('data', $insight);
-        }
+        // Structure verified by assertJsonStructure
     }
 
     /** @test */
@@ -125,18 +124,25 @@ class ProjectInsightsApiTest extends TestCase
             ->getJson("/api/v1/projects/{$this->project->slug}/insights?sections[]=health");
 
         // Assert
-        $response->assertOk();
+        $response->assertOk()
+            ->assertJsonStructure([
+                'success',
+                'project_id',
+                'project_name',
+                'insights' => [
+                    '*' => ['type', 'title', 'message', 'data']
+                ],
+                'sections_requested',
+                'generated_at',
+                'message',
+            ]);
         
-        $data = $response->json('data');
+    $data = $response->json();
         $this->assertEquals(['health'], $data['sections_requested']);
 
         $insights = $data['insights'];
         $this->assertCount(1, $insights);
-        // Basic structure only
-        $this->assertArrayHasKey('type', $insights[0]);
-        $this->assertArrayHasKey('title', $insights[0]);
-        $this->assertArrayHasKey('message', $insights[0]);
-        $this->assertArrayHasKey('data', $insights[0]);
+    // Basic structure verified by assertJsonStructure
     }
 
     /** @test */
@@ -150,8 +156,19 @@ class ProjectInsightsApiTest extends TestCase
             "/api/v1/projects/{$this->project->slug}/insights?sections[]=%20health%20&sections[]=&sections[]=task-health&sections[]=health"
         );
 
-        $response->assertOk();
-        $data = $response->json('data');
+        $response->assertOk()
+            ->assertJsonStructure([
+                'success',
+                'project_id',
+                'project_name',
+                'insights' => [
+                    '*' => ['type', 'title', 'message', 'data']
+                ],
+                'sections_requested',
+                'generated_at',
+                'message',
+            ]);
+    $data = $response->json();
         // Expect normalized unique order as first-seen
         $this->assertEquals(['health', 'task-health'], $data['sections_requested']);
         $this->assertIsArray($data['insights']);
@@ -197,9 +214,20 @@ class ProjectInsightsApiTest extends TestCase
             ->getJson("/api/v1/projects/{$emptyProject->slug}/insights");
 
         // Assert: Should still return valid structure
-        $response->assertOk();
+        $response->assertOk()
+            ->assertJsonStructure([
+                'success',
+                'project_id',
+                'project_name',
+                'insights' => [
+                    '*' => ['type', 'title', 'message', 'data']
+                ],
+                'sections_requested',
+                'generated_at',
+                'message',
+            ]);
         
-        $data = $response->json('data');
+    $data = $response->json();
         $this->assertEquals($emptyProject->id, $data['project_id']);
         $this->assertIsArray($data['insights']);
         

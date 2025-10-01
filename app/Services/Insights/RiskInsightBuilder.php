@@ -9,6 +9,11 @@ final class RiskInsightBuilder implements InsightBuilderInterface
     private const HIGH_RISK_THRESHOLD = 70;
     private const MODERATE_RISK_THRESHOLD = 40;
 
+    /**
+     * @param mixed $input
+     * @param array<string,mixed> $context
+     * @return array<string,mixed>
+     */
     public function build(mixed $input, array $context = []): array
     {
         if (!is_array($input) || !isset($input['score'])) {
