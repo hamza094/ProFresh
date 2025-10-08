@@ -49,7 +49,7 @@ class ProjectsResource extends JsonResource
        * 
        * @example cold
       */
-        'status'=>$this->status,
+      'health_status' => $this->health_status,
 
       /**
        * Details of the current stage of the project.

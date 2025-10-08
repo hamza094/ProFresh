@@ -31,8 +31,8 @@
                             <span class="info-value">{{ project.stage.name }}</span>
                         </div>
                         <div class="info-item">
-                            <span class="info-label">Status:</span>
-                            <span class="info-value">{{project.status}}</span>
+                            <span class="info-label">Health Status:</span>
+                            <span class="info-value">{{project.health_status}}</span>
                         </div>
                         <div class="info-item">
                             <span class="info-label">Created:</span>

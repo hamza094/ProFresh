@@ -28,6 +28,7 @@ class ProjectFactory extends Factory
         'user_id' => User::factory(),
         'stage_id' => Stage::factory(),
         'name' => $this->faker->catchPhrase,
+        'slug' => $this->faker->slug,
         'about' => $this->faker->text($maxNbChars = 250),
         'stage_updated_at' => Carbon::now(),
         ];

@@ -7,11 +7,15 @@ use App\Http\Requests\Api\V1\ProjectInsightsRequest;
 use App\Services\Api\V1\ProjectInsightService;
 use App\Models\Project;
 use App\Http\Resources\Api\V1\ProjectInsightsResource;
+use Illuminate\Support\Facades\RateLimiter;
+use App\Jobs\RecalculateProjectHealth;
+use App\Actions\ProjectMetrics\ProjectHealthRecalculationAction;
 
 class ProjectInsightsController extends Controller
 {
     public function __construct(
-        private ProjectInsightService $insightService
+    private ProjectInsightService $insightService,
+    private ProjectHealthRecalculationAction $healthRecalculationAction
     ) {}
 
     /**
@@ -29,6 +33,8 @@ class ProjectInsightsController extends Controller
         $sections = $request->getSections();
 
         $insights = $this->insightService->getInsights($project, $sections);
+
+        $this->healthRecalculationAction->handle($project, $sections);
 
         return new ProjectInsightsResource([
             'project' => $project,

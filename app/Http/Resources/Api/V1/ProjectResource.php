@@ -52,12 +52,6 @@ class ProjectResource extends JsonResource
           'notes' => $this->notes,
 
         /**
-         * The total score associated with the project.
-         * @example 5
-        */
-          'score' => 0,
-
-        /**
          * Date when the project was created, displayed in a human-readable format.
          * @example 4 June 2024
         */
@@ -108,8 +102,24 @@ class ProjectResource extends JsonResource
          * @example [data]
         */
         'user' => $this->when($showRoute && $this->relationLoaded('user'), fn () => $this->user->only(['uuid', 'name', 'avatar_path', 'username', 'email'])),
+        
+      /**
+       * Project status calculated on the based of score
+       * 
+       * @example cold
+      */
+      'health_status' => $this->health_status,
 
+      /**
+       * @example 72.5
+      */
+      'health_score' => $this->health_score,
 
+      /**
+        * Timestamp when the health score was last calculated
+        * @example 2024-10-01 15:30:00
+      */
+      'health_score_calculated_at' => $this->health_score_calculated_at?->toDateTimeString(),
 
         /**
          * Current stage information for the project.

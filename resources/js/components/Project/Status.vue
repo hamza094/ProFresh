@@ -5,7 +5,6 @@
     </div>
 
     <div class="score-dropdown" ref="dropdown" :id="'score-dropdown-' + _uid">
-      <!-- trigger -->
       <span
         role="button"
         tabindex="0"
@@ -17,22 +16,19 @@
         @keydown.enter.prevent="isPop = !isPop"
         @keydown.space.prevent="isPop = !isPop"
       >
-        {{ score }}
+  {{ displayScore }}
       </span>
 
-      <!-- Enhanced menu with insights -->
       <div class="score-dropdown_item" v-show="isPop">
         <div class="score">
-          <!-- Project Info Header -->
           <div class="score-content">
             <p class="score-content_para">
               <i class="far fa-clock"></i>
-              The project started {{ start }}. Currently in its
-              <b v-text="stagename()"></b> stage
+              The project started {{ project && project.start ? project.start : 'N/A' }}. Currently in its
+              <b v-text="project.stage.name"></b> stage
             </p>
           </div>
 
-          <!-- Inline Project Health Insight -->
           <div class="insights-section">
             <div class="insights-header d-flex justify-content-between align-items-center mb-2 pb-2 border-bottom-0">
               <h5 class="mb-0 d-flex align-items-center">
@@ -44,7 +40,7 @@
             <div class="mt-2">
               <div v-if="healthLoading" class="d-flex align-items-center text-muted small py-1">
                 <div class="spinner-border spinner-border-sm text-primary me-2" role="status" aria-label="Loading"></div>
-                <span>Loading health…</span>
+                <span>Loading health...</span>
               </div>
               <div v-else-if="healthError" class="text-danger small">{{ healthError }}</div>
 
@@ -77,7 +73,6 @@
       </div>
     </div>
 
-    <!-- Project Insights Modal -->
     <ProjectInsightsModal :project="project" />
   </div>
 </template>
@@ -90,122 +85,86 @@ export default {
   name: 'ProjectStatus',
   components: { ProjectInsightsModal },
   mixins: [ProjectInsightsMixin],
-
   props: {
-    projectName: { type: String, default: '' },
-    start: { type: String, default: '' },
-    stage: { type: [Object, String, Number], default: null },
-    completed: { type: Boolean, default: false },
-    status: { type: String, default: '' },
-    project: { type: Object, default: null }
+    project: { type: Object, default: null },
   },
-
   data() {
     return {
       isPop: false,
       clickOutsideHandler: null,
-      // Inline project health preview state
       healthLoading: false,
       healthError: null,
       healthInsight: null
     }
   },
-
+  computed: {
+    projectInitial() {
+      return this.project && this.project.name ? this.project.name.substring(0,1).toUpperCase() : ''
+    },
+    displayScore() {
+      if (!this.project || this.project.score == null) return 'N/A'
+      const n = Number(this.project.score)
+      return Number.isFinite(n) ? Math.round(n) : 'N/A'
+    },
+    status() {
+      return this.project && this.project.status ? this.project.status : 'cold'
+    }
+  },
   watch: {
-    isPop: {
-      handler(isOpen) {
-        if (isOpen) {
-          this.addClickOutsideListener()
-          // Fetch health insight when dropdown opens
-          if (this.project) {
-            this.fetchHealth()
-          }
-        } else {
-          this.removeClickOutsideListener()
-        }
+    isPop(open) {
+      if (open) {
+        this.addClickOutsideListener()
+        if (this.project) this.fetchHealth()
+      } else {
+        this.removeClickOutsideListener()
       }
     }
   },
-
   beforeDestroy() {
     this.removeClickOutsideListener()
   },
-
   methods: {
-    stagename() {
-      return this.project && this.project.stage ? this.project.stage.name : 'Unknown'
-    },
-
+    toggle() { this.isPop = !this.isPop },
     addClickOutsideListener() {
       if (this.clickOutsideHandler) return
-
       this.$nextTick(() => {
-        this.clickOutsideHandler = (event) => {
-          if (this.$refs.dropdown && !this.$refs.dropdown.contains(event.target)) {
-            this.isPop = false
-          }
+        this.clickOutsideHandler = (e) => {
+          if (this.$refs.dropdown && !this.$refs.dropdown.contains(e.target)) this.isPop = false
         }
-
         document.addEventListener('click', this.clickOutsideHandler)
       })
     },
-
     removeClickOutsideListener() {
       if (!this.clickOutsideHandler) return
-
       document.removeEventListener('click', this.clickOutsideHandler)
       this.clickOutsideHandler = null
     },
-
-    openInsightsModal(event) {
-      if (event && event.stopPropagation) event.stopPropagation()
-
-      if (!this.project) {
-        console.warn('No project available for insights modal')
-        return
-      }
-
+    openInsightsModal() {
+      if (!this.project) return
       this.isPop = false
       this.$modal.show('project-insights-modal', { project: this.project })
     },
-
     async fetchHealth() {
       this.healthLoading = true
       this.healthError = null
       this.healthInsight = null
-
       try {
-
-  const result = await this.loadCurrentProjectInsights(['health'])
-  if (!result || !result.success) throw new Error('Failed to load health insight')
-
-  const insights = Array.isArray(result.insights) ? result.insights : []
-  this.healthInsight = insights[0] || null
+        const result = await this.loadCurrentProjectInsights(['health'])
+        if (!result || !result.success) throw new Error('Failed to load health insight')
+        const arr = Array.isArray(result.insights) ? result.insights : []
+        this.healthInsight = arr[0] || null
       } catch (e) {
         this.healthError = (e && e.message) ? e.message : 'Failed to load health insight'
       } finally {
         this.healthLoading = false
       }
     },
-
     formatHealthValue(insight) {
       if (!insight || !insight.data) return 'N/A'
       const { value, percentage } = insight.data
       if (typeof percentage === 'number') return Math.round(percentage)
       if (typeof value === 'number') return Math.round(value)
       return 'N/A'
-    }
-  },
-
-  computed: {
-    projectInitial() {
-      return (this.projectName || '').substring(0, 1).toUpperCase()
-    }
-    ,
-    score() {
-      // safe fallback if project doesn't provide a score
-      if (this.project && (this.project.score != null)) return this.project.score
-      return ''
     }
   }
 }

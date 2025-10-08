@@ -27,8 +27,9 @@ class ProjectResource extends JsonResource
         'owner'=>$this->whenLoaded('user'),
         'tasks_count'=>$this->whenCounted('tasks'),
         'members_count'=>$this->whenCounted('activeMembers'),
-        'score'=>$this->score(),
-        'status'=>$this->status,
+        'score'=>$this->health_score,
+        'status'=>$this->health_status,
+        'health_score_calculated_at'=>$this->health_score_calculated_at?->toDateTimeString(),
         'links'=>[
           'self'=>"/api/v1/".$this->slug,
         ],

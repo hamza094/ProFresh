@@ -14,7 +14,9 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Support\Facades\Redis;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use App\Enums\ScoreValue;
+use App\Enums\ProjectHealthStatus;
 use Illuminate\Support\Collection;
 use Carbon\Carbon;
 use Auth;
@@ -29,7 +31,19 @@ class Project extends Model
 
     protected $guarded = [];
 
+    /**
+     * Date/time attributes on the model.
+     *
+     * @var array<int,string>
+     */
     protected $dates = ['created_at'];
+
+    /**
+     * Accessors to append to model's array/JSON form.
+     *
+     * @var array<int,string>
+     */
+    protected $appends = ['health_status'];
 
     /**
      * Project model cast properties.
@@ -39,6 +53,8 @@ class Project extends Model
     protected $casts = [
       'stage_updated_at' => 'datetime',
       'delivered_at' => 'datetime',
+        'health_score' => 'float',
+        'health_score_calculated_at' => 'datetime',
     ];
     
     /**
@@ -48,17 +64,12 @@ class Project extends Model
    */
     protected static $recordableEvents = ['created','updated','deleted','restored'];
     
-    /**
-    * @var string
-    */
-    public static $status = "cold";
-
 
     /**
- * Return the sluggable configuration array for this model.
- *
- * @return array
- */
+     * Return the sluggable configuration array for this model.
+     *
+     * @return array<string, array<string, string>>
+     */
     public function sluggable(): array
     {
         return [
@@ -143,7 +154,13 @@ class Project extends Model
         ]);
     }
 
-    public function addTasks($tasks)
+    /**
+     * Add multiple tasks to the project.
+     *
+     * @param  array<int,array<string,mixed>>  $tasks
+     * @return EloquentCollection<int,\App\Models\Task>
+     */
+    public function addTasks(array $tasks): EloquentCollection
     {
         //$this->timestamps = false;
 
@@ -207,9 +224,30 @@ class Project extends Model
         return $this->tasks_count == config('app.project.taskLimit');
     }
 
-    public function getStatusAttribute(): string
+    /**
+     * Derived health status label from persisted health_score.
+     */
+    public function getHealthStatusAttribute(): string
     {
-        return static::$status;
+        $score = (float) ($this->health_score ?? 0.0);
+        return match (true) {
+            $score >= 75.0 => ProjectHealthStatus::HOT->value,
+            $score >= 45.0 => ProjectHealthStatus::WARM->value,
+            default => ProjectHealthStatus::COLD->value,
+        };
+    }
+
+    /**
+     * Scope for ordering by health_score.
+     */
+    /**
+     * @param  \Illuminate\Database\Eloquent\Builder<\App\Models\Project>  $query
+     * @param  string  $direction
+     * @return \Illuminate\Database\Eloquent\Builder<\App\Models\Project>
+     */
+    public function scopeOrderByHealthScore(Builder $query, string $direction = 'desc'): Builder
+    {
+        return $query->orderBy('health_score', $direction);
     }
 
     /**
@@ -228,7 +266,12 @@ class Project extends Model
         ->get();
     }
 
-    public function limitedActivities()
+    /**
+     * Return a limited activities relation (shallow wrapper).
+     *
+     * @return HasMany<\App\Models\Activity>
+     */
+    public function limitedActivities(): HasMany
     {
         return $this->activities()->take(5);
     }
@@ -272,7 +315,15 @@ class Project extends Model
         }
     }
 
-    public function scopeCreatedIn($query, $year = null, $month = null)
+    /**
+     * Scope projects created in a given year/month.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder<\App\Models\Project>  $query
+     * @param  int|null  $year
+     * @param  int|null  $month
+     * @return \Illuminate\Database\Eloquent\Builder<\App\Models\Project>
+     */
+    public function scopeCreatedIn(Builder $query, ?int $year = null, ?int $month = null): Builder
    {
     if ($year) {
         $query->whereYear('projects.created_at', $year);

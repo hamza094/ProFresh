@@ -83,3 +83,14 @@ Broadcast::channel('meetingStatus.{id}', function ($user, $id) {
                         $user->id === $project->user_id || 
                         $project->activeMembers->contains($user->id));
 });
+
+// Authorization for project health updates. Users who can `access` the project may listen.
+Broadcast::channel('project.{id}.health', function ($user, $id) {
+    $project = Project::where('id', $id)->firstOrFail();
+
+    if ($user->can('access', $project)) {
+        return true;
+    }
+
+    return false;
+});

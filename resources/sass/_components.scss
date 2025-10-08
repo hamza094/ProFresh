@@ -372,63 +372,10 @@ padding-left: 0px !important;
         &_hot{
             background-color:$color-hot;
         }
-    }
-    &-content{
-        &_para{
-            padding: .5rem;
-          border-bottom:1px solid #E5E5EE;
-            i{
-                margin-right:.3rem;
-                color:$color-grey;
-            }
-        }
-        &_point{
-            &-para{
-                border-bottom:1px solid #E5E5EE;
-                padding-left:.5rem;
-                padding-bottom:.5rem;
-            }
-            &-cold{
-                padding-left:1.5rem;
-                &_point{
-                    border: 3px solid $color-cold;
-                    border-radius: 50%;
-                    height: 37px;
-                    width: 37px;
-                    display: flex !important;
-                    align-items: center;
-                    justify-content: center;
-                    color:$color-cold;
-                }
-                &_status{
-                    top: 2.7rem;
-                    margin-left: .2rem;
-                    position: absolute;
-                    color:$color-cold;
-                }
-            }
-            &-hot{
-                padding-left:1.5rem;
-                &_point{
-                    border: 4px solid $color-hot;
-                    border-radius: 50%;
-                    height: 37px;
-                    width: 37px;
-                    display: flex !important;
-                    align-items: center;
-                    justify-content: center;
-                    color:$color-hot;
-                }
-                &_status{
-                    top: 2.7rem;
-                    margin-left: .3rem;
-                    position: absolute;
-                    color:$color-hot;
-                }
-            }
+        &_warm{
+            background-color:$color-warm;
         }
     }
-
 }
 
 
@@ -757,6 +704,10 @@ margin-left: 1rem;
         color:$color-hot;
         border: 3px solid $color-hot;
       }
+      &_warm{
+        color:$color-warm;
+        border: 3px solid $color-warm;
+      }
     }
   }
   &_rec{
@@ -805,7 +756,11 @@ margin-left: 1rem;
     }
   }
 }
-
+.badge-warm {
+  @extend .badge;              
+  background-color: $color-warm; 
+  color: #fff;
+}
 #paper {
 	color:#FFF;
 	font-size:20px;

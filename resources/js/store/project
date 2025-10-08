@@ -40,6 +40,17 @@ const mutations = {
     noteScore(state,score){
       state.project.score = score
     },
+    updateHealth(state, { score, status, calculated_at }){
+      if (typeof score === 'number') {
+        state.project.score = score;
+      }
+      if (typeof status === 'string' && status.length) {
+        state.project.health_status = status;
+      }
+      if (calculated_at) {
+        state.project.health_score_calculated_at = calculated_at;
+      }
+    },
     updateStage(state,data){
     state.project.stage_updated_at = data.stage_updated
     state.project.stage = data.current_stage

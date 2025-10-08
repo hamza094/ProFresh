@@ -74,8 +74,9 @@ class ProjectHealthMetricAction
     private function calculateStagePercentage(Project $project): float
     {
         $stageData = $this->stageProgressAction->execute($project);
-        $percentage = $stageData['percentage'] ?? 0;
         
+        $percentage = $stageData['percentage'];
+
         return $this->normalizePercentage($percentage);
     }
 

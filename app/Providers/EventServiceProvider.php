@@ -45,6 +45,7 @@ class EventServiceProvider extends ServiceProvider
      'App\Events\ActivityLogged' => [],
      'App\Events\NewMessage' => [],
      'App\Events\MeetingStatusUpdate' => [],
+     'App\Events\ProjectHealthUpdated' => [],
 
       /*Verified::class => [
       'App\Listeners\LogVerifiedUser',

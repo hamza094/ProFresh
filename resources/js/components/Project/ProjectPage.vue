@@ -17,8 +17,9 @@
 					<div class="page-content">
 						<div class="row">
 							<div class="col-md-2">
-								<Status :projectName='project.name' :start="project.created_at" :stage="project.stage"
-								:completed="this.project.completed" :status="this.status" :score="this.project.score" :project="this.project">
+								<Status :project="{id:project.id, slug:project.slug, name:project.name,
+								 start:project.created_at, stage:project.stage, completed:project.completed,
+								 status:project.health_status, score:project.health_score}">
 							</Status>
 						</div>
 						<div class="col-md-10">
@@ -134,11 +135,19 @@
 						<div class="project-info">
 							<div class="project-info_socre">
 								<p class="project-info_score-heading">Status</p>
-								<p class="project-info_score-point" :class="'project-info_score-point_'+this.status">{{this.project.score}}</p>
+								<p class="project-info_score-point" :class="'project-info_score-point_'+project.health_status"><b>{{Math.round(this.project.health_score)}}%</b></p>
 							</div>
 							<div class="project-info_rec">
-								<span>Stage Updated</span>
-								<p v-text="project.stage_updated_at"></p>
+								<span>Staus</span>
+								<p>
+									<span :class="['badge', healthBadgeClass]">
+                    {{ project.health_status?.toUpperCase() }}
+                  </span>
+							</p>
+							</div>
+							<div class="project-info_rec">
+								<span>Score Updated</span>
+								<p v-text="project.health_score_calculated_at"></p>
 							</div>
 							<div class="project-info_rec">
 								<span>Last modified</span>
@@ -213,8 +222,7 @@ export default{
 		 projectId:'',
 		 auth:this.$store.state.currentUser.user,
 		 conversations:[],
-     chatusers:[],
-     Hot_Score: 21,
+	chatusers:[],
 		 path:'',
 		 members:'',
 		 show:false,
@@ -233,6 +241,7 @@ export default{
       this.members = this.project.members;
       this.meetings= this.project.meetings;
       this.listenForActivity();
+			this.listenForProjectHealth();
       this.archiveTask();
     })
     .catch(error => {
@@ -249,14 +258,43 @@ export default{
       return {access, owner};
    },
 
-    status(){
-      return this.project.score > this.Hot_Score ? 'hot' : 'cold'
-    },
+		status(){
+			// Use backend-provided derived health status (hot/warm/cold) to avoid duplicating logic here
+			return this.project.health_status || 'cold'
+		},
+		healthBadgeClass() {
+     const map = {
+      cold: 'badge-info',
+      warm: 'badge-warm',
+      hot: 'badge-success',
+    };
+    return map[this.project.health_status] || 'badge-secondary';
+   },
   },
 
     methods:{
     ...mapActions('project',['loadProject']),
     ...mapMutations('project',['aboutUpdate']),
+
+			// Listen for backend health score updates in real-time and update store
+			listenForProjectHealth()
+			{
+				if (!this.projectId) {
+					return;
+				}
+				$event=Echo.private(`project.${this.projectId}.health`)
+									.listen('ProjectHealthUpdated', (e) => {
+										// Prefer concise alias `score`, fallback to `health_score`
+										const newScore = e.health_score ?? null;
+										const status = e.health_status ?? null;
+										const calculatedAt = e.calculated_at ?? null;
+										this.$store.commit('project/updateHealth', {
+											score: newScore,
+											status: status,
+											calculated_at: calculatedAt,
+										});
+									});
+			},
 
 			updateName(){
 				this.$Progress.start();
@@ -383,6 +421,9 @@ export default{
 
     beforeDestroy(){
       Echo.leave('chatroom.'+this.path);
+			if (this.projectId) {
+				Echo.leave(`project.${this.projectId}.health`);
+			}
   },
 }
 </script>
