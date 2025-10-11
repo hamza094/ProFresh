@@ -41,7 +41,7 @@ class EventServiceProvider extends ServiceProvider
       PasswordUpdateEvent::class => [
         SendPasswordUpdateEmail::class,
     ],
-      'App\Events\DashboardActivity' => [],
+     'App\Events\DashboardActivity' => [],
      'App\Events\ActivityLogged' => [],
      'App\Events\NewMessage' => [],
      'App\Events\MeetingStatusUpdate' => [],
