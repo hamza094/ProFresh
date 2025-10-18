@@ -25,8 +25,8 @@ jobs:
       - name: Clear Composer Cache
         run: composer clear-cache
 
-        - name: Clear caches
-          run: php artisan config:clear && php artisan route:clear && php artisan view:clear
+      - name: Clear caches
+        run: php artisan config:clear && php artisan route:clear && php artisan view:clear
 
 
       - name: Install Dependencies (Verbose)
