@@ -241,6 +241,9 @@ return [
       'filters'=>'10',
       'items_limit' => '6',
     ],
+    'tasks'=>[
+      'limit'=>'3',
+    ],
 
    'date_formats' => [
        'exact'=>'F j, Y, g:i a',

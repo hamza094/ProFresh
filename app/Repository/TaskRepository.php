@@ -25,6 +25,8 @@ class TaskRepository
             ->where('task_user.task_id', '=', $task->id);
     })
       ->whereNull('task_user.task_id')
+          ->orderBy('name')
+          ->orderBy('users.id')
       ->take(5)
       ->get();
    }

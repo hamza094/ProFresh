@@ -9,7 +9,7 @@ use App\Models\Project;
 use App\Traits\ProjectSetup;
 use Carbon\Carbon;
 
-class ProjectTest extends TestCase
+class ProjectFeatureTest extends TestCase
 {
     use RefreshDatabase,ProjectSetup;
 
@@ -39,7 +39,7 @@ class ProjectTest extends TestCase
         ];
 
        $response=$this->postJson('api/v1/projects',$attributes);
-        
+
        $project = Project::where('slug', '=', $response->json('project.slug'))->firstOrFail();       
 
        $this->assertCount(2,$project->tasks);
@@ -55,7 +55,7 @@ class ProjectTest extends TestCase
       $response->assertJsonValidationErrors('name');
     }
 
-    /** @test */
+    /** @test */    
     public function tasks_validated_on_creating_a_new_project()
     {
        $response = $this->postJson('/api/v1/projects', [
@@ -103,7 +103,7 @@ class ProjectTest extends TestCase
         ]);
     }
 
-   /** @test */
+    /** @test */
     public function allowed_user_can_update_project()
     {
       $name="My First Project";
@@ -137,7 +137,7 @@ class ProjectTest extends TestCase
       $response->assertJsonMissingValidationErrors('project.name');
     }
 
-    /** @test */
+    /** @test */    
     public function it_does_not_update_with_invalid_fields()
     {
       $response=$this->patchJson($this->project->path(),
@@ -149,7 +149,7 @@ class ProjectTest extends TestCase
          ]);
     }
 
-     /** @test */
+    /** @test */     
     public function it_does_not_update_field_with_same_data()
     {
         $project=Project::factory()->create(['name'=>'Xepra Tech']);
@@ -164,7 +164,7 @@ class ProjectTest extends TestCase
         ]);
     }
 
-   /** @test*/
+    /** @test */
    public function project_owner_can_get_abandoned_project()
    {
      $this->assertCount(1,$this->user->projects()->get());
@@ -176,7 +176,7 @@ class ProjectTest extends TestCase
      $this->assertSoftDeleted($this->project);
    }
 
-   /** @test*/
+   
    public function project_owner_can_restore_project()
    {
      $this->project->touch('deleted_at');
@@ -190,7 +190,7 @@ class ProjectTest extends TestCase
       $this->assertEquals($this->project->deleted_at,null);
    }
 
-      /** @test */
+      
       public function project_owner_can_delete_project()
       {
         $this->getJson($this->project->path().'/delete');
@@ -198,7 +198,7 @@ class ProjectTest extends TestCase
         $this->assertModelMissing($this->project);
       }
 
-      /** @test */
+      
       public function delete_abandon_projects_after_limit_past()
       {
         $this->project->touch('deleted_at');

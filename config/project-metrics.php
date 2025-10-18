@@ -2,13 +2,12 @@
 
 return [
     'health' => [
-                'weights' => [
-          'tasks' => 0.3,
-          'communication' => 0.15, 
-          'collaboration' => 0.2,
-          'stage' => 0.2,
-                    'activity' => 0.15,
-
+        'weights' => [
+        'tasks' => 0.3,
+        'communication' => 0.15, 
+        'collaboration' => 0.2,
+        'stage' => 0.2,
+        'activity' => 0.15,
         ],
         'communication' => [
             // Score caps and scaling for conversation-derived communication health

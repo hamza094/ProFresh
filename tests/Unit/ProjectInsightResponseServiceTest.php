@@ -37,7 +37,7 @@ class ProjectInsightResponseServiceTest extends TestCase
         $this->assertSame($expectedType, $res['type']);
     }
 
-    public function healthThresholdsProvider(): array
+    public static function healthThresholdsProvider(): array
     {
         return [
             'excellent at 85' => [85.0, 'Excellent Project Health', 'success'],
@@ -73,7 +73,7 @@ class ProjectInsightResponseServiceTest extends TestCase
         }
     }
 
-    public function taskHealthCasesProvider(): array
+    public static function taskHealthCasesProvider(): array
     {
         return [
             'good (info)' => [
@@ -146,7 +146,7 @@ class ProjectInsightResponseServiceTest extends TestCase
         }
     }
 
-    public function collaborationCasesProvider(): array
+    public static function collaborationCasesProvider(): array
     {
         return [
             'ok (info)' => [
@@ -216,7 +216,7 @@ class ProjectInsightResponseServiceTest extends TestCase
         $this->assertSame($expectedType, $res['type']);
     }
 
-    public function riskCasesProvider(): array
+    public static function riskCasesProvider(): array
     {
         return [
             'no risk'  => [0, 0, 0, 'No Risk Detected', 'success'],
@@ -245,7 +245,7 @@ class ProjectInsightResponseServiceTest extends TestCase
         $this->assertSame($expectedType, $res['type']);
     }
 
-    public function stageCasesProvider(): array
+    public static function stageCasesProvider(): array
     {
         return [
             'development info' => [[

@@ -12,7 +12,6 @@ use App\Services\Api\V1\Task\TaskService;
 use App\Http\Resources\Api\V1\TaskResource;
 use App\Http\Resources\Api\V1\TasksResource;
 use App\Http\Controllers\Api\ApiController;
-use Illuminate\Support\Facades\Gate;
 use Auth;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
@@ -27,14 +26,12 @@ class TaskController extends ApiController
      * This endpoint fetches all tasks related to a specific project.
      * 
      *  - Archived tasks are returned without pagination.
-     *- Active tasks are paginated for easier navigation.
-     * 
+     * - Active tasks are paginated for easier navigation.
+     *
      * @response AnonymousResourceCollection<LengthAwarePaginator<TasksResource>>
      */
   public function index(Project $project,Request $request,TaskService $taskService): JsonResponse
   {
-    $this->authorize('access', $project);
-
     $validated = $request->validate([
       'request' => 'nullable|in:archived',
     ]);
@@ -53,8 +50,6 @@ class TaskController extends ApiController
   */ 
   public function store(Project $project,TaskRequest $request,TaskService $taskService): JsonResponse
   {
-    $this->authorize('access',$project);
-
     $task=$project->tasks()->firstOrCreate(
       $request->validated()+['user_id' => Auth::id()
      ]);
@@ -76,8 +71,6 @@ class TaskController extends ApiController
    */
     public function show(Project $project,Task $task)
     {
-      $this->authorize('access',$task);
-
       $task->load(['status','assignee']); 
 
       return new TaskResource($task);
@@ -92,8 +85,6 @@ class TaskController extends ApiController
   public function update(Project $project,Task $task,TaskUpdate $request,TaskService $taskService)
   {
     $taskService->checkValidation($request,$task);
-
-    $this->authorize('access',$task);
    
     $task->update($request->validated());
 

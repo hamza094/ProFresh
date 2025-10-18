@@ -10,15 +10,44 @@ use App\Models\User;
 use App\Traits\ProjectSetup;
 use App\Enums\TaskStatus as TaskStatusEnum;
 use Carbon\Carbon;
+use App\Models\Project;
+use Laravel\Sanctum\Sanctum;
+use Illuminate\Support\Facades\Hash;
 
 class UserTasksDataTest extends TestCase
 {
-    use RefreshDatabase, ProjectSetup { setUp as projectSetUp; }
+   public $project;
+   public $user;
+   public $status;
+
+    use RefreshDatabase;
 
     protected function setUp(): void
     {
         parent::setUp();
-        $this->projectSetUp();
+
+        $this->user = User::factory()->create([
+            'email' => 'johndoe@example.org',
+            'password' => Hash::make('testpassword'),
+        ]);
+
+   Sanctum::actingAs(
+       $this->user,
+   );
+
+   $this->status = TaskStatus::factory()->create();
+
+   $this->project = Project::factory()->for($this->user)->create();
+
+    //if ($this instanceof \Tests\Feature\TaskTest) {
+            //$this->status = TaskStatus::factory()->create();
+        //}
+
+   $middlewaresToRemove = [
+            \App\Http\Middleware\CheckSubscription::class,
+        ];
+
+   $this->withoutMiddleware($middlewaresToRemove);
 
         // Seed canonical TaskStatus rows needed by these tests
         TaskStatus::query()->firstOrCreate(

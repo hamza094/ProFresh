@@ -35,7 +35,7 @@ class TaskFeaturesController extends Controller
      * */
     public function assign(Project $project,Task $task,TaskMembersRequest $request,TaskFeatureService $service): JsonResponse
     {
-        Gate::authorize('archive-task', $task);
+        Gate::authorize('forbid-when-archived', $task);
 
        $members=$request->validated(['members']);
 
@@ -59,7 +59,7 @@ class TaskFeaturesController extends Controller
      * */
     public function unassign(Project $project,Task $task,Request $request): JsonResponse
     {       
-        Gate::authorize('archive-task', $task);
+        Gate::authorize('forbid-when-archived', $task);
 
         $request->validate([
         /**
@@ -89,7 +89,7 @@ class TaskFeaturesController extends Controller
      * Archiving a task marks it as no longer active but retains its data for reference purposes.
      * 
      * ### Authorization:
-     - Ensures the task belongs to a project
+     * - Ensures the task belongs to a project
      * - Access is restricted to:
      *   - The task assigned members
      *   - The task owner.
@@ -97,7 +97,7 @@ class TaskFeaturesController extends Controller
      * */ 
     public function archive(Project $project,Task $task,TaskFeatureService $service): JsonResponse
     {
-      Gate::authorize('archive-task', $task);
+      Gate::authorize('forbid-when-archived', $task);
 
        $service->archiveTask($task);
 
@@ -115,9 +115,9 @@ class TaskFeaturesController extends Controller
      * Unarchiving a task marks it as active, allowing task actions to be performed.
      * 
      * ### Authorization:
-     - Ensures the task belongs to a project
+     * - Ensures the task belongs to a project
      * - Access is restricted to:
-     *   - - The task assigned members
+     *   - The task assigned members
      *   - The task owner.
      *   - The project owner.
      * */
@@ -144,8 +144,12 @@ class TaskFeaturesController extends Controller
      * */
     public function search(Project $project,Task $task,Request $request,TaskRepository $repository): AnonymousResourceCollection
     {
-        Gate::authorize('archive-task', $task);
- 
+        Gate::authorize('forbid-when-archived', $task);
+
+      $validated = $request->validate([
+        'search' => ['required','string','min:1']
+      ]);
+
       $searchResults = $repository->searchMembers($request,$project,$task);
 
       return TaskMemberResource::collection($searchResults);

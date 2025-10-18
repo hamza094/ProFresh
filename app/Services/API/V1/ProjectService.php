@@ -15,7 +15,7 @@ class ProjectService
     $tasksWithUser = collect($tasks['tasks'])->map(fn ($task)=>
         [...$task, 'user_id' => auth()->id()]);
 
-    $project->addTasks($tasksWithUser);   
+    $project->addTasks($tasksWithUser->toArray());   
   }
 
   public function sendNotification($project)

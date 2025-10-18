@@ -253,6 +253,7 @@ class User extends Authenticatable implements MustVerifyEmail,TwoFactorAuthentic
         'name'         => $this->name,
         'username'     => $this->username,
         'avatar_path'  => $this->avatar_path,
+        'email'        => $this->email,
     ];
     }
 

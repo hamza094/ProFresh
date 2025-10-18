@@ -34,11 +34,20 @@ class TaskFactory extends Factory
         ];
     }
 
-     public function configure()
+    // Opt-in state to attach random assignees when needed in specific tests
+    public function withRandomAssignees(int $min = 1, int $max = 3): Factory
     {
-        return $this->afterCreating(function (Task $task) {
-            $assignees = User::inRandomOrder()->limit(rand(1, 3))->get();
-            $task->assignee()->attach($assignees);
+        return $this->afterCreating(function (Task $task) use ($min, $max) {
+            $count = max(0, min($max, $min));
+            if ($min !== $max) {
+                $count = rand($min, $max);
+            }
+            if ($count > 0) {
+                $assignees = User::inRandomOrder()->limit($count)->get();
+                if ($assignees->isNotEmpty()) {
+                    $task->assignee()->attach($assignees);
+                }
+            }
         });
     }
 

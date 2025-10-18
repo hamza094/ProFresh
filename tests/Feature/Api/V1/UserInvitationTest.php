@@ -25,7 +25,7 @@ class UserInvitationTest extends TestCase
         $response->assertStatus(200)
                  ->assertJsonStructure([
                      'invitations' => [
-                         ['id', 'name', 'status', 'slug', 'invitation_sent_at', 'user', 'created_at', 'path']
+                         ['id', 'name', 'status', 'slug', 'invitation_sent_at','created_at', 'path']
                      ]
                  ]);
 

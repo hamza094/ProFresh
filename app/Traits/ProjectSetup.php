@@ -18,10 +18,10 @@ trait ProjectSetup
 
       parent::setUp();
 
-       $this->user=User::factory()->create([
-       'email'=>'johndoe@example.org',
-       'password'=>Hash::make('testpassword')
-   ]);
+        $this->user = User::factory()->create([
+            'email' => 'johndoe@example.org',
+            'password' => Hash::make('testpassword'),
+        ]);
 
    Sanctum::actingAs(
        $this->user,
@@ -40,5 +40,6 @@ trait ProjectSetup
         ];
 
    $this->withoutMiddleware($middlewaresToRemove);
+
    }
 }

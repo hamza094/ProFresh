@@ -95,7 +95,7 @@ Route::controller(TwoFactorController::class)
 
 Route::controller(ProjectDashboardController::class)->group(function(){
  Route::get('dashboard/chart-data','chartData')->name('dashboard.chart-data');
- Route::get('dashboard/insights','getInsights')->name('dashboard.insights');
+ Route::get('dashboard/insights','kpis')->name('dashboard.insights');
  Route::get('/tasksdata','tasksData')->name('tasks.data');
  Route::get('/user/activities','activities');
  Route::get('/user/dashboard-projects','dashboardProjects');
@@ -142,10 +142,11 @@ Route::apiResource('/conversations',ConversationController::class)
     ->middleware('subscription');
 });
 
-Route::apiResource('/tasks', TaskController::class)
-->except(['destroy'])
-->withTrashed()
-->middleware('subscription');
+Route::middleware(['can:access,project', 'subscription'])->group(function () {
+    Route::apiResource('/tasks', TaskController::class)
+        ->except(['destroy'])
+        ->withTrashed();
+});
 
 Route::controller(TaskFeaturesController::class)
 ->name('task.')
@@ -177,7 +178,7 @@ Route::get('unarchive','unarchive')
       ->name('unarchive')
         ->withTrashed();
 
-  Route::get('member/search')
+  Route::get('member/search', 'search')
       ->name('members.search');      
 });
 })->middleware('subscription');

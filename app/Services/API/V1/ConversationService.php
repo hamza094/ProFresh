@@ -100,12 +100,12 @@ class ConversationService
         $project)
     );
 
-    }catch(\Exception $e){
-        Log::error('Failed to send notifications', [
-                    'error' => $e->getMessage(),
-                    'users' => $mentionedUsers->pluck('id')->toArray(),
-        ]);
-    }
+  }catch(\Exception $e){
+    Log::error('Failed to send notifications', [
+          'error' => $e->getMessage(),
+          'users' => $mentionedUsers->pluck('uuid')->toArray(),
+    ]);
+  }
   }
 
   public function deleteConversation(Conversation $conversation, Project $project): void

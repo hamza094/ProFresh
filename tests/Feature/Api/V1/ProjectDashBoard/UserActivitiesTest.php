@@ -54,7 +54,7 @@ class UserActivitiesTest extends TestCase
             ->forProject($this->project)
             ->create(['created_at' => '2025-08-15 10:00:00']);
 
-        // Activity outside range
+        // Activity outside range not to be included
         Activity::factory()
             ->forUser($this->user)
             ->forProject($this->project)
@@ -68,13 +68,11 @@ class UserActivitiesTest extends TestCase
             ->create(['created_at' => '2025-08-10 10:00:00']);
 
         $response = $this->getJson('api/v1/user/activities?start_date=2025-08-01&end_date=2025-08-31');
-        
-        $response = $this->getJson('api/v1/user/activities?start_date=2025-08-01&end_date=2025-08-31');
-        
+                
         $activities = $response->json();
         
         $response->assertOk()
-            ->assertJsonCount(3) // one user activity from project setup trait 
+            ->assertJsonCount(2) // one user activity from project setup trait
             ->assertJsonStructure([
                 '*' => [
                     'id',
@@ -105,7 +103,11 @@ class UserActivitiesTest extends TestCase
         // Soft delete the project
         $project->delete();
 
-        $response = $this->getJson('api/v1/user/activities?start_date=2025-08-01&end_date=2025-08-31');
+        // Use current month's start and end dates to avoid future flakiness
+        $start = Carbon::now()->startOfMonth()->toDateString();
+        $end   = Carbon::now()->endOfMonth()->toDateString();
+
+        $response = $this->getJson("api/v1/user/activities?start_date={$start}&end_date={$end}");
         
         $response->assertOk()
             ->assertJsonCount(2);

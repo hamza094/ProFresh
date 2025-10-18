@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
+use PHPUnit\Framework\Attributes\Test;
 
 class UserTokenTest extends TestCase
 {
@@ -24,7 +25,7 @@ class UserTokenTest extends TestCase
          ]);
     }
 
-    /** @test */
+    #[Test]
     public function user_can_list_their_tokens()
     {
         $user = User::first();
@@ -40,7 +41,7 @@ class UserTokenTest extends TestCase
         $response->assertJsonFragment(['name' => 'Test Token']);
     }
 
-    /** @test */
+    #[Test]
     public function user_can_create_a_token()
     {
         $user = User::first();
@@ -61,7 +62,7 @@ class UserTokenTest extends TestCase
         ]);
     }
 
-    /** @test */
+    #[Test]
     public function user_can_delete_a_token()
     {
         $user = User::first();
@@ -81,7 +82,7 @@ class UserTokenTest extends TestCase
     }
     
 
-    /** @test */
+    #[Test]
     public function user_cannot_delete_current_session_token_via_route()
     {
         $user = User::first();

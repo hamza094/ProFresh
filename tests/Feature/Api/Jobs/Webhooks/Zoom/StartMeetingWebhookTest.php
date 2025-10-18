@@ -35,6 +35,8 @@ class StartMeetingWebhookTest extends TestCase
             'meeting_id' => 813,
             'project_id' => $this->project->id,
             'user_id' => $this->user->id,
+            // Ensure the meeting isn't already started to avoid early return
+            'status' => 'waiting',
         ]);
 
         $users = User::factory()->count(2)->create()->each(fn($user) =>

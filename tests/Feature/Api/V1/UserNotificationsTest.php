@@ -18,9 +18,9 @@ class UserNotificationsTest extends TestCase
     public function auth_user_can_fetch_there_notifications()
     {
         $user = $this->actingAsInvitedUser();
-    
-        $response=$this->getJson("/api/v1/notifications");
-    
+
+        $response=$this->withoutExceptionHandling()->getJson("/api/v1/notifications");
+
         $this->assertCount(1, $response->json('data'));
     }
 

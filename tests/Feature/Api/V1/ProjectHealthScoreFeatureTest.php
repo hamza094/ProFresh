@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\Api\V1;
 
 use App\Actions\ProjectMetrics\ProjectHealthRecalculationAction;
 use App\Events\ProjectHealthUpdated;

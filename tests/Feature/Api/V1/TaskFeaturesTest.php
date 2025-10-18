@@ -111,15 +111,18 @@ class TaskFeaturesTest extends TestCase
    { 
       $user = User::factory()->create(['name' => 'test_user']);
 
-      $task=Task::factory()->create(['project_id'=>$this->project->id]);
+  $task = Task::factory()->create(['project_id' => $this->project->id]);
+  // Ensure no pre-attached assignees exclude our user from search results
+  $task->assignee()->detach();
 
       $this->project->members()->attach($user->id, ['active' => true]);
 
-    $response = $this->getJson(route('task.members.search',[
-        'project' => $this->project->slug,
-      'task'=>$task->id
-  ]),['search' => 'test'])
-        ->assertSuccessful();
+  $response = $this->getJson(route('task.members.search',[
+    'project' => $this->project->slug,
+    'task' => $task->id,
+    'search' => 'test',
+  ]))
+    ->assertSuccessful();
 
      $this->assertCount(1, $response->json());
    }

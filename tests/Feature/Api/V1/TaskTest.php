@@ -40,7 +40,8 @@ class TaskTest extends TestCase
         ->for($this->project)
         ->create(); 
 
-      $this->getJson($this->project->path(). '/tasks')->assertOk()
+      $this->getJson($this->project->path(). '/tasks')      
+            ->assertOk()
             ->assertJsonCount(3, 'tasksData')
             ->assertJsonStructure([
                 'message',

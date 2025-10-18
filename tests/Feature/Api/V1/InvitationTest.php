@@ -41,12 +41,10 @@ class InvitationTest extends TestCase
             'email'=>$invitedUser->email
           ])
       ->assertUnprocessable();
-        /*->assertJsonValidationErrors('invitation');*/
 
         $response=$this->postJson($this->project->path().'/invitations',
             ['email'=>$this->project->user->email])
         ->assertUnprocessable();
-        /*->assertJsonValidationErrors('invitation');*/
       }
 
     /** @test */
@@ -65,7 +63,7 @@ class InvitationTest extends TestCase
     public function auth_user_accept_project_invitation_sent_to_him()
     {
       $invitedUser = User::factory()->create();
-      //$this->project->invite($invitedUser);
+      $this->project->invite($invitedUser);
 
       Sanctum::actingAs($invitedUser);
 

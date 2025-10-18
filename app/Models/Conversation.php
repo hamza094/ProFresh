@@ -42,14 +42,40 @@ class Conversation extends Model
       );
     }
 
+    public function mentionedUsers(): array
+    {
+        $message = (string) ($this->message ?? '');
+        if ($message === '') {
+            return [];
+        }
+
+        // Extract usernames preceded by a non-word boundary to avoid matching emails (name@domain)
+        // Allows letters, numbers, underscore, dot and hyphen in usernames
+        preg_match_all('/(?<![\w])@([\w.-]+)/', $message, $matches);
+        $usernames = $matches[1] ?? [];
+
+        // De-duplicate while preserving order
+        $seen = [];
+        $unique = [];
+        foreach ($usernames as $name) {
+            if (!isset($seen[$name])) {
+                $seen[$name] = true;
+                $unique[] = $name;
+            }
+        }
+
+        return $unique;
+    }
+
     public function mentionedUsersData(): Collection 
     {
         return empty($this->mentionedUsers()) 
         ? collect() 
         : User::whereIn('username', $this->mentionedUsers())
-            ->select('uuid','name', 'username')
+            ->select('id', 'uuid', 'name', 'username')
             ->get();
     }
+
 
 }
 

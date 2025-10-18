@@ -6,6 +6,7 @@ use App\Actions\NotificationAction;
 use App\Models\TaskStatus;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use App\Models\Project;
 use App\Models\Task;
 use App\Models\User;
@@ -20,28 +21,40 @@ class TaskService
 { 
 
   public function getTasksData(Project $project, bool $isArchived): array
-    {
-      $tasks = $this->getTasks($project,$isArchived);
+  {
+    $query = $this->getTasks($project, $isArchived);
 
-       $message = $tasks->isEmpty()
-            ? 'Sorry, no tasks found.'
-            : $this->getMessage($isArchived);
-
-          $tasksData =  $isArchived
-           ? TasksResource::collection($tasks)
-           : TasksResource::collection($tasks)->paginate(3);
-
-        return compact('message', 'tasksData');
+    // Early return for archived tasks (no pagination)
+    if ($isArchived) {
+      $results = $query->get();
+      return [
+        'message' => $results->isEmpty()
+          ? 'Sorry, no tasks found.'
+          : $this->getMessage(true),
+        'tasksData' => TasksResource::collection($results),
+      ];
     }
 
-    private function getTasks($project,$isArchived)
-    {
-      return $project->tasks()
+  // Active tasks (paginated) - use config value for page size
+  $perPage = (int) config('tasks.limit', 3);
+    return [
+      'message' => $query->get()->isEmpty()
+        ? 'Sorry, no tasks found.'
+        : $this->getMessage(false),
+      'tasksData' => TasksResource::collection($query->get())->paginate($perPage),
+    ];
+  }
+
+  private function getTasks(Project $project, bool $isArchived): HasMany
+  {
+    return $project->tasks()
       ->with('project')
-      ->when($isArchived, 
-        fn($query) => $query->archived(), 
-        fn($query) => $query->active());
-    }
+      ->when(
+        $isArchived,
+        fn (Builder $query) => $query->archived(),
+        fn (Builder $query) => $query->active()
+      );
+  }
 
     private function getMessage(bool $isArchived): string
     {
@@ -50,7 +63,7 @@ class TaskService
 
    public function checkValidation($request,$task): void
    {
-    Gate::authorize('archive-task', $task);
+    Gate::authorize('forbid-when-archived', $task);
  
       if (!$request->validated()) {
         throw ValidationException::withMessages([

@@ -17,6 +17,8 @@ use App\Models\User;
 use App\Models\UserInfo;
 use Tests\TestCase;
 use Carbon\Carbon;
+use PHPUnit\Framework\Attributes\Test;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class UserTest extends TestCase
 {
@@ -28,20 +30,20 @@ class UserTest extends TestCase
      * @return void
      */
 
-   /** @test */
+  #[Test]
     public function auth_user_see_all_users()
     {
       $response=$this->getJson('/api/v1/users');
 
         $response->assertStatus(200)
                  ->assertJsonFragment([
-                  'id'=>$this->user->id,
-                  'name'=>$this->user->name
+                  'name'=>$this->user->name,
+                  'email'=>$this->user->email
                ]);
       
     }
 
-     /** @test */
+  #[Test]
     public function auth_user_can_get_his_data()
     {
         $response = $this->getJson($this->user->path());
@@ -54,10 +56,8 @@ class UserTest extends TestCase
                  ]);
     }
 
-    /** 
-    * @test 
-    * @dataProvider dataProvider 
-    */
+  #[Test]
+  #[DataProvider('dataProvider')]
     public function owner_can_update_his_data($newName, $newUsername, $newEmail, $newCompany, $newMobile)
     {
         UserInfo::factory()->for($this->user)->create();
@@ -89,7 +89,7 @@ class UserTest extends TestCase
         ]);
     }
 
-    /** @test */
+  #[Test]
     public function it_can_update_user_password()
     {
       Mail::fake();
@@ -108,7 +108,7 @@ class UserTest extends TestCase
         });
     }
  
-    /** @test */
+  #[Test]
     public function password_update_mail_contains_time()
     {
       $time=Carbon::now()->toDayDateTimeString();
@@ -119,7 +119,7 @@ class UserTest extends TestCase
     }
 
 
-  /** @test */
+  #[Test]
   public function user_can_delete_his_profile()
   {
     $this->deleteJson('api/v1/users/'.$this->user->uuid);
@@ -130,7 +130,7 @@ class UserTest extends TestCase
     $this->assertSoftDeleted($this->project);
   }
 
-    /** @test */
+  #[Test]
     public function it_permanently_deletes_user_and_handles_projects_after_15_days()
     {
         Role::findOrCreate('Admin', 'sanctum');
@@ -158,7 +158,7 @@ class UserTest extends TestCase
     }
 
 
-    /** @test */
+  #[Test]
     public function test_user_profile_delete_command_runs()
     {
       $this->artisan('user:profile-delete')
@@ -166,7 +166,7 @@ class UserTest extends TestCase
         ->assertExitCode(0);
     }
 
-  public function dataProvider(): array
+  public static function dataProvider(): array
   {
     return [
     [

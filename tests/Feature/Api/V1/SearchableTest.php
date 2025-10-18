@@ -22,20 +22,6 @@ class SearchableTest extends TestCase
      *
      * @return void
      */
-
-     /** User Searchable*/
-
-    /** @test */
-    /*public function it_can_search_user_model_search_aspect()
-    {    
-      $search = new Search();
-      $search->registerModel(User::class, 'name');
-      $results = $search->perform('doe');
-
-      $this->assertCount(1, $results->aspect('users'));     
-      $this->assertNotEmpty($results->groupByType('users'));   
-    }*/
-
       
     public function it_returns_an_empty_collection_when_no_query_is_provided()
     {

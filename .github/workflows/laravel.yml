@@ -13,7 +13,7 @@ jobs:
     steps:
       - uses: shivammathur/setup-php@15c43e89cdef867065b0213be354c2841860869e
         with:
-          php-version: '8.1'
+          php-version: '8.2'
 
       - uses: actions/checkout@v2
 
@@ -34,7 +34,7 @@ jobs:
       - name: Directory Permissions
         run: chmod -R 777 storage bootstrap/cache
 
-      - name: Redis Server in GitHub Actions
+      - name: Start Redis Server in GitHub Actions
         uses: supercharge/redis-github-action@1.4.0
 
       - name: Create Database

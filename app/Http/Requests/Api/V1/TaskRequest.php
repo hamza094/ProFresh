@@ -17,14 +17,16 @@ class TaskRequest extends FormRequest
      */
     public function authorize()
     {
+        // Authorization is handled at the route level via `can:access,project`
+        // Returning true here ensures validation runs when the middleware passes.
         return true;
     }
 
     protected function prepareForValidation(): void
     {
 
-     /** @var Project $project */
-     $project = $this->route('project');
+         /** @var Project|null $project */
+         $project = $this->route('project');
        
       throw_if($project->tasksReachedItsLimit(),
       ValidationException::withMessages(
@@ -35,7 +37,8 @@ class TaskRequest extends FormRequest
 
     public function rules()
     {
-        $project=$this->project;
+    /** @var Project $project */
+    $project = $this->route('project');
 
       return [
           /**

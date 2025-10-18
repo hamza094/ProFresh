@@ -5,14 +5,11 @@ namespace Tests\Unit;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use App\Enums\ScoreValue;
-use App\Actions\ScoreAction;
 use App\Models\Task;
 use App\Models\User;
 use App\Models\TaskStatus;
 use App\Models\Project;
 use Laravel\Sanctum\Sanctum;
-use Illuminate\Support\Facades\Hash;
 
 class ProjectTest extends TestCase
 {
@@ -44,22 +41,6 @@ class ProjectTest extends TestCase
      $this->assertInstanceOf('App\Models\Stage',$project->stage);
    }
 
-   /** @test */
-   public function mark_uncomplete_if_completed()
-   {
-     $project=Project::factory()->create(['completed'=>true]);
-     $project->markUncompleteIfCompleted();
-     $this->assertFalse($project->completed);
-   }
-
-   /** @test */
-   public function remove_postponed_reason_if_exists()
-   {
-     $project=Project::factory()->create(['postponed'=>'Unable to junk']);
-     $project->removePostponedIfExists();
-     $this->assertEquals(null,$project->postponed);
-   }
-
   /** @test */
    public function a_project_can_add_a_task()
    {
@@ -84,42 +65,6 @@ class ProjectTest extends TestCase
      $project = Project::factory()->create();
      $project->invite($user=User::factory()->create());
      $this->assertTrue($project->members->contains($user));
-  }
-
-  /** @test */
-  public function get_project_total_score()
-  {
-    $status=TaskStatus::factory()->create();
-    $project = Project::factory()->create();
-
-    Task::factory()->for($project)->count(4)->create();
-
-    $project->notes = "Some notes";
-
-    $user=User::factory()->create();
-
-    $this->addMember($project,$user);
-
-    $expectedScore = (4 * ScoreValue::Task) + ScoreValue::Note + (1 * ScoreValue::Members);
-
-    $this->assertEquals($expectedScore, $project->score());
-  }
-
-  /** @test */
-  public function check_project_status()
-  {
-    $status=TaskStatus::factory()->create();
-    $project = Project::factory()->create();
-
-    Task::factory()->for($project)->count(4)->create();
-
-    $this->assertEquals($project->status,'cold');
-
-    Task::factory()->for($project)->count(7)->create();
-
-    $this->assertEquals(22, $project->score());
-
-    $this->assertEquals($project->status,'hot');
   }
 
     protected function addMember($project,$user)

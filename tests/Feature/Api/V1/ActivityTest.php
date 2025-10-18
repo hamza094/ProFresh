@@ -19,10 +19,10 @@ class ActivityTest extends TestCase
       $response=$this->getJson($this->project->path().'/activities')->assertOk();
 
       $data = $response->json()['data'];
-      
+
       $this->assertCount(2,$data);
-      $this->assertEquals($data[0]['description'],'Project created');
-      $this->assertEquals($data[1]['description'],'Task '.$task->body. 'added');
+      $this->assertEquals('New project created', $data[0]['description']);
+      $this->assertEquals('Task "'.($task->title).'" added', $data[1]['description']);
     }
 
     /** @test */
@@ -33,8 +33,8 @@ class ActivityTest extends TestCase
       $response=$this->getJson($this->project->path().'/activities?tasks=1')
         ->assertJsonCount(1,['data'])
        ->assertOk();
-       
-      $this->assertEquals($response->json()['data'][0]['description'],'Task '.$task->body. 'added');
+      
+        $this->assertEquals('Task "'.($task->title).'" added', $response->json()['data'][0]['description']);
     }
 
     /** @test */
@@ -42,9 +42,9 @@ class ActivityTest extends TestCase
     {
       $task=$this->project->addTask('test task');
 
-      $response=$this->getJson($this->project->path().'/activities?mine='.$this->project->user->id)->assertOk(); 
+  $response=$this->getJson($this->project->path().'/activities?mine='.$this->project->user->id)->assertOk(); 
 
-      $this->assertEquals($response->json()['data'][0]['description'],'Project created');
+  $this->assertEquals('New project created', $response->json()['data'][0]['description']);
     }
 
     /** @test */

@@ -33,10 +33,26 @@ class ZoomConnector extends Connector
      */
     protected function defaultOauthConfig(): OAuthConfig
     {
+        $clientId = config('services.zoom.client_id')
+            ?: env('ZOOM_CLIENT_ID')
+            ?: env('ZOOM_TEST_CLIENT_ID');
+
+        $clientSecret = config('services.zoom.client_secret')
+            ?: env('ZOOM_CLIENT_SECRET')
+            ?: env('ZOOM_TEST_CLIENT_SECRET');
+
+        // Fallback redirect for testing/local without full services config
+        $redirect = config('services.zoom.redirect')
+            ?: rtrim((string) config('app.url', 'http://localhost:8000'), '/') . '/oauth/zoom/callback';
+
+        if (empty($clientId) || empty($clientSecret)) {
+            throw new ZoomException('Zoom OAuth client credentials are not configured.');
+        }
+
         return OAuthConfig::make()
-            ->setClientId(config('services.zoom.client_id'))
-            ->setClientSecret(config('services.zoom.client_secret'))
-            ->setRedirectUri('http://localhost:8000/oauth/zoom/callback')
+            ->setClientId($clientId)
+            ->setClientSecret($clientSecret)
+            ->setRedirectUri($redirect)
             ->setAuthorizeEndpoint('https://zoom.us/oauth/authorize')
             ->setTokenEndpoint('https://zoom.us/oauth/token')
             ->setDefaultScopes(['user:read:zak',

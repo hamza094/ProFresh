@@ -23,7 +23,8 @@ class NotificationSeeder extends Seeder
         $project->tasks()->each(function ($task) use ($project) {
 
           foreach($project->members as $member){
-            $member->notify(new ProjectTask($project,$project->user->toArray()));
+            $member->notify(new ProjectTask($project->name,$project->path(),
+              $project->user->getNotifierData()));
           }
 
         });
