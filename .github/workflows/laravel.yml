@@ -20,11 +20,15 @@ jobs:
       - name: Copy .env
         run: php -r "file_exists('.env') || copy('.env.example', '.env');"
 
-      - name: Clear Composer Cache
-        run: composer clear-cache
-
       - name: Install Dependencies (Verbose)
         run: composer install --no-interaction --prefer-dist --optimize-autoloader
+
+      - name: Dump optimized autoload
+        run: composer dump-autoload -o
+
+      - name: Clear caches
+        run: php artisan config:clear && php artisan route:clear && php artisan view:clear
+
 
       - name: Generate key
         run: php artisan key:generate
