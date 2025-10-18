@@ -14,20 +14,14 @@ jobs:
       - uses: shivammathur/setup-php@15c43e89cdef867065b0213be354c2841860869e
         with:
           php-version: '8.2'
-          extensions: mbstring, intl, pdo_sqlite
-
 
       - uses: actions/checkout@v2
 
       - name: Copy .env
-        run: php -r 'file_exists(".env") || copy(".env.example", ".env")'
+        run: php -r "file_exists('.env') || copy('.env.example', '.env');"
 
       - name: Clear Composer Cache
         run: composer clear-cache
-
-      - name: Clear caches
-        run: php artisan config:clear && php artisan route:clear && php artisan view:clear
-
 
       - name: Install Dependencies (Verbose)
         run: |
