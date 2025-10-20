@@ -12,7 +12,7 @@ use App\Http\Resources\Api\V1\UsersResource;
 use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Api\ApiController;
 use App\Http\Requests\Api\V1\Auth\LoginUserRequest;
-use App\Services\API\V1\Auth\LoginUserService;
+use App\Services\Api\V1\Auth\LoginUserService;
 
 class LoginController extends ApiController
 {

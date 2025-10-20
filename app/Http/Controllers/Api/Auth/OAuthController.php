@@ -11,7 +11,7 @@ use App\Events\UserLogin;
 use App\Http\Resources\Api\V1\UsersResource;
 use Laravel\Socialite\Facades\Socialite;
 use App\Http\Controllers\Api\ApiController;
-use App\Services\API\V1\Auth\LoginUserService;
+use App\Services\Api\V1\Auth\LoginUserService;
 
 
 class OAuthController extends ApiController
