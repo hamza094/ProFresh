@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\API\V1\Auth;
+namespace App\Services\APi\V1\Auth;
 
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
