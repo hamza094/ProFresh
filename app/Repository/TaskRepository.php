@@ -1,36 +1,32 @@
 <?php
+
 namespace App\Repository;
 
-use App\Models\User;
-use App\Models\Task;
 use App\Models\Project;
+use App\Models\Task;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Benchmark;
 
 class TaskRepository
 {
-  public function searchMembers(Request $request,Project $project,Task $task): Collection
-  {
-    //Check with load test
+    public function searchMembers(Request $request, Project $project, Task $task): Collection
+    {
+        // Check with load test
 
-    $searchTerm = $request->input('search');   
+        $searchTerm = $request->input('search');
 
-      return $project->activeMembers()
-           ->select('users.id', 'name','username')
-           ->whereAny(['name','username'], 'LIKE', '%' . $searchTerm . '%')
-      //->where('users.id', '!=', auth()->id())
-      ->leftJoin('task_user', function ($join) use ($task) {
-        $join->on('users.id', '=', 'task_user.user_id')
-            ->where('task_user.task_id', '=', $task->id);
-    })
-      ->whereNull('task_user.task_id')
-          ->orderBy('name')
-          ->orderBy('users.id')
-      ->take(5)
-      ->get();
-   }
-
-  }
-
-?>
+        return $project->activeMembers()
+            ->select('users.id', 'name', 'username')
+            ->whereAny(['name', 'username'], 'LIKE', '%'.$searchTerm.'%')
+        // ->where('users.id', '!=', auth()->id())
+            ->leftJoin('task_user', function ($join) use ($task) {
+                $join->on('users.id', '=', 'task_user.user_id')
+                    ->where('task_user.task_id', '=', $task->id);
+            })
+            ->whereNull('task_user.task_id')
+            ->orderBy('name')
+            ->orderBy('users.id')
+            ->take(5)
+            ->get();
+    }
+}

@@ -2,10 +2,9 @@
 
 namespace App\Console\Commands;
 
-use Illuminate\Console\Command;
 use App\Models\Message;
 use App\Services\Api\V1\MessageService;
-use Illuminate\Support\Facades\Bus;
+use Illuminate\Console\Command;
 
 class ScheduledMessages extends Command
 {
@@ -40,13 +39,11 @@ class ScheduledMessages extends Command
      */
     public function handle(MessageService $service)
     {
-      $messages=Message::messageScheduled()->with('project','users')->get();
+        $messages = Message::messageScheduled()->with('project', 'users')->get();
 
-      foreach($messages as $message)
-      {
-        $project=$message->project;
-        $service->sendNow($project,$message);
-      }
+        foreach ($messages as $message) {
+            $project = $message->project;
+            $service->sendNow($project, $message);
+        }
     }
-
 }

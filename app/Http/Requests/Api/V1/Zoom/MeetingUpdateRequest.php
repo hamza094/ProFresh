@@ -2,9 +2,8 @@
 
 namespace App\Http\Requests\Api\V1\Zoom;
 
-use Illuminate\Foundation\Http\FormRequest;
-use App\Rules\MeetingDateTime;
 use DateTime;
+use Illuminate\Foundation\Http\FormRequest;
 
 class MeetingUpdateRequest extends FormRequest
 {
@@ -21,16 +20,16 @@ class MeetingUpdateRequest extends FormRequest
     protected function prepareForValidation()
     {
         if ($this->has('start_time')) {
-        try {
-            $this->merge([
-                'start_time' => (new DateTime($this->input('start_time')))->format('Y-m-d H:i:s')
-            ]);
-        } catch (\Exception $e) {
-            $this->merge([
-                'start_time' => null
-            ]);
+            try {
+                $this->merge([
+                    'start_time' => (new DateTime($this->input('start_time')))->format('Y-m-d H:i:s'),
+                ]);
+            } catch (\Exception $e) {
+                $this->merge([
+                    'start_time' => null,
+                ]);
+            }
         }
-    }
     }
 
     /**
@@ -41,14 +40,14 @@ class MeetingUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'meeting_id'=>'integer|required',
-            'topic'=>'string|max:200|sometimes',
-            'agenda'=>'string|sometimes|max:2000',
-            'duration'=>'integer|sometimes',
+            'meeting_id' => 'integer|required',
+            'topic' => 'string|max:200|sometimes',
+            'agenda' => 'string|sometimes|max:2000',
+            'duration' => 'integer|sometimes',
             'start_time' => 'sometimes|after:now',
-            'timezone'=>'string|timezone:all|sometimes',
-            'password'=>'string|max:10|sometimes',
-            'join_before_host'=>'boolean|sometimes',
+            'timezone' => 'string|timezone:all|sometimes',
+            'password' => 'string|max:10|sometimes',
+            'join_before_host' => 'boolean|sometimes',
         ];
     }
 }

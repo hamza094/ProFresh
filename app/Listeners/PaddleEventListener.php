@@ -2,8 +2,8 @@
 
 namespace App\Listeners;
 
-use Laravel\Paddle\Events\WebhookReceived;
 use Illuminate\Support\Facades\Log;
+use Laravel\Paddle\Events\WebhookReceived;
 
 class PaddleEventListener
 {
@@ -16,8 +16,8 @@ class PaddleEventListener
 
         // Log all received payloads
         Log::info('Paddle webhook received', $payload);
-        
-          if ($payload['alert_name'] === 'subscription_payment_succeeded') {
+
+        if ($payload['alert_name'] === 'subscription_payment_succeeded') {
             try {
                 // Your custom logic here...
                 // Log or trigger something if needed

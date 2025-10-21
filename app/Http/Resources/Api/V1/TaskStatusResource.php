@@ -19,19 +19,19 @@ class TaskStatusResource extends JsonResource
     {
         return [
             /**
-             * @example 1 
-            */ 
-            'id'=>$this->id,
+             * @example 1
+             */
+            'id' => $this->id,
 
             /**
-             * @example Not Started 
-            */ 
-            'label'=>$this->label,
+             * @example Not Started
+             */
+            'label' => $this->label,
 
             /**
              * @example #CCCCCC
-             */ 
-            'color'=>$this->color
+             */
+            'color' => $this->color,
         ];
     }
 }

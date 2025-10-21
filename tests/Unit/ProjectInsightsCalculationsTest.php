@@ -2,17 +2,17 @@
 
 namespace Tests\Unit;
 
-use Tests\TestCase;
+use App\Actions\ProjectMetrics\ActivityHealthMetricAction;
+use App\Actions\ProjectMetrics\CommunicationHealthMetricAction;
 use App\Actions\ProjectMetrics\ProjectHealthMetricAction;
+use App\Actions\ProjectMetrics\StageProgressMetricAction;
 use App\Actions\ProjectMetrics\TaskHealthMetricAction;
 use App\Actions\ProjectMetrics\TeamCollaborationMetricAction;
-use App\Actions\ProjectMetrics\StageProgressMetricAction;
-use App\Actions\ProjectMetrics\CommunicationHealthMetricAction;
-use App\Actions\ProjectMetrics\ActivityHealthMetricAction;
 use App\Actions\ProjectMetrics\UpcomingRiskMetricAction;
-use App\Models\Project;
 use App\Enums\ProjectStage;
+use App\Models\Project;
 use Mockery;
+use Tests\TestCase;
 
 class ProjectInsightsCalculationsTest extends TestCase
 {
@@ -32,8 +32,8 @@ class ProjectInsightsCalculationsTest extends TestCase
         $communicationHealth = Mockery::mock(CommunicationHealthMetricAction::class);
         $activityHealth = Mockery::mock(ActivityHealthMetricAction::class);
 
-    // Use a real Project instance for attribute assignments to avoid Mockery setAttribute errors
-    $project = new Project();
+        // Use a real Project instance for attribute assignments to avoid Mockery setAttribute errors
+        $project = new Project;
 
         // Mock config
         config(['project-metrics.health.weights' => [
@@ -51,7 +51,7 @@ class ProjectInsightsCalculationsTest extends TestCase
             'percentage' => 75,
             'current_stage' => 'Development',
             'status' => 'active',
-            'stage_id' => 3
+            'stage_id' => 3,
         ]);
 
         // Communication and Activity health are delegated; mock their results
@@ -78,18 +78,18 @@ class ProjectInsightsCalculationsTest extends TestCase
     public function calculate_task_health_weighted_by_completion_overdue_and_abandonment(): void
     {
         // Arrange
-        $project = new Project();
+        $project = new Project;
         $project->tasks_count = 10;
         $project->active_tasks_count = 10; // active denominator used by new logic
         $project->completed_tasks_count = 6;
         $project->overdue_tasks_count = 3;
 
-        $action = new TaskHealthMetricAction();
+        $action = new TaskHealthMetricAction;
 
         // Act
         $result = $action->execute($project);
 
-        // Assert 
+        // Assert
         // completionRate = 6/10 = 60
         // overdueRate = overdue / (active - completed) = 3/(10-6) = 75; contributes as (100 - 75) = 25
         // abandonmentRate = abandoned/total = 0/10 = 0; contributes as (100 - 0) = 100
@@ -101,11 +101,11 @@ class ProjectInsightsCalculationsTest extends TestCase
     public function calculate_task_health_handles_empty_project(): void
     {
         // Arrange
-        $project = new Project();
+        $project = new Project;
 
         $project->tasks_count = 0;
 
-        $action = new TaskHealthMetricAction();
+        $action = new TaskHealthMetricAction;
 
         // Act
         $result = $action->execute($project);
@@ -113,7 +113,6 @@ class ProjectInsightsCalculationsTest extends TestCase
         // Assert
         $this->assertEquals(0.0, $result);
     }
-
 
     /** @test */
     public function calculate_collaboration_health_uses_members_meetings_and_participation(): void
@@ -123,12 +122,12 @@ class ProjectInsightsCalculationsTest extends TestCase
         // - ideal_meetings = 3 with log base 2 → meetingRate = log2(1+meetings)/log2(1+3)*100
         // - participationRate = participants/members * 100
         // - weights (members/meetings/participation) = 40% / 30% / 30%
-        $project = new Project();
+        $project = new Project;
         $project->active_members_count = 4;      // member rate = 4/8 = 50%
         $project->recent_meetings_count = 2;     // meeting rate ≈ log2(3)/log2(4) ≈ 79.25%
         $project->recent_participants_count = 3; // participation = 3/4 = 75%
 
-        $action = new TeamCollaborationMetricAction();
+        $action = new TeamCollaborationMetricAction;
 
         // Act
         $result = $action->execute($project);
@@ -137,14 +136,13 @@ class ProjectInsightsCalculationsTest extends TestCase
         $this->assertEquals(66.3, $result);
     }
 
-
     /** @test */
     public function stage_progress_returns_stage_data_and_preserves_enum_stage_id(): void
     {
         // Arrange
-        $project = new Project();
+        $project = new Project;
         $project->stage_id = ProjectStage::Development->value;
-        $action = new StageProgressMetricAction();
+        $action = new StageProgressMetricAction;
 
         // Act
         $result = $action->execute($project);
@@ -160,10 +158,10 @@ class ProjectInsightsCalculationsTest extends TestCase
     /** @test */
     public function stage_progress_returns_correct_status_for_completed_and_postponed(): void
     {
-        $project = new Project();
+        $project = new Project;
         $project->stage_id = ProjectStage::Completed->value;
 
-        $action = new StageProgressMetricAction();
+        $action = new StageProgressMetricAction;
         $completedResult = $action->execute($project);
         $this->assertEquals('completed', $completedResult['status']);
 
@@ -176,11 +174,11 @@ class ProjectInsightsCalculationsTest extends TestCase
     public function upcoming_risk_returns_score_and_counts(): void
     {
         // Arrange: UpcomingRiskMetricAction now reads precomputed counts from the project
-        $project = new Project();
+        $project = new Project;
         $project->tasks_due_soon_count = 2;
         $project->tasks_at_risk_count = 1;
 
-        $action = new UpcomingRiskMetricAction();
+        $action = new UpcomingRiskMetricAction;
 
         // Act
         $result = $action->execute($project);
@@ -199,8 +197,8 @@ class ProjectInsightsCalculationsTest extends TestCase
     /** @test */
     public function communication_health_calculates_log_scaled_score_and_caps(): void
     {
-        $project = new Project();
-        $action = new CommunicationHealthMetricAction();
+        $project = new Project;
+        $action = new CommunicationHealthMetricAction;
 
         // 7 conversations with base 2 and scale 15 → log2(1+7)=3 → 3*15=45 (max_score 100)
         config([
@@ -216,8 +214,8 @@ class ProjectInsightsCalculationsTest extends TestCase
     /** @test */
     public function activity_health_uses_log_fraction_and_clamps(): void
     {
-        $project = new Project();
-        $action = new ActivityHealthMetricAction();
+        $project = new Project;
+        $action = new ActivityHealthMetricAction;
 
         config([
             'project-metrics.progress.activity_count_for_full' => 75,
@@ -235,6 +233,5 @@ class ProjectInsightsCalculationsTest extends TestCase
         // 15 activities: log2(16)/log2(76) ≈ 4/6.26 ≈ 0.64 → 64.0%
         $project->recent_activities_count = 15;
         $this->assertEquals(64.0, $action->execute($project));
-    }   
-
+    }
 }

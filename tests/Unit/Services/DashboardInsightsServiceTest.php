@@ -2,14 +2,10 @@
 
 namespace Tests\Unit\Services;
 
+use App\Repository\DashboardInsightsRepository;
+use App\Services\Api\V1\Dashboard\DashboardInsightsService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
-use App\Services\Api\V1\Dashboard\DashboardInsightsService;
-use App\Repository\DashboardInsightsRepository;
-use App\Models\User;
-use App\Models\Project;
-use App\Models\Task;
-use Illuminate\Support\Collection;
 
 class DashboardInsightsServiceTest extends TestCase
 {
@@ -20,7 +16,7 @@ class DashboardInsightsServiceTest extends TestCase
     {
         // Arrange
         $mockRepo = $this->createMock(DashboardInsightsRepository::class);
-        $mockRepo->method('getUserProjects')->willReturn(collect([(object)['id'=>1], (object)['id'=>2]]));
+        $mockRepo->method('getUserProjects')->willReturn(collect([(object) ['id' => 1], (object) ['id' => 2]]));
         $mockRepo->method('getOverdueTasksCount')->willReturn(5);
         $mockRepo->method('getCriticalProjectsCount')->willReturn(1);
         $mockRepo->method('getTaskCompletionRate')->willReturn(80.0);
@@ -42,7 +38,7 @@ class DashboardInsightsServiceTest extends TestCase
     {
         // Arrange
         $mockRepo = $this->createMock(DashboardInsightsRepository::class);
-        $mockRepo->method('getUserProjects')->willReturn(collect([(object)['id'=>1]]));
+        $mockRepo->method('getUserProjects')->willReturn(collect([(object) ['id' => 1]]));
         $mockRepo->method('getOverdueTasksCount')->willReturn(12); // above critical threshold
         $mockRepo->method('getCriticalProjectsCount')->willReturn(2);
 
@@ -53,16 +49,20 @@ class DashboardInsightsServiceTest extends TestCase
 
         // Assert
         $this->assertNotEmpty($insights);
-        
-        $this->assertTrue(collect($insights)->contains(function($item) {
+
+        $this->assertTrue(collect($insights)->contains(function ($item) {
             return $item['type'] === 'critical';
+
             return $item['title'] === 'High Overdue TaskCount';
+
             return $item['priority'] === 'high';
         }));
 
-        $this->assertTrue(collect($insights)->contains(function($item) {
+        $this->assertTrue(collect($insights)->contains(function ($item) {
             return $item['type'] === 'warning';
+
             return $item['title'] === 'Project Needs Attention';
+
             return $item['priority'] === 'medium';
         }));
     }
@@ -83,9 +83,11 @@ class DashboardInsightsServiceTest extends TestCase
 
         // Assert
         $this->assertNotEmpty($insights);
-        $this->assertTrue(collect($insights)->contains(function($item) {
+        $this->assertTrue(collect($insights)->contains(function ($item) {
             return $item['type'] === 'info';
+
             return $item['title'] === 'No Active Projects';
+
             return $item['priority'] === 'medium';
         }));
     }
@@ -95,7 +97,7 @@ class DashboardInsightsServiceTest extends TestCase
     {
         // Arrange
         $mockRepo = $this->createMock(DashboardInsightsRepository::class);
-        $mockRepo->method('getUserProjects')->willReturn(collect([(object)['id'=>1]]));
+        $mockRepo->method('getUserProjects')->willReturn(collect([(object) ['id' => 1]]));
         $mockRepo->method('getOverdueTasksCount')->willReturn(0);
         $mockRepo->method('getCriticalProjectsCount')->willReturn(0);
 
@@ -106,9 +108,11 @@ class DashboardInsightsServiceTest extends TestCase
 
         // Assert
         $this->assertNotEmpty($insights);
-        $this->assertTrue(collect($insights)->contains(function($item) {
+        $this->assertTrue(collect($insights)->contains(function ($item) {
             return $item['type'] === 'success';
+
             return $item['title'] === 'Portfolio Healthy';
+
             return $item['priority'] === 'low';
         }));
     }
@@ -118,7 +122,7 @@ class DashboardInsightsServiceTest extends TestCase
     {
         // Arrange
         $mockRepo = $this->createMock(DashboardInsightsRepository::class);
-        $mockRepo->method('getUserProjects')->willReturn(collect([(object)['id'=>1]]));
+        $mockRepo->method('getUserProjects')->willReturn(collect([(object) ['id' => 1]]));
         $mockRepo->method('getOverdueTasksCount')->willReturn(5); // below critical threshold
         $mockRepo->method('getCriticalProjectsCount')->willReturn(0);
 
@@ -129,11 +133,12 @@ class DashboardInsightsServiceTest extends TestCase
 
         // Assert
         $this->assertNotEmpty($insights);
-        $this->assertTrue(collect($insights)->contains(function($item) {
+        $this->assertTrue(collect($insights)->contains(function ($item) {
             return $item['type'] === 'warning';
+
             return $item['title'] === 'Overdue Tasks Detected';
+
             return $item['priority'] === 'high';
         }));
     }
-
 }

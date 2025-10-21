@@ -2,25 +2,26 @@
 
 namespace App\Http\Integrations\Paddle\Requests;
 
+use App\DataTransferObjects\Paddle\Data;
+use App\DataTransferObjects\Paddle\UserSubscriptionData;
+use Saloon\Contracts\Body\HasBody;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
-use Saloon\Contracts\Body\HasBody;
 use Saloon\Http\Response;
-use Saloon\Traits\Body\HasJsonBody;
-use App\DataTransferObjects\Paddle\UserSubscriptionData;
-use App\DataTransferObjects\Paddle\Data;
 use Saloon\PaginationPlugin\Contracts\Paginatable;
+use Saloon\Traits\Body\HasJsonBody;
 
 class SubscriptionUsersList extends Request implements HasBody, Paginatable
 {
     use HasJsonBody;
+
     /**
      * The HTTP method of the request
      */
     protected Method $method = Method::POST;
 
-      public function __construct(
-       private readonly UserSubscriptionData $UserSubscriptionData,
+    public function __construct(
+        private readonly UserSubscriptionData $UserSubscriptionData,
     ) {}
 
     /**
@@ -33,25 +34,24 @@ class SubscriptionUsersList extends Request implements HasBody, Paginatable
 
     protected function defaultBody(): array
     {
-      return [
-       'vendor_id' => $this->UserSubscriptionData->vendorID,
-       'vendor_auth_code' => $this->UserSubscriptionData->vendorAuthCode,
-       'results_per_page' => $this->UserSubscriptionData->resultsPerPage,
-       'page'=>1,
-    ];
-   }    
+        return [
+            'vendor_id' => $this->UserSubscriptionData->vendorID,
+            'vendor_auth_code' => $this->UserSubscriptionData->vendorAuthCode,
+            'results_per_page' => $this->UserSubscriptionData->resultsPerPage,
+            'page' => 1,
+        ];
+    }
 
-  /**
-   * @return array<int, Data>
-   */
-  public function createDtoFromResponse(Response $response): mixed
-  {
-    /** @var array<int, array<string,mixed>> $items */
-    $items = (array) ($response->json('response') ?? []);
+    /**
+     * @return array<int, Data>
+     */
+    public function createDtoFromResponse(Response $response): mixed
+    {
+        /** @var array<int, array<string,mixed>> $items */
+        $items = (array) ($response->json('response') ?? []);
 
-    return collect($items)
-      ->map(fn (array $data): Data => Data::fromResponse($data))
-      ->all();
-  }
-    
+        return collect($items)
+            ->map(fn (array $data): Data => Data::fromResponse($data))
+            ->all();
+    }
 }

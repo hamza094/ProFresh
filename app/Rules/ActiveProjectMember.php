@@ -7,6 +7,7 @@ use Illuminate\Contracts\Validation\Rule;
 class ActiveProjectMember implements Rule
 {
     protected $task;
+
     /**
      * Create a new rule instance.
      *
@@ -26,10 +27,10 @@ class ActiveProjectMember implements Rule
      */
     public function passes($attribute, $value)
     {
-       $activeProjectMemberIds = $this->task->project->activeMembers()->pluck('users.id')->toArray();
-    $invalidMembers = array_diff($value, $activeProjectMemberIds);
+        $activeProjectMemberIds = $this->task->project->activeMembers()->pluck('users.id')->toArray();
+        $invalidMembers = array_diff($value, $activeProjectMemberIds);
 
-    return empty($invalidMembers);
+        return empty($invalidMembers);
     }
 
     /**

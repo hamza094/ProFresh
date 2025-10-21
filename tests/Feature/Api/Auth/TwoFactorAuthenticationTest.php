@@ -2,21 +2,17 @@
 
 namespace Tests\Feature\Api\Auth;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Tests\TestCase;
 use App\Models\User;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use Laragear\TwoFactor\TwoFactorSecret;
-use Illuminate\Support\Collection;
 use Laravel\Sanctum\Sanctum;
 use Mockery;
-use Illuminate\Support\Facades\DB;
-use Mockery\MockInterface;
+use Tests\TestCase;
 
 /**
  * Two-Factor Authentication Feature Tests
- * 
+ *
  * Tests the complete 2FA flow including setup, confirmation, login, and management.
  */
 class TwoFactorAuthenticationTest extends TestCase
@@ -24,7 +20,9 @@ class TwoFactorAuthenticationTest extends TestCase
     use RefreshDatabase;
 
     protected User $user;
+
     protected string $testPassword = 'Testpassword@3';
+
     protected string $testEmail = '2fauser@example.com';
 
     protected function setUp(): void
@@ -55,11 +53,11 @@ class TwoFactorAuthenticationTest extends TestCase
     {
         DB::table('two_factor_authentications')->insert([
             'authenticatable_type' => User::class,
-            'authenticatable_id'   => $this->user->id,
-            'shared_secret'        => encrypt('JBSWY3DPEHPK3PXP'),
-            'recovery_codes'       => encrypt(json_encode(['RCODE-1234-5678'])),
-            'enabled_at'           => now(),
-            'label'                => "ProFresh:{$this->user->email}",
+            'authenticatable_id' => $this->user->id,
+            'shared_secret' => encrypt('JBSWY3DPEHPK3PXP'),
+            'recovery_codes' => encrypt(json_encode(['RCODE-1234-5678'])),
+            'enabled_at' => now(),
+            'label' => "ProFresh:{$this->user->email}",
         ]);
     }
 
@@ -81,7 +79,7 @@ class TwoFactorAuthenticationTest extends TestCase
     private function createMockedUser(array $expectations = []): User
     {
         $mockedUser = Mockery::mock(User::class)->makePartial();
-        
+
         // Set default expectations
         $defaultExpectations = [
             'confirmTwoFactorAuth' => ['123456', true],
@@ -118,9 +116,9 @@ class TwoFactorAuthenticationTest extends TestCase
     public function it_returns_2fa_status_disabled_by_default()
     {
         Sanctum::actingAs($this->user);
-        
+
         $response = $this->getJson('/api/v1/twofactor/fetch-user');
-        
+
         $response->assertOk()
             ->assertJson(['status' => 'disabled']);
     }
@@ -129,7 +127,7 @@ class TwoFactorAuthenticationTest extends TestCase
     public function it_can_prepare_two_factor()
     {
         Sanctum::actingAs($this->user);
-        
+
         // Assert no 2FA before setup
         $this->assertDatabaseMissing('two_factor_authentications', [
             'authenticatable_id' => $this->user->id,
@@ -146,35 +144,33 @@ class TwoFactorAuthenticationTest extends TestCase
 
         // Assert 2FA was created in database
         $this->assertDatabaseHas('two_factor_authentications', [
-           'authenticatable_id' => $this->user->id,
-           'authenticatable_type' => get_class($this->user),
+            'authenticatable_id' => $this->user->id,
+            'authenticatable_type' => get_class($this->user),
         ]);
     }
 
-
     /** @test */
     public function it_can_confirm_two_factor()
-    {         
+    {
         $mockedUser = $this->createMockedUser([
             'confirmTwoFactorAuth' => ['123456', true],
             'hasTwoFactorEnabled' => false,
             'getRecoveryCodes' => collect(['abc123', 'xyz789']),
         ]);
 
-    Sanctum::actingAs($mockedUser);
+        Sanctum::actingAs($mockedUser);
 
-    $response = $this->postJson('/api/v1/twofactor/confirm', [
-        'code' => '123456',
-    ]);
+        $response = $this->postJson('/api/v1/twofactor/confirm', [
+            'code' => '123456',
+        ]);
 
         $response->assertOk()
             ->assertJson([
-        'status' => 'enabled',
-    'message' => 'success',
-    'recoveryCodes' => ['abc123', 'xyz789'],
-    ]);
-  }
-
+                'status' => 'enabled',
+                'message' => 'success',
+                'recoveryCodes' => ['abc123', 'xyz789'],
+            ]);
+    }
 
     /** @test */
     public function it_can_show_and_regenerate_recovery_codes()
@@ -184,22 +180,21 @@ class TwoFactorAuthenticationTest extends TestCase
             'generateRecoveryCodes' => collect(['abc123', 'xyz789']),
         ]);
 
-    Sanctum::actingAs($mockedUser);
+        Sanctum::actingAs($mockedUser);
 
         $response = $this->getJson('/api/v1/twofactor/recovery-codes');
 
         $response->assertOk()
             ->assertJson([
-        'message' => 'success',
-        'recoveryCodes' => ['abc123', 'xyz789'],
-    ]);
+                'message' => 'success',
+                'recoveryCodes' => ['abc123', 'xyz789'],
+            ]);
     }
 
-
-      /** @test */
+    /** @test */
     public function it_can_disable_two_factor()
     {
-         Sanctum::actingAs($this->user);
+        Sanctum::actingAs($this->user);
 
         // First setup 2FA
         $this->postJson('/api/v1/twofactor/setup', [
@@ -207,12 +202,11 @@ class TwoFactorAuthenticationTest extends TestCase
         ]);
 
         // Then disable it
-       $response = $this->deleteJson('/api/v1/twofactor/disable');
+        $response = $this->deleteJson('/api/v1/twofactor/disable');
 
         $response->assertOk()
-        ->assertJson(['status' => 'disabled']);
+            ->assertJson(['status' => 'disabled']);
     }
-
 
     /** @test */
     public function it_shows_2fa_required_message_during_login_when_enabled()
@@ -225,24 +219,23 @@ class TwoFactorAuthenticationTest extends TestCase
         ]);
 
         $response->assertOk()
-        ->assertJson([
-            'message' => 'Two-factor authentication is enabled. Please provide the verification code.',
-            'status' => '2fa_required',
-        ]);
+            ->assertJson([
+                'message' => 'Two-factor authentication is enabled. Please provide the verification code.',
+                'status' => '2fa_required',
+            ]);
 
         // Assert session exists and is encrypted
-    $this->assertTrue(session()->has('2fa_login'));
+        $this->assertTrue(session()->has('2fa_login'));
 
         // Verify encrypted session contents
         $encryptedSession = session('2fa_login');
         $this->assertIsString($encryptedSession);
-        
+
         $decryptedSession = decrypt($encryptedSession);
         $this->assertEquals($this->user->email, $decryptedSession['email']);
         $this->assertEquals($this->testPassword, $decryptedSession['password']);
         $this->assertNotNull($decryptedSession['expires_at']);
     }
-
 
     /** @test */
     public function it_fails_two_factor_login_with_missing_session()
@@ -253,15 +246,14 @@ class TwoFactorAuthenticationTest extends TestCase
 
         $response->assertUnprocessable()
             ->assertJsonValidationErrors(['code']);
-        
+
         $this->assertStringContainsString(
-            'Session expired or invalid', 
+            'Session expired or invalid',
             $response->json('errors.code.0')
         );
-}
+    }
 
-
-        /** @test */
+    /** @test */
     public function it_fails_two_factor_login_with_expired_session()
     {
         // Setup encrypted session data with expired timestamp
@@ -277,9 +269,9 @@ class TwoFactorAuthenticationTest extends TestCase
 
         $response->assertUnprocessable()
             ->assertJsonValidationErrors(['code']);
-        
+
         $this->assertStringContainsString(
-            'Session expired or invalid', 
+            'Session expired or invalid',
             $response->json('errors.code.0')
         );
     }

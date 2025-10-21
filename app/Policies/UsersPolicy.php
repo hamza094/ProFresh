@@ -3,7 +3,6 @@
 namespace App\Policies;
 
 use App\Models\User;
-use Auth;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class UsersPolicy
@@ -20,18 +19,17 @@ class UsersPolicy
         //
     }
 
-    public function before(User $user, string $ability): bool|null
+    public function before(User $user, string $ability): ?bool
     {
-      if ($user->isAdmin()) {
-          return true;
-      }
- 
-      return null; 
-   }
+        if ($user->isAdmin()) {
+            return true;
+        }
+
+        return null;
+    }
 
     public function owner(User $user): bool
     {
-       return $user->is(auth()->user());
+        return $user->is(auth()->user());
     }
-
 }

@@ -2,22 +2,21 @@
 
 namespace Tests\Feature\Api\Jobs\Webhooks\Zoom;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use App\Models\Meeting;
-use App\Traits\ProjectSetup;
-use Illuminate\Support\Facades\File;
-use App\Jobs\Webhooks\Zoom\StartMeetingWebhook;
-use App\Models\User;
-use Illuminate\Support\Facades\Notification;
-use App\Notifications\Zoom\MeetingStarted;
-use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Support\Facades\Event;
 use App\Events\MeetingStatusUpdate;
+use App\Jobs\Webhooks\Zoom\StartMeetingWebhook;
+use App\Models\Meeting;
+use App\Models\User;
+use App\Notifications\Zoom\MeetingStarted;
+use App\Traits\ProjectSetup;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Notification;
 use Tests\TestCase;
 
 class StartMeetingWebhookTest extends TestCase
 {
-    use RefreshDatabase,ProjectSetup;
+    use ProjectSetup,RefreshDatabase;
 
     /**
      * A basic feature test example.
@@ -39,8 +38,7 @@ class StartMeetingWebhookTest extends TestCase
             'status' => 'waiting',
         ]);
 
-        $users = User::factory()->count(2)->create()->each(fn($user) =>
-            $this->inviteAndActivateUser($this->project, $user)
+        $users = User::factory()->count(2)->create()->each(fn ($user) => $this->inviteAndActivateUser($this->project, $user)
         );
 
         $fixture = File::json(

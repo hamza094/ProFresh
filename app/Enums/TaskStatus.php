@@ -6,9 +6,13 @@ class TaskStatus
 {
     // Database status IDs - keep these in sync with your seed/data
     const PENDING = 1;
+
     const IN_PROGRESS = 2;
+
     const UNDER_REVIEW = 3;
+
     const COMPLETED = 4;
+
     const CANCELLED = 5;
 
     /**0
@@ -37,7 +41,3 @@ class TaskStatus
         ];
     }
 }
-
-
-
-?>

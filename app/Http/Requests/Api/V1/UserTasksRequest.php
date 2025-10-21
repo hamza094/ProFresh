@@ -5,7 +5,6 @@ namespace App\Http\Requests\Api\V1;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\ValidationException;
 
-
 class UserTasksRequest extends FormRequest
 {
     /**
@@ -36,7 +35,7 @@ class UserTasksRequest extends FormRequest
     protected function passedValidation(): void
     {
         if (
-            !$this->hasAnyFilter(['completed', 'overdue', 'remaining', 'user_created', 'task_assigned'])
+            ! $this->hasAnyFilter(['completed', 'overdue', 'remaining', 'user_created', 'task_assigned'])
         ) {
             throw ValidationException::withMessages([
                 'filters' => 'At least one filter must be provided.',
@@ -54,6 +53,7 @@ class UserTasksRequest extends FormRequest
                 return true;
             }
         }
+
         return false;
     }
 

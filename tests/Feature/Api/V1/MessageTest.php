@@ -2,83 +2,79 @@
 
 namespace Tests\Feature\Api\V1;
 
-use DB;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use App\Models\Message;
-use Illuminate\Support\Facades\Queue;
 use App\Traits\ProjectSetup;
 use Carbon\Carbon;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class MessageTest extends TestCase
 {
-  use RefreshDatabase,ProjectSetup;
+    use ProjectSetup,RefreshDatabase;
 
-     /** @test */
-     public function operation_on_send_message()
-     {
-       $response=$this->postJson($this->project->path().'/message',[
-          'message'=>'this is project message',
-          'users'=>json_encode([$this->user->id]),
-          'subject'=>'this is message subject',
-          'sms'=>true,
-          'mail'=>true,
+    /** @test */
+    public function operation_on_send_message()
+    {
+        $response = $this->postJson($this->project->path().'/message', [
+            'message' => 'this is project message',
+            'users' => json_encode([$this->user->id]),
+            'subject' => 'this is message subject',
+            'sms' => true,
+            'mail' => true,
         ]);
 
-        $this->assertDatabaseHas('messages',['type'=>'mail']);
+        $this->assertDatabaseHas('messages', ['type' => 'mail']);
 
-        $this->assertDatabaseHas('messages',['type'=>'sms']);
-     }
+        $this->assertDatabaseHas('messages', ['type' => 'sms']);
+    }
 
-     /** @test */
-     public function message_option_must_be_selected()
-     {
-       $response=$this->postJson($this->project->path().'/message',[
-          'message'=>'this is project message',
-          'users'=>json_encode(['71b88a29','42892']),
+    /** @test */
+    public function message_option_must_be_selected()
+    {
+        $response = $this->postJson($this->project->path().'/message', [
+            'message' => 'this is project message',
+            'users' => json_encode(['71b88a29', '42892']),
         ]);
 
         $response->assertJsonValidationErrors('option');
-     }
+    }
 
-     /** @test */
-     public function check_schedule_command_working()
-     {
-       $messages=Message::factory()->for($this->project)
-       ->count(3)
-       ->create(['delivered_at'=>Carbon::yesterday()]);
+    /** @test */
+    public function check_schedule_command_working()
+    {
+        $messages = Message::factory()->for($this->project)
+            ->count(3)
+            ->create(['delivered_at' => Carbon::yesterday()]);
 
-       $this->assertCount(3, Message::messageScheduled()->get());
+        $this->assertCount(3, Message::messageScheduled()->get());
 
-       $this->artisan('schedule:message')->assertok();
+        $this->artisan('schedule:message')->assertok();
 
-       $this->assertCount(0, $this->project->scheduledMessages());
-     }
+        $this->assertCount(0, $this->project->scheduledMessages());
+    }
 
-     /** @test */
-     public function get_project_scheduled_messages()
-     {
-       $messages=Message::factory()->for($this->project)->count(4)
-       ->create(['delivered_at'=>Carbon::now()->addDay(2)]);
+    /** @test */
+    public function get_project_scheduled_messages()
+    {
+        $messages = Message::factory()->for($this->project)->count(4)
+            ->create(['delivered_at' => Carbon::now()->addDay(2)]);
 
-       $response=$this->getJson($this->project->path().
-        '/messages/scheduled')->assertok();
+        $response = $this->getJson($this->project->path().
+         '/messages/scheduled')->assertok();
 
-       $this->assertEquals($this->project->scheduledMessages()
-            ->count(),$this->project->messages->count());
-     }
+        $this->assertEquals($this->project->scheduledMessages()
+            ->count(), $this->project->messages->count());
+    }
 
-     /** @test */
-     public function project_message_can_be_deleted()
-     {
-        $message=Message::factory()->for($this->project)
-                 ->create();
+    /** @test */
+    public function project_message_can_be_deleted()
+    {
+        $message = Message::factory()->for($this->project)
+            ->create();
 
         $this->deleteJson($this->project->path().'/messages/'.
                $message->id.'/delete');
 
         $this->assertModelMissing($message);
-     }
-
+    }
 }

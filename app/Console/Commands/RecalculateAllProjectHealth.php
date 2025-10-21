@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Console\Commands;
 
-use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Log;
 use App\Jobs\RecalculateProjectHealth;
 use App\Models\Project;
+use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Log;
 
 class RecalculateAllProjectHealth extends Command
 {
@@ -45,6 +45,7 @@ class RecalculateAllProjectHealth extends Command
         });
 
         $this->info("Health recalculation dispatch complete. Dispatched: {$dispatched}");
+
         return 0;
     }
 }

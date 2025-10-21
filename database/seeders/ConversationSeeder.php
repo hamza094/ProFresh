@@ -2,9 +2,9 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
-use App\Models\Project;
 use App\Models\Conversation;
+use App\Models\Project;
+use Illuminate\Database\Seeder;
 
 class ConversationSeeder extends Seeder
 {
@@ -15,13 +15,13 @@ class ConversationSeeder extends Seeder
      */
     public function run()
     {
-      $projects = Project::with('user')->get();
+        $projects = Project::with('user')->get();
 
-        $projects->each(function ($project){
+        $projects->each(function ($project) {
             Conversation::factory(30)->for($project)
-            ->create([
-                'user_id'=>$project->user->id,
-            ]);
+                ->create([
+                    'user_id' => $project->user->id,
+                ]);
         });
     }
 }

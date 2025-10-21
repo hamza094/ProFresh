@@ -2,23 +2,22 @@
 
 namespace Tests\Feature\Api\Jobs\Webhooks\Zoom;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Tests\TestCase;
-use App\Models\Meeting;
-use App\Traits\ProjectSetup;
-use Illuminate\Support\Facades\File;
-use App\Jobs\Webhooks\Zoom\MeetingEndsWebhook;
-use Illuminate\Support\Facades\Event;
 use App\Events\MeetingStatusUpdate;
+use App\Jobs\Webhooks\Zoom\MeetingEndsWebhook;
+use App\Models\Meeting;
 use App\Models\User;
-use Illuminate\Support\Facades\Notification;
 use App\Notifications\Zoom\MeetingEnded;
+use App\Traits\ProjectSetup;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Notification;
+use Tests\TestCase;
 
 class EndedMeetingWebhookTest extends TestCase
 {
-    use RefreshDatabase,ProjectSetup;
-    
+    use ProjectSetup,RefreshDatabase;
+
     /** @test */
     public function notifies_project_members_on_meeting_ended()
     {
@@ -32,8 +31,7 @@ class EndedMeetingWebhookTest extends TestCase
             'status' => 'waiting',
         ]);
 
-        $users = User::factory()->count(2)->create()->each(fn($user) =>
-            $this->inviteAndActivateUser($this->project, $user)
+        $users = User::factory()->count(2)->create()->each(fn ($user) => $this->inviteAndActivateUser($this->project, $user)
         );
 
         $fixture = File::json(
@@ -42,7 +40,7 @@ class EndedMeetingWebhookTest extends TestCase
         );
 
         $object = $fixture['payload']['object'];
-        $meetingId = (string)$object['id'];
+        $meetingId = (string) $object['id'];
         $startTime = $object['start_time'] ?? null;
         $endTime = $object['end_time'] ?? null;
 

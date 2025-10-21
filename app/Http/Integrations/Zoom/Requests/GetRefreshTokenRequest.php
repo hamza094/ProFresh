@@ -2,17 +2,17 @@
 
 namespace App\Http\Integrations\Zoom\Requests;
 
-use Saloon\Enums\Method;
-use Saloon\Http\Request;
 use Saloon\Contracts\Body\HasBody;
+use Saloon\Enums\Method;
 use Saloon\Helpers\OAuth2\OAuthConfig;
+use Saloon\Http\Request;
 use Saloon\Traits\Body\HasFormBody;
 use Saloon\Traits\Plugins\AcceptsJson;
 
 class GetRefreshTokenRequest extends Request implements HasBody
 {
-    use HasFormBody;
     use AcceptsJson;
+    use HasFormBody;
 
     /**
      * The HTTP method of the request
@@ -20,13 +20,13 @@ class GetRefreshTokenRequest extends Request implements HasBody
     protected Method $method = Method::POST;
 
     public function __construct(
-       private OAuthConfig $oauthConfig,
-       private string $refreshToken,
+        private OAuthConfig $oauthConfig,
+        private string $refreshToken,
     ) {
         $this->withBasicAuth(
-        $oauthConfig->getClientId(), $oauthConfig->getClientSecret()
-    );
-    }    
+            $oauthConfig->getClientId(), $oauthConfig->getClientSecret()
+        );
+    }
 
     /**
      * The endpoint for the request
@@ -42,8 +42,8 @@ class GetRefreshTokenRequest extends Request implements HasBody
     public function defaultBody(): array
     {
         return [
-           'grant_type' => 'refresh_token',
-           'refresh_token' => $this->refreshToken,
+            'grant_type' => 'refresh_token',
+            'refresh_token' => $this->refreshToken,
         ];
     }
 }

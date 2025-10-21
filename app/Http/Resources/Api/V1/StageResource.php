@@ -18,15 +18,15 @@ class StageResource extends JsonResource
     public function toArray($request)
     {
         return [
-        /**
-         * @example 1
-        */
-          'id' => $this->id,
+            /**
+             * @example 1
+             */
+            'id' => $this->id,
 
-        /**
-         * @example Planing
-        */
-          'name' => $this->name,
+            /**
+             * @example Planing
+             */
+            'name' => $this->name,
         ];
     }
 }

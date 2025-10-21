@@ -2,11 +2,10 @@
 
 namespace App\Http\Requests\Api\V1;
 
+use App\Models\Project;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
-use App\Models\Project;
 use Illuminate\Validation\ValidationException;
-
 
 class TaskRequest extends FormRequest
 {
@@ -25,40 +24,39 @@ class TaskRequest extends FormRequest
     protected function prepareForValidation(): void
     {
 
-         /** @var Project|null $project */
-         $project = $this->route('project');
-       
-      throw_if($project->tasksReachedItsLimit(),
-      ValidationException::withMessages(
-        ['tasks'=>'Project tasks reached their limit'])
-       );
-    }
+        /** @var Project|null $project */
+        $project = $this->route('project');
 
+        throw_if($project->tasksReachedItsLimit(),
+            ValidationException::withMessages(
+                ['tasks' => 'Project tasks reached their limit'])
+        );
+    }
 
     public function rules()
     {
-    /** @var Project $project */
-    $project = $this->route('project');
+        /** @var Project $project */
+        $project = $this->route('project');
 
-      return [
-          /**
+        return [
+            /**
              * Tasks title
-             * 
+             *
              * - Project task must be unique
-             * 
+             *
              * @example "this is a new project task"
              */
             'title' => [
-             'required',
-             'max:55',
-             'min:3',
-            Rule::unique('tasks')->where(function ($query) use ($project) {
-            return $query->where('project_id', $project->id);
-        }),
-        ],
+                'required',
+                'max:55',
+                'min:3',
+                Rule::unique('tasks')->where(function ($query) use ($project) {
+                    return $query->where('project_id', $project->id);
+                }),
+            ],
         ];
 
-    } 
+    }
 
     /**
      * Get the error messages for the defined validation rules.
@@ -68,9 +66,9 @@ class TaskRequest extends FormRequest
     public function messages()
     {
         return [
-           'title.required' => 'Task title required.',
-           'title.max'=>'Your task title is too long.',
-           'title.unique'=>'Task with same title already exists.'
-          ];
-     }
-  }
+            'title.required' => 'Task title required.',
+            'title.max' => 'Your task title is too long.',
+            'title.unique' => 'Task with same title already exists.',
+        ];
+    }
+}

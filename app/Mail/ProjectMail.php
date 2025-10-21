@@ -3,7 +3,6 @@
 namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
@@ -17,12 +16,13 @@ class ProjectMail extends Mailable
      * @return void
      */
     protected $project;
+
     protected $message;
 
-    public function __construct($project,$message)
+    public function __construct($project, $message)
     {
-      $this->project=$project;
-      $this->message=$message;
+        $this->project = $project;
+        $this->message = $message;
     }
 
     /**
@@ -32,11 +32,11 @@ class ProjectMail extends Mailable
      */
     public function build()
     {
-      return $this->markdown('emails.project.mail', [
-                   'subject'=>$this->message->subject,
-                   'message'=>$this->message->message,
-                   'title'=>$this->project->name,
-                   'url' => config('app.url').'/project/'.$this->project->slug,
-               ]);
+        return $this->markdown('emails.project.mail', [
+            'subject' => $this->message->subject,
+            'message' => $this->message->message,
+            'title' => $this->project->name,
+            'url' => config('app.url').'/project/'.$this->project->slug,
+        ]);
     }
 }

@@ -2,12 +2,10 @@
 
 namespace App\Events;
 
+use App\Http\Resources\Api\V1\Admin\ActivitiesResource;
 use App\Models\Activity;
 use Illuminate\Broadcasting\Channel;
-use App\Http\Resources\Api\V1\Admin\ActivitiesResource;
 use Illuminate\Broadcasting\InteractsWithSockets;
-use Illuminate\Broadcasting\PresenceChannel;
-use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
@@ -40,6 +38,6 @@ class DashboardActivity implements ShouldBroadcast
 
     public function broadcastWith()
     {
-       return (new ActivitiesResource($this->activity))->resolve();
+        return (new ActivitiesResource($this->activity))->resolve();
     }
 }

@@ -2,16 +2,15 @@
 
 namespace Tests\Feature\Api\V1;
 
+use App\Actions\ProjectMetrics\ProjectHealthMetricAction;
 use App\Actions\ProjectMetrics\ProjectHealthRecalculationAction;
 use App\Events\ProjectHealthUpdated;
 use App\Jobs\RecalculateProjectHealth;
 use App\Models\Project;
-use App\Actions\ProjectMetrics\ProjectHealthMetricAction;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\RateLimiter;
-use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
 
 class ProjectHealthScoreFeatureTest extends TestCase
@@ -24,7 +23,7 @@ class ProjectHealthScoreFeatureTest extends TestCase
         Bus::fake();
         $project = Project::factory()->create();
         RateLimiter::clear("project:{$project->id}:health-persist");
-        $action = new ProjectHealthRecalculationAction();
+        $action = new ProjectHealthRecalculationAction;
 
         // act
         $action->handle($project, ['health']);
@@ -40,7 +39,7 @@ class ProjectHealthScoreFeatureTest extends TestCase
         // arrange
         Bus::fake();
         $project = Project::factory()->create();
-        $action = new ProjectHealthRecalculationAction();
+        $action = new ProjectHealthRecalculationAction;
 
         // act
         $action->handle($project, ['task-health']);
@@ -53,10 +52,10 @@ class ProjectHealthScoreFeatureTest extends TestCase
     {
         // arrange
         Bus::fake();
-        RateLimiter::clear("project:1:health-persist");
+        RateLimiter::clear('project:1:health-persist');
         $project = Project::factory()->create(['id' => 1]);
         config()->set('project-metrics.health.persist_throttle_seconds', 60);
-        $action = new ProjectHealthRecalculationAction();
+        $action = new ProjectHealthRecalculationAction;
 
         // act
         $action->handle($project, ['health']);
@@ -90,7 +89,8 @@ class ProjectHealthScoreFeatureTest extends TestCase
             $channel = $event->broadcastOn();
             $channelName = $channel->name ?? (is_string($channel) ? $channel : '');
             $normalized = preg_replace('/^private-/', '', $channelName);
-            $this->assertSame('project.' . $project->id . '.health', $normalized);
+            $this->assertSame('project.'.$project->id.'.health', $normalized);
+
             return $event->project->id === $project->id;
         });
     }
@@ -162,5 +162,4 @@ class ProjectHealthScoreFeatureTest extends TestCase
         // assert
         Bus::assertDispatched(RecalculateProjectHealth::class, 3);
     }
-     
 }

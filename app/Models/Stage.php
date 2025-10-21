@@ -4,24 +4,23 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Stage extends Model
 {
     use HasFactory;
 
-    protected $guarded=[];
+    protected $guarded = [];
 
-    
     /**
      * Get the projects releated to the stage.
      *
      * @return HasMany<Project>
-    */ 
+     */
     public function projects(): HasMany
     {
-      return $this->hasMany(Project::class);
+        return $this->hasMany(Project::class);
     }
 
     /**
@@ -31,9 +30,9 @@ class Stage extends Model
      */
     public function project(): BelongsTo
     {
-      return $this->belongsTo(Project::class);
+        return $this->belongsTo(Project::class);
     }
- 
+
     /**
      * Get the user who created the stage.
      *
@@ -43,5 +42,4 @@ class Stage extends Model
     {
         return $this->belongsTo(User::class);
     }
-
 }

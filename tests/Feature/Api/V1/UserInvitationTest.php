@@ -2,17 +2,16 @@
 
 namespace Tests\Feature\Api\V1;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use App\Traits\ProjectSetup;
 use App\Models\project;
-use Illuminate\Foundation\Testing\WithFaker;
+use App\Traits\ProjectSetup;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class UserInvitationTest extends TestCase
 {
-    use RefreshDatabase,ProjectSetup;
+    use ProjectSetup,RefreshDatabase;
 
-     /** @test */
+    /** @test */
     public function it_returns_pending_project_invitations_for_authenticated_user()
     {
         // Create a project and attach as pending invitation
@@ -23,11 +22,11 @@ class UserInvitationTest extends TestCase
         $response = $this->getJson('/api/v1/me/invitations');
 
         $response->assertStatus(200)
-                 ->assertJsonStructure([
-                     'invitations' => [
-                         ['id', 'name', 'status', 'slug', 'invitation_sent_at','created_at', 'path']
-                     ]
-                 ]);
+            ->assertJsonStructure([
+                'invitations' => [
+                    ['id', 'name', 'status', 'slug', 'invitation_sent_at', 'created_at', 'path'],
+                ],
+            ]);
 
         $this->assertEquals($project->id, $response->json('invitations.0.id'));
     }
@@ -39,9 +38,9 @@ class UserInvitationTest extends TestCase
         $response = $this->getJson('/api/v1/me/invitations');
 
         $response->assertStatus(200)
-                 ->assertJson([
-                     'invitations' => [],
-                     'message' => 'No pending invitations found.'
-                 ]);
+            ->assertJson([
+                'invitations' => [],
+                'message' => 'No pending invitations found.',
+            ]);
     }
 }

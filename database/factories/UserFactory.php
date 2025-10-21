@@ -6,7 +6,6 @@ use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
-use Carbon\Carbon;
 
 class UserFactory extends Factory
 {
@@ -24,17 +23,17 @@ class UserFactory extends Factory
      */
     public function definition()
     {
-        $name=$this->faker->name;
+        $name = $this->faker->name;
 
         return [
-        'name' => $name,
-        'username'=>$this->faker->userName,
-        'avatar_path'=>"https://eu.ui-avatars.com/api/?name=".$name,
-        'email' => $this->faker->unique()->safeEmail,
-        //'last_active_at' =>'',
-        'email_verified_at' => now(),
-        'password' => Hash::make('Berry@999'),
-        'remember_token' => Str::random(10)
+            'name' => $name,
+            'username' => $this->faker->userName,
+            'avatar_path' => 'https://eu.ui-avatars.com/api/?name='.$name,
+            'email' => $this->faker->unique()->safeEmail,
+            // 'last_active_at' =>'',
+            'email_verified_at' => now(),
+            'password' => Hash::make('Berry@999'),
+            'remember_token' => Str::random(10),
         ];
     }
 }

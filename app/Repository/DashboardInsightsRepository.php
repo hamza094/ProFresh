@@ -4,9 +4,8 @@ namespace App\Repository;
 
 use App\Models\Project;
 use App\Models\Task;
-use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Builder;
-
+use Illuminate\Support\Collection;
 
 class DashboardInsightsRepository
 {
@@ -16,14 +15,13 @@ class DashboardInsightsRepository
     {
         return Project::where(function ($query) use ($userId) {
             $query->where('user_id', $userId)
-                  ->orWhereHas('activeMembers', function ($memberQuery) use ($userId) {
-                      $memberQuery->where('user_id', $userId);
-                  });
+                ->orWhereHas('activeMembers', function ($memberQuery) use ($userId) {
+                    $memberQuery->where('user_id', $userId);
+                });
         })
-        ->select(['id'])
-        ->get();
+            ->select(['id'])
+            ->get();
     }
-
 
     public function getTaskCompletionRate(int $userId): float
     {
@@ -49,11 +47,11 @@ class DashboardInsightsRepository
     public function getCriticalProjectsCount(Collection $projects): int
     {
         $threshold = (int) config('dashboard.insights.critical_project.overdue_threshold', 3);
-        
+
         if ($projects->isEmpty()) {
             return 0;
         }
-        
+
         // Single query to get overdue counts for all projects (fixes N+1)
         $projectIds = $projects->pluck('id');
         if ($projectIds->isEmpty()) {
@@ -80,13 +78,13 @@ class DashboardInsightsRepository
     {
         // Optimized with joins instead of nested whereHas for better performance
         return Task::join('projects', 'tasks.project_id', '=', 'projects.id')
-            ->leftJoin('project_members', function($join) {
+            ->leftJoin('project_members', function ($join) {
                 $join->on('projects.id', '=', 'project_members.project_id')
-                     ->where('project_members.active', 1);
+                    ->where('project_members.active', 1);
             })
             ->where(function ($query) use ($userId) {
                 $query->where('projects.user_id', $userId)
-                      ->orWhere('project_members.user_id', $userId);
+                    ->orWhere('project_members.user_id', $userId);
             })
             ->select('tasks.*')
             ->distinct();

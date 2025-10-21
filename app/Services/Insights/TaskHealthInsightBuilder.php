@@ -7,24 +7,27 @@ use App\Enums\InsightType;
 final class TaskHealthInsightBuilder implements InsightBuilderInterface
 {
     private const EXCELLENT_THRESHOLD = 90;
+
     private const GOOD_THRESHOLD = 70;
+
     private const WARNING_THRESHOLD = 40;
+
     private const HIGH_OVERDUE_THRESHOLD = 25;      // mirrors penalty for overdue in action
+
     private const HIGH_ABANDONMENT_THRESHOLD = 15;  // mirrors penalty for abandonment in action
 
     /**
-     * @param mixed $input
-     * @param array<string,mixed> $context
+     * @param  array<string,mixed>  $context
      * @return array<string,mixed>
      */
     public function build(mixed $input, array $context = []): array
     {
-        if ($input === null || !is_numeric($input)) {
+        if ($input === null || ! is_numeric($input)) {
             return [
                 'type' => InsightType::INFO->value,
                 'title' => 'No Task Data',
                 'message' => 'No task data available to generate insights.',
-                'data' => ['value' => null]
+                'data' => ['value' => null],
             ];
         }
 
@@ -32,18 +35,17 @@ final class TaskHealthInsightBuilder implements InsightBuilderInterface
         $summary = $context['summary'] ?? [];
 
         $type = $this->determineInsightType($value, $summary);
+
         return [
             'type' => $type,
             'title' => $this->generateTitle($type, $value, $summary),
             'message' => $this->generateMessage($value, $summary),
-            'data' => ['value' => $value]
+            'data' => ['value' => $value],
         ];
     }
 
     /**
-     * @param float $value
-     * @param array<string,mixed> $summary
-     * @return string
+     * @param  array<string,mixed>  $summary
      */
     private function determineInsightType(float $value, array $summary): string
     {
@@ -64,10 +66,7 @@ final class TaskHealthInsightBuilder implements InsightBuilderInterface
     }
 
     /**
-     * @param string $type
-     * @param float $value
-     * @param array<string,mixed> $summary
-     * @return string
+     * @param  array<string,mixed>  $summary
      */
     private function generateTitle(string $type, float $value, array $summary): string
     {
@@ -81,6 +80,7 @@ final class TaskHealthInsightBuilder implements InsightBuilderInterface
             if ($abandonmentRate >= self::HIGH_ABANDONMENT_THRESHOLD) {
                 return 'High Task Abandonment';
             }
+
             return 'Critical Task Issues';
         }
 
@@ -93,9 +93,7 @@ final class TaskHealthInsightBuilder implements InsightBuilderInterface
     }
 
     /**
-     * @param float $value
-     * @param array<string,mixed> $summary
-     * @return string
+     * @param  array<string,mixed>  $summary
      */
     private function generateMessage(float $value, array $summary): string
     {

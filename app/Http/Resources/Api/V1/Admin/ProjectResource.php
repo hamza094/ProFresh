@@ -3,8 +3,6 @@
 namespace App\Http\Resources\Api\V1\Admin;
 
 use Illuminate\Http\Resources\Json\JsonResource;
-use App\Http\Resources\Api\V1\StageResource;
-use App\Http\Resources\Api\V1\Admin\UserResource;
 
 class ProjectResource extends JsonResource
 {
@@ -17,22 +15,22 @@ class ProjectResource extends JsonResource
     public function toArray($request)
     {
         return [
-        'id'=>$this->id,
-        'name'=>$this->name,
-        'about'=>str_limit($this->about,50),
-        'slug'=>$this->slug,
-        'state'=>$this->state(),
-        'stage'=>$this->whenLoaded('stage'),
-        'created_at'=>$this->created_at->diffforHumans(),
-        'owner'=>$this->whenLoaded('user'),
-        'tasks_count'=>$this->whenCounted('tasks'),
-        'members_count'=>$this->whenCounted('activeMembers'),
-        'score'=>$this->health_score,
-        'status'=>$this->health_status,
-        'health_score_calculated_at'=>$this->health_score_calculated_at?->toDateTimeString(),
-        'links'=>[
-          'self'=>"/api/v1/".$this->slug,
-        ],
+            'id' => $this->id,
+            'name' => $this->name,
+            'about' => str_limit($this->about, 50),
+            'slug' => $this->slug,
+            'state' => $this->state(),
+            'stage' => $this->whenLoaded('stage'),
+            'created_at' => $this->created_at->diffforHumans(),
+            'owner' => $this->whenLoaded('user'),
+            'tasks_count' => $this->whenCounted('tasks'),
+            'members_count' => $this->whenCounted('activeMembers'),
+            'score' => $this->health_score,
+            'status' => $this->health_status,
+            'health_score_calculated_at' => $this->health_score_calculated_at?->toDateTimeString(),
+            'links' => [
+                'self' => '/api/v1/'.$this->slug,
+            ],
         ];
     }
 }

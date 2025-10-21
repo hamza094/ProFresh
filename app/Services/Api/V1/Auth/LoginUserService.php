@@ -11,9 +11,10 @@ class LoginUserService
     /**
      * Attempt to authenticate the user.
      *
-     * @param string $email
-     * @param string $password
+     * @param  string  $email
+     * @param  string  $password
      * @return User
+     *
      * @throws ValidationException
      */
     public function attemptLogin($email, $password)
@@ -32,9 +33,9 @@ class LoginUserService
     /**
      * Handle 2FA session setup if enabled.
      *
-     * @param User $user
-     * @param string $email
-     * @param string $password
+     * @param  User  $user
+     * @param  string  $email
+     * @param  string  $password
      * @return bool
      */
     public function handleTwoFactor($user, $email, $password)
@@ -43,10 +44,12 @@ class LoginUserService
             session(['2fa_login' => encrypt([
                 'email' => $email,
                 'password' => $password,
-                'expires_at' => now()->addMinutes(5)
+                'expires_at' => now()->addMinutes(5),
             ])]);
+
             return true;
         }
+
         return false;
     }
 }

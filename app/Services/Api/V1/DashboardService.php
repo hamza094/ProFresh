@@ -3,10 +3,10 @@
 namespace App\Services\Api\V1;
 
 use App\Http\Requests\Api\V1\DashboardProjectRequest;
-use App\Repository\DashBoardRepository;
 use App\Models\User;
-use Illuminate\Database\Eloquent\Collection;
+use App\Repository\DashBoardRepository;
 use Auth;
+use Illuminate\Database\Eloquent\Collection;
 
 class DashboardService
 {
@@ -18,9 +18,8 @@ class DashboardService
     }
 
     /**
-    * @param DashboardProjectRequest $request
-    * @return Collection<int, \App\Models\Project>|null
-    */
+     * @return Collection<int, \App\Models\Project>|null
+     */
     public function getUserProjects(DashboardProjectRequest $request): ?Collection
     {
         $user = Auth::user();
@@ -32,8 +31,8 @@ class DashboardService
     }
 
     /**
-    * @return Collection<int, \App\Models\Project>
-    */
+     * @return Collection<int, \App\Models\Project>
+     */
     public function getDashboardProjects(): Collection
     {
         $user = Auth::user();
@@ -49,20 +48,18 @@ class DashboardService
     }
 
     /**
-    * @param User $user
-    * @param DashboardProjectRequest $request
-    * @return Collection<int,\App\Models\Project>
-    */
+     * @return Collection<int,\App\Models\Project>
+     */
     private function filterProjects(User $user, DashboardProjectRequest $request): Collection
     {
         $filters = $this->getFilters($request);
-        $query = $filters['member'] 
+        $query = $filters['member']
             ? $user->members(true)
             : $user->projects();
         $results = $query
             ->with(['stage', 'user'])
-            ->when($filters['abandoned'], fn($query) => $query->trashed())
-            ->when($filters['search'], fn($query) => $query->search($filters['search']))
+            ->when($filters['abandoned'], fn ($query) => $query->trashed())
+            ->when($filters['search'], fn ($query) => $query->search($filters['search']))
             ->sortBy($filters['sort'])
             ->get();
 
@@ -71,7 +68,6 @@ class DashboardService
     }
 
     /**
-     * @param DashboardProjectRequest $request
      * @return array<string,mixed>
      */
     private function getFilters(DashboardProjectRequest $request): array
@@ -83,6 +79,4 @@ class DashboardService
             'abandoned' => $request->validated('abandoned', false),
         ];
     }
-
-
 }

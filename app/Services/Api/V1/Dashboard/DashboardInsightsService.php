@@ -2,11 +2,11 @@
 
 namespace App\Services\Api\V1\Dashboard;
 
+use App\Enums\InsightPriority;
+use App\Enums\InsightType;
+use App\Enums\StatusLevel;
 use App\Repository\DashboardInsightsRepository;
 use Illuminate\Support\Collection;
-use App\Enums\InsightType;
-use App\Enums\InsightPriority;
-use App\Enums\StatusLevel;
 
 final readonly class DashboardInsightsService
 {
@@ -62,6 +62,7 @@ final readonly class DashboardInsightsService
         $userProjects = $this->insightsRepository->getUserProjects($userId);
         $overdueCount = $this->insightsRepository->getOverdueTasksCount($userId);
         $criticalProjects = $this->insightsRepository->getCriticalProjectsCount($userProjects);
+
         return [
             ...$this->buildOverdueInsights($overdueCount),
             ...$this->buildCriticalProjectsInsights($criticalProjects),

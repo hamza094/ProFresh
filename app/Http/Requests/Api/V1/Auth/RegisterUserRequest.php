@@ -24,15 +24,16 @@ class RegisterUserRequest extends FormRequest
     {
         return [
             /**
-            * @example berry
+             * @example berry
              */
             'name' => 'required|string|max:100',
-             'email' => 'required|string|email|max:255|unique:users',
-             /**
+            'email' => 'required|string|email|max:255|unique:users',
+            /**
              * Passwords require letters, mixed case,  numbers, and symbols.
+             *
              * @example Berry@04
              */
-             'password' => [
+            'password' => [
                 'required',
                 'string',
                 'confirmed',
@@ -42,7 +43,7 @@ class RegisterUserRequest extends FormRequest
         ];
     }
 
-       /**
+    /**
      * @return array<string, string>
      */
     public function messages()

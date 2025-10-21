@@ -2,8 +2,8 @@
 
 namespace App\Http\Resources\Api\V1;
 
-use Illuminate\Http\Resources\Json\JsonResource;
 use Carbon\Carbon;
+use Illuminate\Http\Resources\Json\JsonResource;
 
 class ReceiptResource extends JsonResource
 {
@@ -16,14 +16,14 @@ class ReceiptResource extends JsonResource
     public function toArray($request)
     {
         return [
-          'id' => $this->id,
-          'created_at'=>\Timezone::convertToLocal(Carbon::parse($this->created_at)),
-          'currency'=>$this->currency,
-          'quantity'=>$this->quantity,
-          'receipt_url'=>$this->receipt_url,
-          'tax'=>$this->tax,
-          'amount'=>$this->amount,
-          'updated_at'=>$this->updated_at->diffForHumans()
+            'id' => $this->id,
+            'created_at' => \Timezone::convertToLocal(Carbon::parse($this->created_at)),
+            'currency' => $this->currency,
+            'quantity' => $this->quantity,
+            'receipt_url' => $this->receipt_url,
+            'tax' => $this->tax,
+            'amount' => $this->amount,
+            'updated_at' => $this->updated_at->diffForHumans(),
         ];
     }
 }

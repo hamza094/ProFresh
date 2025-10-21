@@ -18,18 +18,19 @@ trait HasSubscription
      * Get the user's current subscription plan name ('monthly', 'yearly', 'Not Subscribed', or 'Unknown').
      * Optionally accepts plan IDs for testability.
      */
-    public function subscribedPlan(int $monthlyPlanId = null, int $yearlyPlanId = null): string
+    public function subscribedPlan(?int $monthlyPlanId = null, ?int $yearlyPlanId = null): string
     {
         $subscription = $this->getSubscription();
-        if (!$subscription) {
+        if (! $subscription) {
             return 'Not Subscribed';
         }
         $monthlyPlanId = $monthlyPlanId ?? (int) config('services.paddle.monthly');
         $yearlyPlanId = $yearlyPlanId ?? (int) config('services.paddle.yearly');
         $plans = [
             $monthlyPlanId => 'monthly',
-            $yearlyPlanId  => 'yearly',
+            $yearlyPlanId => 'yearly',
         ];
+
         return $plans[$subscription->paddle_plan] ?? 'Unknown';
     }
 
@@ -39,26 +40,24 @@ trait HasSubscription
     public function hasGracePeriod(): bool
     {
         $subscription = $this->getSubscription();
+
         return $subscription ? $subscription->onGracePeriod() : false;
     }
 
     /**
      * Get the user's next payment for the ProFresh subscription, or a message if not subscribed.
-     *
-     * @return mixed
      */
     public function payment(): mixed
     {
         $subscription = $this->getSubscription();
+
         return $subscription ? $subscription->nextPayment() : 'No active subscription';
     }
 
     /**
      * Helper to get the ProFresh subscription instance.
-     *
-     * @return mixed
      */
-     function getSubscription(): mixed
+    public function getSubscription(): mixed
     {
         return $this->subscription(self::SUBSCRIPTION_NAME);
     }

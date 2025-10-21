@@ -2,12 +2,9 @@
 
 namespace Tests\Feature\Api\V1;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Http\UploadedFile;
 use App\Enums\FileType;
 use App\Services\Api\V1\FileService;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Validation\ValidationException;
 use Tests\TestCase;
 
@@ -16,18 +13,19 @@ class FileUploadTest extends TestCase
     use RefreshDatabase;
 
     private $fileService;
+
     private $fileType;
 
-     public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
-        $this->fileService = new FileService();
+        $this->fileService = new FileService;
         $this->fileType = FileType::AVATAR;
     }
 
-     /** @test */
-     public function store_method_when_file_missing(): void
-     {
+    /** @test */
+    public function store_method_when_file_missing(): void
+    {
         $id = 1;
 
         $this->expectException(ValidationException::class);

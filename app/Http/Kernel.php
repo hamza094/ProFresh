@@ -37,15 +37,15 @@ class Kernel extends HttpKernel
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
-             \App\Http\Middleware\TrackLastActiveAt::class,
+            \App\Http\Middleware\TrackLastActiveAt::class,
 
         ],
 
         'api' => [
-             'throttle:60,10',
+            'throttle:60,10',
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
             \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
-             \App\Http\Middleware\TrackLastActiveAt::class,
+            \App\Http\Middleware\TrackLastActiveAt::class,
         ],
     ];
 
@@ -71,16 +71,16 @@ class Kernel extends HttpKernel
         'role' => \Spatie\Permission\Middleware\RoleMiddleware::class,
         'permission' => \Spatie\Permission\Middleware\PermissionMiddleware::class,
         'role_or_permission' => \Spatie\Permission\Middleware\RoleOrPermissionMiddleware::class,
-        'zoom.webhook'=>\App\Http\Middleware\VerifyZoomWebhook::class,
+        'zoom.webhook' => \App\Http\Middleware\VerifyZoomWebhook::class,
         'guest.authenticated' => \App\Http\Middleware\AllowGuestOrAuthenticated::class,
 
     ];
 
     protected function bootstrappers()
-  {
-    return array_merge(
-        [\Bugsnag\BugsnagLaravel\OomBootstrapper::class],
-        parent::bootstrappers(),
-    );
-   }
+    {
+        return array_merge(
+            [\Bugsnag\BugsnagLaravel\OomBootstrapper::class],
+            parent::bootstrappers(),
+        );
+    }
 }

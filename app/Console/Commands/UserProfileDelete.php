@@ -2,8 +2,8 @@
 
 namespace App\Console\Commands;
 
-use Illuminate\Console\Command;
 use App\Actions\DeleteProfileAction;
+use Illuminate\Console\Command;
 
 class UserProfileDelete extends Command
 {
@@ -26,8 +26,9 @@ class UserProfileDelete extends Command
      */
     public function handle(): int
     {
-        (new DeleteProfileAction())->execute();
+        (new DeleteProfileAction)->execute();
         $this->info('User profile deletion process completed.');
+
         return 0;
     }
 }

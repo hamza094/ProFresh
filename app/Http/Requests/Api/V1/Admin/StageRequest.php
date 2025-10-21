@@ -2,9 +2,9 @@
 
 namespace App\Http\Requests\Api\V1\Admin;
 
+use App\Models\Stage;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
-use App\Models\Stage;
 
 class StageRequest extends FormRequest
 {
@@ -25,7 +25,7 @@ class StageRequest extends FormRequest
      */
     public function rules()
     {
-         return [
+        return [
             'name' => [
                 'required',
                 'string',

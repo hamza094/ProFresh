@@ -15,8 +15,8 @@ class RolesResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'id'=>$this->pivot->role_id,
-            'name'=>$this->name,
+            'id' => $this->pivot->role_id,
+            'name' => $this->name,
         ];
     }
 }

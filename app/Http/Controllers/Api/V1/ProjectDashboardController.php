@@ -3,18 +3,18 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use Illuminate\Http\JsonResponse;
-use App\Repository\UserTasksDataRepository;
-use App\Http\Resources\Api\V1\UserActivitiesResource;
-use App\Services\Api\V1\DashboardService;
-use App\Http\Resources\Api\V1\ProjectsResource;
-use App\Http\Resources\Api\V1\UserTasksResource;
 use App\Http\Requests\Api\V1\DashboardProjectRequest;
 use App\Http\Requests\Api\V1\UserActivitiesRequest;
 use App\Http\Requests\Api\V1\UserTasksRequest;
+use App\Http\Resources\Api\V1\ProjectsResource;
+use App\Http\Resources\Api\V1\UserActivitiesResource;
+use App\Http\Resources\Api\V1\UserTasksResource;
 use App\Repository\DashBoardRepository;
+use App\Repository\UserTasksDataRepository;
 use App\Services\Api\V1\Dashboard\DashboardInsightsService;
+use App\Services\Api\V1\DashboardService;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Pagination\LengthAwarePaginator;
 
@@ -27,11 +27,10 @@ class ProjectDashboardController extends Controller
 
     /**
      * Get paginated list of user's projects with filters
-     * 
+     *
      * List and filter user's projects. Supports pagination with defined items per page.
      *
      * @response AnonymousResourceCollection<LengthAwarePaginator<ProjectsResource>>
-     * 
      */
     public function userProjects(DashboardProjectRequest $request): JsonResponse
     {
@@ -50,7 +49,7 @@ class ProjectDashboardController extends Controller
     public function dashboardProjects(): JsonResponse
     {
         $projects = $this->dashboardService->getDashboardProjects();
-        
+
         $projectsResource = ProjectsResource::collection($projects);
 
         return response()->json([
@@ -62,15 +61,11 @@ class ProjectDashboardController extends Controller
 
     /**
      * Get user project activities
-     *
-     * @param UserActivitiesRequest $request
-     * @param DashBoardRepository $repository
-     * @return AnonymousResourceCollection
      */
     public function activities(UserActivitiesRequest $request, DashBoardRepository $repository): AnonymousResourceCollection
     {
         $dateRange = $request->getDateRange();
-        
+
         $activities = $repository->getUserActivities(
             auth()->id(),
             $dateRange['start_date'],
@@ -81,13 +76,13 @@ class ProjectDashboardController extends Controller
     }
 
     public function chartData(Request $request, DashBoardRepository $dashboardRepository): JsonResponse
-    {        
+    {
         $data = $dashboardRepository->getProjectStats($request);
 
         return response()->json([
-          'success' => true,
-           'message' => 'Project stats fetched successfully.',
-           'data' => $data,
+            'success' => true,
+            'message' => 'Project stats fetched successfully.',
+            'data' => $data,
         ]);
     }
 

@@ -3,18 +3,16 @@
 namespace Tests\Traits;
 
 use App\Interfaces\Zoom;
-use App\Services\Api\V1\Zoom\ZoomService;
 use App\Services\Api\V1\Zoom\ZoomServiceFake;
 
 trait InteractsWithZoom
 {
-   private function fakeZoom(): ZoomServiceFake
-   {
-      $zoomServiceFake = new ZoomServiceFake();
+    private function fakeZoom(): ZoomServiceFake
+    {
+        $zoomServiceFake = new ZoomServiceFake;
 
-      $this->swap(Zoom::class, $zoomServiceFake);
+        $this->swap(Zoom::class, $zoomServiceFake);
 
-      return $zoomServiceFake;
-   }
+        return $zoomServiceFake;
+    }
 }
-	

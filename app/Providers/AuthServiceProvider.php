@@ -2,15 +2,15 @@
 
 namespace App\Providers;
 
-use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
-use Illuminate\Support\Facades\Gate;
 use App\Models\Task;
-use Illuminate\Validation\Rules\Password;
-use Illuminate\Notifications\Messages\MailMessage;
-use Illuminate\Validation\ValidationException;
 use Illuminate\Auth\Notifications\VerifyEmail;
-use Illuminate\Support\Facades\URL;
+use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\URL;
+use Illuminate\Validation\Rules\Password;
+use Illuminate\Validation\ValidationException;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -38,27 +38,24 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies();
 
         Password::defaults(
-            fn () =>
-        Password::min(8)
-            ->letters()
-             ->mixedCase()
-            ->numbers()
-            ->symbols()
+            fn () => Password::min(8)
+                ->letters()
+                ->mixedCase()
+                ->numbers()
+                ->symbols()
         );
 
         Gate::before(function ($user, $ability) {
             return $user->hasRole('Admin') ? true : null;
         });
 
-
         Gate::define('forbid-when-archived', function ($user, Task $task) {
             return $task->trashed()
             ? throw ValidationException::withMessages(['task' => 'Task is archived. Activate the task to proceed.']) : true;
         });
 
-
         VerifyEmail::toMailUsing(function (object $notifiable, string $url) {
-            return (new MailMessage())
+            return (new MailMessage)
                 ->subject('Verify Email Address')
                 ->line('Click the button below to verify your email address.This link will expire after 60 minutes.Please Remember you must be login to get your account verified')
                 ->action('Verify Email Address', $url);

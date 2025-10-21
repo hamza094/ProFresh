@@ -3,10 +3,9 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
-use App\Interfaces\Paddle;
-use App\Http\Resources\Api\V1\SubscriptionResource;
 use App\Http\Requests\Api\V1\SubscriptionRequest;
-use Illuminate\Http\Request;
+use App\Http\Resources\Api\V1\SubscriptionResource;
+use App\Interfaces\Paddle;
 use Illuminate\Http\JsonResponse;
 
 class SubscriptionController extends Controller
@@ -47,4 +46,3 @@ class SubscriptionController extends Controller
         ], 200);
     }
 }
-

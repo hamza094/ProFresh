@@ -17,30 +17,29 @@ class TaskHealthMetricAction
         }
 
         $completionRate = $this->computeCompletionRate($activeTasks, $completedCount);
-        $overdueRate      = $this->computeOverdueRate($activeTasks, $completedCount, $overdueCount);
-        $abandonmentRate  = $this->computeAbandonmentRate($totalTasks, $abandonedCount);
+        $overdueRate = $this->computeOverdueRate($activeTasks, $completedCount, $overdueCount);
+        $abandonmentRate = $this->computeAbandonmentRate($totalTasks, $abandonedCount);
 
         $weights = [
-        'completion'   => 0.5,
-        'overdue'      => 0.3,
-        'abandonment'  => 0.2,
-    ];
+            'completion' => 0.5,
+            'overdue' => 0.3,
+            'abandonment' => 0.2,
+        ];
 
+        $taskHealth =
+            ($completionRate * $weights['completion']) +
+            ((100 - $overdueRate) * $weights['overdue']) +
+            ((100 - $abandonmentRate) * $weights['abandonment']);
 
-    $taskHealth =
-        ($completionRate * $weights['completion']) +
-        ((100 - $overdueRate) * $weights['overdue']) +
-        ((100 - $abandonmentRate) * $weights['abandonment']);
- 
         return max(0, min(100, round($taskHealth, 1)));
     }
 
     /**
      * Extract counts from the project object and normalize to ints.
      * Returns: [total, active, completed, overdue, abandoned]
-    *
-    * @return list<int> [total, active, completed, overdue, abandoned]
-    */
+     *
+     * @return list<int> [total, active, completed, overdue, abandoned]
+     */
     private function getCountsFromProject(Project $project): array
     {
         $total = (int) ($project->tasks_count ?? 0);
@@ -88,7 +87,6 @@ class TaskHealthMetricAction
 
         return ($abandonedCount / $totalTasks) * 100;
     }
-
 
     /**
      * Public summary helper that returns task rates and counts.

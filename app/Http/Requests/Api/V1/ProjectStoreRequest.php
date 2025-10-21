@@ -25,29 +25,29 @@ class ProjectStoreRequest extends FormRequest
     {
         return [
             /**
-             * @example The Dimension 
-            */
-            'name'=>'required|string|max:150|min:4',
+             * @example The Dimension
+             */
+            'name' => 'required|string|max:150|min:4',
             /**
-             * @example This project is about band of the beatels 
-            */ 
-            'about'=>'required|min:15',
+             * @example This project is about band of the beatels
+             */
+            'about' => 'required|min:15',
             /**
              * @example 1
-             */ 
-            'stage_id'=>'required|int|between:1,5',
+             */
+            'stage_id' => 'required|int|between:1,5',
             /**
-             * @example Some notes about project 
-            */ 
-            'notes'=>'sometimes|max:250',
+             * @example Some notes about project
+             */
+            'notes' => 'sometimes|max:250',
             /**
              * Only three tasks are allowed while creating project
-            */ 
+             */
             'tasks' => 'sometimes|array|max:3',
             /**
              * @example This is project first task
-             */ 
-            'tasks.*.title' =>'required|string|min:5|max:55',
+             */
+            'tasks.*.title' => 'required|string|min:5|max:55',
         ];
     }
 }

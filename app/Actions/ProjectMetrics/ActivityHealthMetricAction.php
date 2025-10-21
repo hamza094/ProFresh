@@ -33,9 +33,16 @@ class ActivityHealthMetricAction
 
     private function clampPercent(float $value): float
     {
-        if (!is_finite($value)) return 0.0;
-        if ($value < 0) return 0.0;
-        if ($value > 100) return 100.0;
+        if (! is_finite($value)) {
+            return 0.0;
+        }
+        if ($value < 0) {
+            return 0.0;
+        }
+        if ($value > 100) {
+            return 100.0;
+        }
+
         return $value;
     }
 }

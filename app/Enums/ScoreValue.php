@@ -4,8 +4,5 @@ namespace App\Enums;
 
 class ScoreValue
 {
-   const Hot_Score=21;
+    const Hot_Score = 21;
 }
-
-
-?>

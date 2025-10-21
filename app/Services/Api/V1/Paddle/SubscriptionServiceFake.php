@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Services\Api\V1\Paddle;
+
 use App\Interfaces\Paddle;
 use App\Models\User;
 
@@ -17,7 +18,7 @@ final class SubscriptionServiceFake implements Paddle
     public function swap(User $user, string $plan): array
     {
         return [
-            'message' => 'Your subscription has been successfully updated to the ' . $plan . ' plan (fake).',
+            'message' => 'Your subscription has been successfully updated to the '.$plan.' plan (fake).',
         ];
     }
 
@@ -25,7 +26,7 @@ final class SubscriptionServiceFake implements Paddle
      * @return array{message: string}
      */
     public function cancel(User $user, string $plan): array
-    {   
+    {
         return [
             'message' => 'Your subscription has been canceled successfully (fake).',
         ];

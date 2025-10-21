@@ -2,19 +2,15 @@
 
 namespace Tests\Feature\Api\V1;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Tests\TestCase;
 use App\Models\Project;
-use App\Models\Task;
 use App\Models\User;
 use App\Traits\ProjectSetup;
-use Illuminate\Support\Facades\DB;
-use Carbon\Carbon;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 class DashboardTest extends TestCase
 {
-    use RefreshDatabase, ProjectSetup;
+    use ProjectSetup, RefreshDatabase;
 
     /** @test */
     public function auth_user_can_view_dashboard_projects()
@@ -28,7 +24,7 @@ class DashboardTest extends TestCase
             ->assertJsonStructure([
                 'projects',
                 'projectsCount',
-                'message'
+                'message',
             ]);
 
         // Should only return 3 projects (latest)
@@ -51,5 +47,4 @@ class DashboardTest extends TestCase
         $this->assertEquals(0, $response->json('projectsCount'));
         $this->assertEquals('No active projects found', $response->json('message'));
     }
-    
 }

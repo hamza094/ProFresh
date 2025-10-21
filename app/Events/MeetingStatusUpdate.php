@@ -2,21 +2,16 @@
 
 namespace App\Events;
 
-use Illuminate\Broadcasting\Channel;
+use App\Http\Resources\Api\V1\Zoom\MeetingsResource;
+use App\Models\Meeting;
 use Illuminate\Broadcasting\InteractsWithSockets;
-use Illuminate\Broadcasting\PresenceChannel;
 use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
-use App\Http\Resources\Api\V1\Zoom\MeetingsResource;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
-use App\Models\Meeting;
 
 class MeetingStatusUpdate implements ShouldBroadcast
 {
-    /**
-     * @var \App\Models\Meeting
-     */
     public Meeting $meeting;
 
     use Dispatchable, InteractsWithSockets, SerializesModels;
@@ -33,7 +28,7 @@ class MeetingStatusUpdate implements ShouldBroadcast
 
     public function broadcastOn()
     {
-       return new PrivateChannel('meetingStatus.'.$this->meeting->id);
+        return new PrivateChannel('meetingStatus.'.$this->meeting->id);
     }
 
     /**
@@ -47,6 +42,6 @@ class MeetingStatusUpdate implements ShouldBroadcast
     public function broadcastWith(): array
     {
         return (new MeetingsResource($this->meeting))
-              ->resolve();
+            ->resolve();
     }
 }

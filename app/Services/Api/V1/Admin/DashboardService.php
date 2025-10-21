@@ -1,18 +1,19 @@
 <?php
+
 namespace App\Services\Api\V1\Admin;
 
 use App\Repository\Admin\DashboardRepository;
 
 class DashboardService
 {
-   protected $dashboardRepository;
+    protected $dashboardRepository;
 
-   public function __construct(DashboardRepository $dashboardRepository)
-   {
+    public function __construct(DashboardRepository $dashboardRepository)
+    {
         $this->dashboardRepository = $dashboardRepository;
-   }
+    }
 
-   public function fetchDataForMonths($startDate, $endDate)
+    public function fetchDataForMonths($startDate, $endDate)
     {
         $data = [];
         $result = $this->dashboardRepository->fetchDataForMonths($startDate, $endDate);
@@ -51,4 +52,3 @@ class DashboardService
         return $data;
     }
 }
-?>

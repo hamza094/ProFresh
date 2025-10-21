@@ -28,10 +28,10 @@ class SubscriptionRequest extends FormRequest
         ];
     }
 
-     protected function prepareForValidation()
+    protected function prepareForValidation()
     {
         // Merge the route parameter "plan" into the request data if it's not already present.
-        if (!$this->has('plan') && $this->route('plan')) {
+        if (! $this->has('plan') && $this->route('plan')) {
             $this->merge(['plan' => $this->route('plan')]);
         }
     }

@@ -7,5 +7,3 @@ enum NotificationFilter: string
     case READ = 'read';
     case UNREAD = 'unread';
 }
-
-?>

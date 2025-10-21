@@ -18,23 +18,21 @@ class ConversationRequest extends FormRequest
 
     /**
      * Get the validation rules that apply to the request.
-     *
-     * @return array
      */
     public function rules(): array
     {
         return [
             'message' => 'required_without:file|string|min:2|max:1000',
-                        
+
             'file' => 'required_without:message|file|max:700|mimes:jpg,png,pdf,docx',
         ];
     }
 
     public function messages(): array
-   {
-    return [
-        'message.required_without' => 'A message is required if no file is uploaded.',
-        'file.required_without' => 'A file is required if no message is provided.',
-    ];
-   }
+    {
+        return [
+            'message.required_without' => 'A message is required if no file is uploaded.',
+            'file.required_without' => 'A file is required if no message is provided.',
+        ];
+    }
 }

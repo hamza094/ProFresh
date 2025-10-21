@@ -2,18 +2,17 @@
 
 namespace Tests\Feature\Api\Controllers\Paddle;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Tests\Traits\InteractsWithPaddle;
-use Laravel\Sanctum\Sanctum;
 use App\Http\Middleware\CheckSubscription;
-use Illuminate\Support\Facades\Hash;
 use App\Models\User;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Hash;
+use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
+use Tests\Traits\InteractsWithPaddle;
 
 class SubscriptionTest extends TestCase
 {
-    use RefreshDatabase, InteractsWithPaddle;
+    use InteractsWithPaddle, RefreshDatabase;
 
     protected function setUp(): void
     {
@@ -22,7 +21,7 @@ class SubscriptionTest extends TestCase
         // Create a user
         $user = User::factory()->create([
             'email' => 'johndoe@example.org',
-            'password' => Hash::make('testpassword')
+            'password' => Hash::make('testpassword'),
         ]);
 
         Sanctum::actingAs($user);
@@ -88,7 +87,7 @@ class SubscriptionTest extends TestCase
     public function it_fails_validation_for_invalid_plan()
     {
         $invalidPlan = 'weekly';
-        $response = $this->getJson('/api/v1/user/subscribe/' . $invalidPlan);
+        $response = $this->getJson('/api/v1/user/subscribe/'.$invalidPlan);
 
         $response->assertStatus(422)
             ->assertJsonValidationErrors(['plan']);

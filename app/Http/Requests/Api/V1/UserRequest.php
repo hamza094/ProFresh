@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Requests\Api\V1;
+
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rules\Password;
 
@@ -81,12 +82,12 @@ class UserRequest extends FormRequest
      */
     public function messages()
     {
-      return [
-         'current_password.current_password' => 'The given password does not match to current password.',
-          'password.mixed' => 'The password must include both uppercase and lowercase letters.',
-          'password.letters' => 'The password must contain at least one letter.',
-          'password.symbols' => 'The password must include at least one special character (symbol).',
-          'password.numbers' => 'The password must contain at least one number.',
+        return [
+            'current_password.current_password' => 'The given password does not match to current password.',
+            'password.mixed' => 'The password must include both uppercase and lowercase letters.',
+            'password.letters' => 'The password must contain at least one letter.',
+            'password.symbols' => 'The password must include at least one special character (symbol).',
+            'password.numbers' => 'The password must contain at least one number.',
         ];
     }
 }

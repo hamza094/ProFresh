@@ -15,6 +15,7 @@ class CommunicationHealthMetricAction
         $conversationCount = $this->getRecentConversationCount($project);
         $config = $this->resolveCommunicationConfig();
         $rawScore = $this->computeRawScore($conversationCount, $config['logBase'], $config['scale']);
+
         return $this->clampScore($rawScore, $config['maxScore']);
     }
 

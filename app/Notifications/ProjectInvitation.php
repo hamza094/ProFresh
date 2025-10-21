@@ -2,36 +2,33 @@
 
 namespace App\Notifications;
 
-use App\Models\Project;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Notifications\Notification;
-use Illuminate\Notifications\Messages\BroadcastMessage;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Notifications\Messages\BroadcastMessage;
+use Illuminate\Notifications\Notification;
 
-class ProjectInvitation extends Notification implements ShouldQueue,ShouldBroadcast
+class ProjectInvitation extends Notification implements ShouldBroadcast, ShouldQueue
 {
     use Queueable;
 
     /**
      * Create a new notification instance.
-     *
      */
     public function __construct(
-      protected string $projectName,
-      protected string $projectPath,
-      protected array $notifierData
-     ){}
+        protected string $projectName,
+        protected string $projectPath,
+        protected array $notifierData
+    ) {}
 
-     /**
+    /**
      * Get the notification's delivery channels.
      *
-     * @param mixed $notifiable
      * @return array<string> The channels through which the notification is delivered.
      */
     public function via(mixed $notifiable): array
     {
-        return ['database','broadcast'];
+        return ['database', 'broadcast'];
     }
 
     /**
@@ -42,16 +39,15 @@ class ProjectInvitation extends Notification implements ShouldQueue,ShouldBroadc
     private function notificationData(): array
     {
         return [
-          'message' => 'Sent you a project '. $this->projectName.' invitation',
-          'notifier' => $this->notifierData,
-          'link' => $this->projectPath
+            'message' => 'Sent you a project '.$this->projectName.' invitation',
+            'notifier' => $this->notifierData,
+            'link' => $this->projectPath,
         ];
     }
 
-     /**
+    /**
      * Get the array representation of the notification.
      *
-     * @param mixed $notifiable
      * @return array<string, mixed> The notification data.
      */
     public function toArray(mixed $notifiable): array
@@ -62,12 +58,10 @@ class ProjectInvitation extends Notification implements ShouldQueue,ShouldBroadc
     /**
      * Get the broadcast representation of the notification.
      *
-     * @param mixed $notifiable
      * @return BroadcastMessage The broadcast notification data.
      */
-    public function toBroadcast(mixed $notifiable):BroadcastMessage
+    public function toBroadcast(mixed $notifiable): BroadcastMessage
     {
-      return new BroadcastMessage($this->notificationData());
-   }
-
+        return new BroadcastMessage($this->notificationData());
+    }
 }

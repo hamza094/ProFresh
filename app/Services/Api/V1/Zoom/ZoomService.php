@@ -5,24 +5,22 @@ namespace App\Services\Api\V1\Zoom;
 use App\DataTransferObjects\Zoom\AccessTokenDetails;
 use App\DataTransferObjects\Zoom\AuthorizationCallbackDetails;
 use App\DataTransferObjects\Zoom\AuthorizationRedirectDetails;
-use App\DataTransferObjects\Zoom\UpdateMeetingData;
 use App\DataTransferObjects\Zoom\Meeting;
 use App\Exceptions\Integrations\Zoom\ZoomException;
-use App\Http\Integrations\Zoom\ZoomConnector;
-use App\Http\Integrations\Zoom\Requests\GetAccessTokenRequest;
 use App\Http\Integrations\Zoom\Requests\CreateMeeting;
-use App\Http\Integrations\Zoom\Requests\UpdateMeeting;
 use App\Http\Integrations\Zoom\Requests\DeleteMeeting;
+use App\Http\Integrations\Zoom\Requests\GetAccessTokenRequest;
 use App\Http\Integrations\Zoom\Requests\GetZakToken;
+use App\Http\Integrations\Zoom\Requests\UpdateMeeting;
+use App\Http\Integrations\Zoom\ZoomConnector;
 use App\Interfaces\Zoom;
-use Saloon\Http\Response as SaloonResponse;
 use App\Models\User;
 use Illuminate\Support\Str;
 use Saloon\Http\Auth\AccessTokenAuthenticator;
+use Saloon\Http\Response as SaloonResponse;
 
 final class ZoomService implements Zoom
 {
-
     public function getAuthRedirectDetails(): AuthorizationRedirectDetails
     {
         $codeVerifier = Str::random(random_int(43, 128));
@@ -77,7 +75,7 @@ final class ZoomService implements Zoom
 
     private function connector(): ZoomConnector
     {
-        return new ZoomConnector();
+        return new ZoomConnector;
     }
 
     private function connectorForUser(User $user): ZoomConnector
@@ -89,7 +87,7 @@ final class ZoomService implements Zoom
         if ($accessTokenDetails->hasExpired()) {
 
             $newAccessTokenDetails =
-            
+
             $connector->refreshAccessToken($accessTokenDetails);
 
             $connector->authenticate($newAccessTokenDetails);
@@ -121,12 +119,11 @@ final class ZoomService implements Zoom
     }
 
     /**
-     * @param array<string, mixed> $validated
+     * @param  array<string, mixed>  $validated
      */
     public function createMeeting(array $validated, User $user): Meeting
     {
-        if (!$user->isConnectedToZoom()) 
-        {
+        if (! $user->isConnectedToZoom()) {
             throw new ZoomException('User is not connected to Zoom.');
         }
 
@@ -136,12 +133,11 @@ final class ZoomService implements Zoom
     }
 
     /**
-     * @param array<string, mixed> $validated
+     * @param  array<string, mixed>  $validated
      */
     public function updateMeeting(array $validated, User $user): SaloonResponse
     {
-        if (!$user->isConnectedToZoom()) 
-        {
+        if (! $user->isConnectedToZoom()) {
             throw new ZoomException('User is not connected to Zoom.');
         }
 
@@ -152,8 +148,7 @@ final class ZoomService implements Zoom
 
     public function deleteMeeting(int $meetingId, User $user): SaloonResponse
     {
-        if (!$user->isConnectedToZoom()) 
-        {
+        if (! $user->isConnectedToZoom()) {
             throw new ZoomException('User is not connected to Zoom.');
         }
 
@@ -164,16 +159,14 @@ final class ZoomService implements Zoom
 
     public function getZakToken(User $user): string
     {
-        if (!$user->isConnectedToZoom()) 
-        {
+        if (! $user->isConnectedToZoom()) {
             throw new ZoomException('User is not connected to Zoom.');
         }
 
         $response = $this->connectorForUser($user)
-            ->send(new GetZakToken())
+            ->send(new GetZakToken)
             ->json();
 
         return $response['token'];
     }
 }
-

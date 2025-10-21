@@ -3,19 +3,16 @@
 namespace App\Http\Requests\Api\V1\Auth;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\ValidationException;
 
 /**
  * Form Request for Confirming Two-Factor Authentication Setup
- * 
+ *
  * Validates 2FA code and ensures setup is not already confirmed.
  */
 class ConfirmTwoFactorRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
-     * 
-     * @return bool
      */
     public function authorize(): bool
     {
@@ -24,7 +21,7 @@ class ConfirmTwoFactorRequest extends FormRequest
 
     /**
      * Get the validation rules that apply to the request.
-     * 
+     *
      * @return array<string, mixed>
      */
     public function rules(): array
@@ -39,9 +36,8 @@ class ConfirmTwoFactorRequest extends FormRequest
 
     /**
      * Configure the validator instance.
-     * 
-     * @param \Illuminate\Validation\Validator $validator
-     * @return void
+     *
+     * @param  \Illuminate\Validation\Validator  $validator
      */
     public function withValidator($validator): void
     {
@@ -52,24 +48,24 @@ class ConfirmTwoFactorRequest extends FormRequest
 
     /**
      * Validate 2FA setup status and code
-     * 
-     * @param \Illuminate\Validation\Validator $validator
-     * @return void
+     *
+     * @param  \Illuminate\Validation\Validator  $validator
      */
     private function validateTwoFactorSetup($validator): void
     {
         $user = $this->user();
-        
+
         if ($user && $user->hasTwoFactorEnabled()) {
             $validator->errors()->add(
-                'two_factor', 
+                'two_factor',
                 'Two-factor is already confirmed.'
             );
+
             return;
         }
-        
+
         // Validate the 2FA code
-        if ($user && !$user->hasTwoFactorEnabled() && !$user->confirmTwoFactorAuth($this->code)) {
+        if ($user && ! $user->hasTwoFactorEnabled() && ! $user->confirmTwoFactorAuth($this->code)) {
             $validator->errors()->add('code', 'Invalid code provided.');
         }
     }

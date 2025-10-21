@@ -9,4 +9,4 @@ enum TwoFactorStatus: string
     case DISABLED = 'disabled';
     case TWO_FA_REQUIRED = '2fa_required';
     case SUCCESS = 'success';
-} 
+}

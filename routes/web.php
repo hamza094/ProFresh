@@ -1,10 +1,7 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-
 use App\Http\Controllers\HomeController;
-
-use App\Http\Controllers\Api\Auth\VerificationController;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,6 +17,5 @@ Route::get('/', function () {
     return view('welcome.home');
 });
 
-
-//SPA Routes
+// SPA Routes
 Route::get('{path}', HomeController::class)->where('path', '(.*)');

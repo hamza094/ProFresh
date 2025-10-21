@@ -2,15 +2,13 @@
 
 namespace Database\Factories;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
-use App\Models\Project;
 use App\Models\Meeting;
+use App\Models\Project;
 use App\Models\User;
-use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 class MeetingFactory extends Factory
 {
-
     protected $model = Meeting::class;
 
     /**

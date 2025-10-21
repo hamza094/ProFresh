@@ -15,8 +15,8 @@ class TaskProjectResource extends JsonResource
     public function toArray($request)
     {
         return [
-        'name'=>$this->name,
-        'slug'=>$this->slug,
+            'name' => $this->name,
+            'slug' => $this->slug,
         ];
     }
 }

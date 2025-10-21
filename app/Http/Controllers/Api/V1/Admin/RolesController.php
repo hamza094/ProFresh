@@ -3,17 +3,16 @@
 namespace App\Http\Controllers\Api\V1\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Api\V1\Admin\RoleRequest;
+use App\Http\Resources\Api\V1\Admin\RoleResource;
+use F9Web\ApiResponseHelpers;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
-use Spatie\Permission\Models\Permission;
-use App\Http\Resources\Api\V1\Admin\RoleResource;
-use App\Http\Requests\Api\V1\Admin\RoleRequest;
-use F9Web\ApiResponseHelpers;
-use Illuminate\Http\JsonResponse;
 
 class RolesController extends Controller
 {
     use ApiResponseHelpers;
+
     /**
      * Display a listing of the resource.
      *
@@ -21,7 +20,7 @@ class RolesController extends Controller
      */
     public function index()
     {
-        $roles=Role::with('permissions')->get();
+        $roles = Role::with('permissions')->get();
 
         return RoleResource::collection($roles);
     }
@@ -39,22 +38,18 @@ class RolesController extends Controller
         $role->load('permissions');
 
         return $this->respondCreated([
-         'message'=>'Role Created Successfully',
-         'role'=> new RoleResource($role)
-       ]);
+            'message' => 'Role Created Successfully',
+            'role' => new RoleResource($role),
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Role $role)
-    {
-
-    }
+    public function update(Request $request, Role $role) {}
 
     /**
      * Remove the specified resource from storage.
@@ -64,10 +59,10 @@ class RolesController extends Controller
      */
     public function destroy(Role $role)
     {
-        Role::where('id',$role->id)->delete();
+        Role::where('id', $role->id)->delete();
 
         return $this->respondNoContent([
-            'message'=>'Role Deleted Successfully'
+            'message' => 'Role Deleted Successfully',
         ]);
     }
 }

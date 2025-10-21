@@ -2,23 +2,18 @@
 
 namespace App\Http\Controllers\Api\Auth;
 
+use App\Http\Controllers\Api\ApiController;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\V1\Auth\RegisterUserRequest;
-use Illuminate\Http\Request;
-use App\Http\Controllers\Api\ApiController;
-use App\Providers\RouteServiceProvider;
-use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Auth\Events\Registered;
 use App\Http\Resources\Api\V1\UsersResource;
-use Illuminate\Http\JsonResponse;
 use App\Models\User;
-
+use App\Providers\RouteServiceProvider;
+use Illuminate\Auth\Events\Registered;
+use Illuminate\Http\JsonResponse;
 
 class RegisterController extends ApiController
 {
-	    /*
+    /*
     |--------------------------------------------------------------------------
     | Register Controller
     |--------------------------------------------------------------------------
@@ -37,32 +32,30 @@ class RegisterController extends ApiController
     protected $redirectTo = RouteServiceProvider::HOME;
 
     /**
-    * @unauthenticated
-    * Register User
-    * 
-    * Registers a new user and returns the user API resource.
-    */
-
+     * @unauthenticated
+     * Register User
+     *
+     * Registers a new user and returns the user API resource.
+     */
     public function register(RegisterUserRequest $request): JsonResponse
     {
 
-      $validatedData = $request->validated();
+        $validatedData = $request->validated();
 
-    $validatedData['password'] = bcrypt($request->password);
+        $validatedData['password'] = bcrypt($request->password);
 
-      try {
-        $user = User::create($validatedData);
-        event(new Registered($user));
+        try {
+            $user = User::create($validatedData);
+            event(new Registered($user));
 
-        return response()->json([
-            'message' => 'User Registered Successfully',
-            'user' => new UsersResource($user)
-        ], 201);
+            return response()->json([
+                'message' => 'User Registered Successfully',
+                'user' => new UsersResource($user),
+            ], 201);
 
-    } catch (\Exception $e) {
-        return response()->json(['error' => 'User registration failed.'], 500);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'User registration failed.'], 500);
+        }
+
     }
-
-    }
-
 }

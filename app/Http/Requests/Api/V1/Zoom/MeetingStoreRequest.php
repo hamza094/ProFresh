@@ -1,8 +1,8 @@
 <?php
 
 namespace App\Http\Requests\Api\V1\Zoom;
-use DateTime;
 
+use DateTime;
 use Illuminate\Foundation\Http\FormRequest;
 
 class MeetingStoreRequest extends FormRequest
@@ -17,15 +17,15 @@ class MeetingStoreRequest extends FormRequest
         return true;
     }
 
-      protected function prepareForValidation()
+    protected function prepareForValidation()
     {
         try {
             $this->merge([
-                'start_time' => (new DateTime($this->input('start_time')))->format('Y-m-d H:i:s')
+                'start_time' => (new DateTime($this->input('start_time')))->format('Y-m-d H:i:s'),
             ]);
         } catch (\Exception $e) {
             $this->merge([
-                'start_time' => null
+                'start_time' => null,
             ]);
         }
     }
@@ -38,13 +38,13 @@ class MeetingStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'topic'=>'required|max:200|string',
-            'agenda'=>'required|max:2000|string',
-            'duration'=>'required|integer',
+            'topic' => 'required|max:200|string',
+            'agenda' => 'required|max:2000|string',
+            'duration' => 'required|integer',
             'start_time' => 'required|after:now',
-            'timezone'=>'required|timezone:all|string',
-            'password'=>'required|max:10|string',
-            'join_before_host'=>'required|boolean',
+            'timezone' => 'required|timezone:all|string',
+            'password' => 'required|max:10|string',
+            'join_before_host' => 'required|boolean',
         ];
     }
 }

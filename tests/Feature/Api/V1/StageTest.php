@@ -2,15 +2,13 @@
 
 namespace Tests\Feature\Api\V1;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Testing\Fluent\AssertableJson;
-use Tests\TestCase;
-use App\Models\User;
 use App\Models\Project;
 use App\Models\Stage;
+use App\Models\User;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Hash;
 use Laravel\Sanctum\Sanctum;
+use Tests\TestCase;
 
 class StageTest extends TestCase
 {
@@ -18,15 +16,15 @@ class StageTest extends TestCase
 
     public $project;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
         // create a user
         $user = User::factory()->create([
-             'email' => 'johndoe@example.org',
-             'password' => Hash::make('testpassword')
-         ]);
+            'email' => 'johndoe@example.org',
+            'password' => Hash::make('testpassword'),
+        ]);
 
         Sanctum::actingAs(
             $user,
@@ -38,7 +36,7 @@ class StageTest extends TestCase
         Stage::factory()->postponed()->create();
 
         $this->project = Project::factory()->for($user)
-        ->create(['stage_id' => 1]);
+            ->create(['stage_id' => 1]);
     }
 
     /** @test */
@@ -47,7 +45,7 @@ class StageTest extends TestCase
         $stages = Stage::all();
 
         $response = $this->getJson('api/v1/stages')
-          ->assertOk();
+            ->assertOk();
 
         $this->assertEquals($stages->count(), 4);
     }
@@ -60,21 +58,21 @@ class StageTest extends TestCase
         $newStageId = 2;
 
         $response = $this->withoutExceptionHandling()
-        ->patchJson($this->project->path().'/stage', [
-              'stage' => $newStageId,
-          ]);
+            ->patchJson($this->project->path().'/stage', [
+                'stage' => $newStageId,
+            ]);
 
-        $this->assertDatabaseHas('projects', ['id' => $this->project->id,'stage_id' => $newStageId]);
+        $this->assertDatabaseHas('projects', ['id' => $this->project->id, 'stage_id' => $newStageId]);
 
         $this->project->refresh();
 
         $response->assertJson([
-          'project' => [
-            'stage' => ['name' => $this->project->stage->name,
-                     'id' => $this->project->stage->id],
-            'stage_updated_at' => $this->project->stage_updated_at
-                      ->format(config('app.date_formats.exact'))]
-         ]);
+            'project' => [
+                'stage' => ['name' => $this->project->stage->name,
+                    'id' => $this->project->stage->id],
+                'stage_updated_at' => $this->project->stage_updated_at
+                    ->format(config('app.date_formats.exact'))],
+        ]);
     }
 
     /** @test */
@@ -84,18 +82,17 @@ class StageTest extends TestCase
 
         $response = $this->withoutExceptionHandling()->patchJson($this->project->path().'/stage', [
             'stage' => 4,
-          'postponed_reason' => $postponed_reason,
-          ]);
+            'postponed_reason' => $postponed_reason,
+        ]);
 
         $this->project->refresh();
 
-        $this->assertDatabaseHas('projects', ['id' => $this->project->id,'postponed_reason' => $postponed_reason,'stage_id' => 4]);
+        $this->assertDatabaseHas('projects', ['id' => $this->project->id, 'postponed_reason' => $postponed_reason, 'stage_id' => 4]);
 
         $this->project->refresh();
 
         $response->assertJson([
-          'project' => ['postponed_reason' => $this->project->postponed_reason]
-   ]);
+            'project' => ['postponed_reason' => $this->project->postponed_reason],
+        ]);
     }
-
 }

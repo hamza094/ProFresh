@@ -2,9 +2,8 @@
 
 namespace App\Http\Requests\Api\V1;
 
-use Illuminate\Foundation\Http\FormRequest;
 use App\Rules\ActiveProjectMember;
-use Illuminate\Validation\Rule;
+use Illuminate\Foundation\Http\FormRequest;
 
 class TaskMembersRequest extends FormRequest
 {
@@ -26,18 +25,17 @@ class TaskMembersRequest extends FormRequest
     public function rules()
     {
         return [
-        /**
-        * 
-        * - Prevents assigning a task to users who are already assigned.
-        * - Ensures tasks can only be assigned to active members of the project.
-        */ 
-        'members' => ['required',
-         'array',
-          'min:1',
-          $this->membersValidation(),
-          new ActiveProjectMember($this->task),
-        ],
-        'members.*' => ['required', 'exists:users,id', 'distinct'],
+            /**
+             * - Prevents assigning a task to users who are already assigned.
+             * - Ensures tasks can only be assigned to active members of the project.
+             */
+            'members' => ['required',
+                'array',
+                'min:1',
+                $this->membersValidation(),
+                new ActiveProjectMember($this->task),
+            ],
+            'members.*' => ['required', 'exists:users,id', 'distinct'],
         ];
     }
 

@@ -2,18 +2,16 @@
 
 namespace Tests\Feature\Api\V1\ProjectDashboard;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
-use App\Traits\ProjectSetup;
 use App\Models\Project;
 use App\Models\User;
+use App\Traits\ProjectSetup;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
 use Tests\TestCase;
-use Laravel\Sanctum\Sanctum;
 
 class UserProjectsPageTest extends TestCase
 {
-    use RefreshDatabase, ProjectSetup;
+    use ProjectSetup, RefreshDatabase;
 
     /** @test */
     public function it_validates_sort_parameter()
@@ -25,8 +23,8 @@ class UserProjectsPageTest extends TestCase
             ->assertJson([
                 'message' => 'Validation Error',
                 'errors' => [
-                    'sort' => ['Sort must be either latest or oldest']
-                ]
+                    'sort' => ['Sort must be either latest or oldest'],
+                ],
             ]);
     }
 
@@ -40,8 +38,8 @@ class UserProjectsPageTest extends TestCase
             ->assertJson([
                 'message' => 'Validation Error',
                 'errors' => [
-                    'member' => ['The member field must be true or false.']
-                ]
+                    'member' => ['The member field must be true or false.'],
+                ],
             ]);
     }
 
@@ -55,8 +53,8 @@ class UserProjectsPageTest extends TestCase
             ->assertJson([
                 'message' => 'Validation Error',
                 'errors' => [
-                    'page' => ['Page must be at least 1']
-                ]
+                    'page' => ['Page must be at least 1'],
+                ],
             ]);
     }
 
@@ -64,13 +62,13 @@ class UserProjectsPageTest extends TestCase
     public function it_accepts_valid_parameters()
     {
         Project::factory()->create(['name' => 'Test Project', 'user_id' => $this->user->id]);
-        
+
         $response = $this->getJson(route('user.projects', [
             'sort' => 'latest',
-            'member' => true,    
-            'abandoned' => false, 
-            'page' => 1,         
-            'search' => 'Test'
+            'member' => true,
+            'abandoned' => false,
+            'page' => 1,
+            'search' => 'Test',
         ]));
 
         $response->assertOk()
@@ -96,14 +94,13 @@ class UserProjectsPageTest extends TestCase
         $this->assertEquals('Frontend Project', $projects[0]['name']);
     }
 
-
     /** @test */
     public function auth_user_can_sort_projects_by_latest()
     {
         $oldProject = Project::factory()->create([
             'name' => 'Old Project',
             'user_id' => $this->user->id,
-            'created_at' => now()->subDays(5)
+            'created_at' => now()->subDays(5),
         ]);
 
         $latestProject = $this->project; // Assuming this is the default project created in ProjectSetup
@@ -119,7 +116,7 @@ class UserProjectsPageTest extends TestCase
         $oldProject = Project::factory()->create([
             'name' => 'Old Project',
             'user_id' => $this->user->id,
-            'created_at' => now()->subDays(5)
+            'created_at' => now()->subDays(5),
         ]);
 
         $latestProject = $this->project; // Assuming this is the default project created in ProjectSetup

@@ -2,15 +2,13 @@
 
 namespace App\Jobs;
 
-use App\Models\Project;
 use App\Models\Message;
+use App\Models\Project;
 use App\Services\Api\V1\SendSmsService;
+use Illuminate\Bus\Batchable;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldBeUnique;
-use App\Http\Requests\Api\V1\MessageRequest;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
-use Illuminate\Bus\Batchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 
@@ -23,21 +21,22 @@ class SmsMessage implements ShouldQueue
      *
      * @var \App\Models\Podcast
      */
-     private $project;
-     private $message;
-     //private $user;
+    private $project;
+
+    private $message;
+    // private $user;
 
     /**
      * Create a new job instance.
      *
      * @return void
      */
-     public function __construct(Project $project,Message $message)
-     {
-       $this->project=$project;
-       $this->message=$message;
-       //$this->user=$user;
-     }
+    public function __construct(Project $project, Message $message)
+    {
+        $this->project = $project;
+        $this->message = $message;
+        // $this->user=$user;
+    }
 
     /**
      * Execute the job.
@@ -46,6 +45,6 @@ class SmsMessage implements ShouldQueue
      */
     public function handle(SendSmsService $service)
     {
-      $service->send($this->project,$this->message);
+        $service->send($this->project, $this->message);
     }
 }

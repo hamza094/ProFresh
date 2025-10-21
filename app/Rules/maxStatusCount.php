@@ -2,8 +2,8 @@
 
 namespace App\Rules;
 
-use Illuminate\Contracts\Validation\Rule;
 use App\Model\TaskStatus as Status;
+use Illuminate\Contracts\Validation\Rule;
 
 class maxStatusCount implements Rule
 {
@@ -38,6 +38,6 @@ class maxStatusCount implements Rule
      */
     public function message()
     {
-     return 'The maximum allowed number of statuses has been reached.';
+        return 'The maximum allowed number of statuses has been reached.';
     }
 }

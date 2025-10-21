@@ -235,18 +235,17 @@ return [
 
     ],
 
-    'project'=>[
-      'taskLimit' => '18',
-      'abandonedLimit'=>'90',
-      'filters'=>'10',
-      'items_limit' => '6',
+    'project' => [
+        'taskLimit' => '18',
+        'abandonedLimit' => '90',
+        'filters' => '10',
+        'items_limit' => '6',
     ],
-    'tasks'=>[
-      'limit'=>'3',
+    'tasks' => [
+        'limit' => '3',
     ],
 
-   'date_formats' => [
-       'exact'=>'F j, Y, g:i a',
-   ]
+    'date_formats' => [
+        'exact' => 'F j, Y, g:i a',
+    ],
 ];
-

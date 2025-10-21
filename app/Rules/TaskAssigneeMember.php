@@ -13,7 +13,8 @@ class TaskAssigneeMember implements Rule
      *
      * @return void
      */
-    public function __construct($task){
+    public function __construct($task)
+    {
         $this->task = $task;
     }
 

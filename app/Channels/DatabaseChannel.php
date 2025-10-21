@@ -2,9 +2,9 @@
 
 namespace App\Channels;
 
-use Illuminate\Support\Facades\DB;
-use Illuminate\Notifications\Notification;
 use Illuminate\Notifications\Channels\DatabaseChannel as Channel;
+use Illuminate\Notifications\Notification;
+use Illuminate\Support\Facades\DB;
 
 class DatabaseChannel extends Channel
 {

@@ -2,9 +2,9 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
 use App\Models\Project;
 use App\Models\User;
+use Illuminate\Database\Seeder;
 
 class MembersSeeder extends Seeder
 {
@@ -15,11 +15,12 @@ class MembersSeeder extends Seeder
      */
     public function run()
     {
-      $userIds = User::pluck('id');
+        $userIds = User::pluck('id');
 
-      Project::with('members')->chunk(50, function ($projects) use ($userIds) {
-        foreach ($projects as $project) {
-        $project->members()->attach($userIds->random(rand(1,4)));
-      }});
+        Project::with('members')->chunk(50, function ($projects) use ($userIds) {
+            foreach ($projects as $project) {
+                $project->members()->attach($userIds->random(rand(1, 4)));
+            }
+        });
     }
 }

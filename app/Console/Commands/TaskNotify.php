@@ -2,11 +2,10 @@
 
 namespace App\Console\Commands;
 
-use Illuminate\Console\Command;
-use App\Models\Task;
 use App\Actions\TaskDueAction;
+use App\Models\Task;
+use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
-
 
 class TaskNotify extends Command
 {
@@ -25,43 +24,40 @@ class TaskNotify extends Command
 
     /**
      * Execute the console command.
-     *
-     * @return int
      */
     public function handle(): int
     {
         Task::dueForNotifications()
-        ->with([
-            'assignee:id,name',
-            'project:id,name,slug',
-        ])
-        ->chunk(50, fn($tasks) => $this->processTasks($tasks));
+            ->with([
+                'assignee:id,name',
+                'project:id,name,slug',
+            ])
+            ->chunk(50, fn ($tasks) => $this->processTasks($tasks));
 
-         $this->info('Task notifications sent successfully.');
+        $this->info('Task notifications sent successfully.');
 
-         return 0;
+        return 0;
     }
 
     /**
- * Process each task in the chunk.
- *
- * @param  \Illuminate\Database\Eloquent\Collection  $tasks
- * @return void
- */
-   private function processTasks($tasks)
-   {
-    foreach ($tasks as $task) {
-        try {
-            if ($this->taskDueAction->shouldNotify($task)) {
-                $this->taskDueAction->sendNotification($task);
+     * Process each task in the chunk.
+     *
+     * @param  \Illuminate\Database\Eloquent\Collection  $tasks
+     * @return void
+     */
+    private function processTasks($tasks)
+    {
+        foreach ($tasks as $task) {
+            try {
+                if ($this->taskDueAction->shouldNotify($task)) {
+                    $this->taskDueAction->sendNotification($task);
+                }
+            } catch (\Exception $e) {
+                Log::error('Failed to process task notification', [
+                    'task_id' => $task->id,
+                    'error' => $e->getMessage(),
+                ]);
             }
-        } catch (\Exception $e) {
-            Log::error('Failed to process task notification', [
-                'task_id' => $task->id,
-                'error' => $e->getMessage(),
-            ]);
         }
     }
-}
-
 }

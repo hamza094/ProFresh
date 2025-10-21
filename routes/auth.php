@@ -1,13 +1,11 @@
 <?php
 
+use App\Http\Controllers\Api\Auth\LoginController;
+use App\Http\Controllers\Api\Auth\RegisterController;
+use App\Http\Controllers\Api\Auth\ResetPasswordController;
+use App\Http\Controllers\Api\Auth\VerificationController;
 use Illuminate\Support\Facades\Route;
 
-use App\Http\Controllers\Api\Auth\{
-  RegisterController,
-  LoginController,
-  ResetPasswordController,
-  VerificationController,
-};
 /*
 |--------------------------------------------------------------------------
 | Auth Routes
@@ -19,41 +17,38 @@ use App\Http\Controllers\Api\Auth\{
 |
 */
 
-Route::group(['prefix'=>'v1'], function () {
+Route::group(['prefix' => 'v1'], function () {
 
-  Route::group(['middleware' => 'guest:api'], function () {
+    Route::group(['middleware' => 'guest:api'], function () {
 
-  Route::post('register', [RegisterController::class, 'register'])
-       ->name('auth.register');
+        Route::post('register', [RegisterController::class, 'register'])
+            ->name('auth.register');
 
-  Route::post('login', [LoginController::class, 'login'])
-         ->name('auth.login');
+        Route::post('login', [LoginController::class, 'login'])
+            ->name('auth.login');
 
-  Route::post('/forgot-password', [ResetPasswordController::class, 'sendResetLink'])->name('password.email');
+        Route::post('/forgot-password', [ResetPasswordController::class, 'sendResetLink'])->name('password.email');
 
-  Route::post('/reset-password', [ResetPasswordController::class, 'resetPassword'])->name('password.email');
+        Route::post('/reset-password', [ResetPasswordController::class, 'resetPassword'])->name('password.email');
 
+        Route::get('/password/reset/{token}', [VerificationController::class, 'resetForm'])->name('password.reset');
 
-    Route::get('/password/reset/{token}', [VerificationController::class, 'resetForm'])->name('password.reset');  
+    });
 
-});
+    Route::group(['middleware' => ['auth:sanctum']], function () {
 
+        Route::post('/email/verify/{user}', [VerificationController::class, 'verify'])
+            ->name('verification.verify');
 
-Route::group(['middleware' => ['auth:sanctum']], function () {
+        Route::post('/email/resend/{user}', [VerificationController::class, 'resend'])
+            ->name('verification.resend');
 
-  Route::post('/email/verify/{user}', [VerificationController::class, 'verify'])
-     ->name('verification.verify');
+        Route::post('logout', [LoginController::class, 'logout'])->name('auth.logout');
 
-  Route::post('/email/resend/{user}', [VerificationController::class, 'resend'])
-    ->name('verification.resend');
-
-  Route::post('logout', [LoginController::class, 'logout'])->name('auth.logout');
-
-
-});
+    });
 
 });
 
-Route::fallback(function() {
+Route::fallback(function () {
     return response()->json(['message' => 'Not Found.'], 404);
 });

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Services;
@@ -16,7 +17,7 @@ class ProjectInsightsPreloader
     private static ?array $cachedWindowConfig = null;
 
     /**
-     * @param array<string> $sections
+     * @param  array<string>  $sections
      */
     public function preload(Project $project, array $sections): void
     {
@@ -39,7 +40,7 @@ class ProjectInsightsPreloader
     }
 
     /**
-     * @param array<int|string,string> $sections
+     * @param  array<int|string,string>  $sections
      * @return array<int|string,mixed>
      */
     private function buildCountLoaders(array $sections, CarbonInterface $now): array
@@ -52,6 +53,7 @@ class ProjectInsightsPreloader
             ->flatMap(function (string $section) use ($sectionToTypesMap): array {
                 /** @var array<int,string> $types */
                 $types = $sectionToTypesMap[$section] ?? [];
+
                 return $types;
             })
             ->unique()
@@ -81,32 +83,32 @@ class ProjectInsightsPreloader
     }
 
     /**
-     * @param array<string,int> $windowConfig
+     * @param  array<string,int>  $windowConfig
      * @return array<int|string,mixed>
      */
     private function definitionsForMetricType(string $metricType, CarbonInterface $now, array $windowConfig): array
     {
-        return match($metricType) {
+        return match ($metricType) {
             'tasks' => [
-                'tasks' => fn($q) => $q->withTrashed(),
-                'tasks as active_tasks_count' => fn($q) => $q->whereNull('deleted_at'),
-                'tasks as completed_tasks_count' => fn($q) => $q->completed(),
-                'tasks as overdue_tasks_count' => fn($q) => $q->overdue(),
-                'tasks as abandoned_tasks_count' => fn($q) => $q->onlyTrashed(),
+                'tasks' => fn ($q) => $q->withTrashed(),
+                'tasks as active_tasks_count' => fn ($q) => $q->whereNull('deleted_at'),
+                'tasks as completed_tasks_count' => fn ($q) => $q->completed(),
+                'tasks as overdue_tasks_count' => fn ($q) => $q->overdue(),
+                'tasks as abandoned_tasks_count' => fn ($q) => $q->onlyTrashed(),
             ],
             'communication' => [
-                'conversations as recent_conversations_count' => fn($q) => $q->where('created_at', '>=', (clone $now)->subDays($windowConfig['conversationLookbackDays'])),
+                'conversations as recent_conversations_count' => fn ($q) => $q->where('created_at', '>=', (clone $now)->subDays($windowConfig['conversationLookbackDays'])),
             ],
             'collaboration' => [
-                'activeMembers as active_members_count' => fn($q) => $q,
-                'meetings as recent_meetings_count' => fn($q) => $q->where('start_time', '>=', (clone $now)->subDays($windowConfig['meetingLookbackDays'])),
+                'activeMembers as active_members_count' => fn ($q) => $q,
+                'meetings as recent_meetings_count' => fn ($q) => $q->where('start_time', '>=', (clone $now)->subDays($windowConfig['meetingLookbackDays'])),
             ],
             'activity' => [
-                'activities as recent_activities_count' => fn($q) => $q->where('created_at', '>=', (clone $now)->subDays($windowConfig['recentActivityLookbackDays'])),
+                'activities as recent_activities_count' => fn ($q) => $q->where('created_at', '>=', (clone $now)->subDays($windowConfig['recentActivityLookbackDays'])),
             ],
             'risk' => [
-                'tasks as tasks_due_soon_count' => fn($q) => $q->dueSoon($windowConfig['riskAssessmentHours']),
-                'tasks as tasks_at_risk_count' => fn($q) => $q->dueSoon($windowConfig['riskAssessmentHours'])->whereDoesntHave('activities', fn($sub) => $sub->where('created_at', '>=', (clone $now)->subDays($windowConfig['taskInactivityDays']))),
+                'tasks as tasks_due_soon_count' => fn ($q) => $q->dueSoon($windowConfig['riskAssessmentHours']),
+                'tasks as tasks_at_risk_count' => fn ($q) => $q->dueSoon($windowConfig['riskAssessmentHours'])->whereDoesntHave('activities', fn ($sub) => $sub->where('created_at', '>=', (clone $now)->subDays($windowConfig['taskInactivityDays']))),
             ],
             default => [],
         };
@@ -144,7 +146,7 @@ class ProjectInsightsPreloader
     }
 
     /**
-     * @param array<int|string,string> $sections
+     * @param  array<int|string,string>  $sections
      * @return array<int,string>
      */
     private function expandSections(array $sections): array

@@ -2,12 +2,10 @@
 
 namespace App\Events;
 
+use App\Http\Resources\Api\V1\ActivityResource;
 use App\Models\Activity;
 use Illuminate\Broadcasting\Channel;
-use App\Http\Resources\Api\V1\ActivityResource;
 use Illuminate\Broadcasting\InteractsWithSockets;
-use Illuminate\Broadcasting\PresenceChannel;
-use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
@@ -17,16 +15,18 @@ class ActivityLogged implements ShouldBroadcast
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public Activity $activity;
+
     public int $projectId;
+
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct(Activity $activity,int $projectId)
+    public function __construct(Activity $activity, int $projectId)
     {
-      $this->activity = $activity;
-      $this->projectId = $projectId;
+        $this->activity = $activity;
+        $this->projectId = $projectId;
     }
 
     /**
@@ -34,25 +34,24 @@ class ActivityLogged implements ShouldBroadcast
      */
     public function broadcastOn(): Channel
     {
-      return new Channel('activities.project.'. $this->projectId);
+        return new Channel('activities.project.'.$this->projectId);
     }
 
-
-     /**
+    /**
      * Get the data to broadcast.
-     * 
+     *
      * @return array<string, int>
      */
     public function broadcastWith(): array
     {
-      return (new ActivityResource($this->activity))->resolve();
+        return (new ActivityResource($this->activity))->resolve();
     }
-   
+
     /**
-   * The name of the queue on which to place the  broadcasting job.
-   */
-   public function broadcastQueue(): string
-   {
-     return 'activities';
-   }
+     * The name of the queue on which to place the  broadcasting job.
+     */
+    public function broadcastQueue(): string
+    {
+        return 'activities';
+    }
 }

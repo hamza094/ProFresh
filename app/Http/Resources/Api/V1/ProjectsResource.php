@@ -1,8 +1,8 @@
 <?php
 
 namespace App\Http\Resources\Api\V1;
+
 use Illuminate\Http\Resources\Json\JsonResource;
-use App\Http\Resources\Api\V1\StageResource;
 
 /**
  * @mixin \App\Models\Project
@@ -18,59 +18,61 @@ class ProjectsResource extends JsonResource
     public function toArray($request)
     {
 
-      if ($request->is('api/v1/tasksdata')) {
+        if ($request->is('api/v1/tasksdata')) {
+            return [
+                'name' => $this->name,
+                'slug' => $this->slug,
+                'links' => [
+                    'self' => '/api/v1/'.$this->slug,
+                ],
+            ];
+        }
+
         return [
+            /**
+             * @example 1
+             */
+            'id' => $this->id,
+
+            /**
+             * @example The Dimension
+             */
             'name' => $this->name,
+
+            /**
+             * @example the-dimension
+             */
             'slug' => $this->slug,
-            'links'=>[
-             'self'=>"/api/v1/".$this->slug,
-        ],
+
+            /**
+             * Project status calculated on the based of score
+             *
+             * @example cold
+             */
+            'health_status' => $this->health_status,
+
+            /**
+             * Details of the current stage of the project.
+             */
+            'stage' => new StageResource($this->stage),
+
+            /**
+             * The human-readable creation date of the project.
+             *
+             * @example "2 hours ago"
+             */
+            'created_at' => $this->created_at->diffForHumans(),
+
+            /**
+             * Links related to the project.
+             *
+             * @example {
+             *   "self": "/api/v1/projects/the-dimension"
+             * }
+             */
+            'links' => [
+                'self' => '/api/v1/projects/'.$this->slug,
+            ],
         ];
-    }
-
-      return [
-      /**
-       * @example 1
-      */
-        'id'=>$this->id,
-
-      /**
-       * @example The Dimension
-      */
-        'name'=>$this->name,
-
-      /**
-       * @example the-dimension
-      */
-        'slug'=>$this->slug,
-
-      /**
-       * Project status calculated on the based of score
-       * 
-       * @example cold
-      */
-      'health_status' => $this->health_status,
-
-      /**
-       * Details of the current stage of the project.
-      */
-        'stage'=>new StageResource($this->stage),
-
-      /**
-       * The human-readable creation date of the project.
-       * @example "2 hours ago"
-     */
-        'created_at'=>$this->created_at->diffForHumans(),
-
-          /**
-     * Links related to the project.
-     * @example {
-     *   "self": "/api/v1/projects/the-dimension"
-     * }
-     */
-        'links'=>[
-          'self'=>"/api/v1/projects/".$this->slug,
-        ],
-      ];
     }
 }

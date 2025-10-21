@@ -2,9 +2,8 @@
 
 namespace App\Http\Requests\Api\V1;
 
-use Illuminate\Foundation\Http\FormRequest;
-use App\Enums\StageStatus;
 use Closure;
+use Illuminate\Foundation\Http\FormRequest;
 
 class StageRequest extends FormRequest
 {
@@ -27,32 +26,31 @@ class StageRequest extends FormRequest
     {
         return [
 
-          /**
-           * 
-           * @example 1
-           */
-          'stage' => ['required','int',
-                 function (string $attribute, mixed $value, Closure $fail) {
-                     if ((int)$value === (int)$this->project->stage_id) {
-                         $fail("The selected stage must be different from the current project stage.");
-                     }
-                 },
-        ],
+            /**
+             * @example 1
+             */
+            'stage' => ['required', 'int',
+                function (string $attribute, mixed $value, Closure $fail) {
+                    if ((int) $value === (int) $this->project->stage_id) {
+                        $fail('The selected stage must be different from the current project stage.');
+                    }
+                },
+            ],
 
-          /**
-           * @example null
-           */
-          'postponed_reason' => ['sometimes','required','string',
-      ],
+            /**
+             * @example null
+             */
+            'postponed_reason' => ['sometimes', 'required', 'string',
+            ],
         ];
     }
 
     public function messages()
-{
-    return [
-        'stage.required' => 'The stage field is required.',
-        'stage.in' => 'The selected stage is invalid. Please choose a valid stage.',
-        // Add more custom messages here
-    ];
-}
+    {
+        return [
+            'stage.required' => 'The stage field is required.',
+            'stage.in' => 'The selected stage is invalid. Please choose a valid stage.',
+            // Add more custom messages here
+        ];
+    }
 }

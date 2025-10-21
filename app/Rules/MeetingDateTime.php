@@ -2,8 +2,8 @@
 
 namespace App\Rules;
 
-use Illuminate\Contracts\Validation\Rule;
 use DateTime;
+use Illuminate\Contracts\Validation\Rule;
 
 class MeetingDateTime implements Rule
 {
@@ -27,7 +27,8 @@ class MeetingDateTime implements Rule
     public function passes($attribute, $value)
     {
         if ($value instanceof DateTime) {
-            $now = new DateTime();
+            $now = new DateTime;
+
             return $value > $now;
         }
 

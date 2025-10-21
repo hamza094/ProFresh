@@ -2,11 +2,12 @@
 
 namespace App\QueryBuilder;
 
-use Illuminate\Database\Eloquent\Builder;
 use App\Enums\TaskStatus as TaskStatusEnum;
+use Illuminate\Database\Eloquent\Builder;
 
 /**
  * @extends Builder<\App\Models\Task>
+ *
  * @method $this onlyTrashed()
  */
 class TaskQueryBuilder extends Builder
@@ -25,10 +26,10 @@ class TaskQueryBuilder extends Builder
     public function remaining(): self
     {
         return $this->where('status_id', '!=', TaskStatusEnum::COMPLETED)
-                    ->where(function ($q) {
-                        $q->whereNull('due_at')
-                          ->orWhere('due_at', '>=', now());
-                    });
+            ->where(function ($q) {
+                $q->whereNull('due_at')
+                    ->orWhere('due_at', '>=', now());
+            });
     }
 
     /**
@@ -37,8 +38,8 @@ class TaskQueryBuilder extends Builder
     public function overdue(): self
     {
         return $this->whereNotNull('due_at')
-                    ->where('due_at', '<', now())
-                    ->where('status_id', '!=', TaskStatusEnum::COMPLETED);
+            ->where('due_at', '<', now())
+            ->where('status_id', '!=', TaskStatusEnum::COMPLETED);
     }
 
     /**
@@ -47,11 +48,10 @@ class TaskQueryBuilder extends Builder
     public function dueSoon(int $hours = 48): self
     {
         return $this->whereNotNull('due_at')
-                    ->where('due_at', '>', now())
-                    ->where('due_at', '<=', now()->addHours($hours))
-                    ->where('status_id', '!=', TaskStatusEnum::COMPLETED);
+            ->where('due_at', '>', now())
+            ->where('due_at', '<=', now()->addHours($hours))
+            ->where('status_id', '!=', TaskStatusEnum::COMPLETED);
     }
-
 
     public function active(): self
     {
@@ -64,8 +64,8 @@ class TaskQueryBuilder extends Builder
     public function dueForNotifications(): self
     {
         return $this->whereNotNull(['notified', 'due_at'])
-                    ->where('due_at', '>=', now())
-                    ->where('notify_sent', false);
+            ->where('due_at', '>=', now())
+            ->where('notify_sent', false);
     }
 
     /**
@@ -75,6 +75,4 @@ class TaskQueryBuilder extends Builder
     {
         return $this->onlyTrashed()->with('status');
     }
-
-
 }

@@ -8,16 +8,16 @@ use App\Enums\ProjectStage;
 final class StageInsightBuilder implements InsightBuilderInterface
 {
     private const SUCCESS_THRESHOLD = 70;
+
     private const INFO_THRESHOLD = 40;
 
     /**
-     * @param mixed $input
-     * @param array<string,mixed> $context
+     * @param  array<string,mixed>  $context
      * @return array<string,mixed>
      */
     public function build(mixed $input, array $context = []): array
     {
-        if (!is_array($input) || !isset($input['percentage'])) {
+        if (! is_array($input) || ! isset($input['percentage'])) {
             return [
                 'type' => InsightType::INFO->value,
                 'title' => 'No Stage Data',
@@ -106,5 +106,4 @@ final class StageInsightBuilder implements InsightBuilderInterface
 
         return sprintf('In %s stage (%.1f%% complete).', $stageLabel, $percentage);
     }
-
 }

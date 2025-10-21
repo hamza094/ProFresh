@@ -3,8 +3,6 @@
 namespace App\Http\Resources\Api\V1;
 
 use Illuminate\Http\Resources\Json\JsonResource;
-use App\Http\Resources\Api\V1\ReceiptResource;
-use Laravel\Paddle\Subscription;
 
 /**
  * @mixin \App\Models\User
@@ -23,21 +21,21 @@ class SubscriptionResource extends JsonResource
             $this->mergeWhen($this->isSubscribed(), [
                 'subscribed' => true,
                 'plan' => $this->subscribedPlan(),
-                'next_payment'=>$this->payment(),
-                'created_at'=>optional(
-                  $this->getSubscription()?->created_at
+                'next_payment' => $this->payment(),
+                'created_at' => optional(
+                    $this->getSubscription()?->created_at
                 )->diffForHumans(),
                 'receipts' => ReceiptResource::collection($this->receipts),
             ]),
             $this->mergeWhen(! $this->isSubscribed(), [
-        'subscribed' => false,
-    ]),
-            
-           $this->mergeWhen($this->hasGracePeriod(), [
-              'grace_period' => true,
+                'subscribed' => false,
+            ]),
 
-              'grace_period_ends_at' =>  optional(
-                  $this->getSubscription()?->ends_at
+            $this->mergeWhen($this->hasGracePeriod(), [
+                'grace_period' => true,
+
+                'grace_period_ends_at' => optional(
+                    $this->getSubscription()?->ends_at
                 )->isoFormat('MMMM Do YYYY'),
             ]),
         ];

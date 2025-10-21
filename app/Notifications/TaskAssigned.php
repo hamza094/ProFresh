@@ -3,13 +3,13 @@
 namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Notifications\Notification;
-use Illuminate\Notifications\Messages\MailMessage;
-use Illuminate\Notifications\Messages\BroadcastMessage;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Notifications\Messages\BroadcastMessage;
+use Illuminate\Notifications\Messages\MailMessage;
+use Illuminate\Notifications\Notification;
 
-class TaskAssigned extends Notification implements ShouldQueue,ShouldBroadcast
+class TaskAssigned extends Notification implements ShouldBroadcast, ShouldQueue
 {
     use Queueable;
 
@@ -23,8 +23,7 @@ class TaskAssigned extends Notification implements ShouldQueue,ShouldBroadcast
         protected string $projectName,
         protected string $projectPath,
         protected array $notifierData
-    )
-    {
+    ) {
         $this->afterCommit();
     }
 
@@ -32,49 +31,46 @@ class TaskAssigned extends Notification implements ShouldQueue,ShouldBroadcast
      * Get the notification's delivery channels.
      *
      * @param  mixed  $notifiable
-     * @return array
      */
     public function via($notifiable): array
     {
-        return ['mail','database','broadcast'];
+        return ['mail', 'database', 'broadcast'];
     }
 
     /**
      * Get the mail representation of the notification.
      *
      * @param  mixed  $notifiable
-     * @return \Illuminate\Notifications\Messages\MailMessage
      */
     public function toMail($notifiable): MailMessage
     {
         return (new MailMessage)
-                   ->from('ProFresh@live.com', 'ProFresh')
-                    ->line("{$this->notifierData['name']} has assigned you a new task.")
-                    ->line("Task: \"{$this->taskTitle}\"")
-                    ->line("Project: {$this->projectName}")
-                     ->action('View Project', url($this->projectPath))
-                    ->line('Thank you for using our application!');
+            ->from('ProFresh@live.com', 'ProFresh')
+            ->line("{$this->notifierData['name']} has assigned you a new task.")
+            ->line("Task: \"{$this->taskTitle}\"")
+            ->line("Project: {$this->projectName}")
+            ->action('View Project', url($this->projectPath))
+            ->line('Thank you for using our application!');
     }
 
     /**
-    * Prepare the notification data.
-    *
-    * @return array<string, mixed> The notification data.
-    */
+     * Prepare the notification data.
+     *
+     * @return array<string, mixed> The notification data.
+     */
     private function notificationData(): array
     {
         return [
-         'message'=>'has assigned you a task: "'.$this->taskTitle. '" This is regarding the project '. $this->projectName,
-          'notifier' =>$this->notifierData,
-          'link'=>$this->projectPath
-      ];
+            'message' => 'has assigned you a task: "'.$this->taskTitle.'" This is regarding the project '.$this->projectName,
+            'notifier' => $this->notifierData,
+            'link' => $this->projectPath,
+        ];
     }
-
 
     /**
      * Get the array representation of the notification.
      *
-     * @param mixed $notifiable
+     * @param  mixed  $notifiable
      * @return array<string, mixed> The notification data.
      */
     public function toArray($notifiable): array
@@ -82,17 +78,16 @@ class TaskAssigned extends Notification implements ShouldQueue,ShouldBroadcast
         return $this->notificationData();
     }
 
-    
     /**
      * Get the broadcast representation of the notification.
      *
-     * @param mixed $notifiable
+     * @param  mixed  $notifiable
      * @return BroadcastMessage The broadcast notification data.
      */
     public function toBroadcast($notifiable): BroadcastMessage
     {
-      return new BroadcastMessage(
-        $this->notificationData()
-      );
-  }
+        return new BroadcastMessage(
+            $this->notificationData()
+        );
+    }
 }

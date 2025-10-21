@@ -12,24 +12,24 @@ return new class extends Migration
     public function up(): void
     {
         if (! Schema::hasTable('receipts')) {
-        Schema::create('receipts', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->char('billable_id', 36);
-            $table->string('billable_type');
-            $table->unsignedBigInteger('paddle_subscription_id')->nullable()->index();
-            $table->string('checkout_id');
-            $table->string('order_id')->unique();
-            $table->string('amount');
-            $table->string('tax');
-            $table->string('currency', 3);
-            $table->integer('quantity');
-            $table->string('receipt_url')->unique();
-            $table->timestamp('paid_at');
-            $table->timestamps();
+            Schema::create('receipts', function (Blueprint $table) {
+                $table->bigIncrements('id');
+                $table->char('billable_id', 36);
+                $table->string('billable_type');
+                $table->unsignedBigInteger('paddle_subscription_id')->nullable()->index();
+                $table->string('checkout_id');
+                $table->string('order_id')->unique();
+                $table->string('amount');
+                $table->string('tax');
+                $table->string('currency', 3);
+                $table->integer('quantity');
+                $table->string('receipt_url')->unique();
+                $table->timestamp('paid_at');
+                $table->timestamps();
 
-            $table->index(['billable_id', 'billable_type']);
-        });
-    }
+                $table->index(['billable_id', 'billable_type']);
+            });
+        }
     }
 
     /**

@@ -2,18 +2,18 @@
 
 namespace Tests\Feature\Api\Actions;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Support\Facades\Config;
 use App\Actions\ZoomAction;
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
+use Illuminate\Support\Facades\Config;
 use Tests\TestCase;
 
 class ZoomActionTest extends TestCase
 {
     protected $sdkKey;
+
     protected $sdkSecret;
+
     protected $action;
 
     protected function setUp(): void
@@ -39,10 +39,10 @@ class ZoomActionTest extends TestCase
 
         $token = $this->action->handle($meetingNumber, $role);
 
-            $decodedToken = JWT::decode($token, new Key($this->sdkSecret, 'HS256'));
+        $decodedToken = JWT::decode($token, new Key($this->sdkSecret, 'HS256'));
 
-            $this->assertEquals($this->sdkKey, $decodedToken->sdkKey);
-            $this->assertEquals($meetingNumber, $decodedToken->mn);
-            $this->assertEquals($role, $decodedToken->role);
+        $this->assertEquals($this->sdkKey, $decodedToken->sdkKey);
+        $this->assertEquals($meetingNumber, $decodedToken->mn);
+        $this->assertEquals($role, $decodedToken->role);
     }
 }

@@ -17,12 +17,12 @@ interface Zoom
     ): AccessTokenDetails;
 
     /**
-     * @param array<string, mixed> $validated
+     * @param  array<string, mixed>  $validated
      */
     public function createMeeting(array $validated, User $user): Meeting;
 
     /**
-     * @param array<string, mixed> $validated
+     * @param  array<string, mixed>  $validated
      */
     public function updateMeeting(array $validated, User $user): mixed;
 

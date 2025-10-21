@@ -5,15 +5,13 @@ namespace App\Services\Api\V1\Zoom;
 use App\DataTransferObjects\Zoom\AccessTokenDetails;
 use App\DataTransferObjects\Zoom\AuthorizationCallbackDetails;
 use App\DataTransferObjects\Zoom\AuthorizationRedirectDetails;
-use App\Exceptions\Integrations\Zoom\ZoomException;
 use App\DataTransferObjects\Zoom\Meeting;
-use App\DataTransferObjects\Zoom\UpdateMeetingData;
-use App\Http\Requests\Zoom\MeetingUpdateRequest;
+use App\Exceptions\Integrations\Zoom\ZoomException;
+use App\Interfaces\Zoom;
+use App\Models\User;
+use Faker\Generator;
 use Illuminate\Support\Collection;
 use PHPUnit\Framework\Assert;
-use App\Interfaces\Zoom;
-use Faker\Generator;
-use App\Models\User;
 
 /**
  * @template TKey of array-key
@@ -25,14 +23,18 @@ final class ZoomServiceFake implements Zoom
      * @var Collection<int, array<string, mixed>>
      */
     public Collection $meetingsToCreate;
+
     public string $authorizationUrl;
+
     public string $state;
+
     public string $codeVerifier;
+
     private ?ZoomException $failureException = null;
 
     public function __construct()
     {
-        $this->meetingsToCreate = new Collection();
+        $this->meetingsToCreate = new Collection;
     }
 
     public function getAuthRedirectDetails(): AuthorizationRedirectDetails
@@ -50,6 +52,7 @@ final class ZoomServiceFake implements Zoom
         if (isset($this->failureException)) {
             throw $this->failureException;
         }
+
         return new AccessTokenDetails(
             accessToken: 'access-token-here',
             refreshToken: 'refresh-token-here',
@@ -63,6 +66,7 @@ final class ZoomServiceFake implements Zoom
     public function shouldFailWithException(ZoomException $exception): self
     {
         $this->failureException = $exception;
+
         return $this;
     }
 
@@ -77,11 +81,12 @@ final class ZoomServiceFake implements Zoom
         $this->authorizationUrl = $authorizationUrl;
         $this->state = $state;
         $this->codeVerifier = $codeVerifier;
+
         return $this;
     }
 
     /**
-     * @param array<string, mixed> $validated
+     * @param  array<string, mixed>  $validated
      */
     public function createMeeting(array $validated, User $user): Meeting
     {
@@ -89,17 +94,19 @@ final class ZoomServiceFake implements Zoom
             throw $this->failureException;
         }
         $this->meetingsToCreate->push($validated);
+
         return $this->fakeMeeting();
     }
 
     /**
-     * @param array<string, mixed> $validated
+     * @param  array<string, mixed>  $validated
      */
     public function updateMeeting(array $validated, User $user): \Illuminate\Http\JsonResponse
     {
         if (isset($this->failureException)) {
             throw $this->failureException;
         }
+
         return response()->json(204);
     }
 
@@ -108,18 +115,21 @@ final class ZoomServiceFake implements Zoom
         if (isset($this->failureException)) {
             throw $this->failureException;
         }
+
         return response()->json(204);
     }
 
     public function getZakToken(User $user): string
     {
-        $token = "zak&token";
+        $token = 'zak&token';
+
         return $token;
     }
 
     private function fakeMeeting(): Meeting
     {
         $faker = app(Generator::class);
+
         return new Meeting(
             meeting_id: 1234,
             topic: 'Topic Of Meeting',
@@ -151,6 +161,3 @@ final class ZoomServiceFake implements Zoom
         Assert::assertTrue($meetingIsToBeCreated, 'Meetings were created.');
     }
 }
-
-
-

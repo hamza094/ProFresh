@@ -3,8 +3,8 @@
 namespace Database\Factories;
 
 use App\Models\Activity;
-use App\Models\User;
 use App\Models\Project;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class ActivityFactory extends Factory
@@ -32,7 +32,7 @@ class ActivityFactory extends Factory
                 'deleted_project',
                 'added_task',
                 'completed_task',
-                'commented_on_task'
+                'commented_on_task',
             ]),
             'created_at' => $this->faker->dateTimeBetween('-1 month', 'now'),
             'updated_at' => function (array $attributes) {

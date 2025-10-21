@@ -3,7 +3,6 @@
 namespace App\Http\Resources\Api\V1;
 
 use Illuminate\Http\Resources\Json\JsonResource;
-use App\Http\Resources\Api\V1\InvitedUserResource;
 
 /**
  * @mixin \App\Models\Conversation
@@ -18,22 +17,22 @@ class ConversationResource extends JsonResource
      */
     public function toArray($request): array
     {
-      return [
-        'id'=>$this->id,
+        return [
+            'id' => $this->id,
 
-        'message'=>$this->whenNotNull($this->message),
+            'message' => $this->whenNotNull($this->message),
 
-        'file'=>$this->whenNotNull($this->file),
+            'file' => $this->whenNotNull($this->file),
 
-        'user'=>new InvitedUserResource($this->whenLoaded('user')),
+            'user' => new InvitedUserResource($this->whenLoaded('user')),
 
-        'created_at'=>$this->created_at
+            'created_at' => $this->created_at
                 ->diffForHumans(),
-                
-        'links'=>[
-          'project_link'=>$this->project->path(),
-        ]        
-     ]; 
+
+            'links' => [
+                'project_link' => $this->project->path(),
+            ],
+        ];
     }
 
     /*private function formatMentions(?string $message): ?string

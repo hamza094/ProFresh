@@ -14,27 +14,27 @@ class StageFactory extends Factory
      * @var string
      */
     protected $model = Stage::class;
+
     /**
      * Define the model's default state.
      *
      * @return array
      */
-
     public function definition()
     {
         return [
-          'name' => 'Planing',
-          'user_id' => User::factory(),
-          ];
+            'name' => 'Planing',
+            'user_id' => User::factory(),
+        ];
     }
 
     public function design()
     {
         return $this->state(function (array $attributes) {
             return [
-               'name' => 'Design',
-               'user_id' => User::factory(),
-        ];
+                'name' => 'Design',
+                'user_id' => User::factory(),
+            ];
         });
     }
 
@@ -42,10 +42,10 @@ class StageFactory extends Factory
     {
         return $this->state(function (array $attributes) {
             return [
-               'name' => 'Develop',
+                'name' => 'Develop',
                 'user_id' => User::factory(),
 
-       ];
+            ];
         });
     }
 
@@ -53,9 +53,9 @@ class StageFactory extends Factory
     {
         return $this->state(function (array $attributes) {
             return [
-               'name' => 'Testing',
-               'user_id' => User::factory(),
-      ];
+                'name' => 'Testing',
+                'user_id' => User::factory(),
+            ];
         });
     }
 
@@ -63,9 +63,9 @@ class StageFactory extends Factory
     {
         return $this->state(function (array $attributes) {
             return [
-               'name' => 'Deliver',
+                'name' => 'Deliver',
                 'user_id' => User::factory(),
-     ];
+            ];
         });
     }
 
@@ -73,9 +73,9 @@ class StageFactory extends Factory
     {
         return $this->state(function (array $attributes) {
             return [
-               'name' => 'Completed',
+                'name' => 'Completed',
                 'user_id' => User::factory(),
-     ];
+            ];
         });
     }
 
@@ -83,10 +83,9 @@ class StageFactory extends Factory
     {
         return $this->state(function (array $attributes) {
             return [
-               'name' => 'Postponed',
+                'name' => 'Postponed',
                 'user_id' => User::factory(),
-     ];
+            ];
         });
     }
-
 }

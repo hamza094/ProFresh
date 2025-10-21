@@ -7,23 +7,25 @@ use App\Enums\InsightType;
 final class HealthInsightBuilder implements InsightBuilderInterface
 {
     private const EXCELLENT_THRESHOLD = 85;
+
     private const GOOD_THRESHOLD = 65;
+
     private const WARNING_THRESHOLD = 45;
+
     private const CRITICAL_THRESHOLD = 20;
 
     /**
-     * @param mixed $input
-     * @param array<string,mixed> $context
+     * @param  array<string,mixed>  $context
      * @return array<string,mixed>
      */
     public function build(mixed $input, array $context = []): array
     {
-        if ($input === null || !is_numeric($input)) {
+        if ($input === null || ! is_numeric($input)) {
             return [
                 'type' => InsightType::INFO->value,
                 'title' => 'No Health Data',
                 'message' => 'Insufficient data to calculate project health.',
-                'data' => ['value' => null]
+                'data' => ['value' => null],
             ];
         }
 
@@ -33,7 +35,7 @@ final class HealthInsightBuilder implements InsightBuilderInterface
             'type' => $this->determineInsightType($score),
             'title' => $this->generateTitle($score),
             'message' => $this->generateMessage($score),
-            'data' => ['value' => $score]
+            'data' => ['value' => $score],
         ];
     }
 

@@ -6,7 +6,6 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 /**
  * Insight item resource
- *
  */
 class InsightResource extends JsonResource
 {

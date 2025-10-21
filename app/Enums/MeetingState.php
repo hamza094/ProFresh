@@ -2,9 +2,8 @@
 
 namespace App\Enums;
 
-enum MeetingState: string {
+enum MeetingState: string
+{
     case START = 'started';
     case ENDS = 'ended';
 }
-
-?>

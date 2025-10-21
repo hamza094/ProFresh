@@ -25,14 +25,14 @@ class ProjectFilterRequest extends FormRequest
     {
         return [
             'sort' => ['sometimes', 'required', 'in:asc,desc'],
-            'search'=>['sometimes'],
-            'filter'=>['sometimes','in:active,trashed'],
-            'members'=>['sometimes','required'],
-            'status'=>['sometimes','required','in:cold,hot'],
-            'tasks'=>['sometimes','required'],
-            'stage'=>['sometimes','required','int','min:0','max:6'],
-            'from'=>['sometimes','required','date','required_with:to'],
-            'to'=>['sometimes','required','date','required_with:from'],
+            'search' => ['sometimes'],
+            'filter' => ['sometimes', 'in:active,trashed'],
+            'members' => ['sometimes', 'required'],
+            'status' => ['sometimes', 'required', 'in:cold,hot'],
+            'tasks' => ['sometimes', 'required'],
+            'stage' => ['sometimes', 'required', 'int', 'min:0', 'max:6'],
+            'from' => ['sometimes', 'required', 'date', 'required_with:to'],
+            'to' => ['sometimes', 'required', 'date', 'required_with:from'],
         ];
     }
 }

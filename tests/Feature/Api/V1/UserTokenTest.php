@@ -2,27 +2,26 @@
 
 namespace Tests\Feature\Api\V1;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use App\Models\User;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Hash;
 use Laravel\Sanctum\Sanctum;
-use Tests\TestCase;
 use PHPUnit\Framework\Attributes\Test;
+use Tests\TestCase;
 
 class UserTokenTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
-         parent::setUp();
-         // create a user
+        parent::setUp();
+        // create a user
         $user = User::factory()->create([
-             'email'=>'johndoe@example.org',
-             'password'=>Hash::make('testpassword'),
-             'name'=>'jon doe',
-         ]);
+            'email' => 'johndoe@example.org',
+            'password' => Hash::make('testpassword'),
+            'name' => 'jon doe',
+        ]);
     }
 
     #[Test]
@@ -30,10 +29,10 @@ class UserTokenTest extends TestCase
     {
         $user = User::first();
 
-                Sanctum::actingAs(
-        $user,
-        ['*'],
-    );
+        Sanctum::actingAs(
+            $user,
+            ['*'],
+        );
 
         $token = $user->createToken('Test Token', ['*']);
         $response = $this->getJson('/api/v1/api-tokens');
@@ -46,10 +45,10 @@ class UserTokenTest extends TestCase
     {
         $user = User::first();
 
-                Sanctum::actingAs(
-        $user,
-        ['*'],
-    );
+        Sanctum::actingAs(
+            $user,
+            ['*'],
+        );
 
         $response = $this->postJson('/api/v1/api-tokens', [
             'name' => 'My API Token',
@@ -68,35 +67,34 @@ class UserTokenTest extends TestCase
         $user = User::first();
 
         Sanctum::actingAs(
-        $user,
-    );
+            $user,
+        );
 
         $token = $user->createToken('Delete Token', ['*']);
         $tokenId = $token->accessToken->id;
-        $response = $this->deleteJson('/api/v1/api-tokens/' . $tokenId);
+        $response = $this->deleteJson('/api/v1/api-tokens/'.$tokenId);
         $response->assertOk();
         $response->assertJsonFragment(['message' => 'Token deleted.']);
         $this->assertDatabaseMissing('personal_access_tokens', [
             'id' => $tokenId,
         ]);
     }
-    
 
     #[Test]
     public function user_cannot_delete_current_session_token_via_route()
     {
         $user = User::first();
         $tokenResult = $user->createToken('Session Token', ['*']);
-        $plainText   = $tokenResult->plainTextToken;
-        $tokenModel  = $tokenResult->accessToken;
+        $plainText = $tokenResult->plainTextToken;
+        $tokenModel = $tokenResult->accessToken;
 
         $response = $this
             ->withToken($plainText)
             ->deleteJson("/api/v1/api-tokens/{$tokenModel->id}");
 
         $response->assertStatus(403)
-                 ->assertJsonFragment([
-                   'message' => 'Cannot delete the current session token via this route.'
-                 ]);
+            ->assertJsonFragment([
+                'message' => 'Cannot delete the current session token via this route.',
+            ]);
     }
 }

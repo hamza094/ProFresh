@@ -3,7 +3,7 @@
 namespace App\Http\Resources\Api\V1\Admin;
 
 use Illuminate\Http\Resources\Json\JsonResource;
- 
+
 class ProjectsResource extends JsonResource
 {
     /**
@@ -15,10 +15,10 @@ class ProjectsResource extends JsonResource
     public function toArray($request)
     {
         return [
-        'id'=>$this->id,
-        'name'=>$this->name,
-        'slug'=>$this->slug,
-        'state'=>$this->state()
+            'id' => $this->id,
+            'name' => $this->name,
+            'slug' => $this->slug,
+            'state' => $this->state(),
         ];
     }
 }

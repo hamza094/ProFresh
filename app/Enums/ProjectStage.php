@@ -14,7 +14,7 @@ enum ProjectStage: int
 
     public function label(): string
     {
-        return match($this) {
+        return match ($this) {
             self::Planning => 'Planning',
             self::Design => 'Design',
             self::Development => 'Development',
@@ -27,7 +27,7 @@ enum ProjectStage: int
 
     public function progress(): int
     {
-        return match($this) {
+        return match ($this) {
             self::Planning => 0,
             self::Design => 20,
             self::Development => 40,
@@ -40,7 +40,7 @@ enum ProjectStage: int
 
     public function status(): string
     {
-        return match($this) {
+        return match ($this) {
             self::Completed => 'completed',
             self::Postponed => 'postponed',
             default => 'in_progress',

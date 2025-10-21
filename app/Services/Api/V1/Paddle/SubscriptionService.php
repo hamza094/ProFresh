@@ -1,9 +1,10 @@
 <?php
 
 namespace App\Services\Api\V1\Paddle;
+
+use App\Exceptions\Paddle\SubscriptionException;
 use App\Interfaces\Paddle;
 use App\Models\User;
-use App\Exceptions\Paddle\SubscriptionException;
 
 final class SubscriptionService implements Paddle
 {
@@ -13,7 +14,7 @@ final class SubscriptionService implements Paddle
             throw new SubscriptionException('You are already subscribed to this plan.');
         }
 
-        return $user->newSubscription('ProFresh', config('services.paddle.' . $plan))
+        return $user->newSubscription('ProFresh', config('services.paddle.'.$plan))
             ->returnTo('http://localhost:8000/subscriptions')
             ->create();
     }
@@ -29,10 +30,10 @@ final class SubscriptionService implements Paddle
             throw new SubscriptionException('You are already on this plan.');
         }
 
-        $user->subscription('ProFresh')->swapAndInvoice(config('services.paddle.' . $plan));
+        $user->subscription('ProFresh')->swapAndInvoice(config('services.paddle.'.$plan));
 
         return [
-            'message' => 'Your subscription has been successfully updated to the ' . $plan . ' plan',
+            'message' => 'Your subscription has been successfully updated to the '.$plan.' plan',
         ];
     }
 

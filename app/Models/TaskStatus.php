@@ -3,15 +3,15 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class TaskStatus extends Model
 {
     use HasFactory;
 
-    protected $guarded=[];
+    protected $guarded = [];
 
     protected $table = 'statuses';
 
@@ -19,7 +19,7 @@ class TaskStatus extends Model
     {
         parent::boot();
 
-          static::deleting(function ($taskStatus) {
+        static::deleting(function ($taskStatus) {
             $taskStatus->tasks()->update(['status_id' => null]);
         });
     }
@@ -33,7 +33,7 @@ class TaskStatus extends Model
     {
         return $this->hasMany(Task::class, 'status_id');
     }
-    
+
     /**
      * Get user who created TaskStatus.
      *

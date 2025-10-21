@@ -2,16 +2,14 @@
 
 namespace App\Http\Controllers\Api\V1\Admin;
 
-use Dedoc\Scramble\Attributes\ExcludeRouteFromDocs;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Artisan;
 use App\Http\Resources\Api\V1\Admin\ActivitiesResource;
 use App\Models\Activity;
-use App\Models\Project;
-use App\Models\Task;
-use Carbon\Carbon;
 use App\Services\Api\V1\Admin\DashboardService;
+use Carbon\Carbon;
+use Dedoc\Scramble\Attributes\ExcludeRouteFromDocs;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Artisan;
 
 class DashboardController extends Controller
 {
@@ -22,12 +20,13 @@ class DashboardController extends Controller
         $this->dashboardService = $dashboardService;
     }
 
-   #[ExcludeRouteFromDocs]
+    #[ExcludeRouteFromDocs]
     public function backup()
     {
-       try {
-               Artisan::call('backup:clean');
+        try {
+            Artisan::call('backup:clean');
             Artisan::call('backup:run');
+
             return response()->json(['message' => 'Backup process started']);
         } catch (\Throwable $e) {
             return response()->json(['error' => $e->getMessage()], 500);
@@ -36,21 +35,21 @@ class DashboardController extends Controller
 
     public function activities()
     {
-        $activities=Activity::with('user','subject','project')->latest()->limit(15)->get();
+        $activities = Activity::with('user', 'subject', 'project')->latest()->limit(15)->get();
 
         return ActivitiesResource::collection($activities);
     }
- 
-  #[ExcludeRouteFromDocs]
-   public function data(Request $request)
-   {     
-    $data = [];
 
-    $startDate = Carbon::now()->subMonths(11)->startOfMonth();
-    $endDate = Carbon::now()->endOfMonth();
+    #[ExcludeRouteFromDocs]
+    public function data(Request $request)
+    {
+        $data = [];
 
-    $data = $this->dashboardService->fetchDataForMonths($startDate, $endDate);
+        $startDate = Carbon::now()->subMonths(11)->startOfMonth();
+        $endDate = Carbon::now()->endOfMonth();
 
-      return response()->json($data);
+        $data = $this->dashboardService->fetchDataForMonths($startDate, $endDate);
+
+        return response()->json($data);
     }
 }

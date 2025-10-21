@@ -2,32 +2,27 @@
 
 namespace App\Models;
 
+use App\Enums\ProjectHealthStatus;
+use App\QueryBuilder\ProjectQueryBuilder;
 use App\Traits\RecordActivity;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use App\Models\Task;
-use Illuminate\Database\Eloquent\Relations\MorphMany;
-use Illuminate\Support\Facades\Redis;
+use Carbon\Carbon;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
-use App\Enums\ScoreValue;
-use App\Enums\ProjectHealthStatus;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Collection;
-use Carbon\Carbon;
-use Auth;
-use App\QueryBuilder\ProjectQueryBuilder;
 
 class Project extends Model
 {
-    use RecordActivity;
     use HasFactory;
-    use SoftDeletes;
+    use RecordActivity;
     use Sluggable;
+    use SoftDeletes;
 
     protected $guarded = [];
 
@@ -49,21 +44,20 @@ class Project extends Model
      * Project model cast properties.
      *
      * @var array<string,string>
-    */
+     */
     protected $casts = [
-      'stage_updated_at' => 'datetime',
-      'delivered_at' => 'datetime',
+        'stage_updated_at' => 'datetime',
+        'delivered_at' => 'datetime',
         'health_score' => 'float',
         'health_score_calculated_at' => 'datetime',
     ];
-    
+
     /**
      * The events that should be recorded.
      *
      * @var array<string>
-   */
-    protected static $recordableEvents = ['created','updated','deleted','restored'];
-    
+     */
+    protected static $recordableEvents = ['created', 'updated', 'deleted', 'restored'];
 
     /**
      * Return the sluggable configuration array for this model.
@@ -74,8 +68,8 @@ class Project extends Model
     {
         return [
             'slug' => [
-                'source' => 'name'
-            ]
+                'source' => 'name',
+            ],
         ];
     }
 
@@ -96,7 +90,7 @@ class Project extends Model
     {
         return "/api/v1/projects/{$this->slug}";
     }
-    
+
     /**
      * Get user associated to the project.
      *
@@ -148,9 +142,9 @@ class Project extends Model
     public function addTask(string $title): Task
     {
         return $this->tasks()->create([
-          'title' => $title,
-          'user_id' => auth()->id(),
-          'status_id' => 1,
+            'title' => $title,
+            'user_id' => auth()->id(),
+            'status_id' => 1,
         ]);
     }
 
@@ -162,7 +156,7 @@ class Project extends Model
      */
     public function addTasks(array $tasks): EloquentCollection
     {
-        //$this->timestamps = false;
+        // $this->timestamps = false;
 
         return $this->tasks()->createManyQuietly($tasks);
     }
@@ -171,18 +165,18 @@ class Project extends Model
     {
         $this->members()->attach($user);
     }
-    
+
     /**
      * Get the project members.
      *
      * @return BelongsToMany<User>
      */
-    public function members(): BelongsToMany 
+    public function members(): BelongsToMany
     {
         return $this->belongsToMany(User::class, 'project_members')
-                    ->withPivot('active')->withTimestamps();
+            ->withPivot('active')->withTimestamps();
     }
-    
+
     /**
      * Get project active members.
      *
@@ -191,8 +185,8 @@ class Project extends Model
     public function activeMembers(): BelongsToMany
     {
         return $this
-              ->members()
-              ->wherePivot('active', true);
+            ->members()
+            ->wherePivot('active', true);
     }
 
     /**
@@ -203,12 +197,12 @@ class Project extends Model
     public function asignees(): BelongsToMany
     {
         return $this
-        ->belongsToMany(User::class, 'project_members')
-        ->wherePivot('active', true)
-        ->select(['users.id', 'users.name', 'users.email']);
+            ->belongsToMany(User::class, 'project_members')
+            ->wherePivot('active', true)
+            ->select(['users.id', 'users.name', 'users.email']);
     }
 
-   /**
+    /**
      * Get chat conversations releated to the project.
      *
      * @return HasMany<Conversation>
@@ -221,6 +215,7 @@ class Project extends Model
     public function tasksReachedItsLimit(): bool
     {
         $this->loadCount('tasks');
+
         return $this->tasks_count == config('app.project.taskLimit');
     }
 
@@ -230,6 +225,7 @@ class Project extends Model
     public function getHealthStatusAttribute(): string
     {
         $score = (float) ($this->health_score ?? 0.0);
+
         return match (true) {
             $score >= 75.0 => ProjectHealthStatus::HOT->value,
             $score >= 45.0 => ProjectHealthStatus::WARM->value,
@@ -242,7 +238,6 @@ class Project extends Model
      */
     /**
      * @param  \Illuminate\Database\Eloquent\Builder<\App\Models\Project>  $query
-     * @param  string  $direction
      * @return \Illuminate\Database\Eloquent\Builder<\App\Models\Project>
      */
     public function scopeOrderByHealthScore(Builder $query, string $direction = 'desc'): Builder
@@ -252,18 +247,18 @@ class Project extends Model
 
     /**
      * Get all scheduled messages releated to project
-     * 
-     * @return Collection<int, Message> 
+     *
+     * @return Collection<int, Message>
      */
     public function scheduledMessages(): Collection
     {
         return $this
-        ->messages()
-        ->where('delivered', false)
-        ->whereNotNull('delivered_at')
-        ->whereDate('delivered_at', '>', Carbon::now())
-        ->with('users:name')
-        ->get();
+            ->messages()
+            ->where('delivered', false)
+            ->whereNotNull('delivered_at')
+            ->whereDate('delivered_at', '>', Carbon::now())
+            ->with('users:name')
+            ->get();
     }
 
     /**
@@ -285,12 +280,12 @@ class Project extends Model
     {
         return $this->deleted_at ? 'trashed' : 'active';
     }
-    
+
     /**
      * Get meetings releated to the project.
      *
      * @return HasMany<Meeting>
-     */ 
+     */
     public function meetings(): HasMany
     {
         return $this->hasMany(Meeting::class);
@@ -319,19 +314,17 @@ class Project extends Model
      * Scope projects created in a given year/month.
      *
      * @param  \Illuminate\Database\Eloquent\Builder<\App\Models\Project>  $query
-     * @param  int|null  $year
-     * @param  int|null  $month
      * @return \Illuminate\Database\Eloquent\Builder<\App\Models\Project>
      */
     public function scopeCreatedIn(Builder $query, ?int $year = null, ?int $month = null): Builder
-   {
-    if ($year) {
-        $query->whereYear('projects.created_at', $year);
-        if ($month) {
-            $query->whereMonth('projects.created_at', $month);
+    {
+        if ($year) {
+            $query->whereYear('projects.created_at', $year);
+            if ($month) {
+                $query->whereMonth('projects.created_at', $month);
+            }
         }
-    }
-    return $query;
-   }
 
+        return $query;
+    }
 }

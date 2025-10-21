@@ -31,9 +31,9 @@ return [
     ],
 
     'vonage' => [
-      'api_key'=>env('VONAGE_KEY'),
-      'secret_key'=>env('VONAGE_SECRET'),
-      'from'=>env('VONAGE_SMS_FROM'),
+        'api_key' => env('VONAGE_KEY'),
+        'secret_key' => env('VONAGE_SECRET'),
+        'from' => env('VONAGE_SMS_FROM'),
     ],
 
     'github' => [
@@ -42,37 +42,35 @@ return [
         'redirect' => env('OAUTH_CALLBACK_URL'),
     ],
 
-      'google' => [
+    'google' => [
         'client_id' => env('GOOGLE_CLIENT_ID'),
         'client_secret' => env('GOOGLE_CLIENT_SECRET'),
         'redirect' => env('GOOGLE_OAUTH_CALLBACK_URL'),
     ],
 
     'paddle' => [
-      'monthly' => env('Monthly_Plan'),
-      'yearly' => env('Yearly_Plan'),
-      'vendor_id'=>env('PADDLE_VENDOR_ID'),
-      'vendor_auth_code'=>env('PADDLE_VENDOR_AUTH_CODE'), 
-      'results_per_page'=>10,
-     ],
+        'monthly' => env('Monthly_Plan'),
+        'yearly' => env('Yearly_Plan'),
+        'vendor_id' => env('PADDLE_VENDOR_ID'),
+        'vendor_auth_code' => env('PADDLE_VENDOR_AUTH_CODE'),
+        'results_per_page' => 10,
+    ],
 
     'paypal' => [
         'id' => env('PAYPAL_ID'),
         'secret' => env('PAYPAL_SECRET'),
-        'url'=>[
-            'executeAgreement'=>[
-                'success'=>'http://localhost:8000/execute-agreement/true',
-                'failure'=>'http://localhost:8000/execute-agreement/false'
-            ]
-        ]
+        'url' => [
+            'executeAgreement' => [
+                'success' => 'http://localhost:8000/execute-agreement/true',
+                'failure' => 'http://localhost:8000/execute-agreement/false',
+            ],
+        ],
     ],
 
     'zoom' => [
-        'client_id'=> env('ZOOM_CLIENT_ID'),
-        'client_secret'=> env('ZOOM_CLIENT_SECRET'), 
-        'webhook_secret'=> env('ZOOM_WEBHOOK_SECRET_TOKEN'),
+        'client_id' => env('ZOOM_CLIENT_ID'),
+        'client_secret' => env('ZOOM_CLIENT_SECRET'),
+        'webhook_secret' => env('ZOOM_WEBHOOK_SECRET_TOKEN'),
     ],
-
-
 
 ];

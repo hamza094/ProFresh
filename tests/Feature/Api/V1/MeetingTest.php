@@ -2,14 +2,10 @@
 
 namespace Tests\Feature\Api\V1;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Tests\TestCase;
-use App\Models\User;
-use App\Models\Project;
 use App\Models\Meeting;
 use App\Traits\ProjectSetup;
 use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
+use Tests\TestCase;
 
 class MeetingTest extends TestCase
 {
@@ -29,8 +25,8 @@ class MeetingTest extends TestCase
                 'success' => true,
                 'data' => [
                     'id' => $meeting->id,
-                    'meeting_id' => $meeting->meeting_id,  
-                ]
+                    'meeting_id' => $meeting->meeting_id,
+                ],
             ]);
     }
 
@@ -53,7 +49,7 @@ class MeetingTest extends TestCase
                 'success' => true,
                 'message' => 'Scheduled meetings',
             ]);
-            
+
         $this->assertCount(3, $response->json('meetingsData.data'));
 
         // Previous meetings

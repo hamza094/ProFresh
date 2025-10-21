@@ -17,5 +17,4 @@ interface Paddle
      * @return array{message: string}
      */
     public function cancel(User $user, string $plan): array;
-  
 }

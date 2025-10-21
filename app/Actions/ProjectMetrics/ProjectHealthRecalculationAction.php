@@ -1,18 +1,18 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Actions\ProjectMetrics;
 
 use App\Jobs\RecalculateProjectHealth;
 use App\Models\Project;
-use App\Events\ProjectHealthUpdated;
-use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\RateLimiter;
 
 final class ProjectHealthRecalculationAction
 {
     /**
-     * @param array<int,string> $sections
+     * @param  array<int,string>  $sections
      */
     public function handle(Project $project, array $sections): void
     {

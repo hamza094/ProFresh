@@ -34,6 +34,7 @@ class FakePaddleService implements Paddle
             'message' => 'Your subscription has been canceled successfully (fake).',
         ];
     }
+
     public function subscriptionUsersList(UserSubscriptionData $subscriptionData): DataCollection
     {
         // Return a fake DataCollection for testing purposes

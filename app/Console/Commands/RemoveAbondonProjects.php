@@ -2,9 +2,8 @@
 
 namespace App\Console\Commands;
 
-use Illuminate\Console\Command;
-
 use App\Models\Project;
+use Illuminate\Console\Command;
 
 class RemoveAbondonProjects extends Command
 {
@@ -39,13 +38,13 @@ class RemoveAbondonProjects extends Command
      */
     public function handle()
     {
-      $projects=Project::onlyTrashed()
-        ->pastAbandonedLimit()
-        ->get();
+        $projects = Project::onlyTrashed()
+            ->pastAbandonedLimit()
+            ->get();
 
-      $projects->each(function($project){
-        $project->forceDelete();
-      });
+        $projects->each(function ($project) {
+            $project->forceDelete();
+        });
 
     }
 }

@@ -24,19 +24,20 @@ class InvitationUsersRequest extends FormRequest
     public function rules()
     {
         return [
-         /**
-          * - Email must be present in database
-          * @example maximillia.koelpin@example.com
-          */    
-        'email' => 'required|email|exists:users,email',
+            /**
+             * - Email must be present in database
+             *
+             * @example maximillia.koelpin@example.com
+             */
+            'email' => 'required|email|exists:users,email',
         ];
     }
- 
+
     /**
-    * Custom error messages for validation.
-    *
-    * @return array<string, string>
-    */
+     * Custom error messages for validation.
+     *
+     * @return array<string, string>
+     */
     public function messages()
     {
         return [

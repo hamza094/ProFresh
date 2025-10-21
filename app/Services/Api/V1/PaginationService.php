@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Services\Api\V1;
 
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -18,7 +19,7 @@ class PaginationService extends LengthAwarePaginator
                 'first' => $this->url(1),
                 'last' => $this->url($this->lastPage()),
                 'prev' => $this->previousPageUrl(),
-                'next' => $this->nextPageUrl()
+                'next' => $this->nextPageUrl(),
             ],
             'meta' => [
                 'current_page' => $this->currentPage(),
@@ -29,7 +30,7 @@ class PaginationService extends LengthAwarePaginator
                 'per_page' => $this->perPage(),
                 'to' => $this->lastItem(),
                 'total' => $this->total(),
-            ]
+            ],
         ];
     }
 }

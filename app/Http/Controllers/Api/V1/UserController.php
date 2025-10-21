@@ -2,15 +2,13 @@
 
 namespace App\Http\Controllers\Api\V1;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use App\Http\Resources\Api\V1\UsersResource;
-use App\Http\Resources\Api\V1\UserResource;
-use App\Http\Requests\Api\V1\UserRequest;
-use App\Services\Api\V1\UserService;
 use App\Http\Controllers\Api\ApiController;
-use Illuminate\Http\JsonResponse;
+use App\Http\Requests\Api\V1\UserRequest;
+use App\Http\Resources\Api\V1\UserResource;
+use App\Http\Resources\Api\V1\UsersResource;
 use App\Models\User;
+use App\Services\Api\V1\UserService;
+use Illuminate\Http\JsonResponse;
 
 class UserController extends ApiController
 {
@@ -18,14 +16,13 @@ class UserController extends ApiController
      * List all users
      *
      * This endpoint returns a list of all users in the application.
-     *
      */
     public function index(): JsonResponse
     {
         $users = User::all();
-        
+
         return response()->json([
-            'users' => UsersResource::collection($users)
+            'users' => UsersResource::collection($users),
         ], 200);
     }
 
@@ -33,7 +30,6 @@ class UserController extends ApiController
      * Show user details
      *
      * Get detailed information for a specific user.
-     *
      */
     public function show(User $user): JsonResponse
     {
@@ -41,7 +37,7 @@ class UserController extends ApiController
 
         return response()->json([
             'message' => 'User Data',
-            'user' => new UserResource($user)
+            'user' => new UserResource($user),
         ], 200);
     }
 
@@ -49,8 +45,7 @@ class UserController extends ApiController
      * Update user
      *
      * Update the specified user's information. Only the owner can update their data.
-    *
-   */
+     */
     public function update(UserRequest $request, User $user, UserService $userService): JsonResponse
     {
         $this->authorize('owner', $user);
@@ -59,7 +54,7 @@ class UserController extends ApiController
 
         return response()->json([
             'message' => 'User Data Updated Sucessfully',
-            'user' => new UserResource($user)
+            'user' => new UserResource($user),
         ], 200);
     }
 
@@ -67,7 +62,6 @@ class UserController extends ApiController
      * Soft delete user
      *
      * Soft delete the specified user. Only the owner can delete their account.  * This will also soft delete all projects owned by the user*.
-     *
      */
     public function destroy(User $user): JsonResponse
     {
@@ -84,12 +78,12 @@ class UserController extends ApiController
      * Force delete user
      *
      * Permanently delete the specified user .
-     *
      */
     public function forceDestroy(User $user): JsonResponse
     {
         $getUser = User::withTrashed()->findOrFail($user);
-        $getUser->forceDelete(); 
+        $getUser->forceDelete();
+
         return response()->json([
             'message' => 'User Data Permanently Deleted',
         ], 200);

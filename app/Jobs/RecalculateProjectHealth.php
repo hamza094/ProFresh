@@ -22,6 +22,7 @@ class RecalculateProjectHealth implements ShouldQueue
      * Number of attempts and timeout per attempt.
      */
     public int $tries = 2;
+
     public int $timeout = 60; // seconds
 
     /**
@@ -34,10 +35,7 @@ class RecalculateProjectHealth implements ShouldQueue
         return [40, 60];
     }
 
-
-    public function __construct(public int $projectId, public ?float $precomputedScore = null, public bool $broadcast = false)
-    {
-    }
+    public function __construct(public int $projectId, public ?float $precomputedScore = null, public bool $broadcast = false) {}
 
     public function handle(ProjectHealthMetricAction $action, ?ProjectInsightsPreloader $preloader = null): void
     {
@@ -123,5 +121,4 @@ class RecalculateProjectHealth implements ShouldQueue
 
         event(new ProjectHealthUpdated($project));
     }
-
 }

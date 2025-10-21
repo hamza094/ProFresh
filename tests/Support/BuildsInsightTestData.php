@@ -17,32 +17,32 @@ trait BuildsInsightTestData
     {
         // Create different task statuses
         $completedStatus = TaskStatus::factory()->completed()->create();
-        $progressStatus  = TaskStatus::factory()->progress()->create();
-        $pendingStatus   = TaskStatus::factory()->create(); // Default "Not Started"
+        $progressStatus = TaskStatus::factory()->progress()->create();
+        $pendingStatus = TaskStatus::factory()->create(); // Default "Not Started"
 
         // Mix of completed, in-progress, and pending/overdue tasks
         Task::factory()->count(6)->create([
             'project_id' => $project->id,
-            'status_id'  => $completedStatus->id,
+            'status_id' => $completedStatus->id,
             'updated_at' => now()->subDays(2),
         ]);
 
         Task::factory()->count(3)->create([
             'project_id' => $project->id,
-            'status_id'  => $progressStatus->id,
-            'due_at'     => now()->addDays(5),
+            'status_id' => $progressStatus->id,
+            'due_at' => now()->addDays(5),
         ]);
 
         Task::factory()->create([
             'project_id' => $project->id,
-            'status_id'  => $pendingStatus->id,
-            'due_at'     => now()->subDays(1), // Overdue
+            'status_id' => $pendingStatus->id,
+            'due_at' => now()->subDays(1), // Overdue
         ]);
 
         // Recent activities contribute to activity and distinct participants
         Activity::factory()->count(8)->create([
             'project_id' => $project->id,
-            'user_id'    => $actor->id,
+            'user_id' => $actor->id,
             'created_at' => now()->subDays(3),
         ]);
 
