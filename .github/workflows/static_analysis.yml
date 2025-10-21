@@ -29,8 +29,7 @@ jobs:
       - name: Cache Composer
         uses: actions/cache@v4
         with:
-          path: |
-            ~/.composer/cache/files
+          path: ~/.composer/cache/files
           key: composer-${{ runner.os }}-${{ hashFiles('**/composer.lock') }}
           restore-keys: |
             composer-${{ runner.os }}-
@@ -41,12 +40,10 @@ jobs:
       - name: Cache PHPStan result cache
         uses: actions/cache@v4
         with:
-          path: |
-            .phpstan-cache
-          key: phpstan-${{ runner.os }}-${{ github.sha }}
+          path: .phpstan-cache
+          key: phpstan-${{ runner.os }}-${{ hashFiles('composer.lock') }}
           restore-keys: |
             phpstan-${{ runner.os }}-
 
       - name: Run PHPStan (Larastan)
-        run: |
-          vendor/bin/phpstan analyse -c phpstan.neon --error-format=github --no-progress --memory-limit=1G
+        run: vendor/bin/phpstan analyse -c phpstan.neon --error-format=github --no-progress --memory-limit=1G

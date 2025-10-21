@@ -27,3 +27,7 @@ parameters:
 
 #
 #    checkMissingIterableValueType: false
+
+    # Improves performance and consistency in CI
+    tmpDir: .phpstan-cache
+    reportUnmatchedIgnoredErrors: true
