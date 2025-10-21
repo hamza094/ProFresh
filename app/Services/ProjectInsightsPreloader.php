@@ -38,13 +38,22 @@ class ProjectInsightsPreloader
         $this->preload($project, ['health']);
     }
 
-    /** @param array<string> $sections @return array<int|string,mixed> */
+    /**
+     * @param array<int|string,string> $sections
+     * @return array<int|string,mixed>
+     */
     private function buildCountLoaders(array $sections, CarbonInterface $now): array
     {
+        /** @var array<string, array<int,string>> $sectionToTypesMap */
         $sectionToTypesMap = (array) config('insights.section_count_mappings', []);
 
+        /** @var \Illuminate\Support\Collection<int,string> $metricTypes */
         $metricTypes = collect($sections)
-            ->flatMap(fn(string $section) => $sectionToTypesMap[$section] ?? [])
+            ->flatMap(function (string $section) use ($sectionToTypesMap): array {
+                /** @var array<int,string> $types */
+                $types = $sectionToTypesMap[$section] ?? [];
+                return $types;
+            })
             ->unique()
             ->values();
 
@@ -71,7 +80,10 @@ class ProjectInsightsPreloader
         return $loaders;
     }
 
-    /** @return array<int|string,mixed> */
+    /**
+     * @param array<string,int> $windowConfig
+     * @return array<int|string,mixed>
+     */
     private function definitionsForMetricType(string $metricType, CarbonInterface $now, array $windowConfig): array
     {
         return match($metricType) {
@@ -100,6 +112,9 @@ class ProjectInsightsPreloader
         };
     }
 
+    /**
+     * @return array<string,int>
+     */
     private function loadConfigWindowValues(): array
     {
         if (self::$cachedWindowConfig !== null) {
@@ -128,6 +143,10 @@ class ProjectInsightsPreloader
         $project->setAttribute('recent_participants_count', $recentParticipants);
     }
 
+    /**
+     * @param array<int|string,string> $sections
+     * @return array<int,string>
+     */
     private function expandSections(array $sections): array
     {
         if (! in_array('health', $sections, true)) {

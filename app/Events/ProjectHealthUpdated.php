@@ -16,7 +16,7 @@ class ProjectHealthUpdated implements ShouldBroadcast
     {
     }
 
-    public $broadcastQueue = 'metrics';
+    public string $broadcastQueue = 'metrics';
 
     public function broadcastOn(): PrivateChannel
     {

@@ -96,8 +96,7 @@ class ConversationService
       new UserMentioned(
         $project->name,
         $project->path(),
-        auth()->user()->getNotifierData(),
-        $project)
+        auth()->user()->getNotifierData())
     );
 
   }catch(\Exception $e){

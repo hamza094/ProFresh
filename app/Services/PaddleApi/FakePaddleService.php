@@ -5,9 +5,35 @@ namespace App\Services\Paddle;
 use App\Collections\Paddle\DataCollection;
 use App\DataTransferObjects\Paddle\UserSubscriptionData;
 use App\Interfaces\Paddle;
+use App\Models\User;
 
 class FakePaddleService implements Paddle
 {
+    public function subscribe(User $user, string $plan): mixed
+    {
+        // Return a fake payment link to mimic Paddle checkout
+        return 'https://paddle.example.test/paylink/'.$plan;
+    }
+
+    /**
+     * @return array{message: string}
+     */
+    public function swap(User $user, string $plan): array
+    {
+        return [
+            'message' => 'Your subscription has been successfully updated to the '.$plan.' plan (fake).',
+        ];
+    }
+
+    /**
+     * @return array{message: string}
+     */
+    public function cancel(User $user, string $plan): array
+    {
+        return [
+            'message' => 'Your subscription has been canceled successfully (fake).',
+        ];
+    }
     public function subscriptionUsersList(UserSubscriptionData $subscriptionData): DataCollection
     {
         // Return a fake DataCollection for testing purposes

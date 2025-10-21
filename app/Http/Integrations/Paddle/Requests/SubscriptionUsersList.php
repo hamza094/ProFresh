@@ -41,10 +41,17 @@ class SubscriptionUsersList extends Request implements HasBody, Paginatable
     ];
    }    
 
-    public function createDtoFromResponse(Response $response): mixed
-    {
-       $response->collect()
-      ->map(fn (array $data): Data => Data::fromResponse($data));
-    }
+  /**
+   * @return array<int, Data>
+   */
+  public function createDtoFromResponse(Response $response): mixed
+  {
+    /** @var array<int, array<string,mixed>> $items */
+    $items = (array) ($response->json('response') ?? []);
+
+    return collect($items)
+      ->map(fn (array $data): Data => Data::fromResponse($data))
+      ->all();
+  }
     
 }

@@ -17,6 +17,9 @@ use Illuminate\Support\Facades\Cache;
 class DashBoardRepository
 {
     
+    /**
+     * @return array{active_projects:int, trashed_projects:int, member_projects:int, total_projects:int}
+     */
     public function getProjectStats(Request $request): array
     {
          $userId = Auth::id();
@@ -66,11 +69,14 @@ return [
      * @param Carbon $endDate
      * @return \Illuminate\Database\Eloquent\Collection
      */
+    /**
+     * @return \Illuminate\Database\Eloquent\Collection<int, \App\Models\Activity>
+     */
     public function getUserActivities(int $userId, Carbon $startDate, Carbon $endDate)
     {
         $cacheKey = "activities_{$userId}_{$startDate->format('Ymd')}_{$endDate->format('Ymd')}";
 
-        return Cache::remember($cacheKey, now()->addSeconds(60), function () use ($userId, $startDate, $endDate) {
+        return Cache::remember($cacheKey, now()->addSeconds(60), function () use ($userId, $startDate, $endDate): \Illuminate\Database\Eloquent\Collection {
             return Activity::query()
                 ->where('user_id', $userId)
                 ->whereBetween('created_at', [$startDate, $endDate])

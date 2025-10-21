@@ -6,18 +6,18 @@ use App\DataTransferObjects\Paddle\UserSubscriptionData;
 use App\DataTransferObjects\Paddle\Data;
 use App\Http\Integrations\Paddle\PaddleConnector;
 use App\Http\Resources\Api\V1\Admin\Integration\PaddleResource;
-use App\Interfaces\Paddle;
+use App\Interfaces\PaddleApi;
 use App\Http\Integrations\Paddle\Requests\SubscriptionUsersList;
 use Illuminate\Pagination\LengthAwarePaginator;
 
-final class PaddleService implements Paddle
+final class PaddleService implements PaddleApi
 {
     private function connector(): PaddleConnector
     {
       return app(PaddleConnector::class);
     }
 
-    public function SubscriptionUsersList(UserSubscriptionData $listData): DataCollection 
+  public function subscriptionUsersList(UserSubscriptionData $listData): DataCollection 
    {
      $subscriptionsData = $this->connector()
       ->send(new SubscriptionUsersList($listData))

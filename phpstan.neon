@@ -1,5 +1,6 @@
 includes:
     - vendor/larastan/larastan/extension.neon
+    - phpstan-baseline.neon
 
 parameters:
 
@@ -17,7 +18,7 @@ parameters:
          -   */app/Http/Controllers/Api/V1/Admin/*
          -   */app/Repository/Admin/*
          -   */app/Http/Resources/Api/V1/Admin/*
-
+         -   */app/Http/Requests/Api/V1/Admin/*
 
 
     ignoreErrors:

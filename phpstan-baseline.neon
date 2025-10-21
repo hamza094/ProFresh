@@ -1,0 +1,2076 @@
+parameters:
+	ignoreErrors:
+		-
+			message: "#^Method App\\\\Actions\\\\NotificationAction\\:\\:isAuthUser\\(\\) has parameter \\$user with no type specified\\.$#"
+			count: 1
+			path: app/Actions/NotificationAction.php
+
+		-
+			message: "#^Method App\\\\Actions\\\\NotificationAction\\:\\:send\\(\\) has parameter \\$notification with no type specified\\.$#"
+			count: 1
+			path: app/Actions/NotificationAction.php
+
+		-
+			message: "#^Method App\\\\Actions\\\\NotificationAction\\:\\:send\\(\\) has parameter \\$project with no type specified\\.$#"
+			count: 1
+			path: app/Actions/NotificationAction.php
+
+		-
+			message: "#^Access to an undefined property Laravel\\\\Socialite\\\\Contracts\\\\User\\:\\:\\$refreshToken\\.$#"
+			count: 1
+			path: app/Actions/OAuthAction.php
+
+		-
+			message: "#^Access to an undefined property Laravel\\\\Socialite\\\\Contracts\\\\User\\:\\:\\$token\\.$#"
+			count: 1
+			path: app/Actions/OAuthAction.php
+
+		-
+			message: "#^Method App\\\\Console\\\\Commands\\\\RemoveAbondonProjects\\:\\:handle\\(\\) should return int but return statement is missing\\.$#"
+			count: 1
+			path: app/Console/Commands/RemoveAbondonProjects.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Models\\\\Message\\:\\:\\$project\\.$#"
+			count: 1
+			path: app/Console/Commands/ScheduledMessages.php
+
+		-
+			message: "#^Method App\\\\Console\\\\Commands\\\\ScheduledMessages\\:\\:handle\\(\\) should return int but return statement is missing\\.$#"
+			count: 1
+			path: app/Console/Commands/ScheduledMessages.php
+
+		-
+			message: "#^Relation 'project' is not found in App\\\\Models\\\\Message model\\.$#"
+			count: 1
+			path: app/Console/Commands/ScheduledMessages.php
+
+		-
+			message: "#^Access to an undefined property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$id\\.$#"
+			count: 1
+			path: app/Console/Commands/TaskNotify.php
+
+		-
+			message: "#^Method App\\\\Console\\\\Commands\\\\TaskNotify\\:\\:processTasks\\(\\) has parameter \\$tasks with generic class Illuminate\\\\Database\\\\Eloquent\\\\Collection but does not specify its types\\: TKey, TModel$#"
+			count: 1
+			path: app/Console/Commands/TaskNotify.php
+
+		-
+			message: "#^Property App\\\\Console\\\\Commands\\\\TaskNotify\\:\\:\\$taskDueAction has no type specified\\.$#"
+			count: 1
+			path: app/Console/Commands/TaskNotify.php
+
+		-
+			message: "#^Call to static method messageScheduled\\(\\) on an unknown class App\\\\Console\\\\Message\\.$#"
+			count: 1
+			path: app/Console/Kernel.php
+
+		-
+			message: "#^Method App\\\\Console\\\\Kernel\\:\\:bootstrappers\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Console/Kernel.php
+
+		-
+			message: "#^Property App\\\\Console\\\\Kernel\\:\\:\\$commands type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Console/Kernel.php
+
+		-
+			message: "#^Method App\\\\Enums\\\\TaskDueNotifies\\:\\:values\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Enums/TaskDueNotifies.php
+
+		-
+			message: "#^Method App\\\\Enums\\\\TaskStatus\\:\\:active\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Enums/TaskStatus.php
+
+		-
+			message: "#^Method App\\\\Enums\\\\TaskStatus\\:\\:all\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Enums/TaskStatus.php
+
+		-
+			message: "#^Method App\\\\Events\\\\DashboardActivity\\:\\:broadcastOn\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Events/DashboardActivity.php
+
+		-
+			message: "#^Method App\\\\Events\\\\DashboardActivity\\:\\:broadcastWith\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: app/Events/DashboardActivity.php
+
+		-
+			message: "#^Property App\\\\Events\\\\DashboardActivity\\:\\:\\$activity has no type specified\\.$#"
+			count: 1
+			path: app/Events/DashboardActivity.php
+
+		-
+			message: "#^PHPDoc tag @return with type array\\|Illuminate\\\\Broadcasting\\\\Channel is not subtype of native type Illuminate\\\\Broadcasting\\\\PrivateChannel\\.$#"
+			count: 1
+			path: app/Events/NewMessage.php
+
+		-
+			message: "#^PHPDoc type array of property App\\\\Exceptions\\\\Handler\\:\\:\\$dontFlash is not covariant with PHPDoc type array\\<int, string\\> of overridden property Illuminate\\\\Foundation\\\\Exceptions\\\\Handler\\:\\:\\$dontFlash\\.$#"
+			count: 1
+			path: app/Exceptions/Handler.php
+
+		-
+			message: "#^PHPDoc type array of property App\\\\Exceptions\\\\Handler\\:\\:\\$dontReport is not covariant with PHPDoc type array\\<int, class\\-string\\<Throwable\\>\\> of overridden property Illuminate\\\\Foundation\\\\Exceptions\\\\Handler\\:\\:\\$dontReport\\.$#"
+			count: 1
+			path: app/Exceptions/Handler.php
+
+		-
+			message: "#^Parameter \\$e of anonymous function has invalid type App\\\\Exceptions\\\\MethodNotAllowedHttpException\\.$#"
+			count: 1
+			path: app/Exceptions/Handler.php
+
+		-
+			message: "#^Property App\\\\Exceptions\\\\Handler\\:\\:\\$dontFlash type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Exceptions/Handler.php
+
+		-
+			message: "#^Property App\\\\Exceptions\\\\Handler\\:\\:\\$dontReport type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Exceptions/Handler.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Exports\\\\ProjectsExport\\:\\:\\$project\\.$#"
+			count: 2
+			path: app/Exports/ProjectsExport.php
+
+		-
+			message: "#^Class App\\\\Exports\\\\ProjectsExport implements generic interface Maatwebsite\\\\Excel\\\\Concerns\\\\WithMapping but does not specify its types\\: RowType$#"
+			count: 1
+			path: app/Exports/ProjectsExport.php
+
+		-
+			message: "#^Method App\\\\Exports\\\\ProjectsExport\\:\\:headings\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Exports/ProjectsExport.php
+
+		-
+			message: "#^Method App\\\\Exports\\\\ProjectsExport\\:\\:map\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Exports/ProjectsExport.php
+
+		-
+			message: "#^Method App\\\\Exports\\\\ProjectsExport\\:\\:query\\(\\) has invalid return type Laravel\\\\Scout\\\\Builder\\.$#"
+			count: 1
+			path: app/Exports/ProjectsExport.php
+
+		-
+			message: "#^Method App\\\\Exports\\\\ProjectsExport\\:\\:query\\(\\) return type with generic class Illuminate\\\\Database\\\\Eloquent\\\\Builder does not specify its types\\: TModel$#"
+			count: 1
+			path: app/Exports/ProjectsExport.php
+
+		-
+			message: "#^Method App\\\\Exports\\\\ProjectsExport\\:\\:query\\(\\) return type with generic class Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\Relation does not specify its types\\: TRelatedModel, TDeclaringModel, TResult$#"
+			count: 1
+			path: app/Exports/ProjectsExport.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Controllers\\\\Api\\\\Auth\\\\ResetPasswordController\\:\\:resetPassword\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: app/Http/Controllers/Api/Auth/ResetPasswordController.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Controllers\\\\Api\\\\Auth\\\\ResetPasswordController\\:\\:sendResetLink\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: app/Http/Controllers/Api/Auth/ResetPasswordController.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Controllers\\\\Api\\\\V1\\\\ActivityController\\:\\:index\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: app/Http/Controllers/Api/V1/ActivityController.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Controllers\\\\Api\\\\V1\\\\FeaturesController\\:\\:export\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: app/Http/Controllers/Api/V1/FeaturesController.php
+
+		-
+			message: "#^Property App\\\\Http\\\\Controllers\\\\Api\\\\V1\\\\FeaturesController\\:\\:\\$featureService has no type specified\\.$#"
+			count: 1
+			path: app/Http/Controllers/Api/V1/FeaturesController.php
+
+		-
+			message: "#^Parameter \\#2 \\$user of method App\\\\Services\\\\Api\\\\V1\\\\InvitationService\\:\\:rejectInvitation\\(\\) expects App\\\\Models\\\\User, Illuminate\\\\Contracts\\\\Auth\\\\Authenticatable\\|null given\\.$#"
+			count: 1
+			path: app/Http/Controllers/Api/V1/InvitationController.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Controllers\\\\Api\\\\V1\\\\MessageController\\:\\:delete\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: app/Http/Controllers/Api/V1/MessageController.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Controllers\\\\Api\\\\V1\\\\MessageController\\:\\:message\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: app/Http/Controllers/Api/V1/MessageController.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Controllers\\\\Api\\\\V1\\\\MessageController\\:\\:scheduled\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: app/Http/Controllers/Api/V1/MessageController.php
+
+		-
+			message: "#^Unable to resolve the template type TKey in call to function collect$#"
+			count: 1
+			path: app/Http/Controllers/Api/V1/MessageController.php
+
+		-
+			message: "#^Unable to resolve the template type TValue in call to function collect$#"
+			count: 1
+			path: app/Http/Controllers/Api/V1/MessageController.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Models\\\\User\\:\\:\\$unreadNotifications\\.$#"
+			count: 1
+			path: app/Http/Controllers/Api/V1/NotificationsController.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Controllers\\\\Api\\\\V1\\\\NotificationsController\\:\\:destroy\\(\\) has parameter \\$notification with no type specified\\.$#"
+			count: 1
+			path: app/Http/Controllers/Api/V1/NotificationsController.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Controllers\\\\Api\\\\V1\\\\NotificationsController\\:\\:index\\(\\) return type with generic class Illuminate\\\\Pagination\\\\LengthAwarePaginator does not specify its types\\: TValue$#"
+			count: 1
+			path: app/Http/Controllers/Api/V1/NotificationsController.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Controllers\\\\Api\\\\V1\\\\NotificationsController\\:\\:updateStatus\\(\\) has parameter \\$notification with no type specified\\.$#"
+			count: 1
+			path: app/Http/Controllers/Api/V1/NotificationsController.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Controllers\\\\Api\\\\V1\\\\ProjectController\\:\\:delete\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: app/Http/Controllers/Api/V1/ProjectController.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Controllers\\\\Api\\\\V1\\\\ProjectController\\:\\:destroy\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: app/Http/Controllers/Api/V1/ProjectController.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Controllers\\\\Api\\\\V1\\\\ProjectController\\:\\:restore\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: app/Http/Controllers/Api/V1/ProjectController.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Controllers\\\\Api\\\\V1\\\\ProjectController\\:\\:show\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: app/Http/Controllers/Api/V1/ProjectController.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Controllers\\\\Api\\\\V1\\\\ProjectController\\:\\:update\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: app/Http/Controllers/Api/V1/ProjectController.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Controllers\\\\Api\\\\V1\\\\StageController\\:\\:index\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: app/Http/Controllers/Api/V1/StageController.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Controllers\\\\Api\\\\V1\\\\TaskController\\:\\:show\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: app/Http/Controllers/Api/V1/TaskController.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Controllers\\\\Api\\\\V1\\\\TaskController\\:\\:update\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: app/Http/Controllers/Api/V1/TaskController.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Controllers\\\\Api\\\\V1\\\\TaskStatusController\\:\\:__invoke\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: app/Http/Controllers/Api/V1/TaskStatusController.php
+
+		-
+			message: "#^Call to an undefined static method App\\\\DataTransferObjects\\\\Paddle\\\\Data\\:\\:fromResponse\\(\\)\\.$#"
+			count: 1
+			path: app/Http/Integrations/Paddle/Requests/SubscriptionUsersList.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Integrations\\\\Paddle\\\\Requests\\\\SubscriptionUsersList\\:\\:defaultBody\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Http/Integrations/Paddle/Requests/SubscriptionUsersList.php
+
+		-
+			message: "#^Class App\\\\Http\\\\Middleware\\\\AllowGuestOrAuthenticated not found\\.$#"
+			count: 1
+			path: app/Http/Kernel.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Kernel\\:\\:bootstrappers\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Http/Kernel.php
+
+		-
+			message: "#^PHPDoc type array of property App\\\\Http\\\\Kernel\\:\\:\\$middleware is not covariant with PHPDoc type array\\<int, string\\> of overridden property Illuminate\\\\Foundation\\\\Http\\\\Kernel\\:\\:\\$middleware\\.$#"
+			count: 1
+			path: app/Http/Kernel.php
+
+		-
+			message: "#^PHPDoc type array of property App\\\\Http\\\\Kernel\\:\\:\\$middlewareAliases is not covariant with PHPDoc type array\\<string, string\\> of overridden property Illuminate\\\\Foundation\\\\Http\\\\Kernel\\:\\:\\$middlewareAliases\\.$#"
+			count: 1
+			path: app/Http/Kernel.php
+
+		-
+			message: "#^PHPDoc type array of property App\\\\Http\\\\Kernel\\:\\:\\$middlewareGroups is not covariant with PHPDoc type array\\<string, array\\<int, string\\>\\> of overridden property Illuminate\\\\Foundation\\\\Http\\\\Kernel\\:\\:\\$middlewareGroups\\.$#"
+			count: 1
+			path: app/Http/Kernel.php
+
+		-
+			message: "#^Property App\\\\Http\\\\Kernel\\:\\:\\$middleware type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Http/Kernel.php
+
+		-
+			message: "#^Property App\\\\Http\\\\Kernel\\:\\:\\$middlewareAliases type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Http/Kernel.php
+
+		-
+			message: "#^Property App\\\\Http\\\\Kernel\\:\\:\\$middlewareGroups type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Http/Kernel.php
+
+		-
+			message: "#^PHPDoc type array of property App\\\\Http\\\\Middleware\\\\CheckForMaintenanceMode\\:\\:\\$except is not covariant with PHPDoc type array\\<int, string\\> of overridden property Illuminate\\\\Foundation\\\\Http\\\\Middleware\\\\PreventRequestsDuringMaintenance\\:\\:\\$except\\.$#"
+			count: 1
+			path: app/Http/Middleware/CheckForMaintenanceMode.php
+
+		-
+			message: "#^Property App\\\\Http\\\\Middleware\\\\CheckForMaintenanceMode\\:\\:\\$except type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Http/Middleware/CheckForMaintenanceMode.php
+
+		-
+			message: "#^PHPDoc type array of property App\\\\Http\\\\Middleware\\\\EncryptCookies\\:\\:\\$except is not covariant with PHPDoc type array\\<int, string\\> of overridden property Illuminate\\\\Cookie\\\\Middleware\\\\EncryptCookies\\:\\:\\$except\\.$#"
+			count: 1
+			path: app/Http/Middleware/EncryptCookies.php
+
+		-
+			message: "#^Property App\\\\Http\\\\Middleware\\\\EncryptCookies\\:\\:\\$except type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Http/Middleware/EncryptCookies.php
+
+		-
+			message: "#^Undefined variable\\: \\$guards$#"
+			count: 1
+			path: app/Http/Middleware/RedirectIfAuthenticated.php
+
+		-
+			message: "#^Variable \\$guards in empty\\(\\) is never defined\\.$#"
+			count: 1
+			path: app/Http/Middleware/RedirectIfAuthenticated.php
+
+		-
+			message: "#^PHPDoc type array of property App\\\\Http\\\\Middleware\\\\TrimStrings\\:\\:\\$except is not covariant with PHPDoc type array\\<int, string\\> of overridden property Illuminate\\\\Foundation\\\\Http\\\\Middleware\\\\TrimStrings\\:\\:\\$except\\.$#"
+			count: 1
+			path: app/Http/Middleware/TrimStrings.php
+
+		-
+			message: "#^Property App\\\\Http\\\\Middleware\\\\TrimStrings\\:\\:\\$except type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Http/Middleware/TrimStrings.php
+
+		-
+			message: "#^PHPDoc type array\\|string of property App\\\\Http\\\\Middleware\\\\TrustProxies\\:\\:\\$proxies is not covariant with PHPDoc type array\\<int, string\\>\\|string\\|null of overridden property Illuminate\\\\Http\\\\Middleware\\\\TrustProxies\\:\\:\\$proxies\\.$#"
+			count: 1
+			path: app/Http/Middleware/TrustProxies.php
+
+		-
+			message: "#^Property App\\\\Http\\\\Middleware\\\\TrustProxies\\:\\:\\$proxies type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Http/Middleware/TrustProxies.php
+
+		-
+			message: "#^PHPDoc type array of property App\\\\Http\\\\Middleware\\\\VerifyCsrfToken\\:\\:\\$except is not covariant with PHPDoc type array\\<int, string\\> of overridden property Illuminate\\\\Foundation\\\\Http\\\\Middleware\\\\VerifyCsrfToken\\:\\:\\$except\\.$#"
+			count: 1
+			path: app/Http/Middleware/VerifyCsrfToken.php
+
+		-
+			message: "#^Property App\\\\Http\\\\Middleware\\\\VerifyCsrfToken\\:\\:\\$except type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Http/Middleware/VerifyCsrfToken.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Requests\\\\Api\\\\V1\\\\ConversationRequest\\:\\:messages\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Http/Requests/Api/V1/ConversationRequest.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Requests\\\\Api\\\\V1\\\\ConversationRequest\\:\\:rules\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Http/Requests/Api/V1/ConversationRequest.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Requests\\\\Api\\\\V1\\\\DashboardProjectRequest\\:\\:messages\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Http/Requests/Api/V1/DashboardProjectRequest.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Requests\\\\Api\\\\V1\\\\DashboardProjectRequest\\:\\:rules\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Http/Requests/Api/V1/DashboardProjectRequest.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Requests\\\\Api\\\\V1\\\\MessageRequest\\:\\:messages\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Http/Requests/Api/V1/MessageRequest.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Requests\\\\Api\\\\V1\\\\MessageRequest\\:\\:rules\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Http/Requests/Api/V1/MessageRequest.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Requests\\\\Api\\\\V1\\\\MessageRequest\\:\\:sanitize\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: app/Http/Requests/Api/V1/MessageRequest.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Requests\\\\Api\\\\V1\\\\MessageRequest\\:\\:validator\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: app/Http/Requests/Api/V1/MessageRequest.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Requests\\\\Api\\\\V1\\\\MessageRequest\\:\\:validator\\(\\) has parameter \\$factory with no type specified\\.$#"
+			count: 1
+			path: app/Http/Requests/Api/V1/MessageRequest.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Requests\\\\Api\\\\V1\\\\ProjectStoreRequest\\:\\:rules\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Http/Requests/Api/V1/ProjectStoreRequest.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Requests\\\\Api\\\\V1\\\\ProjectUpdateRequest\\:\\:messages\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Http/Requests/Api/V1/ProjectUpdateRequest.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Requests\\\\Api\\\\V1\\\\ProjectUpdateRequest\\:\\:rules\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Http/Requests/Api/V1/ProjectUpdateRequest.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Requests\\\\Api\\\\V1\\\\StageRequest\\:\\:messages\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Http/Requests/Api/V1/StageRequest.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Requests\\\\Api\\\\V1\\\\StageRequest\\:\\:rules\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Http/Requests/Api/V1/StageRequest.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Requests\\\\Api\\\\V1\\\\TaskMembersRequest\\:\\:membersValidation\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: app/Http/Requests/Api/V1/TaskMembersRequest.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Requests\\\\Api\\\\V1\\\\TaskMembersRequest\\:\\:rules\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Http/Requests/Api/V1/TaskMembersRequest.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Requests\\\\Api\\\\V1\\\\TaskRequest\\:\\:messages\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Http/Requests/Api/V1/TaskRequest.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Requests\\\\Api\\\\V1\\\\TaskRequest\\:\\:rules\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: app/Http/Requests/Api/V1/TaskRequest.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Requests\\\\Api\\\\V1\\\\TaskUpdate\\:\\:rules\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Http/Requests/Api/V1/TaskUpdate.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Requests\\\\Api\\\\V1\\\\UserActivitiesRequest\\:\\:getDateRange\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Http/Requests/Api/V1/UserActivitiesRequest.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Requests\\\\Api\\\\V1\\\\UserActivitiesRequest\\:\\:rules\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Http/Requests/Api/V1/UserActivitiesRequest.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Requests\\\\Api\\\\V1\\\\UserTasksRequest\\:\\:filters\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Http/Requests/Api/V1/UserTasksRequest.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Requests\\\\Api\\\\V1\\\\UserTasksRequest\\:\\:hasAnyFilter\\(\\) has parameter \\$keys with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Http/Requests/Api/V1/UserTasksRequest.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Requests\\\\Api\\\\V1\\\\UserTasksRequest\\:\\:rules\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Http/Requests/Api/V1/UserTasksRequest.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Http\\\\Resources\\\\Api\\\\V1\\\\ActivityResource\\:\\:\\$changes\\.$#"
+			count: 2
+			path: app/Http/Resources/Api/V1/ActivityResource.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Http\\\\Resources\\\\Api\\\\V1\\\\ActivityResource\\:\\:\\$created_at\\.$#"
+			count: 1
+			path: app/Http/Resources/Api/V1/ActivityResource.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Http\\\\Resources\\\\Api\\\\V1\\\\ActivityResource\\:\\:\\$description\\.$#"
+			count: 1
+			path: app/Http/Resources/Api/V1/ActivityResource.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Http\\\\Resources\\\\Api\\\\V1\\\\ActivityResource\\:\\:\\$subject\\.$#"
+			count: 7
+			path: app/Http/Resources/Api/V1/ActivityResource.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Http\\\\Resources\\\\Api\\\\V1\\\\ActivityResource\\:\\:\\$subject_type\\.$#"
+			count: 1
+			path: app/Http/Resources/Api/V1/ActivityResource.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Http\\\\Resources\\\\Api\\\\V1\\\\ActivityResource\\:\\:\\$user\\.$#"
+			count: 1
+			path: app/Http/Resources/Api/V1/ActivityResource.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Resources\\\\Api\\\\V1\\\\ActivityResource\\:\\:created_meeting\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: app/Http/Resources/Api/V1/ActivityResource.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Resources\\\\Api\\\\V1\\\\ActivityResource\\:\\:deleted_meeting\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: app/Http/Resources/Api/V1/ActivityResource.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Resources\\\\Api\\\\V1\\\\ActivityResource\\:\\:getSubjectDetails\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Http/Resources/Api/V1/ActivityResource.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Resources\\\\Api\\\\V1\\\\ActivityResource\\:\\:loadAffectedUsers\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Http/Resources/Api/V1/ActivityResource.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Resources\\\\Api\\\\V1\\\\ActivityResource\\:\\:updated_meeting\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: app/Http/Resources/Api/V1/ActivityResource.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Http\\\\Resources\\\\Api\\\\V1\\\\InvitedUserResource\\:\\:\\$pivot\\.$#"
+			count: 2
+			path: app/Http/Resources/Api/V1/InvitedUserResource.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Resources\\\\Api\\\\V1\\\\InvitedUserResource\\:\\:toArray\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Http/Resources/Api/V1/InvitedUserResource.php
+
+		-
+			message: "#^PHPDoc tag @return with type array\\|Illuminate\\\\Contracts\\\\Support\\\\Arrayable\\|JsonSerializable is not subtype of native type array\\.$#"
+			count: 1
+			path: app/Http/Resources/Api/V1/InvitedUserResource.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Http\\\\Resources\\\\Api\\\\V1\\\\NotificationResource\\:\\:\\$created_at\\.$#"
+			count: 1
+			path: app/Http/Resources/Api/V1/NotificationResource.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Http\\\\Resources\\\\Api\\\\V1\\\\NotificationResource\\:\\:\\$data\\.$#"
+			count: 2
+			path: app/Http/Resources/Api/V1/NotificationResource.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Http\\\\Resources\\\\Api\\\\V1\\\\NotificationResource\\:\\:\\$id\\.$#"
+			count: 1
+			path: app/Http/Resources/Api/V1/NotificationResource.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Http\\\\Resources\\\\Api\\\\V1\\\\NotificationResource\\:\\:\\$read_at\\.$#"
+			count: 1
+			path: app/Http/Resources/Api/V1/NotificationResource.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Http\\\\Resources\\\\Api\\\\V1\\\\NotificationResource\\:\\:\\$type\\.$#"
+			count: 1
+			path: app/Http/Resources/Api/V1/NotificationResource.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Resources\\\\Api\\\\V1\\\\NotificationResource\\:\\:toArray\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Http/Resources/Api/V1/NotificationResource.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Resources\\\\Api\\\\V1\\\\NotificationResource\\:\\:toArray\\(\\) return type with generic interface Illuminate\\\\Contracts\\\\Support\\\\Arrayable does not specify its types\\: TKey, TValue$#"
+			count: 1
+			path: app/Http/Resources/Api/V1/NotificationResource.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Http\\\\Resources\\\\Api\\\\V1\\\\ProjectInvitaionResource\\:\\:\\$pivot\\.$#"
+			count: 1
+			path: app/Http/Resources/Api/V1/ProjectInvitaionResource.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Http\\\\Resources\\\\Api\\\\V1\\\\ProjectInvitaionResource\\:\\:\\$status\\.$#"
+			count: 1
+			path: app/Http/Resources/Api/V1/ProjectInvitaionResource.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Resources\\\\Api\\\\V1\\\\ProjectInvitaionResource\\:\\:toArray\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Http/Resources/Api/V1/ProjectInvitaionResource.php
+
+		-
+			message: "#^PHPDoc tag @return with type array\\|Illuminate\\\\Contracts\\\\Support\\\\Arrayable\\|JsonSerializable is not subtype of native type array\\.$#"
+			count: 1
+			path: app/Http/Resources/Api/V1/ProjectInvitaionResource.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Resources\\\\Api\\\\V1\\\\ProjectResource\\:\\:toArray\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Http/Resources/Api/V1/ProjectResource.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Resources\\\\Api\\\\V1\\\\ProjectResource\\:\\:toArray\\(\\) return type with generic interface Illuminate\\\\Contracts\\\\Support\\\\Arrayable does not specify its types\\: TKey, TValue$#"
+			count: 1
+			path: app/Http/Resources/Api/V1/ProjectResource.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Resources\\\\Api\\\\V1\\\\ProjectStageResource\\:\\:toArray\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Http/Resources/Api/V1/ProjectStageResource.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Resources\\\\Api\\\\V1\\\\ProjectStageResource\\:\\:toArray\\(\\) return type with generic interface Illuminate\\\\Contracts\\\\Support\\\\Arrayable does not specify its types\\: TKey, TValue$#"
+			count: 1
+			path: app/Http/Resources/Api/V1/ProjectStageResource.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Resources\\\\Api\\\\V1\\\\ProjectsResource\\:\\:toArray\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Http/Resources/Api/V1/ProjectsResource.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Resources\\\\Api\\\\V1\\\\ProjectsResource\\:\\:toArray\\(\\) return type with generic interface Illuminate\\\\Contracts\\\\Support\\\\Arrayable does not specify its types\\: TKey, TValue$#"
+			count: 1
+			path: app/Http/Resources/Api/V1/ProjectsResource.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Http\\\\Resources\\\\Api\\\\V1\\\\ReceiptResource\\:\\:\\$amount\\.$#"
+			count: 1
+			path: app/Http/Resources/Api/V1/ReceiptResource.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Http\\\\Resources\\\\Api\\\\V1\\\\ReceiptResource\\:\\:\\$created_at\\.$#"
+			count: 1
+			path: app/Http/Resources/Api/V1/ReceiptResource.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Http\\\\Resources\\\\Api\\\\V1\\\\ReceiptResource\\:\\:\\$currency\\.$#"
+			count: 1
+			path: app/Http/Resources/Api/V1/ReceiptResource.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Http\\\\Resources\\\\Api\\\\V1\\\\ReceiptResource\\:\\:\\$id\\.$#"
+			count: 1
+			path: app/Http/Resources/Api/V1/ReceiptResource.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Http\\\\Resources\\\\Api\\\\V1\\\\ReceiptResource\\:\\:\\$quantity\\.$#"
+			count: 1
+			path: app/Http/Resources/Api/V1/ReceiptResource.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Http\\\\Resources\\\\Api\\\\V1\\\\ReceiptResource\\:\\:\\$receipt_url\\.$#"
+			count: 1
+			path: app/Http/Resources/Api/V1/ReceiptResource.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Http\\\\Resources\\\\Api\\\\V1\\\\ReceiptResource\\:\\:\\$tax\\.$#"
+			count: 1
+			path: app/Http/Resources/Api/V1/ReceiptResource.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Http\\\\Resources\\\\Api\\\\V1\\\\ReceiptResource\\:\\:\\$updated_at\\.$#"
+			count: 1
+			path: app/Http/Resources/Api/V1/ReceiptResource.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Resources\\\\Api\\\\V1\\\\ReceiptResource\\:\\:toArray\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Http/Resources/Api/V1/ReceiptResource.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Resources\\\\Api\\\\V1\\\\ReceiptResource\\:\\:toArray\\(\\) return type with generic interface Illuminate\\\\Contracts\\\\Support\\\\Arrayable does not specify its types\\: TKey, TValue$#"
+			count: 1
+			path: app/Http/Resources/Api/V1/ReceiptResource.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Resources\\\\Api\\\\V1\\\\StageResource\\:\\:toArray\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Http/Resources/Api/V1/StageResource.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Resources\\\\Api\\\\V1\\\\StageResource\\:\\:toArray\\(\\) return type with generic interface Illuminate\\\\Contracts\\\\Support\\\\Arrayable does not specify its types\\: TKey, TValue$#"
+			count: 1
+			path: app/Http/Resources/Api/V1/StageResource.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Resources\\\\Api\\\\V1\\\\SubscriptionResource\\:\\:toArray\\(\\) should return array\\<string, mixed\\> but returns array\\<int, mixed\\>\\.$#"
+			count: 1
+			path: app/Http/Resources/Api/V1/SubscriptionResource.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Resources\\\\Api\\\\V1\\\\Task\\\\TaskMemberResource\\:\\:toArray\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Http/Resources/Api/V1/Task/TaskMemberResource.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Resources\\\\Api\\\\V1\\\\Task\\\\TaskMemberResource\\:\\:toArray\\(\\) return type with generic interface Illuminate\\\\Contracts\\\\Support\\\\Arrayable does not specify its types\\: TKey, TValue$#"
+			count: 1
+			path: app/Http/Resources/Api/V1/Task/TaskMemberResource.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Resources\\\\Api\\\\V1\\\\TaskResource\\:\\:formatDate\\(\\) has parameter \\$date with no type specified\\.$#"
+			count: 1
+			path: app/Http/Resources/Api/V1/TaskResource.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Resources\\\\Api\\\\V1\\\\TaskResource\\:\\:toArray\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Http/Resources/Api/V1/TaskResource.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Resources\\\\Api\\\\V1\\\\TaskResource\\:\\:toArray\\(\\) return type with generic interface Illuminate\\\\Contracts\\\\Support\\\\Arrayable does not specify its types\\: TKey, TValue$#"
+			count: 1
+			path: app/Http/Resources/Api/V1/TaskResource.php
+
+		-
+			message: "#^Parameter \\#1 \\$condition of method Illuminate\\\\Http\\\\Resources\\\\Json\\\\JsonResource\\:\\:when\\(\\) expects bool, Carbon\\\\Carbon\\|null given\\.$#"
+			count: 1
+			path: app/Http/Resources/Api/V1/TaskResource.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Resources\\\\Api\\\\V1\\\\TaskStatusResource\\:\\:toArray\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Http/Resources/Api/V1/TaskStatusResource.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Resources\\\\Api\\\\V1\\\\TaskStatusResource\\:\\:toArray\\(\\) return type with generic interface Illuminate\\\\Contracts\\\\Support\\\\Arrayable does not specify its types\\: TKey, TValue$#"
+			count: 1
+			path: app/Http/Resources/Api/V1/TaskStatusResource.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Resources\\\\Api\\\\V1\\\\TasksResource\\:\\:toArray\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Http/Resources/Api/V1/TasksResource.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Resources\\\\Api\\\\V1\\\\TasksResource\\:\\:toArray\\(\\) return type with generic interface Illuminate\\\\Contracts\\\\Support\\\\Arrayable does not specify its types\\: TKey, TValue$#"
+			count: 1
+			path: app/Http/Resources/Api/V1/TasksResource.php
+
+		-
+			message: "#^Parameter \\#1 \\$condition of method Illuminate\\\\Http\\\\Resources\\\\Json\\\\JsonResource\\:\\:when\\(\\) expects bool, Carbon\\\\Carbon\\|null given\\.$#"
+			count: 1
+			path: app/Http/Resources/Api/V1/TasksResource.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Http\\\\Resources\\\\Api\\\\V1\\\\UserActivitiesResource\\:\\:\\$created_at\\.$#"
+			count: 1
+			path: app/Http/Resources/Api/V1/UserActivitiesResource.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Http\\\\Resources\\\\Api\\\\V1\\\\UserActivitiesResource\\:\\:\\$description\\.$#"
+			count: 5
+			path: app/Http/Resources/Api/V1/UserActivitiesResource.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Http\\\\Resources\\\\Api\\\\V1\\\\UserActivitiesResource\\:\\:\\$id\\.$#"
+			count: 1
+			path: app/Http/Resources/Api/V1/UserActivitiesResource.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Http\\\\Resources\\\\Api\\\\V1\\\\UserActivitiesResource\\:\\:\\$project\\.$#"
+			count: 16
+			path: app/Http/Resources/Api/V1/UserActivitiesResource.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Http\\\\Resources\\\\Api\\\\V1\\\\UserActivitiesResource\\:\\:\\$subject\\.$#"
+			count: 8
+			path: app/Http/Resources/Api/V1/UserActivitiesResource.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Http\\\\Resources\\\\Api\\\\V1\\\\UserActivitiesResource\\:\\:\\$subject_type\\.$#"
+			count: 1
+			path: app/Http/Resources/Api/V1/UserActivitiesResource.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Http\\\\Resources\\\\Api\\\\V1\\\\UserActivitiesResource\\:\\:\\$user_id\\.$#"
+			count: 1
+			path: app/Http/Resources/Api/V1/UserActivitiesResource.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Resources\\\\Api\\\\V1\\\\UserActivitiesResource\\:\\:accept_invitation_member\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: app/Http/Resources/Api/V1/UserActivitiesResource.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Resources\\\\Api\\\\V1\\\\UserActivitiesResource\\:\\:color\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: app/Http/Resources/Api/V1/UserActivitiesResource.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Resources\\\\Api\\\\V1\\\\UserActivitiesResource\\:\\:created_meeting\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: app/Http/Resources/Api/V1/UserActivitiesResource.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Resources\\\\Api\\\\V1\\\\UserActivitiesResource\\:\\:created_message\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: app/Http/Resources/Api/V1/UserActivitiesResource.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Resources\\\\Api\\\\V1\\\\UserActivitiesResource\\:\\:created_project\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: app/Http/Resources/Api/V1/UserActivitiesResource.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Resources\\\\Api\\\\V1\\\\UserActivitiesResource\\:\\:created_task\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: app/Http/Resources/Api/V1/UserActivitiesResource.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Resources\\\\Api\\\\V1\\\\UserActivitiesResource\\:\\:deleted_meeting\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: app/Http/Resources/Api/V1/UserActivitiesResource.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Resources\\\\Api\\\\V1\\\\UserActivitiesResource\\:\\:deleted_project\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: app/Http/Resources/Api/V1/UserActivitiesResource.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Resources\\\\Api\\\\V1\\\\UserActivitiesResource\\:\\:deleted_task\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: app/Http/Resources/Api/V1/UserActivitiesResource.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Resources\\\\Api\\\\V1\\\\UserActivitiesResource\\:\\:getSubjectDetails\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Http/Resources/Api/V1/UserActivitiesResource.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Resources\\\\Api\\\\V1\\\\UserActivitiesResource\\:\\:remove_project_member\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: app/Http/Resources/Api/V1/UserActivitiesResource.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Resources\\\\Api\\\\V1\\\\UserActivitiesResource\\:\\:restored_project\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: app/Http/Resources/Api/V1/UserActivitiesResource.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Resources\\\\Api\\\\V1\\\\UserActivitiesResource\\:\\:sent_invitation_member\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: app/Http/Resources/Api/V1/UserActivitiesResource.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Resources\\\\Api\\\\V1\\\\UserActivitiesResource\\:\\:toArray\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Http/Resources/Api/V1/UserActivitiesResource.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Resources\\\\Api\\\\V1\\\\UserActivitiesResource\\:\\:toArray\\(\\) return type with generic interface Illuminate\\\\Contracts\\\\Support\\\\Arrayable does not specify its types\\: TKey, TValue$#"
+			count: 1
+			path: app/Http/Resources/Api/V1/UserActivitiesResource.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Resources\\\\Api\\\\V1\\\\UserActivitiesResource\\:\\:updated_meeting\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: app/Http/Resources/Api/V1/UserActivitiesResource.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Resources\\\\Api\\\\V1\\\\UserActivitiesResource\\:\\:updated_project\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: app/Http/Resources/Api/V1/UserActivitiesResource.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Resources\\\\Api\\\\V1\\\\UserActivitiesResource\\:\\:updated_task\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: app/Http/Resources/Api/V1/UserActivitiesResource.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Resources\\\\Api\\\\V1\\\\UserTasksResource\\:\\:toArray\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Http/Resources/Api/V1/UserTasksResource.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Resources\\\\Api\\\\V1\\\\UserTasksResource\\:\\:toArray\\(\\) return type with generic interface Illuminate\\\\Contracts\\\\Support\\\\Arrayable does not specify its types\\: TKey, TValue$#"
+			count: 1
+			path: app/Http/Resources/Api/V1/UserTasksResource.php
+
+		-
+			message: "#^Parameter \\#1 \\$condition of method Illuminate\\\\Http\\\\Resources\\\\Json\\\\JsonResource\\:\\:when\\(\\) expects bool, Carbon\\\\Carbon\\|null given\\.$#"
+			count: 1
+			path: app/Http/Resources/Api/V1/UserTasksResource.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Http\\\\View\\\\Composers\\\\ProjectComposer\\:\\:\\$user\\.$#"
+			count: 1
+			path: app/Http/Views/Composers/ProjectComposer.php
+
+		-
+			message: "#^Constructor of class App\\\\Http\\\\View\\\\Composers\\\\ProjectComposer has an unused parameter \\$users\\.$#"
+			count: 1
+			path: app/Http/Views/Composers/ProjectComposer.php
+
+		-
+			message: "#^Parameter \\$users of method App\\\\Http\\\\View\\\\Composers\\\\ProjectComposer\\:\\:__construct\\(\\) has invalid type App\\\\Repositories\\\\UserRepository\\.$#"
+			count: 2
+			path: app/Http/Views/Composers/ProjectComposer.php
+
+		-
+			message: "#^Property App\\\\Http\\\\View\\\\Composers\\\\ProjectComposer\\:\\:\\$project has unknown class App\\\\Repositories\\\\UserRepository as its type\\.$#"
+			count: 1
+			path: app/Http/Views/Composers/ProjectComposer.php
+
+		-
+			message: "#^Undefined variable\\: \\$project$#"
+			count: 1
+			path: app/Http/Views/Composers/ProjectComposer.php
+
+		-
+			message: "#^Method App\\\\Jobs\\\\MailMessage\\:\\:__construct\\(\\) has parameter \\$message with no type specified\\.$#"
+			count: 1
+			path: app/Jobs/MailMessage.php
+
+		-
+			message: "#^Method App\\\\Jobs\\\\MailMessage\\:\\:__construct\\(\\) has parameter \\$user with no type specified\\.$#"
+			count: 1
+			path: app/Jobs/MailMessage.php
+
+		-
+			message: "#^Property App\\\\Jobs\\\\MailMessage\\:\\:\\$message has no type specified\\.$#"
+			count: 1
+			path: app/Jobs/MailMessage.php
+
+		-
+			message: "#^Property App\\\\Jobs\\\\MailMessage\\:\\:\\$user has no type specified\\.$#"
+			count: 1
+			path: app/Jobs/MailMessage.php
+
+		-
+			message: "#^Property App\\\\Jobs\\\\SmsMessage\\:\\:\\$message has no type specified\\.$#"
+			count: 1
+			path: app/Jobs/SmsMessage.php
+
+		-
+			message: "#^Property App\\\\Jobs\\\\SmsMessage\\:\\:\\$project \\(App\\\\Models\\\\Podcast\\) does not accept App\\\\Models\\\\Project\\.$#"
+			count: 1
+			path: app/Jobs/SmsMessage.php
+
+		-
+			message: "#^Property App\\\\Jobs\\\\SmsMessage\\:\\:\\$project has unknown class App\\\\Models\\\\Podcast as its type\\.$#"
+			count: 1
+			path: app/Jobs/SmsMessage.php
+
+		-
+			message: "#^Method App\\\\Mail\\\\ProjectMail\\:\\:__construct\\(\\) has parameter \\$message with no type specified\\.$#"
+			count: 1
+			path: app/Mail/ProjectMail.php
+
+		-
+			message: "#^Method App\\\\Mail\\\\ProjectMail\\:\\:__construct\\(\\) has parameter \\$project with no type specified\\.$#"
+			count: 1
+			path: app/Mail/ProjectMail.php
+
+		-
+			message: "#^Property App\\\\Mail\\\\ProjectMail\\:\\:\\$message has no type specified\\.$#"
+			count: 1
+			path: app/Mail/ProjectMail.php
+
+		-
+			message: "#^Property App\\\\Mail\\\\ProjectMail\\:\\:\\$project has no type specified\\.$#"
+			count: 1
+			path: app/Mail/ProjectMail.php
+
+		-
+			message: "#^Class App\\\\Models\\\\Activity uses generic trait Illuminate\\\\Database\\\\Eloquent\\\\Factories\\\\HasFactory but does not specify its types\\: TFactory$#"
+			count: 1
+			path: app/Models/Activity.php
+
+		-
+			message: "#^Method App\\\\Models\\\\Activity\\:\\:project\\(\\) should return Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsTo\\<App\\\\Models\\\\Project, App\\\\Models\\\\Activity\\> but returns Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsTo\\<App\\\\Models\\\\Project, \\$this\\(App\\\\Models\\\\Activity\\)\\>\\.$#"
+			count: 1
+			path: app/Models/Activity.php
+
+		-
+			message: "#^Method App\\\\Models\\\\Activity\\:\\:subject\\(\\) return type with generic class Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\MorphTo does not specify its types\\: TRelatedModel, TDeclaringModel$#"
+			count: 1
+			path: app/Models/Activity.php
+
+		-
+			message: "#^Method App\\\\Models\\\\Activity\\:\\:user\\(\\) should return Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsTo\\<App\\\\Models\\\\User, App\\\\Models\\\\Activity\\> but returns Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsTo\\<App\\\\Models\\\\User, \\$this\\(App\\\\Models\\\\Activity\\)\\>\\.$#"
+			count: 1
+			path: app/Models/Activity.php
+
+		-
+			message: "#^Class App\\\\Models\\\\Conversation uses generic trait Illuminate\\\\Database\\\\Eloquent\\\\Factories\\\\HasFactory but does not specify its types\\: TFactory$#"
+			count: 1
+			path: app/Models/Conversation.php
+
+		-
+			message: "#^Method App\\\\Models\\\\Conversation\\:\\:mentionedUsers\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Models/Conversation.php
+
+		-
+			message: "#^Method App\\\\Models\\\\Conversation\\:\\:mentionedUsersData\\(\\) return type with generic class Illuminate\\\\Support\\\\Collection does not specify its types\\: TKey, TValue$#"
+			count: 1
+			path: app/Models/Conversation.php
+
+		-
+			message: "#^Method App\\\\Models\\\\Conversation\\:\\:project\\(\\) should return Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsTo\\<App\\\\Models\\\\Project, App\\\\Models\\\\Conversation\\> but returns Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsTo\\<App\\\\Models\\\\Project, \\$this\\(App\\\\Models\\\\Conversation\\)\\>\\.$#"
+			count: 1
+			path: app/Models/Conversation.php
+
+		-
+			message: "#^Method App\\\\Models\\\\Conversation\\:\\:setMessageAttribute\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: app/Models/Conversation.php
+
+		-
+			message: "#^Method App\\\\Models\\\\Conversation\\:\\:setMessageAttribute\\(\\) has parameter \\$message with no type specified\\.$#"
+			count: 1
+			path: app/Models/Conversation.php
+
+		-
+			message: "#^Method App\\\\Models\\\\Conversation\\:\\:user\\(\\) should return Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsTo\\<App\\\\Models\\\\User, App\\\\Models\\\\Conversation\\> but returns Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsTo\\<App\\\\Models\\\\User, \\$this\\(App\\\\Models\\\\Conversation\\)\\>\\.$#"
+			count: 1
+			path: app/Models/Conversation.php
+
+		-
+			message: "#^Offset 1 on array\\{array\\<int, string\\>, array\\<int, non\\-empty\\-string\\>\\} on left side of \\?\\? always exists and is not nullable\\.$#"
+			count: 1
+			path: app/Models/Conversation.php
+
+		-
+			message: "#^Access to an undefined static property static\\(App\\\\Models\\\\Meeting\\)\\:\\:\\$recordableEvents\\.$#"
+			count: 1
+			path: app/Models/Meeting.php
+
+		-
+			message: "#^Class App\\\\Models\\\\Meeting uses generic trait Illuminate\\\\Database\\\\Eloquent\\\\Factories\\\\HasFactory but does not specify its types\\: TFactory$#"
+			count: 1
+			path: app/Models/Meeting.php
+
+		-
+			message: "#^Generic type Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\MorphMany\\<App\\\\Models\\\\Activity\\> in PHPDoc tag @return does not specify all template types of class Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\MorphMany\\: TRelatedModel, TDeclaringModel$#"
+			count: 1
+			path: app/Models/Meeting.php
+
+		-
+			message: "#^Method App\\\\Models\\\\Meeting\\:\\:activities\\(\\) return type with generic class Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasMany does not specify its types\\: TRelatedModel, TDeclaringModel$#"
+			count: 1
+			path: app/Models/Meeting.php
+
+		-
+			message: "#^Method App\\\\Models\\\\Meeting\\:\\:activityChanges\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Models/Meeting.php
+
+		-
+			message: "#^Method App\\\\Models\\\\Meeting\\:\\:createActivityLog\\(\\) has parameter \\$affectedUserIds with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Models/Meeting.php
+
+		-
+			message: "#^Method App\\\\Models\\\\Meeting\\:\\:createActivityLog\\(\\) should return App\\\\Models\\\\Activity but returns Illuminate\\\\Database\\\\Eloquent\\\\Model\\.$#"
+			count: 1
+			path: app/Models/Meeting.php
+
+		-
+			message: "#^Method App\\\\Models\\\\Meeting\\:\\:project\\(\\) should return Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsTo\\<App\\\\Models\\\\Project, App\\\\Models\\\\Meeting\\> but returns Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsTo\\<App\\\\Models\\\\Project, \\$this\\(App\\\\Models\\\\Meeting\\)\\>\\.$#"
+			count: 1
+			path: app/Models/Meeting.php
+
+		-
+			message: "#^Method App\\\\Models\\\\Meeting\\:\\:recordActivity\\(\\) has parameter \\$affectedUserIds with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Models/Meeting.php
+
+		-
+			message: "#^Method App\\\\Models\\\\Meeting\\:\\:user\\(\\) should return Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsTo\\<App\\\\Models\\\\User, App\\\\Models\\\\Meeting\\> but returns Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsTo\\<App\\\\Models\\\\User, \\$this\\(App\\\\Models\\\\Meeting\\)\\>\\.$#"
+			count: 1
+			path: app/Models/Meeting.php
+
+		-
+			message: "#^PHPDoc tag @return with type App\\\\Models\\\\Activity is incompatible with native type void\\.$#"
+			count: 1
+			path: app/Models/Meeting.php
+
+		-
+			message: "#^Class App\\\\Models\\\\Message uses generic trait Illuminate\\\\Database\\\\Eloquent\\\\Factories\\\\HasFactory but does not specify its types\\: TFactory$#"
+			count: 1
+			path: app/Models/Message.php
+
+		-
+			message: "#^Generic type Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsToMany\\<App\\\\Models\\\\User\\> in PHPDoc tag @return does not specify all template types of class Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsToMany\\: TRelatedModel, TDeclaringModel$#"
+			count: 1
+			path: app/Models/Message.php
+
+		-
+			message: "#^Generic type Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\MorphMany\\<App\\\\Models\\\\Activity\\> in PHPDoc tag @return does not specify all template types of class Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\MorphMany\\: TRelatedModel, TDeclaringModel$#"
+			count: 1
+			path: app/Models/Message.php
+
+		-
+			message: "#^Method App\\\\Models\\\\Message\\:\\:activities\\(\\) return type with generic class Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasMany does not specify its types\\: TRelatedModel, TDeclaringModel$#"
+			count: 1
+			path: app/Models/Message.php
+
+		-
+			message: "#^Method App\\\\Models\\\\Message\\:\\:activityChanges\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Models/Message.php
+
+		-
+			message: "#^Method App\\\\Models\\\\Message\\:\\:createActivityLog\\(\\) has parameter \\$affectedUserIds with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Models/Message.php
+
+		-
+			message: "#^Method App\\\\Models\\\\Message\\:\\:createActivityLog\\(\\) should return App\\\\Models\\\\Activity but returns Illuminate\\\\Database\\\\Eloquent\\\\Model\\.$#"
+			count: 1
+			path: app/Models/Message.php
+
+		-
+			message: "#^Method App\\\\Models\\\\Message\\:\\:project\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: app/Models/Message.php
+
+		-
+			message: "#^Method App\\\\Models\\\\Message\\:\\:recordActivity\\(\\) has parameter \\$affectedUserIds with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Models/Message.php
+
+		-
+			message: "#^Method App\\\\Models\\\\Message\\:\\:scopeMessageScheduled\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: app/Models/Message.php
+
+		-
+			message: "#^Method App\\\\Models\\\\Message\\:\\:scopeMessageScheduled\\(\\) has parameter \\$query with no type specified\\.$#"
+			count: 1
+			path: app/Models/Message.php
+
+		-
+			message: "#^Method App\\\\Models\\\\Message\\:\\:users\\(\\) should return Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsToMany\\<App\\\\Models\\\\User\\> but returns Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsToMany\\<App\\\\Models\\\\User, \\$this\\(App\\\\Models\\\\Message\\)\\>\\.$#"
+			count: 1
+			path: app/Models/Message.php
+
+		-
+			message: "#^PHPDoc tag @return with type App\\\\Models\\\\Activity is incompatible with native type void\\.$#"
+			count: 1
+			path: app/Models/Message.php
+
+		-
+			message: "#^Property App\\\\Models\\\\Message\\:\\:\\$recordableEvents has no type specified\\.$#"
+			count: 1
+			path: app/Models/Message.php
+
+		-
+			message: "#^Class App\\\\Models\\\\Paypal uses generic trait Illuminate\\\\Database\\\\Eloquent\\\\Factories\\\\HasFactory but does not specify its types\\: TFactory$#"
+			count: 1
+			path: app/Models/Paypal.php
+
+		-
+			message: "#^Method App\\\\Models\\\\Paypal\\:\\:user\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: app/Models/Paypal.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Models\\\\Project\\:\\:\\$project_id\\.$#"
+			count: 1
+			path: app/Models/Project.php
+
+		-
+			message: "#^Class App\\\\Models\\\\Project uses generic trait Illuminate\\\\Database\\\\Eloquent\\\\Factories\\\\HasFactory but does not specify its types\\: TFactory$#"
+			count: 1
+			path: app/Models/Project.php
+
+		-
+			message: "#^Generic type Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsToMany\\<App\\\\Models\\\\User\\> in PHPDoc tag @return does not specify all template types of class Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsToMany\\: TRelatedModel, TDeclaringModel$#"
+			count: 3
+			path: app/Models/Project.php
+
+		-
+			message: "#^Generic type Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasMany\\<App\\\\Models\\\\Activity\\> in PHPDoc tag @return does not specify all template types of class Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasMany\\: TRelatedModel, TDeclaringModel$#"
+			count: 1
+			path: app/Models/Project.php
+
+		-
+			message: "#^Generic type Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasMany\\<App\\\\Models\\\\Conversation\\> in PHPDoc tag @return does not specify all template types of class Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasMany\\: TRelatedModel, TDeclaringModel$#"
+			count: 1
+			path: app/Models/Project.php
+
+		-
+			message: "#^Generic type Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasMany\\<App\\\\Models\\\\Meeting\\> in PHPDoc tag @return does not specify all template types of class Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasMany\\: TRelatedModel, TDeclaringModel$#"
+			count: 1
+			path: app/Models/Project.php
+
+		-
+			message: "#^Generic type Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasMany\\<App\\\\Models\\\\Message\\> in PHPDoc tag @return does not specify all template types of class Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasMany\\: TRelatedModel, TDeclaringModel$#"
+			count: 1
+			path: app/Models/Project.php
+
+		-
+			message: "#^Generic type Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasMany\\<App\\\\Models\\\\Task\\> in PHPDoc tag @return does not specify all template types of class Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasMany\\: TRelatedModel, TDeclaringModel$#"
+			count: 1
+			path: app/Models/Project.php
+
+		-
+			message: "#^Generic type Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\MorphMany\\<App\\\\Models\\\\Activity\\> in PHPDoc tag @return does not specify all template types of class Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\MorphMany\\: TRelatedModel, TDeclaringModel$#"
+			count: 1
+			path: app/Models/Project.php
+
+		-
+			message: "#^Method App\\\\Models\\\\Project\\:\\:activeMembers\\(\\) should return Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsToMany\\<App\\\\Models\\\\User\\> but returns Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsToMany\\<App\\\\Models\\\\User, \\$this\\(App\\\\Models\\\\Project\\)\\>\\.$#"
+			count: 1
+			path: app/Models/Project.php
+
+		-
+			message: "#^Method App\\\\Models\\\\Project\\:\\:activities\\(\\) return type with generic class Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasMany does not specify its types\\: TRelatedModel, TDeclaringModel$#"
+			count: 1
+			path: app/Models/Project.php
+
+		-
+			message: "#^Method App\\\\Models\\\\Project\\:\\:activityChanges\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Models/Project.php
+
+		-
+			message: "#^Method App\\\\Models\\\\Project\\:\\:asignees\\(\\) should return Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsToMany\\<App\\\\Models\\\\User\\> but returns Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsToMany\\<App\\\\Models\\\\User, \\$this\\(App\\\\Models\\\\Project\\)\\>\\.$#"
+			count: 1
+			path: app/Models/Project.php
+
+		-
+			message: "#^Method App\\\\Models\\\\Project\\:\\:conversations\\(\\) should return Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasMany\\<App\\\\Models\\\\Conversation\\> but returns Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasMany\\<App\\\\Models\\\\Conversation, \\$this\\(App\\\\Models\\\\Project\\)\\>\\.$#"
+			count: 1
+			path: app/Models/Project.php
+
+		-
+			message: "#^Method App\\\\Models\\\\Project\\:\\:createActivityLog\\(\\) has parameter \\$affectedUserIds with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Models/Project.php
+
+		-
+			message: "#^Method App\\\\Models\\\\Project\\:\\:createActivityLog\\(\\) should return App\\\\Models\\\\Activity but returns Illuminate\\\\Database\\\\Eloquent\\\\Model\\.$#"
+			count: 1
+			path: app/Models/Project.php
+
+		-
+			message: "#^Method App\\\\Models\\\\Project\\:\\:meetings\\(\\) should return Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasMany\\<App\\\\Models\\\\Meeting\\> but returns Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasMany\\<App\\\\Models\\\\Meeting, \\$this\\(App\\\\Models\\\\Project\\)\\>\\.$#"
+			count: 1
+			path: app/Models/Project.php
+
+		-
+			message: "#^Method App\\\\Models\\\\Project\\:\\:members\\(\\) should return Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsToMany\\<App\\\\Models\\\\User\\> but returns Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsToMany\\<App\\\\Models\\\\User, \\$this\\(App\\\\Models\\\\Project\\)\\>\\.$#"
+			count: 1
+			path: app/Models/Project.php
+
+		-
+			message: "#^Method App\\\\Models\\\\Project\\:\\:messages\\(\\) should return Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasMany\\<App\\\\Models\\\\Message\\> but returns Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasMany\\<App\\\\Models\\\\Message, \\$this\\(App\\\\Models\\\\Project\\)\\>\\.$#"
+			count: 1
+			path: app/Models/Project.php
+
+		-
+			message: "#^Method App\\\\Models\\\\Project\\:\\:recordActivity\\(\\) has parameter \\$affectedUserIds with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Models/Project.php
+
+		-
+			message: "#^Method App\\\\Models\\\\Project\\:\\:stage\\(\\) should return Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsTo\\<App\\\\Models\\\\Stage, App\\\\Models\\\\Project\\> but returns Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsTo\\<App\\\\Models\\\\Stage, \\$this\\(App\\\\Models\\\\Project\\)\\>\\.$#"
+			count: 1
+			path: app/Models/Project.php
+
+		-
+			message: "#^Method App\\\\Models\\\\Project\\:\\:tasks\\(\\) should return Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasMany\\<App\\\\Models\\\\Task\\> but returns Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasMany\\<App\\\\Models\\\\Task, \\$this\\(App\\\\Models\\\\Project\\)\\>\\.$#"
+			count: 1
+			path: app/Models/Project.php
+
+		-
+			message: "#^Method App\\\\Models\\\\Project\\:\\:user\\(\\) should return Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsTo\\<App\\\\Models\\\\User, App\\\\Models\\\\Project\\> but returns Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsTo\\<App\\\\Models\\\\User, \\$this\\(App\\\\Models\\\\Project\\)\\>\\.$#"
+			count: 1
+			path: app/Models/Project.php
+
+		-
+			message: "#^PHPDoc tag @return with type App\\\\Models\\\\Activity is incompatible with native type void\\.$#"
+			count: 1
+			path: app/Models/Project.php
+
+		-
+			message: "#^Static property App\\\\Models\\\\Project\\:\\:\\$recordableEvents \\(array\\<string\\>\\) on left side of \\?\\? is not nullable\\.$#"
+			count: 1
+			path: app/Models/Project.php
+
+		-
+			message: "#^Class App\\\\Models\\\\Stage uses generic trait Illuminate\\\\Database\\\\Eloquent\\\\Factories\\\\HasFactory but does not specify its types\\: TFactory$#"
+			count: 1
+			path: app/Models/Stage.php
+
+		-
+			message: "#^Generic type Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasMany\\<App\\\\Models\\\\Project\\> in PHPDoc tag @return does not specify all template types of class Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasMany\\: TRelatedModel, TDeclaringModel$#"
+			count: 1
+			path: app/Models/Stage.php
+
+		-
+			message: "#^Method App\\\\Models\\\\Stage\\:\\:project\\(\\) should return Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsTo\\<App\\\\Models\\\\Project, App\\\\Models\\\\Stage\\> but returns Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsTo\\<App\\\\Models\\\\Project, \\$this\\(App\\\\Models\\\\Stage\\)\\>\\.$#"
+			count: 1
+			path: app/Models/Stage.php
+
+		-
+			message: "#^Method App\\\\Models\\\\Stage\\:\\:projects\\(\\) should return Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasMany\\<App\\\\Models\\\\Project\\> but returns Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasMany\\<App\\\\Models\\\\Project, \\$this\\(App\\\\Models\\\\Stage\\)\\>\\.$#"
+			count: 1
+			path: app/Models/Stage.php
+
+		-
+			message: "#^Method App\\\\Models\\\\Stage\\:\\:user\\(\\) should return Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsTo\\<App\\\\Models\\\\User, App\\\\Models\\\\Stage\\> but returns Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsTo\\<App\\\\Models\\\\User, \\$this\\(App\\\\Models\\\\Stage\\)\\>\\.$#"
+			count: 1
+			path: app/Models/Stage.php
+
+		-
+			message: "#^Class App\\\\Models\\\\Task uses generic trait Illuminate\\\\Database\\\\Eloquent\\\\Factories\\\\HasFactory but does not specify its types\\: TFactory$#"
+			count: 1
+			path: app/Models/Task.php
+
+		-
+			message: "#^Generic type Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsToMany\\<App\\\\Models\\\\User\\> in PHPDoc tag @return does not specify all template types of class Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsToMany\\: TRelatedModel, TDeclaringModel$#"
+			count: 1
+			path: app/Models/Task.php
+
+		-
+			message: "#^Generic type Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\MorphMany\\<App\\\\Models\\\\Activity\\> in PHPDoc tag @return does not specify all template types of class Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\MorphMany\\: TRelatedModel, TDeclaringModel$#"
+			count: 1
+			path: app/Models/Task.php
+
+		-
+			message: "#^Method App\\\\Models\\\\Task\\:\\:activities\\(\\) return type with generic class Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasMany does not specify its types\\: TRelatedModel, TDeclaringModel$#"
+			count: 1
+			path: app/Models/Task.php
+
+		-
+			message: "#^Method App\\\\Models\\\\Task\\:\\:activityChanges\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Models/Task.php
+
+		-
+			message: "#^Method App\\\\Models\\\\Task\\:\\:assignee\\(\\) should return Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsToMany\\<App\\\\Models\\\\User\\> but returns Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsToMany\\<App\\\\Models\\\\User, \\$this\\(App\\\\Models\\\\Task\\)\\>\\.$#"
+			count: 1
+			path: app/Models/Task.php
+
+		-
+			message: "#^Method App\\\\Models\\\\Task\\:\\:assigneeBasic\\(\\) return type with generic class Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsToMany does not specify its types\\: TRelatedModel, TDeclaringModel$#"
+			count: 1
+			path: app/Models/Task.php
+
+		-
+			message: "#^Method App\\\\Models\\\\Task\\:\\:createActivityLog\\(\\) has parameter \\$affectedUserIds with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Models/Task.php
+
+		-
+			message: "#^Method App\\\\Models\\\\Task\\:\\:createActivityLog\\(\\) should return App\\\\Models\\\\Activity but returns Illuminate\\\\Database\\\\Eloquent\\\\Model\\.$#"
+			count: 1
+			path: app/Models/Task.php
+
+		-
+			message: "#^Method App\\\\Models\\\\Task\\:\\:owner\\(\\) should return Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsTo\\<App\\\\Models\\\\User, App\\\\Models\\\\Task\\> but returns Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsTo\\<App\\\\Models\\\\User, \\$this\\(App\\\\Models\\\\Task\\)\\>\\.$#"
+			count: 1
+			path: app/Models/Task.php
+
+		-
+			message: "#^Method App\\\\Models\\\\Task\\:\\:project\\(\\) should return Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsTo\\<App\\\\Models\\\\Project, App\\\\Models\\\\Task\\> but returns Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsTo\\<App\\\\Models\\\\Project, \\$this\\(App\\\\Models\\\\Task\\)\\>\\.$#"
+			count: 1
+			path: app/Models/Task.php
+
+		-
+			message: "#^Method App\\\\Models\\\\Task\\:\\:recordActivity\\(\\) has parameter \\$affectedUserIds with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Models/Task.php
+
+		-
+			message: "#^Method App\\\\Models\\\\Task\\:\\:status\\(\\) should return Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsTo\\<App\\\\Models\\\\TaskStatus, App\\\\Models\\\\Task\\> but returns Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsTo\\<App\\\\Models\\\\TaskStatus, \\$this\\(App\\\\Models\\\\Task\\)\\>\\.$#"
+			count: 1
+			path: app/Models/Task.php
+
+		-
+			message: "#^PHPDoc tag @return with type App\\\\Models\\\\Activity is incompatible with native type void\\.$#"
+			count: 1
+			path: app/Models/Task.php
+
+		-
+			message: "#^Static property App\\\\Models\\\\Task\\:\\:\\$recordableEvents \\(array\\<string\\>\\) on left side of \\?\\? is not nullable\\.$#"
+			count: 1
+			path: app/Models/Task.php
+
+		-
+			message: "#^Class App\\\\Models\\\\TaskStatus uses generic trait Illuminate\\\\Database\\\\Eloquent\\\\Factories\\\\HasFactory but does not specify its types\\: TFactory$#"
+			count: 1
+			path: app/Models/TaskStatus.php
+
+		-
+			message: "#^Generic type Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasMany\\<App\\\\Models\\\\Task\\> in PHPDoc tag @return does not specify all template types of class Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasMany\\: TRelatedModel, TDeclaringModel$#"
+			count: 1
+			path: app/Models/TaskStatus.php
+
+		-
+			message: "#^Method App\\\\Models\\\\TaskStatus\\:\\:tasks\\(\\) should return Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasMany\\<App\\\\Models\\\\Task\\> but returns Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasMany\\<App\\\\Models\\\\Task, \\$this\\(App\\\\Models\\\\TaskStatus\\)\\>\\.$#"
+			count: 1
+			path: app/Models/TaskStatus.php
+
+		-
+			message: "#^Method App\\\\Models\\\\TaskStatus\\:\\:user\\(\\) should return Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsTo\\<App\\\\Models\\\\User, App\\\\Models\\\\TaskStatus\\> but returns Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsTo\\<App\\\\Models\\\\User, \\$this\\(App\\\\Models\\\\TaskStatus\\)\\>\\.$#"
+			count: 1
+			path: app/Models/TaskStatus.php
+
+		-
+			message: "#^Class App\\\\Models\\\\User uses generic trait Illuminate\\\\Database\\\\Eloquent\\\\Factories\\\\HasFactory but does not specify its types\\: TFactory$#"
+			count: 1
+			path: app/Models/User.php
+
+		-
+			message: "#^Generic type Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsToMany\\<App\\\\Models\\\\Message\\> in PHPDoc tag @return does not specify all template types of class Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsToMany\\: TRelatedModel, TDeclaringModel$#"
+			count: 1
+			path: app/Models/User.php
+
+		-
+			message: "#^Generic type Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsToMany\\<App\\\\Models\\\\Project\\> in PHPDoc tag @return does not specify all template types of class Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsToMany\\: TRelatedModel, TDeclaringModel$#"
+			count: 1
+			path: app/Models/User.php
+
+		-
+			message: "#^Generic type Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsToMany\\<App\\\\Models\\\\Task\\> in PHPDoc tag @return does not specify all template types of class Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsToMany\\: TRelatedModel, TDeclaringModel$#"
+			count: 1
+			path: app/Models/User.php
+
+		-
+			message: "#^Generic type Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasMany\\<App\\\\Models\\\\Conversation\\> in PHPDoc tag @return does not specify all template types of class Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasMany\\: TRelatedModel, TDeclaringModel$#"
+			count: 1
+			path: app/Models/User.php
+
+		-
+			message: "#^Generic type Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasMany\\<App\\\\Models\\\\Meeting\\> in PHPDoc tag @return does not specify all template types of class Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasMany\\: TRelatedModel, TDeclaringModel$#"
+			count: 1
+			path: app/Models/User.php
+
+		-
+			message: "#^Generic type Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasMany\\<App\\\\Models\\\\Project\\> in PHPDoc tag @return does not specify all template types of class Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasMany\\: TRelatedModel, TDeclaringModel$#"
+			count: 1
+			path: app/Models/User.php
+
+		-
+			message: "#^Generic type Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasMany\\<App\\\\Models\\\\Task\\> in PHPDoc tag @return does not specify all template types of class Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasMany\\: TRelatedModel, TDeclaringModel$#"
+			count: 1
+			path: app/Models/User.php
+
+		-
+			message: "#^Generic type Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasOne\\<App\\\\Models\\\\UserInfo\\> in PHPDoc tag @return does not specify all template types of class Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasOne\\: TRelatedModel, TDeclaringModel$#"
+			count: 1
+			path: app/Models/User.php
+
+		-
+			message: "#^Method App\\\\Models\\\\User\\:\\:activities\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: app/Models/User.php
+
+		-
+			message: "#^Method App\\\\Models\\\\User\\:\\:assigned\\(\\) should return Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsToMany\\<App\\\\Models\\\\Task\\> but returns Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsToMany\\<App\\\\Models\\\\Task, \\$this\\(App\\\\Models\\\\User\\)\\>\\.$#"
+			count: 1
+			path: app/Models/User.php
+
+		-
+			message: "#^Method App\\\\Models\\\\User\\:\\:conversations\\(\\) should return Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasMany\\<App\\\\Models\\\\Conversation\\> but returns Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasMany\\<App\\\\Models\\\\Conversation, \\$this\\(App\\\\Models\\\\User\\)\\>\\.$#"
+			count: 1
+			path: app/Models/User.php
+
+		-
+			message: "#^Method App\\\\Models\\\\User\\:\\:info\\(\\) should return Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasOne\\<App\\\\Models\\\\UserInfo\\> but returns Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasOne\\<App\\\\Models\\\\UserInfo, \\$this\\(App\\\\Models\\\\User\\)\\>\\.$#"
+			count: 1
+			path: app/Models/User.php
+
+		-
+			message: "#^Method App\\\\Models\\\\User\\:\\:meetings\\(\\) should return Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasMany\\<App\\\\Models\\\\Meeting\\> but returns Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasMany\\<App\\\\Models\\\\Meeting, \\$this\\(App\\\\Models\\\\User\\)\\>\\.$#"
+			count: 1
+			path: app/Models/User.php
+
+		-
+			message: "#^Method App\\\\Models\\\\User\\:\\:members\\(\\) should return Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsToMany\\<App\\\\Models\\\\Project\\> but returns Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsToMany\\<App\\\\Models\\\\Project, \\$this\\(App\\\\Models\\\\User\\)\\>\\.$#"
+			count: 1
+			path: app/Models/User.php
+
+		-
+			message: "#^Method App\\\\Models\\\\User\\:\\:messages\\(\\) should return Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsToMany\\<App\\\\Models\\\\Message\\> but returns Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsToMany\\<App\\\\Models\\\\Message, \\$this\\(App\\\\Models\\\\User\\)\\>\\.$#"
+			count: 1
+			path: app/Models/User.php
+
+		-
+			message: "#^Method App\\\\Models\\\\User\\:\\:projects\\(\\) should return Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasMany\\<App\\\\Models\\\\Project\\> but returns Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasMany\\<App\\\\Models\\\\Project, \\$this\\(App\\\\Models\\\\User\\)\\>\\.$#"
+			count: 1
+			path: app/Models/User.php
+
+		-
+			message: "#^Method App\\\\Models\\\\User\\:\\:tasks\\(\\) should return Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasMany\\<App\\\\Models\\\\Task\\> but returns Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasMany\\<App\\\\Models\\\\Task, \\$this\\(App\\\\Models\\\\User\\)\\>\\.$#"
+			count: 1
+			path: app/Models/User.php
+
+		-
+			message: "#^Property App\\\\Models\\\\User\\:\\:\\$zoom_expires_at \\(Carbon\\\\Carbon\\|null\\) does not accept DateTimeImmutable\\.$#"
+			count: 1
+			path: app/Models/User.php
+
+		-
+			message: "#^Class App\\\\Models\\\\UserInfo uses generic trait Illuminate\\\\Database\\\\Eloquent\\\\Factories\\\\HasFactory but does not specify its types\\: TFactory$#"
+			count: 1
+			path: app/Models/UserInfo.php
+
+		-
+			message: "#^Method App\\\\Models\\\\UserInfo\\:\\:user\\(\\) should return Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsTo\\<App\\\\Models\\\\User, App\\\\Models\\\\UserInfo\\> but returns Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsTo\\<App\\\\Models\\\\User, \\$this\\(App\\\\Models\\\\UserInfo\\)\\>\\.$#"
+			count: 1
+			path: app/Models/UserInfo.php
+
+		-
+			message: "#^Method App\\\\Notifications\\\\AcceptInvitation\\:\\:__construct\\(\\) has parameter \\$notifierData with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Notifications/AcceptInvitation.php
+
+		-
+			message: "#^Method App\\\\Notifications\\\\ProjectInvitation\\:\\:__construct\\(\\) has parameter \\$notifierData with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Notifications/ProjectInvitation.php
+
+		-
+			message: "#^Method App\\\\Notifications\\\\ProjectTask\\:\\:__construct\\(\\) has parameter \\$notifierData with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Notifications/ProjectTask.php
+
+		-
+			message: "#^Method App\\\\Notifications\\\\ProjectUpdated\\:\\:__construct\\(\\) has parameter \\$notifierData with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Notifications/ProjectUpdated.php
+
+		-
+			message: "#^Method App\\\\Notifications\\\\TaskAssigned\\:\\:__construct\\(\\) has parameter \\$notifierData with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Notifications/TaskAssigned.php
+
+		-
+			message: "#^Method App\\\\Notifications\\\\TaskAssigned\\:\\:via\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Notifications/TaskAssigned.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Notifications\\\\TaskDue\\:\\:\\$notifiedType\\.$#"
+			count: 1
+			path: app/Notifications/TaskDue.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Notifications\\\\TaskDue\\:\\:\\$project\\.$#"
+			count: 1
+			path: app/Notifications/TaskDue.php
+
+		-
+			message: "#^Method App\\\\Notifications\\\\TaskDue\\:\\:__construct\\(\\) has parameter \\$notifierData with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Notifications/TaskDue.php
+
+		-
+			message: "#^Method App\\\\Notifications\\\\TaskDue\\:\\:via\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Notifications/TaskDue.php
+
+		-
+			message: "#^Method App\\\\Notifications\\\\UserMentioned\\:\\:__construct\\(\\) has parameter \\$notifierData with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Notifications/UserMentioned.php
+
+		-
+			message: "#^Method App\\\\Notifications\\\\UserMentioned\\:\\:via\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Notifications/UserMentioned.php
+
+		-
+			message: "#^Class App\\\\Interfaces\\\\SendSmsInterface not found\\.$#"
+			count: 1
+			path: app/Providers/AppServiceProvider.php
+
+		-
+			message: "#^Call to an undefined method Illuminate\\\\Database\\\\Eloquent\\\\Builder\\:\\:completed\\(\\)\\.$#"
+			count: 1
+			path: app/Repository/DashboardInsightsRepository.php
+
+		-
+			message: "#^Call to an undefined method Illuminate\\\\Database\\\\Eloquent\\\\Builder\\:\\:overdue\\(\\)\\.$#"
+			count: 1
+			path: app/Repository/DashboardInsightsRepository.php
+
+		-
+			message: "#^Method App\\\\Repository\\\\DashboardInsightsRepository\\:\\:baseUserTasks\\(\\) return type with generic class Illuminate\\\\Database\\\\Eloquent\\\\Builder does not specify its types\\: TModel$#"
+			count: 1
+			path: app/Repository/DashboardInsightsRepository.php
+
+		-
+			message: "#^Method App\\\\Repository\\\\DashboardInsightsRepository\\:\\:getCriticalProjectsCount\\(\\) has parameter \\$projects with generic class Illuminate\\\\Support\\\\Collection but does not specify its types\\: TKey, TValue$#"
+			count: 1
+			path: app/Repository/DashboardInsightsRepository.php
+
+		-
+			message: "#^Method App\\\\Repository\\\\DashboardInsightsRepository\\:\\:getUserProjects\\(\\) return type with generic class Illuminate\\\\Support\\\\Collection does not specify its types\\: TKey, TValue$#"
+			count: 1
+			path: app/Repository/DashboardInsightsRepository.php
+
+		-
+			message: "#^Method App\\\\Repository\\\\ProjectRepository\\:\\:filterActivities\\(\\) has parameter \\$activities with generic class Illuminate\\\\Support\\\\Collection but does not specify its types\\: TKey, TValue$#"
+			count: 1
+			path: app/Repository/ProjectRepository.php
+
+		-
+			message: "#^Method App\\\\Repository\\\\ProjectRepository\\:\\:filterActivities\\(\\) return type with generic class Illuminate\\\\Support\\\\Collection does not specify its types\\: TKey, TValue$#"
+			count: 1
+			path: app/Repository/ProjectRepository.php
+
+		-
+			message: "#^Method App\\\\Repository\\\\ProjectRepository\\:\\:filterActivityByAuthUser\\(\\) has parameter \\$activities with generic class Illuminate\\\\Support\\\\Collection but does not specify its types\\: TKey, TValue$#"
+			count: 1
+			path: app/Repository/ProjectRepository.php
+
+		-
+			message: "#^Method App\\\\Repository\\\\ProjectRepository\\:\\:filterActivityByAuthUser\\(\\) return type with generic class Illuminate\\\\Support\\\\Collection does not specify its types\\: TKey, TValue$#"
+			count: 1
+			path: app/Repository/ProjectRepository.php
+
+		-
+			message: "#^Method App\\\\Repository\\\\ProjectRepository\\:\\:filterActivityByMembers\\(\\) has parameter \\$activities with generic class Illuminate\\\\Support\\\\Collection but does not specify its types\\: TKey, TValue$#"
+			count: 1
+			path: app/Repository/ProjectRepository.php
+
+		-
+			message: "#^Method App\\\\Repository\\\\ProjectRepository\\:\\:filterActivityByMembers\\(\\) return type with generic class Illuminate\\\\Support\\\\Collection does not specify its types\\: TKey, TValue$#"
+			count: 1
+			path: app/Repository/ProjectRepository.php
+
+		-
+			message: "#^Method App\\\\Repository\\\\ProjectRepository\\:\\:filterActivityByProjectSpecified\\(\\) has parameter \\$activities with generic class Illuminate\\\\Support\\\\Collection but does not specify its types\\: TKey, TValue$#"
+			count: 1
+			path: app/Repository/ProjectRepository.php
+
+		-
+			message: "#^Method App\\\\Repository\\\\ProjectRepository\\:\\:filterActivityByProjectSpecified\\(\\) return type with generic class Illuminate\\\\Support\\\\Collection does not specify its types\\: TKey, TValue$#"
+			count: 1
+			path: app/Repository/ProjectRepository.php
+
+		-
+			message: "#^Method App\\\\Repository\\\\ProjectRepository\\:\\:filterActivityByTasks\\(\\) has parameter \\$activities with generic class Illuminate\\\\Support\\\\Collection but does not specify its types\\: TKey, TValue$#"
+			count: 1
+			path: app/Repository/ProjectRepository.php
+
+		-
+			message: "#^Method App\\\\Repository\\\\ProjectRepository\\:\\:filterActivityByTasks\\(\\) return type with generic class Illuminate\\\\Support\\\\Collection does not specify its types\\: TKey, TValue$#"
+			count: 1
+			path: app/Repository/ProjectRepository.php
+
+		-
+			message: "#^Method App\\\\Repository\\\\TaskRepository\\:\\:searchMembers\\(\\) return type with generic class Illuminate\\\\Support\\\\Collection does not specify its types\\: TKey, TValue$#"
+			count: 1
+			path: app/Repository/TaskRepository.php
+
+		-
+			message: "#^Method App\\\\Repository\\\\UserTasksDataRepository\\:\\:appliedFilters\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Repository/UserTasksDataRepository.php
+
+		-
+			message: "#^Method App\\\\Repository\\\\UserTasksDataRepository\\:\\:applyUserContextFilters\\(\\) has parameter \\$query with generic class Illuminate\\\\Database\\\\Eloquent\\\\Builder but does not specify its types\\: TModel$#"
+			count: 1
+			path: app/Repository/UserTasksDataRepository.php
+
+		-
+			message: "#^Method App\\\\Repository\\\\UserTasksDataRepository\\:\\:applyUserContextFilters\\(\\) has parameter \\$validated with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Repository/UserTasksDataRepository.php
+
+		-
+			message: "#^Method App\\\\Repository\\\\UserTasksDataRepository\\:\\:getTasks\\(\\) return type with generic class Illuminate\\\\Support\\\\Collection does not specify its types\\: TKey, TValue$#"
+			count: 1
+			path: app/Repository/UserTasksDataRepository.php
+
+		-
+			message: "#^Method App\\\\Rules\\\\ActiveProjectMember\\:\\:__construct\\(\\) has parameter \\$task with no type specified\\.$#"
+			count: 1
+			path: app/Rules/ActiveProjectMember.php
+
+		-
+			message: "#^Property App\\\\Rules\\\\ActiveProjectMember\\:\\:\\$task has no type specified\\.$#"
+			count: 1
+			path: app/Rules/ActiveProjectMember.php
+
+		-
+			message: "#^Method App\\\\Rules\\\\TaskAssigneeMember\\:\\:__construct\\(\\) has parameter \\$task with no type specified\\.$#"
+			count: 1
+			path: app/Rules/TaskAssigneeMember.php
+
+		-
+			message: "#^Property App\\\\Rules\\\\TaskAssigneeMember\\:\\:\\$task has no type specified\\.$#"
+			count: 1
+			path: app/Rules/TaskAssigneeMember.php
+
+		-
+			message: "#^Call to static method count\\(\\) on an unknown class App\\\\Model\\\\TaskStatus\\.$#"
+			count: 1
+			path: app/Rules/maxStatusCount.php
+
+		-
+			message: "#^Method App\\\\Services\\\\Api\\\\V1\\\\Admin\\\\DashboardService\\:\\:fetchDataForMonths\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: app/Services/Api/V1/Admin/DashboardService.php
+
+		-
+			message: "#^Method App\\\\Services\\\\Api\\\\V1\\\\Admin\\\\DashboardService\\:\\:fetchDataForMonths\\(\\) has parameter \\$endDate with no type specified\\.$#"
+			count: 1
+			path: app/Services/Api/V1/Admin/DashboardService.php
+
+		-
+			message: "#^Method App\\\\Services\\\\Api\\\\V1\\\\Admin\\\\DashboardService\\:\\:fetchDataForMonths\\(\\) has parameter \\$startDate with no type specified\\.$#"
+			count: 1
+			path: app/Services/Api/V1/Admin/DashboardService.php
+
+		-
+			message: "#^Property App\\\\Services\\\\Api\\\\V1\\\\Admin\\\\DashboardService\\:\\:\\$dashboardRepository has no type specified\\.$#"
+			count: 1
+			path: app/Services/Api/V1/Admin/DashboardService.php
+
+		-
+			message: "#^Unable to resolve the template type TKey in call to function collect$#"
+			count: 1
+			path: app/Services/Api/V1/Admin/Integration/PaddleService.php
+
+		-
+			message: "#^Unable to resolve the template type TValue in call to function collect$#"
+			count: 1
+			path: app/Services/Api/V1/Admin/Integration/PaddleService.php
+
+		-
+			message: "#^Method App\\\\Services\\\\Api\\\\V1\\\\ConversationService\\:\\:createConversation\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Services/Api/V1/ConversationService.php
+
+		-
+			message: "#^Method App\\\\Services\\\\Api\\\\V1\\\\ConversationService\\:\\:prepareConversationData\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Services/Api/V1/ConversationService.php
+
+		-
+			message: "#^Method App\\\\Services\\\\Api\\\\V1\\\\Dashboard\\\\DashboardInsightsService\\:\\:buildCriticalProjectsInsights\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Services/Api/V1/Dashboard/DashboardInsightsService.php
+
+		-
+			message: "#^Method App\\\\Services\\\\Api\\\\V1\\\\Dashboard\\\\DashboardInsightsService\\:\\:buildOverdueInsights\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Services/Api/V1/Dashboard/DashboardInsightsService.php
+
+		-
+			message: "#^Method App\\\\Services\\\\Api\\\\V1\\\\Dashboard\\\\DashboardInsightsService\\:\\:buildPortfolioInsights\\(\\) has parameter \\$userProjects with generic class Illuminate\\\\Support\\\\Collection but does not specify its types\\: TKey, TValue$#"
+			count: 1
+			path: app/Services/Api/V1/Dashboard/DashboardInsightsService.php
+
+		-
+			message: "#^Method App\\\\Services\\\\Api\\\\V1\\\\Dashboard\\\\DashboardInsightsService\\:\\:buildPortfolioInsights\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Services/Api/V1/Dashboard/DashboardInsightsService.php
+
+		-
+			message: "#^Method App\\\\Services\\\\Api\\\\V1\\\\FeatureService\\:\\:excelExport\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: app/Services/Api/V1/FeatureService.php
+
+		-
+			message: "#^Method App\\\\Services\\\\Api\\\\V1\\\\FeatureService\\:\\:excelExport\\(\\) has parameter \\$project with no type specified\\.$#"
+			count: 1
+			path: app/Services/Api/V1/FeatureService.php
+
+		-
+			message: "#^Method App\\\\Services\\\\Api\\\\V1\\\\FeatureService\\:\\:getPostponedReason\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Services/Api/V1/FeatureService.php
+
+		-
+			message: "#^Method App\\\\Services\\\\Api\\\\V1\\\\FeatureService\\:\\:getPostponedReason\\(\\) has parameter \\$project with no type specified\\.$#"
+			count: 1
+			path: app/Services/Api/V1/FeatureService.php
+
+		-
+			message: "#^Method App\\\\Services\\\\Api\\\\V1\\\\FeatureService\\:\\:recordActivity\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: app/Services/Api/V1/FeatureService.php
+
+		-
+			message: "#^Method App\\\\Services\\\\Api\\\\V1\\\\FeatureService\\:\\:recordActivity\\(\\) has parameter \\$activity with no type specified\\.$#"
+			count: 1
+			path: app/Services/Api/V1/FeatureService.php
+
+		-
+			message: "#^Method App\\\\Services\\\\Api\\\\V1\\\\FeatureService\\:\\:recordActivity\\(\\) has parameter \\$info with no type specified\\.$#"
+			count: 1
+			path: app/Services/Api/V1/FeatureService.php
+
+		-
+			message: "#^Method App\\\\Services\\\\Api\\\\V1\\\\FeatureService\\:\\:recordActivity\\(\\) has parameter \\$project with no type specified\\.$#"
+			count: 1
+			path: app/Services/Api/V1/FeatureService.php
+
+		-
+			message: "#^Method App\\\\Services\\\\Api\\\\V1\\\\FeatureService\\:\\:updateStageStatus\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: app/Services/Api/V1/FeatureService.php
+
+		-
+			message: "#^Method App\\\\Services\\\\Api\\\\V1\\\\FeatureService\\:\\:updateStageStatus\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Services/Api/V1/FeatureService.php
+
+		-
+			message: "#^Method App\\\\Services\\\\Api\\\\V1\\\\FeatureService\\:\\:updateStageStatus\\(\\) has parameter \\$project with no type specified\\.$#"
+			count: 1
+			path: app/Services/Api/V1/FeatureService.php
+
+		-
+			message: "#^Parameter \\#2 \\$user of method App\\\\Services\\\\Api\\\\V1\\\\InvitationService\\:\\:recordActivity\\(\\) expects App\\\\Models\\\\User, Illuminate\\\\Contracts\\\\Auth\\\\Authenticatable\\|null given\\.$#"
+			count: 1
+			path: app/Services/Api/V1/InvitationService.php
+
+		-
+			message: "#^Method App\\\\Services\\\\Api\\\\V1\\\\MeetingService\\:\\:getMeetingsData\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Services/Api/V1/MeetingService.php
+
+		-
+			message: "#^Class App\\\\Jobs\\\\SmsMessage constructor invoked with 3 parameters, 2 required\\.$#"
+			count: 1
+			path: app/Services/Api/V1/MessageService.php
+
+		-
+			message: "#^Method App\\\\Services\\\\Api\\\\V1\\\\MessageService\\:\\:checkOptionSelect\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: app/Services/Api/V1/MessageService.php
+
+		-
+			message: "#^Method App\\\\Services\\\\Api\\\\V1\\\\MessageService\\:\\:checkOptionSelect\\(\\) has parameter \\$request with no type specified\\.$#"
+			count: 1
+			path: app/Services/Api/V1/MessageService.php
+
+		-
+			message: "#^Method App\\\\Services\\\\Api\\\\V1\\\\MessageService\\:\\:messageCreate\\(\\) has parameter \\$users with generic class Illuminate\\\\Support\\\\Collection but does not specify its types\\: TKey, TValue$#"
+			count: 1
+			path: app/Services/Api/V1/MessageService.php
+
+		-
+			message: "#^Method App\\\\Services\\\\Api\\\\V1\\\\MessageService\\:\\:saveMessageDateAndTime\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: app/Services/Api/V1/MessageService.php
+
+		-
+			message: "#^Method App\\\\Services\\\\Api\\\\V1\\\\MessageService\\:\\:send\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: app/Services/Api/V1/MessageService.php
+
+		-
+			message: "#^Method App\\\\Services\\\\Api\\\\V1\\\\MessageService\\:\\:send\\(\\) has parameter \\$users with generic class Illuminate\\\\Support\\\\Collection but does not specify its types\\: TKey, TValue$#"
+			count: 1
+			path: app/Services/Api/V1/MessageService.php
+
+		-
+			message: "#^Method App\\\\Services\\\\Api\\\\V1\\\\MessageService\\:\\:sendOrScheduledMessage\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: app/Services/Api/V1/MessageService.php
+
+		-
+			message: "#^Method App\\\\Services\\\\Api\\\\V1\\\\MessageService\\:\\:sendOrScheduledMessage\\(\\) has parameter \\$message with no type specified\\.$#"
+			count: 1
+			path: app/Services/Api/V1/MessageService.php
+
+		-
+			message: "#^Method App\\\\Services\\\\Api\\\\V1\\\\MessageService\\:\\:sendOrScheduledMessage\\(\\) has parameter \\$project with no type specified\\.$#"
+			count: 1
+			path: app/Services/Api/V1/MessageService.php
+
+		-
+			message: "#^Parameter \\$batch of anonymous function has invalid type App\\\\Services\\\\Api\\\\V1\\\\Batch\\.$#"
+			count: 1
+			path: app/Services/Api/V1/MessageService.php
+
+		-
+			message: "#^Parameter \\$e of anonymous function has invalid type App\\\\Services\\\\Api\\\\V1\\\\Throwable\\.$#"
+			count: 1
+			path: app/Services/Api/V1/MessageService.php
+
+		-
+			message: "#^Class App\\\\Services\\\\Api\\\\V1\\\\PaginationService extends generic class Illuminate\\\\Pagination\\\\LengthAwarePaginator but does not specify its types\\: TValue$#"
+			count: 1
+			path: app/Services/Api/V1/PaginationService.php
+
+		-
+			message: "#^Method App\\\\Services\\\\Api\\\\V1\\\\PaginationService\\:\\:__construct\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Services/Api/V1/PaginationService.php
+
+		-
+			message: "#^Method App\\\\Services\\\\Api\\\\V1\\\\ProjectService\\:\\:addTasksToProject\\(\\) has parameter \\$project with no type specified\\.$#"
+			count: 1
+			path: app/Services/Api/V1/ProjectService.php
+
+		-
+			message: "#^Method App\\\\Services\\\\Api\\\\V1\\\\ProjectService\\:\\:addTasksToProject\\(\\) has parameter \\$tasks with no type specified\\.$#"
+			count: 1
+			path: app/Services/Api/V1/ProjectService.php
+
+		-
+			message: "#^Method App\\\\Services\\\\Api\\\\V1\\\\ProjectService\\:\\:sendNotification\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: app/Services/Api/V1/ProjectService.php
+
+		-
+			message: "#^Method App\\\\Services\\\\Api\\\\V1\\\\ProjectService\\:\\:sendNotification\\(\\) has parameter \\$project with no type specified\\.$#"
+			count: 1
+			path: app/Services/Api/V1/ProjectService.php
+
+		-
+			message: "#^Unable to resolve the template type TKey in call to function collect$#"
+			count: 1
+			path: app/Services/Api/V1/ProjectService.php
+
+		-
+			message: "#^Unable to resolve the template type TValue in call to function collect$#"
+			count: 1
+			path: app/Services/Api/V1/ProjectService.php
+
+		-
+			message: "#^Method App\\\\Services\\\\Api\\\\V1\\\\SendSmsService\\:\\:send\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: app/Services/Api/V1/SendSmsService.php
+
+		-
+			message: "#^Method App\\\\Services\\\\Api\\\\V1\\\\SendSmsService\\:\\:send\\(\\) has parameter \\$message with no type specified\\.$#"
+			count: 1
+			path: app/Services/Api/V1/SendSmsService.php
+
+		-
+			message: "#^Method App\\\\Services\\\\Api\\\\V1\\\\SendSmsService\\:\\:send\\(\\) has parameter \\$project with no type specified\\.$#"
+			count: 1
+			path: app/Services/Api/V1/SendSmsService.php
+
+		-
+			message: "#^Property App\\\\Services\\\\Api\\\\V1\\\\SendSmsService\\:\\:\\$basic has no type specified\\.$#"
+			count: 1
+			path: app/Services/Api/V1/SendSmsService.php
+
+		-
+			message: "#^Property App\\\\Services\\\\Api\\\\V1\\\\SendSmsService\\:\\:\\$client has no type specified\\.$#"
+			count: 1
+			path: app/Services/Api/V1/SendSmsService.php
+
+		-
+			message: "#^Method App\\\\Services\\\\Api\\\\V1\\\\Task\\\\TaskFeatureService\\:\\:assignMembers\\(\\) has parameter \\$members with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Services/Api/V1/Task/TaskFeatureService.php
+
+		-
+			message: "#^Method App\\\\Services\\\\Api\\\\V1\\\\Task\\\\TaskFeatureService\\:\\:notifyAssignees\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: app/Services/Api/V1/Task/TaskFeatureService.php
+
+		-
+			message: "#^Method App\\\\Services\\\\Api\\\\V1\\\\Task\\\\TaskFeatureService\\:\\:notifyAssignees\\(\\) has parameter \\$members with no type specified\\.$#"
+			count: 1
+			path: app/Services/Api/V1/Task/TaskFeatureService.php
+
+		-
+			message: "#^Called 'isEmpty' on Laravel collection, but could have been retrieved as a query\\.$#"
+			count: 1
+			path: app/Services/Api/V1/Task/TaskService.php
+
+		-
+			message: "#^Method App\\\\Services\\\\Api\\\\V1\\\\Task\\\\TaskService\\:\\:checkValidation\\(\\) has parameter \\$request with no type specified\\.$#"
+			count: 1
+			path: app/Services/Api/V1/Task/TaskService.php
+
+		-
+			message: "#^Method App\\\\Services\\\\Api\\\\V1\\\\Task\\\\TaskService\\:\\:checkValidation\\(\\) has parameter \\$task with no type specified\\.$#"
+			count: 1
+			path: app/Services/Api/V1/Task/TaskService.php
+
+		-
+			message: "#^Method App\\\\Services\\\\Api\\\\V1\\\\Task\\\\TaskService\\:\\:getTasks\\(\\) return type with generic class Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasMany does not specify its types\\: TRelatedModel, TDeclaringModel$#"
+			count: 1
+			path: app/Services/Api/V1/Task/TaskService.php
+
+		-
+			message: "#^Method App\\\\Services\\\\Api\\\\V1\\\\Task\\\\TaskService\\:\\:getTasks\\(\\) should return Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasMany but returns App\\\\QueryBuilder\\\\TaskQueryBuilder\\.$#"
+			count: 1
+			path: app/Services/Api/V1/Task/TaskService.php
+
+		-
+			message: "#^Method App\\\\Services\\\\Api\\\\V1\\\\Task\\\\TaskService\\:\\:getTasksData\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Services/Api/V1/Task/TaskService.php
+
+		-
+			message: "#^Method App\\\\Services\\\\Api\\\\V1\\\\Task\\\\TaskService\\:\\:sendNotification\\(\\) has parameter \\$project with no type specified\\.$#"
+			count: 1
+			path: app/Services/Api/V1/Task/TaskService.php
+
+		-
+			message: "#^Access to an undefined property Saloon\\\\Contracts\\\\OAuthAuthenticator\\:\\:\\$accessToken\\.$#"
+			count: 1
+			path: app/Services/Api/V1/Zoom/ZoomService.php
+
+		-
+			message: "#^Access to an undefined property Saloon\\\\Contracts\\\\OAuthAuthenticator\\:\\:\\$expiresAt\\.$#"
+			count: 1
+			path: app/Services/Api/V1/Zoom/ZoomService.php
+
+		-
+			message: "#^Access to an undefined property Saloon\\\\Contracts\\\\OAuthAuthenticator\\:\\:\\$refreshToken\\.$#"
+			count: 1
+			path: app/Services/Api/V1/Zoom/ZoomService.php
+
+		-
+			message: "#^Parameter \\#1 \\$newAccessTokenDetails of method App\\\\Services\\\\Api\\\\V1\\\\Zoom\\\\ZoomService\\:\\:updateZoomOAuthDetails\\(\\) expects Saloon\\\\Http\\\\Auth\\\\AccessTokenAuthenticator, Saloon\\\\Contracts\\\\OAuthAuthenticator given\\.$#"
+			count: 1
+			path: app/Services/Api/V1/Zoom/ZoomService.php
+
+		-
+			message: "#^Parameter \\#1 \\$items of class App\\\\Collections\\\\Paddle\\\\DataCollection constructor expects Illuminate\\\\Contracts\\\\Support\\\\Arrayable\\<int, App\\\\DataTransferObjects\\\\Paddle\\\\Data\\>\\|iterable\\<int, App\\\\DataTransferObjects\\\\Paddle\\\\Data\\>\\|null, array\\{array\\{id\\: 1, name\\: 'Test User', email\\: 'testuser@example\\.com', plan\\: 'monthly'\\}\\} given\\.$#"
+			count: 1
+			path: app/Services/PaddleApi/FakePaddleService.php
