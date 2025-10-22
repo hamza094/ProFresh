@@ -33,8 +33,9 @@ class SendSmsService
 
         if ($msg->getStatus() == 0) {
             return "The message was sent successfully\n";
-        } else {
-            return 'The message failed with status: '.$msg->getStatus()."\n";
         }
+
+        return 'The message failed with status: '.$msg->getStatus()."\n";
+
     }
 }

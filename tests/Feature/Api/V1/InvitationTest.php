@@ -23,8 +23,8 @@ class InvitationTest extends TestCase
                 'email' => $InvitedUser->email,
             ])->assertOk()
             ->assertJson([
-                    'message' => "Project invitation sent to {$InvitedUser->name}",
-                ]);
+                'message' => "Project invitation sent to {$InvitedUser->name}",
+            ]);
 
         $this->assertTrue($this->project->members->contains(
             $InvitedUser));
@@ -129,9 +129,9 @@ class InvitationTest extends TestCase
             ['project' => $this->project, 'user' => $invitedUser,
             ]))
             ->assertJson([
-                  'message' => 'You have canceled the invitation for '.$invitedUser->name.' to join the project.',
-                  'project' => ['id' => $this->project->id],
-              ]);
+                'message' => 'You have canceled the invitation for '.$invitedUser->name.' to join the project.',
+                'project' => ['id' => $this->project->id],
+            ]);
 
         $this->assertDatabaseMissing('project_members', [
             'project_id' => $this->project->id,

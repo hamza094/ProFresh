@@ -33,7 +33,7 @@ class DeleteMeeting extends Request
     }
 
     /**
-     * @return array<int, \Saloon\RateLimitPlugin\Limit>
+     * @return array<int, Limit>
      */
     protected function resolveLimits(): array
     {

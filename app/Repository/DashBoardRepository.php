@@ -63,7 +63,7 @@ class DashBoardRepository
      * @return \Illuminate\Database\Eloquent\Collection
      */
     /**
-     * @return \Illuminate\Database\Eloquent\Collection<int, \App\Models\Activity>
+     * @return \Illuminate\Database\Eloquent\Collection<int, Activity>
      */
     public function getUserActivities(int $userId, Carbon $startDate, Carbon $endDate)
     {

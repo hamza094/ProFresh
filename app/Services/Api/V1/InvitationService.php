@@ -85,7 +85,7 @@ class InvitationService
     /**
      * Get the pending members for the given project.
      *
-     * @return \Illuminate\Database\Eloquent\Collection<int, \App\Models\User>
+     * @return EloquentCollection<int, User>
      */
     public function pendingMembers(Project $project): EloquentCollection
     {
@@ -96,7 +96,7 @@ class InvitationService
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Collection<int, \App\Models\User>
+     * @return EloquentCollection<int, User>
      */
     public function usersSearch(Project $project, Request $request): Collection
     {

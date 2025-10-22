@@ -152,7 +152,7 @@ class Project extends Model
      * Add multiple tasks to the project.
      *
      * @param  array<int,array<string,mixed>>  $tasks
-     * @return EloquentCollection<int,\App\Models\Task>
+     * @return EloquentCollection<int,Task>
      */
     public function addTasks(array $tasks): EloquentCollection
     {
@@ -237,8 +237,8 @@ class Project extends Model
      * Scope for ordering by health_score.
      */
     /**
-     * @param  \Illuminate\Database\Eloquent\Builder<\App\Models\Project>  $query
-     * @return \Illuminate\Database\Eloquent\Builder<\App\Models\Project>
+     * @param  Builder<Project>  $query
+     * @return Builder<Project>
      */
     public function scopeOrderByHealthScore(Builder $query, string $direction = 'desc'): Builder
     {
@@ -264,7 +264,7 @@ class Project extends Model
     /**
      * Return a limited activities relation (shallow wrapper).
      *
-     * @return HasMany<\App\Models\Activity>
+     * @return HasMany<Activity>
      */
     public function limitedActivities(): HasMany
     {
@@ -313,8 +313,8 @@ class Project extends Model
     /**
      * Scope projects created in a given year/month.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder<\App\Models\Project>  $query
-     * @return \Illuminate\Database\Eloquent\Builder<\App\Models\Project>
+     * @param  Builder<Project>  $query
+     * @return Builder<Project>
      */
     public function scopeCreatedIn(Builder $query, ?int $year = null, ?int $month = null): Builder
     {

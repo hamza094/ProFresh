@@ -57,7 +57,7 @@ class UpdateMeeting extends Request implements HasBody
     }
 
     /**
-     * @return array<int, \Saloon\RateLimitPlugin\Limit>
+     * @return array<int, Limit>
      */
     protected function resolveLimits(): array
     {

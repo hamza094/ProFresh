@@ -92,7 +92,7 @@ class MeetingEndsWebhook implements ShouldQueue
         Notification::send($members, new MeetingEnded($notificationData));
     }
 
-    private function validateStatus(\App\Models\Meeting $meeting): bool
+    private function validateStatus(Meeting $meeting): bool
     {
         if ($meeting->status === MeetingState::ENDS->value) {
             Log::channel('webhook')->info("Meeting already ended for meeting_id: {$this->meeting_id}");

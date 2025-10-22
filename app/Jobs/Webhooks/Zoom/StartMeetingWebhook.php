@@ -93,7 +93,7 @@ class StartMeetingWebhook implements ShouldQueue
         Notification::send($members, new MeetingStarted($notificationData));
     }
 
-    private function validateStatus(\App\Models\Meeting $meeting): bool
+    private function validateStatus(Meeting $meeting): bool
     {
         if ($meeting->status === MeetingState::START->value) {
             Log::channel('webhook')->info("Meeting already started for meeting_id: {$this->meeting_id}");

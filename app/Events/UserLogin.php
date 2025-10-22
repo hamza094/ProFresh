@@ -13,7 +13,7 @@ class UserLogin // implements ShouldQueue
     /**
      * The user instance.
      *
-     * @var \App\Models\User
+     * @var User
      */
     public $user;
 

@@ -70,19 +70,19 @@ class TaskUpdate extends FormRequest
                     */
             'due_at' => 'date|sometimes|required_with:notified',
             /**
-                     * TaskStatus id which task associated to
-                     *
-                     * @example 1
-                     */
+             * TaskStatus id which task associated to
+             *
+             * @example 1
+             */
             'status_id' => 'required|int|max:4|sometimes',
             /*
                     * Notified task users about task due date
                     */
             'notified' => [
-                        'sometimes',
-                        'required',
-                        Rule::in(TaskDueNotifies::values()),
-                    ],
+                'sometimes',
+                'required',
+                Rule::in(TaskDueNotifies::values()),
+            ],
         ];
     }
 }

@@ -142,7 +142,7 @@ trait RecordActivity
     /**
      * The activity feed for the project.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany|\Illuminate\Database\Eloquent\Relations\MorphMany<Activity>
+     * @return HasMany|MorphMany<Activity>
      */
     public function activities(): HasMany|MorphMany
     {

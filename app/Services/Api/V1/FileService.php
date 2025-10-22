@@ -92,7 +92,7 @@ class FileService
             $filePath = ltrim($parsed['path'] ?? '', '/');
             if (! $filePath) {
                 // If parsing fails, fallback to Str::after
-                $filePath = \Illuminate\Support\Str::after($avatarUrl, '.com/');
+                $filePath = Str::after($avatarUrl, '.com/');
             }
 
             if ($filePath) {

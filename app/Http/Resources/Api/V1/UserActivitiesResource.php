@@ -194,12 +194,15 @@ class UserActivitiesResource extends JsonResource
         $desc = method_exists($this, $this->description) ? $this->{$this->description}() : '';
         if (Str::startsWith($desc, 'Project')) {
             return 'purple';
-        } elseif (Str::startsWith($desc, 'Task')) {
-            return 'yellow';
-        } elseif (Str::startsWith($desc, 'Meeting')) {
-            return 'red';
-        } else {
-            return 'green';
         }
+        if (Str::startsWith($desc, 'Task')) {
+            return 'yellow';
+        }
+        if (Str::startsWith($desc, 'Meeting')) {
+            return 'red';
+        }
+
+        return 'green';
+
     }
 }

@@ -1,0 +1,12 @@
+{
+  "preset": "laravel",
+  "rules": {
+    "single_import_per_statement": {
+      "group_to_single_imports": false
+    },
+    "fully_qualified_strict_types": true,
+    "no_useless_else": true,
+    "no_superfluous_elseif":true,
+    "no_multiple_statements_per_line":true
+  }
+}

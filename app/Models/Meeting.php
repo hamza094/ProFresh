@@ -33,7 +33,7 @@ class Meeting extends Model
     ];
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\User, self>
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<User, self>
      */
     public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
@@ -41,7 +41,7 @@ class Meeting extends Model
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Project, self>
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<Project, self>
      */
     public function project(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
@@ -49,8 +49,8 @@ class Meeting extends Model
     }
 
     /**
-     * @param  Builder<\App\Models\Meeting>  $query
-     * @return Builder<\App\Models\Meeting>
+     * @param  Builder<Meeting>  $query
+     * @return Builder<Meeting>
      */
     public function scopePrevious(Builder $query): Builder
     {
@@ -58,8 +58,8 @@ class Meeting extends Model
     }
 
     /**
-     * @param  Builder<\App\Models\Meeting>  $query
-     * @return Builder<\App\Models\Meeting>
+     * @param  Builder<Meeting>  $query
+     * @return Builder<Meeting>
      */
     public function scopeScheduled(Builder $query): Builder
     {

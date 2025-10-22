@@ -56,15 +56,15 @@ class InvitedUserResource extends JsonResource
             ),
 
             /**
-                     * Links related to the user.
-                     *
-                     * @example {
-                     *   "self": "/api/v1/users/9b8ea076-6d80-4076-8a01-73b94f4c0bc3"
-                     * }
-                     */
+             * Links related to the user.
+             *
+             * @example {
+             *   "self": "/api/v1/users/9b8ea076-6d80-4076-8a01-73b94f4c0bc3"
+             * }
+             */
             'links' => [
-                        'self' => '/api/v1/users/'.$this->uuid,
-                    ],
+                'self' => '/api/v1/users/'.$this->uuid,
+            ],
 
         ];
     }

@@ -10,7 +10,7 @@ class ProjectComposer
     /**
      * The user repository implementation.
      *
-     * @var \App\Repositories\UserRepository
+     * @var UserRepository
      */
     protected $project;
 

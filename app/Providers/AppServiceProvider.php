@@ -91,7 +91,7 @@ class AppServiceProvider extends ServiceProvider
          * @param  int|null  $total
          * @param  int|null  $page
          * @param  string  $pageName
-         * @return \App\Services\Api\V1\PaginationService
+         * @return PaginationService
          */
         Collection::macro('paginate', function ($perPage, $total = null, $page = null, $pageName = 'page') {
             $page = $page ?: PaginationService::resolveCurrentPage($pageName);

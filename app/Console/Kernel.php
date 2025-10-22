@@ -14,8 +14,8 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        \App\Console\Commands\UserProfileDelete::class,
-        \App\Console\Commands\RecalculateAllProjectHealth::class,
+        Commands\UserProfileDelete::class,
+        Commands\RecalculateAllProjectHealth::class,
     ];
 
     /**

@@ -55,10 +55,10 @@ class AuthorizeTest extends TestCase
             return $request->resolveEndpoint() ===
             'https://zoom.us/oauth/token'
             && $request->body()->all() === [
-              'grant_type' => 'authorization_code',
-              'code' => 'dummy-code',
-              'redirect_uri' => 'http://localhost:8000/oauth/zoom/callback',
-              'code_verifier' => 'dummy-code-verifier',
+                'grant_type' => 'authorization_code',
+                'code' => 'dummy-code',
+                'redirect_uri' => 'http://localhost:8000/oauth/zoom/callback',
+                'code_verifier' => 'dummy-code-verifier',
             ];
         });
     }

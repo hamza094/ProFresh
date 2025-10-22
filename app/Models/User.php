@@ -175,7 +175,7 @@ class User extends Authenticatable implements MustVerifyEmail, TwoFactorAuthenti
     /**
      * Get all messages created by user
      *
-     * @return belongsToMany<Message>
+     * @return BelongsToMany<Message>
      */
     public function messages(): BelongsToMany
     {

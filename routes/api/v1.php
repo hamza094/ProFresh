@@ -243,10 +243,10 @@ Route::middleware(['auth:sanctum'/* ,\App\Http\Middleware\TrackLastActiveAt::cla
         ->name('task.status');
 
     Route::controller(ZoomAuthController::class)
-           ->as('oauth.zoom.')
-           ->group(function () {
-               Route::get('oauth/zoom/redirect', 'redirect')->name('redirect');
-               Route::get('oauth/zoom/callback', 'callback')->name('callback');
-           });
+        ->as('oauth.zoom.')
+        ->group(function () {
+            Route::get('oauth/zoom/redirect', 'redirect')->name('redirect');
+            Route::get('oauth/zoom/callback', 'callback')->name('callback');
+        });
 
 });

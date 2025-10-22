@@ -58,7 +58,7 @@ class UpdateMeetingWebhook implements ShouldQueue
     /**
      * @param  array<string, mixed>  $updateData
      */
-    private function isMeetingUpdated(\App\Models\Meeting $meeting, array $updateData): bool
+    private function isMeetingUpdated(Meeting $meeting, array $updateData): bool
     {
         foreach ($updateData as $key => $value) {
             if ($value !== $meeting->$key) {

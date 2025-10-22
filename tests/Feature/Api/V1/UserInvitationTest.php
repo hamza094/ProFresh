@@ -15,7 +15,7 @@ class UserInvitationTest extends TestCase
     public function it_returns_pending_project_invitations_for_authenticated_user()
     {
         // Create a project and attach as pending invitation
-        $project = Project::factory()->create();
+        $project = project::factory()->create();
 
         $project->members()->attach($this->user->id, ['active' => false, 'created_at' => now(), 'updated_at' => now()]);
 

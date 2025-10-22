@@ -58,36 +58,36 @@ class TaskResource extends JsonResource
             ),
 
             /**
-                * Task Due at UTC timezone
-                *
-                * @example 2024-12-09T10:25:00.000000
-                */
+             * Task Due at UTC timezone
+             *
+             * @example 2024-12-09T10:25:00.000000
+             */
             'due_at_utc' => $this->due_at,
 
             /**
-                * Task notified wheater notificatopn sent to asinee or not
-                */
+             * Task notified wheater notificatopn sent to asinee or not
+             */
             'notified' => $this->notified,
 
             /**
-                * Task due at at user timezone
-                *
-                * @example '9th December 2024 3:25:pm'
-                */
+             * Task due at at user timezone
+             *
+             * @example '9th December 2024 3:25:pm'
+             */
             'due_at' => $this->when($this->due_at, fn () => \Timezone::convertToLocal(Carbon::parse($this->due_at))),
 
             /**
-                * Task created at utc timezone
-                *
-                * @example 'December 4th 2024, 11:41:34 am'
-                */
+             * Task created at utc timezone
+             *
+             * @example 'December 4th 2024, 11:41:34 am'
+             */
             'created_at' => $this->formatDate($this->created_at),
 
             /**
-                * Task updated at utc timezone if its present
-                *
-                * @example 'December 10th 2024, 9:41:34 am'
-                */
+             * Task updated at utc timezone if its present
+             *
+             * @example 'December 10th 2024, 9:41:34 am'
+             */
             'updated_at' => $this->when(
                 $this->updated_at->isAfter($this->created_at),
                 fn () => $this->formatDate($this->updated_at),

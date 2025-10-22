@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\DB;
 class ZoomMeetingController extends Controller
 {
     /**
-     * @var \App\Services\Api\V1\ExceptionService
+     * @var ExceptionService
      */
     protected $exceptionService;
 

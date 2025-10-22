@@ -23,7 +23,7 @@ class MailMessage implements ShouldQueue
     /**
      * The project instance.
      *
-     * @var \App\Models\Project
+     * @var Project
      */
     protected $project;
 
