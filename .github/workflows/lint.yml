@@ -1,0 +1,50 @@
+name: Lint files
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+  push:
+    branches: [workflow] # or "develop" / "main" depending on your setup
+
+concurrency:
+  group: Lint-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  php:
+    name: Lint PHP files (Laravel Pint)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.2
+          extensions: mbstring, bcmath, intl
+          tools: composer
+
+      - name: Install Composer dependencies
+        run: composer install --no-progress --no-interaction --prefer-dist
+
+      - name: Detect Laravel Pint version
+        id: pint
+        run: |
+          echo "version=$(composer show laravel/pint --locked --format=json | jq -r '.versions[0]' | sed 's/v//')" >> $GITHUB_OUTPUT
+
+      - name: Run Laravel Pint
+        uses: aglipanci/laravel-pint-action@2.6
+        with:
+          configPath: pint.json
+          pintVersion: ${{ steps.pint.outputs.version }}
+
+      - name: Check for uncommitted changes
+        run: |
+          status=$(git status --porcelain)
+          if [ -n "$status" ]; then
+            echo -e "🛑 Laravel Pint found formatting changes:\n$status"
+            echo "::error::Please run 'vendor/bin/pint' locally and commit the fixes."
+            exit 1
+          fi
