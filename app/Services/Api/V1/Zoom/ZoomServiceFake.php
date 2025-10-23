@@ -49,7 +49,7 @@ final class ZoomServiceFake implements Zoom
     public function authorize(
         AuthorizationCallbackDetails $callbackDetails
     ): AccessTokenDetails {
-        if ($this->failureException instanceof \App\Exceptions\Integrations\Zoom\ZoomException) {
+        if ($this->failureException instanceof ZoomException) {
             throw $this->failureException;
         }
 
@@ -90,7 +90,7 @@ final class ZoomServiceFake implements Zoom
      */
     public function createMeeting(array $validated, User $user): Meeting
     {
-        if ($this->failureException instanceof \App\Exceptions\Integrations\Zoom\ZoomException) {
+        if ($this->failureException instanceof ZoomException) {
             throw $this->failureException;
         }
         $this->meetingsToCreate->push($validated);
@@ -103,7 +103,7 @@ final class ZoomServiceFake implements Zoom
      */
     public function updateMeeting(array $validated, User $user): \Illuminate\Http\JsonResponse
     {
-        if ($this->failureException instanceof \App\Exceptions\Integrations\Zoom\ZoomException) {
+        if ($this->failureException instanceof ZoomException) {
             throw $this->failureException;
         }
 
@@ -112,7 +112,7 @@ final class ZoomServiceFake implements Zoom
 
     public function deleteMeeting(int $meetingId, User $user): \Illuminate\Http\JsonResponse
     {
-        if ($this->failureException instanceof \App\Exceptions\Integrations\Zoom\ZoomException) {
+        if ($this->failureException instanceof ZoomException) {
             throw $this->failureException;
         }
 

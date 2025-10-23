@@ -10,9 +10,7 @@ use Illuminate\Database\Eloquent\Collection;
 
 class DashboardService
 {
-    public function __construct(protected DashBoardRepository $dashboardRepository)
-    {
-    }
+    public function __construct(protected DashBoardRepository $dashboardRepository) {}
 
     /**
      * @return Collection<int, \App\Models\Project>|null

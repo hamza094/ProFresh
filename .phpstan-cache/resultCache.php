@@ -1,7 +1,7 @@
 <?php declare(strict_types = 1);
 
 return [
-	'lastFullAnalysisTime' => 1761132136,
+	'lastFullAnalysisTime' => 1761215082,
 	'meta' => array (
   'cacheVersion' => 'v12-linesToIgnore',
   'phpstanVersion' => '1.12.32',
@@ -16,7 +16,7 @@ return [
   ),
   'composerLocks' => 
   array (
-    'D:/apps/profresh/composer.lock' => '4c886943ef5a95db82dc2d8c81117a89ae6c4457',
+    'D:/apps/profresh/composer.lock' => 'ed288881581efdd0542f4ba80eb2653f50fc7b36',
   ),
   'composerInstalled' => 
   array (
@@ -1947,6 +1947,18 @@ return [
           ),
           'dev_requirement' => false,
         ),
+        'rector/rector' => 
+        array (
+          'pretty_version' => '1.2.10',
+          'version' => '1.2.10.0',
+          'reference' => '40f9cf38c05296bd32f444121336a521a293fa61',
+          'type' => 'library',
+          'install_path' => 'D:\\apps\\profresh\\vendor\\composer/../rector/rector',
+          'aliases' => 
+          array (
+          ),
+          'dev_requirement' => true,
+        ),
         'rhumsaa/uuid' => 
         array (
           'dev_requirement' => false,
@@ -3230,12 +3242,12 @@ return [
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Call to static method messageScheduled() on an unknown class App\\Console\\Message.',
        'file' => 'D:\\apps\\profresh\\app\\Console\\Kernel.php',
-       'line' => 30,
+       'line' => 29,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\app\\Console\\Kernel.php',
        'traitFilePath' => NULL,
        'tip' => 'Learn more at https://phpstan.org/user-guide/discovering-symbols',
-       'nodeLine' => 30,
+       'nodeLine' => 29,
        'nodeType' => 'PhpParser\\Node\\Expr\\StaticCall',
        'identifier' => 'class.notFound',
        'metadata' => 
@@ -3246,12 +3258,12 @@ return [
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Method App\\Console\\Kernel::bootstrappers() return type has no value type specified in iterable type array.',
        'file' => 'D:\\apps\\profresh\\app\\Console\\Kernel.php',
-       'line' => 67,
+       'line' => 63,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\app\\Console\\Kernel.php',
        'traitFilePath' => NULL,
        'tip' => 'See: https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type',
-       'nodeLine' => 67,
+       'nodeLine' => 63,
        'nodeType' => 'PHPStan\\Node\\InClassMethodNode',
        'identifier' => 'missingType.iterableValue',
        'metadata' => 
@@ -3370,12 +3382,12 @@ return [
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'PHPDoc tag @return with type array|Illuminate\\Broadcasting\\Channel is not subtype of native type Illuminate\\Broadcasting\\PrivateChannel.',
        'file' => 'D:\\apps\\profresh\\app\\Events\\NewMessage.php',
-       'line' => 37,
+       'line' => 29,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\app\\Events\\NewMessage.php',
        'traitFilePath' => NULL,
        'tip' => NULL,
-       'nodeLine' => 37,
+       'nodeLine' => 29,
        'nodeType' => 'PhpParser\\Node\\Stmt\\ClassMethod',
        'identifier' => 'return.phpDocType',
        'metadata' => 
@@ -3468,137 +3480,6 @@ return [
       ),
     )),
   ),
-  'D:\\apps\\profresh\\app\\Exports\\ProjectsExport.php' => 
-  array (
-    0 => 
-    \PHPStan\Analyser\Error::__set_state(array(
-       'message' => 'Class App\\Exports\\ProjectsExport implements generic interface Maatwebsite\\Excel\\Concerns\\WithMapping but does not specify its types: RowType',
-       'file' => 'D:\\apps\\profresh\\app\\Exports\\ProjectsExport.php',
-       'line' => 13,
-       'canBeIgnored' => true,
-       'filePath' => 'D:\\apps\\profresh\\app\\Exports\\ProjectsExport.php',
-       'traitFilePath' => NULL,
-       'tip' => NULL,
-       'nodeLine' => 13,
-       'nodeType' => 'PHPStan\\Node\\InClassNode',
-       'identifier' => 'missingType.generics',
-       'metadata' => 
-      array (
-      ),
-    )),
-    1 => 
-    \PHPStan\Analyser\Error::__set_state(array(
-       'message' => 'Access to an undefined property App\\Exports\\ProjectsExport::$project.',
-       'file' => 'D:\\apps\\profresh\\app\\Exports\\ProjectsExport.php',
-       'line' => 19,
-       'canBeIgnored' => true,
-       'filePath' => 'D:\\apps\\profresh\\app\\Exports\\ProjectsExport.php',
-       'traitFilePath' => NULL,
-       'tip' => 'Learn more: <fg=cyan>https://phpstan.org/blog/solving-phpstan-access-to-undefined-property</>',
-       'nodeLine' => 19,
-       'nodeType' => 'PHPStan\\Node\\PropertyAssignNode',
-       'identifier' => 'property.notFound',
-       'metadata' => 
-      array (
-      ),
-    )),
-    2 => 
-    \PHPStan\Analyser\Error::__set_state(array(
-       'message' => 'Method App\\Exports\\ProjectsExport::query() has invalid return type Laravel\\Scout\\Builder.',
-       'file' => 'D:\\apps\\profresh\\app\\Exports\\ProjectsExport.php',
-       'line' => 22,
-       'canBeIgnored' => true,
-       'filePath' => 'D:\\apps\\profresh\\app\\Exports\\ProjectsExport.php',
-       'traitFilePath' => NULL,
-       'tip' => NULL,
-       'nodeLine' => 22,
-       'nodeType' => 'PHPStan\\Node\\InClassMethodNode',
-       'identifier' => 'class.notFound',
-       'metadata' => 
-      array (
-      ),
-    )),
-    3 => 
-    \PHPStan\Analyser\Error::__set_state(array(
-       'message' => 'Method App\\Exports\\ProjectsExport::query() return type with generic class Illuminate\\Database\\Eloquent\\Builder does not specify its types: TModel',
-       'file' => 'D:\\apps\\profresh\\app\\Exports\\ProjectsExport.php',
-       'line' => 22,
-       'canBeIgnored' => true,
-       'filePath' => 'D:\\apps\\profresh\\app\\Exports\\ProjectsExport.php',
-       'traitFilePath' => NULL,
-       'tip' => NULL,
-       'nodeLine' => 22,
-       'nodeType' => 'PHPStan\\Node\\InClassMethodNode',
-       'identifier' => 'missingType.generics',
-       'metadata' => 
-      array (
-      ),
-    )),
-    4 => 
-    \PHPStan\Analyser\Error::__set_state(array(
-       'message' => 'Method App\\Exports\\ProjectsExport::query() return type with generic class Illuminate\\Database\\Eloquent\\Relations\\Relation does not specify its types: TRelatedModel, TDeclaringModel, TResult',
-       'file' => 'D:\\apps\\profresh\\app\\Exports\\ProjectsExport.php',
-       'line' => 22,
-       'canBeIgnored' => true,
-       'filePath' => 'D:\\apps\\profresh\\app\\Exports\\ProjectsExport.php',
-       'traitFilePath' => NULL,
-       'tip' => NULL,
-       'nodeLine' => 22,
-       'nodeType' => 'PHPStan\\Node\\InClassMethodNode',
-       'identifier' => 'missingType.generics',
-       'metadata' => 
-      array (
-      ),
-    )),
-    5 => 
-    \PHPStan\Analyser\Error::__set_state(array(
-       'message' => 'Access to an undefined property App\\Exports\\ProjectsExport::$project.',
-       'file' => 'D:\\apps\\profresh\\app\\Exports\\ProjectsExport.php',
-       'line' => 24,
-       'canBeIgnored' => true,
-       'filePath' => 'D:\\apps\\profresh\\app\\Exports\\ProjectsExport.php',
-       'traitFilePath' => NULL,
-       'tip' => 'Learn more: <fg=cyan>https://phpstan.org/blog/solving-phpstan-access-to-undefined-property</>',
-       'nodeLine' => 24,
-       'nodeType' => 'PhpParser\\Node\\Expr\\PropertyFetch',
-       'identifier' => 'property.notFound',
-       'metadata' => 
-      array (
-      ),
-    )),
-    6 => 
-    \PHPStan\Analyser\Error::__set_state(array(
-       'message' => 'Method App\\Exports\\ProjectsExport::headings() return type has no value type specified in iterable type array.',
-       'file' => 'D:\\apps\\profresh\\app\\Exports\\ProjectsExport.php',
-       'line' => 27,
-       'canBeIgnored' => true,
-       'filePath' => 'D:\\apps\\profresh\\app\\Exports\\ProjectsExport.php',
-       'traitFilePath' => NULL,
-       'tip' => 'See: https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type',
-       'nodeLine' => 27,
-       'nodeType' => 'PHPStan\\Node\\InClassMethodNode',
-       'identifier' => 'missingType.iterableValue',
-       'metadata' => 
-      array (
-      ),
-    )),
-    7 => 
-    \PHPStan\Analyser\Error::__set_state(array(
-       'message' => 'Method App\\Exports\\ProjectsExport::map() return type has no value type specified in iterable type array.',
-       'file' => 'D:\\apps\\profresh\\app\\Exports\\ProjectsExport.php',
-       'line' => 45,
-       'canBeIgnored' => true,
-       'filePath' => 'D:\\apps\\profresh\\app\\Exports\\ProjectsExport.php',
-       'traitFilePath' => NULL,
-       'tip' => 'See: https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type',
-       'nodeLine' => 45,
-       'nodeType' => 'PHPStan\\Node\\InClassMethodNode',
-       'identifier' => 'missingType.iterableValue',
-       'metadata' => 
-      array (
-      ),
-    )),
-  ),
   'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\Auth\\ResetPasswordController.php' => 
   array (
     0 => 
@@ -3669,53 +3550,18 @@ return [
       ),
     )),
   ),
-  'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\FeaturesController.php' => 
-  array (
-    0 => 
-    \PHPStan\Analyser\Error::__set_state(array(
-       'message' => 'Property App\\Http\\Controllers\\Api\\V1\\FeaturesController::$featureService has no type specified.',
-       'file' => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\FeaturesController.php',
-       'line' => 21,
-       'canBeIgnored' => true,
-       'filePath' => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\FeaturesController.php',
-       'traitFilePath' => NULL,
-       'tip' => NULL,
-       'nodeLine' => 21,
-       'nodeType' => 'PHPStan\\Node\\ClassPropertyNode',
-       'identifier' => 'missingType.property',
-       'metadata' => 
-      array (
-      ),
-    )),
-    1 => 
-    \PHPStan\Analyser\Error::__set_state(array(
-       'message' => 'Method App\\Http\\Controllers\\Api\\V1\\FeaturesController::export() has no return type specified.',
-       'file' => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\FeaturesController.php',
-       'line' => 51,
-       'canBeIgnored' => true,
-       'filePath' => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\FeaturesController.php',
-       'traitFilePath' => NULL,
-       'tip' => NULL,
-       'nodeLine' => 51,
-       'nodeType' => 'PHPStan\\Node\\InClassMethodNode',
-       'identifier' => 'missingType.return',
-       'metadata' => 
-      array (
-      ),
-    )),
-  ),
   'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\InvitationController.php' => 
   array (
     0 => 
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Parameter #2 $user of method App\\Services\\Api\\V1\\InvitationService::rejectInvitation() expects App\\Models\\User, Illuminate\\Contracts\\Auth\\Authenticatable|null given.',
        'file' => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\InvitationController.php',
-       'line' => 115,
+       'line' => 110,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\InvitationController.php',
        'traitFilePath' => NULL,
        'tip' => NULL,
-       'nodeLine' => 115,
+       'nodeLine' => 110,
        'nodeType' => 'PhpParser\\Node\\Expr\\MethodCall',
        'identifier' => 'argument.type',
        'metadata' => 
@@ -3777,12 +3623,12 @@ return [
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Method App\\Http\\Controllers\\Api\\V1\\MessageController::scheduled() has no return type specified.',
        'file' => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\MessageController.php',
-       'line' => 27,
+       'line' => 25,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\MessageController.php',
        'traitFilePath' => NULL,
        'tip' => NULL,
-       'nodeLine' => 27,
+       'nodeLine' => 25,
        'nodeType' => 'PHPStan\\Node\\InClassMethodNode',
        'identifier' => 'missingType.return',
        'metadata' => 
@@ -3793,12 +3639,12 @@ return [
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Method App\\Http\\Controllers\\Api\\V1\\MessageController::delete() has no return type specified.',
        'file' => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\MessageController.php',
-       'line' => 41,
+       'line' => 39,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\MessageController.php',
        'traitFilePath' => NULL,
        'tip' => NULL,
-       'nodeLine' => 41,
+       'nodeLine' => 39,
        'nodeType' => 'PHPStan\\Node\\InClassMethodNode',
        'identifier' => 'missingType.return',
        'metadata' => 
@@ -4747,12 +4593,12 @@ return [
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Method App\\Http\\Requests\\Api\\V1\\TaskRequest::messages() return type has no value type specified in iterable type array.',
        'file' => 'D:\\apps\\profresh\\app\\Http\\Requests\\Api\\V1\\TaskRequest.php',
-       'line' => 66,
+       'line' => 64,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\app\\Http\\Requests\\Api\\V1\\TaskRequest.php',
        'traitFilePath' => NULL,
        'tip' => 'See: https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type',
-       'nodeLine' => 66,
+       'nodeLine' => 64,
        'nodeType' => 'PHPStan\\Node\\InClassMethodNode',
        'identifier' => 'missingType.iterableValue',
        'metadata' => 
@@ -6801,149 +6647,34 @@ return [
       ),
     )),
   ),
-  'D:\\apps\\profresh\\app\\Http\\Views\\Composers\\ProjectComposer.php' => 
-  array (
-    0 => 
-    \PHPStan\Analyser\Error::__set_state(array(
-       'message' => 'Property App\\Http\\View\\Composers\\ProjectComposer::$project has unknown class App\\Repositories\\UserRepository as its type.',
-       'file' => 'D:\\apps\\profresh\\app\\Http\\Views\\Composers\\ProjectComposer.php',
-       'line' => 15,
-       'canBeIgnored' => true,
-       'filePath' => 'D:\\apps\\profresh\\app\\Http\\Views\\Composers\\ProjectComposer.php',
-       'traitFilePath' => NULL,
-       'tip' => 'Learn more at https://phpstan.org/user-guide/discovering-symbols',
-       'nodeLine' => 15,
-       'nodeType' => 'PHPStan\\Node\\ClassPropertyNode',
-       'identifier' => 'class.notFound',
-       'metadata' => 
-      array (
-      ),
-    )),
-    1 => 
-    \PHPStan\Analyser\Error::__set_state(array(
-       'message' => 'Constructor of class App\\Http\\View\\Composers\\ProjectComposer has an unused parameter $users.',
-       'file' => 'D:\\apps\\profresh\\app\\Http\\Views\\Composers\\ProjectComposer.php',
-       'line' => 22,
-       'canBeIgnored' => true,
-       'filePath' => 'D:\\apps\\profresh\\app\\Http\\Views\\Composers\\ProjectComposer.php',
-       'traitFilePath' => NULL,
-       'tip' => NULL,
-       'nodeLine' => 22,
-       'nodeType' => 'PHPStan\\Node\\InClassMethodNode',
-       'identifier' => 'constructor.unusedParameter',
-       'metadata' => 
-      array (
-      ),
-    )),
-    2 => 
-    \PHPStan\Analyser\Error::__set_state(array(
-       'message' => 'Parameter $users of method App\\Http\\View\\Composers\\ProjectComposer::__construct() has invalid type App\\Repositories\\UserRepository.',
-       'file' => 'D:\\apps\\profresh\\app\\Http\\Views\\Composers\\ProjectComposer.php',
-       'line' => 22,
-       'canBeIgnored' => true,
-       'filePath' => 'D:\\apps\\profresh\\app\\Http\\Views\\Composers\\ProjectComposer.php',
-       'traitFilePath' => NULL,
-       'tip' => NULL,
-       'nodeLine' => 22,
-       'nodeType' => 'PHPStan\\Node\\InClassMethodNode',
-       'identifier' => 'class.notFound',
-       'metadata' => 
-      array (
-      ),
-    )),
-    3 => 
-    \PHPStan\Analyser\Error::__set_state(array(
-       'message' => 'Undefined variable: $project',
-       'file' => 'D:\\apps\\profresh\\app\\Http\\Views\\Composers\\ProjectComposer.php',
-       'line' => 25,
-       'canBeIgnored' => true,
-       'filePath' => 'D:\\apps\\profresh\\app\\Http\\Views\\Composers\\ProjectComposer.php',
-       'traitFilePath' => NULL,
-       'tip' => NULL,
-       'nodeLine' => 25,
-       'nodeType' => 'PhpParser\\Node\\Expr\\Variable',
-       'identifier' => 'variable.undefined',
-       'metadata' => 
-      array (
-      ),
-    )),
-    4 => 
-    \PHPStan\Analyser\Error::__set_state(array(
-       'message' => 'Access to an undefined property App\\Http\\View\\Composers\\ProjectComposer::$user.',
-       'file' => 'D:\\apps\\profresh\\app\\Http\\Views\\Composers\\ProjectComposer.php',
-       'line' => 35,
-       'canBeIgnored' => true,
-       'filePath' => 'D:\\apps\\profresh\\app\\Http\\Views\\Composers\\ProjectComposer.php',
-       'traitFilePath' => NULL,
-       'tip' => 'Learn more: <fg=cyan>https://phpstan.org/blog/solving-phpstan-access-to-undefined-property</>',
-       'nodeLine' => 35,
-       'nodeType' => 'PhpParser\\Node\\Expr\\PropertyFetch',
-       'identifier' => 'property.notFound',
-       'metadata' => 
-      array (
-      ),
-    )),
-  ),
   'D:\\apps\\profresh\\app\\Jobs\\MailMessage.php' => 
   array (
     0 => 
     \PHPStan\Analyser\Error::__set_state(array(
-       'message' => 'Property App\\Jobs\\MailMessage::$message has no type specified.',
-       'file' => 'D:\\apps\\profresh\\app\\Jobs\\MailMessage.php',
-       'line' => 30,
-       'canBeIgnored' => true,
-       'filePath' => 'D:\\apps\\profresh\\app\\Jobs\\MailMessage.php',
-       'traitFilePath' => NULL,
-       'tip' => NULL,
-       'nodeLine' => 30,
-       'nodeType' => 'PHPStan\\Node\\ClassPropertyNode',
-       'identifier' => 'missingType.property',
-       'metadata' => 
-      array (
-      ),
-    )),
-    1 => 
-    \PHPStan\Analyser\Error::__set_state(array(
-       'message' => 'Property App\\Jobs\\MailMessage::$user has no type specified.',
-       'file' => 'D:\\apps\\profresh\\app\\Jobs\\MailMessage.php',
-       'line' => 32,
-       'canBeIgnored' => true,
-       'filePath' => 'D:\\apps\\profresh\\app\\Jobs\\MailMessage.php',
-       'traitFilePath' => NULL,
-       'tip' => NULL,
-       'nodeLine' => 32,
-       'nodeType' => 'PHPStan\\Node\\ClassPropertyNode',
-       'identifier' => 'missingType.property',
-       'metadata' => 
-      array (
-      ),
-    )),
-    2 => 
-    \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Method App\\Jobs\\MailMessage::__construct() has parameter $message with no type specified.',
        'file' => 'D:\\apps\\profresh\\app\\Jobs\\MailMessage.php',
-       'line' => 39,
+       'line' => 35,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\app\\Jobs\\MailMessage.php',
        'traitFilePath' => NULL,
        'tip' => NULL,
-       'nodeLine' => 39,
+       'nodeLine' => 35,
        'nodeType' => 'PHPStan\\Node\\InClassMethodNode',
        'identifier' => 'missingType.parameter',
        'metadata' => 
       array (
       ),
     )),
-    3 => 
+    1 => 
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Method App\\Jobs\\MailMessage::__construct() has parameter $user with no type specified.',
        'file' => 'D:\\apps\\profresh\\app\\Jobs\\MailMessage.php',
-       'line' => 39,
+       'line' => 35,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\app\\Jobs\\MailMessage.php',
        'traitFilePath' => NULL,
        'tip' => NULL,
-       'nodeLine' => 39,
+       'nodeLine' => 35,
        'nodeType' => 'PHPStan\\Node\\InClassMethodNode',
        'identifier' => 'missingType.parameter',
        'metadata' => 
@@ -6971,30 +6702,14 @@ return [
     )),
     1 => 
     \PHPStan\Analyser\Error::__set_state(array(
-       'message' => 'Property App\\Jobs\\SmsMessage::$message has no type specified.',
-       'file' => 'D:\\apps\\profresh\\app\\Jobs\\SmsMessage.php',
-       'line' => 26,
-       'canBeIgnored' => true,
-       'filePath' => 'D:\\apps\\profresh\\app\\Jobs\\SmsMessage.php',
-       'traitFilePath' => NULL,
-       'tip' => NULL,
-       'nodeLine' => 26,
-       'nodeType' => 'PHPStan\\Node\\ClassPropertyNode',
-       'identifier' => 'missingType.property',
-       'metadata' => 
-      array (
-      ),
-    )),
-    2 => 
-    \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Property App\\Jobs\\SmsMessage::$project (App\\Models\\Podcast) does not accept App\\Models\\Project.',
        'file' => 'D:\\apps\\profresh\\app\\Jobs\\SmsMessage.php',
-       'line' => 36,
+       'line' => 34,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\app\\Jobs\\SmsMessage.php',
        'traitFilePath' => NULL,
        'tip' => NULL,
-       'nodeLine' => 36,
+       'nodeLine' => 34,
        'nodeType' => 'PHPStan\\Node\\PropertyAssignNode',
        'identifier' => 'assign.propertyType',
        'metadata' => 
@@ -7006,62 +6721,30 @@ return [
   array (
     0 => 
     \PHPStan\Analyser\Error::__set_state(array(
-       'message' => 'Property App\\Mail\\ProjectMail::$project has no type specified.',
-       'file' => 'D:\\apps\\profresh\\app\\Mail\\ProjectMail.php',
-       'line' => 18,
-       'canBeIgnored' => true,
-       'filePath' => 'D:\\apps\\profresh\\app\\Mail\\ProjectMail.php',
-       'traitFilePath' => NULL,
-       'tip' => NULL,
-       'nodeLine' => 18,
-       'nodeType' => 'PHPStan\\Node\\ClassPropertyNode',
-       'identifier' => 'missingType.property',
-       'metadata' => 
-      array (
-      ),
-    )),
-    1 => 
-    \PHPStan\Analyser\Error::__set_state(array(
-       'message' => 'Property App\\Mail\\ProjectMail::$message has no type specified.',
-       'file' => 'D:\\apps\\profresh\\app\\Mail\\ProjectMail.php',
-       'line' => 20,
-       'canBeIgnored' => true,
-       'filePath' => 'D:\\apps\\profresh\\app\\Mail\\ProjectMail.php',
-       'traitFilePath' => NULL,
-       'tip' => NULL,
-       'nodeLine' => 20,
-       'nodeType' => 'PHPStan\\Node\\ClassPropertyNode',
-       'identifier' => 'missingType.property',
-       'metadata' => 
-      array (
-      ),
-    )),
-    2 => 
-    \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Method App\\Mail\\ProjectMail::__construct() has parameter $message with no type specified.',
        'file' => 'D:\\apps\\profresh\\app\\Mail\\ProjectMail.php',
-       'line' => 22,
+       'line' => 13,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\app\\Mail\\ProjectMail.php',
        'traitFilePath' => NULL,
        'tip' => NULL,
-       'nodeLine' => 22,
+       'nodeLine' => 13,
        'nodeType' => 'PHPStan\\Node\\InClassMethodNode',
        'identifier' => 'missingType.parameter',
        'metadata' => 
       array (
       ),
     )),
-    3 => 
+    1 => 
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Method App\\Mail\\ProjectMail::__construct() has parameter $project with no type specified.',
        'file' => 'D:\\apps\\profresh\\app\\Mail\\ProjectMail.php',
-       'line' => 22,
+       'line' => 13,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\app\\Mail\\ProjectMail.php',
        'traitFilePath' => NULL,
        'tip' => NULL,
-       'nodeLine' => 22,
+       'nodeLine' => 13,
        'nodeType' => 'PHPStan\\Node\\InClassMethodNode',
        'identifier' => 'missingType.parameter',
        'metadata' => 
@@ -7337,12 +7020,12 @@ return [
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Method App\\Models\\Meeting::recordActivity() has parameter $affectedUserIds with no value type specified in iterable type array.',
        'file' => 'D:\\apps\\profresh\\app\\Traits\\RecordActivity.php (in context of class App\\Models\\Meeting)',
-       'line' => 74,
+       'line' => 72,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\app\\Models\\Meeting.php',
        'traitFilePath' => 'D:\\apps\\profresh\\app\\Traits\\RecordActivity.php',
        'tip' => 'See: https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type',
-       'nodeLine' => 74,
+       'nodeLine' => 72,
        'nodeType' => 'PHPStan\\Node\\InClassMethodNode',
        'identifier' => 'missingType.iterableValue',
        'metadata' => 
@@ -7351,94 +7034,78 @@ return [
     )),
     5 => 
     \PHPStan\Analyser\Error::__set_state(array(
-       'message' => 'PHPDoc tag @return with type App\\Models\\Activity is incompatible with native type void.',
-       'file' => 'D:\\apps\\profresh\\app\\Traits\\RecordActivity.php (in context of class App\\Models\\Meeting)',
-       'line' => 74,
-       'canBeIgnored' => true,
-       'filePath' => 'D:\\apps\\profresh\\app\\Models\\Meeting.php',
-       'traitFilePath' => 'D:\\apps\\profresh\\app\\Traits\\RecordActivity.php',
-       'tip' => NULL,
-       'nodeLine' => 74,
-       'nodeType' => 'PhpParser\\Node\\Stmt\\ClassMethod',
-       'identifier' => 'return.phpDocType',
-       'metadata' => 
-      array (
-      ),
-    )),
-    6 => 
-    \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Method App\\Models\\Meeting::createActivityLog() has parameter $affectedUserIds with no value type specified in iterable type array.',
        'file' => 'D:\\apps\\profresh\\app\\Traits\\RecordActivity.php (in context of class App\\Models\\Meeting)',
-       'line' => 88,
+       'line' => 86,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\app\\Models\\Meeting.php',
        'traitFilePath' => 'D:\\apps\\profresh\\app\\Traits\\RecordActivity.php',
        'tip' => 'See: https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type',
-       'nodeLine' => 88,
+       'nodeLine' => 86,
        'nodeType' => 'PHPStan\\Node\\InClassMethodNode',
        'identifier' => 'missingType.iterableValue',
        'metadata' => 
       array (
       ),
     )),
-    7 => 
+    6 => 
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Method App\\Models\\Meeting::createActivityLog() should return App\\Models\\Activity but returns Illuminate\\Database\\Eloquent\\Model.',
        'file' => 'D:\\apps\\profresh\\app\\Traits\\RecordActivity.php (in context of class App\\Models\\Meeting)',
-       'line' => 100,
+       'line' => 98,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\app\\Models\\Meeting.php',
        'traitFilePath' => 'D:\\apps\\profresh\\app\\Traits\\RecordActivity.php',
        'tip' => NULL,
-       'nodeLine' => 100,
+       'nodeLine' => 98,
        'nodeType' => 'PhpParser\\Node\\Stmt\\Return_',
        'identifier' => 'return.type',
        'metadata' => 
       array (
       ),
     )),
-    8 => 
+    7 => 
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Generic type Illuminate\\Database\\Eloquent\\Relations\\MorphMany<App\\Models\\Activity> in PHPDoc tag @return does not specify all template types of class Illuminate\\Database\\Eloquent\\Relations\\MorphMany: TRelatedModel, TDeclaringModel',
        'file' => 'D:\\apps\\profresh\\app\\Traits\\RecordActivity.php (in context of class App\\Models\\Meeting)',
-       'line' => 147,
+       'line' => 145,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\app\\Models\\Meeting.php',
        'traitFilePath' => 'D:\\apps\\profresh\\app\\Traits\\RecordActivity.php',
        'tip' => NULL,
-       'nodeLine' => 147,
+       'nodeLine' => 145,
        'nodeType' => 'PhpParser\\Node\\Stmt\\ClassMethod',
        'identifier' => 'generics.lessTypes',
        'metadata' => 
       array (
       ),
     )),
-    9 => 
+    8 => 
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Method App\\Models\\Meeting::activities() return type with generic class Illuminate\\Database\\Eloquent\\Relations\\HasMany does not specify its types: TRelatedModel, TDeclaringModel',
        'file' => 'D:\\apps\\profresh\\app\\Traits\\RecordActivity.php (in context of class App\\Models\\Meeting)',
-       'line' => 147,
+       'line' => 145,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\app\\Models\\Meeting.php',
        'traitFilePath' => 'D:\\apps\\profresh\\app\\Traits\\RecordActivity.php',
        'tip' => NULL,
-       'nodeLine' => 147,
+       'nodeLine' => 145,
        'nodeType' => 'PHPStan\\Node\\InClassMethodNode',
        'identifier' => 'missingType.generics',
        'metadata' => 
       array (
       ),
     )),
-    10 => 
+    9 => 
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Method App\\Models\\Meeting::activityChanges() return type has no value type specified in iterable type array.',
        'file' => 'D:\\apps\\profresh\\app\\Traits\\RecordActivity.php (in context of class App\\Models\\Meeting)',
-       'line' => 161,
+       'line' => 159,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\app\\Models\\Meeting.php',
        'traitFilePath' => 'D:\\apps\\profresh\\app\\Traits\\RecordActivity.php',
        'tip' => 'See: https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type',
-       'nodeLine' => 161,
+       'nodeLine' => 159,
        'nodeType' => 'PHPStan\\Node\\InClassMethodNode',
        'identifier' => 'missingType.iterableValue',
        'metadata' => 
@@ -7564,12 +7231,12 @@ return [
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Method App\\Models\\Message::recordActivity() has parameter $affectedUserIds with no value type specified in iterable type array.',
        'file' => 'D:\\apps\\profresh\\app\\Traits\\RecordActivity.php (in context of class App\\Models\\Message)',
-       'line' => 74,
+       'line' => 72,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\app\\Models\\Message.php',
        'traitFilePath' => 'D:\\apps\\profresh\\app\\Traits\\RecordActivity.php',
        'tip' => 'See: https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type',
-       'nodeLine' => 74,
+       'nodeLine' => 72,
        'nodeType' => 'PHPStan\\Node\\InClassMethodNode',
        'identifier' => 'missingType.iterableValue',
        'metadata' => 
@@ -7578,94 +7245,78 @@ return [
     )),
     8 => 
     \PHPStan\Analyser\Error::__set_state(array(
-       'message' => 'PHPDoc tag @return with type App\\Models\\Activity is incompatible with native type void.',
-       'file' => 'D:\\apps\\profresh\\app\\Traits\\RecordActivity.php (in context of class App\\Models\\Message)',
-       'line' => 74,
-       'canBeIgnored' => true,
-       'filePath' => 'D:\\apps\\profresh\\app\\Models\\Message.php',
-       'traitFilePath' => 'D:\\apps\\profresh\\app\\Traits\\RecordActivity.php',
-       'tip' => NULL,
-       'nodeLine' => 74,
-       'nodeType' => 'PhpParser\\Node\\Stmt\\ClassMethod',
-       'identifier' => 'return.phpDocType',
-       'metadata' => 
-      array (
-      ),
-    )),
-    9 => 
-    \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Method App\\Models\\Message::createActivityLog() has parameter $affectedUserIds with no value type specified in iterable type array.',
        'file' => 'D:\\apps\\profresh\\app\\Traits\\RecordActivity.php (in context of class App\\Models\\Message)',
-       'line' => 88,
+       'line' => 86,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\app\\Models\\Message.php',
        'traitFilePath' => 'D:\\apps\\profresh\\app\\Traits\\RecordActivity.php',
        'tip' => 'See: https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type',
-       'nodeLine' => 88,
+       'nodeLine' => 86,
        'nodeType' => 'PHPStan\\Node\\InClassMethodNode',
        'identifier' => 'missingType.iterableValue',
        'metadata' => 
       array (
       ),
     )),
-    10 => 
+    9 => 
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Method App\\Models\\Message::createActivityLog() should return App\\Models\\Activity but returns Illuminate\\Database\\Eloquent\\Model.',
        'file' => 'D:\\apps\\profresh\\app\\Traits\\RecordActivity.php (in context of class App\\Models\\Message)',
-       'line' => 100,
+       'line' => 98,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\app\\Models\\Message.php',
        'traitFilePath' => 'D:\\apps\\profresh\\app\\Traits\\RecordActivity.php',
        'tip' => NULL,
-       'nodeLine' => 100,
+       'nodeLine' => 98,
        'nodeType' => 'PhpParser\\Node\\Stmt\\Return_',
        'identifier' => 'return.type',
        'metadata' => 
       array (
       ),
     )),
-    11 => 
+    10 => 
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Generic type Illuminate\\Database\\Eloquent\\Relations\\MorphMany<App\\Models\\Activity> in PHPDoc tag @return does not specify all template types of class Illuminate\\Database\\Eloquent\\Relations\\MorphMany: TRelatedModel, TDeclaringModel',
        'file' => 'D:\\apps\\profresh\\app\\Traits\\RecordActivity.php (in context of class App\\Models\\Message)',
-       'line' => 147,
+       'line' => 145,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\app\\Models\\Message.php',
        'traitFilePath' => 'D:\\apps\\profresh\\app\\Traits\\RecordActivity.php',
        'tip' => NULL,
-       'nodeLine' => 147,
+       'nodeLine' => 145,
        'nodeType' => 'PhpParser\\Node\\Stmt\\ClassMethod',
        'identifier' => 'generics.lessTypes',
        'metadata' => 
       array (
       ),
     )),
-    12 => 
+    11 => 
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Method App\\Models\\Message::activities() return type with generic class Illuminate\\Database\\Eloquent\\Relations\\HasMany does not specify its types: TRelatedModel, TDeclaringModel',
        'file' => 'D:\\apps\\profresh\\app\\Traits\\RecordActivity.php (in context of class App\\Models\\Message)',
-       'line' => 147,
+       'line' => 145,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\app\\Models\\Message.php',
        'traitFilePath' => 'D:\\apps\\profresh\\app\\Traits\\RecordActivity.php',
        'tip' => NULL,
-       'nodeLine' => 147,
+       'nodeLine' => 145,
        'nodeType' => 'PHPStan\\Node\\InClassMethodNode',
        'identifier' => 'missingType.generics',
        'metadata' => 
       array (
       ),
     )),
-    13 => 
+    12 => 
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Method App\\Models\\Message::activityChanges() return type has no value type specified in iterable type array.',
        'file' => 'D:\\apps\\profresh\\app\\Traits\\RecordActivity.php (in context of class App\\Models\\Message)',
-       'line' => 161,
+       'line' => 159,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\app\\Models\\Message.php',
        'traitFilePath' => 'D:\\apps\\profresh\\app\\Traits\\RecordActivity.php',
        'tip' => 'See: https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type',
-       'nodeLine' => 161,
+       'nodeLine' => 159,
        'nodeType' => 'PHPStan\\Node\\InClassMethodNode',
        'identifier' => 'missingType.iterableValue',
        'metadata' => 
@@ -8018,12 +7669,12 @@ return [
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Method App\\Models\\Project::recordActivity() has parameter $affectedUserIds with no value type specified in iterable type array.',
        'file' => 'D:\\apps\\profresh\\app\\Traits\\RecordActivity.php (in context of class App\\Models\\Project)',
-       'line' => 74,
+       'line' => 72,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\app\\Models\\Project.php',
        'traitFilePath' => 'D:\\apps\\profresh\\app\\Traits\\RecordActivity.php',
        'tip' => 'See: https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type',
-       'nodeLine' => 74,
+       'nodeLine' => 72,
        'nodeType' => 'PHPStan\\Node\\InClassMethodNode',
        'identifier' => 'missingType.iterableValue',
        'metadata' => 
@@ -8032,110 +7683,94 @@ return [
     )),
     20 => 
     \PHPStan\Analyser\Error::__set_state(array(
-       'message' => 'PHPDoc tag @return with type App\\Models\\Activity is incompatible with native type void.',
-       'file' => 'D:\\apps\\profresh\\app\\Traits\\RecordActivity.php (in context of class App\\Models\\Project)',
-       'line' => 74,
-       'canBeIgnored' => true,
-       'filePath' => 'D:\\apps\\profresh\\app\\Models\\Project.php',
-       'traitFilePath' => 'D:\\apps\\profresh\\app\\Traits\\RecordActivity.php',
-       'tip' => NULL,
-       'nodeLine' => 74,
-       'nodeType' => 'PhpParser\\Node\\Stmt\\ClassMethod',
-       'identifier' => 'return.phpDocType',
-       'metadata' => 
-      array (
-      ),
-    )),
-    21 => 
-    \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Method App\\Models\\Project::createActivityLog() has parameter $affectedUserIds with no value type specified in iterable type array.',
        'file' => 'D:\\apps\\profresh\\app\\Traits\\RecordActivity.php (in context of class App\\Models\\Project)',
-       'line' => 88,
+       'line' => 86,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\app\\Models\\Project.php',
        'traitFilePath' => 'D:\\apps\\profresh\\app\\Traits\\RecordActivity.php',
        'tip' => 'See: https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type',
-       'nodeLine' => 88,
+       'nodeLine' => 86,
        'nodeType' => 'PHPStan\\Node\\InClassMethodNode',
        'identifier' => 'missingType.iterableValue',
        'metadata' => 
       array (
       ),
     )),
-    22 => 
+    21 => 
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Method App\\Models\\Project::createActivityLog() should return App\\Models\\Activity but returns Illuminate\\Database\\Eloquent\\Model.',
        'file' => 'D:\\apps\\profresh\\app\\Traits\\RecordActivity.php (in context of class App\\Models\\Project)',
-       'line' => 100,
+       'line' => 98,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\app\\Models\\Project.php',
        'traitFilePath' => 'D:\\apps\\profresh\\app\\Traits\\RecordActivity.php',
        'tip' => NULL,
-       'nodeLine' => 100,
+       'nodeLine' => 98,
        'nodeType' => 'PhpParser\\Node\\Stmt\\Return_',
        'identifier' => 'return.type',
        'metadata' => 
       array (
       ),
     )),
-    23 => 
+    22 => 
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Access to an undefined property App\\Models\\Project::$project_id.',
        'file' => 'D:\\apps\\profresh\\app\\Traits\\RecordActivity.php (in context of class App\\Models\\Project)',
-       'line' => 130,
+       'line' => 128,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\app\\Models\\Project.php',
        'traitFilePath' => 'D:\\apps\\profresh\\app\\Traits\\RecordActivity.php',
        'tip' => 'Learn more: <fg=cyan>https://phpstan.org/blog/solving-phpstan-access-to-undefined-property</>',
-       'nodeLine' => 130,
+       'nodeLine' => 128,
        'nodeType' => 'PhpParser\\Node\\Expr\\PropertyFetch',
        'identifier' => 'property.notFound',
        'metadata' => 
       array (
       ),
     )),
-    24 => 
+    23 => 
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Generic type Illuminate\\Database\\Eloquent\\Relations\\MorphMany<App\\Models\\Activity> in PHPDoc tag @return does not specify all template types of class Illuminate\\Database\\Eloquent\\Relations\\MorphMany: TRelatedModel, TDeclaringModel',
        'file' => 'D:\\apps\\profresh\\app\\Traits\\RecordActivity.php (in context of class App\\Models\\Project)',
-       'line' => 147,
+       'line' => 145,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\app\\Models\\Project.php',
        'traitFilePath' => 'D:\\apps\\profresh\\app\\Traits\\RecordActivity.php',
        'tip' => NULL,
-       'nodeLine' => 147,
+       'nodeLine' => 145,
        'nodeType' => 'PhpParser\\Node\\Stmt\\ClassMethod',
        'identifier' => 'generics.lessTypes',
        'metadata' => 
       array (
       ),
     )),
-    25 => 
+    24 => 
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Method App\\Models\\Project::activities() return type with generic class Illuminate\\Database\\Eloquent\\Relations\\HasMany does not specify its types: TRelatedModel, TDeclaringModel',
        'file' => 'D:\\apps\\profresh\\app\\Traits\\RecordActivity.php (in context of class App\\Models\\Project)',
-       'line' => 147,
+       'line' => 145,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\app\\Models\\Project.php',
        'traitFilePath' => 'D:\\apps\\profresh\\app\\Traits\\RecordActivity.php',
        'tip' => NULL,
-       'nodeLine' => 147,
+       'nodeLine' => 145,
        'nodeType' => 'PHPStan\\Node\\InClassMethodNode',
        'identifier' => 'missingType.generics',
        'metadata' => 
       array (
       ),
     )),
-    26 => 
+    25 => 
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Method App\\Models\\Project::activityChanges() return type has no value type specified in iterable type array.',
        'file' => 'D:\\apps\\profresh\\app\\Traits\\RecordActivity.php (in context of class App\\Models\\Project)',
-       'line' => 161,
+       'line' => 159,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\app\\Models\\Project.php',
        'traitFilePath' => 'D:\\apps\\profresh\\app\\Traits\\RecordActivity.php',
        'tip' => 'See: https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type',
-       'nodeLine' => 161,
+       'nodeLine' => 159,
        'nodeType' => 'PHPStan\\Node\\InClassMethodNode',
        'identifier' => 'missingType.iterableValue',
        'metadata' => 
@@ -8360,12 +7995,12 @@ return [
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Method App\\Models\\Task::recordActivity() has parameter $affectedUserIds with no value type specified in iterable type array.',
        'file' => 'D:\\apps\\profresh\\app\\Traits\\RecordActivity.php (in context of class App\\Models\\Task)',
-       'line' => 74,
+       'line' => 72,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\app\\Models\\Task.php',
        'traitFilePath' => 'D:\\apps\\profresh\\app\\Traits\\RecordActivity.php',
        'tip' => 'See: https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type',
-       'nodeLine' => 74,
+       'nodeLine' => 72,
        'nodeType' => 'PHPStan\\Node\\InClassMethodNode',
        'identifier' => 'missingType.iterableValue',
        'metadata' => 
@@ -8374,94 +8009,78 @@ return [
     )),
     9 => 
     \PHPStan\Analyser\Error::__set_state(array(
-       'message' => 'PHPDoc tag @return with type App\\Models\\Activity is incompatible with native type void.',
-       'file' => 'D:\\apps\\profresh\\app\\Traits\\RecordActivity.php (in context of class App\\Models\\Task)',
-       'line' => 74,
-       'canBeIgnored' => true,
-       'filePath' => 'D:\\apps\\profresh\\app\\Models\\Task.php',
-       'traitFilePath' => 'D:\\apps\\profresh\\app\\Traits\\RecordActivity.php',
-       'tip' => NULL,
-       'nodeLine' => 74,
-       'nodeType' => 'PhpParser\\Node\\Stmt\\ClassMethod',
-       'identifier' => 'return.phpDocType',
-       'metadata' => 
-      array (
-      ),
-    )),
-    10 => 
-    \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Method App\\Models\\Task::createActivityLog() has parameter $affectedUserIds with no value type specified in iterable type array.',
        'file' => 'D:\\apps\\profresh\\app\\Traits\\RecordActivity.php (in context of class App\\Models\\Task)',
-       'line' => 88,
+       'line' => 86,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\app\\Models\\Task.php',
        'traitFilePath' => 'D:\\apps\\profresh\\app\\Traits\\RecordActivity.php',
        'tip' => 'See: https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type',
-       'nodeLine' => 88,
+       'nodeLine' => 86,
        'nodeType' => 'PHPStan\\Node\\InClassMethodNode',
        'identifier' => 'missingType.iterableValue',
        'metadata' => 
       array (
       ),
     )),
-    11 => 
+    10 => 
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Method App\\Models\\Task::createActivityLog() should return App\\Models\\Activity but returns Illuminate\\Database\\Eloquent\\Model.',
        'file' => 'D:\\apps\\profresh\\app\\Traits\\RecordActivity.php (in context of class App\\Models\\Task)',
-       'line' => 100,
+       'line' => 98,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\app\\Models\\Task.php',
        'traitFilePath' => 'D:\\apps\\profresh\\app\\Traits\\RecordActivity.php',
        'tip' => NULL,
-       'nodeLine' => 100,
+       'nodeLine' => 98,
        'nodeType' => 'PhpParser\\Node\\Stmt\\Return_',
        'identifier' => 'return.type',
        'metadata' => 
       array (
       ),
     )),
-    12 => 
+    11 => 
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Generic type Illuminate\\Database\\Eloquent\\Relations\\MorphMany<App\\Models\\Activity> in PHPDoc tag @return does not specify all template types of class Illuminate\\Database\\Eloquent\\Relations\\MorphMany: TRelatedModel, TDeclaringModel',
        'file' => 'D:\\apps\\profresh\\app\\Traits\\RecordActivity.php (in context of class App\\Models\\Task)',
-       'line' => 147,
+       'line' => 145,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\app\\Models\\Task.php',
        'traitFilePath' => 'D:\\apps\\profresh\\app\\Traits\\RecordActivity.php',
        'tip' => NULL,
-       'nodeLine' => 147,
+       'nodeLine' => 145,
        'nodeType' => 'PhpParser\\Node\\Stmt\\ClassMethod',
        'identifier' => 'generics.lessTypes',
        'metadata' => 
       array (
       ),
     )),
-    13 => 
+    12 => 
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Method App\\Models\\Task::activities() return type with generic class Illuminate\\Database\\Eloquent\\Relations\\HasMany does not specify its types: TRelatedModel, TDeclaringModel',
        'file' => 'D:\\apps\\profresh\\app\\Traits\\RecordActivity.php (in context of class App\\Models\\Task)',
-       'line' => 147,
+       'line' => 145,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\app\\Models\\Task.php',
        'traitFilePath' => 'D:\\apps\\profresh\\app\\Traits\\RecordActivity.php',
        'tip' => NULL,
-       'nodeLine' => 147,
+       'nodeLine' => 145,
        'nodeType' => 'PHPStan\\Node\\InClassMethodNode',
        'identifier' => 'missingType.generics',
        'metadata' => 
       array (
       ),
     )),
-    14 => 
+    13 => 
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Method App\\Models\\Task::activityChanges() return type has no value type specified in iterable type array.',
        'file' => 'D:\\apps\\profresh\\app\\Traits\\RecordActivity.php (in context of class App\\Models\\Task)',
-       'line' => 161,
+       'line' => 159,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\app\\Models\\Task.php',
        'traitFilePath' => 'D:\\apps\\profresh\\app\\Traits\\RecordActivity.php',
        'tip' => 'See: https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type',
-       'nodeLine' => 161,
+       'nodeLine' => 159,
        'nodeType' => 'PHPStan\\Node\\InClassMethodNode',
        'identifier' => 'missingType.iterableValue',
        'metadata' => 
@@ -9040,12 +8659,12 @@ return [
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Method App\\Notifications\\TaskAssigned::via() return type has no value type specified in iterable type array.',
        'file' => 'D:\\apps\\profresh\\app\\Notifications\\TaskAssigned.php',
-       'line' => 35,
+       'line' => 33,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\app\\Notifications\\TaskAssigned.php',
        'traitFilePath' => NULL,
        'tip' => 'See: https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type',
-       'nodeLine' => 35,
+       'nodeLine' => 33,
        'nodeType' => 'PHPStan\\Node\\InClassMethodNode',
        'identifier' => 'missingType.iterableValue',
        'metadata' => 
@@ -9075,46 +8694,14 @@ return [
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Method App\\Notifications\\TaskDue::via() return type has no value type specified in iterable type array.',
        'file' => 'D:\\apps\\profresh\\app\\Notifications\\TaskDue.php',
-       'line' => 36,
+       'line' => 34,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\app\\Notifications\\TaskDue.php',
        'traitFilePath' => NULL,
        'tip' => 'See: https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type',
-       'nodeLine' => 36,
+       'nodeLine' => 34,
        'nodeType' => 'PHPStan\\Node\\InClassMethodNode',
        'identifier' => 'missingType.iterableValue',
-       'metadata' => 
-      array (
-      ),
-    )),
-    2 => 
-    \PHPStan\Analyser\Error::__set_state(array(
-       'message' => 'Access to an undefined property App\\Notifications\\TaskDue::$notifiedType.',
-       'file' => 'D:\\apps\\profresh\\app\\Notifications\\TaskDue.php',
-       'line' => 43,
-       'canBeIgnored' => true,
-       'filePath' => 'D:\\apps\\profresh\\app\\Notifications\\TaskDue.php',
-       'traitFilePath' => NULL,
-       'tip' => 'Learn more: <fg=cyan>https://phpstan.org/blog/solving-phpstan-access-to-undefined-property</>',
-       'nodeLine' => 43,
-       'nodeType' => 'PhpParser\\Node\\Expr\\PropertyFetch',
-       'identifier' => 'property.notFound',
-       'metadata' => 
-      array (
-      ),
-    )),
-    3 => 
-    \PHPStan\Analyser\Error::__set_state(array(
-       'message' => 'Access to an undefined property App\\Notifications\\TaskDue::$project.',
-       'file' => 'D:\\apps\\profresh\\app\\Notifications\\TaskDue.php',
-       'line' => 55,
-       'canBeIgnored' => true,
-       'filePath' => 'D:\\apps\\profresh\\app\\Notifications\\TaskDue.php',
-       'traitFilePath' => NULL,
-       'tip' => 'Learn more: <fg=cyan>https://phpstan.org/blog/solving-phpstan-access-to-undefined-property</>',
-       'nodeLine' => 55,
-       'nodeType' => 'PhpParser\\Node\\Expr\\PropertyFetch',
-       'identifier' => 'property.notFound',
        'metadata' => 
       array (
       ),
@@ -9244,12 +8831,12 @@ return [
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Method App\\Repository\\DashboardInsightsRepository::baseUserTasks() return type with generic class Illuminate\\Database\\Eloquent\\Builder does not specify its types: TModel',
        'file' => 'D:\\apps\\profresh\\app\\Repository\\DashboardInsightsRepository.php',
-       'line' => 77,
+       'line' => 75,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\app\\Repository\\DashboardInsightsRepository.php',
        'traitFilePath' => NULL,
        'tip' => NULL,
-       'nodeLine' => 77,
+       'nodeLine' => 75,
        'nodeType' => 'PHPStan\\Node\\InClassMethodNode',
        'identifier' => 'missingType.generics',
        'metadata' => 
@@ -9510,30 +9097,14 @@ return [
   array (
     0 => 
     \PHPStan\Analyser\Error::__set_state(array(
-       'message' => 'Property App\\Rules\\ActiveProjectMember::$task has no type specified.',
-       'file' => 'D:\\apps\\profresh\\app\\Rules\\ActiveProjectMember.php',
-       'line' => 9,
-       'canBeIgnored' => true,
-       'filePath' => 'D:\\apps\\profresh\\app\\Rules\\ActiveProjectMember.php',
-       'traitFilePath' => NULL,
-       'tip' => NULL,
-       'nodeLine' => 9,
-       'nodeType' => 'PHPStan\\Node\\ClassPropertyNode',
-       'identifier' => 'missingType.property',
-       'metadata' => 
-      array (
-      ),
-    )),
-    1 => 
-    \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Method App\\Rules\\ActiveProjectMember::__construct() has parameter $task with no type specified.',
        'file' => 'D:\\apps\\profresh\\app\\Rules\\ActiveProjectMember.php',
-       'line' => 16,
+       'line' => 14,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\app\\Rules\\ActiveProjectMember.php',
        'traitFilePath' => NULL,
        'tip' => NULL,
-       'nodeLine' => 16,
+       'nodeLine' => 14,
        'nodeType' => 'PHPStan\\Node\\InClassMethodNode',
        'identifier' => 'missingType.parameter',
        'metadata' => 
@@ -9545,30 +9116,14 @@ return [
   array (
     0 => 
     \PHPStan\Analyser\Error::__set_state(array(
-       'message' => 'Property App\\Rules\\TaskAssigneeMember::$task has no type specified.',
-       'file' => 'D:\\apps\\profresh\\app\\Rules\\TaskAssigneeMember.php',
-       'line' => 9,
-       'canBeIgnored' => true,
-       'filePath' => 'D:\\apps\\profresh\\app\\Rules\\TaskAssigneeMember.php',
-       'traitFilePath' => NULL,
-       'tip' => NULL,
-       'nodeLine' => 9,
-       'nodeType' => 'PHPStan\\Node\\ClassPropertyNode',
-       'identifier' => 'missingType.property',
-       'metadata' => 
-      array (
-      ),
-    )),
-    1 => 
-    \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Method App\\Rules\\TaskAssigneeMember::__construct() has parameter $task with no type specified.',
        'file' => 'D:\\apps\\profresh\\app\\Rules\\TaskAssigneeMember.php',
-       'line' => 16,
+       'line' => 14,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\app\\Rules\\TaskAssigneeMember.php',
        'traitFilePath' => NULL,
        'tip' => NULL,
-       'nodeLine' => 16,
+       'nodeLine' => 14,
        'nodeType' => 'PHPStan\\Node\\InClassMethodNode',
        'identifier' => 'missingType.parameter',
        'metadata' => 
@@ -9703,12 +9258,12 @@ return [
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Method App\\Services\\Api\\V1\\ConversationService::prepareConversationData() return type has no value type specified in iterable type array.',
        'file' => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\ConversationService.php',
-       'line' => 63,
+       'line' => 58,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\ConversationService.php',
        'traitFilePath' => NULL,
        'tip' => 'See: https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type',
-       'nodeLine' => 63,
+       'nodeLine' => 58,
        'nodeType' => 'PHPStan\\Node\\InClassMethodNode',
        'identifier' => 'missingType.iterableValue',
        'metadata' => 
@@ -9719,12 +9274,12 @@ return [
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Method App\\Services\\Api\\V1\\ConversationService::createConversation() has parameter $data with no value type specified in iterable type array.',
        'file' => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\ConversationService.php',
-       'line' => 79,
+       'line' => 74,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\ConversationService.php',
        'traitFilePath' => NULL,
        'tip' => 'See: https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type',
-       'nodeLine' => 79,
+       'nodeLine' => 74,
        'nodeType' => 'PHPStan\\Node\\InClassMethodNode',
        'identifier' => 'missingType.iterableValue',
        'metadata' => 
@@ -10166,12 +9721,12 @@ return [
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Class App\\Jobs\\SmsMessage constructor invoked with 3 parameters, 2 required.',
        'file' => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\MessageService.php',
-       'line' => 77,
+       'line' => 76,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\MessageService.php',
        'traitFilePath' => NULL,
        'tip' => NULL,
-       'nodeLine' => 77,
+       'nodeLine' => 76,
        'nodeType' => 'PhpParser\\Node\\Expr\\New_',
        'identifier' => 'arguments.count',
        'metadata' => 
@@ -10182,12 +9737,12 @@ return [
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Parameter $batch of anonymous function has invalid type App\\Services\\Api\\V1\\Batch.',
        'file' => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\MessageService.php',
-       'line' => 86,
+       'line' => 84,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\MessageService.php',
        'traitFilePath' => NULL,
        'tip' => NULL,
-       'nodeLine' => 86,
+       'nodeLine' => 84,
        'nodeType' => 'PhpParser\\Node\\Expr\\Closure',
        'identifier' => 'class.notFound',
        'metadata' => 
@@ -10198,12 +9753,12 @@ return [
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Parameter $e of anonymous function has invalid type App\\Services\\Api\\V1\\Throwable.',
        'file' => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\MessageService.php',
-       'line' => 86,
+       'line' => 84,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\MessageService.php',
        'traitFilePath' => NULL,
        'tip' => NULL,
-       'nodeLine' => 86,
+       'nodeLine' => 84,
        'nodeType' => 'PhpParser\\Node\\Expr\\Closure',
        'identifier' => 'class.notFound',
        'metadata' => 
@@ -10214,12 +9769,12 @@ return [
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Method App\\Services\\Api\\V1\\MessageService::saveMessageDateAndTime() has no return type specified.',
        'file' => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\MessageService.php',
-       'line' => 100,
+       'line' => 98,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\MessageService.php',
        'traitFilePath' => NULL,
        'tip' => NULL,
-       'nodeLine' => 100,
+       'nodeLine' => 98,
        'nodeType' => 'PHPStan\\Node\\InClassMethodNode',
        'identifier' => 'missingType.return',
        'metadata' => 
@@ -10720,12 +10275,12 @@ return [
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Negated boolean expression is always false.',
        'file' => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\TokenController.php',
-       'line' => 61,
+       'line' => 60,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\TokenController.php',
        'traitFilePath' => NULL,
        'tip' => 'Because the type is coming from a PHPDoc, you can turn off this check by setting <fg=cyan>treatPhpDocTypesAsCertain: false</> in your <fg=cyan>%configurationFile%</>.',
-       'nodeLine' => 61,
+       'nodeLine' => 60,
        'nodeType' => 'PhpParser\\Node\\Expr\\BooleanNot',
        'identifier' => 'booleanNot.alwaysFalse',
        'metadata' => 
@@ -10739,7 +10294,7 @@ return [
   array (
     'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\TokenController.php' => 
     array (
-      61 => NULL,
+      60 => NULL,
     ),
   ),
 ),
@@ -10786,7 +10341,7 @@ return [
 	'dependencies' => array (
   'D:\\apps\\profresh\\app\\Actions\\DeleteProfileAction.php' => 
   array (
-    'fileHash' => '764c4de21b21fe28b8af56adcd0f2afcb48ef896',
+    'fileHash' => '1b481bd09e445f3a0394c942584f43cee5bf3a8a',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Console\\Commands\\UserProfileDelete.php',
@@ -10827,7 +10382,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Actions\\ProjectMetrics\\ProjectHealthMetricAction.php' => 
   array (
-    'fileHash' => 'e22b209d6acee455320be5569f113b62af84a0c0',
+    'fileHash' => 'b27741fb153f78526d7d13af908d1eed13ac1e83',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Jobs\\RecalculateProjectHealth.php',
@@ -10836,7 +10391,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Actions\\ProjectMetrics\\ProjectHealthRecalculationAction.php' => 
   array (
-    'fileHash' => 'a0bf4d048fd1de5177fef1b2e31be847d923a8f3',
+    'fileHash' => 'd5851fab4c7ce037ac62627897f73b082283a3b4',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\ProjectInsightsController.php',
@@ -10950,7 +10505,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Console\\Kernel.php' => 
   array (
-    'fileHash' => 'bae46d60a32eb4c73df2465a821430588914b46e',
+    'fileHash' => '1c6c72743daa9f1d241e4246ce464f2b927aacb9',
     'dependentFiles' => 
     array (
     ),
@@ -11026,7 +10581,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Data\\ProjectMetricsDto.php' => 
   array (
-    'fileHash' => '063a741d8a2842eb68720993edd3039e8be9f730',
+    'fileHash' => '120445b44433b684427ca0f97cb1a6a3d30375f6',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Repository\\ProjectInsightsRepository.php',
@@ -11159,25 +10714,27 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Events\\ActivityLogged.php' => 
   array (
-    'fileHash' => '88763ae34804c5387e9d81f42f655742e8e716ae',
+    'fileHash' => 'bf2622eeedfa2ceaf71cae8ff9ea986c3b98a8bd',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Models\\Meeting.php',
       1 => 'D:\\apps\\profresh\\app\\Models\\Message.php',
       2 => 'D:\\apps\\profresh\\app\\Models\\Project.php',
       3 => 'D:\\apps\\profresh\\app\\Models\\Task.php',
+      4 => 'D:\\apps\\profresh\\app\\Providers\\EventServiceProvider.php',
     ),
   ),
   'D:\\apps\\profresh\\app\\Events\\DashboardActivity.php' => 
   array (
-    'fileHash' => '34f8c20743ef5e2418ca331046f31e7ed644a874',
+    'fileHash' => '01a3e33bd8d24d9d112a8bc2da8adc67195be089',
     'dependentFiles' => 
     array (
+      0 => 'D:\\apps\\profresh\\app\\Providers\\EventServiceProvider.php',
     ),
   ),
   'D:\\apps\\profresh\\app\\Events\\DeleteConversation.php' => 
   array (
-    'fileHash' => '0ff0d97209fdb38b18bf7f20a8ec8157d17d6d9e',
+    'fileHash' => 'a7dd48e6cc9a2a1866e66d04a53459f3ee43cbba',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\ConversationService.php',
@@ -11185,24 +10742,26 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Events\\MeetingStatusUpdate.php' => 
   array (
-    'fileHash' => '2353cfd110e87a251e582d261df6468de3045693',
+    'fileHash' => '6ac39a2e232746ceef8bd50e24770952bf383e93',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Jobs\\Webhooks\\Zoom\\MeetingEndsWebhook.php',
       1 => 'D:\\apps\\profresh\\app\\Jobs\\Webhooks\\Zoom\\StartMeetingWebhook.php',
+      2 => 'D:\\apps\\profresh\\app\\Providers\\EventServiceProvider.php',
     ),
   ),
   'D:\\apps\\profresh\\app\\Events\\NewMessage.php' => 
   array (
-    'fileHash' => 'c3a4fc189cd6dc03bc69cc33b78a1d8c40c16677',
+    'fileHash' => '09c29aa49d171af38fda918321335c10a8fe2b16',
     'dependentFiles' => 
     array (
-      0 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\ConversationService.php',
+      0 => 'D:\\apps\\profresh\\app\\Providers\\EventServiceProvider.php',
+      1 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\ConversationService.php',
     ),
   ),
   'D:\\apps\\profresh\\app\\Events\\PasswordUpdateEvent.php' => 
   array (
-    'fileHash' => 'fa45850d2c8aac7e75056e5a4ab6c02201be8820',
+    'fileHash' => 'f5f527b23aa789e0cb0b9abef94b85670d021bfb',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Listeners\\SendPasswordUpdateEmail.php',
@@ -11216,6 +10775,7 @@ return [
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Jobs\\RecalculateProjectHealth.php',
+      1 => 'D:\\apps\\profresh\\app\\Providers\\EventServiceProvider.php',
     ),
   ),
   'D:\\apps\\profresh\\app\\Events\\UserHasRegistered.php' => 
@@ -11227,7 +10787,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Events\\UserLogin.php' => 
   array (
-    'fileHash' => '55c12ddf4ee88f76c711b9eecec9e04d02da0881',
+    'fileHash' => 'abd5e967a5a21d43ad36d1cae5be4bafd33e60cc',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\Auth\\LoginController.php',
@@ -11238,7 +10798,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Exceptions\\Handler.php' => 
   array (
-    'fileHash' => '6f96cd5e803581e9e14a16b864215023d24c4a10',
+    'fileHash' => 'e4ed05c01b4b9b9af60d249ce19609a1fe0e43d3',
     'dependentFiles' => 
     array (
     ),
@@ -11295,7 +10855,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Exports\\ProjectsExport.php' => 
   array (
-    'fileHash' => 'a52f0f33196497dc6f74ac271b15d71d2e2ff306',
+    'fileHash' => '523cc7b206a78971c187bfb6e0cab03d42c5eeda',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\FeaturesController.php',
@@ -11324,21 +10884,21 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\Auth\\LoginController.php' => 
   array (
-    'fileHash' => '289ed7631bbf48f6c9376565b6156d88b5ae4e5c',
+    'fileHash' => '077c87ee9552130b0f944342fcd69059fbf1c0ea',
     'dependentFiles' => 
     array (
     ),
   ),
   'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\Auth\\OAuthController.php' => 
   array (
-    'fileHash' => 'f6ca4648850a2424b89fab4eb599fab1ca041f63',
+    'fileHash' => '278ff8b42da6222b601a8cda444eb716b8ae37c9',
     'dependentFiles' => 
     array (
     ),
   ),
   'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\Auth\\RegisterController.php' => 
   array (
-    'fileHash' => '34a16dea54c74becb71af7491135c8e774679f89',
+    'fileHash' => 'fecf632585e0056aa59ae0450b29faea879fd931',
     'dependentFiles' => 
     array (
     ),
@@ -11387,28 +10947,28 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\ConversationController.php' => 
   array (
-    'fileHash' => '6144469d22f7e15031d2607ad44e66e137b7ab22',
+    'fileHash' => '020b9a13f78582e82b8194c51a49331cdc57cf8e',
     'dependentFiles' => 
     array (
     ),
   ),
   'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\FeaturesController.php' => 
   array (
-    'fileHash' => 'ab4951091aa9eaef57009532feb523b88b093ebd',
+    'fileHash' => '14989cb2430c43d383335eae6cb58caed0db8931',
     'dependentFiles' => 
     array (
     ),
   ),
   'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\InvitationController.php' => 
   array (
-    'fileHash' => '30a43a6d0e528e745f272876fded963bdf7cc355',
+    'fileHash' => '60ef4963d99b5ef8070336972037a037aa3ded42',
     'dependentFiles' => 
     array (
     ),
   ),
   'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\MessageController.php' => 
   array (
-    'fileHash' => 'e248f8637a48c60ce2b1aff5385fb1cebcce4ff4',
+    'fileHash' => '6eb9db9798e5c66c554c906f73c37b463e4dc2aa',
     'dependentFiles' => 
     array (
     ),
@@ -11436,7 +10996,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\ProjectInsightsController.php' => 
   array (
-    'fileHash' => 'ee41c4fde699c26ec7799c5aac32e4803ae36d3a',
+    'fileHash' => 'e8791a56f698593f351e0f99d68032e4f75fc38e',
     'dependentFiles' => 
     array (
     ),
@@ -11464,7 +11024,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\TaskFeaturesController.php' => 
   array (
-    'fileHash' => 'ba5090f00f8b86446693312b4e64933b90758dc0',
+    'fileHash' => 'b60ce650861ec2e3985cd5e336902b26ceadad24',
     'dependentFiles' => 
     array (
     ),
@@ -11478,7 +11038,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\TokenController.php' => 
   array (
-    'fileHash' => '58dce766c88db96a106f22bd92fb8db5192371ba',
+    'fileHash' => 'f949bf9b0576956d173b921c9609765a26dea854',
     'dependentFiles' => 
     array (
     ),
@@ -11506,7 +11066,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\ZoomMeetingController.php' => 
   array (
-    'fileHash' => 'f31ae0186a6b7ac3f50f29c92cb7cd65f142ad19',
+    'fileHash' => '89d2a4d00fc6f70f487b23182f790bc257e8012f',
     'dependentFiles' => 
     array (
     ),
@@ -11580,7 +11140,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Http\\Integrations\\Zoom\\Requests\\CreateMeeting.php' => 
   array (
-    'fileHash' => '556b163e9bd312107d5128e1beb6c7dace4a9268',
+    'fileHash' => '3e12c7f88d41392f3d4ba6c708e432d268d3c203',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\Zoom\\ZoomService.php',
@@ -11588,7 +11148,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Http\\Integrations\\Zoom\\Requests\\DeleteMeeting.php' => 
   array (
-    'fileHash' => 'd4cccdbcf04e4b5b414d876642671b24ec1c154c',
+    'fileHash' => 'a5134218425b086709095146dfaa534279762291',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\Zoom\\ZoomService.php',
@@ -11621,7 +11181,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Http\\Integrations\\Zoom\\Requests\\UpdateMeeting.php' => 
   array (
-    'fileHash' => '71d00613404f0a38e41ab8a7c9e0aa137cafe121',
+    'fileHash' => '4ce59d397a579ebf9152e822a35cba516413d973',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\Zoom\\ZoomService.php',
@@ -11637,14 +11197,14 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Http\\Kernel.php' => 
   array (
-    'fileHash' => '4203bfc2853399f47249091f5ff09750186d09cc',
+    'fileHash' => '83fb5c1f403c8e4bc8864b6eaecfb7a0ec276d09',
     'dependentFiles' => 
     array (
     ),
   ),
   'D:\\apps\\profresh\\app\\Http\\Middleware\\Authenticate.php' => 
   array (
-    'fileHash' => 'a6abab420c2617852caadbb39c02bdf56e822816',
+    'fileHash' => '395a5427cf5278dd266c5362719be119f78e503d',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Http\\Kernel.php',
@@ -11660,7 +11220,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Http\\Middleware\\CheckSubscription.php' => 
   array (
-    'fileHash' => 'da92ae58e57f7ac3714e234dac41b1baa138e30a',
+    'fileHash' => 'adca525c38cac0a14bb95d6cf23f1c01c22670be',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Http\\Kernel.php',
@@ -11676,7 +11236,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Http\\Middleware\\RedirectIfAuthenticated.php' => 
   array (
-    'fileHash' => 'b6f07df05775209fb5bd4aabf88b96c1c199e831',
+    'fileHash' => '8beeec6866484a2ff0983ca5db8b6fc06547f0e4',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Http\\Kernel.php',
@@ -11684,7 +11244,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Http\\Middleware\\TrackLastActiveAt.php' => 
   array (
-    'fileHash' => '3c3d0b7d326409dd362a0bea5d5fdd61f8f5cb96',
+    'fileHash' => 'e03ec55e9ff7c6a18d33f0b1e10b48cebec33b7f',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Http\\Kernel.php',
@@ -11716,7 +11276,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Http\\Middleware\\VerifyZoomWebhook.php' => 
   array (
-    'fileHash' => '527c1931256db901cf99b9f69afe05b1ef8c6576',
+    'fileHash' => '82ad8350004a4d9e88bd5636cc387a2b2dce740f',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Http\\Kernel.php',
@@ -11764,7 +11324,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Http\\Requests\\Api\\V1\\Auth\\TwoFactorLoginRequest.php' => 
   array (
-    'fileHash' => 'f5ccce6cc8e6e6e004efae86410f162a53527157',
+    'fileHash' => '10d803551703ee812b7a823a6080517d1d96e30a',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\Auth\\TwoFactorController.php',
@@ -11798,7 +11358,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Http\\Requests\\Api\\V1\\MessageRequest.php' => 
   array (
-    'fileHash' => 'c620c14700bda4ddfa022c43097052435baac7bb',
+    'fileHash' => '28c2a365f9c63f48b03ff23c6e542af0eb3550b1',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\MessageController.php',
@@ -11854,7 +11414,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Http\\Requests\\Api\\V1\\TaskRequest.php' => 
   array (
-    'fileHash' => '8dada1cb386dbbc9bd938e24656dca13165af25c',
+    'fileHash' => '56d3bddc5b12976258a3647722c52004ac4db82c',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\TaskController.php',
@@ -11862,7 +11422,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Http\\Requests\\Api\\V1\\TaskUpdate.php' => 
   array (
-    'fileHash' => 'c50e09e1ecb26165a2e910bdff23192bd9ea9eea',
+    'fileHash' => '7d5c4dd038a9276768c00ee222c070a3ad08db33',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\TaskController.php',
@@ -11911,7 +11471,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Http\\Requests\\Api\\V1\\Zoom\\MeetingStoreRequest.php' => 
   array (
-    'fileHash' => 'f6092d4446889d8c721d63670248628d3a31e8af',
+    'fileHash' => '39eafd8c00d7ba9f453077ae8b6b38c1e71d6e67',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\ZoomMeetingController.php',
@@ -11919,7 +11479,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Http\\Requests\\Api\\V1\\Zoom\\MeetingUpdateRequest.php' => 
   array (
-    'fileHash' => '4d788af5a9982432e8cac4589ff3f71cca30f2ce',
+    'fileHash' => '345c2b031cc35331059abde4fe382228a3eeb793',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\ZoomMeetingController.php',
@@ -11963,7 +11523,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\InvitedUserResource.php' => 
   array (
-    'fileHash' => 'e6b3726e5e40aa868f367d433da2324bff79acbe',
+    'fileHash' => 'c69981077c8143ea428f66a29e99658922dcfd02',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\InvitationController.php',
@@ -11998,7 +11558,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\ProjectResource.php' => 
   array (
-    'fileHash' => '59e05f9859087dd5085962be913212f901fd0cfe',
+    'fileHash' => '59dfa959f8585714ffed07c310d3be3aa2bc2418',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\ProjectController.php',
@@ -12053,7 +11613,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\TaskResource.php' => 
   array (
-    'fileHash' => '943e1a1a4e7957f52169f29549343fbb0e06aa54',
+    'fileHash' => 'b20956016f9299c4446be3ba2c3ca680a1847f42',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\TaskController.php',
@@ -12100,7 +11660,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\UserActivitiesResource.php' => 
   array (
-    'fileHash' => '17edae963878898f9dcec9c62a260f7359f48030',
+    'fileHash' => '45cc2fef3c63a787eec272dddb3b22f355066abf',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\ProjectDashboardController.php',
@@ -12132,7 +11692,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\UsersResource.php' => 
   array (
-    'fileHash' => '7e3274d23fdcb9324d3ff021482e5a901051f8c2',
+    'fileHash' => 'e78233e128f9de0e280aebb9ecb4d8270ed7b3ad',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\Auth\\LoginController.php',
@@ -12164,7 +11724,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Http\\Views\\Composers\\ProjectComposer.php' => 
   array (
-    'fileHash' => '1070086493ac19f489f883672f2a36ed0f0e0efe',
+    'fileHash' => 'f8cf2d2277de84e3d2c67fbacb9700e2fa03c065',
     'dependentFiles' => 
     array (
     ),
@@ -12211,7 +11771,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Jobs\\MailMessage.php' => 
   array (
-    'fileHash' => '64e25fa63b0cb690e69cc489bcbce7e28313f95a',
+    'fileHash' => '602555f6810967f7fd855d2f7b618309ffe27714',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\MessageService.php',
@@ -12219,7 +11779,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Jobs\\QueuedPasswordResetJob.php' => 
   array (
-    'fileHash' => '221a996bd86dc6aa2ad4e766ff50b9a26b59cc9d',
+    'fileHash' => '6f52c66659661e361ab0d0c10ff3d1fa81adfbb3',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Models\\User.php',
@@ -12227,7 +11787,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Jobs\\QueuedVerifyEmailJob.php' => 
   array (
-    'fileHash' => 'ffb3758872d193f8ed5a5d94372e21d74014bebe',
+    'fileHash' => '1c0014d1e567ec295a2a832f21a8824c2be41454',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Models\\User.php',
@@ -12235,7 +11795,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Jobs\\RecalculateProjectHealth.php' => 
   array (
-    'fileHash' => '4d6aa11ebb4cfa7fd12041738a5e8fba96018192',
+    'fileHash' => '404541d4d3a80454aadce5ef41d6b6646c7b3302',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Actions\\ProjectMetrics\\ProjectHealthRecalculationAction.php',
@@ -12244,7 +11804,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Jobs\\SmsMessage.php' => 
   array (
-    'fileHash' => 'bc9b3c58e58e288c32e6fc2ad6923de778a3769f',
+    'fileHash' => 'fc66934116fbf03ad747e0a33e94855c9e3fad9c',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\MessageService.php',
@@ -12267,7 +11827,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Jobs\\Webhooks\\Zoom\\MeetingEndsWebhook.php' => 
   array (
-    'fileHash' => 'a3bf3e764a267e040c86d54ccbd4fd99bd5f67d6',
+    'fileHash' => 'a6a68988e97b4c638fdb9ec1bbc853dec494abdb',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\Webhooks\\ZoomWebhookController.php',
@@ -12275,7 +11835,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Jobs\\Webhooks\\Zoom\\StartMeetingWebhook.php' => 
   array (
-    'fileHash' => '9d2eb993291edafd053e9a4ad5789c8b5e674e94',
+    'fileHash' => '0ceb8871f27e9447e8ae9295f3e42a1488b0f331',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\Webhooks\\ZoomWebhookController.php',
@@ -12283,7 +11843,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Jobs\\Webhooks\\Zoom\\UpdateMeetingWebhook.php' => 
   array (
-    'fileHash' => '1bce9b3f252e116a764ab67eda2914b24cfd4087',
+    'fileHash' => '7098a2a149b82cfb5e2a6f7602d0f16960c039cd',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\Webhooks\\ZoomWebhookController.php',
@@ -12323,7 +11883,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Mail\\PasswordUpdate.php' => 
   array (
-    'fileHash' => '299ef47ca720e3444e82c974a1943b98cf397c59',
+    'fileHash' => '9fba187a00c9b9feaa9b9c86b610e1a29c01eb24',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Listeners\\SendPasswordUpdateEmail.php',
@@ -12331,7 +11891,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Mail\\ProjectMail.php' => 
   array (
-    'fileHash' => '9bf7870b832c470021812e49f474edc80e0299c9',
+    'fileHash' => 'ef8cafedb72dfaca95ba7077be2f6428bc4fe0cc',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Jobs\\MailMessage.php',
@@ -12360,7 +11920,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Models\\Conversation.php' => 
   array (
-    'fileHash' => '7fc0a4b1e045100cc1c1a27d0a5af25b92980a43',
+    'fileHash' => '751e7c9f07c966200a5ff6d9ea8538462d958387',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Events\\NewMessage.php',
@@ -12369,13 +11929,14 @@ return [
       3 => 'D:\\apps\\profresh\\app\\Models\\Project.php',
       4 => 'D:\\apps\\profresh\\app\\Models\\User.php',
       5 => 'D:\\apps\\profresh\\app\\Policies\\ConversationPolicy.php',
-      6 => 'D:\\apps\\profresh\\app\\Repository\\Api\\V1\\ConversationRepository.php',
-      7 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\ConversationService.php',
+      6 => 'D:\\apps\\profresh\\app\\Providers\\AuthServiceProvider.php',
+      7 => 'D:\\apps\\profresh\\app\\Repository\\Api\\V1\\ConversationRepository.php',
+      8 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\ConversationService.php',
     ),
   ),
   'D:\\apps\\profresh\\app\\Models\\Meeting.php' => 
   array (
-    'fileHash' => '1587f50bd787f54c4074af5a4d3d4f7644659811',
+    'fileHash' => 'a344e8052472e984f454a5b818cf0d449ab40550',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Events\\MeetingStatusUpdate.php',
@@ -12413,7 +11974,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Models\\Project.php' => 
   array (
-    'fileHash' => '4f2a2c7e0c15875d4b336bd25723edb77f998682',
+    'fileHash' => 'cf11488c853cfc923c416e8dc6e14fa4a8e1b275',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Actions\\DeleteProfileAction.php',
@@ -12465,21 +12026,23 @@ return [
       46 => 'D:\\apps\\profresh\\app\\Models\\User.php',
       47 => 'D:\\apps\\profresh\\app\\Policies\\ProjectsPolicy.php',
       48 => 'D:\\apps\\profresh\\app\\Policies\\TasksPolicy.php',
-      49 => 'D:\\apps\\profresh\\app\\QueryBuilder\\ProjectQueryBuilder.php',
-      50 => 'D:\\apps\\profresh\\app\\Repository\\Api\\V1\\ConversationRepository.php',
-      51 => 'D:\\apps\\profresh\\app\\Repository\\DashBoardRepository.php',
-      52 => 'D:\\apps\\profresh\\app\\Repository\\DashboardInsightsRepository.php',
-      53 => 'D:\\apps\\profresh\\app\\Repository\\ProjectInsightsRepository.php',
-      54 => 'D:\\apps\\profresh\\app\\Repository\\TaskRepository.php',
-      55 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\ConversationService.php',
-      56 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\DashboardService.php',
-      57 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\InvitationService.php',
-      58 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\MeetingService.php',
-      59 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\MessageService.php',
-      60 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\ProjectInsightService.php',
-      61 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\Task\\TaskFeatureService.php',
-      62 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\Task\\TaskService.php',
-      63 => 'D:\\apps\\profresh\\app\\Services\\ProjectInsightsPreloader.php',
+      49 => 'D:\\apps\\profresh\\app\\Providers\\AuthServiceProvider.php',
+      50 => 'D:\\apps\\profresh\\app\\QueryBuilder\\ProjectQueryBuilder.php',
+      51 => 'D:\\apps\\profresh\\app\\Repository\\Api\\V1\\ConversationRepository.php',
+      52 => 'D:\\apps\\profresh\\app\\Repository\\DashBoardRepository.php',
+      53 => 'D:\\apps\\profresh\\app\\Repository\\DashboardInsightsRepository.php',
+      54 => 'D:\\apps\\profresh\\app\\Repository\\ProjectInsightsRepository.php',
+      55 => 'D:\\apps\\profresh\\app\\Repository\\TaskRepository.php',
+      56 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\ConversationService.php',
+      57 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\DashboardService.php',
+      58 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\FeatureService.php',
+      59 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\InvitationService.php',
+      60 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\MeetingService.php',
+      61 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\MessageService.php',
+      62 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\ProjectInsightService.php',
+      63 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\Task\\TaskFeatureService.php',
+      64 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\Task\\TaskService.php',
+      65 => 'D:\\apps\\profresh\\app\\Services\\ProjectInsightsPreloader.php',
     ),
   ),
   'D:\\apps\\profresh\\app\\Models\\Stage.php' => 
@@ -12487,13 +12050,14 @@ return [
     'fileHash' => 'f412cc159fd43ea3a346685c029a12db9e554e9b',
     'dependentFiles' => 
     array (
-      0 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\StageController.php',
-      1 => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\ActivityResource.php',
-      2 => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\ProjectResource.php',
-      3 => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\ProjectStageResource.php',
-      4 => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\ProjectsResource.php',
-      5 => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\StageResource.php',
-      6 => 'D:\\apps\\profresh\\app\\Models\\Project.php',
+      0 => 'D:\\apps\\profresh\\app\\Exports\\ProjectsExport.php',
+      1 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\StageController.php',
+      2 => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\ActivityResource.php',
+      3 => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\ProjectResource.php',
+      4 => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\ProjectStageResource.php',
+      5 => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\ProjectsResource.php',
+      6 => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\StageResource.php',
+      7 => 'D:\\apps\\profresh\\app\\Models\\Project.php',
     ),
   ),
   'D:\\apps\\profresh\\app\\Models\\Task.php' => 
@@ -12504,23 +12068,24 @@ return [
       0 => 'D:\\apps\\profresh\\app\\Actions\\TaskDueAction.php',
       1 => 'D:\\apps\\profresh\\app\\Console\\Commands\\TaskNotify.php',
       2 => 'D:\\apps\\profresh\\app\\Console\\Kernel.php',
-      3 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\ProjectDashboardController.php',
-      4 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\TaskController.php',
-      5 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\TaskFeaturesController.php',
-      6 => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\TaskResource.php',
-      7 => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\TasksResource.php',
-      8 => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\UserTasksResource.php',
-      9 => 'D:\\apps\\profresh\\app\\Models\\Project.php',
-      10 => 'D:\\apps\\profresh\\app\\Models\\TaskStatus.php',
-      11 => 'D:\\apps\\profresh\\app\\Models\\User.php',
-      12 => 'D:\\apps\\profresh\\app\\Policies\\TasksPolicy.php',
-      13 => 'D:\\apps\\profresh\\app\\Providers\\AuthServiceProvider.php',
-      14 => 'D:\\apps\\profresh\\app\\QueryBuilder\\TaskQueryBuilder.php',
-      15 => 'D:\\apps\\profresh\\app\\Repository\\DashboardInsightsRepository.php',
-      16 => 'D:\\apps\\profresh\\app\\Repository\\TaskRepository.php',
-      17 => 'D:\\apps\\profresh\\app\\Repository\\UserTasksDataRepository.php',
-      18 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\Task\\TaskFeatureService.php',
-      19 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\Task\\TaskService.php',
+      3 => 'D:\\apps\\profresh\\app\\Exports\\ProjectsExport.php',
+      4 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\ProjectDashboardController.php',
+      5 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\TaskController.php',
+      6 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\TaskFeaturesController.php',
+      7 => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\TaskResource.php',
+      8 => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\TasksResource.php',
+      9 => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\UserTasksResource.php',
+      10 => 'D:\\apps\\profresh\\app\\Models\\Project.php',
+      11 => 'D:\\apps\\profresh\\app\\Models\\TaskStatus.php',
+      12 => 'D:\\apps\\profresh\\app\\Models\\User.php',
+      13 => 'D:\\apps\\profresh\\app\\Policies\\TasksPolicy.php',
+      14 => 'D:\\apps\\profresh\\app\\Providers\\AuthServiceProvider.php',
+      15 => 'D:\\apps\\profresh\\app\\QueryBuilder\\TaskQueryBuilder.php',
+      16 => 'D:\\apps\\profresh\\app\\Repository\\DashboardInsightsRepository.php',
+      17 => 'D:\\apps\\profresh\\app\\Repository\\TaskRepository.php',
+      18 => 'D:\\apps\\profresh\\app\\Repository\\UserTasksDataRepository.php',
+      19 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\Task\\TaskFeatureService.php',
+      20 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\Task\\TaskService.php',
     ),
   ),
   'D:\\apps\\profresh\\app\\Models\\TaskStatus.php' => 
@@ -12539,7 +12104,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Models\\User.php' => 
   array (
-    'fileHash' => '3e034c0c036e301feab4a406eeb18f692ecf6d6a',
+    'fileHash' => '5e648a50f2ea172cae9a872d2a7ab06d736332b3',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Actions\\DeleteProfileAction.php',
@@ -12547,80 +12112,83 @@ return [
       2 => 'D:\\apps\\profresh\\app\\Actions\\TaskDueAction.php',
       3 => 'D:\\apps\\profresh\\app\\Events\\PasswordUpdateEvent.php',
       4 => 'D:\\apps\\profresh\\app\\Events\\UserLogin.php',
-      5 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\Auth\\LoginController.php',
-      6 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\Auth\\OAuthController.php',
-      7 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\Auth\\RegisterController.php',
-      8 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\Auth\\TwoFactorController.php',
-      9 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\Auth\\VerificationController.php',
-      10 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\OAuth\\ZoomAuthController.php',
-      11 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\AvatarController.php',
-      12 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\InvitationController.php',
-      13 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\NotificationsController.php',
-      14 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\ProjectController.php',
-      15 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\SubscriptionController.php',
-      16 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\TaskFeaturesController.php',
-      17 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\TokenController.php',
-      18 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\UserController.php',
-      19 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\UserInvitationsController.php',
-      20 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\ZoomMeetingController.php',
-      21 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\Zoom\\ZoomTokenController.php',
-      22 => 'D:\\apps\\profresh\\app\\Http\\Middleware\\CheckSubscription.php',
-      23 => 'D:\\apps\\profresh\\app\\Http\\Middleware\\TrackLastActiveAt.php',
-      24 => 'D:\\apps\\profresh\\app\\Http\\Requests\\Api\\V1\\Auth\\ConfirmTwoFactorRequest.php',
-      25 => 'D:\\apps\\profresh\\app\\Http\\Requests\\Api\\V1\\Auth\\DisableTwoFactorRequest.php',
-      26 => 'D:\\apps\\profresh\\app\\Http\\Requests\\Api\\V1\\Auth\\PrepareTwoFactorRequest.php',
-      27 => 'D:\\apps\\profresh\\app\\Http\\Requests\\Api\\V1\\Auth\\TwoFactorLoginRequest.php',
-      28 => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\ActivityResource.php',
-      29 => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\ConversationResource.php',
-      30 => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\InvitedUserResource.php',
-      31 => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\NotificationResource.php',
-      32 => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\ProjectInvitaionResource.php',
-      33 => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\ProjectResource.php',
-      34 => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\SubscriptionResource.php',
-      35 => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\TaskResource.php',
-      36 => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\Task\\TaskMemberResource.php',
-      37 => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\UserResource.php',
-      38 => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\UserTasksResource.php',
-      39 => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\UsersResource.php',
-      40 => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\Zoom\\MeetingResource.php',
-      41 => 'D:\\apps\\profresh\\app\\Interfaces\\Paddle.php',
-      42 => 'D:\\apps\\profresh\\app\\Interfaces\\Zoom.php',
-      43 => 'D:\\apps\\profresh\\app\\Jobs\\QueuedPasswordResetJob.php',
-      44 => 'D:\\apps\\profresh\\app\\Jobs\\QueuedVerifyEmailJob.php',
-      45 => 'D:\\apps\\profresh\\app\\Jobs\\Webhooks\\Zoom\\MeetingEndsWebhook.php',
-      46 => 'D:\\apps\\profresh\\app\\Jobs\\Webhooks\\Zoom\\StartMeetingWebhook.php',
-      47 => 'D:\\apps\\profresh\\app\\Listeners\\SaveUserTimezone.php',
-      48 => 'D:\\apps\\profresh\\app\\Listeners\\SendPasswordUpdateEmail.php',
-      49 => 'D:\\apps\\profresh\\app\\Models\\Activity.php',
-      50 => 'D:\\apps\\profresh\\app\\Models\\Conversation.php',
-      51 => 'D:\\apps\\profresh\\app\\Models\\Meeting.php',
-      52 => 'D:\\apps\\profresh\\app\\Models\\Message.php',
-      53 => 'D:\\apps\\profresh\\app\\Models\\Paypal.php',
-      54 => 'D:\\apps\\profresh\\app\\Models\\Project.php',
-      55 => 'D:\\apps\\profresh\\app\\Models\\Stage.php',
-      56 => 'D:\\apps\\profresh\\app\\Models\\Task.php',
-      57 => 'D:\\apps\\profresh\\app\\Models\\TaskStatus.php',
-      58 => 'D:\\apps\\profresh\\app\\Models\\UserInfo.php',
-      59 => 'D:\\apps\\profresh\\app\\Policies\\ConversationPolicy.php',
-      60 => 'D:\\apps\\profresh\\app\\Policies\\ProjectsPolicy.php',
-      61 => 'D:\\apps\\profresh\\app\\Policies\\TasksPolicy.php',
-      62 => 'D:\\apps\\profresh\\app\\Policies\\UsersPolicy.php',
-      63 => 'D:\\apps\\profresh\\app\\Repository\\TaskRepository.php',
-      64 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\Auth\\LoginUserService.php',
-      65 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\ConversationService.php',
-      66 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\DashboardService.php',
-      67 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\FileService.php',
-      68 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\InvitationService.php',
-      69 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\MessageService.php',
-      70 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\Paddle\\SubscriptionService.php',
-      71 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\Paddle\\SubscriptionServiceFake.php',
-      72 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\ProjectService.php',
-      73 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\Task\\TaskFeatureService.php',
-      74 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\Task\\TaskService.php',
-      75 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\UserService.php',
-      76 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\Zoom\\ZoomService.php',
-      77 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\Zoom\\ZoomServiceFake.php',
-      78 => 'D:\\apps\\profresh\\app\\Services\\PaddleApi\\FakePaddleService.php',
+      5 => 'D:\\apps\\profresh\\app\\Exports\\ProjectsExport.php',
+      6 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\Auth\\LoginController.php',
+      7 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\Auth\\OAuthController.php',
+      8 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\Auth\\RegisterController.php',
+      9 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\Auth\\TwoFactorController.php',
+      10 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\Auth\\VerificationController.php',
+      11 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\OAuth\\ZoomAuthController.php',
+      12 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\AvatarController.php',
+      13 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\InvitationController.php',
+      14 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\NotificationsController.php',
+      15 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\ProjectController.php',
+      16 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\SubscriptionController.php',
+      17 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\TaskFeaturesController.php',
+      18 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\TokenController.php',
+      19 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\UserController.php',
+      20 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\UserInvitationsController.php',
+      21 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\ZoomMeetingController.php',
+      22 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\Zoom\\ZoomTokenController.php',
+      23 => 'D:\\apps\\profresh\\app\\Http\\Middleware\\CheckSubscription.php',
+      24 => 'D:\\apps\\profresh\\app\\Http\\Middleware\\TrackLastActiveAt.php',
+      25 => 'D:\\apps\\profresh\\app\\Http\\Requests\\Api\\V1\\Auth\\ConfirmTwoFactorRequest.php',
+      26 => 'D:\\apps\\profresh\\app\\Http\\Requests\\Api\\V1\\Auth\\DisableTwoFactorRequest.php',
+      27 => 'D:\\apps\\profresh\\app\\Http\\Requests\\Api\\V1\\Auth\\PrepareTwoFactorRequest.php',
+      28 => 'D:\\apps\\profresh\\app\\Http\\Requests\\Api\\V1\\Auth\\TwoFactorLoginRequest.php',
+      29 => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\ActivityResource.php',
+      30 => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\ConversationResource.php',
+      31 => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\InvitedUserResource.php',
+      32 => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\NotificationResource.php',
+      33 => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\ProjectInvitaionResource.php',
+      34 => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\ProjectResource.php',
+      35 => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\SubscriptionResource.php',
+      36 => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\TaskResource.php',
+      37 => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\Task\\TaskMemberResource.php',
+      38 => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\UserResource.php',
+      39 => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\UserTasksResource.php',
+      40 => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\UsersResource.php',
+      41 => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\Zoom\\MeetingResource.php',
+      42 => 'D:\\apps\\profresh\\app\\Http\\Views\\Composers\\ProjectComposer.php',
+      43 => 'D:\\apps\\profresh\\app\\Interfaces\\Paddle.php',
+      44 => 'D:\\apps\\profresh\\app\\Interfaces\\Zoom.php',
+      45 => 'D:\\apps\\profresh\\app\\Jobs\\QueuedPasswordResetJob.php',
+      46 => 'D:\\apps\\profresh\\app\\Jobs\\QueuedVerifyEmailJob.php',
+      47 => 'D:\\apps\\profresh\\app\\Jobs\\Webhooks\\Zoom\\MeetingEndsWebhook.php',
+      48 => 'D:\\apps\\profresh\\app\\Jobs\\Webhooks\\Zoom\\StartMeetingWebhook.php',
+      49 => 'D:\\apps\\profresh\\app\\Listeners\\SaveUserTimezone.php',
+      50 => 'D:\\apps\\profresh\\app\\Listeners\\SendPasswordUpdateEmail.php',
+      51 => 'D:\\apps\\profresh\\app\\Models\\Activity.php',
+      52 => 'D:\\apps\\profresh\\app\\Models\\Conversation.php',
+      53 => 'D:\\apps\\profresh\\app\\Models\\Meeting.php',
+      54 => 'D:\\apps\\profresh\\app\\Models\\Message.php',
+      55 => 'D:\\apps\\profresh\\app\\Models\\Paypal.php',
+      56 => 'D:\\apps\\profresh\\app\\Models\\Project.php',
+      57 => 'D:\\apps\\profresh\\app\\Models\\Stage.php',
+      58 => 'D:\\apps\\profresh\\app\\Models\\Task.php',
+      59 => 'D:\\apps\\profresh\\app\\Models\\TaskStatus.php',
+      60 => 'D:\\apps\\profresh\\app\\Models\\UserInfo.php',
+      61 => 'D:\\apps\\profresh\\app\\Policies\\ConversationPolicy.php',
+      62 => 'D:\\apps\\profresh\\app\\Policies\\ProjectsPolicy.php',
+      63 => 'D:\\apps\\profresh\\app\\Policies\\TasksPolicy.php',
+      64 => 'D:\\apps\\profresh\\app\\Policies\\UsersPolicy.php',
+      65 => 'D:\\apps\\profresh\\app\\Providers\\AuthServiceProvider.php',
+      66 => 'D:\\apps\\profresh\\app\\Repository\\TaskRepository.php',
+      67 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\Auth\\LoginUserService.php',
+      68 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\ConversationService.php',
+      69 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\DashboardService.php',
+      70 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\FileService.php',
+      71 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\InvitationService.php',
+      72 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\MessageService.php',
+      73 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\Paddle\\SubscriptionService.php',
+      74 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\Paddle\\SubscriptionServiceFake.php',
+      75 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\ProjectService.php',
+      76 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\Task\\TaskFeatureService.php',
+      77 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\Task\\TaskService.php',
+      78 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\UserService.php',
+      79 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\Zoom\\ZoomService.php',
+      80 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\Zoom\\ZoomServiceFake.php',
+      81 => 'D:\\apps\\profresh\\app\\Services\\PaddleApi\\FakePaddleService.php',
     ),
   ),
   'D:\\apps\\profresh\\app\\Models\\UserInfo.php' => 
@@ -12652,7 +12220,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Notifications\\ProjectTask.php' => 
   array (
-    'fileHash' => 'd914d3f671ca9c96d06a4adb9c7b2225f7232e38',
+    'fileHash' => '3b60e53f5dc67fe171303cd7e113f689d4737a21',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\Task\\TaskService.php',
@@ -12660,7 +12228,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Notifications\\ProjectUpdated.php' => 
   array (
-    'fileHash' => 'be0fb40f40473122643a41f34097acc04efff93d',
+    'fileHash' => '1f82bb44fc550b0eb93c27d8b7271282abf4d1dc',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\ProjectService.php',
@@ -12668,7 +12236,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Notifications\\TaskAssigned.php' => 
   array (
-    'fileHash' => '9ebac1a42871b45c073b0242a208cf3f49e79ba1',
+    'fileHash' => '8e8eaac05b0ff621be6ef19b6856dab77f1f5f7c',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\Task\\TaskFeatureService.php',
@@ -12676,7 +12244,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Notifications\\TaskDue.php' => 
   array (
-    'fileHash' => '0a120ea98b343c86d107291db14a76914e3c1af6',
+    'fileHash' => '57e55d49506c27b59adafe84de05935afa1c9ab4',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Actions\\TaskDueAction.php',
@@ -12692,7 +12260,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Notifications\\Zoom\\MeetingEnded.php' => 
   array (
-    'fileHash' => 'cdb42962fe22e2244bc8f088530578e20255db88',
+    'fileHash' => 'b9280395619c399361a71b48f18b24c693d550d1',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Jobs\\Webhooks\\Zoom\\MeetingEndsWebhook.php',
@@ -12700,7 +12268,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Notifications\\Zoom\\MeetingStarted.php' => 
   array (
-    'fileHash' => 'ea0b58e50018c225e655b55c2e50f53d1ddddde0',
+    'fileHash' => '47bbccdaa2d61896c872dfd371994644f114e875',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Jobs\\Webhooks\\Zoom\\StartMeetingWebhook.php',
@@ -12711,6 +12279,7 @@ return [
     'fileHash' => 'e79c59bc238774a2a9f23fec282f1f41618c6e74',
     'dependentFiles' => 
     array (
+      0 => 'D:\\apps\\profresh\\app\\Providers\\AuthServiceProvider.php',
     ),
   ),
   'D:\\apps\\profresh\\app\\Policies\\ProjectsPolicy.php' => 
@@ -12718,6 +12287,7 @@ return [
     'fileHash' => '9c23070ba76488cd20a24365f3f71df14f8e03de',
     'dependentFiles' => 
     array (
+      0 => 'D:\\apps\\profresh\\app\\Providers\\AuthServiceProvider.php',
     ),
   ),
   'D:\\apps\\profresh\\app\\Policies\\TasksPolicy.php' => 
@@ -12725,6 +12295,7 @@ return [
     'fileHash' => '36df65d29dd8b3a3e73f51a27c462eb694d32201',
     'dependentFiles' => 
     array (
+      0 => 'D:\\apps\\profresh\\app\\Providers\\AuthServiceProvider.php',
     ),
   ),
   'D:\\apps\\profresh\\app\\Policies\\UsersPolicy.php' => 
@@ -12732,18 +12303,19 @@ return [
     'fileHash' => 'd5b8fd47282ee42f4896c25987ab872af5b259e4',
     'dependentFiles' => 
     array (
+      0 => 'D:\\apps\\profresh\\app\\Providers\\AuthServiceProvider.php',
     ),
   ),
   'D:\\apps\\profresh\\app\\Providers\\AppServiceProvider.php' => 
   array (
-    'fileHash' => 'e222230eae946bec4109a1a765b0de647099720a',
+    'fileHash' => 'd3ecb9be4358c0bbc168a22fff6a9d33c5aace53',
     'dependentFiles' => 
     array (
     ),
   ),
   'D:\\apps\\profresh\\app\\Providers\\AuthServiceProvider.php' => 
   array (
-    'fileHash' => 'f4e30cacd0c67e25f150ff6805c5122605ece3ca',
+    'fileHash' => '0443fb79de201e39f13350ffe78a9ee6eade348a',
     'dependentFiles' => 
     array (
     ),
@@ -12757,7 +12329,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Providers\\EventServiceProvider.php' => 
   array (
-    'fileHash' => '2f6ad8d313fd094b7d6613811569a16f0d46b4c1',
+    'fileHash' => 'c6fbc2ceaf45d2fc08b6f540e3fe9a3cf5417c01',
     'dependentFiles' => 
     array (
     ),
@@ -12773,7 +12345,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Providers\\TelescopeServiceProvider.php' => 
   array (
-    'fileHash' => '705807293e8987099ffb7687ef38345deee3ab33',
+    'fileHash' => 'cf3c711e5058a7f4e751bbd8dcc12595bb56c76d',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Providers\\AppServiceProvider.php',
@@ -12802,10 +12374,11 @@ return [
     array (
       0 => 'D:\\apps\\profresh\\app\\Console\\Commands\\TaskNotify.php',
       1 => 'D:\\apps\\profresh\\app\\Console\\Kernel.php',
-      2 => 'D:\\apps\\profresh\\app\\Models\\Task.php',
-      3 => 'D:\\apps\\profresh\\app\\Repository\\DashboardInsightsRepository.php',
-      4 => 'D:\\apps\\profresh\\app\\Repository\\UserTasksDataRepository.php',
-      5 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\Task\\TaskService.php',
+      2 => 'D:\\apps\\profresh\\app\\Exports\\ProjectsExport.php',
+      3 => 'D:\\apps\\profresh\\app\\Models\\Task.php',
+      4 => 'D:\\apps\\profresh\\app\\Repository\\DashboardInsightsRepository.php',
+      5 => 'D:\\apps\\profresh\\app\\Repository\\UserTasksDataRepository.php',
+      6 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\Task\\TaskService.php',
     ),
   ),
   'D:\\apps\\profresh\\app\\Repository\\Api\\DashboardInsigntRepository.php' => 
@@ -12825,7 +12398,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Repository\\DashBoardRepository.php' => 
   array (
-    'fileHash' => '30cb487e8072c99a282465d0dfa7c2d2ebc39cfb',
+    'fileHash' => '4e615f50d9e289b99355e667d60a925646c35d5d',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\ProjectDashboardController.php',
@@ -12834,7 +12407,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Repository\\DashboardInsightsRepository.php' => 
   array (
-    'fileHash' => 'b9e5456d452f6349e104e8e63290b77b8faab5b8',
+    'fileHash' => '1382b1975c5b8423e768e85a6a95fc5f259a6bf0',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\Dashboard\\DashboardInsightsService.php',
@@ -12842,7 +12415,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Repository\\ProjectInsightsRepository.php' => 
   array (
-    'fileHash' => '675af5bf1dc4eece048ade2279dc960e20fa5919',
+    'fileHash' => '9c06c6d18739ebe9bb95eaabf21a26be134227f9',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\ProjectInsightService.php',
@@ -12850,7 +12423,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Repository\\ProjectRepository.php' => 
   array (
-    'fileHash' => '56c0b2759d02b385a06d1889fc11e2646d19cfed',
+    'fileHash' => 'ca25c8b168c9d6c2ab003f1be8eef07aff879501',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\ActivityController.php',
@@ -12874,7 +12447,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Rules\\ActiveProjectMember.php' => 
   array (
-    'fileHash' => 'ffba5818ddd8522412f2a51d7a897ec62124a2a9',
+    'fileHash' => '0cdde125fe667c8aa602f77e00f898cdec9d8bc2',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Http\\Requests\\Api\\V1\\TaskMembersRequest.php',
@@ -12889,7 +12462,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Rules\\TaskAssigneeMember.php' => 
   array (
-    'fileHash' => '6e37701a6f15ddc0707329c989b1be006d7afe68',
+    'fileHash' => '8d2b2d224cc46b9d75d049e28215614117f4bb50',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\TaskFeaturesController.php',
@@ -12911,7 +12484,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Services\\Api\\V1\\Admin\\Integration\\PaddleService.php' => 
   array (
-    'fileHash' => '596ca232393993fa739df9d540f222531ef6b369',
+    'fileHash' => '6a4e62c5ad8bc6b2a54722f438270c0e2a47cd3b',
     'dependentFiles' => 
     array (
     ),
@@ -12927,7 +12500,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Services\\Api\\V1\\ConversationService.php' => 
   array (
-    'fileHash' => 'f9e4036a43834c1c50fe779e4960f83cfaa93301',
+    'fileHash' => '7f449c9222cd0576bdfd8aa8dc9b779bc04b2f68',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\ConversationController.php',
@@ -12935,7 +12508,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Services\\Api\\V1\\DashboardService.php' => 
   array (
-    'fileHash' => '42e9149cc3698ce33a9d04c3b8dfdf52fef5ddf9',
+    'fileHash' => '30a51f6152753a5f8baab7db60d87b665482afb5',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\ProjectDashboardController.php',
@@ -12943,7 +12516,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Services\\Api\\V1\\Dashboard\\DashboardInsightsService.php' => 
   array (
-    'fileHash' => 'bc81130facc9cfb3509aa20ef2178ebd48e93f82',
+    'fileHash' => 'ff46b23c4c9ffe5d20ac757be935e23e9fa74897',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\ProjectDashboardController.php',
@@ -12951,7 +12524,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Services\\Api\\V1\\ExceptionService.php' => 
   array (
-    'fileHash' => '149c7ef44e7f55b83b2097ee472d533188168268',
+    'fileHash' => 'fe4357d1895e08cbefaeea5f87ae72d5feb0ed82',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\ZoomMeetingController.php',
@@ -12967,7 +12540,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Services\\Api\\V1\\FileService.php' => 
   array (
-    'fileHash' => '13c534d450f466595561fd7416bb5ee1b66c1c8e',
+    'fileHash' => 'a2a74baf75029e01a52dd50dbbe7673f13ed20f9',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\AvatarController.php',
@@ -12976,7 +12549,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Services\\Api\\V1\\InvitationService.php' => 
   array (
-    'fileHash' => 'f5bee2e9aea1ed03422677e62ba30f7dbad09189',
+    'fileHash' => '5c5135e724dc796dda47d7930f4f548e6dc625b0',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\InvitationController.php',
@@ -12984,7 +12557,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Services\\Api\\V1\\MeetingService.php' => 
   array (
-    'fileHash' => '80e1e5d01389020078356f1ba463ec321f24e555',
+    'fileHash' => '938b60a9582667927be05dae7c006eb4826520c1',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\ZoomMeetingController.php',
@@ -12992,7 +12565,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Services\\Api\\V1\\MessageService.php' => 
   array (
-    'fileHash' => '41875c88cd7f45d6184967d89cbf7f25db5e198a',
+    'fileHash' => '505595ea6c32100120cad03716bed343f5cb70bf',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Console\\Commands\\ScheduledMessages.php',
@@ -13024,7 +12597,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Services\\Api\\V1\\ProjectInsightService.php' => 
   array (
-    'fileHash' => '0f82ffd4f97738368013fa84774b7069ebeacae5',
+    'fileHash' => '7ea8960ba6d6cdd0b469451187b7c2e495fd5ebd',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\ProjectInsightsController.php',
@@ -13041,7 +12614,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Services\\Api\\V1\\SendSmsService.php' => 
   array (
-    'fileHash' => 'e46a4dce66122763119750d1b0afbbd69f04cb96',
+    'fileHash' => '05606efc74eea9eab70241e29c0efe37280edfd5',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Jobs\\SmsMessage.php',
@@ -13066,7 +12639,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Services\\Api\\V1\\UserService.php' => 
   array (
-    'fileHash' => '5de92e445383cc54441033ba63a8d04d041a26a5',
+    'fileHash' => 'c7f5a8c24372c069552e068516e0540af9d3b5c0',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\UserController.php',
@@ -13090,7 +12663,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Services\\Api\\V1\\Zoom\\ZoomServiceFake.php' => 
   array (
-    'fileHash' => '626bba117734cd8e4c710687c108724c2501fb45',
+    'fileHash' => 'c9e852c54d741b08db57583bbf3adfecc00cb827',
     'dependentFiles' => 
     array (
     ),
@@ -13126,7 +12699,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Services\\Insights\\StageInsightBuilder.php' => 
   array (
-    'fileHash' => '9b557d7b2ad33afea234b74097cd48d47832e785',
+    'fileHash' => '8c3d6a7cbe76cc13ac7a5d613a82eba12a2379ca',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\ProjectInsightService.php',
@@ -13157,7 +12730,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Services\\ProjectInsightsPreloader.php' => 
   array (
-    'fileHash' => 'a993a99d6944fa0b79b661113672ab9ef1697d56',
+    'fileHash' => '471b4865c2f0d465fb8be4c7442cb0d85f12291f',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Jobs\\RecalculateProjectHealth.php',
@@ -13173,7 +12746,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Traits\\HasSubscription.php' => 
   array (
-    'fileHash' => 'a468195a37bd050d40feb82d945a192a5002fe8a',
+    'fileHash' => '5d50cc3412a4da7a924656ac87244d220f645eac',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Actions\\DeleteProfileAction.php',
@@ -13181,75 +12754,78 @@ return [
       2 => 'D:\\apps\\profresh\\app\\Actions\\TaskDueAction.php',
       3 => 'D:\\apps\\profresh\\app\\Events\\PasswordUpdateEvent.php',
       4 => 'D:\\apps\\profresh\\app\\Events\\UserLogin.php',
-      5 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\Auth\\LoginController.php',
-      6 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\Auth\\OAuthController.php',
-      7 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\Auth\\RegisterController.php',
-      8 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\Auth\\TwoFactorController.php',
-      9 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\Auth\\VerificationController.php',
-      10 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\OAuth\\ZoomAuthController.php',
-      11 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\AvatarController.php',
-      12 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\InvitationController.php',
-      13 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\NotificationsController.php',
-      14 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\ProjectController.php',
-      15 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\SubscriptionController.php',
-      16 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\TaskFeaturesController.php',
-      17 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\TokenController.php',
-      18 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\UserController.php',
-      19 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\UserInvitationsController.php',
-      20 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\ZoomMeetingController.php',
-      21 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\Zoom\\ZoomTokenController.php',
-      22 => 'D:\\apps\\profresh\\app\\Http\\Middleware\\CheckSubscription.php',
-      23 => 'D:\\apps\\profresh\\app\\Http\\Middleware\\TrackLastActiveAt.php',
-      24 => 'D:\\apps\\profresh\\app\\Http\\Requests\\Api\\V1\\Auth\\ConfirmTwoFactorRequest.php',
-      25 => 'D:\\apps\\profresh\\app\\Http\\Requests\\Api\\V1\\Auth\\DisableTwoFactorRequest.php',
-      26 => 'D:\\apps\\profresh\\app\\Http\\Requests\\Api\\V1\\Auth\\PrepareTwoFactorRequest.php',
-      27 => 'D:\\apps\\profresh\\app\\Http\\Requests\\Api\\V1\\Auth\\TwoFactorLoginRequest.php',
-      28 => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\ActivityResource.php',
-      29 => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\InvitedUserResource.php',
-      30 => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\ProjectResource.php',
-      31 => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\SubscriptionResource.php',
-      32 => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\Task\\TaskMemberResource.php',
-      33 => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\UserResource.php',
-      34 => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\UsersResource.php',
-      35 => 'D:\\apps\\profresh\\app\\Interfaces\\Paddle.php',
-      36 => 'D:\\apps\\profresh\\app\\Interfaces\\Zoom.php',
-      37 => 'D:\\apps\\profresh\\app\\Jobs\\QueuedPasswordResetJob.php',
-      38 => 'D:\\apps\\profresh\\app\\Jobs\\QueuedVerifyEmailJob.php',
-      39 => 'D:\\apps\\profresh\\app\\Jobs\\Webhooks\\Zoom\\MeetingEndsWebhook.php',
-      40 => 'D:\\apps\\profresh\\app\\Jobs\\Webhooks\\Zoom\\StartMeetingWebhook.php',
-      41 => 'D:\\apps\\profresh\\app\\Listeners\\SaveUserTimezone.php',
-      42 => 'D:\\apps\\profresh\\app\\Listeners\\SendPasswordUpdateEmail.php',
-      43 => 'D:\\apps\\profresh\\app\\Models\\Activity.php',
-      44 => 'D:\\apps\\profresh\\app\\Models\\Conversation.php',
-      45 => 'D:\\apps\\profresh\\app\\Models\\Meeting.php',
-      46 => 'D:\\apps\\profresh\\app\\Models\\Message.php',
-      47 => 'D:\\apps\\profresh\\app\\Models\\Paypal.php',
-      48 => 'D:\\apps\\profresh\\app\\Models\\Project.php',
-      49 => 'D:\\apps\\profresh\\app\\Models\\Stage.php',
-      50 => 'D:\\apps\\profresh\\app\\Models\\Task.php',
-      51 => 'D:\\apps\\profresh\\app\\Models\\TaskStatus.php',
-      52 => 'D:\\apps\\profresh\\app\\Models\\User.php',
-      53 => 'D:\\apps\\profresh\\app\\Models\\UserInfo.php',
-      54 => 'D:\\apps\\profresh\\app\\Policies\\ConversationPolicy.php',
-      55 => 'D:\\apps\\profresh\\app\\Policies\\ProjectsPolicy.php',
-      56 => 'D:\\apps\\profresh\\app\\Policies\\TasksPolicy.php',
-      57 => 'D:\\apps\\profresh\\app\\Policies\\UsersPolicy.php',
-      58 => 'D:\\apps\\profresh\\app\\Repository\\TaskRepository.php',
-      59 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\Auth\\LoginUserService.php',
-      60 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\ConversationService.php',
-      61 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\DashboardService.php',
-      62 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\FileService.php',
-      63 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\InvitationService.php',
-      64 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\MessageService.php',
-      65 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\Paddle\\SubscriptionService.php',
-      66 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\Paddle\\SubscriptionServiceFake.php',
-      67 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\ProjectService.php',
-      68 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\Task\\TaskFeatureService.php',
-      69 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\Task\\TaskService.php',
-      70 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\UserService.php',
-      71 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\Zoom\\ZoomService.php',
-      72 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\Zoom\\ZoomServiceFake.php',
-      73 => 'D:\\apps\\profresh\\app\\Services\\PaddleApi\\FakePaddleService.php',
+      5 => 'D:\\apps\\profresh\\app\\Exports\\ProjectsExport.php',
+      6 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\Auth\\LoginController.php',
+      7 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\Auth\\OAuthController.php',
+      8 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\Auth\\RegisterController.php',
+      9 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\Auth\\TwoFactorController.php',
+      10 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\Auth\\VerificationController.php',
+      11 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\OAuth\\ZoomAuthController.php',
+      12 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\AvatarController.php',
+      13 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\InvitationController.php',
+      14 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\NotificationsController.php',
+      15 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\ProjectController.php',
+      16 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\SubscriptionController.php',
+      17 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\TaskFeaturesController.php',
+      18 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\TokenController.php',
+      19 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\UserController.php',
+      20 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\UserInvitationsController.php',
+      21 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\ZoomMeetingController.php',
+      22 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\Zoom\\ZoomTokenController.php',
+      23 => 'D:\\apps\\profresh\\app\\Http\\Middleware\\CheckSubscription.php',
+      24 => 'D:\\apps\\profresh\\app\\Http\\Middleware\\TrackLastActiveAt.php',
+      25 => 'D:\\apps\\profresh\\app\\Http\\Requests\\Api\\V1\\Auth\\ConfirmTwoFactorRequest.php',
+      26 => 'D:\\apps\\profresh\\app\\Http\\Requests\\Api\\V1\\Auth\\DisableTwoFactorRequest.php',
+      27 => 'D:\\apps\\profresh\\app\\Http\\Requests\\Api\\V1\\Auth\\PrepareTwoFactorRequest.php',
+      28 => 'D:\\apps\\profresh\\app\\Http\\Requests\\Api\\V1\\Auth\\TwoFactorLoginRequest.php',
+      29 => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\ActivityResource.php',
+      30 => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\InvitedUserResource.php',
+      31 => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\ProjectResource.php',
+      32 => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\SubscriptionResource.php',
+      33 => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\Task\\TaskMemberResource.php',
+      34 => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\UserResource.php',
+      35 => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\UsersResource.php',
+      36 => 'D:\\apps\\profresh\\app\\Http\\Views\\Composers\\ProjectComposer.php',
+      37 => 'D:\\apps\\profresh\\app\\Interfaces\\Paddle.php',
+      38 => 'D:\\apps\\profresh\\app\\Interfaces\\Zoom.php',
+      39 => 'D:\\apps\\profresh\\app\\Jobs\\QueuedPasswordResetJob.php',
+      40 => 'D:\\apps\\profresh\\app\\Jobs\\QueuedVerifyEmailJob.php',
+      41 => 'D:\\apps\\profresh\\app\\Jobs\\Webhooks\\Zoom\\MeetingEndsWebhook.php',
+      42 => 'D:\\apps\\profresh\\app\\Jobs\\Webhooks\\Zoom\\StartMeetingWebhook.php',
+      43 => 'D:\\apps\\profresh\\app\\Listeners\\SaveUserTimezone.php',
+      44 => 'D:\\apps\\profresh\\app\\Listeners\\SendPasswordUpdateEmail.php',
+      45 => 'D:\\apps\\profresh\\app\\Models\\Activity.php',
+      46 => 'D:\\apps\\profresh\\app\\Models\\Conversation.php',
+      47 => 'D:\\apps\\profresh\\app\\Models\\Meeting.php',
+      48 => 'D:\\apps\\profresh\\app\\Models\\Message.php',
+      49 => 'D:\\apps\\profresh\\app\\Models\\Paypal.php',
+      50 => 'D:\\apps\\profresh\\app\\Models\\Project.php',
+      51 => 'D:\\apps\\profresh\\app\\Models\\Stage.php',
+      52 => 'D:\\apps\\profresh\\app\\Models\\Task.php',
+      53 => 'D:\\apps\\profresh\\app\\Models\\TaskStatus.php',
+      54 => 'D:\\apps\\profresh\\app\\Models\\User.php',
+      55 => 'D:\\apps\\profresh\\app\\Models\\UserInfo.php',
+      56 => 'D:\\apps\\profresh\\app\\Policies\\ConversationPolicy.php',
+      57 => 'D:\\apps\\profresh\\app\\Policies\\ProjectsPolicy.php',
+      58 => 'D:\\apps\\profresh\\app\\Policies\\TasksPolicy.php',
+      59 => 'D:\\apps\\profresh\\app\\Policies\\UsersPolicy.php',
+      60 => 'D:\\apps\\profresh\\app\\Providers\\AuthServiceProvider.php',
+      61 => 'D:\\apps\\profresh\\app\\Repository\\TaskRepository.php',
+      62 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\Auth\\LoginUserService.php',
+      63 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\ConversationService.php',
+      64 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\DashboardService.php',
+      65 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\FileService.php',
+      66 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\InvitationService.php',
+      67 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\MessageService.php',
+      68 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\Paddle\\SubscriptionService.php',
+      69 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\Paddle\\SubscriptionServiceFake.php',
+      70 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\ProjectService.php',
+      71 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\Task\\TaskFeatureService.php',
+      72 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\Task\\TaskService.php',
+      73 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\UserService.php',
+      74 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\Zoom\\ZoomService.php',
+      75 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\Zoom\\ZoomServiceFake.php',
+      76 => 'D:\\apps\\profresh\\app\\Services\\PaddleApi\\FakePaddleService.php',
     ),
     'usedTraitDependentFiles' => 
     array (
@@ -13265,7 +12841,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Traits\\RecordActivity.php' => 
   array (
-    'fileHash' => '72ec2e32c39cd318b6cdad1d4d7dcb412b87b81d',
+    'fileHash' => 'a1575497e3c162b8970a0c58e3e919848d8eac4e',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Actions\\DeleteProfileAction.php',
@@ -17171,38 +16747,6 @@ return [
        'statements' => 
       array (
         0 => 
-        \PHPStan\Dependency\ExportedNode\ExportedPropertiesNode::__set_state(array(
-           'names' => 
-          array (
-            0 => 'activity',
-          ),
-           'phpDoc' => NULL,
-           'type' => 'App\\Models\\Activity',
-           'public' => true,
-           'private' => false,
-           'static' => false,
-           'readonly' => false,
-           'attributes' => 
-          array (
-          ),
-        )),
-        1 => 
-        \PHPStan\Dependency\ExportedNode\ExportedPropertiesNode::__set_state(array(
-           'names' => 
-          array (
-            0 => 'projectId',
-          ),
-           'phpDoc' => NULL,
-           'type' => 'int',
-           'public' => true,
-           'private' => false,
-           'static' => false,
-           'readonly' => false,
-           'attributes' => 
-          array (
-          ),
-        )),
-        2 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => '__construct',
            'phpDoc' => 
@@ -17263,7 +16807,7 @@ return [
           array (
           ),
         )),
-        3 => 
+        1 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'broadcastOn',
            'phpDoc' => 
@@ -17300,7 +16844,7 @@ return [
           array (
           ),
         )),
-        4 => 
+        2 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'broadcastWith',
            'phpDoc' => 
@@ -17339,7 +16883,7 @@ return [
           array (
           ),
         )),
-        5 => 
+        3 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'broadcastQueue',
            'phpDoc' => 
@@ -17480,7 +17024,7 @@ return [
              'phpDocString' => '/**
      * Get the channels the event should broadcast on.
      *
-     * @return \\Illuminate\\Broadcasting\\Channel|array
+     * @return Channel|array
      */',
              'namespace' => 'App\\Events',
              'uses' => 
@@ -17560,38 +17104,6 @@ return [
        'statements' => 
       array (
         0 => 
-        \PHPStan\Dependency\ExportedNode\ExportedPropertiesNode::__set_state(array(
-           'names' => 
-          array (
-            0 => 'conversationId',
-          ),
-           'phpDoc' => NULL,
-           'type' => 'int',
-           'public' => true,
-           'private' => false,
-           'static' => false,
-           'readonly' => false,
-           'attributes' => 
-          array (
-          ),
-        )),
-        1 => 
-        \PHPStan\Dependency\ExportedNode\ExportedPropertiesNode::__set_state(array(
-           'names' => 
-          array (
-            0 => 'projectSlug',
-          ),
-           'phpDoc' => NULL,
-           'type' => 'string',
-           'public' => true,
-           'private' => false,
-           'static' => false,
-           'readonly' => false,
-           'attributes' => 
-          array (
-          ),
-        )),
-        2 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => '__construct',
            'phpDoc' => 
@@ -17650,7 +17162,7 @@ return [
           array (
           ),
         )),
-        3 => 
+        1 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'broadcastOn',
            'phpDoc' => 
@@ -17685,7 +17197,7 @@ return [
           array (
           ),
         )),
-        4 => 
+        2 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'broadcastWith',
            'phpDoc' => 
@@ -17753,22 +17265,6 @@ return [
        'statements' => 
       array (
         0 => 
-        \PHPStan\Dependency\ExportedNode\ExportedPropertiesNode::__set_state(array(
-           'names' => 
-          array (
-            0 => 'meeting',
-          ),
-           'phpDoc' => NULL,
-           'type' => 'App\\Models\\Meeting',
-           'public' => true,
-           'private' => false,
-           'static' => false,
-           'readonly' => false,
-           'attributes' => 
-          array (
-          ),
-        )),
-        1 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => '__construct',
            'phpDoc' => 
@@ -17818,7 +17314,7 @@ return [
           array (
           ),
         )),
-        2 => 
+        1 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'broadcastOn',
            'phpDoc' => NULL,
@@ -17836,7 +17332,7 @@ return [
           array (
           ),
         )),
-        3 => 
+        2 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'broadcastWith',
            'phpDoc' => 
@@ -17904,38 +17400,6 @@ return [
        'statements' => 
       array (
         0 => 
-        \PHPStan\Dependency\ExportedNode\ExportedPropertiesNode::__set_state(array(
-           'names' => 
-          array (
-            0 => 'conversation',
-          ),
-           'phpDoc' => NULL,
-           'type' => 'App\\Models\\Conversation',
-           'public' => true,
-           'private' => false,
-           'static' => false,
-           'readonly' => false,
-           'attributes' => 
-          array (
-          ),
-        )),
-        1 => 
-        \PHPStan\Dependency\ExportedNode\ExportedPropertiesNode::__set_state(array(
-           'names' => 
-          array (
-            0 => 'projectSlug',
-          ),
-           'phpDoc' => NULL,
-           'type' => 'string',
-           'public' => true,
-           'private' => false,
-           'static' => false,
-           'readonly' => false,
-           'attributes' => 
-          array (
-          ),
-        )),
-        2 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => '__construct',
            'phpDoc' => 
@@ -17996,7 +17460,7 @@ return [
           array (
           ),
         )),
-        3 => 
+        1 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'broadcastOn',
            'phpDoc' => 
@@ -18035,7 +17499,7 @@ return [
           array (
           ),
         )),
-        4 => 
+        2 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'broadcastWith',
            'phpDoc' => 
@@ -18104,70 +17568,6 @@ return [
        'statements' => 
       array (
         0 => 
-        \PHPStan\Dependency\ExportedNode\ExportedPropertiesNode::__set_state(array(
-           'names' => 
-          array (
-            0 => 'user',
-          ),
-           'phpDoc' => 
-          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
-             'phpDocString' => '/**
-     * The user whose password was updated.
-     */',
-             'namespace' => 'App\\Events',
-             'uses' => 
-            array (
-              'user' => 'App\\Models\\User',
-              'interactswithsockets' => 'Illuminate\\Broadcasting\\InteractsWithSockets',
-              'dispatchable' => 'Illuminate\\Foundation\\Events\\Dispatchable',
-              'serializesmodels' => 'Illuminate\\Queue\\SerializesModels',
-            ),
-             'constUses' => 
-            array (
-            ),
-          )),
-           'type' => 'App\\Models\\User',
-           'public' => true,
-           'private' => false,
-           'static' => false,
-           'readonly' => false,
-           'attributes' => 
-          array (
-          ),
-        )),
-        1 => 
-        \PHPStan\Dependency\ExportedNode\ExportedPropertiesNode::__set_state(array(
-           'names' => 
-          array (
-            0 => 'updatedAt',
-          ),
-           'phpDoc' => 
-          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
-             'phpDocString' => '/**
-     * The time the password was updated.
-     */',
-             'namespace' => 'App\\Events',
-             'uses' => 
-            array (
-              'user' => 'App\\Models\\User',
-              'interactswithsockets' => 'Illuminate\\Broadcasting\\InteractsWithSockets',
-              'dispatchable' => 'Illuminate\\Foundation\\Events\\Dispatchable',
-              'serializesmodels' => 'Illuminate\\Queue\\SerializesModels',
-            ),
-             'constUses' => 
-            array (
-            ),
-          )),
-           'type' => 'string',
-           'public' => true,
-           'private' => false,
-           'static' => false,
-           'readonly' => false,
-           'attributes' => 
-          array (
-          ),
-        )),
-        2 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => '__construct',
            'phpDoc' => 
@@ -18491,7 +17891,7 @@ return [
              'phpDocString' => '/**
      * The user instance.
      *
-     * @var \\App\\Models\\User
+     * @var User
      */',
              'namespace' => 'App\\Events',
              'uses' => 
@@ -18677,7 +18077,7 @@ return [
      *
      * @return void
      *
-     * @throws \\Exception
+     * @throws Exception
      */',
              'namespace' => 'App\\Exceptions',
              'uses' => 
@@ -18910,7 +18310,25 @@ return [
     0 => 
     \PHPStan\Dependency\ExportedNode\ExportedClassNode::__set_state(array(
        'name' => 'App\\Exports\\ProjectsExport',
-       'phpDoc' => NULL,
+       'phpDoc' => 
+      \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
+         'phpDocString' => '/**
+ * @implements WithMapping<Project>
+ */',
+         'namespace' => 'App\\Exports',
+         'uses' => 
+        array (
+          'project' => 'App\\Models\\Project',
+          'builder' => 'Illuminate\\Database\\Eloquent\\Builder',
+          'exportable' => 'Maatwebsite\\Excel\\Concerns\\Exportable',
+          'fromquery' => 'Maatwebsite\\Excel\\Concerns\\FromQuery',
+          'withheadings' => 'Maatwebsite\\Excel\\Concerns\\WithHeadings',
+          'withmapping' => 'Maatwebsite\\Excel\\Concerns\\WithMapping',
+        ),
+         'constUses' => 
+        array (
+        ),
+      )),
        'abstract' => false,
        'final' => false,
        'extends' => NULL,
@@ -18961,14 +18379,32 @@ return [
         1 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'query',
-           'phpDoc' => NULL,
+           'phpDoc' => 
+          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
+             'phpDocString' => '/**
+     * @return Builder<Project>
+     */',
+             'namespace' => 'App\\Exports',
+             'uses' => 
+            array (
+              'project' => 'App\\Models\\Project',
+              'builder' => 'Illuminate\\Database\\Eloquent\\Builder',
+              'exportable' => 'Maatwebsite\\Excel\\Concerns\\Exportable',
+              'fromquery' => 'Maatwebsite\\Excel\\Concerns\\FromQuery',
+              'withheadings' => 'Maatwebsite\\Excel\\Concerns\\WithHeadings',
+              'withmapping' => 'Maatwebsite\\Excel\\Concerns\\WithMapping',
+            ),
+             'constUses' => 
+            array (
+            ),
+          )),
            'byRef' => false,
            'public' => true,
            'private' => false,
            'abstract' => false,
            'final' => false,
            'static' => false,
-           'returnType' => NULL,
+           'returnType' => 'Illuminate\\Database\\Eloquent\\Builder',
            'parameters' => 
           array (
           ),
@@ -18979,7 +18415,25 @@ return [
         2 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'headings',
-           'phpDoc' => NULL,
+           'phpDoc' => 
+          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
+             'phpDocString' => '/**
+     * @return array<int, string>
+     */',
+             'namespace' => 'App\\Exports',
+             'uses' => 
+            array (
+              'project' => 'App\\Models\\Project',
+              'builder' => 'Illuminate\\Database\\Eloquent\\Builder',
+              'exportable' => 'Maatwebsite\\Excel\\Concerns\\Exportable',
+              'fromquery' => 'Maatwebsite\\Excel\\Concerns\\FromQuery',
+              'withheadings' => 'Maatwebsite\\Excel\\Concerns\\WithHeadings',
+              'withmapping' => 'Maatwebsite\\Excel\\Concerns\\WithMapping',
+            ),
+             'constUses' => 
+            array (
+            ),
+          )),
            'byRef' => false,
            'public' => true,
            'private' => false,
@@ -18997,7 +18451,26 @@ return [
         3 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'map',
-           'phpDoc' => NULL,
+           'phpDoc' => 
+          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
+             'phpDocString' => '/**
+     * @param  Project  $row
+     * @return array<int, string|int|null>
+     */',
+             'namespace' => 'App\\Exports',
+             'uses' => 
+            array (
+              'project' => 'App\\Models\\Project',
+              'builder' => 'Illuminate\\Database\\Eloquent\\Builder',
+              'exportable' => 'Maatwebsite\\Excel\\Concerns\\Exportable',
+              'fromquery' => 'Maatwebsite\\Excel\\Concerns\\FromQuery',
+              'withheadings' => 'Maatwebsite\\Excel\\Concerns\\WithHeadings',
+              'withmapping' => 'Maatwebsite\\Excel\\Concerns\\WithMapping',
+            ),
+             'constUses' => 
+            array (
+            ),
+          )),
            'byRef' => false,
            'public' => true,
            'private' => false,
@@ -19009,7 +18482,7 @@ return [
           array (
             0 => 
             \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
-               'name' => 'project',
+               'name' => 'row',
                'type' => NULL,
                'byRef' => false,
                'variadic' => false,
@@ -19079,22 +18552,6 @@ return [
        'statements' => 
       array (
         0 => 
-        \PHPStan\Dependency\ExportedNode\ExportedPropertiesNode::__set_state(array(
-           'names' => 
-          array (
-            0 => 'loginUserService',
-          ),
-           'phpDoc' => NULL,
-           'type' => 'App\\Services\\Api\\V1\\Auth\\LoginUserService',
-           'public' => false,
-           'private' => false,
-           'static' => false,
-           'readonly' => false,
-           'attributes' => 
-          array (
-          ),
-        )),
-        1 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => '__construct',
            'phpDoc' => NULL,
@@ -19123,7 +18580,7 @@ return [
           array (
           ),
         )),
-        2 => 
+        1 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'login',
            'phpDoc' => 
@@ -19177,7 +18634,7 @@ return [
           array (
           ),
         )),
-        3 => 
+        2 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'logout',
            'phpDoc' => 
@@ -19254,22 +18711,6 @@ return [
        'statements' => 
       array (
         0 => 
-        \PHPStan\Dependency\ExportedNode\ExportedPropertiesNode::__set_state(array(
-           'names' => 
-          array (
-            0 => 'loginUserService',
-          ),
-           'phpDoc' => NULL,
-           'type' => 'App\\Services\\Api\\V1\\Auth\\LoginUserService',
-           'public' => false,
-           'private' => false,
-           'static' => false,
-           'readonly' => false,
-           'attributes' => 
-          array (
-          ),
-        )),
-        1 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => '__construct',
            'phpDoc' => NULL,
@@ -19298,7 +18739,7 @@ return [
           array (
           ),
         )),
-        2 => 
+        1 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'redirect',
            'phpDoc' => 
@@ -19348,7 +18789,7 @@ return [
           array (
           ),
         )),
-        3 => 
+        2 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'callback',
            'phpDoc' => 
@@ -20744,6 +20185,7 @@ return [
               'jsonresponse' => 'Illuminate\\Http\\JsonResponse',
               'request' => 'Illuminate\\Http\\Request',
               'excel' => 'Maatwebsite\\Excel\\Facades\\Excel',
+              'binaryfileresponse' => 'Symfony\\Component\\HttpFoundation\\BinaryFileResponse',
             ),
              'constUses' => 
             array (
@@ -20798,6 +20240,7 @@ return [
               'jsonresponse' => 'Illuminate\\Http\\JsonResponse',
               'request' => 'Illuminate\\Http\\Request',
               'excel' => 'Maatwebsite\\Excel\\Facades\\Excel',
+              'binaryfileresponse' => 'Symfony\\Component\\HttpFoundation\\BinaryFileResponse',
             ),
              'constUses' => 
             array (
@@ -20860,7 +20303,7 @@ return [
            'abstract' => false,
            'final' => false,
            'static' => false,
-           'returnType' => NULL,
+           'returnType' => 'Symfony\\Component\\HttpFoundation\\BinaryFileResponse',
            'parameters' => 
           array (
             0 => 
@@ -24483,7 +23926,7 @@ return [
            'phpDoc' => 
           \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
              'phpDocString' => '/**
-     * @var \\App\\Services\\Api\\V1\\ExceptionService
+     * @var ExceptionService
      */',
              'namespace' => 'App\\Http\\Controllers\\Api\\V1',
              'uses' => 
@@ -25556,7 +24999,7 @@ return [
            'phpDoc' => 
           \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
              'phpDocString' => '/**
-     * @return array<int, \\Saloon\\RateLimitPlugin\\Limit>
+     * @return array<int, Limit>
      */',
              'namespace' => 'App\\Http\\Integrations\\Zoom\\Requests',
              'uses' => 
@@ -25765,7 +25208,7 @@ return [
            'phpDoc' => 
           \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
              'phpDocString' => '/**
-     * @return array<int, \\Saloon\\RateLimitPlugin\\Limit>
+     * @return array<int, Limit>
      */',
              'namespace' => 'App\\Http\\Integrations\\Zoom\\Requests',
              'uses' => 
@@ -26497,7 +25940,7 @@ return [
            'phpDoc' => 
           \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
              'phpDocString' => '/**
-     * @return array<int, \\Saloon\\RateLimitPlugin\\Limit>
+     * @return array<int, Limit>
      */',
              'namespace' => 'App\\Http\\Integrations\\Zoom\\Requests',
              'uses' => 
@@ -27103,7 +26546,7 @@ return [
              'phpDocString' => '/**
      * Handle an incoming request.
      *
-     * @param  \\Closure(\\Illuminate\\Http\\Request): (\\Illuminate\\Http\\Response|\\Illuminate\\Http\\RedirectResponse)  $next
+     * @param  Closure(Request): (\\Illuminate\\Http\\Response|\\Illuminate\\Http\\RedirectResponse)  $next
      */',
              'namespace' => 'App\\Http\\Middleware',
              'uses' => 
@@ -27242,7 +26685,7 @@ return [
              'phpDocString' => '/**
      * Handle an incoming request.
      *
-     * @param  \\Illuminate\\Http\\Request  $request
+     * @param  Request  $request
      * @param  string|null  $guard
      * @return mixed
      */',
@@ -27339,7 +26782,7 @@ return [
              'phpDocString' => '/**
      * Handle an incoming request.
      *
-     * @param  \\Closure(\\Illuminate\\Http\\Request): (\\Illuminate\\Http\\Response|\\Illuminate\\Http\\RedirectResponse)  $next
+     * @param  Closure(Request): (\\Illuminate\\Http\\Response|\\Illuminate\\Http\\RedirectResponse)  $next
      * @return \\Illuminate\\Http\\Response|\\Illuminate\\Http\\RedirectResponse
      */',
              'namespace' => 'App\\Http\\Middleware',
@@ -27626,7 +27069,7 @@ return [
              'phpDocString' => '/**
      * Handle an incoming request.
      *
-     * @param  \\Closure(\\Illuminate\\Http\\Request): (\\Illuminate\\Http\\Response|\\Illuminate\\Http\\RedirectResponse)  $next
+     * @param  Closure(Request): (\\Illuminate\\Http\\Response|\\Illuminate\\Http\\RedirectResponse)  $next
      * @return \\Illuminate\\Http\\Response|\\Illuminate\\Http\\RedirectResponse
      */',
              'namespace' => 'App\\Http\\Middleware',
@@ -33688,26 +33131,10 @@ return [
         \PHPStan\Dependency\ExportedNode\ExportedPropertiesNode::__set_state(array(
            'names' => 
           array (
-            0 => 'project',
+            0 => 'user',
           ),
-           'phpDoc' => 
-          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
-             'phpDocString' => '/**
-     * The user repository implementation.
-     *
-     * @var \\App\\Repositories\\UserRepository
-     */',
-             'namespace' => 'App\\Http\\View\\Composers',
-             'uses' => 
-            array (
-              'userrepository' => 'App\\Repositories\\UserRepository',
-              'view' => 'Illuminate\\View\\View',
-            ),
-             'constUses' => 
-            array (
-            ),
-          )),
-           'type' => NULL,
+           'phpDoc' => NULL,
+           'type' => '?App\\Models\\User',
            'public' => false,
            'private' => false,
            'static' => false,
@@ -33723,13 +33150,11 @@ return [
           \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
              'phpDocString' => '/**
      * Create a new profile composer.
-     *
-     * @return void
      */',
              'namespace' => 'App\\Http\\View\\Composers',
              'uses' => 
             array (
-              'userrepository' => 'App\\Repositories\\UserRepository',
+              'user' => 'App\\Models\\User',
               'view' => 'Illuminate\\View\\View',
             ),
              'constUses' => 
@@ -33745,17 +33170,6 @@ return [
            'returnType' => NULL,
            'parameters' => 
           array (
-            0 => 
-            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
-               'name' => 'users',
-               'type' => 'App\\Repositories\\UserRepository',
-               'byRef' => false,
-               'variadic' => false,
-               'hasDefault' => false,
-               'attributes' => 
-              array (
-              ),
-            )),
           ),
            'attributes' => 
           array (
@@ -33768,13 +33182,11 @@ return [
           \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
              'phpDocString' => '/**
      * Bind data to the view.
-     *
-     * @return void
      */',
              'namespace' => 'App\\Http\\View\\Composers',
              'uses' => 
             array (
-              'userrepository' => 'App\\Repositories\\UserRepository',
+              'user' => 'App\\Models\\User',
               'view' => 'Illuminate\\View\\View',
             ),
              'constUses' => 
@@ -33787,7 +33199,7 @@ return [
            'abstract' => false,
            'final' => false,
            'static' => false,
-           'returnType' => NULL,
+           'returnType' => 'void',
            'parameters' => 
           array (
             0 => 
@@ -34392,7 +33804,7 @@ return [
              'phpDocString' => '/**
      * The project instance.
      *
-     * @var \\App\\Models\\Project
+     * @var Project
      */',
              'namespace' => 'App\\Jobs',
              'uses' => 
@@ -34421,38 +33833,6 @@ return [
           ),
         )),
         1 => 
-        \PHPStan\Dependency\ExportedNode\ExportedPropertiesNode::__set_state(array(
-           'names' => 
-          array (
-            0 => 'message',
-          ),
-           'phpDoc' => NULL,
-           'type' => NULL,
-           'public' => false,
-           'private' => false,
-           'static' => false,
-           'readonly' => false,
-           'attributes' => 
-          array (
-          ),
-        )),
-        2 => 
-        \PHPStan\Dependency\ExportedNode\ExportedPropertiesNode::__set_state(array(
-           'names' => 
-          array (
-            0 => 'user',
-          ),
-           'phpDoc' => NULL,
-           'type' => NULL,
-           'public' => false,
-           'private' => false,
-           'static' => false,
-           'readonly' => false,
-           'attributes' => 
-          array (
-          ),
-        )),
-        3 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => '__construct',
            'phpDoc' => 
@@ -34526,7 +33906,7 @@ return [
           array (
           ),
         )),
-        4 => 
+        2 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'handle',
            'phpDoc' => 
@@ -34599,38 +33979,6 @@ return [
        'statements' => 
       array (
         0 => 
-        \PHPStan\Dependency\ExportedNode\ExportedPropertiesNode::__set_state(array(
-           'names' => 
-          array (
-            0 => 'user',
-          ),
-           'phpDoc' => NULL,
-           'type' => 'App\\Models\\User',
-           'public' => false,
-           'private' => false,
-           'static' => false,
-           'readonly' => false,
-           'attributes' => 
-          array (
-          ),
-        )),
-        1 => 
-        \PHPStan\Dependency\ExportedNode\ExportedPropertiesNode::__set_state(array(
-           'names' => 
-          array (
-            0 => 'token',
-          ),
-           'phpDoc' => NULL,
-           'type' => 'string',
-           'public' => false,
-           'private' => false,
-           'static' => false,
-           'readonly' => false,
-           'attributes' => 
-          array (
-          ),
-        )),
-        2 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => '__construct',
            'phpDoc' => 
@@ -34691,7 +34039,7 @@ return [
           array (
           ),
         )),
-        3 => 
+        1 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'handle',
            'phpDoc' => 
@@ -34762,22 +34110,6 @@ return [
        'statements' => 
       array (
         0 => 
-        \PHPStan\Dependency\ExportedNode\ExportedPropertiesNode::__set_state(array(
-           'names' => 
-          array (
-            0 => 'user',
-          ),
-           'phpDoc' => NULL,
-           'type' => 'App\\Models\\User',
-           'public' => false,
-           'private' => false,
-           'static' => false,
-           'readonly' => false,
-           'attributes' => 
-          array (
-          ),
-        )),
-        1 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => '__construct',
            'phpDoc' => 
@@ -34827,7 +34159,7 @@ return [
           array (
           ),
         )),
-        2 => 
+        1 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'handle',
            'phpDoc' => 
@@ -36682,41 +36014,6 @@ return [
        'statements' => 
       array (
         0 => 
-        \PHPStan\Dependency\ExportedNode\ExportedPropertiesNode::__set_state(array(
-           'names' => 
-          array (
-            0 => 'time',
-          ),
-           'phpDoc' => 
-          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
-             'phpDocString' => '/**
-     * Create a new message instance.
-     *
-     * @return void
-     */',
-             'namespace' => 'App\\Mail',
-             'uses' => 
-            array (
-              'queueable' => 'Illuminate\\Bus\\Queueable',
-              'shouldqueue' => 'Illuminate\\Contracts\\Queue\\ShouldQueue',
-              'mailable' => 'Illuminate\\Mail\\Mailable',
-              'content' => 'Illuminate\\Mail\\Mailables\\Content',
-              'serializesmodels' => 'Illuminate\\Queue\\SerializesModels',
-            ),
-             'constUses' => 
-            array (
-            ),
-          )),
-           'type' => 'string',
-           'public' => false,
-           'private' => false,
-           'static' => false,
-           'readonly' => false,
-           'attributes' => 
-          array (
-          ),
-        )),
-        1 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => '__construct',
            'phpDoc' => NULL,
@@ -36745,7 +36042,7 @@ return [
           array (
           ),
         )),
-        2 => 
+        1 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'content',
            'phpDoc' => 
@@ -36809,55 +36106,6 @@ return [
        'statements' => 
       array (
         0 => 
-        \PHPStan\Dependency\ExportedNode\ExportedPropertiesNode::__set_state(array(
-           'names' => 
-          array (
-            0 => 'project',
-          ),
-           'phpDoc' => 
-          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
-             'phpDocString' => '/**
-     * Create a new message instance.
-     *
-     * @return void
-     */',
-             'namespace' => 'App\\Mail',
-             'uses' => 
-            array (
-              'queueable' => 'Illuminate\\Bus\\Queueable',
-              'mailable' => 'Illuminate\\Mail\\Mailable',
-              'serializesmodels' => 'Illuminate\\Queue\\SerializesModels',
-            ),
-             'constUses' => 
-            array (
-            ),
-          )),
-           'type' => NULL,
-           'public' => false,
-           'private' => false,
-           'static' => false,
-           'readonly' => false,
-           'attributes' => 
-          array (
-          ),
-        )),
-        1 => 
-        \PHPStan\Dependency\ExportedNode\ExportedPropertiesNode::__set_state(array(
-           'names' => 
-          array (
-            0 => 'message',
-          ),
-           'phpDoc' => NULL,
-           'type' => NULL,
-           'public' => false,
-           'private' => false,
-           'static' => false,
-           'readonly' => false,
-           'attributes' => 
-          array (
-          ),
-        )),
-        2 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => '__construct',
            'phpDoc' => NULL,
@@ -36897,7 +36145,7 @@ return [
           array (
           ),
         )),
-        3 => 
+        1 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'build',
            'phpDoc' => 
@@ -37393,7 +36641,7 @@ return [
            'phpDoc' => 
           \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
              'phpDocString' => '/**
-     * @return \\Illuminate\\Database\\Eloquent\\Relations\\BelongsTo<\\App\\Models\\User, self>
+     * @return \\Illuminate\\Database\\Eloquent\\Relations\\BelongsTo<User, self>
      */',
              'namespace' => 'App\\Models',
              'uses' => 
@@ -37428,7 +36676,7 @@ return [
            'phpDoc' => 
           \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
              'phpDocString' => '/**
-     * @return \\Illuminate\\Database\\Eloquent\\Relations\\BelongsTo<\\App\\Models\\Project, self>
+     * @return \\Illuminate\\Database\\Eloquent\\Relations\\BelongsTo<Project, self>
      */',
              'namespace' => 'App\\Models',
              'uses' => 
@@ -37463,8 +36711,8 @@ return [
            'phpDoc' => 
           \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
              'phpDocString' => '/**
-     * @param  Builder<\\App\\Models\\Meeting>  $query
-     * @return Builder<\\App\\Models\\Meeting>
+     * @param  Builder<Meeting>  $query
+     * @return Builder<Meeting>
      */',
              'namespace' => 'App\\Models',
              'uses' => 
@@ -37510,8 +36758,8 @@ return [
            'phpDoc' => 
           \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
              'phpDocString' => '/**
-     * @param  Builder<\\App\\Models\\Meeting>  $query
-     * @return Builder<\\App\\Models\\Meeting>
+     * @param  Builder<Meeting>  $query
+     * @return Builder<Meeting>
      */',
              'namespace' => 'App\\Models',
              'uses' => 
@@ -38371,7 +37619,7 @@ return [
      * Add multiple tasks to the project.
      *
      * @param  array<int,array<string,mixed>>  $tasks
-     * @return EloquentCollection<int,\\App\\Models\\Task>
+     * @return EloquentCollection<int,Task>
      */',
              'namespace' => 'App\\Models',
              'uses' => 
@@ -38701,8 +37949,8 @@ return [
            'phpDoc' => 
           \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
              'phpDocString' => '/**
-     * @param  \\Illuminate\\Database\\Eloquent\\Builder<\\App\\Models\\Project>  $query
-     * @return \\Illuminate\\Database\\Eloquent\\Builder<\\App\\Models\\Project>
+     * @param  Builder<Project>  $query
+     * @return Builder<Project>
      */',
              'namespace' => 'App\\Models',
              'uses' => 
@@ -38816,7 +38064,7 @@ return [
              'phpDocString' => '/**
      * Return a limited activities relation (shallow wrapper).
      *
-     * @return HasMany<\\App\\Models\\Activity>
+     * @return HasMany<Activity>
      */',
              'namespace' => 'App\\Models',
              'uses' => 
@@ -38962,8 +38210,8 @@ return [
              'phpDocString' => '/**
      * Scope projects created in a given year/month.
      *
-     * @param  \\Illuminate\\Database\\Eloquent\\Builder<\\App\\Models\\Project>  $query
-     * @return \\Illuminate\\Database\\Eloquent\\Builder<\\App\\Models\\Project>
+     * @param  Builder<Project>  $query
+     * @return Builder<Project>
      */',
              'namespace' => 'App\\Models',
              'uses' => 
@@ -40275,7 +39523,7 @@ return [
              'phpDocString' => '/**
      * Get all messages created by user
      *
-     * @return belongsToMany<Message>
+     * @return BelongsToMany<Message>
      */',
              'namespace' => 'App\\Models',
              'uses' => 
@@ -41305,7 +40553,6 @@ return [
              'phpDocString' => '/**
      * Get the notification\'s delivery channels.
      *
-     * @param  mixed  $notifiable
      * @return array<string> The channels through which the notification is delivered.
      */',
              'namespace' => 'App\\Notifications',
@@ -41333,7 +40580,7 @@ return [
             0 => 
             \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
                'name' => 'notifiable',
-               'type' => NULL,
+               'type' => 'mixed',
                'byRef' => false,
                'variadic' => false,
                'hasDefault' => false,
@@ -41354,7 +40601,6 @@ return [
              'phpDocString' => '/**
      * Get the array representation of the notification.
      *
-     * @param  mixed  $notifiable
      * @return array<string, mixed> The notification data.
      */',
              'namespace' => 'App\\Notifications',
@@ -41382,7 +40628,7 @@ return [
             0 => 
             \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
                'name' => 'notifiable',
-               'type' => NULL,
+               'type' => 'mixed',
                'byRef' => false,
                'variadic' => false,
                'hasDefault' => false,
@@ -41403,7 +40649,6 @@ return [
              'phpDocString' => '/**
      * Get the broadcast representation of the notification.
      *
-     * @param  mixed  $notifiable
      * @return BroadcastMessage The broadcast notification data.
      */',
              'namespace' => 'App\\Notifications',
@@ -41431,7 +40676,7 @@ return [
             0 => 
             \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
                'name' => 'notifiable',
-               'type' => NULL,
+               'type' => 'mixed',
                'byRef' => false,
                'variadic' => false,
                'hasDefault' => false,
@@ -41551,7 +40796,6 @@ return [
              'phpDocString' => '/**
      * Get the notification\'s delivery channels.
      *
-     * @param  mixed  $notifiable
      * @return array<string> The channels through which the notification is delivered.
      */',
              'namespace' => 'App\\Notifications',
@@ -41579,7 +40823,7 @@ return [
             0 => 
             \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
                'name' => 'notifiable',
-               'type' => NULL,
+               'type' => 'mixed',
                'byRef' => false,
                'variadic' => false,
                'hasDefault' => false,
@@ -41600,7 +40844,6 @@ return [
              'phpDocString' => '/**
      * Get the array representation of the notification.
      *
-     * @param  mixed  $notifiable
      * @return array<string, mixed> The notification data.
      */',
              'namespace' => 'App\\Notifications',
@@ -41628,7 +40871,7 @@ return [
             0 => 
             \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
                'name' => 'notifiable',
-               'type' => NULL,
+               'type' => 'mixed',
                'byRef' => false,
                'variadic' => false,
                'hasDefault' => false,
@@ -41649,7 +40892,6 @@ return [
              'phpDocString' => '/**
      * Get the broadcast representation of the notification.
      *
-     * @param  mixed  $notifiable
      * @return BroadcastMessage The broadcast notification data.
      */',
              'namespace' => 'App\\Notifications',
@@ -41677,7 +40919,7 @@ return [
             0 => 
             \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
                'name' => 'notifiable',
-               'type' => NULL,
+               'type' => 'mixed',
                'byRef' => false,
                'variadic' => false,
                'hasDefault' => false,
@@ -41808,8 +41050,6 @@ return [
           \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
              'phpDocString' => '/**
      * Get the notification\'s delivery channels.
-     *
-     * @param  mixed  $notifiable
      */',
              'namespace' => 'App\\Notifications',
              'uses' => 
@@ -41837,7 +41077,7 @@ return [
             0 => 
             \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
                'name' => 'notifiable',
-               'type' => NULL,
+               'type' => 'mixed',
                'byRef' => false,
                'variadic' => false,
                'hasDefault' => false,
@@ -41857,8 +41097,6 @@ return [
           \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
              'phpDocString' => '/**
      * Get the mail representation of the notification.
-     *
-     * @param  mixed  $notifiable
      */',
              'namespace' => 'App\\Notifications',
              'uses' => 
@@ -41886,7 +41124,7 @@ return [
             0 => 
             \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
                'name' => 'notifiable',
-               'type' => NULL,
+               'type' => 'mixed',
                'byRef' => false,
                'variadic' => false,
                'hasDefault' => false,
@@ -41907,7 +41145,6 @@ return [
              'phpDocString' => '/**
      * Get the array representation of the notification.
      *
-     * @param  mixed  $notifiable
      * @return array<string, mixed> The notification data.
      */',
              'namespace' => 'App\\Notifications',
@@ -41936,7 +41173,7 @@ return [
             0 => 
             \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
                'name' => 'notifiable',
-               'type' => NULL,
+               'type' => 'mixed',
                'byRef' => false,
                'variadic' => false,
                'hasDefault' => false,
@@ -41957,7 +41194,6 @@ return [
              'phpDocString' => '/**
      * Get the broadcast representation of the notification.
      *
-     * @param  mixed  $notifiable
      * @return BroadcastMessage The broadcast notification data.
      */',
              'namespace' => 'App\\Notifications',
@@ -41986,7 +41222,7 @@ return [
             0 => 
             \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
                'name' => 'notifiable',
-               'type' => NULL,
+               'type' => 'mixed',
                'byRef' => false,
                'variadic' => false,
                'hasDefault' => false,
@@ -42140,8 +41376,6 @@ return [
           \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
              'phpDocString' => '/**
      * Get the notification\'s delivery channels.
-     *
-     * @param  mixed  $notifiable
      */',
              'namespace' => 'App\\Notifications',
              'uses' => 
@@ -42170,7 +41404,7 @@ return [
             0 => 
             \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
                'name' => 'notifiable',
-               'type' => NULL,
+               'type' => 'mixed',
                'byRef' => false,
                'variadic' => false,
                'hasDefault' => false,
@@ -42190,8 +41424,6 @@ return [
           \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
              'phpDocString' => '/**
      * Get the mail representation of the notification.
-     *
-     * @param  mixed  $notifiable
      */',
              'namespace' => 'App\\Notifications',
              'uses' => 
@@ -42220,7 +41452,7 @@ return [
             0 => 
             \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
                'name' => 'notifiable',
-               'type' => NULL,
+               'type' => 'mixed',
                'byRef' => false,
                'variadic' => false,
                'hasDefault' => false,
@@ -42241,7 +41473,6 @@ return [
              'phpDocString' => '/**
      * Get the array representation of the notification.
      *
-     * @param  mixed  $notifiable
      * @return array<string, mixed> The notification data.
      */',
              'namespace' => 'App\\Notifications',
@@ -42271,7 +41502,7 @@ return [
             0 => 
             \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
                'name' => 'notifiable',
-               'type' => NULL,
+               'type' => 'mixed',
                'byRef' => false,
                'variadic' => false,
                'hasDefault' => false,
@@ -42292,7 +41523,6 @@ return [
              'phpDocString' => '/**
      * Get the broadcast representation of the notification.
      *
-     * @param  mixed  $notifiable
      * @return BroadcastMessage The broadcast notification data.
      */',
              'namespace' => 'App\\Notifications',
@@ -42322,7 +41552,7 @@ return [
             0 => 
             \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
                'name' => 'notifiable',
-               'type' => NULL,
+               'type' => 'mixed',
                'byRef' => false,
                'variadic' => false,
                'hasDefault' => false,
@@ -42605,40 +41835,6 @@ return [
        'statements' => 
       array (
         0 => 
-        \PHPStan\Dependency\ExportedNode\ExportedPropertiesNode::__set_state(array(
-           'names' => 
-          array (
-            0 => 'data',
-          ),
-           'phpDoc' => 
-          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
-             'phpDocString' => '/**
-     * @var array<string, mixed>
-     */',
-             'namespace' => 'App\\Notifications\\Zoom',
-             'uses' => 
-            array (
-              'carbon' => 'Carbon\\Carbon',
-              'queueable' => 'Illuminate\\Bus\\Queueable',
-              'shouldbroadcast' => 'Illuminate\\Contracts\\Broadcasting\\ShouldBroadcast',
-              'broadcastmessage' => 'Illuminate\\Notifications\\Messages\\BroadcastMessage',
-              'mailmessage' => 'Illuminate\\Notifications\\Messages\\MailMessage',
-              'notification' => 'Illuminate\\Notifications\\Notification',
-            ),
-             'constUses' => 
-            array (
-            ),
-          )),
-           'type' => 'array',
-           'public' => false,
-           'private' => false,
-           'static' => false,
-           'readonly' => false,
-           'attributes' => 
-          array (
-          ),
-        )),
-        1 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => '__construct',
            'phpDoc' => 
@@ -42688,7 +41884,7 @@ return [
           array (
           ),
         )),
-        2 => 
+        1 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'via',
            'phpDoc' => 
@@ -42696,7 +41892,6 @@ return [
              'phpDocString' => '/**
      * Get the notification\'s delivery channels.
      *
-     * @param  mixed  $notifiable
      * @return array<int, string>
      */',
              'namespace' => 'App\\Notifications\\Zoom',
@@ -42725,7 +41920,7 @@ return [
             0 => 
             \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
                'name' => 'notifiable',
-               'type' => NULL,
+               'type' => 'mixed',
                'byRef' => false,
                'variadic' => false,
                'hasDefault' => false,
@@ -42738,15 +41933,13 @@ return [
           array (
           ),
         )),
-        3 => 
+        2 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'toMail',
            'phpDoc' => 
           \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
              'phpDocString' => '/**
      * Get the mail representation of the notification.
-     *
-     * @param  mixed  $notifiable
      */',
              'namespace' => 'App\\Notifications\\Zoom',
              'uses' => 
@@ -42774,7 +41967,36 @@ return [
             0 => 
             \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
                'name' => 'notifiable',
-               'type' => NULL,
+               'type' => 'mixed',
+               'byRef' => false,
+               'variadic' => false,
+               'hasDefault' => false,
+               'attributes' => 
+              array (
+              ),
+            )),
+          ),
+           'attributes' => 
+          array (
+          ),
+        )),
+        3 => 
+        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
+           'name' => 'toBroadcast',
+           'phpDoc' => NULL,
+           'byRef' => false,
+           'public' => true,
+           'private' => false,
+           'abstract' => false,
+           'final' => false,
+           'static' => false,
+           'returnType' => 'Illuminate\\Notifications\\Messages\\BroadcastMessage',
+           'parameters' => 
+          array (
+            0 => 
+            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
+               'name' => 'notifiable',
+               'type' => 'mixed',
                'byRef' => false,
                'variadic' => false,
                'hasDefault' => false,
@@ -42789,60 +42011,12 @@ return [
         )),
         4 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
-           'name' => 'toBroadcast',
-           'phpDoc' => 
-          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
-             'phpDocString' => '/**
-     * @param  mixed  $notifiable
-     */',
-             'namespace' => 'App\\Notifications\\Zoom',
-             'uses' => 
-            array (
-              'carbon' => 'Carbon\\Carbon',
-              'queueable' => 'Illuminate\\Bus\\Queueable',
-              'shouldbroadcast' => 'Illuminate\\Contracts\\Broadcasting\\ShouldBroadcast',
-              'broadcastmessage' => 'Illuminate\\Notifications\\Messages\\BroadcastMessage',
-              'mailmessage' => 'Illuminate\\Notifications\\Messages\\MailMessage',
-              'notification' => 'Illuminate\\Notifications\\Notification',
-            ),
-             'constUses' => 
-            array (
-            ),
-          )),
-           'byRef' => false,
-           'public' => true,
-           'private' => false,
-           'abstract' => false,
-           'final' => false,
-           'static' => false,
-           'returnType' => 'Illuminate\\Notifications\\Messages\\BroadcastMessage',
-           'parameters' => 
-          array (
-            0 => 
-            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
-               'name' => 'notifiable',
-               'type' => NULL,
-               'byRef' => false,
-               'variadic' => false,
-               'hasDefault' => false,
-               'attributes' => 
-              array (
-              ),
-            )),
-          ),
-           'attributes' => 
-          array (
-          ),
-        )),
-        5 => 
-        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'toArray',
            'phpDoc' => 
           \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
              'phpDocString' => '/**
      * Get the array representation of the notification.
      *
-     * @param  mixed  $notifiable
      * @return array<string, mixed>
      */',
              'namespace' => 'App\\Notifications\\Zoom',
@@ -42871,7 +42045,7 @@ return [
             0 => 
             \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
                'name' => 'notifiable',
-               'type' => NULL,
+               'type' => 'mixed',
                'byRef' => false,
                'variadic' => false,
                'hasDefault' => false,
@@ -42913,40 +42087,6 @@ return [
        'statements' => 
       array (
         0 => 
-        \PHPStan\Dependency\ExportedNode\ExportedPropertiesNode::__set_state(array(
-           'names' => 
-          array (
-            0 => 'data',
-          ),
-           'phpDoc' => 
-          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
-             'phpDocString' => '/**
-     * @var array<string, mixed>
-     */',
-             'namespace' => 'App\\Notifications\\Zoom',
-             'uses' => 
-            array (
-              'carbon' => 'Carbon\\Carbon',
-              'queueable' => 'Illuminate\\Bus\\Queueable',
-              'shouldbroadcast' => 'Illuminate\\Contracts\\Broadcasting\\ShouldBroadcast',
-              'broadcastmessage' => 'Illuminate\\Notifications\\Messages\\BroadcastMessage',
-              'mailmessage' => 'Illuminate\\Notifications\\Messages\\MailMessage',
-              'notification' => 'Illuminate\\Notifications\\Notification',
-            ),
-             'constUses' => 
-            array (
-            ),
-          )),
-           'type' => 'array',
-           'public' => false,
-           'private' => false,
-           'static' => false,
-           'readonly' => false,
-           'attributes' => 
-          array (
-          ),
-        )),
-        1 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => '__construct',
            'phpDoc' => 
@@ -42996,7 +42136,7 @@ return [
           array (
           ),
         )),
-        2 => 
+        1 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'via',
            'phpDoc' => 
@@ -43004,7 +42144,6 @@ return [
              'phpDocString' => '/**
      * Get the notification\'s delivery channels.
      *
-     * @param  mixed  $notifiable
      * @return array<int, string>
      */',
              'namespace' => 'App\\Notifications\\Zoom',
@@ -43033,7 +42172,7 @@ return [
             0 => 
             \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
                'name' => 'notifiable',
-               'type' => NULL,
+               'type' => 'mixed',
                'byRef' => false,
                'variadic' => false,
                'hasDefault' => false,
@@ -43046,15 +42185,13 @@ return [
           array (
           ),
         )),
-        3 => 
+        2 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'toMail',
            'phpDoc' => 
           \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
              'phpDocString' => '/**
      * Get the mail representation of the notification.
-     *
-     * @param  mixed  $notifiable
      */',
              'namespace' => 'App\\Notifications\\Zoom',
              'uses' => 
@@ -43082,7 +42219,36 @@ return [
             0 => 
             \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
                'name' => 'notifiable',
-               'type' => NULL,
+               'type' => 'mixed',
+               'byRef' => false,
+               'variadic' => false,
+               'hasDefault' => false,
+               'attributes' => 
+              array (
+              ),
+            )),
+          ),
+           'attributes' => 
+          array (
+          ),
+        )),
+        3 => 
+        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
+           'name' => 'toBroadcast',
+           'phpDoc' => NULL,
+           'byRef' => false,
+           'public' => true,
+           'private' => false,
+           'abstract' => false,
+           'final' => false,
+           'static' => false,
+           'returnType' => 'Illuminate\\Notifications\\Messages\\BroadcastMessage',
+           'parameters' => 
+          array (
+            0 => 
+            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
+               'name' => 'notifiable',
+               'type' => 'mixed',
                'byRef' => false,
                'variadic' => false,
                'hasDefault' => false,
@@ -43097,60 +42263,12 @@ return [
         )),
         4 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
-           'name' => 'toBroadcast',
-           'phpDoc' => 
-          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
-             'phpDocString' => '/**
-     * @param  mixed  $notifiable
-     */',
-             'namespace' => 'App\\Notifications\\Zoom',
-             'uses' => 
-            array (
-              'carbon' => 'Carbon\\Carbon',
-              'queueable' => 'Illuminate\\Bus\\Queueable',
-              'shouldbroadcast' => 'Illuminate\\Contracts\\Broadcasting\\ShouldBroadcast',
-              'broadcastmessage' => 'Illuminate\\Notifications\\Messages\\BroadcastMessage',
-              'mailmessage' => 'Illuminate\\Notifications\\Messages\\MailMessage',
-              'notification' => 'Illuminate\\Notifications\\Notification',
-            ),
-             'constUses' => 
-            array (
-            ),
-          )),
-           'byRef' => false,
-           'public' => true,
-           'private' => false,
-           'abstract' => false,
-           'final' => false,
-           'static' => false,
-           'returnType' => 'Illuminate\\Notifications\\Messages\\BroadcastMessage',
-           'parameters' => 
-          array (
-            0 => 
-            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
-               'name' => 'notifiable',
-               'type' => NULL,
-               'byRef' => false,
-               'variadic' => false,
-               'hasDefault' => false,
-               'attributes' => 
-              array (
-              ),
-            )),
-          ),
-           'attributes' => 
-          array (
-          ),
-        )),
-        5 => 
-        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'toDatabase',
            'phpDoc' => 
           \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
              'phpDocString' => '/**
      * Get the array representation of the notification.
      *
-     * @param  mixed  $notifiable
      * @return array<string, mixed>
      */',
              'namespace' => 'App\\Notifications\\Zoom',
@@ -43179,7 +42297,7 @@ return [
             0 => 
             \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
                'name' => 'notifiable',
-               'type' => NULL,
+               'type' => 'mixed',
                'byRef' => false,
                'variadic' => false,
                'hasDefault' => false,
@@ -45191,7 +44309,7 @@ return [
            'phpDoc' => 
           \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
              'phpDocString' => '/**
-     * @return \\Illuminate\\Database\\Eloquent\\Collection<int, \\App\\Models\\Activity>
+     * @return \\Illuminate\\Database\\Eloquent\\Collection<int, Activity>
      */',
              'namespace' => 'App\\Repository',
              'uses' => 
@@ -46081,22 +45199,6 @@ return [
        'statements' => 
       array (
         0 => 
-        \PHPStan\Dependency\ExportedNode\ExportedPropertiesNode::__set_state(array(
-           'names' => 
-          array (
-            0 => 'task',
-          ),
-           'phpDoc' => NULL,
-           'type' => NULL,
-           'public' => false,
-           'private' => false,
-           'static' => false,
-           'readonly' => false,
-           'attributes' => 
-          array (
-          ),
-        )),
-        1 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => '__construct',
            'phpDoc' => 
@@ -46140,7 +45242,7 @@ return [
           array (
           ),
         )),
-        2 => 
+        1 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'passes',
            'phpDoc' => 
@@ -46197,7 +45299,7 @@ return [
           array (
           ),
         )),
-        3 => 
+        2 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'message',
            'phpDoc' => 
@@ -46411,22 +45513,6 @@ return [
        'statements' => 
       array (
         0 => 
-        \PHPStan\Dependency\ExportedNode\ExportedPropertiesNode::__set_state(array(
-           'names' => 
-          array (
-            0 => 'task',
-          ),
-           'phpDoc' => NULL,
-           'type' => NULL,
-           'public' => false,
-           'private' => false,
-           'static' => false,
-           'readonly' => false,
-           'attributes' => 
-          array (
-          ),
-        )),
-        1 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => '__construct',
            'phpDoc' => 
@@ -46470,7 +45556,7 @@ return [
           array (
           ),
         )),
-        2 => 
+        1 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'passes',
            'phpDoc' => 
@@ -46527,7 +45613,7 @@ return [
           array (
           ),
         )),
-        3 => 
+        2 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'message',
            'phpDoc' => 
@@ -47288,22 +46374,6 @@ return [
        'statements' => 
       array (
         0 => 
-        \PHPStan\Dependency\ExportedNode\ExportedPropertiesNode::__set_state(array(
-           'names' => 
-          array (
-            0 => 'dashboardRepository',
-          ),
-           'phpDoc' => NULL,
-           'type' => 'App\\Repository\\DashBoardRepository',
-           'public' => false,
-           'private' => false,
-           'static' => false,
-           'readonly' => false,
-           'attributes' => 
-          array (
-          ),
-        )),
-        1 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => '__construct',
            'phpDoc' => NULL,
@@ -47332,7 +46402,7 @@ return [
           array (
           ),
         )),
-        2 => 
+        1 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'getUserProjects',
            'phpDoc' => 
@@ -47378,7 +46448,7 @@ return [
           array (
           ),
         )),
-        3 => 
+        2 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'getDashboardProjects',
            'phpDoc' => 
@@ -47606,7 +46676,7 @@ return [
             0 => 
             \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
                'name' => 'exception',
-               'type' => 'Exception',
+               'type' => 'Throwable',
                'byRef' => false,
                'variadic' => false,
                'hasDefault' => false,
@@ -48039,7 +47109,7 @@ return [
              'phpDocString' => '/**
      * Get the pending members for the given project.
      *
-     * @return \\Illuminate\\Database\\Eloquent\\Collection<int, \\App\\Models\\User>
+     * @return EloquentCollection<int, User>
      */',
              'namespace' => 'App\\Services\\Api\\V1',
              'uses' => 
@@ -48091,7 +47161,7 @@ return [
            'phpDoc' => 
           \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
              'phpDocString' => '/**
-     * @return \\Illuminate\\Database\\Eloquent\\Collection<int, \\App\\Models\\User>
+     * @return EloquentCollection<int, User>
      */',
              'namespace' => 'App\\Services\\Api\\V1',
              'uses' => 
@@ -52203,8 +51273,6 @@ return [
           \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
              'phpDocString' => '/**
      * Create the activity log entry in the database.
-     *
-     * @return Activity
      */',
              'namespace' => 'App\\Traits',
              'uses' => 
@@ -52467,7 +51535,7 @@ return [
              'phpDocString' => '/**
      * The activity feed for the project.
      *
-     * @return \\Illuminate\\Database\\Eloquent\\Relations\\HasMany|\\Illuminate\\Database\\Eloquent\\Relations\\MorphMany<Activity>
+     * @return HasMany|MorphMany<Activity>
      */',
              'namespace' => 'App\\Traits',
              'uses' => 

@@ -19,9 +19,7 @@ class PasswordUpdate extends Mailable implements ShouldQueue
          * @return void
          */
         protected string $time
-    )
-    {
-    }
+    ) {}
 
     /**
      * Get the message content definition.

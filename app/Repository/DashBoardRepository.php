@@ -69,7 +69,7 @@ class DashBoardRepository
     {
         $cacheKey = "activities_{$userId}_{$startDate->format('Ymd')}_{$endDate->format('Ymd')}";
 
-        return Cache::remember($cacheKey, now()->addSeconds(60), fn(): \Illuminate\Database\Eloquent\Collection => Activity::query()
+        return Cache::remember($cacheKey, now()->addSeconds(60), fn (): \Illuminate\Database\Eloquent\Collection => Activity::query()
             ->where('user_id', $userId)
             ->whereBetween('created_at', [$startDate, $endDate])
             ->with([

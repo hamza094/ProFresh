@@ -2,6 +2,6 @@
 
 // variadic-method-App\Repository\DashboardInsightsRepository-getTaskCompletionRate-D:\apps\profresh\app\Repository\DashboardInsightsRepository.php
 return \PHPStan\Cache\CacheItem::__set_state(array(
-   'variableKey' => '1761061133-v4',
+   'variableKey' => '1761205248-v4',
    'data' => false,
 ));

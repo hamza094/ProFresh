@@ -2,6 +2,6 @@
 
 // variadic-method-App\Jobs\QueuedVerifyEmailJob-__construct-D:\apps\profresh\app\Jobs\QueuedVerifyEmailJob.php
 return \PHPStan\Cache\CacheItem::__set_state(array(
-   'variableKey' => '1761061114-v4',
+   'variableKey' => '1761205252-v4',
    'data' => false,
 ));

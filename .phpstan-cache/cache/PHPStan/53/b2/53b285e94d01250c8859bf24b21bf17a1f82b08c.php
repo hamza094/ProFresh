@@ -2,6 +2,6 @@
 
 // variadic-method-App\Repository\ProjectInsightsRepository-getProjectInsights-D:\apps\profresh\app\Repository\ProjectInsightsRepository.php
 return \PHPStan\Cache\CacheItem::__set_state(array(
-   'variableKey' => '1761061134-v4',
+   'variableKey' => '1761205249-v4',
    'data' => false,
 ));

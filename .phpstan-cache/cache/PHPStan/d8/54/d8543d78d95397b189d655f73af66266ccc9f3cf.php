@@ -2,6 +2,6 @@
 
 // variadic-method-App\Services\Api\V1\Admin\Integration\PaddleService-connector-D:\apps\profresh\app\Services\Api\V1\Admin\Integration\PaddleService.php
 return \PHPStan\Cache\CacheItem::__set_state(array(
-   'variableKey' => '1761061137-v4',
+   'variableKey' => '1761228489-v4',
    'data' => false,
 ));

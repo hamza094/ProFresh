@@ -19,9 +19,7 @@ class MeetingStarted extends Notification implements ShouldBroadcast
      * @param  array<string, mixed>  $data
      * @return void
      */
-    public function __construct(protected array $data)
-    {
-    }
+    public function __construct(protected array $data) {}
 
     /**
      * Get the notification's delivery channels.

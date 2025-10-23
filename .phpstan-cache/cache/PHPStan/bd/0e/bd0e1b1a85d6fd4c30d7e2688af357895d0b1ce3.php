@@ -2,6 +2,6 @@
 
 // variadic-method-App\Events\DeleteConversation-__construct-D:\apps\profresh\app\Events\DeleteConversation.php
 return \PHPStan\Cache\CacheItem::__set_state(array(
-   'variableKey' => '1761061077-v4',
+   'variableKey' => '1761228475-v4',
    'data' => false,
 ));

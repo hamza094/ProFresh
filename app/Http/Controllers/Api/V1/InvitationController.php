@@ -23,9 +23,7 @@ class InvitationController extends ApiController
      *
      * App\Service\Api\V1\InvitationService
      */
-    public function __construct(private readonly InvitationService $invitationService)
-    {
-    }
+    public function __construct(private readonly InvitationService $invitationService) {}
 
     /**
      * Search Users to send project invitation.

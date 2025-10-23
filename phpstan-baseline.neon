@@ -136,41 +136,6 @@ parameters:
 			path: app/Exceptions/Handler.php
 
 		-
-			message: "#^Access to an undefined property App\\\\Exports\\\\ProjectsExport\\:\\:\\$project\\.$#"
-			count: 2
-			path: app/Exports/ProjectsExport.php
-
-		-
-			message: "#^Class App\\\\Exports\\\\ProjectsExport implements generic interface Maatwebsite\\\\Excel\\\\Concerns\\\\WithMapping but does not specify its types\\: RowType$#"
-			count: 1
-			path: app/Exports/ProjectsExport.php
-
-		-
-			message: "#^Method App\\\\Exports\\\\ProjectsExport\\:\\:headings\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: app/Exports/ProjectsExport.php
-
-		-
-			message: "#^Method App\\\\Exports\\\\ProjectsExport\\:\\:map\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: app/Exports/ProjectsExport.php
-
-		-
-			message: "#^Method App\\\\Exports\\\\ProjectsExport\\:\\:query\\(\\) has invalid return type Laravel\\\\Scout\\\\Builder\\.$#"
-			count: 1
-			path: app/Exports/ProjectsExport.php
-
-		-
-			message: "#^Method App\\\\Exports\\\\ProjectsExport\\:\\:query\\(\\) return type with generic class Illuminate\\\\Database\\\\Eloquent\\\\Builder does not specify its types\\: TModel$#"
-			count: 1
-			path: app/Exports/ProjectsExport.php
-
-		-
-			message: "#^Method App\\\\Exports\\\\ProjectsExport\\:\\:query\\(\\) return type with generic class Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\Relation does not specify its types\\: TRelatedModel, TDeclaringModel, TResult$#"
-			count: 1
-			path: app/Exports/ProjectsExport.php
-
-		-
 			message: "#^Method App\\\\Http\\\\Controllers\\\\Api\\\\Auth\\\\ResetPasswordController\\:\\:resetPassword\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: app/Http/Controllers/Api/Auth/ResetPasswordController.php
@@ -186,16 +151,7 @@ parameters:
 			path: app/Http/Controllers/Api/V1/ActivityController.php
 
 		-
-			message: "#^Method App\\\\Http\\\\Controllers\\\\Api\\\\V1\\\\FeaturesController\\:\\:export\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: app/Http/Controllers/Api/V1/FeaturesController.php
 
-		-
-			message: "#^Property App\\\\Http\\\\Controllers\\\\Api\\\\V1\\\\FeaturesController\\:\\:\\$featureService has no type specified\\.$#"
-			count: 1
-			path: app/Http/Controllers/Api/V1/FeaturesController.php
-
-		-
 			message: "#^Parameter \\#2 \\$user of method App\\\\Services\\\\Api\\\\V1\\\\InvitationService\\:\\:rejectInvitation\\(\\) expects App\\\\Models\\\\User, Illuminate\\\\Contracts\\\\Auth\\\\Authenticatable\\|null given\\.$#"
 			count: 1
 			path: app/Http/Controllers/Api/V1/InvitationController.php
@@ -936,31 +892,6 @@ parameters:
 			path: app/Http/Resources/Api/V1/UserTasksResource.php
 
 		-
-			message: "#^Access to an undefined property App\\\\Http\\\\View\\\\Composers\\\\ProjectComposer\\:\\:\\$user\\.$#"
-			count: 1
-			path: app/Http/Views/Composers/ProjectComposer.php
-
-		-
-			message: "#^Constructor of class App\\\\Http\\\\View\\\\Composers\\\\ProjectComposer has an unused parameter \\$users\\.$#"
-			count: 1
-			path: app/Http/Views/Composers/ProjectComposer.php
-
-		-
-			message: "#^Parameter \\$users of method App\\\\Http\\\\View\\\\Composers\\\\ProjectComposer\\:\\:__construct\\(\\) has invalid type App\\\\Repositories\\\\UserRepository\\.$#"
-			count: 2
-			path: app/Http/Views/Composers/ProjectComposer.php
-
-		-
-			message: "#^Property App\\\\Http\\\\View\\\\Composers\\\\ProjectComposer\\:\\:\\$project has unknown class App\\\\Repositories\\\\UserRepository as its type\\.$#"
-			count: 1
-			path: app/Http/Views/Composers/ProjectComposer.php
-
-		-
-			message: "#^Undefined variable\\: \\$project$#"
-			count: 1
-			path: app/Http/Views/Composers/ProjectComposer.php
-
-		-
 			message: "#^Method App\\\\Jobs\\\\MailMessage\\:\\:__construct\\(\\) has parameter \\$message with no type specified\\.$#"
 			count: 1
 			path: app/Jobs/MailMessage.php
@@ -969,21 +900,6 @@ parameters:
 			message: "#^Method App\\\\Jobs\\\\MailMessage\\:\\:__construct\\(\\) has parameter \\$user with no type specified\\.$#"
 			count: 1
 			path: app/Jobs/MailMessage.php
-
-		-
-			message: "#^Property App\\\\Jobs\\\\MailMessage\\:\\:\\$message has no type specified\\.$#"
-			count: 1
-			path: app/Jobs/MailMessage.php
-
-		-
-			message: "#^Property App\\\\Jobs\\\\MailMessage\\:\\:\\$user has no type specified\\.$#"
-			count: 1
-			path: app/Jobs/MailMessage.php
-
-		-
-			message: "#^Property App\\\\Jobs\\\\SmsMessage\\:\\:\\$message has no type specified\\.$#"
-			count: 1
-			path: app/Jobs/SmsMessage.php
 
 		-
 			message: "#^Property App\\\\Jobs\\\\SmsMessage\\:\\:\\$project \\(App\\\\Models\\\\Podcast\\) does not accept App\\\\Models\\\\Project\\.$#"
@@ -1002,16 +918,6 @@ parameters:
 
 		-
 			message: "#^Method App\\\\Mail\\\\ProjectMail\\:\\:__construct\\(\\) has parameter \\$project with no type specified\\.$#"
-			count: 1
-			path: app/Mail/ProjectMail.php
-
-		-
-			message: "#^Property App\\\\Mail\\\\ProjectMail\\:\\:\\$message has no type specified\\.$#"
-			count: 1
-			path: app/Mail/ProjectMail.php
-
-		-
-			message: "#^Property App\\\\Mail\\\\ProjectMail\\:\\:\\$project has no type specified\\.$#"
 			count: 1
 			path: app/Mail/ProjectMail.php
 
@@ -1126,11 +1032,6 @@ parameters:
 			path: app/Models/Meeting.php
 
 		-
-			message: "#^PHPDoc tag @return with type App\\\\Models\\\\Activity is incompatible with native type void\\.$#"
-			count: 1
-			path: app/Models/Meeting.php
-
-		-
 			message: "#^Class App\\\\Models\\\\Message uses generic trait Illuminate\\\\Database\\\\Eloquent\\\\Factories\\\\HasFactory but does not specify its types\\: TFactory$#"
 			count: 1
 			path: app/Models/Message.php
@@ -1187,11 +1088,6 @@ parameters:
 
 		-
 			message: "#^Method App\\\\Models\\\\Message\\:\\:users\\(\\) should return Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsToMany\\<App\\\\Models\\\\User\\> but returns Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsToMany\\<App\\\\Models\\\\User, \\$this\\(App\\\\Models\\\\Message\\)\\>\\.$#"
-			count: 1
-			path: app/Models/Message.php
-
-		-
-			message: "#^PHPDoc tag @return with type App\\\\Models\\\\Activity is incompatible with native type void\\.$#"
 			count: 1
 			path: app/Models/Message.php
 
@@ -1326,11 +1222,6 @@ parameters:
 			path: app/Models/Project.php
 
 		-
-			message: "#^PHPDoc tag @return with type App\\\\Models\\\\Activity is incompatible with native type void\\.$#"
-			count: 1
-			path: app/Models/Project.php
-
-		-
 			message: "#^Static property App\\\\Models\\\\Project\\:\\:\\$recordableEvents \\(array\\<string\\>\\) on left side of \\?\\? is not nullable\\.$#"
 			count: 1
 			path: app/Models/Project.php
@@ -1422,11 +1313,6 @@ parameters:
 
 		-
 			message: "#^Method App\\\\Models\\\\Task\\:\\:status\\(\\) should return Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsTo\\<App\\\\Models\\\\TaskStatus, App\\\\Models\\\\Task\\> but returns Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsTo\\<App\\\\Models\\\\TaskStatus, \\$this\\(App\\\\Models\\\\Task\\)\\>\\.$#"
-			count: 1
-			path: app/Models/Task.php
-
-		-
-			message: "#^PHPDoc tag @return with type App\\\\Models\\\\Activity is incompatible with native type void\\.$#"
 			count: 1
 			path: app/Models/Task.php
 
@@ -1591,16 +1477,6 @@ parameters:
 			path: app/Notifications/TaskAssigned.php
 
 		-
-			message: "#^Access to an undefined property App\\\\Notifications\\\\TaskDue\\:\\:\\$notifiedType\\.$#"
-			count: 1
-			path: app/Notifications/TaskDue.php
-
-		-
-			message: "#^Access to an undefined property App\\\\Notifications\\\\TaskDue\\:\\:\\$project\\.$#"
-			count: 1
-			path: app/Notifications/TaskDue.php
-
-		-
 			message: "#^Method App\\\\Notifications\\\\TaskDue\\:\\:__construct\\(\\) has parameter \\$notifierData with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: app/Notifications/TaskDue.php
@@ -1731,17 +1607,7 @@ parameters:
 			path: app/Rules/ActiveProjectMember.php
 
 		-
-			message: "#^Property App\\\\Rules\\\\ActiveProjectMember\\:\\:\\$task has no type specified\\.$#"
-			count: 1
-			path: app/Rules/ActiveProjectMember.php
-
-		-
 			message: "#^Method App\\\\Rules\\\\TaskAssigneeMember\\:\\:__construct\\(\\) has parameter \\$task with no type specified\\.$#"
-			count: 1
-			path: app/Rules/TaskAssigneeMember.php
-
-		-
-			message: "#^Property App\\\\Rules\\\\TaskAssigneeMember\\:\\:\\$task has no type specified\\.$#"
 			count: 1
 			path: app/Rules/TaskAssigneeMember.php
 

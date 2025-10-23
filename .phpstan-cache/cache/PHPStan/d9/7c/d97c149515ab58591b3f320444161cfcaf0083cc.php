@@ -2,6 +2,6 @@
 
 // variadic-method-App\Services\Api\V1\InvitationService-validateInvitation-D:\apps\profresh\app\Services\Api\V1\InvitationService.php
 return \PHPStan\Cache\CacheItem::__set_state(array(
-   'variableKey' => '1761061141-v4',
+   'variableKey' => '1761209043-v4',
    'data' => false,
 ));

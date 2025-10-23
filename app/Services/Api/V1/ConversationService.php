@@ -21,9 +21,7 @@ class ConversationService
      *
      * App\Service\Api\V1\FileService
      */
-    public function __construct(private readonly FileService $fileService)
-    {
-    }
+    public function __construct(private readonly FileService $fileService) {}
 
     /**
      * Stores a new conversation and dispatches events and notifications.

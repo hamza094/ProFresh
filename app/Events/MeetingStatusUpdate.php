@@ -19,9 +19,7 @@ class MeetingStatusUpdate implements ShouldBroadcast
      *
      * @return void
      */
-    public function __construct(public Meeting $meeting)
-    {
-    }
+    public function __construct(public Meeting $meeting) {}
 
     public function broadcastOn()
     {

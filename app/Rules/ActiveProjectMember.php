@@ -11,9 +11,7 @@ class ActiveProjectMember implements Rule
      *
      * @return void
      */
-    public function __construct(protected $task)
-    {
-    }
+    public function __construct(protected $task) {}
 
     /**
      * Determine if the validation rule passes.

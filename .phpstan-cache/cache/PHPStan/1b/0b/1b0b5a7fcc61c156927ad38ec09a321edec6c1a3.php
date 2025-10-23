@@ -2,6 +2,6 @@
 
 // variadic-method-App\Mail\ProjectMail-__construct-D:\apps\profresh\app\Mail\ProjectMail.php
 return \PHPStan\Cache\CacheItem::__set_state(array(
-   'variableKey' => '1761061118-v4',
+   'variableKey' => '1761205219-v4',
    'data' => false,
 ));

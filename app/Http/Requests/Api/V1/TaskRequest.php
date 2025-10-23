@@ -50,7 +50,7 @@ class TaskRequest extends FormRequest
                 'required',
                 'max:55',
                 'min:3',
-                Rule::unique('tasks')->where(fn($query) => $query->where('project_id', $project->id)),
+                Rule::unique('tasks')->where(fn ($query) => $query->where('project_id', $project->id)),
             ],
         ];
 

@@ -19,9 +19,7 @@ class ActivityLogged implements ShouldBroadcast
      *
      * @return void
      */
-    public function __construct(public Activity $activity, public int $projectId)
-    {
-    }
+    public function __construct(public Activity $activity, public int $projectId) {}
 
     /**
      * Get the channels the event should broadcast on.

@@ -12,8 +12,6 @@ use Illuminate\Notifications\Notification;
 
 class TaskDue extends Notification implements ShouldBroadcast, ShouldQueue
 {
-    public $notifiedType;
-    public $project;
     use Queueable;
 
     /**
@@ -40,7 +38,7 @@ class TaskDue extends Notification implements ShouldBroadcast, ShouldQueue
 
     private function notificationMessage(): string
     {
-        return "Your task '{$this->taskTitle}' due '{$this->dueDate}' is approaching. You selected to be notified '{$this->notifiedType}'.";
+        return "Your task '{$this->taskTitle}' due '{$this->dueDate}' is approaching. You selected to be notified '{$this->notifiedOption}'.";
     }
 
     /**
@@ -50,7 +48,7 @@ class TaskDue extends Notification implements ShouldBroadcast, ShouldQueue
     {
         return (new MailMessage)
             ->line($this->notificationMessage())
-            ->action('View Task', url(env('APP_URL').'/projects/'.$this->project->path()))
+            ->action('View Task', url(env('APP_URL').'/projects/'.$this->projectPath))
             ->line('Thank you for using our application!');
     }
 

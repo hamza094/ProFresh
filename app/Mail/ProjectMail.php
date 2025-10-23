@@ -18,9 +18,7 @@ class ProjectMail extends Mailable
          */
         protected $project,
         protected $message
-    )
-    {
-    }
+    ) {}
 
     /**
      * Build the message.

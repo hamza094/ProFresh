@@ -23,7 +23,7 @@ class AuthServiceProvider extends ServiceProvider
         'App\Model' => 'App\Policies\ModelPolicy',
         \App\Models\Project::class => \App\Policies\ProjectsPolicy::class,
         \App\Models\User::class => \App\Policies\UsersPolicy::class,
-        \App\Models\Task::class => \App\Policies\TasksPolicy::class,
+        Task::class => \App\Policies\TasksPolicy::class,
         \App\Models\Conversation::class => \App\Policies\ConversationPolicy::class,
 
     ];
@@ -45,17 +45,17 @@ class AuthServiceProvider extends ServiceProvider
                 ->symbols()
         );
 
-        Gate::before(fn($user, $ability) => $user->hasRole('Admin') ? true : null);
+        Gate::before(fn ($user, $ability) => $user->hasRole('Admin') ? true : null);
 
-        Gate::define('forbid-when-archived', fn($user, Task $task) => $task->trashed()
+        Gate::define('forbid-when-archived', fn ($user, Task $task) => $task->trashed()
         ? throw ValidationException::withMessages(['task' => 'Task is archived. Activate the task to proceed.']) : true);
 
-        VerifyEmail::toMailUsing(fn(object $notifiable, string $url) => (new MailMessage)
+        VerifyEmail::toMailUsing(fn (object $notifiable, string $url) => (new MailMessage)
             ->subject('Verify Email Address')
             ->line('Click the button below to verify your email address.This link will expire after 60 minutes.Please Remember you must be login to get your account verified')
             ->action('Verify Email Address', $url));
 
-        VerifyEmail::$createUrlCallback = fn($notifiable) => URL::temporarySignedRoute(
+        VerifyEmail::$createUrlCallback = fn ($notifiable) => URL::temporarySignedRoute(
             'verification.verify',
             Carbon::now()->addMinutes(60),
             [

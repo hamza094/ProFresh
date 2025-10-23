@@ -8,14 +8,13 @@ use Rector\Set\ValueObject\SetList;
 
 return RectorConfig::configure()
     ->withPaths([
-        __DIR__ . '/app',
+        __DIR__.'/app',
     ])
-    ->withPhpSets() 
+    ->withPhpSets()
     ->withSets([
         SetList::CODE_QUALITY,
         SetList::DEAD_CODE,
         SetList::EARLY_RETURN,
-        //SetList::STRICT_BOOLEANS,
+        // SetList::STRICT_BOOLEANS,
         LevelSetList::UP_TO_PHP_82,
     ]);
-

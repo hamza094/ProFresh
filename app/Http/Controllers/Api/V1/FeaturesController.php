@@ -13,6 +13,7 @@ use F9Web\ApiResponseHelpers;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class FeaturesController extends ApiController
 {
@@ -22,9 +23,7 @@ class FeaturesController extends ApiController
      * Service For Project Feature
      * App\Service\FeatureService
      */
-    public function __construct(private FeatureService $featureService)
-    {
-    }
+    public function __construct(private FeatureService $featureService) {}
 
     /**
      * Update Project Stage.
@@ -45,7 +44,7 @@ class FeaturesController extends ApiController
         ], 200);
     }
 
-    public function export(Project $project)
+    public function export(Project $project): BinaryFileResponse
     {
         // $this->featureService->excelExport($project);
         return Excel::download(new ProjectsExport($project), "Project $project->name.xls");

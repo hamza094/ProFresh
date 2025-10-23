@@ -51,7 +51,7 @@ class UpdateMeeting extends Request implements HasBody
             'password' => $this->validated['password'] ?? null,
             'join_before_host' => $this->validated['join_before_host'] ?? null,
             'timezone' => $this->validated['timezone'] ?? null,
-        ], fn($value) => ! is_null($value));
+        ], fn ($value) => ! is_null($value));
     }
 
     /**

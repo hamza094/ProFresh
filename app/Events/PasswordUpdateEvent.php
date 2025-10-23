@@ -23,7 +23,5 @@ class PasswordUpdateEvent
          * The time the password was updated.
          */
         public string $updatedAt
-    )
-    {
-    }
+    ) {}
 }

@@ -18,9 +18,7 @@ class ConversationController extends ApiController
      *
      * App\Service\Api\V1\ConversationService
      */
-    public function __construct(private readonly ConversationService $conversationService)
-    {
-    }
+    public function __construct(private readonly ConversationService $conversationService) {}
 
     public function index(Project $project, ConversationRepository $repository): JsonResponse
     {

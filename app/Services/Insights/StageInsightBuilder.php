@@ -64,7 +64,7 @@ final class StageInsightBuilder implements InsightBuilderInterface
 
     private function generateTitle(?ProjectStage $stageEnum, float $percentage): string
     {
-        if ($stageEnum instanceof \App\Enums\ProjectStage) {
+        if ($stageEnum instanceof ProjectStage) {
             return match ($stageEnum) {
                 ProjectStage::Completed => 'Project Completed',
                 ProjectStage::Postponed => 'Project Postponed',
@@ -93,7 +93,7 @@ final class StageInsightBuilder implements InsightBuilderInterface
             return sprintf('Project postponed in %s stage.', $stageLabel);
         }
 
-        if ($stageEnum instanceof \App\Enums\ProjectStage) {
+        if ($stageEnum instanceof ProjectStage) {
             return match ($stageEnum) {
                 ProjectStage::Delivery => sprintf('Delivery phase (%.1f%% complete) - preparing for launch.', $percentage),
                 ProjectStage::Testing => sprintf('Testing phase (%.1f%% complete) - quality assurance underway.', $percentage),

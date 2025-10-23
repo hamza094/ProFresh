@@ -134,7 +134,7 @@ class ProjectResource extends JsonResource
             /**
              * Limited list of recent project activities.
              */
-            'activities' => $this->whenLoaded('limitedActivities', fn() => ActivityResource::collection($this->limitedActivities)),
+            'activities' => $this->whenLoaded('limitedActivities', fn () => ActivityResource::collection($this->limitedActivities)),
 
             'links' => $this->when(
                 $request->routeIs('projects.update'),

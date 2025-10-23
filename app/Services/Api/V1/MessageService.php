@@ -73,7 +73,7 @@ class MessageService
         $job = \App\Jobs\SmsMessage::class;
 
         $jobs = $message->users
-            ->map(fn($user) => new $job($project, $message, $user));
+            ->map(fn ($user) => new $job($project, $message, $user));
 
         $batch = Bus::batch($jobs)
             ->allowFailures()

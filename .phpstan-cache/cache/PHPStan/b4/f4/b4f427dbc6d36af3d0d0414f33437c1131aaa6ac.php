@@ -2,6 +2,6 @@
 
 // variadic-method-App\Jobs\Webhooks\Zoom\MeetingEndsWebhook-validateStatus-D:\apps\profresh\app\Jobs\Webhooks\Zoom\MeetingEndsWebhook.php
 return \PHPStan\Cache\CacheItem::__set_state(array(
-   'variableKey' => '1761061116-v4',
+   'variableKey' => '1761146791-v4',
    'data' => false,
 ));

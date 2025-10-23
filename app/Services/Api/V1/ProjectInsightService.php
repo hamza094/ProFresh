@@ -44,7 +44,7 @@ final class ProjectInsightService
 
             'task-health' => fn (ProjectMetricsDto $m, ?Project $project = null) => $this->taskHealthBuilder->build(
                 $m->taskHealth,
-                $project instanceof \App\Models\Project ? ['summary' => $this->taskHealthAction->summary($project)] : []
+                $project instanceof Project ? ['summary' => $this->taskHealthAction->summary($project)] : []
             ),
             'collaboration' => fn (ProjectMetricsDto $m, ?Project $project = null) => $this->collaborationBuilder->build(
                 $m->collaborationScore,
@@ -122,7 +122,7 @@ final class ProjectInsightService
      */
     private function getCollaborationDetails(?Project $project): array
     {
-        if (!$project instanceof \App\Models\Project) {
+        if (! $project instanceof Project) {
             return [];
         }
 

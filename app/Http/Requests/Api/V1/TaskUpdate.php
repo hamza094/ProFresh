@@ -52,7 +52,7 @@ class TaskUpdate extends FormRequest
                 'sometimes',
                 'required',
                 'max:55',
-                Rule::unique('tasks')/* ->ignore($this->task) */ ->where(fn($query) => $query->where('project_id', $project->id)),
+                Rule::unique('tasks')/* ->ignore($this->task) */ ->where(fn ($query) => $query->where('project_id', $project->id)),
             ],
             /*
                 * Task's Description

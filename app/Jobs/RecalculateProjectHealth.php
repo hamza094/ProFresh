@@ -40,7 +40,7 @@ class RecalculateProjectHealth implements ShouldQueue
     public function handle(ProjectHealthMetricAction $action, ?ProjectInsightsPreloader $preloader = null): void
     {
         $project = $this->findProject();
-        if (!$project instanceof \App\Models\Project) {
+        if (! $project instanceof Project) {
             return;
         }
 

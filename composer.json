@@ -98,6 +98,31 @@
         ],
         "post-update-cmd": [
             "@php artisan vendor:publish --tag=laravel-assets --ansi --force"
+        ],
+        "test": [
+            "@php vendor/bin/phpunit"
+        ],
+        "stan": [
+            "@php vendor/bin/phpstan analyse -c phpstan.neon --memory-limit=1G"
+        ],
+        "pint:test": [
+            "@php vendor/bin/pint --test"
+        ],
+        "rector:test": [
+            "@php vendor/bin/rector --dry-run"
+        ],
+        "qa": [
+            "@test",
+            "@stan",
+            "@pint:test",
+            "@rector:test"
+        ],
+        "qa:fix": [
+            "@php vendor/bin/pint",
+            "@php vendor/bin/rector"
+        ],
+        "qa:all": [
+            "@php tools/qa-all.php"
         ]
     }
 }

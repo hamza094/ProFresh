@@ -24,7 +24,7 @@ final class PaddleService implements PaddleApi
 
         $subscriptions = collect($subscriptionsData['response']);
 
-        $filteredSubscriptions = $subscriptions->map(fn($subscription) => new Data(
+        $filteredSubscriptions = $subscriptions->map(fn ($subscription) => new Data(
             $subscription['user_id'] ?? 0,
             $subscription['user_email'] ?? 0,
             $subscription['signup_date'] ?? 0,

@@ -2,6 +2,6 @@
 
 // variadic-method-App\Models\User-updateZoomOAuthDetails-D:\apps\profresh\app\Models\User.php
 return \PHPStan\Cache\CacheItem::__set_state(array(
-   'variableKey' => '1761061123-v4',
+   'variableKey' => '1761146796-v4',
    'data' => false,
 ));

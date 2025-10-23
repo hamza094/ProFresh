@@ -2,37 +2,28 @@
 
 namespace App\Http\View\Composers;
 
-use App\Repositories\UserRepository;
+use App\Models\User;
 use Illuminate\View\View;
 
 class ProjectComposer
 {
-    public $user;
-    /**
-     * The user repository implementation.
-     *
-     * @var UserRepository
-     */
-    protected $project;
+    protected ?User $user = null;
 
     /**
      * Create a new profile composer.
-     *
-     * @return void
      */
     public function __construct()
     {
-        // Dependencies are automatically resolved by the service container...
-        $this->project = $project;
+        // Resolve the currently authenticated user (if any)
+        $this->user = auth()->user();
     }
 
     /**
      * Bind data to the view.
-     *
-     * @return void
      */
-    public function compose(View $view)
+    public function compose(View $view): void
     {
-        $view->with('lastSeen', $this->user->lastseen);
+        $lastSeen = $this->user?->lastseen ?? null;
+        $view->with('lastSeen', $lastSeen);
     }
 }

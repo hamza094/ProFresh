@@ -19,9 +19,7 @@ class NewMessage implements ShouldBroadcast
      *
      * @return void
      */
-    public function __construct(public Conversation $conversation, public string $projectSlug)
-    {
-    }
+    public function __construct(public Conversation $conversation, public string $projectSlug) {}
 
     /**
      * Get the channels the event should broadcast on.

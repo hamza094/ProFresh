@@ -58,7 +58,7 @@ class TwoFactorLoginRequest extends FormRequest
         // Get user from encrypted session data
         $user = $this->getUserFromSession();
 
-        if (!$user instanceof \App\Models\User) {
+        if (! $user instanceof User) {
             $this->addSessionError($validator);
 
             return;

@@ -2,6 +2,6 @@
 
 // variadic-method-App\Services\Api\V1\Dashboard\DashboardInsightsService-getActionableInsights-D:\apps\profresh\app\Services\Api\V1\Dashboard\DashboardInsightsService.php
 return \PHPStan\Cache\CacheItem::__set_state(array(
-   'variableKey' => '1761061139-v4',
+   'variableKey' => '1761209547-v4',
    'data' => false,
 ));

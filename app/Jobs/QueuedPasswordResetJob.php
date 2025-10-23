@@ -19,9 +19,7 @@ class QueuedPasswordResetJob implements ShouldQueue
      *
      * @return void
      */
-    public function __construct(protected User $user, protected string $token)
-    {
-    }
+    public function __construct(protected User $user, protected string $token) {}
 
     /**
      * Execute the job.

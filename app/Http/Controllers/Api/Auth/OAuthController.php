@@ -13,9 +13,7 @@ use Laravel\Socialite\Facades\Socialite;
 
 class OAuthController extends ApiController
 {
-    public function __construct(protected LoginUserService $loginUserService)
-    {
-    }
+    public function __construct(protected LoginUserService $loginUserService) {}
 
     /**
      * @unauthenticated

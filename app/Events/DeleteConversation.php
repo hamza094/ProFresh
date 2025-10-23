@@ -17,9 +17,7 @@ class DeleteConversation implements ShouldBroadcast
      *
      * @return void
      */
-    public function __construct(public int $conversationId, public string $projectSlug)
-    {
-    }
+    public function __construct(public int $conversationId, public string $projectSlug) {}
 
     /**
      * Get the channels the event should broadcast on.
