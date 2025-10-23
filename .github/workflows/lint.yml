@@ -4,7 +4,7 @@ on:
   pull_request:
     types: [opened, synchronize, reopened]
   push:
-    branches: [workflow] # or "develop" / "main" depending on your setup
+    branches: [master] # or "develop" / "main" depending on your setup
 
 concurrency:
   group: Lint-${{ github.ref }}

@@ -2,9 +2,9 @@ name: Laravel
 
 on:
   push:
-    branches: [workflow]
+    branches: [master]
   pull_request:
-    branches: [workflow]
+    branches: [master]
 
 jobs:
   laravel-tests:
