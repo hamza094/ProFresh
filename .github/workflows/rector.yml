@@ -1,0 +1,41 @@
+name: Rector Code Refactor
+
+on:
+  pull_request:
+    branches:
+      - master   # Run only when a PR targets master
+    types: [opened, synchronize, reopened]
+
+concurrency:
+  group: rector-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  rector:
+    name: Rector Refactor Check
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          extensions: mbstring, intl, bcmath
+          coverage: none
+
+      - name: Cache Composer dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.composer/cache
+          key: composer-${{ runner.os }}-${{ hashFiles('**/composer.lock') }}
+          restore-keys: composer-${{ runner.os }}-
+
+      - name: Install dependencies
+        run: composer install --no-interaction --prefer-dist
+
+      - name: Run Rector (dry-run)
+        run: |
+          vendor/bin/rector process --dry-run --no-progress
