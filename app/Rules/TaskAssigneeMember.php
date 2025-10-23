@@ -6,16 +6,13 @@ use Illuminate\Contracts\Validation\Rule;
 
 class TaskAssigneeMember implements Rule
 {
-    protected $task;
-
     /**
      * Create a new rule instance.
      *
      * @return void
      */
-    public function __construct($task)
+    public function __construct(protected $task)
     {
-        $this->task = $task;
     }
 
     /**

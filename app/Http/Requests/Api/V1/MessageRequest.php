@@ -20,14 +20,14 @@ class MessageRequest extends FormRequest
     public function validator($factory)
     {
         return $factory->make(
-            $this->sanitize(), $this->container->call([$this, 'rules']), $this->messages()
+            $this->sanitize(), $this->container->call($this->rules(...)), $this->messages()
         );
     }
 
     public function sanitize()
     {
         $this->merge([
-            'users' => json_decode($this->input('users'), true),
+            'users' => json_decode((string) $this->input('users'), true),
         ]);
 
         return $this->all();

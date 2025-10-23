@@ -23,7 +23,7 @@ final class ProjectHealthRecalculationAction
         $key = "project:{$project->id}:health-persist";
         $decay = (int) config('project-metrics.health.persist_throttle_seconds', 15 * 60);
         $queue = (string) config('project-metrics.health.persist_queue', 'metrics');
-        $dispatched = RateLimiter::attempt(
+        RateLimiter::attempt(
             $key,
             1,
             function () use ($project, $queue, $key) {

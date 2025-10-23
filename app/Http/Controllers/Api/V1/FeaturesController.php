@@ -18,15 +18,12 @@ class FeaturesController extends ApiController
 {
     use ApiResponseHelpers;
 
-    private $featureService;
-
     /**
      * Service For Project Feature
      * App\Service\FeatureService
      */
-    public function __construct(FeatureService $featureService)
+    public function __construct(private FeatureService $featureService)
     {
-        $this->featureService = $featureService;
     }
 
     /**

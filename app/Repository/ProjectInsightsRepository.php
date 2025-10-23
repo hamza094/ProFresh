@@ -16,12 +16,12 @@ class ProjectInsightsRepository
     // No class constants; defaults live in config/insights.php
 
     public function __construct(
-        private ProjectHealthMetricAction $projectHealthAction,
-        private TaskHealthMetricAction $taskHealthAction,
-        private StageProgressMetricAction $stageProgressAction,
-        private UpcomingRiskMetricAction $upcomingRiskAction,
-        private TeamCollaborationMetricAction $collaborationHealthAction,
-        private ProjectInsightsPreloader $preloader
+        private readonly ProjectHealthMetricAction $projectHealthAction,
+        private readonly TaskHealthMetricAction $taskHealthAction,
+        private readonly StageProgressMetricAction $stageProgressAction,
+        private readonly UpcomingRiskMetricAction $upcomingRiskAction,
+        private readonly TeamCollaborationMetricAction $collaborationHealthAction,
+        private readonly ProjectInsightsPreloader $preloader
     ) {}
 
     /**

@@ -25,7 +25,7 @@ class ProjectInsightsPreloader
         $expandedSections = $this->expandSections($sections);
 
         $countLoaders = $this->buildCountLoaders($expandedSections, $now);
-        if (! empty($countLoaders)) {
+        if ($countLoaders !== []) {
             $project->loadCount($countLoaders);
         }
 

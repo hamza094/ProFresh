@@ -69,20 +69,18 @@ class DashBoardRepository
     {
         $cacheKey = "activities_{$userId}_{$startDate->format('Ymd')}_{$endDate->format('Ymd')}";
 
-        return Cache::remember($cacheKey, now()->addSeconds(60), function () use ($userId, $startDate, $endDate): \Illuminate\Database\Eloquent\Collection {
-            return Activity::query()
-                ->where('user_id', $userId)
-                ->whereBetween('created_at', [$startDate, $endDate])
-                ->with([
-                    'subject',
-                    'project' => function ($query) {
-                        $query->withTrashed();
-                    },
-                    'project.stage',
-                ])
-                ->orderBy('created_at')
-                ->get();
-        });
+        return Cache::remember($cacheKey, now()->addSeconds(60), fn(): \Illuminate\Database\Eloquent\Collection => Activity::query()
+            ->where('user_id', $userId)
+            ->whereBetween('created_at', [$startDate, $endDate])
+            ->with([
+                'subject',
+                'project' => function ($query) {
+                    $query->withTrashed();
+                },
+                'project.stage',
+            ])
+            ->orderBy('created_at')
+            ->get());
     }
 
     /*public function fetchTaskStatistics(): object

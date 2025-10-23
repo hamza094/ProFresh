@@ -38,7 +38,7 @@ class Conversation extends Model
         $this->attributes['message'] = preg_replace(
             '/@([\w\-]+)/',
             '<a href="/user/$1/profile" target="_blank">$0</a>',
-            $message
+            (string) $message
         );
     }
 
@@ -69,7 +69,7 @@ class Conversation extends Model
 
     public function mentionedUsersData(): Collection
     {
-        return empty($this->mentionedUsers())
+        return $this->mentionedUsers() === []
         ? collect()
         : User::whereIn('username', $this->mentionedUsers())
             ->select('id', 'uuid', 'name', 'username')

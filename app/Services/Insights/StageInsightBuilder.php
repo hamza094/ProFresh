@@ -36,7 +36,7 @@ final class StageInsightBuilder implements InsightBuilderInterface
 
         return [
             'type' => $this->determineInsightType($percentage, $status),
-            'title' => $this->generateTitle($stageEnum, $currentStage, $percentage),
+            'title' => $this->generateTitle($stageEnum, $percentage),
             'message' => $this->generateMessage($stageEnum, $currentStage, $percentage, $status),
             'data' => [
                 'value' => $percentage,
@@ -62,9 +62,9 @@ final class StageInsightBuilder implements InsightBuilderInterface
         };
     }
 
-    private function generateTitle(?ProjectStage $stageEnum, string $stageLabel, float $percentage): string
+    private function generateTitle(?ProjectStage $stageEnum, float $percentage): string
     {
-        if ($stageEnum) {
+        if ($stageEnum instanceof \App\Enums\ProjectStage) {
             return match ($stageEnum) {
                 ProjectStage::Completed => 'Project Completed',
                 ProjectStage::Postponed => 'Project Postponed',
@@ -93,7 +93,7 @@ final class StageInsightBuilder implements InsightBuilderInterface
             return sprintf('Project postponed in %s stage.', $stageLabel);
         }
 
-        if ($stageEnum) {
+        if ($stageEnum instanceof \App\Enums\ProjectStage) {
             return match ($stageEnum) {
                 ProjectStage::Delivery => sprintf('Delivery phase (%.1f%% complete) - preparing for launch.', $percentage),
                 ProjectStage::Testing => sprintf('Testing phase (%.1f%% complete) - quality assurance underway.', $percentage),

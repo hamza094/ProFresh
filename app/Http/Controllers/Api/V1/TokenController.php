@@ -54,7 +54,6 @@ class TokenController extends Controller
     public function destroy(int $tokenId): JsonResponse
     {
         $user = auth()->user();
-        $tokenId = (int) $tokenId;
         $currentToken = $user->currentAccessToken();
 
         // @phpstan-ignore-next-line

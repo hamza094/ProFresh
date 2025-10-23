@@ -19,7 +19,7 @@ class ActivitiesResource extends JsonResource
             'description' => $this->{$this->description}(),
             'project' => $this->whenLoaded('project') ? new ProjectsResource($this->project) : null,
             'time' => $this->created_at->diffForHumans(),
-            'subject_id' => $this->subject_type === 'App\\Models\\Task' ? ($this->subject ? $this->subject->id : null) : $this->subject_type,
+            'subject_id' => $this->subject_type === \App\Models\Task::class ? ($this->subject ? $this->subject->id : null) : $this->subject_type,
             'user' => new UserResource($this->whenLoaded('user')),
         ];
     }
@@ -59,7 +59,7 @@ class ActivitiesResource extends JsonResource
     protected function created_task()
     {
         if ($this->subject && $this->subject->title) {
-            return 'Added new task '.' '.Str::limit($this->subject->title, 7, '..').' '.'in';
+            return 'Added new task  '.Str::limit($this->subject->title, 7, '..').' '.'in';
         }
 
         return 'Added new Task in';
@@ -126,16 +126,16 @@ class ActivitiesResource extends JsonResource
 
     protected function sent_invitation_member()
     {
-        return 'Sent invitation'.' '.$this->info.''.'to Project';
+        return 'Sent invitation '.$this->info.''.'to Project';
     }
 
     protected function accept_invitation_member()
     {
-        return 'Invitation accepted by'.' '.$this->info.' of Project';
+        return 'Invitation accepted by '.$this->info.' of Project';
     }
 
     protected function remove_project_member()
     {
-        return 'Member'.' '.$this->info.' '.' removed from project';
+        return 'Member '.$this->info.' '.' removed from project';
     }
 }

@@ -7,6 +7,7 @@ use Illuminate\View\View;
 
 class ProjectComposer
 {
+    public $user;
     /**
      * The user repository implementation.
      *
@@ -19,7 +20,7 @@ class ProjectComposer
      *
      * @return void
      */
-    public function __construct(UserRepository $users)
+    public function __construct()
     {
         // Dependencies are automatically resolved by the service container...
         $this->project = $project;

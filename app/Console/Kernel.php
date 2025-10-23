@@ -26,18 +26,14 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->command('schedule:message')
-            ->when(function () {
-                return Message::messageScheduled()->exists();
-            })->withoutOverlapping();
+            ->when(fn() => Message::messageScheduled()->exists())->withoutOverlapping();
 
         $schedule->command('tasks:notify')
             ->withoutOverlapping()
             ->runInBackground()
             ->everyTwoMinutes()
-            ->when(function () {
-                return Task::dueForNotifications()
-                    ->count() > 0;
-            });
+            ->when(fn() => Task::dueForNotifications()
+                ->count() > 0);
 
         $schedule->command('remove:abandon')->daily();
         $schedule->command('queue:prune-batches --hours=48 --unfinished=72')->daily();

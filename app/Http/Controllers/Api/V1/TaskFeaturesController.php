@@ -144,7 +144,7 @@ class TaskFeaturesController extends Controller
     {
         Gate::authorize('forbid-when-archived', $task);
 
-        $validated = $request->validate([
+        $request->validate([
             'search' => ['required', 'string', 'min:1'],
         ]);
 

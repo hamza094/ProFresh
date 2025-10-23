@@ -12,8 +12,8 @@ use App\Services\Api\V1\ProjectInsightService;
 class ProjectInsightsController extends Controller
 {
     public function __construct(
-        private ProjectInsightService $insightService,
-        private ProjectHealthRecalculationAction $healthRecalculationAction
+        private readonly ProjectInsightService $insightService,
+        private readonly ProjectHealthRecalculationAction $healthRecalculationAction
     ) {}
 
     /**

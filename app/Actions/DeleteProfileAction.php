@@ -28,7 +28,7 @@ class DeleteProfileAction
 
             $admin = $this->findAdminForProject($project, $user->id);
 
-            if ($admin) {
+            if ($admin instanceof \App\Models\User) {
                 $project->user_id = $admin->id;
                 $project->save();
             }

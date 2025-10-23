@@ -14,19 +14,13 @@ class ActivityLogged implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public Activity $activity;
-
-    public int $projectId;
-
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct(Activity $activity, int $projectId)
+    public function __construct(public Activity $activity, public int $projectId)
     {
-        $this->activity = $activity;
-        $this->projectId = $projectId;
     }
 
     /**

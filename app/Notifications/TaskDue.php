@@ -12,6 +12,8 @@ use Illuminate\Notifications\Notification;
 
 class TaskDue extends Notification implements ShouldBroadcast, ShouldQueue
 {
+    public $notifiedType;
+    public $project;
     use Queueable;
 
     /**
@@ -30,10 +32,8 @@ class TaskDue extends Notification implements ShouldBroadcast, ShouldQueue
 
     /**
      * Get the notification's delivery channels.
-     *
-     * @param  mixed  $notifiable
      */
-    public function via($notifiable): array
+    public function via(mixed $notifiable): array
     {
         return ['mail', 'database', 'broadcast'];
     }
@@ -45,10 +45,8 @@ class TaskDue extends Notification implements ShouldBroadcast, ShouldQueue
 
     /**
      * Get the mail representation of the notification.
-     *
-     * @param  mixed  $notifiable
      */
-    public function toMail($notifiable): MailMessage
+    public function toMail(mixed $notifiable): MailMessage
     {
         return (new MailMessage)
             ->line($this->notificationMessage())
@@ -59,10 +57,9 @@ class TaskDue extends Notification implements ShouldBroadcast, ShouldQueue
     /**
      * Get the array representation of the notification.
      *
-     * @param  mixed  $notifiable
      * @return array<string, mixed> The notification data.
      */
-    public function toArray($notifiable): array
+    public function toArray(mixed $notifiable): array
     {
         return [
             'message' => $this->notificationMessage(),
@@ -74,10 +71,9 @@ class TaskDue extends Notification implements ShouldBroadcast, ShouldQueue
     /**
      * Get the broadcast representation of the notification.
      *
-     * @param  mixed  $notifiable
      * @return BroadcastMessage The broadcast notification data.
      */
-    public function toBroadcast($notifiable): BroadcastMessage
+    public function toBroadcast(mixed $notifiable): BroadcastMessage
     {
         return new BroadcastMessage(
             $this->toArray($notifiable)

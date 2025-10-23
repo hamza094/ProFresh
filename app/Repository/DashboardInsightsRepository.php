@@ -64,9 +64,7 @@ class DashboardInsightsRepository
             ->groupBy('project_id')
             ->pluck('overdue_count', 'project_id');
 
-        return $projects->sum(function ($project) use ($threshold, $overdueCounts) {
-            return ($overdueCounts[$project->id] ?? 0) > $threshold ? 1 : 0;
-        });
+        return $projects->sum(fn($project) => ($overdueCounts[$project->id] ?? 0) > $threshold ? 1 : 0);
     }
 
     // Status evaluation moved to service layer.

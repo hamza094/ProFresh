@@ -69,13 +69,11 @@ class MessageService
 
     public function sendNow(Project $project, Message $message): void
     {
-        $message->type == 'mail' ? $job = '\App\Jobs\MailMessage' :
-        $job = '\App\Jobs\SmsMessage';
+        $message->type == 'mail' ? $job = \App\Jobs\MailMessage::class :
+        $job = \App\Jobs\SmsMessage::class;
 
         $jobs = $message->users
-            ->map(function ($user) use ($project, $message, $job) {
-                return new $job($project, $message, $user);
-            });
+            ->map(fn($user) => new $job($project, $message, $user));
 
         $batch = Bus::batch($jobs)
             ->allowFailures()

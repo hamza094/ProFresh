@@ -22,8 +22,6 @@ class SmsMessage implements ShouldQueue
      * @var \App\Models\Podcast
      */
     private $project;
-
-    private $message;
     // private $user;
 
     /**
@@ -31,10 +29,9 @@ class SmsMessage implements ShouldQueue
      *
      * @return void
      */
-    public function __construct(Project $project, Message $message)
+    public function __construct(Project $project, private Message $message)
     {
         $this->project = $project;
-        $this->message = $message;
         // $this->user=$user;
     }
 

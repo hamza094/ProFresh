@@ -35,7 +35,7 @@ class UserService
             $user->password = Hash::make($password);
             $user->save();
             event(new PasswordUpdateEvent($user, now()->toDayDateTimeString()));
-        } catch (\Exception $e) {
+        } catch (\Exception) {
             throw ValidationException::withMessages([
                 'password' => 'Unable to update password. Please try again later.',
             ]);

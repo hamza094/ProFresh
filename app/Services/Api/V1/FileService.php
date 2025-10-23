@@ -37,7 +37,7 @@ class FileService
     }
 
     /* Returns the appropriate folder name for the file type. */
-    private static function getFolderName(string $fileType): string
+    private function getFolderName(string $fileType): string
     {
         return match ($fileType) {
             FileType::CONVERSATION => 'conversations',
@@ -54,7 +54,7 @@ class FileService
 
     private function optimizeFile(UploadedFile $file): void
     {
-        if (strpos($file->getMimeType(), 'image/') === 0) {
+        if (str_starts_with((string) $file->getMimeType(), 'image/')) {
             OptimizerChainFactory::create()->optimize($file->path());
         }
     }
@@ -90,7 +90,7 @@ class FileService
             // Extract the S3 file path robustly
             $parsed = parse_url($avatarUrl);
             $filePath = ltrim($parsed['path'] ?? '', '/');
-            if (! $filePath) {
+            if ($filePath === '' || $filePath === '0') {
                 // If parsing fails, fallback to Str::after
                 $filePath = Str::after($avatarUrl, '.com/');
             }

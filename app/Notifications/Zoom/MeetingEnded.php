@@ -14,28 +14,21 @@ class MeetingEnded extends Notification implements ShouldBroadcast
     use Queueable;
 
     /**
-     * @var array<string, mixed>
-     */
-    protected array $data;
-
-    /**
      * Create a new notification instance.
      *
      * @param  array<string, mixed>  $data
      * @return void
      */
-    public function __construct(array $data)
+    public function __construct(protected array $data)
     {
-        $this->data = $data;
     }
 
     /**
      * Get the notification's delivery channels.
      *
-     * @param  mixed  $notifiable
      * @return array<int, string>
      */
-    public function via($notifiable): array
+    public function via(mixed $notifiable): array
     {
         return ['mail', 'database', 'broadcast'];
     }
@@ -52,10 +45,8 @@ class MeetingEnded extends Notification implements ShouldBroadcast
 
     /**
      * Get the mail representation of the notification.
-     *
-     * @param  mixed  $notifiable
      */
-    public function toMail($notifiable): MailMessage
+    public function toMail(mixed $notifiable): MailMessage
     {
         return (new MailMessage)
             ->subject('Meeting Ended: '.$this->data['meeting_topic'])
@@ -70,10 +61,7 @@ class MeetingEnded extends Notification implements ShouldBroadcast
             ]);
     }
 
-    /**
-     * @param  mixed  $notifiable
-     */
-    public function toBroadcast($notifiable): BroadcastMessage
+    public function toBroadcast(mixed $notifiable): BroadcastMessage
     {
         return new BroadcastMessage([
             'message' => 'Project '.$this->data['project_name'].' Meeting '.$this->data['meeting_topic'].' ended at '.$this->formattedEndTime().' '.$this->data['meeting_timezone'],
@@ -85,10 +73,9 @@ class MeetingEnded extends Notification implements ShouldBroadcast
     /**
      * Get the array representation of the notification.
      *
-     * @param  mixed  $notifiable
      * @return array<string, mixed>
      */
-    public function toArray($notifiable): array
+    public function toArray(mixed $notifiable): array
     {
         return [
             'message' => 'Project '.$this->data['project_name'].' Meeting '.$this->data['meeting_topic'].' ended at '.$this->formattedEndTime().' '.$this->data['meeting_timezone'],

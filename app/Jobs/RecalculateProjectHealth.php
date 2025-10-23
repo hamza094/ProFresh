@@ -40,7 +40,7 @@ class RecalculateProjectHealth implements ShouldQueue
     public function handle(ProjectHealthMetricAction $action, ?ProjectInsightsPreloader $preloader = null): void
     {
         $project = $this->findProject();
-        if (! $project) {
+        if (!$project instanceof \App\Models\Project) {
             return;
         }
 
@@ -80,7 +80,7 @@ class RecalculateProjectHealth implements ShouldQueue
             return;
         }
 
-        $preloader = $preloader ?? app(ProjectInsightsPreloader::class);
+        $preloader ??= app(ProjectInsightsPreloader::class);
 
         $preloader->preloadForHealth($project);
 
@@ -96,7 +96,7 @@ class RecalculateProjectHealth implements ShouldQueue
             return $this->precomputedScore; // Trust upstream provided value
         }
 
-        return (float) $action->execute($project);
+        return $action->execute($project);
     }
 
     /**

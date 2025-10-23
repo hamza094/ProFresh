@@ -24,7 +24,7 @@ class MeetingUpdateRequest extends FormRequest
                 $this->merge([
                     'start_time' => (new DateTime($this->input('start_time')))->format('Y-m-d H:i:s'),
                 ]);
-            } catch (\Exception $e) {
+            } catch (\Exception) {
                 $this->merge([
                     'start_time' => null,
                 ]);

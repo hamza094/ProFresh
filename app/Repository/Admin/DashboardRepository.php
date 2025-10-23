@@ -32,6 +32,6 @@ class DashboardRepository
             ->orderBy('month')
             ->get();
 
-        return compact('projectsData', 'tasksData');
+        return ['projectsData' => $projectsData, 'tasksData' => $tasksData];
     }
 }

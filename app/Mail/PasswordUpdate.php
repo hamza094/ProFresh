@@ -12,16 +12,15 @@ class PasswordUpdate extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
 
-    /**
-     * Create a new message instance.
-     *
-     * @return void
-     */
-    protected string $time;
-
-    public function __construct(string $time)
+    public function __construct(
+        /**
+         * Create a new message instance.
+         *
+         * @return void
+         */
+        protected string $time
+    )
     {
-        $this->time = $time;
     }
 
     /**

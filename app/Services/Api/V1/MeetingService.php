@@ -23,7 +23,7 @@ class MeetingService
 
         $meetingsData = $meetingsData->paginate(3);
 
-        return compact('message', 'meetingsData');
+        return ['message' => $message, 'meetingsData' => $meetingsData];
     }
 
     private function getMessage(bool $isPrevious): string

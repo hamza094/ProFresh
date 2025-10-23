@@ -13,16 +13,13 @@ use Illuminate\Http\JsonResponse;
 
 class ConversationController extends ApiController
 {
-    private ConversationService $conversationService;
-
     /**
      * Service For Conversation Feature
      *
      * App\Service\Api\V1\ConversationService
      */
-    public function __construct(ConversationService $conversationService)
+    public function __construct(private readonly ConversationService $conversationService)
     {
-        $this->conversationService = $conversationService;
     }
 
     public function index(Project $project, ConversationRepository $repository): JsonResponse

@@ -53,7 +53,7 @@ class RegisterController extends ApiController
                 'user' => new UsersResource($user),
             ], 201);
 
-        } catch (\Exception $e) {
+        } catch (\Exception) {
             return response()->json(['error' => 'User registration failed.'], 500);
         }
 

@@ -14,8 +14,8 @@ class DatabaseChannel extends Channel
 
         DB::table('notifications')->insertOrIgnore([
             'id' => $notification->id,
-            'type' => get_class($notification),
-            'notifiable_type' => get_class($notifiable),
+            'type' => $notification::class,
+            'notifiable_type' => $notifiable::class,
             'notifiable_id' => $notifiable->id,
             'data' => $data,
             'signature' => hash('sha256', $data),

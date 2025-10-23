@@ -19,11 +19,11 @@ use App\Models\Project;
 class ProjectHealthMetricAction
 {
     public function __construct(
-        private TaskHealthMetricAction $taskHealthAction,
-        private TeamCollaborationMetricAction $collaborationHealthAction,
-        private StageProgressMetricAction $stageProgressAction,
-        private CommunicationHealthMetricAction $communicationHealthAction,
-        private ActivityHealthMetricAction $activityHealthAction
+        private readonly TaskHealthMetricAction $taskHealthAction,
+        private readonly TeamCollaborationMetricAction $collaborationHealthAction,
+        private readonly StageProgressMetricAction $stageProgressAction,
+        private readonly CommunicationHealthMetricAction $communicationHealthAction,
+        private readonly ActivityHealthMetricAction $activityHealthAction
     ) {}
 
     public function execute(Project $project): float

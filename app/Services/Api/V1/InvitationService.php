@@ -102,13 +102,11 @@ class InvitationService
     {
         $searchTerm = $request->input('query');
 
-        $users = User::query()
+        return User::query()
             ->whereAny(['name', 'email'], 'LIKE', '%'.$searchTerm.'%')
             ->select('uuid', 'name', 'email')
             ->limit(5)
             ->get();
-
-        return $users;
     }
 
     /**

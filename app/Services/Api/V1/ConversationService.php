@@ -16,16 +16,13 @@ use Illuminate\Support\Facades\Storage;
 
 class ConversationService
 {
-    private FileService $fileService;
-
     /**
      * Service For File Storage
      *
      * App\Service\Api\V1\FileService
      */
-    public function __construct(FileService $fileService)
+    public function __construct(private readonly FileService $fileService)
     {
-        $this->fileService = $fileService;
     }
 
     /**

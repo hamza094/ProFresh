@@ -49,7 +49,7 @@ final class ZoomServiceFake implements Zoom
     public function authorize(
         AuthorizationCallbackDetails $callbackDetails
     ): AccessTokenDetails {
-        if (isset($this->failureException)) {
+        if ($this->failureException instanceof \App\Exceptions\Integrations\Zoom\ZoomException) {
             throw $this->failureException;
         }
 
@@ -90,7 +90,7 @@ final class ZoomServiceFake implements Zoom
      */
     public function createMeeting(array $validated, User $user): Meeting
     {
-        if (isset($this->failureException)) {
+        if ($this->failureException instanceof \App\Exceptions\Integrations\Zoom\ZoomException) {
             throw $this->failureException;
         }
         $this->meetingsToCreate->push($validated);
@@ -103,7 +103,7 @@ final class ZoomServiceFake implements Zoom
      */
     public function updateMeeting(array $validated, User $user): \Illuminate\Http\JsonResponse
     {
-        if (isset($this->failureException)) {
+        if ($this->failureException instanceof \App\Exceptions\Integrations\Zoom\ZoomException) {
             throw $this->failureException;
         }
 
@@ -112,7 +112,7 @@ final class ZoomServiceFake implements Zoom
 
     public function deleteMeeting(int $meetingId, User $user): \Illuminate\Http\JsonResponse
     {
-        if (isset($this->failureException)) {
+        if ($this->failureException instanceof \App\Exceptions\Integrations\Zoom\ZoomException) {
             throw $this->failureException;
         }
 
@@ -121,14 +121,12 @@ final class ZoomServiceFake implements Zoom
 
     public function getZakToken(User $user): string
     {
-        $token = 'zak&token';
-
-        return $token;
+        return 'zak&token';
     }
 
     private function fakeMeeting(): Meeting
     {
-        $faker = app(Generator::class);
+        app(Generator::class);
 
         return new Meeting(
             meeting_id: 1234,

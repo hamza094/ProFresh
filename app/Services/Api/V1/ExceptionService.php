@@ -10,7 +10,7 @@ use Saloon\RateLimitPlugin\Exceptions\RateLimitReachedException;
 
 class ExceptionService
 {
-    public function handleZoom(\Exception $exception): JsonResponse
+    public function handleZoom(\Throwable $exception): JsonResponse
     {
         return match (true) {
             $exception instanceof UnauthorizedException => response()->json(['error' => $exception->getMessage()], 403),

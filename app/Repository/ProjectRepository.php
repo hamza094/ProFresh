@@ -27,7 +27,7 @@ class ProjectRepository
         $filter = request()->only(array_keys($filters));
         $filter = key($filter);
 
-        if (! empty($filter) && array_key_exists($filter, $filters)) {
+        if ($filter !== 0 && ($filter !== '' && $filter !== '0') && array_key_exists($filter, $filters)) {
             $method = $filters[$filter];
             $activities = $this->$method($activities);
         }
@@ -52,7 +52,7 @@ class ProjectRepository
      */
     protected function filterActivityByTasks($activities): Collection
     {
-        return $activities->filter(fn ($activity) => str_contains($activity['description'], '_task'));
+        return $activities->filter(fn ($activity) => str_contains((string) $activity['description'], '_task'));
     }
 
     /**
@@ -62,7 +62,7 @@ class ProjectRepository
      */
     protected function filterActivityByProjectSpecified($activities): Collection
     {
-        return $activities->filter(fn ($activity) => str_contains($activity['description'], '_project'));
+        return $activities->filter(fn ($activity) => str_contains((string) $activity['description'], '_project'));
     }
 
     /**

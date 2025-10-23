@@ -18,16 +18,13 @@ use Illuminate\Validation\ValidationException;
 
 class InvitationController extends ApiController
 {
-    private InvitationService $invitationService;
-
     /**
      * Service For Invitation Feature
      *
      * App\Service\Api\V1\InvitationService
      */
-    public function __construct(InvitationService $invitationService)
+    public function __construct(private readonly InvitationService $invitationService)
     {
-        $this->invitationService = $invitationService;
     }
 
     /**
@@ -95,7 +92,7 @@ class InvitationController extends ApiController
                 'accepted_user' => new InvitedUserResource(Auth::user()),
             ], 200);
 
-        } catch (\Exception $ex) {
+        } catch (\Exception) {
             return response()->json(['error' => 'An unexpected error occurred.'], 500);
         }
     }

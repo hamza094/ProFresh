@@ -29,9 +29,7 @@ class CreatePlan extends Paypal
 
         $plan->setMerchantPreferences($merchantPreferences);
 
-        $output = $plan->create($this->apiContext);
-
-        return $output;
+        return $plan->create($this->apiContext);
     }
 
     protected function Plan(): Plan
@@ -86,16 +84,12 @@ class CreatePlan extends Paypal
     {
         $params = ['page_size' => '5'];
 
-        $planList = Plan::all($params, $this->apiContext);
-
-        return $planList;
+        return Plan::all($params, $this->apiContext);
     }
 
     public function planDetail($id)
     {
-        $plan = Plan::get($id, $this->apiContext);
-
-        return $plan;
+        return Plan::get($id, $this->apiContext);
     }
 
     public function active($id)
@@ -118,8 +112,6 @@ class CreatePlan extends Paypal
 
         $createdPlan->update($patchRequest, $this->apiContext);
 
-        $plan = Plan::get($createdPlan->getId(), $this->apiContext);
-
-        return $plan;
+        return Plan::get($createdPlan->getId(), $this->apiContext);
     }
 }

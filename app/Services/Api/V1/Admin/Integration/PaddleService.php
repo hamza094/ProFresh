@@ -24,17 +24,15 @@ final class PaddleService implements PaddleApi
 
         $subscriptions = collect($subscriptionsData['response']);
 
-        $filteredSubscriptions = $subscriptions->map(function ($subscription) {
-            return new Data(
-                $subscription['user_id'] ?? 0,
-                $subscription['user_email'] ?? 0,
-                $subscription['signup_date'] ?? 0,
-                $subscription['last_payment']['amount'] ?? 0,
-                $subscription['last_payment']['currency'] ?? 0,
-                $subscription['last_payment']['date'] ?? 0,
-                $subscription['next_payment']['date'] ?? 0,
-            );
-        })->filter();
+        $filteredSubscriptions = $subscriptions->map(fn($subscription) => new Data(
+            $subscription['user_id'] ?? 0,
+            $subscription['user_email'] ?? 0,
+            $subscription['signup_date'] ?? 0,
+            $subscription['last_payment']['amount'] ?? 0,
+            $subscription['last_payment']['currency'] ?? 0,
+            $subscription['last_payment']['date'] ?? 0,
+            $subscription['next_payment']['date'] ?? 0,
+        ))->filter();
 
         return DataCollection::make($filteredSubscriptions);
     }

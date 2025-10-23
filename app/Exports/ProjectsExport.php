@@ -12,6 +12,7 @@ use Maatwebsite\Excel\Concerns\WithMapping;
 
 class ProjectsExport implements FromQuery, WithHeadings, WithMapping
 {
+    public $project;
     use Exportable;
 
     public function __construct(Project $project)

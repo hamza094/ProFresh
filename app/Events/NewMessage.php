@@ -14,19 +14,13 @@ class NewMessage implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public Conversation $conversation;
-
-    public string $projectSlug;
-
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct(Conversation $conversation, string $projectSlug)
+    public function __construct(public Conversation $conversation, public string $projectSlug)
     {
-        $this->conversation = $conversation;
-        $this->projectSlug = $projectSlug;
     }
 
     /**

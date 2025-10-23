@@ -27,20 +27,14 @@ class MailMessage implements ShouldQueue
      */
     protected $project;
 
-    protected $message;
-
-    protected $user;
-
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct(Project $project, $message, $user)
+    public function __construct(Project $project, protected $message, protected $user)
     {
         $this->project = $project;
-        $this->message = $message;
-        $this->user = $user;
     }
 
     /**

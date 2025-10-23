@@ -55,6 +55,6 @@ class VerifyZoomWebhook
     {
         $message = 'v0:'.$timestamp.':'.json_encode($request->all(), JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
 
-        return 'v0='.hash_hmac('sha256', $message, config('services.zoom.webhook_secret'));
+        return 'v0='.hash_hmac('sha256', $message, (string) config('services.zoom.webhook_secret'));
     }
 }

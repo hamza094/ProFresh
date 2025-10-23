@@ -26,10 +26,9 @@ class ProjectUpdated extends Notification implements ShouldBroadcast, ShouldQueu
     /**
      * Get the notification's delivery channels.
      *
-     * @param  mixed  $notifiable
      * @return array<string> The channels through which the notification is delivered.
      */
-    public function via($notifiable): array
+    public function via(mixed $notifiable): array
     {
         return ['database', 'broadcast'];
     }
@@ -51,10 +50,9 @@ class ProjectUpdated extends Notification implements ShouldBroadcast, ShouldQueu
     /**
      * Get the array representation of the notification.
      *
-     * @param  mixed  $notifiable
      * @return array<string, mixed> The notification data.
      */
-    public function toArray($notifiable): array
+    public function toArray(mixed $notifiable): array
     {
         return $this->notificationData();
     }
@@ -62,10 +60,9 @@ class ProjectUpdated extends Notification implements ShouldBroadcast, ShouldQueu
     /**
      * Get the broadcast representation of the notification.
      *
-     * @param  mixed  $notifiable
      * @return BroadcastMessage The broadcast notification data.
      */
-    public function toBroadcast($notifiable): BroadcastMessage
+    public function toBroadcast(mixed $notifiable): BroadcastMessage
     {
         return new BroadcastMessage(
             $this->notificationData()

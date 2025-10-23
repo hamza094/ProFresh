@@ -164,6 +164,6 @@ final readonly class DashboardInsightsService
      */
     private function makeInsight(string $type, string $title, string $message, string $action, string $priority = 'medium'): array
     {
-        return compact('type', 'title', 'message', 'action', 'priority');
+        return ['type' => $type, 'title' => $title, 'message' => $message, 'action' => $action, 'priority' => $priority];
     }
 }

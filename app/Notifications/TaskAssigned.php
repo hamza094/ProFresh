@@ -29,20 +29,16 @@ class TaskAssigned extends Notification implements ShouldBroadcast, ShouldQueue
 
     /**
      * Get the notification's delivery channels.
-     *
-     * @param  mixed  $notifiable
      */
-    public function via($notifiable): array
+    public function via(mixed $notifiable): array
     {
         return ['mail', 'database', 'broadcast'];
     }
 
     /**
      * Get the mail representation of the notification.
-     *
-     * @param  mixed  $notifiable
      */
-    public function toMail($notifiable): MailMessage
+    public function toMail(mixed $notifiable): MailMessage
     {
         return (new MailMessage)
             ->from('ProFresh@live.com', 'ProFresh')
@@ -70,10 +66,9 @@ class TaskAssigned extends Notification implements ShouldBroadcast, ShouldQueue
     /**
      * Get the array representation of the notification.
      *
-     * @param  mixed  $notifiable
      * @return array<string, mixed> The notification data.
      */
-    public function toArray($notifiable): array
+    public function toArray(mixed $notifiable): array
     {
         return $this->notificationData();
     }
@@ -81,10 +76,9 @@ class TaskAssigned extends Notification implements ShouldBroadcast, ShouldQueue
     /**
      * Get the broadcast representation of the notification.
      *
-     * @param  mixed  $notifiable
      * @return BroadcastMessage The broadcast notification data.
      */
-    public function toBroadcast($notifiable): BroadcastMessage
+    public function toBroadcast(mixed $notifiable): BroadcastMessage
     {
         return new BroadcastMessage(
             $this->notificationData()

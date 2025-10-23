@@ -17,9 +17,7 @@ class MessageController extends Controller
     {
         $message->checkOptionSelect($request);
 
-        $users = collect($request->users)->filter(function ($user) {
-            return ! empty($user['user_id']);
-        })->pluck('user_id');
+        $users = collect($request->users)->filter(fn($user) => ! empty($user['user_id']))->pluck('user_id');
 
         return $message->send($project, $users);
     }

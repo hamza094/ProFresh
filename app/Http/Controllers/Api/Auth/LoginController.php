@@ -13,11 +13,8 @@ use Illuminate\Http\Request;
 
 class LoginController extends ApiController
 {
-    protected LoginUserService $loginUserService;
-
-    public function __construct(LoginUserService $loginUserService)
+    public function __construct(protected LoginUserService $loginUserService)
     {
-        $this->loginUserService = $loginUserService;
     }
 
     /**

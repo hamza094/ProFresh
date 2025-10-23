@@ -63,7 +63,7 @@ class UsersResource extends JsonResource
             /**
              * Return user email verified or not
              */
-            'verified' => $this->email_verified_at ? true : false,
+            'verified' => (bool) $this->email_verified_at,
 
         ];
     }

@@ -68,8 +68,6 @@ trait RecordActivity
 
     /**
      * Create the activity log entry in the database.
-     *
-     * @return Activity
      */
     public function recordActivity(string $description, array $affectedUserIds = []): void
     {

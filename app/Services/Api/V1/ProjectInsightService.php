@@ -22,13 +22,13 @@ final class ProjectInsightService
     private array $insightBuilders;
 
     public function __construct(
-        private ProjectInsightsRepository $repository,
-        private TaskHealthMetricAction $taskHealthAction,
-        private HealthInsightBuilder $healthBuilder,
-        private TaskHealthInsightBuilder $taskHealthBuilder,
-        private TeamCollaborationInsightBuilder $collaborationBuilder,
-        private RiskInsightBuilder $riskBuilder,
-        private StageInsightBuilder $stageBuilder,
+        private readonly ProjectInsightsRepository $repository,
+        private readonly TaskHealthMetricAction $taskHealthAction,
+        private readonly HealthInsightBuilder $healthBuilder,
+        private readonly TaskHealthInsightBuilder $taskHealthBuilder,
+        private readonly TeamCollaborationInsightBuilder $collaborationBuilder,
+        private readonly RiskInsightBuilder $riskBuilder,
+        private readonly StageInsightBuilder $stageBuilder,
     ) {
         $this->setupBuilders();
     }
@@ -44,7 +44,7 @@ final class ProjectInsightService
 
             'task-health' => fn (ProjectMetricsDto $m, ?Project $project = null) => $this->taskHealthBuilder->build(
                 $m->taskHealth,
-                $project ? ['summary' => $this->taskHealthAction->summary($project)] : []
+                $project instanceof \App\Models\Project ? ['summary' => $this->taskHealthAction->summary($project)] : []
             ),
             'collaboration' => fn (ProjectMetricsDto $m, ?Project $project = null) => $this->collaborationBuilder->build(
                 $m->collaborationScore,
@@ -63,7 +63,7 @@ final class ProjectInsightService
      */
     public function getInsights(Project $project, array $sections = []): array
     {
-        if (empty($sections)) {
+        if ($sections === []) {
             $sections = array_keys($this->insightBuilders);
         }
 
@@ -122,7 +122,7 @@ final class ProjectInsightService
      */
     private function getCollaborationDetails(?Project $project): array
     {
-        if (! $project) {
+        if (!$project instanceof \App\Models\Project) {
             return [];
         }
 

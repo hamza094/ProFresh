@@ -24,8 +24,8 @@ trait HasSubscription
         if (! $subscription) {
             return 'Not Subscribed';
         }
-        $monthlyPlanId = $monthlyPlanId ?? (int) config('services.paddle.monthly');
-        $yearlyPlanId = $yearlyPlanId ?? (int) config('services.paddle.yearly');
+        $monthlyPlanId ??= (int) config('services.paddle.monthly');
+        $yearlyPlanId ??= (int) config('services.paddle.yearly');
         $plans = [
             $monthlyPlanId => 'monthly',
             $yearlyPlanId => 'yearly',

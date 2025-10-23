@@ -2,7 +2,7 @@
 
 namespace App\Data;
 
-final class ProjectMetricsDto
+final readonly class ProjectMetricsDto
 {
     /**
      * Data transfer object for project metrics.
@@ -17,10 +17,10 @@ final class ProjectMetricsDto
      * @param  float|null  $collaborationScore  Collaboration score (0-100)
      */
     public function __construct(
-        public readonly ?float $health = null,
-        public readonly ?float $taskHealth = null,
-        public readonly ?array $upcomingRisk = null,
-        public readonly ?array $stageProgress = null,
-        public readonly ?float $collaborationScore = null,
+        public ?float $health = null,
+        public ?float $taskHealth = null,
+        public ?array $upcomingRisk = null,
+        public ?array $stageProgress = null,
+        public ?float $collaborationScore = null,
     ) {}
 }

@@ -12,8 +12,6 @@ use Illuminate\Queue\SerializesModels;
 
 class MeetingStatusUpdate implements ShouldBroadcast
 {
-    public Meeting $meeting;
-
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     /**
@@ -21,9 +19,8 @@ class MeetingStatusUpdate implements ShouldBroadcast
      *
      * @return void
      */
-    public function __construct(Meeting $meeting)
+    public function __construct(public Meeting $meeting)
     {
-        $this->meeting = $meeting;
     }
 
     public function broadcastOn()
