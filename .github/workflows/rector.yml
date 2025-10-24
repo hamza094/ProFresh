@@ -38,4 +38,4 @@ jobs:
 
       - name: Run Rector (dry-run)
         run: |
-          vendor/bin/rector process --dry-run --no-progress
+          vendor/bin/rector process --dry-run --no-progress-bar
