@@ -135,8 +135,8 @@ final class ZoomServiceFake implements Zoom
             created_at: '2024-05-18 18:00:07',
             duration: 30,
             start_time: '2024-05-27 18:00:07',
-            start_url: 'https://zoom.us/s/1234567890?pwd=fake-test-password',
-            join_url: 'https://zoom.us/j/1234567890?pwd=fake-test-password',
+            start_url: 'https://zoom.us/s/1234567890?pwd=fake-test-password', // Test fixture; no real credentials. NOSONAR
+            join_url: 'https://zoom.us/j/1234567890?pwd=fake-test-password', // Test fixture; no real credentials. NOSONAR
             status: 'waiting',
             timezone: 'UTC',
             password: 'herpku',

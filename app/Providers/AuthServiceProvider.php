@@ -60,6 +60,7 @@ class AuthServiceProvider extends ServiceProvider
             Carbon::now()->addMinutes(60),
             [
                 'user' => $notifiable->uuid,
+                // sha1 is expected by Laravel's verification flow; the URL itself is HMAC-signed via temporarySignedRoute. NOSONAR
                 'hash' => sha1((string) $notifiable->getEmailForVerification()),
             ]
         );
