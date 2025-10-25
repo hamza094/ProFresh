@@ -41,7 +41,7 @@ jobs:
         run: chmod -R 777 storage bootstrap/cache
 
       - name: Start Redis Server in GitHub Actions
-        uses: supercharge/redis-github-action@1.4.0
+        uses: supercharge/redis-github-action@1.8.0
 
       - name: Create Database
         run: |
