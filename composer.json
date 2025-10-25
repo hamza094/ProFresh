@@ -46,7 +46,7 @@
     "require-dev": {
         "fakerphp/faker": "^1.23",
         "kitloong/laravel-migrations-generator": "^7.2",
-        "larastan/larastan": "^2.0",
+        "larastan/larastan": "^3.7",
         "laravel/telescope": "^5.2",
         "mockery/mockery": "^1.6",
         "nunomaduro/collision": "^8.1",
