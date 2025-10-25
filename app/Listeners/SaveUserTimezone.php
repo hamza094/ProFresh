@@ -25,11 +25,15 @@ class SaveUserTimezone
     public function handle(UserLogin $event)
     {
         try {
-            $ip = Http::get('http://ipecho.net/plain')->body();
-            $getTz = Http::get("http://ip-api.com/json/$ip")->json();
-            $tz = $getTz['timezone'];
-            $event->user->timezone = $tz;
-            $event->user->save();
+            $ip = Http::get('https://ipecho.net/plain')->body();
+            $getTz = Http::get("https://ipapi.co/{$ip}/json/")->json();
+            $tz = $getTz['timezone'] ?? $getTz['time_zone'] ?? null;
+            if ($tz) {
+                $event->user->timezone = $tz;
+                $event->user->save();
+            } else {
+                \Log::warning("Could not determine timezone for IP {$ip}", ['response' => $getTz]);
+            }
 
         } catch (\Exception $e) {
             \Log::error('Failed to update user timezone: '.$e->getMessage());

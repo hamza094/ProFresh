@@ -150,7 +150,8 @@ trait RecordActivity
 
         return $query
             ->with(['user:id,name,uuid', 'subject' => fn ($query) => $query->withTrashed()])
-            ->latest();
+            ->latest()
+            ->orderByDesc('id'); // Break ties when multiple activities share same created_at
     }
 
     /**

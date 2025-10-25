@@ -11,6 +11,8 @@ class ActivityTest extends TestCase
     use ProjectSetup,RefreshDatabase;
 
     /** @test */
+
+    // filter
     public function it_filters_activities_by_project_specified()
     {
         $task = $this->project->addTask('test task');
@@ -20,8 +22,8 @@ class ActivityTest extends TestCase
         $data = $response->json()['data'];
 
         $this->assertCount(2, $data);
-        $this->assertEquals('New project created', $data[0]['description']);
-        $this->assertEquals('Task "'.($task->title).'" added', $data[1]['description']);
+        $this->assertEquals('Task "'.($task->title).'" added', $data[0]['description']);
+        $this->assertEquals('New project created', $data[1]['description']);
     }
 
     /** @test */
@@ -43,7 +45,7 @@ class ActivityTest extends TestCase
 
         $response = $this->getJson($this->project->path().'/activities?mine='.$this->project->user->id)->assertOk();
 
-        $this->assertEquals('New project created', $response->json()['data'][0]['description']);
+        $this->assertEquals('New project created', $response->json()['data'][1]['description']);
     }
 
     /** @test */

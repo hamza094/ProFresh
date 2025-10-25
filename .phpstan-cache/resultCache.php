@@ -7100,12 +7100,12 @@ return [
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Method App\\Models\\Meeting::activityChanges() return type has no value type specified in iterable type array.',
        'file' => 'D:\\apps\\profresh\\app\\Traits\\RecordActivity.php (in context of class App\\Models\\Meeting)',
-       'line' => 159,
+       'line' => 160,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\app\\Models\\Meeting.php',
        'traitFilePath' => 'D:\\apps\\profresh\\app\\Traits\\RecordActivity.php',
        'tip' => 'See: https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type',
-       'nodeLine' => 159,
+       'nodeLine' => 160,
        'nodeType' => 'PHPStan\\Node\\InClassMethodNode',
        'identifier' => 'missingType.iterableValue',
        'metadata' => 
@@ -7311,12 +7311,12 @@ return [
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Method App\\Models\\Message::activityChanges() return type has no value type specified in iterable type array.',
        'file' => 'D:\\apps\\profresh\\app\\Traits\\RecordActivity.php (in context of class App\\Models\\Message)',
-       'line' => 159,
+       'line' => 160,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\app\\Models\\Message.php',
        'traitFilePath' => 'D:\\apps\\profresh\\app\\Traits\\RecordActivity.php',
        'tip' => 'See: https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type',
-       'nodeLine' => 159,
+       'nodeLine' => 160,
        'nodeType' => 'PHPStan\\Node\\InClassMethodNode',
        'identifier' => 'missingType.iterableValue',
        'metadata' => 
@@ -7765,12 +7765,12 @@ return [
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Method App\\Models\\Project::activityChanges() return type has no value type specified in iterable type array.',
        'file' => 'D:\\apps\\profresh\\app\\Traits\\RecordActivity.php (in context of class App\\Models\\Project)',
-       'line' => 159,
+       'line' => 160,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\app\\Models\\Project.php',
        'traitFilePath' => 'D:\\apps\\profresh\\app\\Traits\\RecordActivity.php',
        'tip' => 'See: https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type',
-       'nodeLine' => 159,
+       'nodeLine' => 160,
        'nodeType' => 'PHPStan\\Node\\InClassMethodNode',
        'identifier' => 'missingType.iterableValue',
        'metadata' => 
@@ -8075,12 +8075,12 @@ return [
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Method App\\Models\\Task::activityChanges() return type has no value type specified in iterable type array.',
        'file' => 'D:\\apps\\profresh\\app\\Traits\\RecordActivity.php (in context of class App\\Models\\Task)',
-       'line' => 159,
+       'line' => 160,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\app\\Models\\Task.php',
        'traitFilePath' => 'D:\\apps\\profresh\\app\\Traits\\RecordActivity.php',
        'tip' => 'See: https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type',
-       'nodeLine' => 159,
+       'nodeLine' => 160,
        'nodeType' => 'PHPStan\\Node\\InClassMethodNode',
        'identifier' => 'missingType.iterableValue',
        'metadata' => 
@@ -12841,7 +12841,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Traits\\RecordActivity.php' => 
   array (
-    'fileHash' => 'a1575497e3c162b8970a0c58e3e919848d8eac4e',
+    'fileHash' => '8d275216d4149772286b71ac779dbb1ea32eba82',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Actions\\DeleteProfileAction.php',

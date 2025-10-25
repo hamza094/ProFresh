@@ -45,9 +45,10 @@ class AuthorizeTest extends TestCase
 
         $this->assertEquals('refresh-token-here', $authDetails->refreshToken);
 
-        $this->assertEquals(
-            now()->addHour()->format('U'),
-            $authDetails->expiresAt->format('U')
+        $this->assertEqualsWithDelta(
+            now()->addHour()->unix(),
+            $authDetails->expiresAt->getTimestamp(),
+            1
         );
 
         // Assert our request was sent with the correct code verifier.

@@ -36,9 +36,9 @@ class RecordActivityTest extends TestCase
 
         $this->project->update(['name' => 'changed name']);
 
-        $this->assertCount(2, $this->project->activities);
+        $this->assertEquals(2, $this->project->activities()->count());
 
-        $activity = $this->project->activities->last();
+        $activity = $this->project->activities()->first();
 
         $this->assertEquals('updated_project', $activity->description);
 
@@ -51,7 +51,7 @@ class RecordActivityTest extends TestCase
     /** @test */
     public function it_removes_project_activities_when_deleted()
     {
-        $this->assertCount(1, $this->project->activities);
+        $this->assertEquals(1, $this->project->activities()->count());
 
         $this->project->delete();
 
@@ -70,7 +70,7 @@ class RecordActivityTest extends TestCase
         $this->project->refresh();
 
         $this->assertEquals('restored_project',
-            $this->project->activities->last()->description);
+            $this->project->activities()->first()->description);
     }
 
     /** @test */
@@ -78,11 +78,9 @@ class RecordActivityTest extends TestCase
     {
         $task = $this->project->addTask('Test Task');
 
-        $this->assertCount(2, $this->project->activities);
+        $this->assertEquals(2, $this->project->activities()->count());
 
-        $activity = $this->project->activities->last();
-
-        $activity->refresh();
+        $activity = $this->project->activities()->first();
 
         $this->assertEquals('created_task', $activity->description);
 
@@ -98,9 +96,7 @@ class RecordActivityTest extends TestCase
 
         $this->putJson($task->path(), ['title' => 'changed']);
 
-        $activity = $this->project->activities->last();
-
-        $activity->refresh();
+        $activity = $this->project->activities()->first();
 
         $this->assertEquals('updated_task', $activity->description);
 
@@ -117,9 +113,9 @@ class RecordActivityTest extends TestCase
 
         $task->delete();
 
-        $this->assertCount(3, $this->project->activities);
+        $this->assertEquals(3, $this->project->activities()->count());
 
-        $this->assertEquals('deleted_task', $this->project->activities->last()->description);
+        $this->assertEquals('deleted_task', $this->project->activities()->first()->description);
     }
 
     /** @test */
@@ -134,9 +130,8 @@ class RecordActivityTest extends TestCase
 
         $this->deleteJson($task->path().'/remove');
 
-        tap($this->project->activities->last(), function ($activity) {
-            $this->assertEquals('deleted_task', $activity->description);
-        });
+        $activity = $this->project->activities()->first();
+        $this->assertEquals('deleted_task', $activity->description);
     }
 
     /** @test */
@@ -148,9 +143,9 @@ class RecordActivityTest extends TestCase
             'email' => $user->email,
         ]);
 
-        $this->assertCount(2, $this->project->activities);
+        $this->assertEquals(2, $this->project->activities()->count());
 
-        $this->assertEquals('invitation_sent', $this->project->activities->last()->description);
+        $this->assertEquals('invitation_sent', $this->project->activities()->first()->description);
     }
 
     /** @test */
@@ -164,7 +159,7 @@ class RecordActivityTest extends TestCase
 
         $this->getJson($this->project->path().'/accept-invitation');
 
-        $this->assertEquals('invitation_accepted', $this->project->activities->last()->description);
+        $this->assertEquals('invitation_accepted', $this->project->activities()->first()->description);
     }
 
     /** @test */
@@ -176,7 +171,7 @@ class RecordActivityTest extends TestCase
 
         $this->getJson($this->project->path().'/remove/member/'.$user->uuid);
 
-        $this->assertEquals('member_removed', $this->project->activities->last()->description);
+        $this->assertEquals('member_removed', $this->project->activities()->first()->description);
     }
 
     /** @test */
@@ -190,8 +185,8 @@ class RecordActivityTest extends TestCase
             'mail' => true,
         ]);
 
-        $this->assertCount(3, $this->project->activities);
+        $this->assertEquals(3, $this->project->activities()->count());
 
-        $this->assertEquals('created_message', $this->project->activities->last()->description);
+        $this->assertEquals('created_message', $this->project->activities()->first()->description);
     }
 }

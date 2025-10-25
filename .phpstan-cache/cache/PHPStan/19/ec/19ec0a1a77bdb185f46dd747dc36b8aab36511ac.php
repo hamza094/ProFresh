@@ -4467,7 +4467,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'D:\\apps\\profresh\\app\\Traits\\RecordActivity.php' => 
     array (
-      0 => 'a1575497e3c162b8970a0c58e3e919848d8eac4e',
+      0 => '8d275216d4149772286b71ac779dbb1ea32eba82',
       1 => 
       array (
         0 => 'app\\traits\\recordactivity',
