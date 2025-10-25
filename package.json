@@ -26,7 +26,7 @@
         "@tabler/core": "^1.0.0-beta20",
         "@zoom/meetingsdk": "^3.8.0",
         "animate.css": "^4.1.1",
-        "chart.js": "^2.9.4",
+        "chart.js": "^4.5.1",
         "emoji-mart-vue-fast": "^11.2.0",
         "js-file-download": "^0.4.12",
         "laravel-echo": "^1.10.0",
