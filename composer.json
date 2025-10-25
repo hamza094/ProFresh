@@ -39,7 +39,7 @@
         "spatie/laravel-backup": "^8.4",
         "spatie/laravel-permission": "^6.3",
         "torann/geoip": "^3.0",
-        "vonage/client": "^3.0",
+        "vonage/client": "^4.2",
         "wendelladriel/laravel-validated-dto": "^3.5",
         "jamesmills/laravel-timezone": "dev-master as 1.7.0"
     },
