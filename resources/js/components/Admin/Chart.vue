@@ -32,6 +32,9 @@
         }
       };
     },
+    mounted() {
+      this.fetchData();
+    },
     methods: {
       async fetchData() {
         try {
@@ -48,9 +51,6 @@
           console.error('Error fetching data:', error);
         }
       },
-    },
-    mounted() {
-      this.fetchData();
     }
   };
 </script>

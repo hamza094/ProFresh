@@ -31,7 +31,8 @@
     </div>
 
     <ul class="list-group">
-      <li v-for="notification in notifications.data" :key="notification.id" 
+      <li
+v-for="notification in notifications.data" :key="notification.id" 
           class="list-group-item d-flex justify-content-between align-items-center"
           :class="{ 'notification-unread': !notification.read_at }">
         <div class="d-flex align-items-center">

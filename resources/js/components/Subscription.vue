@@ -182,17 +182,17 @@ export default {
     }
   },
 
-  // Lifecycle hook: fetch subscription info on mount
-  mounted() {
-    this.fetchSubscription();
-  },
-
   // Watchers
   watch: {
     // Prevent background scroll when modal is open
     isIframeOpen(val) {
       document.body.classList.toggle('modal-open', val);
     }
+  },
+
+  // Lifecycle hook: fetch subscription info on mount
+  mounted() {
+    this.fetchSubscription();
   },
 
   // Methods

@@ -1,18 +1,18 @@
 <template>
     <div class="col-md-2">
         <div class="img-avatar" @click="showAvatarModal">
-            <div class="img-avatar_name" v-if="!this.avatar">
-                {{ this.name.substring(0, 1) }}
+            <div class="img-avatar_name" v-if="!avatar">
+                {{ name.substring(0, 1) }}
             </div>
             <div v-else>
-                <img :src="this.avatar" alt="" class="main-profile-img" />
+                <img :src="avatar" alt="" class="main-profile-img" />
             </div>
             <div class="img-avatar_overlay">
                 <div class="img-avatar_overlay-text">Update</div>
             </div>
         </div>
 
-      <modal name="avatar-file" height="auto" :clickToClose="false">
+      <modal name="avatar-file" height="auto" :click-to-close="false">
         <div class="p-3 bg-white shadow rounded-lg img_avarar">
             <button class="btn btn-sm float-right" @click="closeAvatarModal">❌</button>
                 <input
@@ -29,7 +29,7 @@
 
                 <!-- Cropper container -->
                 <div
-                    v-if="this.imageSrc"
+                    v-if="imageSrc"
                     class="my-3 d-flex align-items-center justify-content-center mx-auto"
                 >
                     <vue-cropper
@@ -37,7 +37,7 @@
                         ref="cropper"
                         :guides="true"
                         :src="imageSrc"
-                        :aspectRatio="0.9"
+                        :aspect-ratio="0.9"
                     ></vue-cropper>
 
                     <!-- Cropped image previewer -->
@@ -46,13 +46,13 @@
 
                 <button
                     class="btn panel-btn_close"
-                    v-if="this.imageSrc"
+                    v-if="imageSrc"
                     @click="cropImage">
                     Crop
                 </button>
                 <button
                     class="btn panel-btn_save"
-                    v-if="this.croppedImageSrc"
+                    v-if="croppedImageSrc"
                     @click="uploadImage()">
                     Upload
                 </button>
@@ -66,8 +66,8 @@ import VueCropper from "vue-cropperjs";
 import { mapMutations } from 'vuex';
 
 export default {
-    props: ["userId","name","avatar"],
     components: { VueCropper },
+    props: ["userId","name","avatar"],
 
     data() {
         return {

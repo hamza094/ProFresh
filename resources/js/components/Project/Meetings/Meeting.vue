@@ -63,8 +63,8 @@
 
     </div>
     <pagination :data="meetings" @pagination-change-page="getResults"></pagination>
-    <MeetingModal :projectSlug="projectSlug"></MeetingModal>
-    <ViewModal :projectSlug="projectSlug" :members="members" :notAuthorize="notAuthorize"></ViewModal>
+    <MeetingModal :project-slug="projectSlug"></MeetingModal>
+    <ViewModal :project-slug="projectSlug" :members="members" :not-authorize="notAuthorize"></ViewModal>
   </div>
 </template>
 
@@ -77,12 +77,12 @@ import { fetchTokens, setupAndJoinMeeting } from '../../../utils/zoomUtils';
 import { shouldShowStartButton, shouldShowJoinButton } from '../../../utils/meetingUtils';
 
 export default {
-  // Props for project and meeting data
-  props: ['projectSlug', 'projectMeetings', 'notAuthorize', 'members'],
   components: {
     MeetingModal,
     ViewModal
   },
+  // Props for project and meeting data
+  props: ['projectSlug', 'projectMeetings', 'notAuthorize', 'members'],
   data() {
     return {
       showPrevious: false,

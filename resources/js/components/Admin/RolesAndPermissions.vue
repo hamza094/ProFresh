@@ -17,7 +17,8 @@
   <div class="role-content">
     <p>{{ role.name }}</p>
     <div class="button-group">
-      <div v-if="role.permissions.length > 0" class="role-dropdown"
+      <div
+v-if="role.permissions.length > 0" class="role-dropdown"
           @click="toggleDropdown(role.id)">
         <span class="btn btn-sm btn-primary" role="button">+</span>
         <div class="role-dropdown_item" v-show="isOpen[role.id]">

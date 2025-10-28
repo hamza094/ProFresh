@@ -92,6 +92,9 @@ export default{
     message: '',
   };
   },
+    mounted() {
+      this.loadDashboardProjects();
+    },
     methods: {
       loadDashboardProjects() {
         axios.get('/api/v1/user/dashboard-projects')
@@ -103,9 +106,6 @@ export default{
         this.projectsCount = data.projectsCount;
         this.message = data.message;
       },
-    },
-    mounted() {
-      this.loadDashboardProjects();
     }
 }
 </script>

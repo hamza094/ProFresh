@@ -74,7 +74,7 @@
                   <h4 class="empty-title">{{ currentTabConfig.emptyTitle }}</h4>
                   <p class="empty-text">{{ currentTabConfig.emptyText }}</p>
                   <div class="empty-actions" v-if="currentTab === 'active'">
-                    <button v-on:click.prevent="showPanel" class="btn btn-primary">
+                    <button @click.prevent="showPanel" class="btn btn-primary">
                       <i class="fas fa-plus me-2"></i>
                       Create Your First Project
                     </button>
@@ -206,6 +206,10 @@ export default {
     currentPagination() {
       return this.tabData[this.currentTab].pagination;
     }
+  },
+  
+  mounted() {
+    this.fetchProjects('active');
   },
   
   methods: {
@@ -343,10 +347,6 @@ export default {
         });
       }
     
-  },
-  
-  mounted() {
-    this.fetchProjects('active');
   }
 };
 </script>

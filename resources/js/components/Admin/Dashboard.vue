@@ -278,6 +278,12 @@ export default{
       return {access};
     },
     },
+    
+    mounted(){
+      //this.listenForActivities();
+      this.loadActivities();
+      this.subscriptionList();
+    },
     methods:{
     runBackup(){
     axios.get('/api/v1/admin/subscriptions/list').
@@ -309,12 +315,6 @@ export default{
           this.activities.unshift(e);
       });
     },*/		
-    },
-    
-    mounted(){
-      //this.listenForActivities();
-      this.loadActivities();
-      this.subscriptionList();
     }
 }
 </script>

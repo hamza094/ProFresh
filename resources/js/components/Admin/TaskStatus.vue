@@ -2,8 +2,9 @@
   <div>
      <button class="btn btn-outline-dark w-100 btn-sm" @click.pervent="modalStatus()">View</button>
      
-      <modal name="status-modal" height="auto" :scrollable="true"
-      width="40%" :clickToClose=false>
+      <modal
+name="status-modal" height="auto" :scrollable="true"
+      width="40%" :click-to-close=false>
     <div class="container m-2">
     <h3>Task Statuses Panel</h3>
     <div class="mb-2 mt-3">

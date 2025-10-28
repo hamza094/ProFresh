@@ -75,6 +75,15 @@ export default {
     }
   },
   emits: ['confirm', 'cancel'],
+  watch: {
+    show(newVal) {
+      if (newVal) {
+        document.body.classList.add('modal-open');
+      } else {
+        document.body.classList.remove('modal-open');
+      }
+    }
+  },
   mounted() {
     // Prevent body scroll when modal is open
     if (this.show) {
@@ -84,15 +93,6 @@ export default {
   beforeDestroy() {
     // Restore body scroll when component is destroyed
     document.body.classList.remove('modal-open');
-  },
-  watch: {
-    show(newVal) {
-      if (newVal) {
-        document.body.classList.add('modal-open');
-      } else {
-        document.body.classList.remove('modal-open');
-      }
-    }
   }
 };
 </script> 

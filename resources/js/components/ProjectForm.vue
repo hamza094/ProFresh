@@ -25,7 +25,7 @@
                 <div class="form-group">
                     <label for="Tasks" class="label-name">Select Stage:*</label>
                     <br>
-                    <div v-for="stage in this.stages" class="form-check form-check-inline">
+                    <div v-for="stage in stages" class="form-check form-check-inline">
                     <input class="form-check-input" type="radio" name="stage_id" :value="stage.id" v-model="form.stage_id" :key="stage.id">
                     <label class="form-check-label" for="inlineRadio1">{{stage.name}}</label>
                     </div>
@@ -33,10 +33,11 @@
 
                 <div class="form-group">
                     <label for="Tasks" class="label-name">Need Some Tasks?:
-                    <span class="text-danger font-italic" v-if="taskError"> {{this.taskError}}</span>
+                    <span class="text-danger font-italic" v-if="taskError"> {{taskError}}</span>
                     </label>
                      <div v-if="form.tasks.length > 0">
-                            <input type="text" 
+                            <input
+type="text" 
                                    class="form-control model-input mb-2" 
                                    placeholder="Task..." 
                                    name="task" 
@@ -80,6 +81,9 @@ export default{
             errors:{},
             taskError:'',
         };
+    },
+    mounted(){
+      this.loadStages();
     },
     methods:{
         closePanel() {
@@ -125,9 +129,6 @@ export default{
                 }
          });
         }
-    },
-    mounted(){
-      this.loadStages();
     },
 }
 </script>

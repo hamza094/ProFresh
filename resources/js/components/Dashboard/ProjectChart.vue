@@ -99,6 +99,14 @@ export default {
       this.loadChartData();
     }
   },
+  mounted() {
+    this.loadChartData();
+  },
+  beforeDestroy() {
+    if (this.chartInstance) {
+      this.chartInstance.destroy();
+    }
+  },
   methods: {
     async loadChartData() {
       // Prevent multiple simultaneous requests
@@ -148,7 +156,7 @@ export default {
       }
     },
     renderChart() {
-  this.$nextTick(() => {
+  this.$nextTick().then(() => {
     const canvas = this.$refs.chartCanvas;
     if (!canvas) {
       console.warn('Canvas not found yet');
@@ -168,14 +176,6 @@ export default {
     });
   });
 }
-  },
-  mounted() {
-    this.loadChartData();
-  },
-  beforeDestroy() {
-    if (this.chartInstance) {
-      this.chartInstance.destroy();
-    }
   }
 };
 </script>

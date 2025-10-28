@@ -25,7 +25,8 @@
 
                                             <h4>Filter By</h4>
                                             <div class="col-md-4">
-  <input class="form-check-input" type="radio"
+  <input
+class="form-check-input" type="radio"
    v-model="form.projects" id="RadioProjects" value="active"   @click="toggleRadio('active')"> 
   Active Projects                                            
     </div>
@@ -35,7 +36,8 @@
     </div>
     <div class="col-md-4">
     <div class="form-check">
-  <input class="form-check-input" type="checkbox" 
+  <input
+class="form-check-input" type="checkbox" 
   id="CheckTasks" v-model='form.activeTasks'>
   <label class="form-check-label" for="CheckTasks">
     Active Tasks
@@ -91,15 +93,18 @@
                     <h4>Search By Date</h4>
        
                    <div class="col-md-6">
-                       <h6 style="display: inline-block;">From:</h6>  <span style="display: inline-block;" class="form-date_close" @click.pervent="form.startdate = ''" 
+                       <h6 style="display: inline-block;">From:</h6>  <span
+style="display: inline-block;" class="form-date_close" @click.pervent="form.startdate = ''" 
                        v-if="form.startdate !== ''">x</span>
-            <datetime type="date" value-zone="local" 
+            <datetime
+type="date" value-zone="local" 
             zone="local" v-model="form.startdate">
                 </datetime>
                    </div>
                    <div class="col-md-6">
                     <h6 style="display: inline-block;">To:</h6>  <span style="display: inline-block;" class="form-date_close" @click.pervent="form.enddate = ''" v-if="form.enddate !== ''">x</span>
-                <datetime type="date" value-zone="local" 
+                <datetime
+type="date" value-zone="local" 
                   zone="local" v-model="form.enddate">
                 </datetime>
                    </div>
@@ -126,7 +131,8 @@
                     <table v-else class="table card-table table-vcenter text-nowrap datatable">
                       <thead>
                         <tr>
-                          <th class="w-1"><input class="form-check-input m-0 align-middle" type="checkbox" aria-label="Select all invoices"
+                          <th class="w-1"><input
+class="form-check-input m-0 align-middle" type="checkbox" aria-label="Select all invoices"
                           v-model="selectAll"
                           @change="selectAllProjects"></th>
                           <th class="w-1">No.
@@ -147,7 +153,8 @@
                       </thead>
                       <tbody>
                         <tr v-for="(project,index) in projects.data" :key="project.id">
-                          <td><input class="form-check-input m-0 align-middle" type="checkbox" aria-label="Select invoice"
+                          <td><input
+class="form-check-input m-0 align-middle" type="checkbox" aria-label="Select invoice"
                           v-model="selectedProjects"
                           :value="project.id"></td>
                           <td>{{project.id}}</td>
@@ -189,7 +196,7 @@
                   </div>
                   <div class="card-footer d-flex">
                     <p class="float-left">Showing <span>{{from}}</span> to {{to}}<span></span> of <span></span>{{total}} entries</p>
-                        <pagination :data="this.projects" @pagination-change-page="getResults"></pagination>
+                        <pagination :data="projects" @pagination-change-page="getResults"></pagination>
                 
                   </div>
                 </div>

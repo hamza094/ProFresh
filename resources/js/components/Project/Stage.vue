@@ -23,7 +23,8 @@
   </div>
 </div>
 <div>
-  <modal name="stage-reason" :clickToClose=false 
+  <modal
+name="stage-reason" :click-to-close=false 
     :height="260"
      :adaptive="true">
     <div class="panel-top_content">

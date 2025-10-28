@@ -10,7 +10,7 @@
     <button class="btn btn-primary btn-sm" @click="$modal.show('edit-profile')">Edit Profile
     </button>
 
-  <FeatureDropdown :featurePop="this.featurePop">
+  <FeatureDropdown :feature-pop="featurePop">
     <ul v-if="owner">
     <li v-if="user.avatar" class="feature-dropdown_item-content" @click="deleteAvatar"><i class="far fa-user-circle"></i> Remove Avatar</li>
 
@@ -26,7 +26,7 @@
 	<div class="page-content">
 	<div class="row">
 
-	<UserAvatar :userId="user.id" :avatar="userAvatar" :name="user.name"></UserAvatar>
+	<UserAvatar :user-id="user.id" :avatar="userAvatar" :name="user.name"></UserAvatar>
 
   <div class="col-md-10">
   <div class="content">

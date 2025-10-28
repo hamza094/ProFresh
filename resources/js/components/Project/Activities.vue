@@ -36,7 +36,8 @@
 
         <ul v-else>
 
-        <li v-for="(activity,index) in activities.data" 
+        <li
+v-for="(activity,index) in activities.data" 
         :key="activity.id">
 
         <!-- Icon + Description -->
@@ -85,7 +86,8 @@
                      <div class="card-body activity-search">
         <!-- Filter List -->
         <ul>
-        <li v-for="activity in activityTypes" 
+        <li
+v-for="activity in activityTypes" 
         :key="activity.status">
         <a 
             href="#" 
@@ -130,6 +132,10 @@ export default{
         activityTypes: activityMixins.data().activityTypes
     };
     },
+
+	mounted() {
+       this.fetchActivities(this.activityTypes[0]);
+    },
     methods:{
     // Fetch activities design from mixin
     activityIcon(description) {
@@ -160,10 +166,6 @@ export default{
           let query = this.currentQuery ? `${this.currentQuery}&page=${page}` : `?page=${page}`;
            this.getData(query); 
         }
-    },
-
-	mounted() {
-       this.fetchActivities(this.activityTypes[0]);
     },
 }
 </script>

@@ -63,7 +63,8 @@
             </a>
                           <div class="dropdown-menu dropdown-menu-end" style="">
                           <div v-for="role in roles" :key="role.id">
-                            <a :class="{ 'dropdown-item': true, 'active': user && user.roles && hasRole(user.roles, role) }" 
+                            <a
+:class="{ 'dropdown-item': true, 'active': user && user.roles && hasRole(user.roles, role) }" 
                             @click="assignUserRole(role.id,user.id)">{{role.name}}</a>
                           </div>
                           </div>
@@ -78,7 +79,7 @@
                   </div>
                   <div class="card-footer d-flex">
      <p class="float-left">Showing <span>{{from}}</span> to {{to}}<span></span> of <span></span>{{total}} entries</p>
-                        <pagination :data="this.users" @pagination-change-page="getResults"></pagination>
+                        <pagination :data="users" @pagination-change-page="getResults"></pagination>
                   </div>
                 </div>
               </div>

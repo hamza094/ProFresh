@@ -25,7 +25,7 @@
 
                     <project-button></project-button>
 
-                    <router-link :to="`/user/${this.user.id}/profile`" class="panel-list_item">
+                    <router-link :to="`/user/${user.id}/profile`" class="panel-list_item">
                         <p><span class="icon">
                             <i class="icon-logo  fas fa-user-circle"></i>
                             <span class="icon-name">Profile</span>

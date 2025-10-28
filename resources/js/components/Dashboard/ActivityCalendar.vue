@@ -88,6 +88,14 @@ export default {
       ].filter(attr => attr.dates !== null)
     },
   },
+  mounted() {
+    this.calendarData()
+  },
+    beforeDestroy() {
+    if (this.cancelTokenSource) {
+      try { this.cancelTokenSource.cancel('Component unmounted') } catch (e) {}
+    }
+  },
   methods: {
     onPageChange(page) {
       // Accepts: {month, year}, [from,to], Date or ISO string
@@ -140,14 +148,6 @@ export default {
         this.isLoading = false
       })
     },
-  },
-  mounted() {
-    this.calendarData()
-  },
-    beforeDestroy() {
-    if (this.cancelTokenSource) {
-      try { this.cancelTokenSource.cancel('Component unmounted') } catch (e) {}
-    }
   },
 }
 </script>

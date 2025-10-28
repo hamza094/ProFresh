@@ -12,7 +12,7 @@
 
                             <div class="col-md-8">
                                 <input id="email" type="email" class="form-control" name="email" v-model="user.email" required autocomplete="email" autofocus>
-                                 <span class="text-danger font-italic" v-if="this.errors.email" v-text="this.errors.email[0]"></span>
+                                 <span class="text-danger font-italic" v-if="errors.email" v-text="errors.email[0]"></span>
                             </div>
                         </div>
 
@@ -21,7 +21,7 @@
 
                             <div class="col-md-8">
                                 <input id="password" type="password" class="form-control" name="password" v-model="user.password" required autocomplete="current-password">
-                                <span class="text-danger font-italic" v-if="this.errors.password" v-text="this.errors.password[0]"></span>
+                                <span class="text-danger font-italic" v-if="errors.password" v-text="errors.password[0]"></span>
                             </div>
                         </div>
 

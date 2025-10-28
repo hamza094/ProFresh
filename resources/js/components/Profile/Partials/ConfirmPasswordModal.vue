@@ -1,5 +1,5 @@
 <template>
-  <modal name="ConfirmPassword" height="auto" :scrollable="true" width="40%" class="model-desin" :clickToClose="false">
+  <modal name="ConfirmPassword" height="auto" :scrollable="true" width="40%" class="model-desin" :click-to-close="false">
     <div class="edit-border-top p-3">
       <div class="edit-border-bottom">
         <div class="panel-top_content d-flex justify-content-between align-items-center">
@@ -49,13 +49,13 @@ export default {
       default: false
     }
   },
+  emits: ['submit'],
   data() {
     return {
       password: "",
       passwordError: ""
     };
   },
-  emits: ['submit'],
   methods: {
     closeModal() {
       this.$modal.hide('ConfirmPassword');

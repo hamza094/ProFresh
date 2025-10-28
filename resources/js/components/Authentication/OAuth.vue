@@ -3,7 +3,7 @@
   <div class="text-center mt-5">
     <h3>Please wait while we sign you into ProFresh</h3>
     <div class="d-flex mt-3 justify-content-center align-items-center">
-      <ring-loader :color=this.color :size="100" />
+      <ring-loader :color=color :size="100" />
     </div>
   </div>
 </div>

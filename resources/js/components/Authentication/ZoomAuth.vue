@@ -22,6 +22,9 @@ export default {
   computed: {
     ...mapState('currentUser', ['user']),
   },
+  mounted() {
+    this.zoomAuth();
+  },
   methods: {
     zoomAuth() {
       if (this.loading) return;
@@ -44,9 +47,6 @@ export default {
           this.loading = false;
         });
     },
-  },
-  mounted() {
-    this.zoomAuth();
   }
 }
 </script>

@@ -50,9 +50,9 @@ import InsightPresentationMixin from '../../../mixins/InsightPresentationMixin.j
 
 export default {
   name: 'InsightDetailCard',
+  mixins: [InsightPresentationMixin],
   props: {
     insight: { type: Object, required: true }
-  },
-  mixins: [InsightPresentationMixin]
+  }
 }
 </script>

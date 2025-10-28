@@ -2,7 +2,7 @@
   <div class="panel">
        <div class="panel-top">
           <div class="panel-top_content">
-            <span class="panel-heading">{{this.message}}</span>
+            <span class="panel-heading">{{message}}</span>
            <span class="panel-exit float-right" role="button" @click.prevent="closePanel">x</span>
           </div>
        </div>
@@ -10,7 +10,8 @@
              <div  v-if="archivedTasks  &&archivedTasks.length > 0">
        <div v-for="(task,index) in archivedTasks" :key="task.id">
          <div class="card task-card_style" @click="openModal(task)">
-          <div v-if="task.status" class="task-card_border" :style="{ 
+          <div
+v-if="task.status" class="task-card_border" :style="{ 
             borderColor: task.status.color 
         }"></div>
           <div class="card-body task-card_body">
@@ -22,8 +23,9 @@
       <div v-else>
           <p>Sorry, no tasks found.</p>
       </div>
-      <modal name="archive-task-modal" height="auto" :scrollable="true"
-      width="65%" class="model-desin archive-modal" :clickToClose=false @modal-closed="closeModal">
+      <modal
+name="archive-task-modal" height="auto" :scrollable="true"
+      width="65%" class="model-desin archive-modal" :click-to-close=false @modal-closed="closeModal">
          <TaskModal :slug="slug" :state="state"></TaskModal @modal-closed="closeModal">
     </modal>
           </div>

@@ -13,7 +13,8 @@
       </div>
 
       <div class="member-list" v-if="searchResults.length > 0 && form.search">        
-      <div v-for="member in searchResults" :key="member.id"
+      <div
+v-for="member in searchResults" :key="member.id"
         class="member-list_items">
 
       <div @click.prevent="addMember(member,member.id)">{{member.name}} ({{member.username}})

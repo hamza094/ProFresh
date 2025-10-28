@@ -6,7 +6,7 @@
           <div class="col-12">
                 <div class="card">
                   <div class="card-header">
-                    <h3 class="card-title">Tasks > {{this. appliedFilter}}</h3>
+                    <h3 class="card-title">Tasks > {{appliedFilter}}</h3>
                   </div>
 
                   <div class="card-body border-bottom py-3">
@@ -34,7 +34,8 @@
                     <table v-else class="table card-table table-vcenter text-nowrap datatable">
                       <thead>
                         <tr>
-                          <th class="w-1"><input class="form-check-input m-0 align-middle" type="checkbox" aria-label="Select all tasks"
+                          <th class="w-1"><input
+class="form-check-input m-0 align-middle" type="checkbox" aria-label="Select all tasks"
                           v-model="selectAll"
                           @change="selectAllTasks"></th>
                           <th>ID</th>
@@ -52,7 +53,8 @@
                       </thead>
                       <tbody>
                         <tr v-for="(task,index) in tasks.data" :key="task.id">
-                          <td><input class="form-check-input m-0 align-middle" type="checkbox" aria-label="Select task"
+                          <td><input
+class="form-check-input m-0 align-middle" type="checkbox" aria-label="Select task"
                           v-model="selectedTasks"
                           :value="task.id"></td>
                           <td>{{task.id}}</td>
@@ -88,7 +90,7 @@
                   </div>
                   <div class="card-footer d-flex">
      <p class="float-left">Showing <span>{{from}}</span> to {{to}}<span></span> of <span></span>{{total}} entries</p>
-                        <pagination :data="this.tasks" @pagination-change-page="paginate($event, filter)"></pagination>
+                        <pagination :data="tasks" @pagination-change-page="paginate($event, filter)"></pagination>
                   </div>
                 </div>
               </div>

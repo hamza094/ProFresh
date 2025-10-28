@@ -30,7 +30,8 @@
         </form>
         <div v-if="newToken" class="alert alert-success mt-3 d-flex align-items-center">
           <span class="mr-2 font-weight-bold">New Token:</span>
-          <input :type="showTokenMap[newTokenId] ? 'text' : 'password'"
+          <input
+:type="showTokenMap[newTokenId] ? 'text' : 'password'"
                  class="form-control form-control-sm w-auto d-inline-block mr-2"
                  :value="newToken"
                  readonly style="max-width: 300px;">
@@ -66,15 +67,18 @@
               <td>{{ token.last_used_at ? token.last_used_at : 'Never' }}</td>
               <td>{{ token.expires_at ? token.expires_at : 'Never' }}</td>
               <td>
-                <input :type="showTokenMap[token.id] ? 'text' : 'password'"
+                <input
+:type="showTokenMap[token.id] ? 'text' : 'password'"
                        class="form-control form-control-sm w-auto d-inline-block mr-2"
                        :value="token.id === newTokenId ? newToken : 'Token value not available'"
                        readonly style="max-width: 300px;">
-                <button class="btn btn-sm btn-outline-secondary mr-2"
+                <button
+class="btn btn-sm btn-outline-secondary mr-2"
                         @click="toggleShowToken(token.id)">
                   <i :class="showTokenMap[token.id] ? 'fas fa-eye-slash' : 'fas fa-eye'"></i>
                 </button>
-                <button class="btn btn-sm btn-outline-primary"
+                <button
+class="btn btn-sm btn-outline-primary"
                         :disabled="token.id !== newTokenId"
                         @click="copyToken(token.id === newTokenId ? newToken : '')">
                   <i class="fas fa-copy"></i>
@@ -126,6 +130,9 @@ export default {
     auth() {
       return this.$store.state.currentUser.user;
     }
+  },
+  mounted() {
+    this.loadTokens();
   },
   methods: {
     toggleShowToken(tokenId) {
@@ -196,9 +203,6 @@ export default {
       });
     },
     // formatDate removed: date formatting is now handled by backend
-  },
-  mounted() {
-    this.loadTokens();
   }
 }
 </script>

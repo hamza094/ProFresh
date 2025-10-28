@@ -1,9 +1,10 @@
 <template>
 	<div>
 		<!-- Message Modal-->
-	    <modal name="project-message" height="auto" :scrollable="true" width="45%"
+	    <modal
+name="project-message" height="auto" :scrollable="true" width="45%"
      class="model-desin"
-    :clickToClose=false >
+    :click-to-close=false >
     <div class="edit-border-top p-3">
 
     <div class="edit-border-bottom">
@@ -19,14 +20,14 @@
 
     <div class="form-group">
         <label for="message" class="label-name">Subject:</label>
-        <input type="text" id="subject" class="form-control" name="subject" v-model="form.subject" :readonly="!this.form.mail">
-				<p class="text-danger" v-if="this.errors.subject">*{{this.errors.subject[0]}}</p>
+        <input type="text" id="subject" class="form-control" name="subject" v-model="form.subject" :readonly="!form.mail">
+				<p class="text-danger" v-if="errors.subject">*{{errors.subject[0]}}</p>
     </div>
 
     <div class="form-group">
         <label for="subject" class="label-name">Message:</label>
         <textarea name="message" class="form-control" rows="5" v-model="form.message"></textarea>
-				<p class="text-danger" v-if="this.errors.message">*{{this.errors.message[0]}}</p>
+				<p class="text-danger" v-if="errors.message">*{{errors.message[0]}}</p>
     </div>
 
 		<div class="form-group">
@@ -39,23 +40,23 @@
 			<input class="form-check-input" type="checkbox" id="smsCheckbox" name="sms" v-model="form.sms">
 			<label class="form-check-label" for="smsCheckbox">Send Sms</label>
 		</div>
-		<p class="text-danger" v-if="this.errors.option">*{{this.errors.option[0]}}</p>
+		<p class="text-danger" v-if="errors.option">*{{errors.option[0]}}</p>
 	</div>
 
 	<div class="form-group">
 		<label for="to" class="label-name mt-2">To: Select Project Member</label>
 		<div class="check_members">
-		<div class="form-check" v-for="(user,index) in  this.members" :key="user.id">
+		<div class="form-check" v-for="(user,index) in  members" :key="user.id">
 	<input v-if="user.id !== auth.id" class="form-check-input" type="checkbox" v-model="form.users" :value="user" id="checkUsers">
 	<label v-if="user.id !== auth.id" class="form-check-label" for="checkUsers">
 		{{user.name}} ({{user.email}})
 	</label>
 </div>
 </div>
-<p class="text-danger" v-if="this.errors.users">*{{this.errors.users[0]}}</p>
+<p class="text-danger" v-if="errors.users">*{{errors.users[0]}}</p>
 </div>
 
-	<span class="text-muted" v-if="this.messageButton() == 'Schedule'"><i class="far fa-calendar-alt"></i> Message will send on {{this.form.scheduled_at}} </span>
+	<span class="text-muted" v-if="messageButton() == 'Schedule'"><i class="far fa-calendar-alt"></i> Message will send on {{form.scheduled_at}} </span>
   </div>
 
   <div class="panel-bottom">
@@ -65,7 +66,7 @@
       <div class="panel-top_content float-right">
 				<a class="btn btn-link" @click="$modal.show('schedule-message')"><i class="far fa-calendar-alt"></i></a>
           <button class="btn panel-btn_close" @click.prevent="modalClose">Cancel</button>
-          <button class="btn panel-btn_save" type="submit">{{this.messageButton()}}</button>
+          <button class="btn panel-btn_save" type="submit">{{messageButton()}}</button>
       </div>
   </div>
 </form>
@@ -76,9 +77,10 @@
 
         <!-- Schedule Modal-->
 		<div>
-		    <modal name="schedule-message" height="auto" :scrollable="true" width="45%"
+		    <modal
+name="schedule-message" height="auto" :scrollable="true" width="45%"
 	     class="model-desin"
-	    :clickToClose=false >
+	    :click-to-close=false >
 	    <div class="edit-border-top p-3">
 	    <div class="edit-border-bottom">
 	        <div class="panel-top_content">

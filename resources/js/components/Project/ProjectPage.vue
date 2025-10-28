@@ -1,5 +1,5 @@
 <template>
-	<div v-if="this.show">
+	<div v-if="show">
 		<div class="container-fluid ">
 			<div class="row">
 				<div class="col-md-8 page pd-r">
@@ -10,14 +10,15 @@
 								<span class="page-top_arrow"> > </span>
 								<span> {{project.name}}</span>
 							</span>
-							<project-features :slug="project.slug"  :members="this.project.members" :name="this.project.name">
+							<project-features :slug="project.slug"  :members="project.members" :name="project.name">
 							</project-features>
 						</div>
 					</div>
 					<div class="page-content">
 						<div class="row">
 							<div class="col-md-2">
-								<Status :project="{id:project.id, slug:project.slug, name:project.name,
+								<Status
+:project="{id:project.id, slug:project.slug, name:project.name,
 								 start:project.created_at, stage:project.stage, completed:project.completed,
 								 status:project.health_status, score:project.health_score}">
 							</Status>
@@ -52,7 +53,8 @@
 									</span>
 
 									<span v-else>
-										<button v-if="permission.access"
+										<button
+v-if="permission.access"
 										 type="button"
 										  class="btn btn-link btn-sm"
 										   @click="nameEdit = true">
@@ -71,11 +73,11 @@
 									<router-link :to="'/user/'+user.id+'/profile'" class="btn btn-link">{{user.name}}</router-link>
 								</p>
 							</div>
-							<div v-if="this.project.deleted_at">
+							<div v-if="project.deleted_at">
 								<div class="alert alert-danger" role="alert">
 									This project is abandoned to access project features active this project,
-									or it will be deleted automatically after {{this.project.days_limit}} days from the abandoned date.
-									<p>Abandoned on: <b v-text="this.project.deleted_at"></b> </p>
+									or it will be deleted automatically after {{project.days_limit}} days from the abandoned date.
+									<p>Abandoned on: <b v-text="project.deleted_at"></b> </p>
 									<a class="btn btn-info" @click.prevent="restore()" >Restore Project</a>
 								</div>
 							</div>
@@ -121,8 +123,9 @@
 						</div>
 					</div>
 					<br>
-					<Stage :slug="project.slug" :projectstage='project.stage' :postponed_reason="project.postponed_reason"
-					 :stage_updated="project.stage_updated_at" :get_stage="this.getStage" :access="permission.access">
+					<Stage
+:slug="project.slug" :projectstage='project.stage' :postponed_reason="project.postponed_reason"
+					 :stage_updated="project.stage_updated_at" :get_stage="getStage" :access="permission.access">
 				</Stage> 
 				<br>
 				<hr>
@@ -135,7 +138,7 @@
 						<div class="project-info">
 							<div class="project-info_socre">
 								<p class="project-info_score-heading">Status</p>
-								<p class="project-info_score-point" :class="'project-info_score-point_'+project.health_status"><b>{{Math.round(this.project.health_score)}}%</b></p>
+								<p class="project-info_score-point" :class="'project-info_score-point_'+project.health_status"><b>{{Math.round(project.health_score)}}%</b></p>
 							</div>
 							<div class="project-info_rec">
 								<span>Staus</span>
@@ -156,7 +159,8 @@
 						</div>
 						<br>
 						<hr>
-						<Meeting :projectSlug="this.project.slug" :projectMeetings="this.project.meetings" :notAuthorize="this.project.ownerNotAuthorized"
+						<Meeting
+:project-slug="project.slug" :project-meetings="project.meetings" :not-authorize="project.ownerNotAuthorized"
 						:members="project.members"></Meeting>
 					</div>
 				</div>
@@ -166,10 +170,11 @@
 		<div class="col-md-4 side_panel">
 			Project Side Panel
 			<br>
-			<Task :slug="project.slug" :tasks="tasks" :access="permission.access" :projectMembers="this.project.members"></Task> 
+			<Task :slug="project.slug" :tasks="tasks" :access="permission.access" :project-members="project.members"></Task> 
 			<hr>
-			<PanelFeatues :slug="project.slug" :notes="project.notes"
-			:members="project.members" :owner="user" :access="permission.access" :ownerLogin="permission.owner"></PanelFeatues> 
+			<PanelFeatues
+:slug="project.slug" :notes="project.notes"
+			:members="project.members" :owner="user" :access="permission.access" :owner-login="permission.owner"></PanelFeatues> 
 			<hr>
 			<div>
             <p><b>Online Users For Chat</b></p>
@@ -177,8 +182,9 @@
         </div>
 
 			<hr>
-			<Chat :slug="project.slug" 
-			:conversations="project.conversations" :members="project.members" :owner="this.user" :auth="this.auth"></Chat>
+			<Chat
+:slug="project.slug" 
+			:conversations="project.conversations" :members="project.members" :owner="user" :auth="auth"></Chat>
 		</div>
 	</div>
 </div>

@@ -300,7 +300,7 @@ export default {
     this.check2FAStatus();
     document.addEventListener('keydown', this.handleEscape);
     // Initialize Bootstrap tooltips
-    this.$nextTick(() => {
+    this.$nextTick().then(() => {
       if (window.bootstrap) {
         const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
         tooltipTriggerList.forEach(function (tooltipTriggerEl) {

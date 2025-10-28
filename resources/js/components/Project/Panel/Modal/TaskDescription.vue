@@ -7,8 +7,9 @@
 
                 <div v-if="edit == task.id">
               
-                <vue-editor name="description" 
-                v-model="form.description" :editorToolbar="customToolbar"></vue-editor>
+                <vue-editor
+name="description" 
+                v-model="form.description" :editor-toolbar="customToolbar"></vue-editor>
 
             <span class="btn btn-link btn-sm" @click="updateDescription(task.id,task)">Update</span>
 
@@ -34,8 +35,8 @@
   import { mapMutations, mapActions, mapState } from 'vuex';
   import {url,ErrorHandling} from '../../../../utils/TaskUtils';
 export default {
-      props:['task','slug','errors'],
   components: {VueEditor},
+      props:['task','slug','errors'],
   data() {
     return {
     edit:0,

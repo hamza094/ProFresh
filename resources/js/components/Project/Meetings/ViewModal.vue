@@ -1,8 +1,9 @@
 <template>
 <div>
-  <modal name="ViewMeeting" height="auto" :scrollable="true" width="40%"
+  <modal
+name="ViewMeeting" height="auto" :scrollable="true" width="40%"
      class="model-desin"
-    :clickToClose="false" >
+    :click-to-close="false" >
 
     <div class="edit-border-top p-3">
       <div v-if="meeting.status === STATUS_STARTED" class="glowing-dot"></div>
@@ -28,7 +29,7 @@
 
     <meeting-detail v-if="!isEditing" label="Meeting ID" :value="meeting.meeting_id" />
 
-    <meeting-detail label="Agenda" :isEditing="isEditing">
+    <meeting-detail label="Agenda" :is-editing="isEditing">
       <template v-if="!isEditing">
         <span>{{ meeting.agenda }}</span>
       </template>
@@ -39,7 +40,7 @@
       </template>
     </meeting-detail>
 
-    <meeting-detail label="Start Time" :isEditing="isEditing">
+    <meeting-detail label="Start Time" :is-editing="isEditing">
       <template v-if="!isEditing">
         <span>{{ meeting.start_time }}</span>
       </template>
@@ -50,7 +51,7 @@
       </template>
     </meeting-detail>
 
-    <meeting-detail label="Meeting Duration" :isEditing="isEditing">
+    <meeting-detail label="Meeting Duration" :is-editing="isEditing">
       <template v-if="!isEditing">
         <span>{{ meeting.duration }} Minutes</span>
       </template>
@@ -72,7 +73,7 @@
 
     <meeting-detail v-if="!isEditing" label="Created At" :value="meeting.created_at" />
 
-     <meeting-detail label="Timezone" :isEditing="isEditing">
+     <meeting-detail label="Timezone" :is-editing="isEditing">
       <template v-if="!isEditing">
         <span>{{ meeting.timezone }}</span>
       </template>
@@ -85,7 +86,7 @@
     </meeting-detail>
 
 
-    <meeting-detail label="Password" :isEditing="isEditing">
+    <meeting-detail label="Password" :is-editing="isEditing">
       <template v-if="!isEditing">
         <span>{{ meeting.password }}</span>
       </template>
@@ -98,7 +99,7 @@
 
       <meeting-detail v-if="!isEditing" label="Updated At" :value="meeting.updated_at" />
 
-    <meeting-detail label="Join Before Host" :isEditing="isEditing">
+    <meeting-detail label="Join Before Host" :is-editing="isEditing">
       <template v-if="!isEditing">
         <span>{{ meeting.join_before_host }}</span>
       </template>

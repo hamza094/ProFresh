@@ -7,27 +7,30 @@
 
  <SubscriptionCheck>
 
-    <form v-if="access" 
+    <form
+v-if="access" 
     id="paper"
      method="post"
      @keyup.enter.prevent="ProjectNote">
 
-      <textarea placeholder="Write Project Notes"
+      <textarea
+placeholder="Write Project Notes"
        id="text"
         name="notes"
          rows="4"
           v-model="form.notes"
-           v-text="this.notes">
+           v-text="notes">
       </textarea>
       <br>
   </form>
 
-    <textarea v-if="!access"
+    <textarea
+v-if="!access"
      placeholder="Only project members and owners are allowed to write project notes."
       id="text"
        rows="4"
         v-model="form.notes"
-         v-text="this.notes"
+         v-text="notes"
           readonly>
     </textarea>
  </SubscriptionCheck> 
@@ -39,7 +42,8 @@
     <div class="invite" v-if="access">
       <p><b>Project Invitations:</b></p>
 
-       <input type="text"
+       <input
+type="text"
         placeholder="Search user for invitation" class="form-control"
         v-model="query"
         @input="searchUsers"
@@ -82,7 +86,8 @@
                <router-link :to="'/user/'+member.uuid+'/profile'">
                    <img v-if="member.avatar" :src="member.avatar" alt="" class="img-fluid rounded-circle">
                    <p>
-                    <span v-if="member.uuid == owner.uuid" 
+                    <span
+v-if="member.uuid == owner.uuid" 
                     class="badge badge-success">project owner
                     </span>
                     <br>
@@ -122,7 +127,8 @@
                     </router-link>
                     <span>{{member.invitation_sent_at}}</span>
                     <br>
-                    <a v-if="ownerLogin && member.uuid !== owner.uuid" 
+                    <a
+v-if="ownerLogin && member.uuid !== owner.uuid" 
                        rel="" 
                        role="button" 
                        @click.prevent="cancelRequest(member.uuid, member)" class="text-danger">Cancel</a>

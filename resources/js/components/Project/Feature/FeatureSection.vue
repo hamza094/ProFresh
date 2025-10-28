@@ -2,9 +2,10 @@
 
     <div class="float-right">
 
-  <FeatureDropdown :featurePop="this.featurePop">
+  <FeatureDropdown :feature-pop="featurePop">
   <ul>
-    <li class="feature-dropdown_item-content"
+    <li
+class="feature-dropdown_item-content"
     @click="abandon()"><i class="fas fa-eye-slash"></i> Abandon</li>
 
     <li class="feature-dropdown_item-content"  @click="$modal.show('project-message')"><i class="far fa-envelope"></i>Send Mail or Sms</li>

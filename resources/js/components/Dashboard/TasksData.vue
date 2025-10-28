@@ -64,7 +64,8 @@
               <div class="d-flex align-items-start">
                 <!-- Task State Icon -->
                 <div class="mr-3 mt-1">
-                  <i :class="task.state === 'created' ? 'fas fa-user-edit text-primary' : 'fas fa-user-check text-success'" 
+                  <i
+:class="task.state === 'created' ? 'fas fa-user-edit text-primary' : 'fas fa-user-check text-success'" 
                      :title="task.state === 'created' ? 'Created by you' : 'Assigned to you'"></i>
                 </div>
                 
@@ -73,7 +74,8 @@
                   <!-- Task Title and Status -->
                   <div class="d-flex align-items-center mb-2">
                     <h6 class="mb-0 mr-2 text-dark">{{ task.title }}</h6>
-                    <span v-if="task.status" 
+                    <span
+v-if="task.status" 
                           :style="'background-color: ' + task.status.color + '; color: white;'" 
                           class="badge badge-pill px-2 py-1 text-xs">
                       {{ task.status.label }}
@@ -94,7 +96,8 @@
                     <!-- Project -->
                     <span class="mr-3">
                       <i class="fas fa-project-diagram"></i>
-                      <router-link :to="'/projects/' + task.project.slug" 
+                      <router-link
+:to="'/projects/' + task.project.slug" 
                                    class="text-decoration-none" 
                                    :class="{'text-muted': task.project.state === 'trashed'}">
                         {{ task.project.name }}
@@ -112,7 +115,8 @@
                     <small class="text-muted mr-2">Assigned to:</small>
                     <div class="d-flex">
                       <span v-for="user in task.assignee" :key="user.id" class="mr-2">
-                        <router-link :to="'/user/' + user.uuid + '/profile'" 
+                        <router-link
+:to="'/user/' + user.uuid + '/profile'" 
                                      class="text-decoration-none text-primary small"
                                      target="_blank">
                           <i class="fas fa-user"></i> {{ user.name }}
@@ -143,6 +147,10 @@ export default {
       activeFilter: 'all',
       loading: false,
     };
+  },
+  computed: {},
+  mounted() {
+    this.loadTasks();
   },
   methods: {
     loadTasks(additionalParams = {}) {
@@ -200,10 +208,6 @@ export default {
       const now = new Date();
       return dueDate < now && task.status?.label !== 'Completed';
     },
-  },
-  computed: {},
-  mounted() {
-    this.loadTasks();
   },
 };
 </script>

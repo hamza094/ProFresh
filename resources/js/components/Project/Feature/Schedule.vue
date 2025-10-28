@@ -1,9 +1,10 @@
 <template>
 	<div>
    <a class="btn btn-link" @click.prevent="modalShow()"><i class="far fa-clock"></i></a>
-		    <modal name="view-schedules" height="auto" :scrollable="true"
+		    <modal
+name="view-schedules" height="auto" :scrollable="true"
 	     class="model-desin"
-	    :clickToClose=false width="75%">
+	    :click-to-close=false width="75%">
 	    <div class="edit-border-top p-3">
 	    <div class="edit-border-bottom">
 	        <div class="panel-top_content">
@@ -72,6 +73,9 @@ export default {
             errors:{}
         };
     },
+created(){
+	this.scheduledMessages();
+},
     methods: {
 			modalShow(){
 				 this.$modal.show('view-schedules');
@@ -95,9 +99,6 @@ export default {
     modalClose(){
    this.$modal.hide('view-schedules');
  },
-},
-created(){
-	this.scheduledMessages();
 },
 }
 </script>

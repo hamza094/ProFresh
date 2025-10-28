@@ -2,7 +2,7 @@
  <div class="col-md-7 mb-5">
   <div class="activity">
    <ul>
-    <li v-for="(activity,index) in this.activities" :key="activity.id">
+    <li v-for="(activity,index) in activities" :key="activity.id">
         <span class="activity-icon" :class="activityColor(activity.description)"> <i :class="activityIcon(activity.description)"></i></span>
              {{activity.description}}
               <p class="activity-info">
@@ -12,7 +12,7 @@
           </li>
 
           <li><span class="activity-more">
-            <router-link :to="'/project/'+this.name+'/'+this.slug+'/activities'" class="dashboard-link">View More</router-link>
+            <router-link :to="'/project/'+name+'/'+slug+'/activities'" class="dashboard-link">View More</router-link>
           </span></li>
       </ul>
    </div>

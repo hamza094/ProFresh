@@ -12,7 +12,8 @@
                             <label for="email" class="form-label">E-Mail Address</label>
 
                             <div class="col-md-8">
-                                <input id="email" type="email" class="form-control" name="email" v-model="form.email" required autocomplete="email"
+                                <input
+id="email" type="email" class="form-control" name="email" v-model="form.email" required autocomplete="email"
                                 readonly >
                                  <span class="text-danger font-italic" v-if="errors.email" v-text="errors.email[0]"></span>
                             </div>

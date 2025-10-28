@@ -38,9 +38,9 @@ Vue.use(VueSlideoutPanel);
 Vue.use(VModal);
 Vue.use(Datetime)
 
-Vue.component('datetime', Datetime);
+Vue.component('Datetime', Datetime);
 import VueUploadComponent from 'vue-upload-component'
-Vue.component('file-upload', VueUploadComponent)
+Vue.component('FileUpload', VueUploadComponent)
 
 import { VueSpinners } from '@saeris/vue-spinners'
 
@@ -149,7 +149,7 @@ components.forEach(([name, path]) => {
 });
 
 import LaravelVuePagination from 'laravel-vue-pagination';
-Vue.component('pagination', LaravelVuePagination);
+Vue.component('Pagination', LaravelVuePagination);
 
 const app = new Vue({
     el: '#app',

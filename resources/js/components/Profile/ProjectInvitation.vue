@@ -7,7 +7,8 @@
     <div v-else>
       <div class="row" v-if="invitations.length">
 
-        <div v-for="project in invitations" 
+        <div
+v-for="project in invitations" 
         class="col-md-5" 
         :key="project.id">
 
@@ -18,7 +19,8 @@
             </div>
             <div class="card-body mt-1 text-center">
               <p>Owner Name:
-                <router-link :to="`/user/${project.owner.uuid}/profile`" 
+                <router-link
+:to="`/user/${project.owner.uuid}/profile`" 
                 target="_blank">{{ project.owner.name }}
                 </router-link>
               </p>

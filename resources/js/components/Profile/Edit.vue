@@ -1,6 +1,7 @@
 <template>
-  <modal name="edit-profile"
-        height="auto" :scrollable="true" :shiftX=".98" width="38%" class="model-desin" :clickToClose=false>
+  <modal
+name="edit-profile"
+        height="auto" :scrollable="true" :shift-x=".98" width="38%" class="model-desin" :click-to-close=false>
     <div class="edit-border-top p-3 animate__animated animate__slideInRight">
     <div class="edit-border-bottom">
     <div class="panel-top_content">
@@ -34,13 +35,13 @@
         <hr>
         <h3>Update Password:</h3>
 
-        <span v-html="showIcon(showCurrentPassword)" v-on:click="toggleShowCurrentPassword" class="eye-icon float-right"></span>
+        <span v-html="showIcon(showCurrentPassword)" @click="toggleShowCurrentPassword" class="eye-icon float-right"></span>
 
-        <form-input label="Current Password:" v-model="form.current_password" :error="errors.current_password" v-bind:type="currentPasswordFieldType" id="current_password"/>
+        <form-input label="Current Password:" v-model="form.current_password" :error="errors.current_password" :type="currentPasswordFieldType" id="current_password"/>
 
-        <span v-html="showIcon(showPassword)" v-on:click="toggleShowPassword" class="eye-icon float-right"></span>
+        <span v-html="showIcon(showPassword)" @click="toggleShowPassword" class="eye-icon float-right"></span>
 
-        <form-input label="New Password:" v-model="form.password" :error="errors.password" type="password" id="password" v-bind:type="passwordFieldType"/>       
+        <form-input label="New Password:" v-model="form.password" :error="errors.password" type="password" id="password" :type="passwordFieldType"/>       
         </div>
 
         <div class="panel-bottom">
@@ -88,18 +89,6 @@ export default{
           originalData:{}
 		};
 	},
-  mounted(){
-   this.form.name = this.user.name
-    this.form.username = this.user.username
-    this.form.email = this.user.email
-    this.form.company = this.user.info.company
-    this.form.mobile = this.user.info.mobile
-    this.form.position = this.user.info.position
-    this.form.address = this.user.info.address
-    this.form.bio = this.user.info.bio
-
-    this.originalData = _.cloneDeep(this.form)
-  },
   computed:{
     currentPasswordFieldType() {
       return this.showCurrentPassword ? 'text' : 'password';
@@ -112,6 +101,18 @@ export default{
       return show ? '&#x1F441;' : '&#x1F576;';
     }
   },
+  },
+  mounted(){
+   this.form.name = this.user.name
+    this.form.username = this.user.username
+    this.form.email = this.user.email
+    this.form.company = this.user.info.company
+    this.form.mobile = this.user.info.mobile
+    this.form.position = this.user.info.position
+    this.form.address = this.user.info.address
+    this.form.bio = this.user.info.bio
+
+    this.originalData = _.cloneDeep(this.form)
   },
 	methods:{
     ...mapMutations('profile',['updateUser']),

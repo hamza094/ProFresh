@@ -56,7 +56,7 @@
 
           				<p v-if="task.notified"><small><b>Notified: </b> </small>{{task.notified}} </p>
 
-          				<p v-if="task.due_at"><small><b>Days Left: </b>{{this.remainingTime}}  </small> </p>
+          				<p v-if="task.due_at"><small><b>Days Left: </b>{{remainingTime}}  </small> </p>
 
                   <p><small><b>Task Created At:</b> {{task.created_at}}</small></p>
 
@@ -97,7 +97,7 @@
           					<i class="fas fa-user-alt pr-1"></i> <b>Members</b>
           				</button>
                 
-                <TaskMembers :slug="slug" :taskId="task.id" v-show=memberPop></TaskMembers>
+                <TaskMembers :slug="slug" :task-id="task.id" v-show=memberPop></TaskMembers>
           			</li>
 
           			<li>

@@ -11,7 +11,8 @@
              <li class="notification-header">Notifications</li>
                 <li v-if="!notifications.length" class="mt-2 mr-4 ml-4">No new notifications</li>
 
-                <li v-for="notification in notifications" :key="notification.id" class="notification-list dropdown-item" 
+                <li
+v-for="notification in notifications" :key="notification.id" class="notification-list dropdown-item" 
                 :class="{ 'notification-unread': !notification.read_at }">
 
               <router-link 
@@ -53,10 +54,6 @@ export default{
         return{
         }
     },
-     created(){
-        this.fetchNotifications();
-        this.listenNotifications();
-    },
     computed: {
         notifications() {
             return this.$store.state.notifications.notifications.data;
@@ -70,6 +67,10 @@ export default{
                 return this.$store.state.currentUser.user
             }
         },
+    },
+     created(){
+        this.fetchNotifications();
+        this.listenNotifications();
     },
     methods: {
         fetchNotifications() {

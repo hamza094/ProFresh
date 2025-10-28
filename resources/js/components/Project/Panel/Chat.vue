@@ -87,14 +87,15 @@
         @select="showEmoji"
         title="Pick your emoji…"
         class="emoji-modal"
-        :showPreview="false"
+        :show-preview="false"
       />
     </transition>
     </div>
 
       <!-- Chat with mentionable user functionality -->   
 
-       <Mentionable :keys="['@']" :items="items" offset="6"
+       <Mentionable
+:keys="['@']" :items="items" offset="6"
         insert-space @open="handleOpen" @apply="handleApply">
 
         <div class="position-relative w-100">
@@ -161,16 +162,6 @@
     <vue-progress-bar></vue-progress-bar>
 </div>
 </template>
-<style>
-.mention-item {
-  padding: 4px 10px;
-  border-radius: 4px;
-}
-
-.mention-selected {
-  background: rgb(192, 250, 153);
-}
-</style>
 <script>
 
 import data from "emoji-mart-vue-fast/data/all.json";
@@ -352,4 +343,14 @@ export default {
     this.listenToDeleteConversation();
   },
 }
-</script> 
+</script>
+<style>
+.mention-item {
+  padding: 4px 10px;
+  border-radius: 4px;
+}
+
+.mention-selected {
+  background: rgb(192, 250, 153);
+}
+</style> 

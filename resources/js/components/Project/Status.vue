@@ -127,7 +127,7 @@ export default {
     toggle() { this.isPop = !this.isPop },
     addClickOutsideListener() {
       if (this.clickOutsideHandler) return
-      this.$nextTick(() => {
+      this.$nextTick().then(() => {
         this.clickOutsideHandler = (e) => {
           if (this.$refs.dropdown && !this.$refs.dropdown.contains(e.target)) this.isPop = false
         }

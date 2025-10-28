@@ -2,8 +2,9 @@
   <div>
      <button class="btn btn-outline-primary w-100 btn-sm" @click.pervent="modalStage()">View</button>
      
-      <modal name="stage-modal" height="auto" :scrollable="true"
-      width="40%" :clickToClose=false>
+      <modal
+name="stage-modal" height="auto" :scrollable="true"
+      width="40%" :click-to-close=false>
     <div class="container m-2">
     <h3>Stage Panel</h3>
     <div class="mb-2 mt-3">
