@@ -81,7 +81,7 @@ export default{
 					password: this.form.password,
 					password_confirmation: this.form.password_confirmation,
           token: this.$route.params.token
-      }).then(response=>{
+            }).then(()=>{
         this.$Progress.finish();
         swal.fire("Password Changed","Please Login to continue","success");
           this.$router.push('/login');

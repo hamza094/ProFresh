@@ -2,7 +2,7 @@
 <div>
   <div>
     <div>
-      <p><span><b>Project Stage Last Updated:</b> {{stage_updated}}</span></p>
+  <p><span><b>Project Stage Last Updated:</b> {{ stageUpdated }}</span></p>
     </div>
   <div class="row" v-if="access">
   <ul class="d-flex flex-wrap ml-2 list-unstyled m-0 p-0 w-100">
@@ -57,19 +57,48 @@ name="stage-reason" :click-to-close=false
   import { mapMutations } from 'vuex';
 
   export default{
-    props:['slug','stage_updated','postponed_reason','get_stage','access'],
+    props:{
+      slug: {
+        type: String,
+        default: '',
+      },
+      stageUpdated: {
+        type: String,
+        default: '',
+      },
+      postponedReason: {
+        type: String,
+        default: '',
+      },
+      getStage: {
+        type: Number,
+        default: 0,
+      },
+      access: {
+        type: Boolean,
+        default: false,
+      },
+    },
     data(){
        return{
-         reason:'',
-         stages:{},
+         reason: this.postponedReason || '',
+         stages:[],
          selectedStage:0,
        }
+    },
+    watch: {
+      postponedReason(newValue) {
+        this.reason = newValue || '';
+      },
+    },
+    mounted(){
+      this.loadStages();
     },
     methods:{
       ...mapMutations('project',['updateStage']),
 
   getStageClass(stage) {
-  if (this.get_stage === stage.id) {
+  if (this.getStage === stage.id) {
     if (stage.name === "Postponed") return "postpone";
     if (stage.name === "Completed") return "closed";
     return "current";
@@ -87,6 +116,9 @@ name="stage-reason" :click-to-close=false
     },
 
   updateProject(data) {
+    if (!this.slug) {
+      return;
+    }
     this.$Progress.start();
   axios.patch(`/api/v1/projects/${this.slug}/stage`, data)
 
@@ -103,7 +135,7 @@ name="stage-reason" :click-to-close=false
       this.updateStage(eventData);
       this.$vToastify.success("Successfully update");
     })
-    .catch(error => {
+    .catch(() => {
       this.$Progress.fail();
       this.$vToastify.error("Error in Project Phase Conversion");
     });
@@ -111,7 +143,7 @@ name="stage-reason" :click-to-close=false
 },  
 
   stageChange(stageId) {
-  if (stageId === this.get_stage) {
+  if (stageId === this.getStage) {
     return this.$vToastify.error("Stage already selected");
   }
 
@@ -119,7 +151,7 @@ name="stage-reason" :click-to-close=false
 },
       
  postpone() {
-   this.updateProject({stage:this.selectedStage, postponed_reason: this.reason });
+  this.updateProject({stage:this.selectedStage, postponed_reason: this.reason });
    this.$modal.hide('stage-reason');
 },
 
@@ -132,10 +164,6 @@ name="stage-reason" :click-to-close=false
      console.log(error.response.data.errors);
    });
 },
-
- },
- mounted(){
-      this.loadStages();
-    },
+  },
   }
 </script>

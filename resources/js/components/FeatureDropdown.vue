@@ -1,5 +1,5 @@
 <template>
-  <span class="feature-dropdown" @click="featurePop = !featurePop">
+  <span class="feature-dropdown" @click="$emit('update:featurePop', !featurePop)">
     <span class="btn btn-light btn-sm"><i class="fas fa-ellipsis-v"></i></span>
     <span class="feature-dropdown_item" v-show="featurePop">
       <slot></slot>
@@ -9,17 +9,11 @@
 
 <script type="text/javascript">
 export default {
-    props:['featurePop'],
-    data() {
-        return {
-
-        };
-    },
-
-    methods: {
-
-
-
+  props: {
+    featurePop: {
+      type: Boolean,
+      default: false,
+    }
   }
 }
 </script>

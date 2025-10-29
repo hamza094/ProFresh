@@ -342,7 +342,7 @@ export default {
       })
 
       panel1Handle.promise
-        .then(result => {
+        .then(() => {
 
         });
       }

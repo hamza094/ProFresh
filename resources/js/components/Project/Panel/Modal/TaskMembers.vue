@@ -13,11 +13,11 @@
       </div>
 
       <div class="member-list" v-if="searchResults.length > 0 && form.search">        
-      <div
+  <div
 v-for="member in searchResults" :key="member.id"
         class="member-list_items">
 
-      <div @click.prevent="addMember(member,member.id)">{{member.name}} ({{member.username}})
+  <div @click.prevent="addMember(member)">{{member.name}} ({{member.username}})
       </div>
 
       </div> 
@@ -27,29 +27,37 @@ v-for="member in searchResults" :key="member.id"
 
       <div v-if="taskMembers.length > 0" class="mt-3" style="height:70px;width:150px; overflow-y:scroll;">
 
-      <div v-for="member in taskMembers">
-        <span>{{member.username}} <span @click.prevent="removeMember(member,member.id)"><i class="fas fa-minus-circle"></i></span> </span>
+      <div v-for="member in taskMembers" :key="member.id || member.username">
+        <span>{{member.username}} <span @click.prevent="removeMember(member)"><i class="fas fa-minus-circle"></i></span> </span>
       </div>
       </div>
       </div>
 </template>
 
 <script type="text/javascript">
-  import { mapMutations, mapActions, mapState } from 'vuex';
+  import { mapMutations, mapState } from 'vuex';
   import {url,ErrorHandling} from '../../../../utils/TaskUtils';
   import { debounce } from 'lodash';
 
 export default {
-    props:['slug','taskId'],
-  computed:{
-    ...mapState('SingleTask',['form','errors','task']),
-  },
-
+    props:{
+      slug: {
+        type: String,
+        required: true,
+      },
+      taskId: {
+        type: [String, Number],
+        required: true,
+      }
+    },
   data() {
     return {
-    searchResults:"",
+    searchResults: [],
     taskMembers: [], 
     };
+  },
+  computed:{
+    ...mapState('SingleTask',['form','errors','task']),
   },
     watch:{
       'form.search': debounce(function(newSearch) {
@@ -68,7 +76,7 @@ export default {
 
   performSearch(searchTerm) {
     axios.get(`/api/v1/projects/${this.slug}/tasks/${this.taskId}/member/search`, {
-        params: { search: this.form.search}
+        params: { search: searchTerm }
     })
     .then(response => {
         this.searchResults=response.data;
@@ -77,7 +85,7 @@ export default {
         console.log(error);
     });
 },
- addMember(member,id){
+ addMember(member){
    const memberExists = this.taskMembers.some(m => m.id === member.id);
 
   if (memberExists) {
@@ -89,7 +97,7 @@ export default {
   this.form.search='';
 },
 
-removeMember(member,id){
+removeMember(member){
   this.taskMembers = this.taskMembers.filter((m) => m !== member);
 },
 
@@ -124,7 +132,7 @@ removeMember(member,id){
       return [];
     },
       hasError(key) {
-    if (this.errors && typeof this.errors === 'object' && this.errors.hasOwnProperty(key)) {
+    if (this.errors && typeof this.errors === 'object' && Object.prototype.hasOwnProperty.call(this.errors, key)) {
       return true;
     }
     return false;

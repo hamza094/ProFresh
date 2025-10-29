@@ -148,7 +148,10 @@ export default {
           { label: 'Total Projects', value: response.data.data.total_projects || 0 }
         ];
         this.renderChart();
-      } catch (error) {
+      } catch (err) {
+        if (process.env.NODE_ENV !== 'production') {
+          console.error(err);
+        }
         this.$vToastify.error('Failed to load chart data');
       } finally {
         this.isLoading = false;

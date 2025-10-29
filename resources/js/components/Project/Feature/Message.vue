@@ -45,10 +45,10 @@ name="project-message" height="auto" :scrollable="true" width="45%"
 
 	<div class="form-group">
 		<label for="to" class="label-name mt-2">To: Select Project Member</label>
-		<div class="check_members">
-		<div class="form-check" v-for="(user,index) in  members" :key="user.id">
-	<input v-if="user.id !== auth.id" class="form-check-input" type="checkbox" v-model="form.users" :value="user" id="checkUsers">
-	<label v-if="user.id !== auth.id" class="form-check-label" for="checkUsers">
+			<div class="check_members">
+			<div class="form-check" v-for="user in members" :key="user.id">
+	<input v-if="user.id !== auth.id" class="form-check-input" type="checkbox" v-model="form.users" :value="user" :id="'checkUser-' + user.id">
+	<label v-if="user.id !== auth.id" class="form-check-label" :for="'checkUser-' + user.id">
 		{{user.name}} ({{user.email}})
 	</label>
 </div>
@@ -124,9 +124,12 @@ name="schedule-message" height="auto" :scrollable="true" width="45%"
     import SubscriptionCheck from '../../SubscriptionChecker.vue';
 
 export default {
-	components: {ScheduleMessages,SubscriptionCheck},
+		components: {ScheduleMessages,SubscriptionCheck},
 
-  props:['slug','members'],
+	props: {
+		slug: { type: String, required: true },
+		members: { type: Array, default: () => [] },
+	},
     data() {
       return {
         auth:this.$store.state.currentUser.user,
@@ -159,9 +162,9 @@ export default {
 		users:JSON.stringify(this.form.users),
 		date:this.form.date,
 		time:this.form.time
-    }).then(response=>{
-        this.$vToastify.success("Message Sent Successfully");
-		this.modalClose();
+	}).then(() => {
+		this.$vToastify.success("Message Sent Successfully");
+ 		this.modalClose();
     }).catch(error=>{
         this.errors=error.response.data.errors;
 		this.$vToastify.warning("Failed To Send Message");

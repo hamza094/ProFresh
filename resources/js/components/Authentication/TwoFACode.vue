@@ -42,6 +42,9 @@ export default {
       status: '',
     };
   },
+  async mounted() {
+    await this.fetch2FAStatus();
+  },
   methods: {
     ...mapActions('currentUser', ['twoFactorLogin']),
     async submitCode() {
@@ -66,14 +69,12 @@ export default {
       try {
         const res = await this.$axios.get('/api/v1/twofactor/fetch-user');
         this.status = res.data.status;
-      } catch (e) {
+      } catch {
         this.status = '';
       }
     },
   },
-  async mounted() {
-    await this.fetch2FAStatus();
-  }
+  
 }
 </script>
 

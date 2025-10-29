@@ -19,7 +19,6 @@
 
           					<small class="ml-2"><b>Members:</b></small>
                   
-                  <template>
                       <span v-for="member in task.members" class="task-member-container" :key="member.id">
 
                     <router-link 
@@ -46,11 +45,9 @@
                      <span class="unassign-cross" @click="unassignMember(task.id,member.id)">&times;</span>
                     </span>
                     </span>
-
-                  </template>  
                 </p>
                 <span class="text-danger font-italic" v-if="errors?.member" v-text="errors?.member"></span>
-          					</p>
+
 
           				<p v-if="task.due_at"><small><b>Task due: </b> </small> {{task.due_at}} {{auth.timezone}}</p>
 
@@ -80,8 +77,8 @@
           			<h5 class="text-center">Change Label</h5>
 
           			<ul class="task-option_labels">
-          			<li v-for="status in statuses" :key="status.id">
-                     <p class="task-option_labels-component" @click="changeStatus(status.id,task,task.id)" :style="{backgroundColor: status.color}">
+          				<li v-for="status in statuses" :key="status.id">
+                     <p class="task-option_labels-component" @click="changeStatus(status.id, task.id)" :style="{backgroundColor: status.color}">
                       {{status.label}}
                      <span  v-if="task.status_id == status.id">
                        <i class="fas fa-check-circle" style="color: #2a971c;"></i>
@@ -97,21 +94,21 @@
           					<i class="fas fa-user-alt pr-1"></i> <b>Members</b>
           				</button>
                 
-                <TaskMembers :slug="slug" :task-id="task.id" v-show=memberPop></TaskMembers>
+                <TaskMembers :slug="slug" :task-id="task.id" v-show="memberPop"></TaskMembers>
           			</li>
 
           			<li>
           				<button class="btn btn-sm btn btn-sm btn-outline-success btn-block" @click.prevent="datePop = !datePop">
           				  <i class="fas fa-clock pr-1"></i><b>Due Date</b>
           				</button>
-          				<div class="member-dropdown_item" v-show=datePop>
+          				<div class="member-dropdown_item" v-show="datePop">
                         <span>Due Date:
                         <datetime type="datetime" v-model="form.due_at" value-zone="local" zone="local" :min-datetime="modifiedDate"></datetime>
                         </span>
 
                         <select class="custom-select mr-sm-2" v-model="form.notified">
                          <option value="">Choose Option</option>
-                          <option v-for="notify in due_notifies" :value="notify">{{ notify }}</option>
+                          <option v-for="notify in due_notifies" :key="notify" :value="notify">{{ notify }}</option>
                          </select>
 
                            <span class="text-danger font-italic" v-if="errors?.notified" v-text="errors?.notified?.[0]"></span>
@@ -119,7 +116,7 @@
                          <div class="float-right mt-2">
                           <button class="btn btn-sm btn-secondary" @click.prevent="cancelDue()">Cancel</button>
 
-                          <button class="btn btn-sm btn-primary" @click.prevent="taskDue(task.id,task)">Set</button>
+                          <button class="btn btn-sm btn-primary" @click.prevent="taskDue(task.id)">Set</button>
                          </div>
                        </div>
           			</li>	
@@ -134,7 +131,7 @@
           			</li>
 
           			<li>	
-          				<button class="btn btn-sm btn btn-sm btn-outline-danger btn-block" @click.prevent="trash(task,task.id)" v-if="state == 'archived'">
+          				<button class="btn btn-sm btn btn-sm btn-outline-danger btn-block" @click.prevent="trash(task.id)" v-if="state == 'archived'">
           				  <i class="fas fa-trash-alt pr-1"></i><b>	Delete</b>
           				</button>
           			</li>
@@ -158,7 +155,20 @@ import { modalClose } from '../../../mixins/modalClose';
 export default {
 	components: {TopPanel,TaskDescription,TaskMembers},
 
-  props:['slug','state','projectMembers'],
+  props:{
+    slug: {
+      type: String,
+      required: true,
+    },
+    state: {
+      type: String,
+      default: 'active',
+    },
+    projectMembers: {
+      type: Array,
+      default: () => [],
+    },
+  },
     data() {
       return {
         currentDate: new Date().toUTCString(),
@@ -202,8 +212,8 @@ created() {
 
     ...mapActions({fetchTasks: 'task/fetchTasks'}),
 
-   changeStatus(statusId,task,id){
-         axios.put(url(this.slug, id),{status_id:statusId},{ useProgress: true })
+   changeStatus(statusId,id){
+     axios.put(url(this.slug, id),{status_id:statusId},{ useProgress: true })
     .then(response => {
       this.$vToastify.success(response.data.message);
         this.setErrors([]);
@@ -215,7 +225,7 @@ created() {
     });
     },
 
-    taskDue(id,task){
+    taskDue(id){
       axios.put(url(this.slug, id),
         {due_at:this.form.due_at,notified:this.form.notified},{ useProgress: true })
     .then(response => {
@@ -275,7 +285,7 @@ created() {
              ErrorHandling(this,error);
           });
     },
-    trash(task,taskId){
+    trash(taskId){
     	axios.delete(url(this.slug, taskId)+'/remove',{ useProgress: true })
           .then(response=>{
             console.log(response);

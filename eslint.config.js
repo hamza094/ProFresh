@@ -4,11 +4,13 @@ import pluginVue from 'eslint-plugin-vue'
 import globals from 'globals'
 
 export default [
-  // add more generic rulesets here, such as:
-   js.configs.recommended,
-    ...pluginVue.configs['flat/vue2-essential'],
-    ...pluginVue.configs['flat/vue2-recommended'],
-    ...pluginVue.configs['flat/vue2-strongly-recommended'],
+  { 
+    ignores: ['resources/js/components/Admin/**'] 
+  },
+  js.configs.recommended,
+  ...pluginVue.configs['flat/vue2-essential'],
+  ...pluginVue.configs['flat/vue2-recommended'],
+  ...pluginVue.configs['flat/vue2-strongly-recommended'],
   {   
     languageOptions: {
       sourceType: 'module',

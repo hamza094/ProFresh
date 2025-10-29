@@ -15,7 +15,7 @@ name="view-schedules" height="auto" :scrollable="true"
 
 	  <div class="panel-top_content">
 
-			<h2 v-if="messages == 0">Sorry no scheduled messages found</h2>
+			<h2 v-if="messages.length === 0">Sorry no scheduled messages found</h2>
 
 			<table v-else class="table table-bordered">
 	  <thead>
@@ -29,11 +29,11 @@ name="view-schedules" height="auto" :scrollable="true"
 	    </tr>
 	  </thead>
 	  <tbody>
-	    <tr v-for="(message,index) in messages" :key="message.id">
+		<tr v-for="message in messages" :key="message.id">
 	      <td>{{message.type}}</td>
 	      <td>{{message.message}}</td>
 				<td>
-				<span v-for="user in message.users">
+                <span v-for="user in message.users" :key="user.id || (user.pivot && user.pivot.id) || user.name">
         <router-link :to="'/user/'+user.pivot.id+'/profile'" class="btn btn-link">
 					{{user.name}}
 				</router-link><br>
@@ -41,7 +41,7 @@ name="view-schedules" height="auto" :scrollable="true"
 			</td>
 	      <td>{{message.delivered_at | datetime}}</td>
 				<td>{{message.created_at | datetime}}</td>
-				<td><a class="btn btn-danger" @click="remove(message.id,index)"><i class="fas fa-minus-circle"></i></a></td>
+				<td><a class="btn btn-danger" @click="remove(message.id)"><i class="fas fa-minus-circle"></i></a></td>
 	    </tr>
 	  </tbody>
 	</table>
@@ -62,7 +62,9 @@ name="view-schedules" height="auto" :scrollable="true"
 <script>
 
 export default {
-  props:['slug'],
+	props: {
+		slug: { type: String, required: true },
+	},
     data() {
         return {
          messages:[],
@@ -85,16 +87,18 @@ created(){
 					then(response=>{
 					this.messages=response.data;
 					}).catch(error=>{
-					console.log(error.response.data.errors);
+					const msg = error?.response?.data?.message || 'Failed to load scheduled messages';
+					this.$vToastify.warning(msg);
 					});
 			},
-			remove(id,index){
-				axios.delete('/api/v1/projects/'+this.slug+'/messages/'+id+'/delete').
-					then(response=>{
-					   this.scheduledMessages();
-					}).catch(error=>{
-					console.log(error.response.data.errors);
-					});
+			remove(id){
+	                axios.delete('/api/v1/projects/'+this.slug+'/messages/'+id+'/delete').
+					then(() => {
+	   					   this.scheduledMessages();
+							}).catch(error=>{
+	                    const msg = error?.response?.data?.message || 'Failed to delete scheduled message';
+	                    this.$vToastify.warning(msg);
+							});
 			},
     modalClose(){
    this.$modal.hide('view-schedules');

@@ -76,13 +76,15 @@ name="MeetingModal" height="auto" :scrollable="true" width="40%"
 
 
 <script>
-  import { mapState, mapMutations, mapActions } from 'vuex';
+  import { mapMutations } from 'vuex';
   import FormGroup from './../FormGroup.vue';
 
 export default{
   components: { FormGroup },
 
-	props:['projectSlug'],
+  props: {
+    projectSlug: { type: String, required: true },
+  },
 
     data() {	
      return{

@@ -33,7 +33,7 @@
         {{ message }}
       </div>
 
-      <div v-for="(meeting, index) in meetings.data" :key="meeting.id">
+  <div v-for="meeting in meetings.data" :key="meeting.id">
         <div class="card mt-3 card-hover" @click.prevent="getMeeting(meeting.id)">
           <div :class="['ribbon', ribbonColor(meeting.status)]">{{ meeting.status }}</div>
           <div class="card-stamp">
@@ -71,8 +71,7 @@
 <script>
 import MeetingModal from './MeetingModal.vue';
 import ViewModal from './ViewModal.vue';
-import { permission } from '../../../auth';
-import { mapState, mapMutations, mapActions } from 'vuex';
+import { mapState, mapActions } from 'vuex';
 import { fetchTokens, setupAndJoinMeeting } from '../../../utils/zoomUtils';
 import { shouldShowStartButton, shouldShowJoinButton } from '../../../utils/meetingUtils';
 
@@ -82,7 +81,12 @@ export default {
     ViewModal
   },
   // Props for project and meeting data
-  props: ['projectSlug', 'projectMeetings', 'notAuthorize', 'members'],
+  props: {
+    projectSlug: { type: String, required: true },
+    projectMeetings: { type: Object, default: () => ({}) },
+    notAuthorize: { type: Boolean, default: false },
+    members: { type: Array, default: () => [] },
+  },
   data() {
     return {
       showPrevious: false,
@@ -98,14 +102,16 @@ export default {
     // Listen for meeting status updates via Echo
     meetingStatusListener() {
       if (this.activeMeetingId) {
-        Echo.private(`meetingStatus.${this.activeMeetingId}`)
+        const id = this.activeMeetingId;
+        Echo.private(`meetingStatus.${id}`)
           .listen('MeetingStatusUpdate', (e) => {
             this.updateMeetingStatus({ id: e.id, status: e.status });
           });
         return () => {
-          Echo.leave(`meetingStatus.${this.activeMeetingId}`);
+          Echo.leave(`meetingStatus.${id}`);
         };
       }
+      return null;
     }
   },
   watch: {
@@ -114,6 +120,28 @@ export default {
       if (oldListener) oldListener();
     }
   },
+  created() {
+    this.showCurrentMeetings();
+    this.$bus.$on('initialize-meeting', this.initializeMeeting);
+  },
+
+  beforeDestroy() {
+    if (this.meetingStatusListener) {
+      this.meetingStatusListener();
+    }
+  },
+
+  mounted() {
+    this.$bus.on('get-results', () => {
+      this.showCurrentMeetings();
+    });
+  },
+
+  destroyed() {
+    this.$bus.$off('get-results');
+    this.$bus.$off('initialize-meeting', this.initializeMeeting);
+  },
+
   methods: {
     ...mapActions({
       fetchMeetings: 'meeting/fetchMeetings',
@@ -161,7 +189,7 @@ export default {
           window.location.href = response.data.redirectUrl;
         })
         .catch(error => {
-          // Optionally handle error
+          this.$vToastify.error(error?.response?.data?.message || 'Authorization failed');
         });
     },
 
@@ -184,7 +212,7 @@ export default {
 
         this.$vToastify.success('Meeting initiated successfully!');
       } catch (error) {
-        this.$vToastify.error('Meeting initiation failed!');
+        this.$vToastify.error(error?.response?.data?.message || error?.message || 'Meeting initiation failed!');
       } finally {
         this.$vToastify.stopLoader(this.loadingId);
         this.loadingId = null;
@@ -202,28 +230,6 @@ export default {
           return 'bg-red';
       }
     },
-  },
-
-  created() {
-    this.showCurrentMeetings();
-    this.$bus.$on('initialize-meeting', this.initializeMeeting);
-  },
-
-  beforeDestroy() {
-    if (this.meetingStatusListener) {
-      this.meetingStatusListener();
-    }
-  },
-
-  mounted() {
-    this.$bus.on('get-results', () => {
-      this.showCurrentMeetings();
-    });
-  },
-
-  destroyed() {
-    this.$bus.$off('get-results');
-    this.$bus.$off('initialize-meeting', this.initializeMeeting);
   },
 };
 </script>

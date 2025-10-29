@@ -68,6 +68,10 @@
   import { mapActions } from 'vuex';
 
 export default {
+  beforeRouteLeave(to, from, next) {
+    this.$store.commit('currentUser/clearErrors');
+    next();
+  },
   data(){
     return{
       user:{
@@ -96,10 +100,6 @@ export default {
           console.error(error);
         });
     },
-  },
-  beforeRouteLeave(to, from, next) {
-    this.$store.commit('currentUser/clearErrors');
-    next();
   },
 }
 </script>

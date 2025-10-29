@@ -2,7 +2,7 @@
  <div class="col-md-7 mb-5">
   <div class="activity">
    <ul>
-    <li v-for="(activity,index) in activities" :key="activity.id">
+    <li v-for="activity in activities" :key="activity.id">
         <span class="activity-icon" :class="activityColor(activity.description)"> <i :class="activityIcon(activity.description)"></i></span>
              {{activity.description}}
               <p class="activity-info">
@@ -24,14 +24,24 @@
 
   export default{
     mixins: [activityMixins],
-    props:['activities','slug','name'],
+    props: {
+      activities: {
+        type: Array,
+        default: () => [],
+      },
+      slug: {
+        type: String,
+        required: true,
+      },
+      name: {
+        type: String,
+        required: true,
+      },
+    },
     data(){
        return{
          icon:'',
        }
-    },
-    watch:{
-
     },
     methods:{
 

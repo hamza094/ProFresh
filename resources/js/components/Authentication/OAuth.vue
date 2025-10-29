@@ -11,13 +11,15 @@
 
 <script>
 import { mapActions } from 'vuex';
-import router from '../../router';
 export default {
   name: 'MyComponent',
   data() {
     return {
      color:'#301934' 
     }
+  },
+  mounted() {
+      this.socialLogin();
   },
   methods: {
     ...mapActions('currentUser', ['handleLoginResponse']),
@@ -35,9 +37,6 @@ export default {
       }
     },
   },
-  mounted() {
-      this.socialLogin();
-  }
 }
 </script>
 

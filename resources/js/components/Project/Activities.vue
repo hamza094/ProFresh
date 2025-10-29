@@ -36,9 +36,9 @@
 
         <ul v-else>
 
-        <li
-v-for="(activity,index) in activities.data" 
-        :key="activity.id">
+  <li
+v-for="activity in activities.data" 
+  :key="activity.id">
 
         <!-- Icon + Description -->
         <span 

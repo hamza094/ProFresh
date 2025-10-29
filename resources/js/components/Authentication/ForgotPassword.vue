@@ -45,9 +45,9 @@ export default{
 	methods:{
 		resetLink(){
       axios.post('/api/v1/forgot-password',this.form,{
-    }).then(response=>{
-      this.$vToastify.success("Reset Email sent successfully check your inbox");
-       }).catch(error=>{
+            }).then(()=>{
+            this.$vToastify.success("Reset Email sent successfully check your inbox");
+             }).catch(error=>{
          this.errors=error.response.data.errors;
     });
 		},

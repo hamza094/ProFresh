@@ -11,7 +11,7 @@
   <div class="d-flex align-items-center">
       <i class="fas fa-comment-alt mr-2"></i>
       <span>Group Chat</span>
-      <span v-if="conversations.length" class="badge badge-light ml-2">{{ conversations.length }}</span>
+  <span v-if="conversationCount" class="badge badge-light ml-2">{{ conversationCount }}</span>
       <span class="ml-1">messages</span>
     </div> 
 
@@ -27,7 +27,7 @@
       <!-- Chat Message -->
 
       <ul class="chat">
-      <li v-for="(conversation,index) in conversations.data" :key="index">
+  <li v-for="conversation in conversations.data" :key="conversation.id || conversation.created_at">
       <div class="chat-body clearfix">
       <div class="header">
 
@@ -58,15 +58,15 @@
             <i>{{conversation.created_at}}</i>
           </span>
 
-          <button v-if="auth.uuid === conversation.user.uuid" class="btn btn-link btn-sm" @click.prevent="deleteConversation(conversation.id,index)">Delete</button>
+          <button v-if="auth.uuid === conversation.user.uuid" class="btn btn-link btn-sm" @click.prevent="deleteConversation(conversation.id)">Delete</button>
 
           <button v-else class="btn btn-link btn-sm disabled">Delete</button>
 
           </div>
           </li>
-          <span v-if="typing" class="help-block" style="font-style: italic;">
-              💬  @{{ user?.name || "Someone"  }} is typing...
-          </span>
+      <span v-if="typing" class="help-block" style="font-style: italic;">
+        💬  @{{ (user && user.name) || "Someone" }} is typing...
+      </span>
           <span v-else class="help-block" style="font-style: italic;">
                 💬
           </span>
@@ -137,7 +137,7 @@
       </div>
     </template>
 
-    <template #item-@="{ item }">
+    <template #[`item-@`]="{ item }">
       <div class="user">
          <img :src="item.avatar" alt="User Avatar" class="mention-user"/> 
          <span class="dim">{{ item.name }}</span> 
@@ -165,26 +165,42 @@
 <script>
 
 import data from "emoji-mart-vue-fast/data/all.json";
-import { Mentionable } from 'vue-mention'
+import { Mentionable } from 'vue-mention';
 import { Picker, EmojiIndex } from "emoji-mart-vue-fast";
 import SubscriptionCheck from '../../SubscriptionChecker.vue';
 import { debounce } from 'lodash';
 
 export default {
   components:{Picker,Mentionable,SubscriptionCheck},
-    props:['slug','members','owner','auth'],
+    props:{
+      slug: {
+        type: String,
+        required: true,
+      },
+      members: {
+        type: Array,
+        default: () => [],
+      },
+      owner: {
+        type: Object,
+        required: true,
+      },
+      auth: {
+        type: Object,
+        required: true,
+      },
+    },
     data() {
       return {
       emojiIndex: new EmojiIndex(data),
       message: '',
       typing: false,
       emojiModal:false,
-      typingTimeout: null,
       user:null,
       fileName: '',
       file:'',
       items: [],
-      conversations:[],
+      conversations:{ data: [] },
       errors:[],
       users: [...this.members, this.owner]
     };
@@ -193,7 +209,23 @@ export default {
   computed: {
     isSendDisabled() {
         return this.message.trim().length === 0 && !this.file;
+    },
+    conversationCount() {
+        if (this.conversations && Array.isArray(this.conversations.data)) {
+          return this.conversations.data.length;
+        }
+        return 0;
     }
+  },
+
+  created(){
+    this.loadConversations();
+
+    this.listenToWhisperEvent();
+
+    this.listenForNewMessage();
+
+    this.listenToDeleteConversation();
   },
 
   methods: {
@@ -205,7 +237,7 @@ export default {
       this.items = key === '@' ? this.users : [];
     },
 
-    async handleApply(item, key) {
+   async handleApply(item) {
        this.message= `${this.message}@${item.username}`;
        this.message=this.message.replace('@undefined','');
     },
@@ -226,10 +258,12 @@ export default {
         }
     },
 
-    removeFile() {
-        this.file = null;
-        this.fileName = "";
-        this.$refs.fileInput.value = ""; // Clear input field
+  removeFile() {
+    this.file = null;
+    this.fileName = "";
+    if (this.$refs.fileInput) {
+      this.$refs.fileInput.value = ""; // Clear input field
+    }
     },
 
   send() {
@@ -248,9 +282,9 @@ export default {
   }
 
     axios.post('/api/v1/projects/'+this.slug+'/conversations', formData,{ useProgress: true })
-    .then((response) => {
-      this.message = '';
-      this.file = null;
+    .then(() => {
+  this.message = '';
+  this.removeFile();
     }).catch(error=>{
      if (error.response && error.response.data.errors) {
             this.errors = error.response.data.errors; // Store errors
@@ -263,16 +297,17 @@ export default {
     });
     },
     
-    deleteConversation(id,index){
+    deleteConversation(id){
       axios.delete('/api/v1/projects/'+this.slug+'/conversations/'+id,{ useProgress: true })
-      .then(response=>{
+      .then(()=>{
          this.$vToastify.info("Conversation deleted sucessfully");
       }).catch(error=>{
-        this.$vToastify.warning("Failed to delete project conversation");
+        const msg = error?.response?.data?.message || error?.message || 'Failed to delete project conversation';
+        this.$vToastify.warning(msg);
       })
     },
 
-   isTyping: _.debounce(function () {
+   isTyping: debounce(function () {
       Echo.private(`typing.${this.slug}`).whisper("typing-indicator", {
         user: this.auth,
         typing: true,
@@ -287,11 +322,20 @@ export default {
     return axios
         .get('/api/v1/projects/'+this.slug+`/conversations`)
         .then(response => {
-            this.conversations = response.data;
+            const payload = response.data;
+            if (payload && Array.isArray(payload.data)) {
+              this.conversations = payload;
+              return;
+            }
+            if (Array.isArray(payload)) {
+              this.conversations = { data: payload };
+              return;
+            }
+            this.conversations = { data: [] };
         })
         .catch(error => {
           console.log(error);
-            this.conversations=[];
+            this.conversations={ data: [] };
         });
   },
 
@@ -331,16 +375,6 @@ export default {
     });
     },
 
-  },
-
-    created(){
-    this.loadConversations();
-
-    this.listenToWhisperEvent();
-
-    this.listenForNewMessage();
-
-    this.listenToDeleteConversation();
   },
 }
 </script>

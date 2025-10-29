@@ -1,5 +1,3 @@
-import { set } from "lodash";
-
 const state = {
   notifications:{ data: [], links: {}, meta: {}
   },

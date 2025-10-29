@@ -124,8 +124,8 @@ v-if="permission.access"
 					</div>
 					<br>
 					<Stage
-:slug="project.slug" :projectstage='project.stage' :postponed_reason="project.postponed_reason"
-					 :stage_updated="project.stage_updated_at" :get_stage="getStage" :access="permission.access">
+:slug="project.slug" :postponed-reason="project.postponed_reason"
+					 :stage-updated="project.stage_updated_at" :get-stage="getStage" :access="permission.access">
 				</Stage> 
 				<br>
 				<hr>
@@ -178,7 +178,7 @@ v-if="permission.access"
 			<hr>
 			<div>
             <p><b>Online Users For Chat</b></p>
-            <p v-for="user in  chatusers">{{user.name}} <span class="chat-circle"></span> </p>
+			<p v-for="user in chatusers" :key="user.id">{{user.name}} <span class="chat-circle"></span> </p>
         </div>
 
 			<hr>
@@ -236,26 +236,7 @@ export default{
     };
     },
 
-    created(){
-    	const slug = this.$route.params.slug;
-      this.loadProject(slug)
-      .then(() => {
-      	this.show=true;
-      this.projectname = this.project.name;
-      this.projectabout = this.project.about;
-      this.projectId=this.project.id;
-      this.members = this.project.members;
-      this.meetings= this.project.meetings;
-      this.listenForActivity();
-			this.listenForProjectHealth();
-      this.archiveTask();
-    })
-    .catch(error => {
-      console.log(error.response.data.errors);
-    });
-    },
-
-    computed: {
+		computed: {
     	...mapState('project',['project','user','getStage','tasks']),
 
     permission() {
@@ -278,7 +259,38 @@ export default{
    },
   },
 
-    methods:{
+		created(){
+			const slug = this.$route.params.slug;
+			this.loadProject(slug)
+			.then(() => {
+				this.show=true;
+			this.projectname = this.project.name;
+			this.projectabout = this.project.about;
+			this.projectId=this.project.id;
+			this.members = this.project.members;
+			this.meetings= this.project.meetings;
+			this.listenForActivity();
+			this.listenForProjectHealth();
+			this.archiveTask();
+		})
+		.catch(error => {
+			console.log(error.response.data.errors);
+		});
+		},
+
+		mounted(){
+			this.path=this.getProjectSlug();
+			this.connectToEcho();
+		},
+
+		beforeDestroy(){
+			Echo.leave('chatroom.'+this.path);
+			if (this.projectId) {
+				Echo.leave(`project.${this.projectId}.health`);
+			}
+	},
+
+		methods:{
     ...mapActions('project',['loadProject']),
     ...mapMutations('project',['aboutUpdate']),
 
@@ -418,18 +430,6 @@ export default{
     }
 });
       },
-  },
-
-    mounted(){
-      this.path=this.getProjectSlug();
-      this.connectToEcho();
-    },
-
-    beforeDestroy(){
-      Echo.leave('chatroom.'+this.path);
-			if (this.projectId) {
-				Echo.leave(`project.${this.projectId}.health`);
-			}
-  },
+	},
 }
 </script>

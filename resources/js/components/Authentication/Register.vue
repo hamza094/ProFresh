@@ -77,7 +77,7 @@ export default{
       RegisterUser(){
         this.$Progress.start();
         axios.post('/api/v1/register',this.form,{
-      }).then(response=>{
+            }).then(()=>{
         this.$Progress.finish();
         swal.fire("Account Registered","Please Verify your account and login","success");
           this.$router.push('/login');

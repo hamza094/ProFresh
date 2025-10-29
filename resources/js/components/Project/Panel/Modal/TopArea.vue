@@ -7,7 +7,7 @@
 
             <input class="title-form form-control" name="title" v-model="form.title" v-text="task.title">
 
-            <span class="btn btn-link btn-sm" @click="updateTitle(task.id,task)">Update</span>
+            <span class="btn btn-link btn-sm" @click="updateTitle(task.id)">Update</span>
 
            <span class="btn btn-link btn-sm" @click="closeTitleForm(task.id,task)">Cancel</span>
           </span>
@@ -28,12 +28,29 @@ Please note that this task is currently archived. Currently, you can only delete
 </template>
 
 <script>
-import { mapMutations, mapActions, mapState } from 'vuex';
+import { mapMutations, mapState } from 'vuex';
 import {url,ErrorHandling } from '../../../../utils/TaskUtils';
 import { modalClose } from '../../../../mixins/modalClose';
 
 export default {
-    props:['task','state','slug','errors'],
+    props:{
+      task: {
+        type: Object,
+        required: true,
+      },
+      state: {
+        type: String,
+        default: '',
+      },
+      slug: {
+        type: String,
+        required: true,
+      },
+      errors: {
+        type: Object,
+        default: () => ({}),
+      },
+    },
 
   data() {
     return {
@@ -43,12 +60,15 @@ export default {
    computed: {
     ...mapState('SingleTask',['form']),
   },
+  created() {
+    
+  },
   methods: {
   ...mapMutations('SingleTask',['setErrors','updateTaskTitle','setForm']),
 
   ...mapMutations('task',['updateTask']),
 
-   updateTitle(id, task) {
+  updateTitle(id) {
        if (this.form.title === this.task.title) {
          return  this.$vToastify.warning('No changes made.');
       }
@@ -80,9 +100,6 @@ export default {
     modalClose(){
       modalClose(this);
    },
-  },
-  created() {
-    
   },
 };
 </script>

@@ -25,7 +25,9 @@ export default{
        this.$vToastify.success(response.data.message);
       self.$router.push('/dashboard');
      }).catch(error=>{
-       Swal.fire("Failed!","There was something wrong.","warning");
+       // show a helpful message and log the error for debugging
+       const msg = error?.response?.data?.message || error?.message || 'There was something wrong.';
+       Swal.fire("Failed!", msg, "warning");
       });
     }
    })

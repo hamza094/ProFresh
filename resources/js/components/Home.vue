@@ -21,7 +21,7 @@
     </div>
 </template>
 <script>
-    import { mapState, mapMutations, mapActions } from 'vuex';
+  import { mapState, mapActions } from 'vuex';
 export default{
     computed:{   
         ...mapState('subscribeUser',['subscription']),
@@ -34,12 +34,13 @@ export default{
     methods:{
         ...mapActions('subscribeUser',['userSubscription']),
        resendMail(){
-           axios.post('/api/v1/email/resend/'+this.user.uuid,{
-           }).then(response=>{
+           axios.post('/api/v1/email/resend/'+this.user.uuid,{})
+           .then(() => {
                this.$vToastify.success("Verification link sent successfully");
-           }).catch(error=>{
-             this.$vToastify.warning("Error! Please try again");
-           })
+           }).catch(error => {
+             const msg = error?.response?.data?.message || error?.message || 'Error! Please try again';
+             this.$vToastify.warning(msg);
+           });
          }
     },
 }

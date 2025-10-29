@@ -67,7 +67,11 @@ import { mapMutations } from 'vuex';
 
 export default {
     components: { VueCropper },
-    props: ["userId","name","avatar"],
+        props: {
+            userId: { type: [Number, String], required: true },
+            name: { type: String, required: true },
+            avatar: { type: String, default: '' },
+        },
 
     data() {
         return {
@@ -97,13 +101,14 @@ export default {
 
                 const reader = new FileReader();
 
-                reader.onload = (event) => {
-                  const imageSrc = event.target.result;
+                                reader.onload = (e) => {
+                                    const imageSrc = e && e.target ? e.target.result : null;
                   this.updateImage(imageSrc);
                 };
 
-                 reader.onerror = (event) => {
-                  alert("Error reading file");
+                                 reader.onerror = (e) => {
+                                    const msg = e && e.target && e.target.error ? e.target.error.message : 'Error reading file';
+                                    this.$vToastify.error(msg);
                 };
 
                 reader.readAsDataURL(file);
@@ -126,8 +131,10 @@ export default {
             this.croppedImageSrc = this.$refs.cropper
                 .getCroppedCanvas()
                 .toDataURL();
-            } catch (error) {
-              alert('Failed to crop image');
+                        } catch (error) {
+                            this.$vToastify.error(error?.message || 'Failed to crop image');
+                            // Optional: log the actual error for debugging
+                            // console.error(error);
         }
         },
 
@@ -140,14 +147,15 @@ export default {
             let formData = new FormData();
             formData.append("avatar", blob);
 
-            axios.post("/api/v1/users/"+this.userId+"/avatar", formData)
+                        axios.post("/api/v1/users/"+this.userId+"/avatar", formData)
               .then((response) => {
                 this.updateUserAvatar(response.data.avatar);
                 this.closeAvatarModal();
                 this.$vToastify.success("Avatar Updated Successfully");
                 })
-                .catch((error)=> {
-                  this.$vToastify.warning("Failed To Update Avatar");    
+                                .catch((error)=> {
+                                    const msg = error?.response?.data?.message || error?.message || 'Failed To Update Avatar';
+                                    this.$vToastify.warning(msg);    
                 }).finally(() => {
                    this.$vToastify.stopLoader();
                 });

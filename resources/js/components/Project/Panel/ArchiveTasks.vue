@@ -7,8 +7,8 @@
           </div>
        </div>
           <div class="panel-top_content">
-             <div  v-if="archivedTasks  &&archivedTasks.length > 0">
-       <div v-for="(task,index) in archivedTasks" :key="task.id">
+     <div  v-if="archivedTasks  &&archivedTasks.length > 0">
+   <div v-for="task in archivedTasks" :key="task.id">
          <div class="card task-card_style" @click="openModal(task)">
           <div
 v-if="task.status" class="task-card_border" :style="{ 
@@ -23,16 +23,13 @@ v-if="task.status" class="task-card_border" :style="{
       <div v-else>
           <p>Sorry, no tasks found.</p>
       </div>
-      <modal
+  <modal
 name="archive-task-modal" height="auto" :scrollable="true"
-      width="65%" class="model-desin archive-modal" :click-to-close=false @modal-closed="closeModal">
-         <TaskModal :slug="slug" :state="state"></TaskModal @modal-closed="closeModal">
+  width="65%" class="model-desin archive-modal" :click-to-close=false @modal-closed="closeModal">
+     <TaskModal :slug="slug" :state="state" />
     </modal>
-          </div>
-
-
-        </div>
-    </div>
+      </div>
+  </div>
   </template>
 
 <script>
@@ -41,7 +38,12 @@ name="archive-task-modal" height="auto" :scrollable="true"
 
 export default {
   components:{TaskModal},
-  props:['slug'],
+  props:{
+    slug: {
+      type: String,
+      required: true,
+    }
+  },
   data() {
     return {
       state:'archived',
@@ -49,6 +51,10 @@ export default {
   },
   computed:{
     ...mapState('task',['archivedTasks','message']),
+  },
+  created(){
+    const slug = this.$route.params.slug;
+      this.loadArchiveTasks(slug);
   },
   methods: {
     ...mapActions('task',['loadArchiveTasks']),
@@ -65,10 +71,6 @@ export default {
      closeModal() {
       this.setTask([]);
   },
-  },
-  created(){
-    const slug = this.$route.params.slug;
-      this.loadArchiveTasks(slug);
   },
 };
 </script>

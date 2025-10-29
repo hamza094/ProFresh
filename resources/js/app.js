@@ -19,9 +19,7 @@ import momenttz from 'moment-timezone';
 import "emoji-mart-vue-fast/css/emoji-mart.css";
 import alertNotice from './mixins/alertNotice';
 import errorHandling from './mixins/errorHandling';
-import popup from './mixins/popup';
 import conversation from './mixins/conversation';
-import Chart from 'chart.js';
 import 'animate.css';
 import "cropperjs/dist/cropper.css"
 import VueToastify from "vue-toastify";
@@ -151,8 +149,8 @@ components.forEach(([name, path]) => {
 import LaravelVuePagination from 'laravel-vue-pagination';
 Vue.component('Pagination', LaravelVuePagination);
 
-const app = new Vue({
-    el: '#app',
-     store,
-     router,
+new Vue({
+  el: '#app',
+  store,
+  router,
 });

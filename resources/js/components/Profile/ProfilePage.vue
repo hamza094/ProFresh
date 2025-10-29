@@ -70,7 +70,7 @@
         </p>
         <div>
           <p class="crm-info"><b>Roles</b>: 
-            <span v-for="role in user.roles"> {{role.name}} ,</span>
+            <span v-for="role in user.roles" :key="role.id || role.name"> {{role.name}} ,</span>
           </p>
         </div>
         </div>
@@ -94,7 +94,6 @@
   import UserTokens from './UserTokens.vue'
   import TwoFactorAuth from './TwoFactorAuth.vue'
   import FeatureDropdown from '../FeatureDropdown.vue';
-  import { permission } from '../../auth';
   import { mapState, mapMutations } from 'vuex';
 
 
@@ -108,16 +107,15 @@ export default{
 		};
 	},
 
-	watch:{
-        userPop(featurePop){
-           document.addEventListener('click', (event) => this.$options.methods.handleClickOutside.call(this, event, '.feature-dropdown', this.featurePop));
-        }
-    },
+    computed: {
+    ...mapState('profile',['user', 'userAvatar', 'invitations'])
+  },
+
     created(){
      this.loadUser();
     },
 
-	methods:{
+    methods:{
     ...mapMutations('profile',['updateUser', 'updateUserAvatar',]),
    
         loadUser(){
@@ -128,7 +126,7 @@ export default{
           this.updateUserAvatar(user.avatar);
           this.owner = (this.user.uuid === this.auth);
          }).catch(error=>{
-           console.log(error.response.data.errors);
+           this.$vToastify.warning(error?.response?.data?.message || 'Failed to load user');
          });
       },
     deleteAvatar(){
@@ -143,7 +141,8 @@ export default{
         this.userAvatar=null;
         })
         .catch((error) => {
-            swal.fire("Failed!","There was something wrong.","warning");
+            const msg = error?.response?.data?.message || error?.message || 'There was something wrong.';
+            swal.fire("Failed!", msg, "warning");
         })
         .finally(() => {
           this.$vToastify.stopLoader();
@@ -161,18 +160,14 @@ export default{
         this.$store.dispatch('currentUser/deleteUser');
       })
       .catch((error) =>{
-          swal.fire("Failed!","There was something wrong.",
-                    "warning");
+          const msg = error?.response?.data?.message || error?.message || 'There was something wrong.';
+          swal.fire("Failed!", msg, "warning");
       });
   }
     })
   },
 
     },
-
-    computed: {
-    ...mapState('profile',['user', 'userAvatar', 'invitations'])
-  },
 }	
 
 </script>

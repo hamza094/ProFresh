@@ -22,17 +22,17 @@
   </form>
     </div>
 
-          <p class="task-list_heading"> {{message}}
+      <p class="task-list_heading"> {{message}}</p>
     <div v-if="tasks" class="task-list">
         <span class="float-right">
           <a @click.prevent="archiveTasks" class="panel-list_item">
           <i class="fas fa-tasks"></i>
          </a>
     </span> 
-  </p> 
+  
 
   <!-- Tasks Lists --> 
-       <section v-for="(task,index) in tasks.data" :key="task.id">
+       <section v-for="task in tasks.data" :key="task.id">
          <div class="card task-card_style" @click="openModal(task)">
           <div
 v-if="task.status" class="task-card_border" :style="{ 
@@ -49,7 +49,7 @@ v-if="task.status" class="task-card_border" :style="{
        <modal
 name="task-modal" height="auto" :scrollable="true"
       width="65%" class="model-desin" :click-to-close=false @modal-closed="closeModal">
-        <TaskModal :slug="slug" :state="state"></TaskModal @modal-closed="closeModal">
+        <TaskModal :slug="slug" :state="state"></TaskModal>
     </modal>
 
 	<pagination :data="tasks" @pagination-change-page="getResults"></pagination>
@@ -66,8 +66,17 @@ name="task-modal" height="auto" :scrollable="true"
   import { mapMutations, mapActions, mapState } from 'vuex';
   import SubscriptionCheck from '../../SubscriptionChecker.vue';
   export default {
-    components:{TaskModal},
-    props:['slug','access'],
+    components:{TaskModal,SubscriptionCheck},
+    props:{
+      slug: {
+        type: String,
+        required: true,
+      },
+      access: {
+        type: Boolean,
+        default: false,
+      },
+    },
     data() {
       return {        
         task_score:2,
@@ -80,6 +89,10 @@ name="task-modal" height="auto" :scrollable="true"
     },
     computed:{
     ...mapState('task',['tasks','message']),
+  },
+  created() {
+    this.getResults(1);
+    this.loadStatuses();
   },
     methods: {
       ...mapActions({
@@ -107,7 +120,7 @@ name="task-modal" height="auto" :scrollable="true"
           }
           })
           panel1Handle.promise
-            .then(result => {
+            .then(() => {
 
             });
           },
@@ -119,14 +132,14 @@ name="task-modal" height="auto" :scrollable="true"
           //this.$Progress.finish();
             this.setTask(response.data);
             this.$modal.show('task-modal');
-          }).catch(error=>{
+          }).catch(()=>{
           //this.$Progress.fail();
        });
     },
 
      add(){
        axios.post('/api/v1/projects/'+this.slug+'/tasks',this.form,{ useProgress: true })
-          .then(response=>{
+          .then(()=>{
               this.$vToastify.success("Project Task added");
               this.form.title="";
 							this.getResults(1);
@@ -141,10 +154,6 @@ name="task-modal" height="auto" :scrollable="true"
       this.setTask([]);
   },
 
-  },
-    created() {
-    this.getResults(1);
-    this.loadStatuses();
   },
 }
 </script>

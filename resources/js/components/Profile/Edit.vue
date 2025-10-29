@@ -29,7 +29,7 @@ name="edit-profile"
 
       <div class="form-group">
         <label for="bio" class="label-name">Your Bio:</label>
-        <textarea type="text" v-model="form.bio" id="bio" name="bio" class="form-control">{{user.bio}}</textarea>
+        <textarea v-model="form.bio" id="bio" name="bio" class="form-control"></textarea>
         <span class="text-danger font-italic" v-if="errors.bio" v-text="errors.bio[0]"></span>
         </div>
         <hr>
@@ -41,7 +41,7 @@ name="edit-profile"
 
         <span v-html="showIcon(showPassword)" @click="toggleShowPassword" class="eye-icon float-right"></span>
 
-        <form-input label="New Password:" v-model="form.password" :error="errors.password" type="password" id="password" :type="passwordFieldType"/>       
+  <form-input label="New Password:" v-model="form.password" :error="errors.password" id="password" :type="passwordFieldType"/>       
         </div>
 
         <div class="panel-bottom">
@@ -67,7 +67,9 @@ export default{
     FormInput,
   },
 
-	props:['user'],
+  props: {
+    user: { type: Object, required: true },
+  },
 	data(){
 		return{
       showCurrentPassword: false,

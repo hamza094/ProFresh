@@ -25,7 +25,7 @@
                 <div class="form-group">
                     <label for="Tasks" class="label-name">Select Stage:*</label>
                     <br>
-                    <div v-for="stage in stages" class="form-check form-check-inline">
+                    <div v-for="stage in stages" :key="stage.id" class="form-check form-check-inline">
                     <input class="form-check-input" type="radio" name="stage_id" :value="stage.id" v-model="form.stage_id" :key="stage.id">
                     <label class="form-check-label" for="inlineRadio1">{{stage.name}}</label>
                     </div>

@@ -114,12 +114,12 @@
           <div v-if="showCodes" class="mb-3">
             <ul class="list-group" role="list" aria-label="Recovery codes list">
               <li 
-                v-for="(code, index) in recoveryCodes" 
-                :key="code.code" 
+                v-for="(rc, index) in recoveryCodes" 
+                :key="rc.code" 
                 class="list-group-item d-flex justify-content-between align-items-center"
                 role="listitem"
               >
-                <span class="font-monospace">{{ code.code }}</span>
+                <span class="font-monospace">{{ rc.code }}</span>
                 <small class="text-muted">Code {{ index + 1 }}</small>
               </li>
             </ul>

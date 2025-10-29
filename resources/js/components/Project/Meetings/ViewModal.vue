@@ -6,7 +6,7 @@ name="ViewMeeting" height="auto" :scrollable="true" width="40%"
     :click-to-close="false" >
 
     <div class="edit-border-top p-3">
-      <div v-if="meeting.status === STATUS_STARTED" class="glowing-dot"></div>
+      <div v-if="meeting && meeting.status === 'Started'" class="glowing-dot"></div>
 
      <div class="edit-border-bottom">
 
@@ -155,13 +155,16 @@ import { mapMutations } from 'vuex';
 import MeetingDetail from './MeetingDetail.vue';
 import { shouldShowStartButton, shouldShowJoinButton } from '../../../utils/meetingUtils';
 
-const STATUS_STARTED = 'Started';
-
 export default {
+  name: 'ViewMeetingModal',
   components: {
     MeetingDetail,
   },
-  props: ['projectSlug','members','notAuthorize'],
+  props: {
+    projectSlug: { type: String, required: true },
+    members: { type: Array, default: () => [] },
+    notAuthorize: { type: Boolean, default: false },
+  },
   data() {
     return {
       meeting: {},
@@ -281,11 +284,11 @@ export default {
 
     filterForm() {
       // Only filter out null/undefined, not false/0
-      return Object.fromEntries(Object.entries(this.form).filter(([key, value]) => value !== null && value !== undefined && value !== ''));
+      // we don't need the key name here so skip it in destructuring to avoid unused-var lint errors
+      return Object.fromEntries(Object.entries(this.form).filter(([, value]) => value !== null && value !== undefined && value !== ''));
     },
 
-    initiliazeUpdateMeeting()
-    {
+    initializeUpdateMeeting() {
       this.form.meeting_id=this.meeting.meeting_id;
       this.form.start_time = this.convertToISO(this.form.start_time);
       this.errors = {};

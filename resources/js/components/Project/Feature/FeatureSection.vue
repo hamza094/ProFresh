@@ -6,7 +6,7 @@
   <ul>
     <li
 class="feature-dropdown_item-content"
-    @click="abandon()"><i class="fas fa-eye-slash"></i> Abandon</li>
+    @click="abandon()"><i class="fas pfa-eye-slash"></i> Abandon</li>
 
     <li class="feature-dropdown_item-content"  @click="$modal.show('project-message')"><i class="far fa-envelope"></i>Send Mail or Sms</li>
 
@@ -32,7 +32,11 @@ export default {
 
   components: {ProjectMessage,FeatureDropdown},
 
-    props:['slug','members','name'],
+    props: {
+      slug: { type: String, required: true },
+      members: { type: Array, default: () => [] },
+      name: { type: String, default: '' },
+    },
     data() {
         return {
           projectmembers:this.members,
@@ -68,7 +72,16 @@ export default {
   }).then(response => {
     fileDownload(response.data, 'Project '+this.slug+'.xls');
       }).catch(error => {
-          console.log(error.response.data)
+          const msg = error?.response?.data?.message || error?.message || 'Export failed';
+          // Show a user-friendly message
+          if (this && this.$vToastify) {
+            this.$vToastify.error(msg);
+          }
+          // Keep a dev-only console error for debugging
+          const isDev = typeof process !== 'undefined' && process.env && process.env.NODE_ENV !== 'production';
+          if (isDev) {
+            console.error(error);
+          }
       })
 },
 

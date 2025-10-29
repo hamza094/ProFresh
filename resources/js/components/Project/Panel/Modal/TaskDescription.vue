@@ -11,17 +11,17 @@
 name="description" 
                 v-model="form.description" :editor-toolbar="customToolbar"></vue-editor>
 
-            <span class="btn btn-link btn-sm" @click="updateDescription(task.id,task)">Update</span>
+            <span class="btn btn-link btn-sm" @click="updateDescription(task.id)">Update</span>
 
            <span class="btn btn-link btn-sm" @click="closeDescriptionForm(task.id,task)">Cancel</span>
-          </span>
+          
           
       </div>
             <div v-else>
 
               <p v-if="task.description" class="task-description_content-link" @click="openDescriptionForm(task.id,task)" v-html="task.description"></p>
 
-              <div v-else="task.description">
+              <div v-else>
               <p class="task-description_content">Sorry! currently no task description present. <a class="task-description_content-link" @click="openDescriptionForm(task.id,task)"> Click here to add description</a>
               </p>
 
@@ -32,11 +32,24 @@ name="description"
 
 <script>
   import { VueEditor } from "vue2-editor";
-  import { mapMutations, mapActions, mapState } from 'vuex';
+  import { mapMutations, mapState } from 'vuex';
   import {url,ErrorHandling} from '../../../../utils/TaskUtils';
 export default {
   components: {VueEditor},
-      props:['task','slug','errors'],
+      props:{
+        task: {
+          type: Object,
+          required: true,
+        },
+        slug: {
+          type: String,
+          required: true,
+        },
+        errors: {
+          type: Object,
+          default: () => ({}),
+        },
+      },
   data() {
     return {
     edit:0,
@@ -56,7 +69,7 @@ export default {
   methods: {
       ...mapMutations('SingleTask',['setErrors','updateTaskDescription']),
 
-    updateDescription(id,task){
+    updateDescription(id){
       if (this.form.description === this.task.description) {
          return  this.$vToastify.warning('No changes made.');
       }

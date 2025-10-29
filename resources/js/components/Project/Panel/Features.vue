@@ -97,7 +97,7 @@ v-if="member.uuid == owner.uuid"
                    </p>
                    <p></p>
                </router-link>
-              <a v-if="ownerLogin && member.uuid !== owner.uuid"  rel="" role="button" @click.prevent="removeMember(member.uuid,member)" class="text-danger">Remove</a>
+              <a v-if="ownerLogin && member.uuid !== owner.uuid"  rel="" role="button" @click.prevent="removeMember(member.uuid)" class="text-danger">Remove</a>
               </div>
         </div>
       </div>
@@ -157,7 +157,32 @@ import { debounce } from 'lodash';
 
 export default{
     components:{SubscriptionCheck},
-  props:['slug','notes','members','owner','access','ownerLogin'],
+  props:{
+    slug: {
+      type: String,
+      required: true,
+    },
+    notes: {
+      type: String,
+      default: '',
+    },
+    members: {
+      type: Array,
+      default: () => [],
+    },
+    owner: {
+      type: Object,
+      required: true,
+    },
+    access: {
+      type: Boolean,
+      default: false,
+    },
+    ownerLogin: {
+      type: Boolean,
+      default: false,
+    },
+  },
   data(){
     return{
       form:{
@@ -213,13 +238,13 @@ export default{
 
     searchUsers(query) 
     {
-      if (!this.query) {
+      if (!query) {
         this.results = [];
         return;
       }
       this.isLoading = true;
 
-    axios.get('/api/v1/users/search', { params: { query: this.query } })
+    axios.get('/api/v1/users/search', { params: { query } })
    .then(response => {
     this.results = response.data;
   })
@@ -253,7 +278,7 @@ export default{
    })
  },
 
- removeMember(id,member){
+ removeMember(id){
    var self = this;
     this.sweetAlert('Yes, Remove Member').then((result) => {
   if (result.value) {

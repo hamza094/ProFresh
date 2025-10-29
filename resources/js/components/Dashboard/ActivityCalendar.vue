@@ -7,14 +7,14 @@
   v-model="currentMonth"
   @update:from-page="onPageChange"
 >
-  <template slot="day-popover" slot-scope="{ dayTitle, attributes }">
+  <template slot="day-popover" slot-scope="{ dayTitle, attributes: attrs }">
   <div class="p-2  user-popover-container">
     <div class="text-muted small mb-1">{{ dayTitle }}</div>
 
     <!-- Loop over each activity attribute -->
     <ul class="user-popover-list">
       <li
-        v-for="attr in attributes"
+        v-for="attr in attrs"
         :key="attr.key || (attr.customData && attr.customData.id) || Math.random()"
         class="d-flex align-items-center mb-1"
       >
@@ -93,7 +93,7 @@ export default {
   },
     beforeDestroy() {
     if (this.cancelTokenSource) {
-      try { this.cancelTokenSource.cancel('Component unmounted') } catch (e) {}
+      try { this.cancelTokenSource.cancel('Component unmounted') } catch (err) { console.error('Cancel token error', err); }
     }
   },
   methods: {
