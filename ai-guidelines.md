@@ -14,13 +14,11 @@ This file contains Laravel and PHP coding standards optimized for AI code assist
 - Always specify `void` return types when methods return nothing
 
 ## Class Structure
-
 - Use typed properties, not docblocks:
 - Constructor property promotion when all properties can be promoted:
 - One trait per line:
 
 ## Type Declarations & Docblocks
-
 - Use typed properties over docblocks
 - Specify return types including `void`
 - Use short nullable syntax: `?Type` not `Type|null`
@@ -31,7 +29,6 @@ This file contains Laravel and PHP coding standards optimized for AI code assist
   ```
 
 ### Docblock Rules
-
 - Don't use docblocks for fully type-hinted methods (unless description needed)
 - **Always import classnames in docblocks** - never use fully qualified names:
   ```php
@@ -48,22 +45,21 @@ This file contains Laravel and PHP coding standards optimized for AI code assist
   ```php
   /**
    * @param array<int, MyObject> $myArray
-   * @param int $typedArgument
+   * @param int $typedArgument 
    */
   function someFunction(array $myArray, int $typedArgument) {}
   ```
 - Use array shape notation for fixed keys, put each key on it's own line:
   ```php
   /** @return array{
-     first: SomeClass,
+     first: SomeClass, 
      second: SomeClass
   } */
   ```
 
 ## Control Flow
-
 - **Happy path last**: Handle error conditions first, success case last
-- **Avoid else**: Use early returns instead of nested conditions
+- **Avoid else**: Use early returns instead of nested conditions  
 - **Separate conditions**: Prefer multiple if statements over compound conditions
 - **Always use curly brackets** even for single statements
 - **Ternary operators**: Each part on own line unless very short
@@ -97,38 +93,33 @@ $condition
 ## Laravel Conventions
 
 ### Routes
-
 - URLs: kebab-case (`/open-source`)
 - Route names: camelCase (`->name('openSource')`)
 - Parameters: camelCase (`{userId}`)
 - Use tuple notation: `[Controller::class, 'method']`
 
 ### Controllers
-
 - Plural resource names (`PostsController`)
 - Stick to CRUD methods (`index`, `create`, `store`, `show`, `edit`, `update`, `destroy`)
 - Extract new controllers for non-CRUD actions
 
 ### Configuration
-
 - Files: kebab-case (`pdf-generator.php`)
 - Keys: snake_case (`chrome_path`)
 - Add service configs to `config/services.php`, don't create new files
 - Use `config()` helper, avoid `env()` outside config files
 
 ### Artisan Commands
-
 - Names: kebab-case (`delete-old-records`)
 - Always provide feedback (`$this->comment('All ok!')`)
 - Show progress for loops, summary at end
 - Put output BEFORE processing item (easier debugging):
-
   ```php
   $items->each(function(Item $item) {
       $this->info("Processing item id `{$item->id}`...");
       $this->processItem($item);
   });
-
+  
   $this->comment("Processed {$items->count()} items.");
   ```
 
@@ -144,15 +135,13 @@ $condition
 
 - **Avoid comments** - write expressive code instead
 - When needed, use proper formatting:
-
   ```php
   // Single line with space after //
-
+  
   /*
    * Multi-line blocks start with single *
    */
   ```
-
 - Refactor comments into descriptive function names
 
 ## Whitespace
@@ -217,7 +206,6 @@ $condition
 ## Quick Reference
 
 ### Naming Conventions
-
 - **Classes**: PascalCase (`UserController`, `OrderStatus`)
 - **Methods/Variables**: camelCase (`getUserName`, `$firstName`)
 - **Routes**: kebab-case (`/open-source`, `/user-profile`)
@@ -226,9 +214,8 @@ $condition
 - **Artisan commands**: kebab-case (`php artisan delete-old-records`)
 
 ### File Structure
-
 - Controllers: plural resource name + `Controller` (`PostsController`)
-- Views: camelCase (`openSource.blade.php`)
+- Views: camelCase (`openSource.blade.php`)  
 - Jobs: action-based (`CreateUser`, `SendEmailNotification`)
 - Events: tense-based (`UserRegistering`, `UserRegistered`)
 - Listeners: action + `Listener` suffix (`SendInvitationMailListener`)
@@ -238,13 +225,11 @@ $condition
 - Enums: descriptive name, no prefix (`OrderStatus`, `BookingType`)
 
 ### Migrations
-
 - do not write down methods in migrations, only up methods
 
 ### Code Quality Reminders
 
 #### PHP
-
 - Use typed properties over docblocks
 - Prefer early returns over nested if/else
 - Use constructor property promotion when all properties can be promoted
@@ -254,4 +239,4 @@ $condition
 
 ---
 
-_These guidelines are maintained by [Spatie](https://spatie.be/guidelines) and optimized for AI code assistants._
+*These guidelines are maintained by [Spatie](https://spatie.be/guidelines) and optimized for AI code assistants.*

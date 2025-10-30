@@ -6,35 +6,39 @@ export default {
         { status: 'my', label: 'My Activities', icon: 'fa-user', color: 'purple', query: '?mine=1' },
         { status: 'project', label: 'Project Activities', icon: 'far fa-star', color: 'green', query: '?specifics=1' },
         { status: 'task', label: 'Task Activities', icon: 'fa-tasks', color: 'primary', query: '?tasks=1' },
-        { status: 'member', label: 'Member Activities', icon: 'fa-users', color: 'danger', query: '?members=1' },
+        { status: 'member', label: 'Member Activities', icon: 'fa-users', color: 'danger', query: '?members=1' }
       ],
       activityData: {
-        Task: {
+        "Task": {
           icon: 'fas fa-tasks',
-          color: 'activity-icon_primary',
+          color: 'activity-icon_primary'
         },
-        'Project invitation': {
+        "Project invitation": {
           icon: 'fas fa-user',
-          color: 'activity-icon_green',
+          color: 'activity-icon_green'
         },
-        'Project member': {
+        "Project member": {
           icon: 'fas fa-user',
-          color: 'activity-icon_green',
-        },
-      },
+          color: 'activity-icon_green'
+        }
+      }
     };
   },
   methods: {
     getIcon(description) {
-      const prefix = Object.keys(this.activityData).find((prefix) => description.startsWith(prefix)) || 'default';
+      const prefix = Object.keys(this.activityData).find(
+        prefix => description.startsWith(prefix)) || 'default';
 
-      return (this.activityData[prefix] && this.activityData[prefix].icon) || 'fab fa-pagelines';
+      return (this.activityData[prefix] && 
+      this.activityData[prefix].icon) || 'fab fa-pagelines';
     },
 
     getColor(description) {
-      const prefix = Object.keys(this.activityData).find((prefix) => description.startsWith(prefix)) || 'default';
+      const prefix = Object.keys(this.activityData).find(
+        prefix => description.startsWith(prefix)) || 'default';
 
-      return (this.activityData[prefix] && this.activityData[prefix].color) || 'activity-icon_purple';
+      return (this.activityData[prefix] &&
+       this.activityData[prefix].color) || 'activity-icon_purple';
     },
-  },
+  }
 };

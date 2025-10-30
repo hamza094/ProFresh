@@ -15,7 +15,7 @@ Here's what did change in an incompatible way:
 
   ```html
   <script type="text/javascript">
-    hljs.configure({ classPrefix: '' });
+    hljs.configure({classPrefix: ''});
     hljs.initHighlightingOnLoad();
   </script>
   ```
@@ -62,11 +62,11 @@ New features:
 
 New languages and styles:
 
-- _Oxygene_ by [Carlo Kok][]
-- _Mathematica_ by [Daniel Kvasnička][]
-- _Autohotkey_ by [Seongwon Lee][]
-- _Atelier_ family of styles in 10 variants by [Bram de Haan][]
-- _Paraíso_ styles by [Jan T. Sott][]
+- *Oxygene* by [Carlo Kok][]
+- *Mathematica* by [Daniel Kvasnička][]
+- *Autohotkey* by [Seongwon Lee][]
+- *Atelier* family of styles in 10 variants by [Bram de Haan][]
+- *Paraíso* styles by [Jan T. Sott][]
 
 Miscelleanous improvements:
 
@@ -82,6 +82,7 @@ Miscelleanous improvements:
 [variants]: https://groups.google.com/d/topic/highlightjs/VoGC9-1p5vk/discussion
 [beginKeywords]: https://github.com/isagalaev/highlight.js/commit/6c7fdea002eb3949577a85b3f7930137c7c3038d
 [php-html]: https://twitter.com/highlightjs/status/408890903017689088
+
 [Carlo Kok]: https://github.com/carlokok
 [Bram de Haan]: https://github.com/atelierbram
 [Daniel Kvasnička]: https://github.com/dkvasnicka
@@ -89,6 +90,7 @@ Miscelleanous improvements:
 [Jeremy Hull]: https://github.com/sourrust
 [Seongwon Lee]: https://github.com/dlimpid
 [Jan T. Sott]: https://github.com/idleberg
+
 
 ## Version 7.5
 
@@ -128,6 +130,7 @@ Improvements:
 [sourrust]: https://github.com/sourrust
 [d]: http://highlightjs.org/download/
 
+
 ## New core developers
 
 The latest long period of almost complete inactivity in the project coincided
@@ -145,6 +148,7 @@ P.S. The historical commit is [here][1] for the record.
 [Jeremy Hull]: https://github.com/sourrust
 [Oleg Efimov]: https://github.com/sannis
 [1]: https://github.com/isagalaev/highlight.js/commit/f3056941bda56d2b72276b97bc0dd5f230f2473f
+
 
 ## Version 7.4
 
@@ -206,6 +210,7 @@ Other notable changes:
 [Dmitry Medvinsky]: https://github.com/dmedvinsky
 [Cédric Néhémie]: https://github.com/abe33
 
+
 ## Version 7.3
 
 - Since this version highlight.js no longer works in IE version 8 and older.
@@ -216,12 +221,13 @@ Other notable changes:
   Brainfuck (by [Evgeny Stepanischev][bolk]).
 
 - Improvements to existing languages:
-  - interpreter prompt in Python (`>>>` and `...`)
-  - @-properties and classes in CoffeeScript
-  - E4X in JavaScript (by [Oleg Efimov][oe])
-  - new keywords in Perl (by [Kirk Kimmel][kk])
-  - big Ruby syntax update (by [Vasily Polovnyov][vast])
-  - small fixes in Bash
+
+    - interpreter prompt in Python (`>>>` and `...`)
+    - @-properties and classes in CoffeeScript
+    - E4X in JavaScript (by [Oleg Efimov][oe])
+    - new keywords in Perl (by [Kirk Kimmel][kk])
+    - big Ruby syntax update (by [Vasily Polovnyov][vast])
+    - small fixes in Bash
 
 - Also Oleg Efimov did a great job of moving all the docs for language and style
   developers and contributors from the old wiki under the source code in the
@@ -235,9 +241,11 @@ Other notable changes:
 [kk]: https://github.com/kimmel
 [vast]: https://github.com/vast
 
+
 ## Version 7.2
 
 A regular bug-fix release without any significant new features. Enjoy!
+
 
 ## Version 7.1
 
@@ -260,6 +268,7 @@ A Summer crop:
 [cd]: https://github.com/caseman
 [amd]: http://requirejs.org/docs/whyamd.html
 
+
 ## Version 7.0
 
 The reason for the new major version update is a global change of keyword syntax
@@ -274,23 +283,23 @@ Notable changes:
   wiki.
 
 - The new unique feature (apparently) among syntax highlighters is highlighting
-  _HTTP_ headers and an arbitrary language in the request body. The most useful
-  languages here are _XML_ and _JSON_ both of which highlight.js does support.
+  *HTTP* headers and an arbitrary language in the request body. The most useful
+  languages here are *XML* and *JSON* both of which highlight.js does support.
   Here's [the detailed post][p] about the feature.
 
-- Two new style themes: a dark "south" _[Pojoaque][]_ by Jason Tate and an
+- Two new style themes: a dark "south" *[Pojoaque][]* by Jason Tate and an
   emulation of*XCode* IDE by [Angel Olloqui][ao].
 
-- Three new languages: _D_ by [Aleksandar Ružičić][ar], _R_ by [Joe Cheng][jc]
-  and _GLSL_ by [Sergey Tikhomirov][st].
+- Three new languages: *D* by [Aleksandar Ružičić][ar], *R* by [Joe Cheng][jc]
+  and *GLSL* by [Sergey Tikhomirov][st].
 
-- _Nginx_ syntax has become a million times smaller and more universal thanks to
+- *Nginx* syntax has become a million times smaller and more universal thanks to
   remaking it in a more generic manner that doesn't require listing all the
   directives in the known universe.
 
-- Function titles are now highlighted in _PHP_.
+- Function titles are now highlighted in *PHP*.
 
-- _Haskell_ and _VHDL_ were significantly reworked to be more rich and correct
+- *Haskell* and *VHDL* were significantly reworked to be more rich and correct
   by their respective maintainers [Jeremy Hull][sr] and [Igor Kalnitsky][ik].
 
 And last but not least, many bugs have been fixed around correctness and
@@ -308,6 +317,7 @@ Overall highlight.js currently supports 51 languages and 20 style themes.
 [st]: https://github.com/tikhomirov
 [sr]: https://github.com/sourrust
 [ik]: https://github.com/ikalnitsky
+
 
 ## Version 6.2
 
@@ -338,6 +348,7 @@ from all this activity:
 [es]: https://github.com/bolknote
 [log]: https://github.com/isagalaev/highlight.js/commits/
 
+
 ## Version 6.1 — Solarized
 
 [Jeremy Hull][jh] has implemented my dream feature — a port of [Solarized][]
@@ -351,6 +362,7 @@ This version also adds a new original style Arta. Its author pumbur maintains a
 [jh]: https://github.com/sourrust
 [solarized]: http://ethanschoonover.com/solarized
 [pb]: https://github.com/pumbur/highlight.js
+
 
 ## Version 6.0
 
@@ -388,6 +400,7 @@ download [your own copy][d].
 
 [d]: /soft/highlight/en/download/
 
+
 ## Version 5.14
 
 Fixed bugs in HTML/XML detection and relevance introduced in previous
@@ -395,6 +408,7 @@ refactoring.
 
 Also test.html now shows the second best result of language detection by
 relevance.
+
 
 ## Version 5.13
 
@@ -444,6 +458,7 @@ Test file test.html has at last become a real test. Now it not only puts the
 detected language name under the code snippet but also tests if it matches the
 expected one. Test summary is displayed right above all language snippets.
 
+
 ## CDN
 
 Fine people at [Yandex][] agreed to host highlight.js on their big fast servers.
@@ -451,6 +466,7 @@ Fine people at [Yandex][] agreed to host highlight.js on their big fast servers.
 
 [yandex]: http://yandex.com/
 [l]: http://softwaremaniacs.org/soft/highlight/en/download/
+
 
 ## Version 5.10 — "Paris".
 
@@ -460,6 +476,7 @@ couple of small fixes:
 - Tomas Vitvar discovered that TAB replacement doesn't always work when used
   with custom markup in code
 - SQL parsing is even more rigid now and doesn't step over SmallTalk in tests
+
 
 ## Version 5.9
 
@@ -495,26 +512,31 @@ welcome to [pick up its maintenance][p] if needed.
 [wp]: http://wordpress.org/
 [p]: http://bazaar.launchpad.net/~isagalaev/+junk/highlight/annotate/342/src/wp_highlight.js.php
 
+
 ## Version 5.8
 
 - Jan Berkel has contributed a definition for Scala. +1 to hotness!
 - All CSS-styles are rewritten to work only inside `<pre>` tags to avoid
   conflicts with host site styles.
 
+
 ## Version 5.7.
 
 Fixed escaping of quotes in VBScript strings.
+
 
 ## Version 5.5
 
 This version brings a small change: now .ini-files allow digits, underscores and
 square brackets in key names.
 
+
 ## Version 5.4
 
 Fixed small but upsetting bug in the packer which caused incorrect highlighting
 of explicitly specified languages. Thanks to Andrew Fedorov for precise
 diagnostics!
+
 
 ## Version 5.3
 
@@ -537,11 +559,13 @@ Also in this version:
 [vp]: http://vasily.polovnyov.ru/
 [vd]: http://dolzhenko.blogspot.com/
 
+
 ## Version 5.2
 
 - at last it's possible to replace indentation TABs with something sensible (e.g. 2 or 4 spaces)
 - new keywords and built-ins for 1C by Sergey Baranov
 - a couple of small fixes to Apache highlighting
+
 
 ## Version 5.1
 
@@ -561,6 +585,7 @@ contributions!
 [drake]: http://drakeguan.org/
 [ke]: http://k-evdokimenko.moikrug.ru/
 
+
 ## Version 5.0
 
 The main change in the new major version of highlight.js is a mechanism for
@@ -575,6 +600,7 @@ And as usually there were a couple of minor correctness fixes.
 
 Great thanks to all contributors! Keep using highlight.js.
 
+
 ## Version 4.3
 
 This version comes with two contributions from [Jason Diamond][jd]:
@@ -585,6 +611,7 @@ This version comes with two contributions from [Jason Diamond][jd]:
 Plus there are a couple of minor bug fixes for parsing HTML and XML attributes.
 
 [jd]: http://jason.diamond.name/weblog/
+
 
 ## Version 4.2
 
@@ -609,6 +636,7 @@ Other changes:
 [voldmar]: http://voldmar.ya.ru/
 [mel]: http://en.wikipedia.org/wiki/Maya_Embedded_Language
 [drake]: http://drakeguan.org/
+
 
 ## Version 4.1
 
@@ -637,6 +665,7 @@ getting in the way of [JSMin][].
 [bug]: http://softwaremaniacs.org/forum/viewtopic.php?id=1823
 [jsmin]: http://code.google.com/p/jsmin-php/
 
+
 ## Version 4.0
 
 New major version is a result of vast refactoring and of many contributions.
@@ -656,6 +685,7 @@ Invisible new features:
 Changing of a major version number caused by a new format of language definition
 files. If you use some third-party language files they should be updated.
 
+
 ## Version 3.5
 
 A very nice version in my opinion fixing a number of small bugs and slightly
@@ -669,6 +699,7 @@ things as CDATA sections and processing instructions (`<? ... ?>`).
 
 [f]: http://softwaremaniacs.org/forum/viewforum.php?id=6
 
+
 ## Version 3.3
 
 [Vladimir Gubarkov][xonix] has provided an interesting and useful addition.
@@ -676,7 +707,9 @@ File export.html contains a little program that shows and allows to copy and
 paste an HTML code generated by the highlighter for any code snippet. This can
 be useful in situations when one can't use the script itself on a site.
 
+
 [xonix]: http://xonixx.blogspot.com/
+
 
 ## Version 3.2 consists completely of contributions:
 
@@ -686,6 +719,7 @@ be useful in situations when one can't use the script itself on a site.
 - Vladimir Ermakov has compiled a mod for phpBB
 
 Many thanks to you all!
+
 
 ## Version 3.1
 
@@ -697,6 +731,7 @@ The engine itself has got a long awaited feature of grouping keywords
 ("keyword", "built-in function", "literal"). No more hacks!
 
 [1]: http://roudakov.ru/
+
 
 ## Version 3.0
 
@@ -720,6 +755,7 @@ use it — replace it with the new one.
 
 [RibKit]: http://ribkit.sourceforge.net/
 
+
 ## Version 2.9
 
 Highlight.js is a parser, not just a couple of regular expressions. That said
@@ -728,9 +764,11 @@ I'm glad to announce that in the new version 2.9 has support for:
 - in-string substitutions for Ruby -- `#{...}`
 - strings from from numeric symbol codes (like #XX) for Delphi
 
+
 ## Version 2.8
 
 A maintenance release with more tuned heuristics. Fully backwards compatible.
+
 
 ## Version 2.7
 
@@ -739,6 +777,7 @@ A maintenance release with more tuned heuristics. Fully backwards compatible.
 - Ongoing tuning of heuristics
 
 Fixed bugs were rather unpleasant so I encourage everyone to upgrade!
+
 
 ## Version 2.4
 
@@ -752,10 +791,12 @@ submit form.
 
 [mail]: mailto:Maniac@SoftwareManiacs.Org
 
+
 ## Version 2.3
 
 This version fixes IE breakage in previous version. My apologies to all who have
 already downloaded that one!
+
 
 ## Version 2.2
 
@@ -763,6 +804,7 @@ already downloaded that one!
 - at last fixed parsing of Delphi's escaped apostrophes in strings
 - in Ruby fixed highlighting of keywords 'def' and 'class', same for 'sub' in
   Perl
+
 
 ## Version 2.0
 
@@ -772,6 +814,7 @@ already downloaded that one!
   places (like keyword "End" at the end of Delphi classes)
 
 [ak]: http://anton.kovalyov.net/
+
 
 ## Version 1.0
 

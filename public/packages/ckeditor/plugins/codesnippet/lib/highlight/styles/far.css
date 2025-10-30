@@ -5,14 +5,13 @@ FAR Style (c) MajestiC <majestic2k@gmail.com>
 */
 
 .hljs {
-  display: block;
-  padding: 0.5em;
+  display: block; padding: 0.5em;
   background: #000080;
 }
 
 .hljs,
 .hljs-subst {
-  color: #0ff;
+  color: #0FF;
 }
 
 .hljs-string,
@@ -36,7 +35,7 @@ FAR Style (c) MajestiC <majestic2k@gmail.com>
 .tex .hljs-command,
 .clojure .hljs-title,
 .coffeescript .hljs-attribute {
-  color: #ff0;
+  color: #FF0;
 }
 
 .hljs-keyword,
@@ -55,7 +54,7 @@ FAR Style (c) MajestiC <majestic2k@gmail.com>
 .bash .hljs-variable,
 .tex .hljs-special,
 .clojure .hljs-built_in {
-  color: #fff;
+  color: #FFF;
 }
 
 .hljs-comment,
@@ -76,7 +75,7 @@ FAR Style (c) MajestiC <majestic2k@gmail.com>
 .smalltalk .hljs-symbol,
 .smalltalk .hljs-char,
 .clojure .hljs-attribute {
-  color: #0f0;
+  color: #0F0;
 }
 
 .python .hljs-decorator,

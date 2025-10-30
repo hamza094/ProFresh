@@ -13,21 +13,13 @@
           <div class="form-row align-items-end">
             <div class="form-group col-md-4">
               <label for="tokenName">Token Name</label>
-              <input
-                type="text"
-                class="form-control"
-                id="tokenName"
-                v-model="form.name"
-                required
-                placeholder="Token name" />
+              <input type="text" class="form-control" id="tokenName" v-model="form.name" required placeholder="Token name">
             </div>
             <div class="form-group col-md-4">
               <label for="expiresAt">Expires In</label>
               <select class="form-control" id="expiresAt" v-model="form.expires_in">
                 <option :value="null">Never</option>
-                <option v-for="option in expiryOptions" :key="option.value" :value="option.value">
-                  {{ option.label }}
-                </option>
+                <option v-for="option in expiryOptions" :key="option.value" :value="option.value">{{ option.label }}</option>
               </select>
             </div>
             <div class="form-group col-md-4 d-flex align-items-end">
@@ -39,17 +31,14 @@
         <div v-if="newToken" class="alert alert-success mt-3 d-flex align-items-center">
           <span class="mr-2 font-weight-bold">New Token:</span>
           <input
-            :type="showTokenMap[newTokenId] ? 'text' : 'password'"
-            class="form-control form-control-sm w-auto d-inline-block mr-2"
-            :value="newToken"
-            readonly
-            style="max-width: 300px" />
+:type="showTokenMap[newTokenId] ? 'text' : 'password'"
+                 class="form-control form-control-sm w-auto d-inline-block mr-2"
+                 :value="newToken"
+                 readonly style="max-width: 300px;">
           <button class="btn btn-sm btn-outline-secondary mr-2" @click="toggleShowToken(newTokenId)">
             <i :class="showTokenMap[newTokenId] ? 'fas fa-eye-slash' : 'fas fa-eye'"></i>
           </button>
-          <button class="btn btn-sm btn-outline-primary" @click="copyToken(newToken)">
-            <i class="fas fa-copy"></i>
-          </button>
+          <button class="btn btn-sm btn-outline-primary" @click="copyToken(newToken)"><i class="fas fa-copy"></i></button>
         </div>
       </div>
 
@@ -79,23 +68,26 @@
               <td>{{ token.expires_at ? token.expires_at : 'Never' }}</td>
               <td>
                 <input
-                  :type="showTokenMap[token.id] ? 'text' : 'password'"
-                  class="form-control form-control-sm w-auto d-inline-block mr-2"
-                  :value="token.id === newTokenId ? newToken : 'Token value not available'"
-                  readonly
-                  style="max-width: 300px" />
-                <button class="btn btn-sm btn-outline-secondary mr-2" @click="toggleShowToken(token.id)">
+:type="showTokenMap[token.id] ? 'text' : 'password'"
+                       class="form-control form-control-sm w-auto d-inline-block mr-2"
+                       :value="token.id === newTokenId ? newToken : 'Token value not available'"
+                       readonly style="max-width: 300px;">
+                <button
+class="btn btn-sm btn-outline-secondary mr-2"
+                        @click="toggleShowToken(token.id)">
                   <i :class="showTokenMap[token.id] ? 'fas fa-eye-slash' : 'fas fa-eye'"></i>
                 </button>
                 <button
-                  class="btn btn-sm btn-outline-primary"
-                  :disabled="token.id !== newTokenId"
-                  @click="copyToken(token.id === newTokenId ? newToken : '')">
+class="btn btn-sm btn-outline-primary"
+                        :disabled="token.id !== newTokenId"
+                        @click="copyToken(token.id === newTokenId ? newToken : '')">
                   <i class="fas fa-copy"></i>
                 </button>
               </td>
               <td>
-                <button class="btn btn-sm btn-danger" @click="deleteToken(token.id)">
+                <button
+                        class="btn btn-sm btn-danger"
+                        @click="deleteToken(token.id)">
                   <i class="fas fa-trash"></i> Delete
                 </button>
               </td>
@@ -137,7 +129,7 @@ export default {
   computed: {
     auth() {
       return this.$store.state.currentUser.user;
-    },
+    }
   },
   mounted() {
     this.loadTokens();
@@ -154,9 +146,8 @@ export default {
     },
     loadTokens() {
       this.loading = true;
-      axios
-        .get('/api/v1/api-tokens')
-        .then((res) => {
+      axios.get('/api/v1/api-tokens')
+        .then(res => {
           this.tokens = res.data.tokens;
         })
         .catch(() => {
@@ -176,9 +167,8 @@ export default {
         expires.setDate(expires.getDate() + Number(this.form.expires_in));
         payload.expires_at = expires.toISOString().slice(0, 19).replace('T', ' ');
       }
-      axios
-        .post('/api/v1/api-tokens', payload)
-        .then((res) => {
+      axios.post('/api/v1/api-tokens', payload)
+        .then(res => {
           this.$vToastify.success(res.data.message || 'Token created.');
           this.newToken = res.data.token;
           this.newTokenId = res.data.token_resource.id;
@@ -187,7 +177,7 @@ export default {
           this.form.expires_in = null;
           this.loadTokens();
         })
-        .catch((err) => {
+        .catch(err => {
           this.$vToastify.error(err.response?.data?.message || 'Failed to create token.');
         })
         .finally(() => {
@@ -198,13 +188,12 @@ export default {
       this.sweetAlert('Yes, delete this token!').then((result) => {
         if (result.value) {
           this.$Progress.start();
-          axios
-            .delete(`/api/v1/api-tokens/${id}`)
-            .then((res) => {
+          axios.delete(`/api/v1/api-tokens/${id}`)
+            .then(res => {
               this.$vToastify.success(res.data.message || 'Token deleted.');
               this.loadTokens();
             })
-            .catch((err) => {
+            .catch(err => {
               this.$vToastify.error(err.response?.data?.message || 'Failed to delete token.');
             })
             .finally(() => {
@@ -214,16 +203,15 @@ export default {
       });
     },
     // formatDate removed: date formatting is now handled by backend
-  },
-};
+  }
+}
 </script>
 
 <style scoped>
 .card {
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
 }
-.table th,
-.table td {
+.table th, .table td {
   vertical-align: middle;
 }
 </style>

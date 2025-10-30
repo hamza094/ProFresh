@@ -12,7 +12,6 @@
 [![npm](https://img.shields.io/npm/v/bootstrap-colorpicker.svg?style=flat-square)](https://www.npmjs.com/package/bootstrap-colorpicker)
 
 ## Install
-
 You can get the latest version in many different ways:
 
 - Downloading [a ZIP file from the releases](https://github.com/farbelous/bootstrap-colorpicker/releases)
@@ -67,56 +66,55 @@ and then building the code using `npm run build`.
   </thead>
 </table>
 
+
 Note that the plugin may work without Bootstrap if your code is not using any of the mentioned Bootstrap
 dependencies.
+
 
 ## Basic example
 
 ```html
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <link href="//cdn.rawgit.com/twbs/bootstrap/v4.1.3/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="dist/css/bootstrap-colorpicker.css" rel="stylesheet" />
-  </head>
-  <body>
-    <div class="jumbotron">
+<head>
+  <meta charset="utf-8">
+  <link href="//cdn.rawgit.com/twbs/bootstrap/v4.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="dist/css/bootstrap-colorpicker.css" rel="stylesheet">
+</head>
+<body>
+  <div class="jumbotron">
       <h1>Bootstrap Colorpicker Demo</h1>
       <input id="demo" type="text" class="form-control" value="rgb(255, 128, 0)" />
-    </div>
-    <script src="//code.jquery.com/jquery-3.3.1.js"></script>
-    <script src="//cdn.rawgit.com/twbs/bootstrap/v4.1.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="dist/js/bootstrap-colorpicker.js"></script>
-    <script>
-      $(function () {
-        // Basic instantiation:
-        $('#demo').colorpicker();
-
-        // Example using an event, to change the color of the .jumbotron background:
-        $('#demo').on('colorpickerChange', function (event) {
-          $('.jumbotron').css('background-color', event.color.toString());
-        });
+  </div>
+  <script src="//code.jquery.com/jquery-3.3.1.js"></script>
+  <script src="//cdn.rawgit.com/twbs/bootstrap/v4.1.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="dist/js/bootstrap-colorpicker.js"></script>
+  <script>
+    $(function () {
+      // Basic instantiation:
+      $('#demo').colorpicker();
+      
+      // Example using an event, to change the color of the .jumbotron background:
+      $('#demo').on('colorpickerChange', function(event) {
+        $('.jumbotron').css('background-color', event.color.toString());
       });
-    </script>
-  </body>
-</html>
+    });
+  </script>
+</body>
 ```
 
 ## Contributions
-
-- [Issues](https://github.com/farbelous/bootstrap-colorpicker/issues)
-- [Pull Requests](https://github.com/farbelous/bootstrap-colorpicker/pulls)
-- [Milestones](https://github.com/farbelous/bootstrap-colorpicker/milestones)
-- [Planned Features](https://github.com/farbelous/bootstrap-colorpicker/projects)
+* [Issues](https://github.com/farbelous/bootstrap-colorpicker/issues)
+* [Pull Requests](https://github.com/farbelous/bootstrap-colorpicker/pulls)
+* [Milestones](https://github.com/farbelous/bootstrap-colorpicker/milestones)
+* [Planned Features](https://github.com/farbelous/bootstrap-colorpicker/projects)
 
 This project exists thanks to all the [people who contribute](https://github.com/farbelous/bootstrap-colorpicker/graphs/contributors).
 
-Please read [CONTRIBUTING](https://github.com/farbelous/bootstrap-colorpicker/blob/master/.github/CONTRIBUTING.md)
+Please read [CONTRIBUTING](https://github.com/farbelous/bootstrap-colorpicker/blob/master/.github/CONTRIBUTING.md) 
 before sending a pull request or issue.
 
 ## License
-
 The MIT License (MIT).
 Please see the [License File](https://github.com/farbelous/bootstrap-colorpicker/blob/master/LICENSE) for more information.
 
@@ -124,6 +122,6 @@ Please see the [License File](https://github.com/farbelous/bootstrap-colorpicker
 
 Written and maintained by [Javi Aguilar](https://itsjavi.com) and all other contributors.
 
-_Based on Stefan Petre's color picker (2013)._
+*Based on Stefan Petre's color picker (2013).*
 
-_Thanks to JetBrains for supporting this project._
+*Thanks to JetBrains for supporting this project.*

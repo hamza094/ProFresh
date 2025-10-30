@@ -9,45 +9,45 @@
  */
 
 .iconpicker .caret {
-  margin-left: 10px !important;
+    margin-left: 10px !important;
 }
 
 .iconpicker {
-  min-width: 60px;
+    min-width: 60px;
 }
 
 .iconpicker input.search-control {
-  margin-bottom: 6px;
-  margin-top: 6px;
+    margin-bottom: 6px;
+    margin-top: 6px;
 }
 
 div.iconpicker.left .table-icons {
-  margin-right: auto;
+    margin-right: auto;
 }
 
 div.iconpicker.center .table-icons {
-  margin-left: auto;
-  margin-right: auto;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 div.iconpicker.right .table-icons {
-  margin-left: auto;
+    margin-left: auto;
 }
 
 .table-icons .btn {
-  min-height: 30px;
-  min-width: 35px;
-  text-align: center;
-  padding: 0;
-  margin: 2px;
+    min-height: 30px;
+    min-width: 35px;
+    text-align: center;
+    padding: 0;
+    margin: 2px;
 }
 
 .table-icons td {
-  min-width: 39px;
+    min-width: 39px;
 }
 
 .popover {
-  max-width: inherit !important;
+    max-width: inherit !important;
 }
 
 .iconpicker-popover {
@@ -55,6 +55,6 @@ div.iconpicker.right .table-icons {
 }
 
 .iconpicker-popover .search-control {
-  margin-bottom: 6px;
-  margin-top: 6px;
+    margin-bottom: 6px;
+    margin-top: 6px;
 }

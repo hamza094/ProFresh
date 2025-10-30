@@ -5,8 +5,7 @@ Dark style from softwaremaniacs.org (c) Ivan Sagalaev <Maniac@SoftwareManiacs.Or
 */
 
 .hljs {
-  display: block;
-  padding: 0.5em;
+  display: block; padding: 0.5em;
   background: #444;
 }
 
@@ -24,7 +23,7 @@ Dark style from softwaremaniacs.org (c) Ivan Sagalaev <Maniac@SoftwareManiacs.Or
 
 .hljs,
 .hljs-subst {
-  color: #ddd;
+  color: #DDD;
 }
 
 .hljs-string,
@@ -58,7 +57,7 @@ Dark style from softwaremaniacs.org (c) Ivan Sagalaev <Maniac@SoftwareManiacs.Or
 .tex .hljs-command,
 .hljs-prompt,
 .coffeescript .hljs-attribute {
-  color: #d88;
+  color: #D88;
 }
 
 .hljs-comment,

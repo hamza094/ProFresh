@@ -8,17 +8,22 @@
         :class="[
           'filter-btn',
           { 'filter-btn_active': isActive(section.key) },
-          { 'filter-btn_all': section.key === 'all' },
+          { 'filter-btn_all': section.key === 'all' }
         ]"
-        :title="section.label">
+        :title="section.label"
+      >
         <i :class="section.icon"></i>
         <span class="filter-label">{{ section.label }}</span>
       </button>
     </div>
-
+    
     <!-- Quick Actions -->
     <div class="filter-actions">
-      <button @click="selectAll" class="action-btn" :class="{ 'action-btn_active': activeSections.includes('all') }">
+      <button 
+        @click="selectAll" 
+        class="action-btn"
+        :class="{ 'action-btn_active': activeSections.includes('all') }"
+      >
         <i class="fas fa-th"></i>
         All
       </button>
@@ -36,53 +41,53 @@ export default {
   props: {
     sections: {
       type: Array,
-      required: true,
+      required: true
     },
     activeSections: {
       type: Array,
-      default: () => ['all'],
-    },
+      default: () => ['all']
+    }
   },
   methods: {
     toggleSection(sectionKey) {
-      const current = Array.isArray(this.activeSections) ? [...this.activeSections] : ['all'];
+      const current = Array.isArray(this.activeSections) ? [...this.activeSections] : ['all']
 
-      if (sectionKey === 'all') return this.emitChange(['all']);
+      if (sectionKey === 'all') return this.emitChange(['all'])
 
-      let next;
+      let next
       if (current.includes('all')) {
-        next = [sectionKey];
+        next = [sectionKey]
       } else if (current.includes(sectionKey)) {
-        next = current.filter((k) => k !== sectionKey);
-        if (next.length === 0) next = ['all'];
+        next = current.filter(k => k !== sectionKey)
+        if (next.length === 0) next = ['all']
       } else {
-        next = [...current, sectionKey];
+        next = [...current, sectionKey]
       }
 
-      this.emitChange(next);
+      this.emitChange(next)
     },
-
+    
     selectAll() {
-      this.emitChange(['all']);
+      this.emitChange(['all'])
     },
-
+    
     clearAll() {
       // Clear behaves like selecting all (no filter)
-      this.emitChange(['all']);
+      this.emitChange(['all'])
     },
-
+    
     isActive(sectionKey) {
-      const current = Array.isArray(this.activeSections) ? this.activeSections : ['all'];
-      if (sectionKey === 'all') return current.includes('all');
-      return current.includes(sectionKey) && !current.includes('all');
+      const current = Array.isArray(this.activeSections) ? this.activeSections : ['all']
+      if (sectionKey === 'all') return current.includes('all')
+      return current.includes(sectionKey) && !current.includes('all')
     },
-
+    
     emitChange(next) {
-      const value = Array.isArray(next) ? next : Array.isArray(this.activeSections) ? this.activeSections : ['all'];
-      this.$emit('filter-change', [...value]);
-    },
-  },
-};
+      const value = Array.isArray(next) ? next : (Array.isArray(this.activeSections) ? this.activeSections : ['all'])
+      this.$emit('filter-change', [...value])
+    }
+  }
+}
 </script>
 
 <style scoped>
@@ -105,8 +110,8 @@ export default {
   align-items: center;
   gap: 0.5rem;
   padding: 0.5rem 0.75rem;
-  background: #f8f9fa;
-  border: 1px solid #e5e5ee;
+  background: #F8F9FA;
+  border: 1px solid #E5E5EE;
   border-radius: 1.5rem;
   font-size: 0.85rem;
   font-weight: 500;
@@ -117,20 +122,20 @@ export default {
 }
 
 .filter-btn:hover {
-  background: #e5f2fd;
-  border-color: #1d4967;
-  color: #1d4967;
+  background: #E5F2FD;
+  border-color: #1D4967;
+  color: #1D4967;
 }
 
 .filter-btn_active {
-  background: #1d4967;
-  border-color: #1d4967;
+  background: #1D4967;
+  border-color: #1D4967;
   color: white;
 }
 
 .filter-btn_all.filter-btn_active {
-  background: #27ae60;
-  border-color: #27ae60;
+  background: #27AE60;
+  border-color: #27AE60;
 }
 
 .filter-btn i {
@@ -152,7 +157,7 @@ export default {
   gap: 0.25rem;
   padding: 0.4rem 0.6rem;
   background: transparent;
-  border: 1px solid #e5e5ee;
+  border: 1px solid #E5E5EE;
   border-radius: 0.25rem;
   font-size: 0.8rem;
   color: #999999;
@@ -162,13 +167,13 @@ export default {
 }
 
 .action-btn:hover {
-  background: #f8f9fa;
+  background: #F8F9FA;
   color: #666666;
 }
 
 .action-btn_active {
-  background: #27ae60;
-  border-color: #27ae60;
+  background: #27AE60;
+  border-color: #27AE60;
   color: white;
 }
 
@@ -182,19 +187,19 @@ export default {
     flex-direction: column;
     align-items: stretch;
   }
-
+  
   .filter-buttons {
     justify-content: center;
   }
-
+  
   .filter-actions {
     justify-content: center;
   }
-
+  
   .filter-label {
     display: none;
   }
-
+  
   .filter-btn {
     padding: 0.5rem;
     border-radius: 50%;

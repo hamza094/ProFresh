@@ -32,6 +32,7 @@ jobs:
       - name: Clear caches
         run: php artisan config:clear && php artisan route:clear && php artisan view:clear
 
+
       - name: Generate key
         run: php artisan key:generate
 

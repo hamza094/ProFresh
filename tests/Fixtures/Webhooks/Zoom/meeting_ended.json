@@ -1,18 +1,18 @@
 {
-  "event": "meeting.ended",
-  "payload": {
-    "account_id": "HsTKzp8YTIWubRtgF7L_2w",
-    "object": {
-      "uuid": "aAcZTflfSPqz6TsDJ/lDKA==",
-      "id": 813,
-      "topic": "shining in the ske",
-      "start_time": "2024-07-30T11:00:00Z",
-      "end_time": "2024-07-30T11:30:00Z",
-      "timezone": "UTC",
-      "duration": 30,
-      "type": 2
+    "event": "meeting.ended",
+    "payload": {
+        "account_id": "HsTKzp8YTIWubRtgF7L_2w",
+        "object": {
+            "uuid": "aAcZTflfSPqz6TsDJ/lDKA==",
+            "id": 813,
+            "topic": "shining in the ske",
+            "start_time": "2024-07-30T11:00:00Z",
+            "end_time": "2024-07-30T11:30:00Z",
+            "timezone": "UTC",
+            "duration": 30,
+            "type": 2
+        },
+        "time_stamp": 1719229788513
     },
-    "time_stamp": 1719229788513
-  },
-  "event_ts": 1719229788513
+    "event_ts": 1719229788513
 }

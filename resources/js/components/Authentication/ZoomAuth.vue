@@ -16,8 +16,8 @@ export default {
   data() {
     return {
       color: '#301934',
-      loading: false,
-    };
+      loading: false
+    }
   },
   computed: {
     ...mapState('currentUser', ['user']),
@@ -32,22 +32,24 @@ export default {
       const code = this.$route.query.code;
       const state = this.$route.query.state;
 
-      axios
-        .get(`/api/v1/oauth/zoom/callback?code=${code}&state=${state}`)
-        .then((response) => {
+      axios.get(`/api/v1/oauth/zoom/callback?code=${code}&state=${state}`)
+        .then(response => {
           this.$router.push(`/user/${this.user.uuid}/profile`);
           this.$vToastify.success(response.data.success);
         })
-        .catch((error) => {
+        .catch(error => {
           this.$router.push('/home');
-          this.$vToastify.warning(error?.response?.data?.error || 'An error occurred during Zoom authentication.');
+          this.$vToastify.warning(
+            error?.response?.data?.error || 'An error occurred during Zoom authentication.'
+          );
         })
         .finally(() => {
           this.loading = false;
         });
     },
-  },
-};
+  }
+}
 </script>
 
-<style scoped></style>
+<style scoped>
+</style>

@@ -13,7 +13,7 @@ export default {
     featurePop: {
       type: Boolean,
       default: false,
-    },
-  },
-};
+    }
+  }
+}
 </script>

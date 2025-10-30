@@ -13,10 +13,8 @@ export async function getToken(url, errorMessage, toastify) {
 
 export async function fetchTokens(action, role, meetingId, toastify) {
   return await Promise.all([
-    action === 'start'
-      ? getToken('/api/v1/user/token', 'Unable to generate ZAK token', toastify)
-      : Promise.resolve(null),
-    getToken(`/api/v1/user/jwt/token?role=${role}&meetingId=${meetingId}`, 'Unable to generate JWT token', toastify),
+    action === 'start' ? getToken('/api/v1/user/token', 'Unable to generate ZAK token', toastify) : Promise.resolve(null),
+    getToken(`/api/v1/user/jwt/token?role=${role}&meetingId=${meetingId}`, 'Unable to generate JWT token', toastify)
   ]);
 }
 
@@ -27,7 +25,7 @@ export async function setupAndJoinMeeting(action, meeting, jwt_token, zak_token,
     zoomAppRoot: meetingSDKElement,
     language: 'en-US',
     patchJsMedia: true,
-    leaveOnPageUnload: true,
+    leaveOnPageUnload: true
   });
 
   // Use correct env var for your build tool

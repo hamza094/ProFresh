@@ -1,11 +1,5 @@
 <template>
-  <modal
-    name="ConfirmPassword"
-    height="auto"
-    :scrollable="true"
-    width="40%"
-    class="model-desin"
-    :click-to-close="false">
+  <modal name="ConfirmPassword" height="auto" :scrollable="true" width="40%" class="model-desin" :click-to-close="false">
     <div class="edit-border-top p-3">
       <div class="edit-border-bottom">
         <div class="panel-top_content d-flex justify-content-between align-items-center">
@@ -26,7 +20,8 @@
               autocomplete="current-password"
               required
               aria-describedby="password-error"
-              :class="{ 'is-invalid': passwordError }" />
+              :class="{ 'is-invalid': passwordError }"
+            />
             <div v-if="passwordError" id="password-error" class="invalid-feedback">
               {{ passwordError }}
             </div>
@@ -34,11 +29,7 @@
           <div class="d-flex justify-content-end gap-2">
             <button class="btn btn-secondary" @click.prevent="closeModal" :disabled="loading">Cancel</button>
             <button class="btn btn-success" type="submit" :disabled="loading || !password.trim()">
-              <span
-                v-if="loading"
-                class="spinner-border spinner-border-sm me-1"
-                role="status"
-                aria-hidden="true"></span>
+              <span v-if="loading" class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>
               <i v-else class="bi bi-check-circle me-1" aria-hidden="true"></i>
               Submit
             </button>
@@ -55,36 +46,36 @@ export default {
   props: {
     loading: {
       type: Boolean,
-      default: false,
-    },
+      default: false
+    }
   },
   emits: ['submit'],
   data() {
     return {
-      password: '',
-      passwordError: '',
+      password: "",
+      passwordError: ""
     };
   },
   methods: {
     closeModal() {
       this.$modal.hide('ConfirmPassword');
-      this.password = ''; // Reset password on close
-      this.passwordError = ''; // Reset error
+      this.password = ""; // Reset password on close
+      this.passwordError = ""; // Reset error
     },
     submitForm() {
-      this.passwordError = ''; // Clear previous errors
-
+      this.passwordError = ""; // Clear previous errors
+      
       if (!this.password.trim()) {
-        this.passwordError = 'Password is required';
+        this.passwordError = "Password is required";
         return;
       }
-
+      
       if (this.password.trim()) {
         this.$emit('submit', this.password);
-        this.password = ''; // Reset password after submit
-        this.passwordError = ''; // Reset error
+        this.password = ""; // Reset password after submit
+        this.passwordError = ""; // Reset error
       }
-    },
-  },
+    }
+  }
 };
-</script>
+</script> 

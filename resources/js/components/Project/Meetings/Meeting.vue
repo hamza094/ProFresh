@@ -2,28 +2,29 @@
   <div>
     <div id="meetingSDKElement"></div>
     <div class="project-info">
+
       <div class="project-info_socre">
         <p class="project-info_score-heading">Meetings</p>
         <p v-if="notAuthorize" class="btn btn-sm btn-secondary" @click.prevent="authorize">Authorize With Zoom</p>
-        <button v-if="!notAuthorize" class="btn btn-sm btn-primary" @click.prevent="openMeetingModal()">
-          Create Meeting
-        </button>
+        <button v-if="!notAuthorize" class="btn btn-sm btn-primary" @click.prevent="openMeetingModal()">Create Meeting</button>
       </div>
-      <hr />
+      <hr>
 
       <div class="btn-group" role="group">
         <button
           type="button"
           class="btn btn-link btn-sm meeting_button"
           :class="{ active: !showPrevious }"
-          @click="showCurrentMeetings">
+          @click="showCurrentMeetings"
+        >
           Current Meetings
         </button>
         <button
           type="button"
           class="btn btn-link btn-sm meeting_button"
           :class="{ active: showPrevious }"
-          @click="showPreviousMeetings">
+          @click="showPreviousMeetings"
+        >
           Previous Meetings
         </button>
       </div>
@@ -32,27 +33,13 @@
         {{ message }}
       </div>
 
-      <div v-for="meeting in meetings.data" :key="meeting.id">
+  <div v-for="meeting in meetings.data" :key="meeting.id">
         <div class="card mt-3 card-hover" @click.prevent="getMeeting(meeting.id)">
           <div :class="['ribbon', ribbonColor(meeting.status)]">{{ meeting.status }}</div>
           <div class="card-stamp">
             <div class="card-stamp-icon bg-yellow">
               <!-- Download SVG icon from http://tabler-icons.io/i/bell -->
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="icon"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                stroke-width="2"
-                stroke="currentColor"
-                fill="none"
-                stroke-linecap="round"
-                stroke-linejoin="round">
-                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                <path d="M10 5a2 2 0 1 1 4 0a7 7 0 0 1 4 6v3a4 4 0 0 0 2 3h-16a4 4 0 0 0 2 -3v-3a7 7 0 0 1 4 -6"></path>
-                <path d="M9 17v1a3 3 0 0 0 6 0v-1"></path>
-              </svg>
+              <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M10 5a2 2 0 1 1 4 0a7 7 0 0 1 4 6v3a4 4 0 0 0 2 3h-16a4 4 0 0 0 2 -3v-3a7 7 0 0 1 4 -6"></path><path d="M9 17v1a3 3 0 0 0 6 0v-1"></path></svg>
             </div>
           </div>
           <div v-if="meeting.status.toLowerCase() === 'started'" class="glowing-dot"></div>
@@ -65,20 +52,15 @@
           </div>
         </div>
         <div class="card-footer">
-          <button
-            v-if="shouldShowStartButton(meeting, auth, notAuthorize)"
-            class="btn btn-sm btn-primary"
-            @click.prevent="initializeMeeting('start', meeting)">
+          <button v-if="shouldShowStartButton(meeting, auth, notAuthorize)" class="btn btn-sm btn-primary" @click.prevent="initializeMeeting('start', meeting)">
             Start Meeting
           </button>
-          <button
-            v-else-if="shouldShowJoinButton(meeting, auth, members)"
-            class="btn btn-sm btn-warning text-white"
-            @click.prevent="initializeMeeting('join', meeting)">
+          <button v-else-if="shouldShowJoinButton(meeting, auth, members)" class="btn btn-sm btn-warning text-white" @click.prevent="initializeMeeting('join', meeting)">
             Join Meeting
           </button>
         </div>
       </div>
+
     </div>
     <pagination :data="meetings" @pagination-change-page="getResults"></pagination>
     <MeetingModal :project-slug="projectSlug"></MeetingModal>
@@ -96,7 +78,7 @@ import { shouldShowStartButton, shouldShowJoinButton } from '../../../utils/meet
 export default {
   components: {
     MeetingModal,
-    ViewModal,
+    ViewModal
   },
   // Props for project and meeting data
   props: {
@@ -121,21 +103,22 @@ export default {
     meetingStatusListener() {
       if (this.activeMeetingId) {
         const id = this.activeMeetingId;
-        Echo.private(`meetingStatus.${id}`).listen('MeetingStatusUpdate', (e) => {
-          this.updateMeetingStatus({ id: e.id, status: e.status });
-        });
+        Echo.private(`meetingStatus.${id}`)
+          .listen('MeetingStatusUpdate', (e) => {
+            this.updateMeetingStatus({ id: e.id, status: e.status });
+          });
         return () => {
           Echo.leave(`meetingStatus.${id}`);
         };
       }
       return null;
-    },
+    }
   },
   watch: {
     // Clean up Echo listener when activeMeetingId changes
     meetingStatusListener(newListener, oldListener) {
       if (oldListener) oldListener();
-    },
+    }
   },
   created() {
     this.showCurrentMeetings();
@@ -201,12 +184,11 @@ export default {
 
     // Authorize the user with Zoom
     authorize() {
-      axios
-        .get(`/api/v1/oauth/zoom/redirect`)
-        .then((response) => {
+      axios.get(`/api/v1/oauth/zoom/redirect`)
+        .then(response => {
           window.location.href = response.data.redirectUrl;
         })
-        .catch((error) => {
+        .catch(error => {
           this.$vToastify.error(error?.response?.data?.message || 'Authorization failed');
         });
     },
@@ -220,12 +202,7 @@ export default {
       try {
         const role = this.auth.id === meeting.owner.id ? 1 : 0;
 
-        const [zakTokenResponse, jwtTokenResponse] = await fetchTokens(
-          action,
-          role,
-          meeting.meeting_id,
-          this.$vToastify,
-        );
+        const [zakTokenResponse, jwtTokenResponse] = await fetchTokens(action, role, meeting.meeting_id, this.$vToastify);
 
         const zak_token = zakTokenResponse ? zakTokenResponse.zak_token : null;
 

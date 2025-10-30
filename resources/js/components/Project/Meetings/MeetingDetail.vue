@@ -3,8 +3,8 @@
     <b>{{ label }}: </b>
     <slot>
       <span class="meeting_item">
-        <span :class="statusBadgeClass">{{ value }}</span>
-      </span>
+      <span :class="statusBadgeClass">{{ value }}</span>
+    </span>
     </slot>
   </li>
 </template>
@@ -13,7 +13,7 @@
 export default {
   props: {
     label: String,
-    value: [String, Number],
+    value: [String,Number],
     isEditing: Boolean,
   },
   computed: {

@@ -13,9 +13,14 @@
             class="form-control form-control-sm ps-4"
             placeholder="Search projects..."
             :value="searchQuery"
-            @input="handleSearchInput" />
+            @input="handleSearchInput"
+          >
         </div>
-        <select class="form-select form-select-sm" :value="sortBy" @change="handleSortChange">
+        <select 
+          class="form-select form-select-sm" 
+          :value="sortBy" 
+          @change="handleSortChange"
+        >
           <option value="latest">Latest</option>
           <option value="oldest">Oldest</option>
           <option value="name">Name A-Z</option>
@@ -28,22 +33,22 @@
 <script>
 export default {
   name: 'SearchFilterSection',
-
+  
   props: {
     currentTabConfig: {
       type: Object,
-      required: true,
+      required: true
     },
     searchQuery: {
       type: String,
-      default: '',
+      default: ''
     },
     sortBy: {
       type: String,
-      default: 'latest',
-    },
+      default: 'latest'
+    }
   },
-
+  
   methods: {
     /**
      * Handle search input changes
@@ -52,14 +57,14 @@ export default {
     handleSearchInput(event) {
       this.$emit('search-changed', event.target.value);
     },
-
+    
     /**
      * Handle sort selection changes
      * @param {Event} event - Change event
      */
     handleSortChange(event) {
       this.$emit('sort-changed', event.target.value);
-    },
-  },
+    }
+  }
 };
-</script>
+</script> 

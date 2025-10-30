@@ -6,7 +6,7 @@
     },
     "fully_qualified_strict_types": true,
     "no_useless_else": true,
-    "no_superfluous_elseif": true,
-    "no_multiple_statements_per_line": true
+    "no_superfluous_elseif":true,
+    "no_multiple_statements_per_line":true
   }
 }
