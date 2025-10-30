@@ -3,7 +3,7 @@ name: Rector Code Refactor
 on:
   pull_request:
     branches:
-      - master   # Run only when a PR targets master
+      - master # Run only when a PR targets master
     types: [opened, synchronize, reopened]
 
 concurrency:

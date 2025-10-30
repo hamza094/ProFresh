@@ -9,11 +9,13 @@ This file contains Vue 2.6 coding standards optimized for AI code assistants lik
 ## Vue Component Structure
 
 ### Component Organization
+
 - Use PascalCase for component names (`ProjectPage`, `TaskModal`)
 - Use kebab-case for component files (`project-page.vue`, `task-modal.vue`)
 - Group related components in subdirectories (`Project/`, `Admin/`, `Authentication/`)
 
 ### Component Template Structure
+
 ```vue
 <template>
   <div class="component-container">
@@ -24,13 +26,29 @@ This file contains Vue 2.6 coding standards optimized for AI code assistants lik
 <script>
 export default {
   name: 'ComponentName',
-  components: { /* Component imports */ },
-  props: { /* Props definition */ },
-  data() { return { /* Local state */ }; },
-  computed: { /* Computed properties */ },
-  watch: { /* Watchers */ },
-  created() { /* Lifecycle hooks */ },
-  methods: { /* Methods */ }
+  components: {
+    /* Component imports */
+  },
+  props: {
+    /* Props definition */
+  },
+  data() {
+    return {
+      /* Local state */
+    };
+  },
+  computed: {
+    /* Computed properties */
+  },
+  watch: {
+    /* Watchers */
+  },
+  created() {
+    /* Lifecycle hooks */
+  },
+  methods: {
+    /* Methods */
+  },
 };
 </script>
 ```
@@ -38,6 +56,7 @@ export default {
 ## Props & Data Management
 
 ### Props Definition
+
 - Always specify prop types and defaults
 - Use camelCase for prop names
 - Provide validation when necessary
@@ -51,6 +70,7 @@ props: {
 ```
 
 ### Data Properties
+
 - Use camelCase for data properties
 - Initialize all data properties in the `data()` function
 - Use descriptive names that reflect the data's purpose
@@ -69,17 +89,25 @@ data() {
 ## Vuex State Management
 
 ### Store Module Structure
+
 Follow the ProFresh pattern with namespaced modules:
 
 ```javascript
-const state = { /* State properties */ };
-const mutations = { /* Synchronous state changes */ };
-const actions = { /* Asynchronous operations */ };
+const state = {
+  /* State properties */
+};
+const mutations = {
+  /* Synchronous state changes */
+};
+const actions = {
+  /* Asynchronous operations */
+};
 
 export default { namespaced: true, state, mutations, actions };
 ```
 
 ### State Management Patterns
+
 - Use `mapState`, `mapGetters`, `mapActions`, `mapMutations` for Vuex integration
 - Keep mutations simple and synchronous
 - Handle async operations in actions
@@ -91,18 +119,19 @@ import { mapState, mapActions, mapMutations } from 'vuex';
 export default {
   computed: {
     ...mapState('project', ['project', 'user']),
-    ...mapState('task', ['tasks', 'message'])
+    ...mapState('task', ['tasks', 'message']),
   },
   methods: {
     ...mapActions('project', ['loadProject']),
-    ...mapMutations('task', ['updateTask'])
-  }
+    ...mapMutations('task', ['updateTask']),
+  },
 };
 ```
 
 ## Event Handling
 
 ### Event Naming
+
 - Use kebab-case for custom events (`@task-created`, `@user-updated`)
 - Use camelCase for method names (`handleTaskCreated`, `updateUser`)
 
@@ -120,6 +149,7 @@ this.$bus.on('project-updated', (projectData) => {
 ## Form Handling
 
 ### Form Validation
+
 - Use consistent error handling patterns
 - Display validation errors clearly
 - Use the `errors` object pattern from ProFresh
@@ -139,7 +169,7 @@ methods: {
     }
     return Object.keys(this.errors).length === 0;
   },
-  
+
   async submitForm() {
     if (!this.validateForm()) return;
     try {
@@ -155,6 +185,7 @@ methods: {
 ## API Integration
 
 ### Axios Configuration
+
 - Use the configured axios instance with interceptors
 - Handle authentication tokens automatically
 - Use consistent error handling
@@ -179,6 +210,7 @@ export default { mixins: [errorHandling] };
 ## Router Integration
 
 ### Route Guards
+
 - Use the authentication guard pattern from ProFresh
 - Handle route transitions properly
 - Use navigation guards for protected routes
@@ -186,30 +218,31 @@ export default { mixins: [errorHandling] };
 ```javascript
 // Route guard example
 const auth = (to, from, next) => {
-  const token = localStorage.getItem("token");
+  const token = localStorage.getItem('token');
   if (token) return next();
   return next('/login');
 };
 
 // Navigation
 this.$router.push({ name: 'ProjectPage', params: { slug: projectSlug } });
-this.$router.push({ 
-  name: 'Activities', 
+this.$router.push({
+  name: 'Activities',
   params: { slug: projectSlug },
-  query: { filter: 'tasks' }
+  query: { filter: 'tasks' },
 });
 ```
 
 ## Component Communication
 
 ### Parent-Child Communication
+
 - Use props for parent-to-child communication
 - Use events for child-to-parent communication
 - Use `$refs` sparingly and only when necessary
 
 ```javascript
 // Parent component
-<child-component 
+<child-component
   :project-data="projectData"
   @task-created="handleTaskCreated"
 />
@@ -230,6 +263,7 @@ methods: {
 ## Lifecycle Hooks
 
 ### Hook Usage
+
 - Use `created()` for initial data fetching
 - Use `mounted()` for DOM manipulation
 - Use `beforeDestroy()` for cleanup
@@ -249,6 +283,7 @@ beforeDestroy() {
 ## Computed Properties
 
 ### Computed vs Methods
+
 - Use computed properties for derived state
 - Use methods for actions and operations
 - Cache expensive calculations with computed properties
@@ -272,6 +307,7 @@ computed: {
 ## Watchers
 
 ### Watcher Patterns
+
 - Use watchers for reactive data changes
 - Use `immediate: true` for initial execution
 - Use `deep: true` for object watching
@@ -295,6 +331,7 @@ watch: {
 ## Mixins
 
 ### Mixin Usage
+
 - Use mixins for shared functionality
 - Keep mixins focused and single-purpose
 - Document mixin behavior clearly
@@ -306,21 +343,22 @@ export default {
     return {
       activityTypes: [
         { status: 'all', label: 'All Activities', icon: 'fa-layer-group' },
-        { status: 'my', label: 'My Activities', icon: 'fa-user' }
-      ]
+        { status: 'my', label: 'My Activities', icon: 'fa-user' },
+      ],
     };
   },
   methods: {
     getActivityIcon(description) {
       // Shared logic for activity icons
-    }
-  }
+    },
+  },
 };
 ```
 
 ## Modal and Panel Patterns
 
 ### Modal Usage
+
 - Use the `vue-js-modal` pattern from ProFresh
 - Handle modal state properly
 - Clean up on modal close
@@ -349,6 +387,7 @@ panelHandle.promise.then(result => {
 ## Styling Guidelines
 
 ### CSS Classes
+
 - Use BEM methodology for CSS classes
 - Use scoped styles when possible
 - Follow the existing class naming patterns
@@ -366,21 +405,31 @@ panelHandle.promise.then(result => {
 </template>
 
 <style scoped>
-.project-card { border: 1px solid #ddd; border-radius: 4px; padding: 1rem; }
-.project-card__header { margin-bottom: 1rem; }
-.project-card__title { font-size: 1.25rem; font-weight: bold; }
+.project-card {
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 1rem;
+}
+.project-card__header {
+  margin-bottom: 1rem;
+}
+.project-card__title {
+  font-size: 1.25rem;
+  font-weight: bold;
+}
 </style>
 ```
 
 ## Documentation & Comments
 
-* **Small comments** only to explain "why," not "what."
-* **JSDoc** for complex methods: `/** @param {string} x */`.
-* **Component documentation** for complex components with multiple responsibilities.
+- **Small comments** only to explain "why," not "what."
+- **JSDoc** for complex methods: `/** @param {string} x */`.
+- **Component documentation** for complex components with multiple responsibilities.
 
 ## Common Anti-Patterns to Avoid
 
 ### ❌ Direct Store Access in Components
+
 ```javascript
 // Avoid this
 data() {
@@ -391,6 +440,7 @@ data() {
 ```
 
 **✅ Better Approach:**
+
 ```javascript
 // Use mapState instead
 computed: {
@@ -402,6 +452,7 @@ computed: {
 ```
 
 ### ❌ Inconsistent Error Handling
+
 ```javascript
 // Avoid scattered error handling
 .catch(error => {
@@ -410,6 +461,7 @@ computed: {
 ```
 
 **✅ Better Approach:**
+
 ```javascript
 // Use centralized error handling
 .catch(error => {
@@ -418,6 +470,7 @@ computed: {
 ```
 
 ### ❌ Direct DOM Manipulation in Components
+
 ```javascript
 // Avoid this
 document.getElementById('text').blur();
@@ -425,6 +478,7 @@ document.getElementById('focus-target').focus();
 ```
 
 **✅ Better Approach:**
+
 ```javascript
 // Use Vue refs
 this.$refs.textInput.blur();
@@ -432,16 +486,21 @@ this.$refs.focusTarget.focus();
 ```
 
 ### ❌ Inconsistent API Call Patterns
+
 ```javascript
 // Avoid mixing patterns
-axios.get('/api/v1/stages').then(response => {
-  this.stages = response.data;
-}).catch(error => {
-  console.log(error.response.data.errors);
-});
+axios
+  .get('/api/v1/stages')
+  .then((response) => {
+    this.stages = response.data;
+  })
+  .catch((error) => {
+    console.log(error.response.data.errors);
+  });
 ```
 
 **✅ Better Approach:**
+
 ```javascript
 // Use consistent async/await pattern
 async loadStages() {
@@ -455,6 +514,7 @@ async loadStages() {
 ```
 
 ### ❌ Large Component Methods
+
 ```javascript
 // Avoid monolithic methods
 updateName() {
@@ -476,6 +536,7 @@ updateName() {
 ```
 
 **✅ Better Approach:**
+
 ```javascript
 // Break into smaller, focused methods
 async updateName() {
@@ -510,41 +571,47 @@ handleUpdateError(error) {
 ```
 
 ### ❌ Inconsistent State Management
+
 ```javascript
 // Avoid direct state mutations
 this.$store.commit('project/nameUpdate', { name, slug });
 ```
 
 **✅ Better Approach:**
+
 ```javascript
 // Use actions for complex state changes
 this.$store.dispatch('project/updateProjectName', { name, slug });
 ```
 
 ### ❌ Missing Component Names
+
 ```javascript
 // Avoid anonymous components
 export default {
   // Missing name
-}
+};
 ```
 
 **✅ Better Approach:**
+
 ```javascript
 // Always include component name
 export default {
   name: 'ProjectCard',
   // ...
-}
+};
 ```
 
 ### ❌ Inconsistent Prop Validation
+
 ```javascript
 // Avoid loose prop definitions
-props: ['slug', 'access']
+props: ['slug', 'access'];
 ```
 
 **✅ Better Approach:**
+
 ```javascript
 // Use proper prop validation
 props: {
@@ -560,6 +627,7 @@ props: {
 ```
 
 ### ❌ Hardcoded Values in Components
+
 ```javascript
 // Avoid magic numbers/strings
 if (this.project.score > 21) {
@@ -568,6 +636,7 @@ if (this.project.score > 21) {
 ```
 
 **✅ Better Approach:**
+
 ```javascript
 // Use constants or computed properties
 const HOT_SCORE_THRESHOLD = 21;
@@ -580,6 +649,7 @@ computed: {
 ```
 
 ### ❌ Inconsistent Event Handling
+
 ```javascript
 // Avoid inconsistent event names
 @click="updateName"
@@ -587,6 +657,7 @@ computed: {
 ```
 
 **✅ Better Approach:**
+
 ```javascript
 // Be consistent with event modifiers
 @click.prevent="updateName"
@@ -594,6 +665,7 @@ computed: {
 ```
 
 ### ❌ Missing Loading States
+
 ```javascript
 // Avoid no loading feedback
 async fetchData() {
@@ -603,6 +675,7 @@ async fetchData() {
 ```
 
 **✅ Better Approach:**
+
 ```javascript
 // Always provide loading feedback
 async fetchData() {
@@ -617,6 +690,7 @@ async fetchData() {
 ```
 
 ### ❌ Inconsistent Form Handling
+
 ```javascript
 // Avoid scattered form logic
 data() {
@@ -628,6 +702,7 @@ data() {
 ```
 
 **✅ Better Approach:**
+
 ```javascript
 // Use form mixins or composable patterns
 import formMixin from '@/mixins/formMixin';
@@ -638,27 +713,29 @@ export default {
     return {
       form: this.createForm({
         name: { value: '', rules: ['required'] },
-        description: { value: '', rules: [] }
-      })
+        description: { value: '', rules: [] },
+      }),
     };
-  }
-}
+  },
+};
 ```
 
 ## Performance Improvements
 
 ### Lazy Loading Components
+
 ```javascript
 // Instead of direct imports
 import HeavyComponent from './HeavyComponent.vue';
 
 // Use dynamic imports
 components: {
-  HeavyComponent: () => import('./HeavyComponent.vue')
+  HeavyComponent: () => import('./HeavyComponent.vue');
 }
 ```
 
 ### Computed Properties for Expensive Operations
+
 ```javascript
 // Instead of methods for derived data
 methods: {
@@ -676,17 +753,16 @@ computed: {
 ```
 
 ### Proper Key Usage
+
 ```vue
 <!-- Instead of index keys -->
-<div v-for="(task, index) in tasks" :key="index">
-
-<!-- Use unique, stable keys -->
-<div v-for="task in tasks" :key="task.id">
+<div v-for="(task, index) in tasks" :key="index"></div>
 ```
 
 ## Performance Optimization
 
 ### Lazy Loading
+
 - Use dynamic imports for route components
 - Lazy load heavy components
 - Use `v-if` instead of `v-show` for conditional rendering when appropriate
@@ -694,11 +770,12 @@ computed: {
 ```javascript
 // Lazy loading components
 components: {
-  HeavyComponent: () => import('./HeavyComponent.vue')
+  HeavyComponent: () => import('./HeavyComponent.vue');
 }
 ```
 
 ### Key Usage
+
 - Always use `:key` with `v-for`
 - Use unique, stable keys
 - Avoid using array index as key when data can change
@@ -714,17 +791,14 @@ components: {
 ## Accessibility
 
 ### ARIA Attributes
+
 - Use proper ARIA labels
 - Ensure keyboard navigation
 - Provide alt text for images
 
 ```vue
 <template>
-  <button 
-    @click="handleClick"
-    :aria-label="`Edit ${project.name}`"
-    class="btn btn-primary"
-  >
+  <button @click="handleClick" :aria-label="`Edit ${project.name}`" class="btn btn-primary">
     <i class="fas fa-edit"></i>
   </button>
 </template>
@@ -733,6 +807,7 @@ components: {
 ## Quick Reference
 
 ### Naming Conventions
+
 - **Components**: PascalCase (`ProjectPage`, `TaskModal`)
 - **Files**: kebab-case (`project-page.vue`, `task-modal.vue`)
 - **Props**: camelCase (`projectData`, `isEditable`)
@@ -741,6 +816,7 @@ components: {
 - **CSS Classes**: BEM methodology (`project-card__title`)
 
 ### File Structure
+
 - Components: `resources/js/components/`
 - Store modules: `resources/js/store/`
 - Mixins: `resources/js/mixins/`
@@ -748,6 +824,7 @@ components: {
 - Main app: `resources/js/app.js`
 
 ### Common Patterns
+
 - Use `mapState`, `mapActions` for Vuex integration
 - Use `this.$emit()` for child-to-parent communication
 - Use `this.$bus.emit()` for cross-component communication
@@ -758,4 +835,4 @@ components: {
 
 ---
 
-*These guidelines are optimized for AI code assistants and align with the ProFresh project architecture.* 
+_These guidelines are optimized for AI code assistants and align with the ProFresh project architecture._

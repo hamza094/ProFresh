@@ -4,7 +4,7 @@ export function calculateRemainingTime(task, currentDate) {
   if (task.due_at_utc !== null) {
     const dueDate = moment.utc(task.due_at_utc);
     const now = moment.utc(currentDate);
-    
+
     const duration = moment.duration(dueDate.diff(now));
 
     if (duration.asMilliseconds() <= 0) {
@@ -30,20 +30,17 @@ export function calculateRemainingTime(task, currentDate) {
   }
 }
 
-export function url($slug,$id){
-      return '/api/v1/projects/'+$slug+'/tasks/'+$id;
+export function url($slug, $id) {
+  return '/api/v1/projects/' + $slug + '/tasks/' + $id;
 }
 
-export function ErrorHandling(component,error)
-{
+export function ErrorHandling(component, error) {
   const toastMessage =
-        error?.response?.data?.errors?.task?.[0] ||
-        error?.response?.data?.message ||
-        'An error occurred';
+    error?.response?.data?.errors?.task?.[0] || error?.response?.data?.message || 'An error occurred';
 
-    component.$vToastify.warning(toastMessage);
+  component.$vToastify.warning(toastMessage);
 
-    if (error.response) {
-        return component.setErrors(error.response.data.errors);
-    }
+  if (error.response) {
+    return component.setErrors(error.response.data.errors);
   }
+}
