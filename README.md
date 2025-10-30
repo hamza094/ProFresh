@@ -1,50 +1,51 @@
 ![Profreshhero](https://github.com/user-attachments/assets/cd84d035-76b3-437b-8d89-096f8bbb0d41)
 
-
 # 🚀 ProFresh - Real-Time Project Management Application
 
 [![License](https://img.shields.io/github/license/hamza094/ProFresh)](LICENSE) [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=hamza094_ProFresh&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=hamza094_ProFresh)
-
 
 <h3> Introduction </h3>
 ProFresh is an open source single page web application built with a Laravel API backend and a Vue.js frontend, designed to simplify project management. It brings project planning, task tracking, and team communication together in one place so you can stay organized, work collaboratively, and keep everything in sync.
 
 Whether you're managing personal projects or leading a team, ProFresh offers a clean and intuitive interface to help you stay focused, meet deadlines, and reach your goals more efficiently.
 
-
 # ⚙️ Features
 
 ## 📂 Project Management
-- **Project CRUD** (create, update, delete, archive)  
-- **Project Stages** & **Activity Feed**  
-- **Project Dashboard** with analytics  
+
+- **Project CRUD** (create, update, delete, archive)
+- **Project Stages** & **Activity Feed**
+- **Project Dashboard** with analytics
 
 ## 🤝 Collaboration
-- **Invitations & Members** management  
-- **Real‑time Group Chat** & **Video Calls (Zoom Integration)**  
-- **Notes**, **Document/Photo Uploads**  
+
+- **Invitations & Members** management
+- **Real‑time Group Chat** & **Video Calls (Zoom Integration)**
+- **Notes**, **Document/Photo Uploads**
 
 ## 🔔 Notifications & Scheduling
-- **Real‑time** & **Scheduled** notifications (SMS, Email)  
-- **Task Reminders**  
+
+- **Real‑time** & **Scheduled** notifications (SMS, Email)
+- **Task Reminders**
 
 ## 🔗 Integrations
-- **Excel Export**  
-- **Amazon S3** file storage  
-- **API‑first** design (REST endpoints)  
+
+- **Excel Export**
+- **Amazon S3** file storage
+- **API‑first** design (REST endpoints)
 
 ## 🔐 Security & Accounts
-- **User Profiles** & **Subscriptions**  
-- **Social Login** (Google, Facebook, etc.)  
-- **Two‑Factor Authentication** 
+
+- **User Profiles** & **Subscriptions**
+- **Social Login** (Google, Facebook, etc.)
+- **Two‑Factor Authentication**
 
 ## 🔥 Live Demos
 
-- **Group Chat**: [Watch real‑time project chat 👥💬](https://twitter.com/h_ik04/status/1603334048213893121)  
-- **Notifications**: [See live email & SMS notifications 📩🚀](https://twitter.com/h_ik04/status/1580147516191940608)  
-- **Task Workflow**: [Explore task features in action ✅📋](https://twitter.com/h_ik04/status/1706709214130041070)  
-- **Mail & SMS Scheduling**: [Demo scheduled messaging 📧📱](https://twitter.com/h_ik04/status/1552968426355732480)  
-
+- **Group Chat**: [Watch real‑time project chat 👥💬](https://twitter.com/h_ik04/status/1603334048213893121)
+- **Notifications**: [See live email & SMS notifications 📩🚀](https://twitter.com/h_ik04/status/1580147516191940608)
+- **Task Workflow**: [Explore task features in action ✅📋](https://twitter.com/h_ik04/status/1706709214130041070)
+- **Mail & SMS Scheduling**: [Demo scheduled messaging 📧📱](https://twitter.com/h_ik04/status/1552968426355732480)
 
 <h3>Contribute</h3>
     <hr>

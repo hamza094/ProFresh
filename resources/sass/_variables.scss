@@ -7,14 +7,14 @@ $font-size-base: 0.9rem;
 $line-height-base: 1.6;
 
 // Colors
-$color-primary:#FFA800;
-$color-secondary:#12344D;
-$color-white:#FFFFFF;
-$color-light:#E5F2FD;
-$color-hot:  #27AE60; 
-$color-cold:#2B87F4;
-$color-warm: #F26B21;
-$color-grey:#999999;
+$color-primary: #ffa800;
+$color-secondary: #12344d;
+$color-white: #ffffff;
+$color-light: #e5f2fd;
+$color-hot: #27ae60;
+$color-cold: #2b87f4;
+$color-warm: #f26b21;
+$color-grey: #999999;
 $color-light-grey: #e5e5ee;
 
 $laravel-border-color: darken($body-bg, 10%);
@@ -23,7 +23,7 @@ $navbar-default-border: $laravel-border-color;
 $panel-default-border: $laravel-border-color;
 $panel-inner-border: $laravel-border-color;
 
-$brand-primary: #3097D1;
+$brand-primary: #3097d1;
 $brand-info: #8eb4cb;
 $brand-success: #2ab27b;
 $brand-warning: #cbb956;
@@ -48,25 +48,19 @@ $panel-default-heading-bg: #fff;
 // --------------------------------------------------
 $insight-gradient-start: #667eea;
 $insight-gradient-end: #764ba2;
-$insight-health: #27AE60;
-$insight-completion: #3498DB;
-$insight-overdue: #E74C3C;
+$insight-health: #27ae60;
+$insight-completion: #3498db;
+$insight-overdue: #e74c3c;
 $insight-critical: #dc3545; // Bootstrap danger tone
-$insight-warning: #ffc107;  // Bootstrap warning tone
-$insight-success: #198754;  // Bootstrap success tone
-$insight-info: #0dcaf0;     // Bootstrap info tone
-$insight-accent: #1D4967;   // Deep accent used for controls
+$insight-warning: #ffc107; // Bootstrap warning tone
+$insight-success: #198754; // Bootstrap success tone
+$insight-info: #0dcaf0; // Bootstrap info tone
+$insight-accent: #1d4967; // Deep accent used for controls
 $insight-accent-dark: #163a50;
 $insight-accent-alt: #2a5a73; // Gradient secondary stop
 $insight-btn-hover-start: #234a5a;
 $insight-btn-hover-end: #326680;
-$insight-header-color: #2F2536;
+$insight-header-color: #2f2536;
 $insight-recommendation-bg: #f8f9fa;
-$insight-border-light: #F0F0F0;
+$insight-border-light: #f0f0f0;
 $insight-avatar-text: $color-white;
-
-
-
-
-
-

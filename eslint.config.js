@@ -1,22 +1,22 @@
 import js from '@eslint/js';
 import eslintConfigPrettier from 'eslint-config-prettier';
-import pluginVue from 'eslint-plugin-vue'
-import globals from 'globals'
+import pluginVue from 'eslint-plugin-vue';
+import globals from 'globals';
 
 export default [
-  { 
-    ignores: ['resources/js/components/Admin/**'] 
+  {
+    ignores: ['resources/js/components/Admin/**'],
   },
   js.configs.recommended,
   ...pluginVue.configs['flat/vue2-essential'],
   ...pluginVue.configs['flat/vue2-recommended'],
   ...pluginVue.configs['flat/vue2-strongly-recommended'],
-  {   
+  {
     languageOptions: {
       sourceType: 'module',
       globals: {
-        ...globals.browser
-      }
+        ...globals.browser,
+      },
     },
     files: ['**/*.{js,vue}'],
     plugins: {
@@ -67,5 +67,5 @@ export default [
       ],
     },
   },
-  eslintConfigPrettier
-]
+  eslintConfigPrettier,
+];

@@ -13,8 +13,8 @@
         </select>
       </div>
     </div>
-    
-    <div class="chart-wrapper" style="height: 300px;">
+
+    <div class="chart-wrapper" style="height: 300px">
       <div v-if="isLoading" class="d-flex justify-content-center align-items-center h-100">
         <div class="spinner-border text-primary" role="status">
           <span class="visually-hidden">Loading...</span>
@@ -22,7 +22,7 @@
       </div>
       <canvas v-else ref="chartCanvas"></canvas>
     </div>
-    
+
     <div class="chart-summary mt-3" v-if="projectStats && !isLoading">
       <div class="row">
         <div class="col-md-3" v-for="stat in projectStats" :key="stat.label">
@@ -37,7 +37,7 @@
 </template>
 
 <script>
-import { Bar } from 'vue-chartjs'
+import { Bar } from 'vue-chartjs';
 
 export default {
   name: 'ProjectChart',
@@ -50,35 +50,47 @@ export default {
       isRequestPending: false,
       chartData: {
         labels: [],
-        datasets: []
+        datasets: [],
       },
       projectStats: null,
       chartInstance: null,
       months: [
-        'January', 'February', 'March', 'April', 'May', 'June',
-        'July', 'August', 'September', 'October', 'November', 'December'
+        'January',
+        'February',
+        'March',
+        'April',
+        'May',
+        'June',
+        'July',
+        'August',
+        'September',
+        'October',
+        'November',
+        'December',
       ],
       options: {
         responsive: true,
         maintainAspectRatio: false,
         scales: {
           xAxes: [{ stacked: false }],
-          yAxes: [{ 
-            stacked: false,
-            ticks: { beginAtZero: true }
-          }]
+          yAxes: [
+            {
+              stacked: false,
+              ticks: { beginAtZero: true },
+            },
+          ],
         },
         plugins: {
           legend: {
             position: 'top',
-            labels: { usePointStyle: true }
+            labels: { usePointStyle: true },
           },
           tooltip: {
             mode: 'index',
-            intersect: false
-          }
-        }
-      }
+            intersect: false,
+          },
+        },
+      },
     };
   },
   computed: {
@@ -89,7 +101,7 @@ export default {
         years.push(year);
       }
       return years;
-    }
+    },
   },
   watch: {
     selectedYear() {
@@ -97,7 +109,7 @@ export default {
     },
     selectedMonth() {
       this.loadChartData();
-    }
+    },
   },
   mounted() {
     this.loadChartData();
@@ -136,16 +148,16 @@ export default {
               data: [
                 response.data.data.active_projects || 0,
                 response.data.data.trashed_projects || 0,
-                response.data.data.member_projects || 0
-              ]
-            }
-          ]
+                response.data.data.member_projects || 0,
+              ],
+            },
+          ],
         };
         this.projectStats = [
           { label: 'Active Projects', value: response.data.data.active_projects || 0 },
           { label: 'Trashed Projects', value: response.data.data.trashed_projects || 0 },
           { label: 'Member Projects', value: response.data.data.member_projects || 0 },
-          { label: 'Total Projects', value: response.data.data.total_projects || 0 }
+          { label: 'Total Projects', value: response.data.data.total_projects || 0 },
         ];
         this.renderChart();
       } catch (err) {
@@ -159,27 +171,27 @@ export default {
       }
     },
     renderChart() {
-  this.$nextTick().then(() => {
-    const canvas = this.$refs.chartCanvas;
-    if (!canvas) {
-      console.warn('Canvas not found yet');
-      return;
-    }
+      this.$nextTick().then(() => {
+        const canvas = this.$refs.chartCanvas;
+        if (!canvas) {
+          console.warn('Canvas not found yet');
+          return;
+        }
 
-    const ctx = canvas.getContext('2d');
+        const ctx = canvas.getContext('2d');
 
-    if (this.chartInstance) {
-      this.chartInstance.destroy();
-    }
+        if (this.chartInstance) {
+          this.chartInstance.destroy();
+        }
 
-    this.chartInstance = new Chart(ctx, {
-      type: 'bar',
-      data: this.chartData,
-      options: this.options
-    });
-  });
-}
-  }
+        this.chartInstance = new Chart(ctx, {
+          type: 'bar',
+          data: this.chartData,
+          options: this.options,
+        });
+      });
+    },
+  },
 };
 </script>
 
@@ -188,7 +200,7 @@ export default {
   background: white;
   border-radius: 8px;
   padding: 1rem;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .chart-controls {

@@ -3,7 +3,13 @@
     <div class="d-flex justify-content-between align-items-center mb-3">
       <h1>Notifications</h1>
       <div class="dropdown">
-        <button class="btn btn-link" type="button" id="dropdownSettings" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <button
+          class="btn btn-link"
+          type="button"
+          id="dropdownSettings"
+          data-toggle="dropdown"
+          aria-haspopup="true"
+          aria-expanded="false">
           <i class="fas fa-cog"></i>
         </button>
         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownSettings">
@@ -14,17 +20,17 @@
     </div>
 
     <div class="btn-group mb-3" role="group">
-      <button 
-        type="button" 
-        class="btn" 
-        :class="filter === 'all' || !filter ? 'btn-primary' : 'btn-outline-primary'" 
+      <button
+        type="button"
+        class="btn"
+        :class="filter === 'all' || !filter ? 'btn-primary' : 'btn-outline-primary'"
         @click="filterNotifications('all')">
         All
       </button>
-      <button 
-        type="button" 
-        class="btn" 
-        :class="filter === 'unread' ? 'btn-primary' : 'btn-outline-primary'" 
+      <button
+        type="button"
+        class="btn"
+        :class="filter === 'unread' ? 'btn-primary' : 'btn-outline-primary'"
         @click="filterNotifications('unread')">
         Unread
       </button>
@@ -32,28 +38,42 @@
 
     <ul class="list-group">
       <li
-v-for="notification in notifications.data" :key="notification.id" 
-          class="list-group-item d-flex justify-content-between align-items-center"
-          :class="{ 'notification-unread': !notification.read_at }">
+        v-for="notification in notifications.data"
+        :key="notification.id"
+        class="list-group-item d-flex justify-content-between align-items-center"
+        :class="{ 'notification-unread': !notification.read_at }">
         <div class="d-flex align-items-center">
-          <img v-if="notification.notifier.avatar" :src="notification.notifier.avatar" alt="Avatar" class="rounded-circle mr-3" style="width: 40px; height: 40px;">
+          <img
+            v-if="notification.notifier.avatar"
+            :src="notification.notifier.avatar"
+            alt="Avatar"
+            class="rounded-circle mr-3"
+            style="width: 40px; height: 40px" />
           <div class="notification-user_content">
-            <router-link :to="(notification.link).slice(7)" class="text-decoration-none">
+            <router-link :to="notification.link.slice(7)" class="text-decoration-none">
               <p class="mb-1">
                 <strong>{{ notification.notifier.name }}</strong>
-                 {{ notification.message }} 
-            <span v-if="!notification.read_at" class="notification-unread_dot"></span>
+                {{ notification.message }}
+                <span v-if="!notification.read_at" class="notification-unread_dot"></span>
               </p>
             </router-link>
             <small class="text-muted">{{ notification.created_at }}</small>
           </div>
         </div>
         <div class="dropdown">
-          <button class="btn btn-link" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <button
+            class="btn btn-link"
+            type="button"
+            id="dropdownMenuButton"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false">
             <i class="fas fa-cog"></i>
           </button>
           <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <button v-if="notification.read_at" class="dropdown-item" @click="markAsUnread(notification)">Mark as unread</button>
+            <button v-if="notification.read_at" class="dropdown-item" @click="markAsUnread(notification)">
+              Mark as unread
+            </button>
             <button v-else class="dropdown-item" @click="markAsRead(notification)">Mark as read</button>
             <button class="dropdown-item text-danger" @click="deleteNotification(notification.id)">Delete</button>
           </div>
@@ -94,12 +114,15 @@ export default {
       this.$store.dispatch('markAsUnread', notification);
     },
     markAllAsRead() {
-      this.$store.dispatch('markAllAsRead').then(() => {
-        this.$vToastify.success('All notifications marked as read.');
-      }).catch(error => {
-        this.$vToastify.error('Failed to mark all notifications as read.');
-        console.error(error);
-      });
+      this.$store
+        .dispatch('markAllAsRead')
+        .then(() => {
+          this.$vToastify.success('All notifications marked as read.');
+        })
+        .catch((error) => {
+          this.$vToastify.error('Failed to mark all notifications as read.');
+          console.error(error);
+        });
     },
     filterNotifications(type) {
       this.filter = type;
