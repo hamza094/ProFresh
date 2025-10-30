@@ -5,7 +5,7 @@
     "build": "vite build",
     "lint": "eslint *.js resources",
     "format": "prettier --write '**/*.{js,vue,css,scss,json,yml,md}'",
-    "format:check": "prettier --check '**/*.{js,vue,css,scss,json,yml,md}'"
+    "postinstall": "husky install"
   },
   "devDependencies": {
     "@vitejs/plugin-vue2": "^2.3.3",
@@ -16,8 +16,10 @@
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-vue": "^10.5.1",
     "globals": "^16.4.0",
+    "husky": "^9.1.7",
     "jquery": "^3.6.0",
     "laravel-vite-plugin": "^1.2.0",
+    "lint-staged": "^16.2.6",
     "lodash": "^4.17.21",
     "prettier": "3.6.2",
     "resolve-url-loader": "^2.3.1",
@@ -62,6 +64,18 @@
     "vuex": "^3.6.2",
     "vuex-persistedstate": "^4.1.0",
     "weekstart": "^1.1.0"
+  },
+  "lint-staged": {
+    "*.js|resources/**/*.{vue,js}": [
+      "eslint --fix",
+      "prettier --write --ignore-unknown"
+    ],
+    "**/*.{css,scss,json,yml,md}": [
+      "prettier --write --ignore-unknown"
+    ],
+    "**/*.php": [
+      "vendor/bin/pint"
+    ]
   },
   "type": "module"
 }
