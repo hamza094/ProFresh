@@ -58,14 +58,14 @@
                           <div class="col-md-12">
                             <h4>By Stage</h4>
                             <ul class="filter-list">
-                              <li class="filter-list_item" v-for="stage in stages">
+                              <li class="filter-list_item" v-for="stage in stages" :key="stage.id || stage.name">
                                 <input
                                   class="form-check-input form-radio"
                                   type="radio"
                                   name="stageRadio"
                                   v-model="form.stage"
                                   :value="stage.id"
-                                  @click.pervent="toggleStage(stage.id)" />
+                                  @click.prevent="toggleStage(stage.id)" />
                                 <label class="form-check-label">
                                   {{ stage.name }}
                                 </label>
@@ -77,7 +77,7 @@
                                   name="stageRadio"
                                   v-model="form.stage"
                                   :value="0"
-                                  @click.pervent="toggleStage(0)" />
+                                  @click.prevent="toggleStage(0)" />
                                 <label class="form-check-label"> Clo/Pos </label>
                               </li>
                             </ul>
@@ -128,7 +128,7 @@
                             <span
                               style="display: inline-block"
                               class="form-date_close"
-                              @click.pervent="form.startdate = ''"
+                              @click.prevent="form.startdate = ''"
                               v-if="form.startdate !== ''"
                               >x</span
                             >
@@ -139,14 +139,14 @@
                             <span
                               style="display: inline-block"
                               class="form-date_close"
-                              @click.pervent="form.enddate = ''"
+                              @click.prevent="form.enddate = ''"
                               v-if="form.enddate !== ''"
                               >x</span
                             >
                             <datetime type="date" value-zone="local" zone="local" v-model="form.enddate"> </datetime>
                           </div>
                         </div>
-                        <button class="float-right mt-4 mb-2 btn btn-primary btn-pill w-50" @click.pervent="filterBy()">
+                        <button class="float-right mt-4 mb-2 btn btn-primary btn-pill w-50" @click.prevent="filterBy()">
                           Filter
                         </button>
                       </div>
@@ -154,7 +154,7 @@
                   </div>
                 </div>
                 <div class="ms-auto text-secondary">
-                  <button class="btn btn-sm btn-danger" @click.pervent="bulkDelete">Bulk Delete</button>
+                  <button class="btn btn-sm btn-danger" @click.prevent="bulkDelete">Bulk Delete</button>
                 </div>
 
                 <div class="ms-auto text-secondary">
@@ -211,7 +211,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr v-for="(project, index) in projects.data" :key="project.id">
+                  <tr v-for="project in projects.data" :key="project.id">
                     <td>
                       <input
                         class="form-check-input m-0 align-middle"
@@ -310,6 +310,10 @@ export default {
       }
     },
   },
+  mounted() {
+    this.getResults();
+    this.loadStages();
+  },
   methods: {
     loadStages() {
       axios
@@ -317,8 +321,8 @@ export default {
         .then((response) => {
           this.stages = response.data;
         })
-        .catch((error) => {
-          console.log(error.response.data.errors);
+        .catch(() => {
+          // Failed to load stages; keep current state
         });
     },
 
@@ -364,7 +368,7 @@ export default {
       };
 
       const filteredParameters = Object.fromEntries(
-        Object.entries(queryParameters).filter(([_, value]) => value !== undefined && value !== ''),
+        Object.entries(queryParameters).filter(([, value]) => value !== undefined && value !== ''),
       );
 
       axios
@@ -380,7 +384,7 @@ export default {
           this.appliedFilters = response.data.appliedFilters;
           this.message = response.data.projects ? '' : response.data.message;
         })
-        .catch((error) => {
+        .catch(() => {
           this.$vToastify.warning('Error! Please review and correct the fields.');
         });
     },
@@ -408,7 +412,7 @@ export default {
               this.$vToastify.success(response.data.message);
               this.getResults();
             })
-            .catch((error) => {
+            .catch(() => {
               swal.fire('Failed!', 'There was something wrong.', 'warning');
             });
         }
@@ -419,10 +423,6 @@ export default {
     searchProjects: debounce(function () {
       this.getResults();
     }, 1000),
-  },
-  mounted() {
-    this.getResults();
-    this.loadStages();
   },
 };
 </script>
