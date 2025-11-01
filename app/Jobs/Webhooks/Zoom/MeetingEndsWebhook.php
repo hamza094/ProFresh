@@ -1,11 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Jobs\Webhooks\Zoom;
 
 use App\Enums\MeetingState;
 use App\Events\MeetingStatusUpdate;
 use App\Models\Meeting;
 use App\Notifications\Zoom\MeetingEnded;
+use Exception;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -14,6 +17,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Notification;
+use Throwable;
 
 class MeetingEndsWebhook implements ShouldQueue
 {
@@ -55,10 +59,19 @@ class MeetingEndsWebhook implements ShouldQueue
         } catch (ModelNotFoundException $e) {
             Log::channel('webhook')->error("Meeting with ID {$this->meeting_id} not found in the database.");
             throw $e;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             Log::channel('webhook')->error('Error processing meeting ending webhook: '.$e->getMessage(), ['exception' => $e]);
             throw $e;
         }
+    }
+
+    public function failed(Throwable $exception): void
+    {
+        Log::error('Meeting Ended webhook job failed', [
+            'meeting_id' => $this->meeting_id,
+            'error' => $exception->getMessage(),
+            'trace' => $exception->getTraceAsString(),
+        ]);
     }
 
     private function getMeeting(): Meeting
@@ -101,14 +114,5 @@ class MeetingEndsWebhook implements ShouldQueue
         }
 
         return true;
-    }
-
-    public function failed(\Throwable $exception): void
-    {
-        Log::error('Meeting Ended webhook job failed', [
-            'meeting_id' => $this->meeting_id,
-            'error' => $exception->getMessage(),
-            'trace' => $exception->getTraceAsString(),
-        ]);
     }
 }

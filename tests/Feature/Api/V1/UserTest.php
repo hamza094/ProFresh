@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Feature\Api\V1;
 
 use App\Actions\DeleteProfileAction;
@@ -21,6 +23,19 @@ use Tests\TestCase;
 class UserTest extends TestCase
 {
     use ProjectSetup,RefreshDatabase;
+
+    public static function dataProvider(): array
+    {
+        return [
+            [
+                'newName' => 'john doe',
+                'newUsername' => 'jane_doe',
+                'newEmail' => 'john_doe@example.com',
+                'newCompany' => 'Acme Inc.',
+                'newMobile' => 1234567890,
+            ],
+        ];
+    }
 
     /**
      * @return void
@@ -98,9 +113,7 @@ class UserTest extends TestCase
 
         $this->assertTrue(Hash::check($newPassword, $user->password));
 
-        Mail::assertQueued(PasswordUpdate::class, function ($mail) use ($user) {
-            return $mail->hasTo($user->email);
-        });
+        Mail::assertQueued(PasswordUpdate::class, fn ($mail) => $mail->hasTo($user->email));
     }
 
     #[Test]
@@ -157,18 +170,5 @@ class UserTest extends TestCase
         $this->artisan('user:profile-delete')
             ->expectsOutput('User profile deletion process completed.')
             ->assertExitCode(0);
-    }
-
-    public static function dataProvider(): array
-    {
-        return [
-            [
-                'newName' => 'john doe',
-                'newUsername' => 'jane_doe',
-                'newEmail' => 'john_doe@example.com',
-                'newCompany' => 'Acme Inc.',
-                'newMobile' => 1234567890,
-            ],
-        ];
     }
 }

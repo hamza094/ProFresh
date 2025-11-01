@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Integrations\Zoom\Requests;
 
 use App\DataTransferObjects\Zoom\Meeting;
-use DateTime;
+use DateTimeImmutable;
 use Illuminate\Support\Facades\Cache;
 use ReflectionClass;
 use Saloon\Contracts\Body\HasBody;
@@ -26,6 +28,13 @@ class CreateMeeting extends Request implements HasBody
     protected Method $method = Method::POST;
 
     /**
+     * @param  array<string, mixed>  $validated
+     */
+    public function __construct(
+        private readonly array $validated,
+    ) {}
+
+    /**
      * The endpoint for the request
      */
     public function resolveEndpoint(): string
@@ -33,12 +42,10 @@ class CreateMeeting extends Request implements HasBody
         return '/users/me/meetings';
     }
 
-    /**
-     * @param  array<string, mixed>  $validated
-     */
-    public function __construct(
-        private readonly array $validated,
-    ) {}
+    public function createDtoFromResponse(Response $response): mixed
+    {
+        return Meeting::fromResponse($response->json());
+    }
 
     /**
      * @return array<string, mixed>
@@ -51,14 +58,9 @@ class CreateMeeting extends Request implements HasBody
             'duration' => $this->validated['duration'],
             'password' => $this->validated['password'],
             'join_before_host' => $this->validated['join_before_host'],
-            'start_time' => (new DateTime($this->validated['start_time']))->format('Y-m-d\TH:i:s\Z'),
+            'start_time' => (new DateTimeImmutable($this->validated['start_time']))->format('Y-m-d\TH:i:s\Z'),
             'timezone' => $this->validated['timezone'],
         ];
-    }
-
-    public function createDtoFromResponse(Response $response): mixed
-    {
-        return Meeting::fromResponse($response->json());
     }
 
     /**

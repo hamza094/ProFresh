@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Feature\Api\V1;
 
 use App\Models\Project;
@@ -44,7 +46,7 @@ class StageTest extends TestCase
     {
         $stages = Stage::all();
 
-        $response = $this->getJson('api/v1/stages')
+        $this->getJson('api/v1/stages')
             ->assertOk();
 
         $this->assertEquals($stages->count(), 4);

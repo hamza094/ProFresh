@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Api\Auth;
 
 use App\Actions\OAuthAction;
@@ -8,6 +10,7 @@ use App\Events\UserLogin;
 use App\Http\Controllers\Api\ApiController;
 use App\Http\Resources\Api\V1\UsersResource;
 use App\Services\Api\V1\Auth\LoginUserService;
+use Exception;
 use Illuminate\Http\JsonResponse;
 use Laravel\Socialite\Facades\Socialite;
 
@@ -65,7 +68,7 @@ class OAuthController extends ApiController
                     ['*'],
                     now()->addMonth())->plainTextToken,
             ], 200);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return response()->json(['message' => 'Error processing user data.', 'error' => $e->getMessage()], 500);
         }
 

@@ -1,9 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Resources\Api\V1;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Str;
+use JsonSerializable;
 
 class UserActivitiesResource extends JsonResource
 {
@@ -11,7 +14,7 @@ class UserActivitiesResource extends JsonResource
      * Transform the resource into an array.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable
+     * @return array|\Illuminate\Contracts\Support\Arrayable|JsonSerializable
      */
     public function toArray($request)
     {
@@ -132,7 +135,7 @@ class UserActivitiesResource extends JsonResource
 
     protected function created_message()
     {
-        $status = ($this->subject && property_exists($this->subject, 'delivered_at') && $this->subject->delivered_at == null) ? 'scheduled' : 'sent';
+        $status = ($this->subject && property_exists($this->subject, 'delivered_at') && $this->subject->delivered_at === null) ? 'scheduled' : 'sent';
         $message = $this->subject && property_exists($this->subject, 'message') ? Str::limit($this->subject->message, 12, '..') : '';
 
         return 'Message '.$message.' '.$status;

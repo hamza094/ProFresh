@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Requests\Api\V1;
 
 use Illuminate\Foundation\Http\FormRequest;
@@ -9,10 +11,8 @@ class MessageRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
-     *
-     * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
@@ -43,7 +43,7 @@ class MessageRequest extends FormRequest
         return [
             'message' => 'required|max:200',
             'mail' => 'sometimes',
-            'subject' => Rule::requiredIf(request()->mail == true),
+            'subject' => Rule::requiredIf(request()->mail === true),
             'sms' => 'sometimes',
             'users' => 'present|required',
             'date' => 'required_with:time',

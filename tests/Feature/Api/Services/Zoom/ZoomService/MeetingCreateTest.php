@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Feature\Api\Services\Zoom\ZoomService;
 
 use App\Http\Integrations\Zoom\Requests\CreateMeeting;
 use App\Http\Integrations\Zoom\Requests\GetRefreshTokenRequest;
 use App\Models\User;
 use App\Services\Api\V1\Zoom\ZoomService;
-use DateTime;
+use DateTimeImmutable;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Saloon\Enums\Method;
 use Saloon\Http\Faking\MockResponse;
@@ -32,7 +34,7 @@ class MeetingCreateTest extends TestCase
             'duration' => 30,
             'password' => 'hacker',
             'join_before_host' => false,
-            'start_time' => (new DateTime('2024-06-18T18:00:07Z'))->format('Y-m-d H:i:s'),
+            'start_time' => (new DateTimeImmutable('2024-06-18T18:00:07Z'))->format('Y-m-d H:i:s'),
             'timezone' => 'UTC',
         ];
         $this->user = $this->userCreate(now()->addWeek());
@@ -51,7 +53,7 @@ class MeetingCreateTest extends TestCase
             ]),
             'users/me/meetings' => $this->mockMeetingResponse(),
         ]);
-        $meeting = (new ZoomService)->createMeeting($this->meetingData, $expiredUser);
+        (new ZoomService)->createMeeting($this->meetingData, $expiredUser);
         Saloon::assertSent(GetRefreshTokenRequest::class);
         $expiredUser->refresh();
         $this->assertEquals('new-access-token-here', $expiredUser->zoom_access_token);
@@ -74,7 +76,7 @@ class MeetingCreateTest extends TestCase
                 'duration' => $this->meetingData['duration'],
                 'password' => $this->meetingData['password'],
                 'join_before_host' => $this->meetingData['join_before_host'],
-                'start_time' => (new DateTime('2024-06-18T18:00:07Z'))->format('Y-m-d\TH:i:s\Z'),
+                'start_time' => (new DateTimeImmutable('2024-06-18T18:00:07Z'))->format('Y-m-d\TH:i:s\Z'),
                 'timezone' => $this->meetingData['timezone'],
             ]
         );

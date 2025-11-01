@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Unit;
 
 use App\Models\Project;
@@ -30,14 +32,14 @@ class ProjectTest extends TestCase
     public function a_project_has_a_creator()
     {
         $project = Project::factory()->create();
-        $this->assertInstanceOf('App\Models\User', $project->user);
+        $this->assertInstanceOf(User::class, $project->user);
     }
 
     /** @test */
     public function project_belongs_to_stage()
     {
         $project = Project::factory()->create();
-        $this->assertInstanceOf('App\Models\Stage', $project->stage);
+        $this->assertInstanceOf(\App\Models\Stage::class, $project->stage);
     }
 
     /** @test */
@@ -45,7 +47,7 @@ class ProjectTest extends TestCase
     {
         $user = User::factory()->create();
         Sanctum::actingAs($user);
-        $status = TaskStatus::factory()->create();
+        TaskStatus::factory()->create();
         $project = Project::factory()->create(['user_id' => $user->id]);
         $project->addTask('run berry run');
         $this->assertCount(1, $project->tasks);
@@ -55,7 +57,7 @@ class ProjectTest extends TestCase
     public function a_project_has_tasks()
     {
         $project = Project::factory()->create();
-        $this->assertInstanceOf('Illuminate\Database\Eloquent\Collection', $project->tasks);
+        $this->assertInstanceOf(\Illuminate\Database\Eloquent\Collection::class, $project->tasks);
     }
 
     /** @test */

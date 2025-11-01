@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Api\ApiController;
@@ -11,6 +13,7 @@ use App\Models\Project;
 use App\Models\User;
 use App\Services\Api\V1\InvitationService;
 use Auth;
+use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
@@ -90,7 +93,7 @@ class InvitationController extends ApiController
                 'accepted_user' => new InvitedUserResource(Auth::user()),
             ], 200);
 
-        } catch (\Exception) {
+        } catch (Exception) {
             return response()->json(['error' => 'An unexpected error occurred.'], 500);
         }
     }

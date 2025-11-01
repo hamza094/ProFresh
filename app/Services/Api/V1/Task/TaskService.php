@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Services\Api\V1\Task;
 
 use App\Actions\NotificationAction;
@@ -40,22 +42,6 @@ class TaskService
         ];
     }
 
-    private function getTasks(Project $project, bool $isArchived): HasMany
-    {
-        return $project->tasks()
-            ->with('project')
-            ->when(
-                $isArchived,
-                fn (Builder $query) => $query->archived(),
-                fn (Builder $query) => $query->active()
-            );
-    }
-
-    private function getMessage(bool $isArchived): string
-    {
-        return 'Project '.($isArchived ? 'Archived' : 'Active').' Tasks';
-    }
-
     public function checkValidation($request, $task): void
     {
         Gate::authorize('forbid-when-archived', $task);
@@ -77,5 +63,21 @@ class TaskService
                 $project->path(),
                 $notifier
             ), $project);
+    }
+
+    private function getTasks(Project $project, bool $isArchived): HasMany
+    {
+        return $project->tasks()
+            ->with('project')
+            ->when(
+                $isArchived,
+                fn (Builder $query) => $query->archived(),
+                fn (Builder $query) => $query->active()
+            );
+    }
+
+    private function getMessage(bool $isArchived): string
+    {
+        return 'Project '.($isArchived ? 'Archived' : 'Active').' Tasks';
     }
 }

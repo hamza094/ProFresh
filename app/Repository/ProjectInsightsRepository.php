@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Repository;
 
 use App\Actions\ProjectMetrics\ProjectHealthMetricAction;
@@ -33,15 +35,15 @@ class ProjectInsightsRepository
         $this->preloader->preload($project, $sections);
 
         $actions = [
-            'health' => fn () => $this->projectHealthAction->execute($project),
-            'task-health' => fn () => $this->taskHealthAction->execute($project),
-            'risk' => fn () => $this->upcomingRiskAction->execute($project),
-            'stage' => fn () => $this->stageProgressAction->execute($project),
-            'collaboration' => fn () => $this->collaborationHealthAction->execute($project),
+            'health' => fn (): float => $this->projectHealthAction->execute($project),
+            'task-health' => fn (): float => $this->taskHealthAction->execute($project),
+            'risk' => fn (): array => $this->upcomingRiskAction->execute($project),
+            'stage' => fn (): array => $this->stageProgressAction->execute($project),
+            'collaboration' => fn (): float => $this->collaborationHealthAction->execute($project),
         ];
 
         $results = collect($actions)
-            ->map(fn ($closure, $section) => $this->shouldInclude($section, $sections) ? $closure() : null)
+            ->map(fn ($closure, $section): float|array|null => $this->shouldInclude($section, $sections) ? $closure() : null)
             ->values()
             ->all();
 

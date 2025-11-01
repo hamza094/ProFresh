@@ -2,6 +2,6 @@
 
 // variadic-method-App\Actions\ProjectMetrics\ProjectHealthRecalculationAction-handle-D:\apps\profresh\app\Actions\ProjectMetrics\ProjectHealthRecalculationAction.php
 return \PHPStan\Cache\CacheItem::__set_state(array(
-   'variableKey' => '1761209034-v4',
+   'variableKey' => '1761994234-v4',
    'data' => false,
 ));

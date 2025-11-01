@@ -16,12 +16,36 @@ class TaskFeatureService
 {
     public function assignMembers(Task $task, array $members, Project $project): void
     {
-        DB::transaction(function () use ($task, $members, $project) {
+        DB::transaction(function () use ($task, $members, $project): void {
             $task->assignee()->attach($members);
             $this->notifyAssignees($members, $task, $project);
         });
 
         $task->load('assignee');
+    }
+
+    public function archiveTask(Task $task): void
+    {
+        DB::transaction(function () use ($task): void {
+            $task->delete();
+        });
+    }
+
+    public function unarchiveTask(Task $task): void
+    {
+        if (! $task->trashed()) {
+            abort(403, 'Task must be trashed to perform this action');
+        }
+
+        DB::transaction(function () use ($task): void {
+            $task->restore();
+            $task->activities()->update(['is_hidden' => false]);
+        });
+    }
+
+    public function removeTask(Task $task): void
+    {
+        $task->forceDelete();
     }
 
     private function notifyAssignees($members, Task $task, Project $project)
@@ -38,29 +62,5 @@ class TaskFeatureService
                 $project->path(),
                 auth()->user()->getNotifierData()
             ));
-    }
-
-    public function archiveTask(Task $task): void
-    {
-        DB::transaction(function () use ($task) {
-            $task->delete();
-        });
-    }
-
-    public function unarchiveTask(Task $task): void
-    {
-        if (! $task->trashed()) {
-            abort(403, 'Task must be trashed to perform this action');
-        }
-
-        DB::transaction(function () use ($task) {
-            $task->restore();
-            $task->activities()->update(['is_hidden' => false]);
-        });
-    }
-
-    public function removeTask(Task $task): void
-    {
-        $task->forceDelete();
     }
 }

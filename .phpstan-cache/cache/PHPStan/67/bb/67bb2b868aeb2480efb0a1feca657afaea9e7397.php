@@ -2,6 +2,6 @@
 
 // variadic-method-App\Services\ProjectInsightsPreloader-getConfigValue-D:\apps\profresh\app\Services\ProjectInsightsPreloader.php
 return \PHPStan\Cache\CacheItem::__set_state(array(
-   'variableKey' => '1761209535-v4',
+   'variableKey' => '1761994253-v4',
    'data' => false,
 ));

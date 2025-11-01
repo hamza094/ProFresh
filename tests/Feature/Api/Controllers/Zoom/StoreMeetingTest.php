@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Feature\Api\Controllers\Zoom;
 
 use App\Exceptions\Integrations\Zoom\ZoomException;

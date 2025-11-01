@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Jobs;
 
 use App\Actions\ProjectMetrics\ProjectHealthMetricAction;
@@ -25,6 +27,8 @@ class RecalculateProjectHealth implements ShouldQueue
 
     public int $timeout = 60; // seconds
 
+    public function __construct(public int $projectId, public ?float $precomputedScore = null, public bool $broadcast = false) {}
+
     /**
      * Exponential-like backoff between retries.
      *
@@ -34,8 +38,6 @@ class RecalculateProjectHealth implements ShouldQueue
     {
         return [40, 60];
     }
-
-    public function __construct(public int $projectId, public ?float $precomputedScore = null, public bool $broadcast = false) {}
 
     public function handle(ProjectHealthMetricAction $action, ?ProjectInsightsPreloader $preloader = null): void
     {

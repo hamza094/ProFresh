@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Requests\Api\V1;
 
 use App\Models\Project;
@@ -10,10 +12,8 @@ class ProjectUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
-     *
-     * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
@@ -32,7 +32,7 @@ class ProjectUpdateRequest extends FormRequest
              */
             'name' => [
                 'sometimes', 'required', 'max:150', 'string', 'min:4',
-                function (string $attribute, mixed $value, Closure $fail) {
+                function (string $attribute, mixed $value, Closure $fail): void {
                     if ($value === $this->project->name) {
                         $fail("The {$attribute} must be different from the current name.");
                     }
@@ -43,7 +43,7 @@ class ProjectUpdateRequest extends FormRequest
              */
             'about' => [
                 'sometimes', 'required', 'min:15',
-                function (string $attribute, mixed $value, Closure $fail) {
+                function (string $attribute, mixed $value, Closure $fail): void {
                     if ($value === $this->project->about) {
                         $fail("The {$attribute} must be different from the current about description.");
                     }
@@ -54,7 +54,7 @@ class ProjectUpdateRequest extends FormRequest
              */
             'notes' => [
                 'sometimes', 'present', 'max:250',
-                function (string $attribute, mixed $value, Closure $fail) {
+                function (string $attribute, mixed $value, Closure $fail): void {
                     if ($this->has('notes') && $value === $this->project->notes) {
                         $fail("The {$attribute} must be different from the current project notes.");
                     }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Feature\Api\V1;
 
 use App\Jobs\SmsMessage;
@@ -66,7 +68,7 @@ class JobsTest extends TestCase
                 ->andReturn('https://picsum.photos/200/300');
         });
 
-        $smsJob = new SmsMessage($project, $message);
+        new SmsMessage($project, $message);
 
         app(SmsMessage::class)->handle($mock);
     }

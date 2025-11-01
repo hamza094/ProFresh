@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Feature\Api\V1;
 
 use App\Actions\ProjectMetrics\ProjectHealthMetricAction;
@@ -29,9 +31,7 @@ class ProjectHealthScoreFeatureTest extends TestCase
         $action->handle($project, ['health']);
 
         // assert
-        Bus::assertDispatched(RecalculateProjectHealth::class, function (RecalculateProjectHealth $job) use ($project) {
-            return $job->projectId === $project->id && $job->broadcast === true;
-        });
+        Bus::assertDispatched(RecalculateProjectHealth::class, fn (RecalculateProjectHealth $job) => $job->projectId === $project->id && $job->broadcast);
     }
 
     public function test_does_not_dispatch_when_health_not_requested(): void
@@ -121,9 +121,7 @@ class ProjectHealthScoreFeatureTest extends TestCase
         $action = $this->createMock(ProjectHealthMetricAction::class);
         $action->expects($this->once())
             ->method('execute')
-            ->with($this->callback(function ($arg) use ($project) {
-                return $arg instanceof Project && $arg->id === $project->id;
-            }))
+            ->with($this->callback(fn ($arg) => $arg instanceof Project && $arg->id === $project->id))
             ->willReturn(42.5);
 
         // act

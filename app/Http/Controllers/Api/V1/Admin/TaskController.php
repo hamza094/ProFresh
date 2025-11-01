@@ -1,11 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Api\V1\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Api\V1\Admin\TaskResource;
 use App\Models\Task;
 use App\Repository\Admin\TaskRepository;
+use Exception;
 use F9Web\ApiResponseHelpers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -36,7 +39,7 @@ class TaskController extends Controller
         DB::beginTransaction();
 
         try {
-            Task::withTrashed()->whereIn('id', $taskIds)->each(function ($task) {
+            Task::withTrashed()->whereIn('id', $taskIds)->each(function ($task): void {
                 // Detach assignees before force deleting
                 $task->assignee()->detach();
 
@@ -49,7 +52,7 @@ class TaskController extends Controller
             return $this->respondWithSuccess([
                 'message' => 'Tasks deleted Successfully',
             ]);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             DB::rollBack(); // Roll back the transaction on exception
 
             return $this->respondWithError([

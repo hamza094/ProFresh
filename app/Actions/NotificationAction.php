@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Actions;
 
 class NotificationAction
@@ -9,7 +11,7 @@ class NotificationAction
         $users = $project->activeMembers->push($project->user);
 
         $users
-            ->reject(fn ($user) => self::isAuthUser($user))
+            ->reject(fn ($user): bool => self::isAuthUser($user))
             ->each(fn ($user) => $user->notify($notification));
     }
 

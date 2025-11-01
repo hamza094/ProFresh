@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Feature\Api\Controllers\Paddle;
 
 use App\Http\Middleware\CheckSubscription;

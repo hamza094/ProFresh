@@ -1,8 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Integrations\Zoom\Requests;
 
-use DateTime;
+use DateTimeImmutable;
 use Illuminate\Support\Facades\Cache;
 use ReflectionClass;
 use Saloon\Contracts\Body\HasBody;
@@ -47,11 +49,11 @@ class UpdateMeeting extends Request implements HasBody
             'topic' => $this->validated['topic'] ?? null,
             'agenda' => $this->validated['agenda'] ?? null,
             'duration' => $this->validated['duration'] ?? null,
-            'start_time' => isset($this->validated['start_time']) ? (new DateTime($this->validated['start_time']))->format('Y-m-d\TH:i:s\Z') : null,
+            'start_time' => isset($this->validated['start_time']) ? (new DateTimeImmutable($this->validated['start_time']))->format('Y-m-d\TH:i:s\Z') : null,
             'password' => $this->validated['password'] ?? null,
             'join_before_host' => $this->validated['join_before_host'] ?? null,
             'timezone' => $this->validated['timezone'] ?? null,
-        ], fn ($value) => ! is_null($value));
+        ], fn ($value): bool => ! is_null($value));
     }
 
     /**

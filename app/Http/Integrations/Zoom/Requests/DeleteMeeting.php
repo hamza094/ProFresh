@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Integrations\Zoom\Requests;
 
 use Illuminate\Support\Facades\Cache;
@@ -15,14 +17,14 @@ class DeleteMeeting extends Request
 {
     use HasRateLimits;
 
-    public function __construct(
-        private readonly int $meetingId,
-    ) {}
-
     /**
      * The HTTP method of the request
      */
     protected Method $method = Method::DELETE;
+
+    public function __construct(
+        private readonly int $meetingId,
+    ) {}
 
     /**
      * The endpoint for the request

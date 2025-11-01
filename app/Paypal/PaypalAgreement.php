@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Paypal;
 
+use Exception;
 use PayPal\Api\Agreement;
 use PayPal\Api\Payer;
 use PayPal\Api\Plan;
@@ -12,6 +15,17 @@ class PaypalAgreement extends Paypal
     public function create($id)
     {
         return redirect($this->agreement($id));
+    }
+
+    public function execute($token)
+    {
+        $agreement = new Agreement;
+        try {
+            $agreement->execute($token, $this->apiContext);
+        } catch (Exception $ex) {
+            dd($ex);
+
+        }
     }
 
     protected function agreement($id): string
@@ -32,7 +46,7 @@ class PaypalAgreement extends Paypal
             $agreement = $agreement->create($this->apiContext);
 
             return $agreement->getApprovalLink();
-        } catch (\Exception $ex) {
+        } catch (Exception $ex) {
             dd($ex);
         }
     }
@@ -66,16 +80,5 @@ class PaypalAgreement extends Paypal
             ->setCountryCode('US');
 
         return $shippingAddress;
-    }
-
-    public function execute($token)
-    {
-        $agreement = new Agreement;
-        try {
-            $agreement->execute($token, $this->apiContext);
-        } catch (\Exception $ex) {
-            dd($ex);
-
-        }
     }
 }

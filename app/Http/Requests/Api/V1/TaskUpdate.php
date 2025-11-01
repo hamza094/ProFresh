@@ -1,38 +1,23 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Requests\Api\V1;
 
 use App\Enums\TaskDueNotifies;
 use Carbon\Carbon;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use Timezone;
 
 class TaskUpdate extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
-     *
-     * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
-    }
-
-    protected function prepareForValidation()
-    {
-        $dueAt = $this->input('due_at');
-
-        if ($dueAt) {
-
-            $parsedDueAt = Carbon::parse($dueAt);
-            $formattedTime = $parsedDueAt->format('Y-m-d H:i:s');
-            $convertedTime = \Timezone::convertFromLocal($formattedTime);
-
-            $this->merge([
-                'due_at' => $convertedTime,
-            ]);
-        }
     }
 
     /**
@@ -82,5 +67,21 @@ class TaskUpdate extends FormRequest
                 Rule::in(TaskDueNotifies::values()),
             ],
         ];
+    }
+
+    protected function prepareForValidation()
+    {
+        $dueAt = $this->input('due_at');
+
+        if ($dueAt) {
+
+            $parsedDueAt = Carbon::parse($dueAt);
+            $formattedTime = $parsedDueAt->format('Y-m-d H:i:s');
+            $convertedTime = Timezone::convertFromLocal($formattedTime);
+
+            $this->merge([
+                'due_at' => $convertedTime,
+            ]);
+        }
     }
 }

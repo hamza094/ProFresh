@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Feature\Api\Services\Zoom\ZoomService;
 
 use App\DataTransferObjects\Zoom\AuthorizationCallbackDetails;
@@ -52,15 +54,13 @@ class AuthorizeTest extends TestCase
         );
 
         // Assert our request was sent with the correct code verifier.
-        Saloon::assertSent(static function (GetAccessTokenRequest $request): bool {
-            return $request->resolveEndpoint() ===
-            'https://zoom.us/oauth/token'
-            && $request->body()->all() === [
-                'grant_type' => 'authorization_code',
-                'code' => 'dummy-code',
-                'redirect_uri' => 'http://localhost:8000/oauth/zoom/callback',
-                'code_verifier' => 'dummy-code-verifier',
-            ];
-        });
+        Saloon::assertSent(static fn (GetAccessTokenRequest $request): bool => $request->resolveEndpoint() ===
+        'https://zoom.us/oauth/token'
+        && $request->body()->all() === [
+            'grant_type' => 'authorization_code',
+            'code' => 'dummy-code',
+            'redirect_uri' => 'http://localhost:8000/oauth/zoom/callback',
+            'code_verifier' => 'dummy-code-verifier',
+        ]);
     }
 }

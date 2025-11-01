@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Feature\Api\V1;
 
 use App\Models\User;
@@ -46,7 +48,7 @@ class UserAvatarTest extends TestCase
 
         $file = UploadedFile::fake()->image('avatar.jpg');
 
-        $response = $this->withoutExceptionHandling()->postJson('api/v1/users/'.$user->uuid.'/avatar', [
+        $this->withoutExceptionHandling()->postJson('api/v1/users/'.$user->uuid.'/avatar', [
             'avatar' => $file,
         ])->assertSuccessful();
 

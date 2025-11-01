@@ -8,6 +8,7 @@ use App\Jobs\RecalculateProjectHealth;
 use App\Models\Project;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\RateLimiter;
+use Throwable;
 
 final class ProjectHealthRecalculationAction
 {
@@ -26,10 +27,10 @@ final class ProjectHealthRecalculationAction
         RateLimiter::attempt(
             $key,
             1,
-            function () use ($project, $queue, $key) {
+            function () use ($project, $queue, $key): void {
                 try {
                     RecalculateProjectHealth::dispatch($project->id, null, true)->onQueue($queue);
-                } catch (\Throwable $e) {
+                } catch (Throwable $e) {
                     RateLimiter::clear($key);
                     Log::error('ProjectHealthRecalculationAction: failed to dispatch RecalculateProjectHealth', [
                         'project_id' => $project->id,

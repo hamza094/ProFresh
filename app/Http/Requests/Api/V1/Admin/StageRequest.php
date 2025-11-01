@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Requests\Api\V1\Admin;
 
 use App\Models\Stage;
@@ -10,10 +12,8 @@ class StageRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
-     *
-     * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
@@ -31,7 +31,7 @@ class StageRequest extends FormRequest
                 'string',
                 'max:255',
                 Rule::unique('stages'),
-                function ($attribute, $value, $fail) {
+                function ($attribute, $value, $fail): void {
                     if (Stage::count() >= 5) {
                         $fail('Cannot add more than 5 stages.');
                     }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Services\Api\V1\Auth;
 
 use App\Models\User;
@@ -36,9 +38,8 @@ class LoginUserService
      * @param  User  $user
      * @param  string  $email
      * @param  string  $password
-     * @return bool
      */
-    public function handleTwoFactor($user, $email, $password)
+    public function handleTwoFactor($user, $email, $password): bool
     {
         if ($user->hasTwoFactorEnabled()) {
             session(['2fa_login' => encrypt([

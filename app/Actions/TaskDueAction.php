@@ -26,7 +26,7 @@ class TaskDueAction
 
     public function sendNotification(Task $task): void
     {
-        DB::transaction(function () use ($task) {
+        DB::transaction(function () use ($task): void {
             $task->notify_sent = true;
             $task->saveQuietly();
 

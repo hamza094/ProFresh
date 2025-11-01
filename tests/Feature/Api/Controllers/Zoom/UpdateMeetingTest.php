@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Feature\Api\Controllers\Zoom;
 
 use App\Exceptions\Integrations\Zoom\ZoomException;
@@ -16,7 +18,7 @@ class UpdateMeetingTest extends TestCase
     /** @test */
     public function meeting_in_database_can_be_updated()
     {
-        $zoomFake = $this->fakeZoom();
+        $this->fakeZoom();
 
         $meeting = Meeting::factory()
             ->for($this->project)
@@ -47,11 +49,11 @@ class UpdateMeetingTest extends TestCase
         $updatedMeetingID = 18976;
         $updatedDuration = 15;
 
-        $zoomFake = $this->fakeZoom()->shouldFailWithException(
+        $this->fakeZoom()->shouldFailWithException(
             new ZoomException('Test error message')
         );
 
-        $response = $this->patchJson('/api/v1/projects/'.$this->project->slug.'/meetings/'.$meeting->id, [
+        $this->patchJson('/api/v1/projects/'.$this->project->slug.'/meetings/'.$meeting->id, [
             'meeting_id' => $updatedMeetingID,
             'duration' => $updatedDuration,
         ])->assertStatus(400);
@@ -69,7 +71,7 @@ class UpdateMeetingTest extends TestCase
             ->for($this->project)
             ->create(['user_id' => $this->user->id]);
 
-        $response = $this->patchJson('/api/v1/projects/'.$this->project->slug.'/meetings/'.$meeting->id, [
+        $this->patchJson('/api/v1/projects/'.$this->project->slug.'/meetings/'.$meeting->id, [
             'meeting_id' => 'not-an-integer',
         ])->assertStatus(422)
             ->assertJsonValidationErrors(['meeting_id']);

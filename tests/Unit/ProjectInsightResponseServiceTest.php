@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Unit;
 
 use App\Services\Insights\HealthInsightBuilder;
@@ -11,33 +13,6 @@ use Tests\TestCase;
 
 class ProjectInsightResponseServiceTest extends TestCase
 {
-    /** @test */
-    public function health_builder_handles_null_and_numeric(): void
-    {
-        $builder = new HealthInsightBuilder;
-
-        $null = $builder->build(null);
-        $this->assertSame('No Health Data', $null['title']);
-        $this->assertNull($null['data']['value']);
-
-        $ok = $builder->build(86.7);
-        $this->assertStringContainsString('Project Health', $ok['title']);
-        $this->assertIsNumeric($ok['data']['value']);
-    }
-
-    /**
-     * @test
-     *
-     * @dataProvider healthThresholdsProvider
-     */
-    public function health_builder_titles_and_types_at_thresholds(float $score, string $expectedTitle, string $expectedType): void
-    {
-        $builder = new HealthInsightBuilder;
-        $res = $builder->build($score);
-        $this->assertSame($expectedTitle, $res['title']);
-        $this->assertSame($expectedType, $res['type']);
-    }
-
     public static function healthThresholdsProvider(): array
     {
         return [
@@ -46,33 +21,6 @@ class ProjectInsightResponseServiceTest extends TestCase
             'warning at 45' => [45.0, 'Moderate Project Health', 'warning'],
             'critical < 20' => [19.9, 'Critical Project Health', 'critical'],
         ];
-    }
-
-    /** @test */
-    public function task_health_builder_handles_no_data(): void
-    {
-        $builder = new TaskHealthInsightBuilder;
-        $noData = $builder->build(null);
-        $this->assertSame('No Task Data', $noData['title']);
-        $this->assertNull($noData['data']['value']);
-    }
-
-    /**
-     * @test
-     *
-     * @dataProvider taskHealthCasesProvider
-     */
-    public function task_health_builder_types_and_messages(float $value, array $summary, string $expectedType, ?string $expectedTitleContains, ?string $expectedMessageContains): void
-    {
-        $builder = new TaskHealthInsightBuilder;
-        $res = $builder->build($value, ['summary' => $summary]);
-        $this->assertSame($expectedType, $res['type']);
-        if ($expectedTitleContains !== null) {
-            $this->assertStringContainsString($expectedTitleContains, $res['title']);
-        }
-        if ($expectedMessageContains !== null) {
-            $this->assertStringContainsString($expectedMessageContains, strtolower($res['message']));
-        }
     }
 
     public static function taskHealthCasesProvider(): array
@@ -100,6 +48,129 @@ class ProjectInsightResponseServiceTest extends TestCase
                 'abandon',
             ],
         ];
+    }
+
+    public static function collaborationCasesProvider(): array
+    {
+        return [
+            'ok (info)' => [
+                70.0,
+                ['member_count' => 10, 'meeting_count' => 3, 'participant_count' => 8],
+                'Good Team Collaboration',
+                'info',
+                'participation: 80%',
+            ],
+            'low (warning)' => [
+                60.0,
+                ['member_count' => 5, 'meeting_count' => 1, 'participant_count' => 2],
+                'Limited Team Collaboration',
+                'warning',
+                'participation',
+            ],
+            'critical low participation' => [
+                70.0,
+                ['member_count' => 5, 'meeting_count' => 2, 'participant_count' => 1],
+                'Low Team Participation',
+                'critical',
+                'participation',
+            ],
+        ];
+    }
+
+    public static function riskCasesProvider(): array
+    {
+        return [
+            'no risk' => [0, 0, 0, 'No Risk Detected', 'success'],
+            'low risk' => [10, 1, 5, 'Low Risk', 'info'],
+            'high' => [85, 5, 7, 'High Risk Alert', 'critical'],
+        ];
+    }
+
+    public static function stageCasesProvider(): array
+    {
+        return [
+            'development info' => [[
+                'percentage' => 45,
+                'current_stage' => 'Development',
+                'status' => 'in_progress',
+                'stage_id' => 3,
+            ], 'Active Development', 'info'],
+
+            'completed success' => [[
+                'percentage' => 100,
+                'current_stage' => 'Completed',
+                'status' => 'completed',
+                'stage_id' => 6,
+            ], 'Project Completed', 'success'],
+
+            'postponed warning' => [[
+                'percentage' => 10,
+                'current_stage' => 'Planning',
+                'status' => 'postponed',
+                'stage_id' => 7,
+            ], 'Project Postponed', 'warning'],
+
+            'delivery success' => [[
+                'percentage' => 80,
+                'current_stage' => 'Delivery',
+                'status' => 'in_progress',
+                'stage_id' => 5,
+            ], 'Near Completion', 'success'],
+        ];
+    }
+
+    /** @test */
+    public function health_builder_handles_null_and_numeric(): void
+    {
+        $builder = new HealthInsightBuilder;
+
+        $null = $builder->build(null);
+        $this->assertSame('No Health Data', $null['title']);
+        $this->assertNull($null['data']['value']);
+
+        $ok = $builder->build(86.7);
+        $this->assertStringContainsString('Project Health', $ok['title']);
+        $this->assertIsNumeric($ok['data']['value']);
+    }
+
+    /**
+     * @test
+     *
+     * @dataProvider healthThresholdsProvider
+     */
+    public function health_builder_titles_and_types_at_thresholds(float $score, string $expectedTitle, string $expectedType): void
+    {
+        $builder = new HealthInsightBuilder;
+        $res = $builder->build($score);
+        $this->assertSame($expectedTitle, $res['title']);
+        $this->assertSame($expectedType, $res['type']);
+    }
+
+    /** @test */
+    public function task_health_builder_handles_no_data(): void
+    {
+        $builder = new TaskHealthInsightBuilder;
+        $noData = $builder->build(null);
+        $this->assertSame('No Task Data', $noData['title']);
+        $this->assertNull($noData['data']['value']);
+    }
+
+    /**
+     * @test
+     *
+     * @dataProvider taskHealthCasesProvider
+     */
+    public function task_health_builder_types_and_messages(float $value, array $summary, string $expectedType, ?string $expectedTitleContains, ?string $expectedMessageContains): void
+    {
+        $builder = new TaskHealthInsightBuilder;
+        $res = $builder->build($value, ['summary' => $summary]);
+        $this->assertSame($expectedType, $res['type']);
+        if ($expectedTitleContains !== null) {
+            $this->assertStringContainsString($expectedTitleContains, $res['title']);
+        }
+        if ($expectedMessageContains !== null) {
+            $this->assertStringContainsString($expectedMessageContains, mb_strtolower((string) $res['message']));
+        }
     }
 
     /** @test */
@@ -145,35 +216,8 @@ class ProjectInsightResponseServiceTest extends TestCase
         $this->assertStringContainsString($expectedTitleContains, $res['title']);
         $this->assertSame($expectedType, $res['type']);
         if ($expectedMessageContains !== null) {
-            $this->assertStringContainsString(strtolower($expectedMessageContains), strtolower($res['message']));
+            $this->assertStringContainsString(mb_strtolower($expectedMessageContains), mb_strtolower((string) $res['message']));
         }
-    }
-
-    public static function collaborationCasesProvider(): array
-    {
-        return [
-            'ok (info)' => [
-                70.0,
-                ['member_count' => 10, 'meeting_count' => 3, 'participant_count' => 8],
-                'Good Team Collaboration',
-                'info',
-                'participation: 80%',
-            ],
-            'low (warning)' => [
-                60.0,
-                ['member_count' => 5, 'meeting_count' => 1, 'participant_count' => 2],
-                'Limited Team Collaboration',
-                'warning',
-                'participation',
-            ],
-            'critical low participation' => [
-                70.0,
-                ['member_count' => 5, 'meeting_count' => 2, 'participant_count' => 1],
-                'Low Team Participation',
-                'critical',
-                'participation',
-            ],
-        ];
     }
 
     /** @test */
@@ -193,9 +237,9 @@ class ProjectInsightResponseServiceTest extends TestCase
         ]);
 
         // Participation window
-        $this->assertStringContainsString('over last 21 days', strtolower($ok['message']));
+        $this->assertStringContainsString('over last 21 days', mb_strtolower((string) $ok['message']));
         // Meetings lookback and ideal
-        $this->assertStringContainsString('in last 10 days', strtolower($ok['message']));
+        $this->assertStringContainsString('in last 10 days', mb_strtolower((string) $ok['message']));
         // Ideal count shown optionally; two lookback windows are sufficient for this test
     }
 
@@ -220,15 +264,6 @@ class ProjectInsightResponseServiceTest extends TestCase
         $this->assertSame($expectedType, $res['type']);
     }
 
-    public static function riskCasesProvider(): array
-    {
-        return [
-            'no risk' => [0, 0, 0, 'No Risk Detected', 'success'],
-            'low risk' => [10, 1, 5, 'Low Risk', 'info'],
-            'high' => [85, 5, 7, 'High Risk Alert', 'critical'],
-        ];
-    }
-
     /** @test */
     public function stage_builder_handles_unknown_input(): void
     {
@@ -248,38 +283,5 @@ class ProjectInsightResponseServiceTest extends TestCase
         $res = $builder->build($input);
         $this->assertSame($expectedTitle, $res['title']);
         $this->assertSame($expectedType, $res['type']);
-    }
-
-    public static function stageCasesProvider(): array
-    {
-        return [
-            'development info' => [[
-                'percentage' => 45,
-                'current_stage' => 'Development',
-                'status' => 'in_progress',
-                'stage_id' => 3,
-            ], 'Active Development', 'info'],
-
-            'completed success' => [[
-                'percentage' => 100,
-                'current_stage' => 'Completed',
-                'status' => 'completed',
-                'stage_id' => 6,
-            ], 'Project Completed', 'success'],
-
-            'postponed warning' => [[
-                'percentage' => 10,
-                'current_stage' => 'Planning',
-                'status' => 'postponed',
-                'stage_id' => 7,
-            ], 'Project Postponed', 'warning'],
-
-            'delivery success' => [[
-                'percentage' => 80,
-                'current_stage' => 'Delivery',
-                'status' => 'in_progress',
-                'stage_id' => 5,
-            ], 'Near Completion', 'success'],
-        ];
     }
 }

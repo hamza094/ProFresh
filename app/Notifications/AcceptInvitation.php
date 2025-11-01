@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
@@ -32,20 +34,6 @@ class AcceptInvitation extends Notification implements ShouldBroadcast, ShouldQu
     }
 
     /**
-     * Prepare the notification data.
-     *
-     * @return array<string, mixed> The notification data.
-     */
-    private function notificationData(): array
-    {
-        return [
-            'message' => 'accepted the invitation of your project '.$this->projectName,
-            'notifier' => $this->notifierData,
-            'link' => $this->projectPath,
-        ];
-    }
-
-    /**
      * Get the array representation of the notification.
      *
      * @return array<string, mixed> The notification data.
@@ -63,5 +51,19 @@ class AcceptInvitation extends Notification implements ShouldBroadcast, ShouldQu
     public function toBroadcast(mixed $notifiable): BroadcastMessage
     {
         return new BroadcastMessage($this->notificationData());
+    }
+
+    /**
+     * Prepare the notification data.
+     *
+     * @return array<string, mixed> The notification data.
+     */
+    private function notificationData(): array
+    {
+        return [
+            'message' => 'accepted the invitation of your project '.$this->projectName,
+            'notifier' => $this->notifierData,
+            'link' => $this->projectPath,
+        ];
     }
 }

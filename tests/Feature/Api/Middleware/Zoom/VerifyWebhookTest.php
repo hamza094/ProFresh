@@ -1,22 +1,27 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Feature\Api\Middleware\Zoom;
 
+use Route;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Tests\TestCase;
 
 class VerifyWebhookTest extends TestCase
 {
+    public $payload;
+
+    public $timestamp;
+
     protected function setUp(): void
     {
         parent::setUp();
 
         config('services.zoom.webhook_secret', 'secret');
 
-        \Route::middleware('zoom.webhook')->any('/_test/webhook', function () {
-            return 'OK';
-        });
+        Route::middleware('zoom.webhook')->any('/_test/webhook', fn () => 'OK');
 
         $this->payload = [
             'event' => 'meeting.started',
@@ -93,6 +98,6 @@ class VerifyWebhookTest extends TestCase
     {
         $message = 'v0:'.$timestamp.':'.json_encode($payload, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
 
-        return 'v0='.hash_hmac('sha256', $message, config('services.zoom.webhook_secret'));
+        return 'v0='.hash_hmac('sha256', $message, (string) config('services.zoom.webhook_secret'));
     }
 }

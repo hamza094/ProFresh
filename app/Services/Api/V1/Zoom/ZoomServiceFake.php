@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Services\Api\V1\Zoom;
 
 use App\DataTransferObjects\Zoom\AccessTokenDetails;
@@ -124,6 +126,21 @@ final class ZoomServiceFake implements Zoom
         return 'zak&token';
     }
 
+    public function assertNoMeetingsCreated(): void
+    {
+        Assert::assertEmpty($this->meetingsToCreate, 'Meeting was not created.');
+    }
+
+    public function assertMeetingCreated(string $topic, string $agenda, int $duration): void
+    {
+        $meetingIsToBeCreated = $this->meetingsToCreate
+            ->where('topic', $topic)
+            ->where('agenda', $agenda)
+            ->where('duration', $duration)
+            ->isNotEmpty();
+        Assert::assertTrue($meetingIsToBeCreated, 'Meetings were created.');
+    }
+
     private function fakeMeeting(): Meeting
     {
         app(Generator::class);
@@ -142,20 +159,5 @@ final class ZoomServiceFake implements Zoom
             password: 'herpku',
             join_before_host: false,
         );
-    }
-
-    public function assertNoMeetingsCreated(): void
-    {
-        Assert::assertEmpty($this->meetingsToCreate, 'Meeting was not created.');
-    }
-
-    public function assertMeetingCreated(string $topic, string $agenda, int $duration): void
-    {
-        $meetingIsToBeCreated = $this->meetingsToCreate
-            ->where('topic', $topic)
-            ->where('agenda', $agenda)
-            ->where('duration', $duration)
-            ->isNotEmpty();
-        Assert::assertTrue($meetingIsToBeCreated, 'Meetings were created.');
     }
 }

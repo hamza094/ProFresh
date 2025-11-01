@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Notifications\Zoom;
 
 use Carbon\Carbon;
@@ -29,16 +31,6 @@ class MeetingEnded extends Notification implements ShouldBroadcast
     public function via(mixed $notifiable): array
     {
         return ['mail', 'database', 'broadcast'];
-    }
-
-    private function formattedStartTime(): string
-    {
-        return $this->data['start_time'] ? Carbon::parse($this->data['start_time'])->format('d F \\a\\t H:i:s') : '';
-    }
-
-    private function formattedEndTime(): string
-    {
-        return $this->data['end_time'] ? Carbon::parse($this->data['end_time'])->format('d F \\a\\t H:i:s') : '';
     }
 
     /**
@@ -80,5 +72,15 @@ class MeetingEnded extends Notification implements ShouldBroadcast
             'notifier' => $this->data['notifier'],
             'link' => $this->data['project_path'],
         ];
+    }
+
+    private function formattedStartTime(): string
+    {
+        return $this->data['start_time'] ? Carbon::parse($this->data['start_time'])->format('d F \\a\\t H:i:s') : '';
+    }
+
+    private function formattedEndTime(): string
+    {
+        return $this->data['end_time'] ? Carbon::parse($this->data['end_time'])->format('d F \\a\\t H:i:s') : '';
     }
 }

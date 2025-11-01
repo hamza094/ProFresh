@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Feature\Api\V1;
 
 use App\Models\User;
@@ -14,8 +16,6 @@ class MessageValidationTest extends TestCase
     /** @test */
     public function validate_message_errors()
     {
-        $users = [];
-
         $users = json_encode(User::factory(2)->create());
 
         $this->postJson($this->project->path().'/message', ['message' => null, 'users' => $users])
@@ -26,7 +26,6 @@ class MessageValidationTest extends TestCase
     /** @test */
     public function check_message_option_select()
     {
-        $users = [];
         $users = json_encode(User::factory(2)->create());
 
         $this->postJson($this->project->path().'/message',

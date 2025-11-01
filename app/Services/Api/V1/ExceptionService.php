@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Services\Api\V1;
 
 use App\Exceptions\Integrations\Zoom\NotFoundException;
@@ -7,10 +9,11 @@ use App\Exceptions\Integrations\Zoom\UnauthorizedException;
 use App\Exceptions\Integrations\Zoom\ZoomException;
 use Illuminate\Http\JsonResponse;
 use Saloon\RateLimitPlugin\Exceptions\RateLimitReachedException;
+use Throwable;
 
 class ExceptionService
 {
-    public function handleZoom(\Throwable $exception): JsonResponse
+    public function handleZoom(Throwable $exception): JsonResponse
     {
         return match (true) {
             $exception instanceof UnauthorizedException => response()->json(['error' => $exception->getMessage()], 403),

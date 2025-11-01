@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Providers;
 
 use App\Http\View\Composers\ProfileComposer;
@@ -29,7 +31,7 @@ class ViewServiceProvider extends ServiceProvider
         // View::composer('profile', ProfileComposer::class);
 
         // Using closure based composers...
-        View::composer('dashboard', function ($view) {
+        View::composer('dashboard', function ($view): void {
             //
         });
     }

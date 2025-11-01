@@ -8,6 +8,7 @@ use App\Jobs\RecalculateProjectHealth;
 use App\Models\Project;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
+use Throwable;
 
 class RecalculateAllProjectHealth extends Command
 {
@@ -33,12 +34,12 @@ class RecalculateAllProjectHealth extends Command
 
         $dispatched = 0;
 
-        $query->chunk($chunk, function ($projects) use ($queue, &$dispatched) {
+        $query->chunk($chunk, function ($projects) use ($queue, &$dispatched): void {
             foreach ($projects as $project) {
                 try {
                     RecalculateProjectHealth::dispatch($project->id)->onQueue($queue);
                     $dispatched++;
-                } catch (\Throwable $e) {
+                } catch (Throwable $e) {
                     Log::error('Failed to dispatch RecalculateProjectHealth for project '.$project->id, ['exception' => $e]);
                 }
             }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
@@ -34,20 +36,6 @@ class ProjectTask extends Notification implements ShouldBroadcast, ShouldQueue
     }
 
     /**
-     * Prepare the notification data.
-     *
-     * @return array<string, mixed> The notification data.
-     */
-    private function notificationData(): array
-    {
-        return [
-            'message' => 'Added a new task to the project '.$this->projectName,
-            'notifier' => $this->notifierData,
-            'link' => $this->projectPath,
-        ];
-    }
-
-    /**
      * Get the array representation of the notification.
      *
      * @return array<string, mixed> The notification data.
@@ -67,5 +55,19 @@ class ProjectTask extends Notification implements ShouldBroadcast, ShouldQueue
         return new BroadcastMessage(
             $this->notificationData()
         );
+    }
+
+    /**
+     * Prepare the notification data.
+     *
+     * @return array<string, mixed> The notification data.
+     */
+    private function notificationData(): array
+    {
+        return [
+            'message' => 'Added a new task to the project '.$this->projectName,
+            'notifier' => $this->notifierData,
+            'link' => $this->projectPath,
+        ];
     }
 }

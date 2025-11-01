@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use App\Enums\ProjectHealthStatus;
@@ -59,6 +61,25 @@ class Project extends Model
      */
     protected static $recordableEvents = ['created', 'updated', 'deleted', 'restored'];
 
+    public static function bootRecordActivity(): void
+    {
+        foreach (static::recordableEvents() as $event) {
+            static::$event(function ($model) use ($event): void {
+                // Only record activity on soft delete, not force delete
+                if ($event === 'deleted' && method_exists($model, 'isForceDeleting') && $model->isForceDeleting()) {
+                    return;
+                }
+                $model->recordActivity($model->activityDescription($event), []);
+            });
+
+            if ($event === 'updated') {
+                static::updating(function ($model): void {
+                    $model->oldAttributes = $model->getOriginal();
+                });
+            }
+        }
+    }
+
     /**
      * Return the sluggable configuration array for this model.
      *
@@ -99,14 +120,6 @@ class Project extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
-    }
-
-    protected static function boot(): void
-    {
-        parent::boot();
-        static::forceDeleted(function ($project) {
-            $project->activities()->delete();
-        });
     }
 
     /**
@@ -216,7 +229,7 @@ class Project extends Model
     {
         $this->loadCount('tasks');
 
-        return $this->tasks_count == config('app.project.taskLimit');
+        return $this->tasks_count === config('app.project.taskLimit');
     }
 
     /**
@@ -291,25 +304,6 @@ class Project extends Model
         return $this->hasMany(Meeting::class);
     }
 
-    public static function bootRecordActivity(): void
-    {
-        foreach (static::recordableEvents() as $event) {
-            static::$event(function ($model) use ($event) {
-                // Only record activity on soft delete, not force delete
-                if ($event === 'deleted' && method_exists($model, 'isForceDeleting') && $model->isForceDeleting()) {
-                    return;
-                }
-                $model->recordActivity($model->activityDescription($event), []);
-            });
-
-            if ($event === 'updated') {
-                static::updating(function ($model) {
-                    $model->oldAttributes = $model->getOriginal();
-                });
-            }
-        }
-    }
-
     /**
      * Scope projects created in a given year/month.
      *
@@ -326,5 +320,13 @@ class Project extends Model
         }
 
         return $query;
+    }
+
+    protected static function boot(): void
+    {
+        parent::boot();
+        static::forceDeleted(function ($project): void {
+            $project->activities()->delete();
+        });
     }
 }

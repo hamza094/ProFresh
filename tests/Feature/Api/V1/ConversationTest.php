@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Feature\Api\V1;
 
 use App\Events\NewMessage;
@@ -35,7 +37,7 @@ class ConversationTest extends TestCase
 
         $message = 'random chat conversation';
 
-        $response = $this->postJson($this->project->path().'/conversations', ['message' => $message,
+        $this->postJson($this->project->path().'/conversations', ['message' => $message,
             'user_id' => $this->user->id]);
 
         $this->assertDatabaseHas('conversations', [
@@ -60,7 +62,7 @@ class ConversationTest extends TestCase
 
         $file = UploadedFile::fake()->image('file.jpg')->size(700);
 
-        $response = $this->postJson($this->project->path().'/conversations', [
+        $this->postJson($this->project->path().'/conversations', [
             'message' => 'abra ka dabra',
             'file' => $file,
             'user_id' => $this->user->id]);
@@ -81,7 +83,7 @@ class ConversationTest extends TestCase
             'file' => UploadedFile::fake()->image('photo1.jpg'),
         ]);
 
-        $response = $this->deleteJson($this->project->path().'/conversations/'.$conversation->id);
+        $this->deleteJson($this->project->path().'/conversations/'.$conversation->id);
 
         $this->assertModelMissing($conversation);
 

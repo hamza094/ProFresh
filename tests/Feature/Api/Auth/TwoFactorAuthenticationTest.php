@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Feature\Api\Auth;
 
 use App\Models\User;
@@ -31,81 +33,10 @@ class TwoFactorAuthenticationTest extends TestCase
         $this->createTestUser();
     }
 
-    // =========================================================================
-    // SETUP & HELPER METHODS
-    // =========================================================================
-
-    /**
-     * Create a test user with known credentials
-     */
-    private function createTestUser(): void
+    protected function tearDown(): void
     {
-        $this->user = User::factory()->create([
-            'email' => $this->testEmail,
-            'password' => Hash::make($this->testPassword),
-        ]);
-    }
-
-    /**
-     * Enable 2FA for the test user
-     */
-    private function enableTwoFactorForUser(): void
-    {
-        DB::table('two_factor_authentications')->insert([
-            'authenticatable_type' => User::class,
-            'authenticatable_id' => $this->user->id,
-            'shared_secret' => encrypt('JBSWY3DPEHPK3PXP'),
-            'recovery_codes' => encrypt(json_encode(['RCODE-1234-5678'])),
-            'enabled_at' => now(),
-            'label' => "ProFresh:{$this->user->email}",
-        ]);
-    }
-
-    /**
-     * Set up encrypted session data for 2FA login
-     */
-    private function setupEncryptedSession(): void
-    {
-        session()->put('2fa_login', encrypt([
-            'email' => $this->user->email,
-            'password' => $this->testPassword,
-            'expires_at' => now()->addMinutes(5),
-        ]));
-    }
-
-    /**
-     * Create a mocked user with specific 2FA behavior
-     */
-    private function createMockedUser(array $expectations = []): User
-    {
-        $mockedUser = Mockery::mock(User::class)->makePartial();
-
-        // Set default expectations
-        $defaultExpectations = [
-            'confirmTwoFactorAuth' => ['123456', true],
-            'hasTwoFactorEnabled' => [false],
-            'getRecoveryCodes' => [collect(['abc123', 'xyz789'])],
-        ];
-
-        // Merge with provided expectations
-        $expectations = array_merge($defaultExpectations, $expectations);
-
-        foreach ($expectations as $method => $params) {
-            if (is_array($params)) {
-                $mockedUser->shouldReceive($method)
-                    ->with(...array_slice($params, 0, -1))
-                    ->andReturn(end($params));
-            } else {
-                $mockedUser->shouldReceive($method)->andReturn($params);
-            }
-        }
-
-        // Set up basic user properties
-        $mockedUser->id = $this->user->id;
-        $mockedUser->email = $this->user->email;
-        $mockedUser->password = $this->user->password;
-
-        return $mockedUser;
+        Mockery::close();
+        parent::tearDown();
     }
 
     // =========================================================================
@@ -131,7 +62,7 @@ class TwoFactorAuthenticationTest extends TestCase
         // Assert no 2FA before setup
         $this->assertDatabaseMissing('two_factor_authentications', [
             'authenticatable_id' => $this->user->id,
-            'authenticatable_type' => get_class($this->user),
+            'authenticatable_type' => $this->user::class,
         ]);
 
         $response = $this->postJson('/api/v1/twofactor/setup', [
@@ -145,7 +76,7 @@ class TwoFactorAuthenticationTest extends TestCase
         // Assert 2FA was created in database
         $this->assertDatabaseHas('two_factor_authentications', [
             'authenticatable_id' => $this->user->id,
-            'authenticatable_type' => get_class($this->user),
+            'authenticatable_type' => $this->user::class,
         ]);
     }
 
@@ -276,9 +207,68 @@ class TwoFactorAuthenticationTest extends TestCase
         );
     }
 
-    protected function tearDown(): void
+    // =========================================================================
+    // SETUP & HELPER METHODS
+    // =========================================================================
+
+    /**
+     * Create a test user with known credentials
+     */
+    private function createTestUser(): void
     {
-        Mockery::close();
-        parent::tearDown();
+        $this->user = User::factory()->create([
+            'email' => $this->testEmail,
+            'password' => Hash::make($this->testPassword),
+        ]);
+    }
+
+    /**
+     * Enable 2FA for the test user
+     */
+    private function enableTwoFactorForUser(): void
+    {
+        DB::table('two_factor_authentications')->insert([
+            'authenticatable_type' => User::class,
+            'authenticatable_id' => $this->user->id,
+            'shared_secret' => encrypt('JBSWY3DPEHPK3PXP'),
+            'recovery_codes' => encrypt(json_encode(['RCODE-1234-5678'])),
+            'enabled_at' => now(),
+            'label' => "ProFresh:{$this->user->email}",
+        ]);
+    }
+
+    /**
+     * Create a mocked user with specific 2FA behavior
+     */
+    private function createMockedUser(array $expectations = []): User
+    {
+        $mockedUser = Mockery::mock(User::class)->makePartial();
+
+        // Set default expectations
+        $defaultExpectations = [
+            'confirmTwoFactorAuth' => ['123456', true],
+            'hasTwoFactorEnabled' => [false],
+            'getRecoveryCodes' => [collect(['abc123', 'xyz789'])],
+        ];
+
+        // Merge with provided expectations
+        $expectations = array_merge($defaultExpectations, $expectations);
+
+        foreach ($expectations as $method => $params) {
+            if (is_array($params)) {
+                $mockedUser->shouldReceive($method)
+                    ->with(...array_slice($params, 0, -1))
+                    ->andReturn(end($params));
+            } else {
+                $mockedUser->shouldReceive($method)->andReturn($params);
+            }
+        }
+
+        // Set up basic user properties
+        $mockedUser->id = $this->user->id;
+        $mockedUser->email = $this->user->email;
+        $mockedUser->password = $this->user->password;
+
+        return $mockedUser;
     }
 }

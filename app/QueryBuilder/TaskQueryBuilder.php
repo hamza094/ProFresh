@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\QueryBuilder;
 
 use App\Enums\TaskStatus as TaskStatusEnum;
@@ -26,7 +28,7 @@ class TaskQueryBuilder extends Builder
     public function remaining(): self
     {
         return $this->where('status_id', '!=', TaskStatusEnum::COMPLETED)
-            ->where(function ($q) {
+            ->where(function ($q): void {
                 $q->whereNull('due_at')
                     ->orWhere('due_at', '>=', now());
             });

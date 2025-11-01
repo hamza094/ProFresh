@@ -1,9 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Resources\Api\V1\Admin;
 
 use App\Http\Resources\Api\V1\TaskStatusResource;
 use Illuminate\Http\Resources\Json\JsonResource;
+use JsonSerializable;
+use Timezone;
 
 class TaskResource extends JsonResource
 {
@@ -11,7 +15,7 @@ class TaskResource extends JsonResource
      * Transform the resource into an array.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable
+     * @return array|\Illuminate\Contracts\Support\Arrayable|JsonSerializable
      */
     public function toArray($request)
     {
@@ -27,7 +31,7 @@ class TaskResource extends JsonResource
             'due_at_utc' => $this->due_at,
             'notified' => $this->notified,
             'owner' => new UserResource($this->whenLoaded('owner')),
-            'due_at' => $this->when($this->due_at, fn () => \Timezone::convertToLocal(Carbon::parse($this->due_at))),
+            'due_at' => $this->when($this->due_at, fn () => Timezone::convertToLocal(Carbon::parse($this->due_at))),
             'state' => $this->state(),
             'created_at' => $this->created_at->diffForHumans([
                 'parts' => 3,

@@ -1,9 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Listeners;
 
 use Illuminate\Support\Facades\Log;
 use Laravel\Paddle\Events\WebhookReceived;
+use Throwable;
 
 class PaddleEventListener
 {
@@ -22,7 +25,7 @@ class PaddleEventListener
                 // Your custom logic here...
                 // Log or trigger something if needed
                 Log::info('Handled annual payment success');
-            } catch (\Throwable $e) {
+            } catch (Throwable $e) {
                 Log::error('Error handling annual payment webhook', [
                     'error' => $e->getMessage(),
                     'trace' => $e->getTraceAsString(),

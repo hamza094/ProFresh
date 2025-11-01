@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Feature\Api\V1\ProjectDashboard;
 
 use App\Enums\TaskStatus as TaskStatusEnum;
@@ -15,13 +17,13 @@ use Tests\TestCase;
 
 class UserTasksDataTest extends TestCase
 {
+    use RefreshDatabase;
+
     public $project;
 
     public $user;
 
     public $status;
-
-    use RefreshDatabase;
 
     protected function setUp(): void
     {

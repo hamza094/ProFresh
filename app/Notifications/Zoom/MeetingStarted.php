@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Notifications\Zoom;
 
 use Carbon\Carbon;
@@ -29,14 +31,6 @@ class MeetingStarted extends Notification implements ShouldBroadcast
     public function via(mixed $notifiable): array
     {
         return ['mail', 'database', 'broadcast'];
-    }
-
-    /**
-     * Get the formatted start time for the meeting.
-     */
-    private function formattedStartTime(): string
-    {
-        return Carbon::parse($this->data['start_time'])->format('d F \\a\\t H:i:s');
     }
 
     /**
@@ -84,5 +78,13 @@ class MeetingStarted extends Notification implements ShouldBroadcast
             'notifier' => $this->data['notifier'],
             'link' => $this->data['project_path'],
         ];
+    }
+
+    /**
+     * Get the formatted start time for the meeting.
+     */
+    private function formattedStartTime(): string
+    {
+        return Carbon::parse($this->data['start_time'])->format('d F \\a\\t H:i:s');
     }
 }

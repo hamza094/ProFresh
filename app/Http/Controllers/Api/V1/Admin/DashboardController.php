@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Api\V1\Admin;
 
 use App\Http\Controllers\Controller;
@@ -10,6 +12,7 @@ use Carbon\Carbon;
 use Dedoc\Scramble\Attributes\ExcludeRouteFromDocs;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
+use Throwable;
 
 class DashboardController extends Controller
 {
@@ -28,7 +31,7 @@ class DashboardController extends Controller
             Artisan::call('backup:run');
 
             return response()->json(['message' => 'Backup process started']);
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
             return response()->json(['error' => $e->getMessage()], 500);
         }
     }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Requests\Api\V1;
 
 use App\Rules\ActiveProjectMember;
@@ -9,10 +11,8 @@ class TaskMembersRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
-     *
-     * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
@@ -41,7 +41,7 @@ class TaskMembersRequest extends FormRequest
 
     protected function membersValidation()
     {
-        return function ($attribute, $value, $fail) {
+        return function ($attribute, $value, $fail): void {
             $existingMembersCount = $this->task->assignee()
                 ->whereIn('user_id', $value)
                 ->count();

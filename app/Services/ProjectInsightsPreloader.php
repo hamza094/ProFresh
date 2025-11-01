@@ -6,6 +6,7 @@ namespace App\Services;
 
 use App\Models\Project;
 use Carbon\CarbonInterface;
+use LogicException;
 
 /**
  * Preloads (primes) aggregated counts & lightweight aggregates required by metrics/insights.
@@ -73,7 +74,7 @@ class ProjectInsightsPreloader
         foreach ($metricTypes as $metricType) {
             foreach ($this->definitionsForMetricType($metricType, $now, $windowConfig) as $key => $definition) {
                 if (array_key_exists($key, $loaders) && config('app.debug')) {
-                    throw new \LogicException("Duplicate count key '{$key}' while resolving project insight counts");
+                    throw new LogicException("Duplicate count key '{$key}' while resolving project insight counts");
                 }
                 $loaders[$key] = $definition;
             }

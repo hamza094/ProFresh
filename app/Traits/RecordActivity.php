@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Traits;
 
 use App\Events\ActivityLogged;
@@ -27,7 +29,7 @@ trait RecordActivity
     public static function bootRecordActivity(): void
     {
         foreach (static::recordableEvents() as $event) {
-            static::$event(function ($model) use ($event) {
+            static::$event(function ($model) use ($event): void {
                 // Only record activity on soft delete, not force delete, for Project model
                 if (
                     $event === 'deleted' &&
@@ -41,29 +43,11 @@ trait RecordActivity
             });
 
             if ($event === 'updated') {
-                static::updating(function ($model) {
+                static::updating(function ($model): void {
                     $model->oldAttributes = $model->getOriginal();
                 });
             }
         }
-    }
-
-    /**
-     * Get the description of the activity.
-     */
-    protected function activityDescription(string $event): string
-    {
-        return "{$event}_".strtolower(class_basename($this));
-    }
-
-    /**
-     * Fetch the model events that should trigger activity.
-     *
-     * @return array<int, string>
-     */
-    protected static function recordableEvents(): array
-    {
-        return static::$recordableEvents ?? ['created', 'updated', 'deleted'];
     }
 
     /**
@@ -78,6 +62,41 @@ trait RecordActivity
         }
 
         // DashboardActivity::dispatch($activity);
+    }
+
+    /**
+     * The activity feed for the project.
+     *
+     * @return HasMany|MorphMany<Activity>
+     */
+    public function activities(): HasMany|MorphMany
+    {
+        $query = ($this instanceof Project)
+        ? $this->hasMany(Activity::class)
+        : $this->morphMany(Activity::class, 'subject');
+
+        return $query
+            ->with(['user:id,name,uuid', 'subject' => fn ($query) => $query->withTrashed()])
+            ->latest()
+            ->orderByDesc('id'); // Break ties when multiple activities share same created_at
+    }
+
+    /**
+     * Fetch the model events that should trigger activity.
+     *
+     * @return array<int, string>
+     */
+    protected static function recordableEvents(): array
+    {
+        return static::$recordableEvents ?? ['created', 'updated', 'deleted'];
+    }
+
+    /**
+     * Get the description of the activity.
+     */
+    protected function activityDescription(string $event): string
+    {
+        return "{$event}_".Str::lower(class_basename($this));
     }
 
     /**
@@ -129,32 +148,6 @@ trait RecordActivity
     }
 
     /**
-     * Resolve the user ID for the activity.
-     */
-    private function resolveUserId(): int
-    {
-        return auth()->id() ?? ($this->project ?? $this)
-            ->user->id;
-    }
-
-    /**
-     * The activity feed for the project.
-     *
-     * @return HasMany|MorphMany<Activity>
-     */
-    public function activities(): HasMany|MorphMany
-    {
-        $query = ($this instanceof Project)
-        ? $this->hasMany(Activity::class)
-        : $this->morphMany(Activity::class, 'subject');
-
-        return $query
-            ->with(['user:id,name,uuid', 'subject' => fn ($query) => $query->withTrashed()])
-            ->latest()
-            ->orderByDesc('id'); // Break ties when multiple activities share same created_at
-    }
-
-    /**
      * Fetch the changes to the model.
      */
     protected function activityChanges(): ?array
@@ -171,5 +164,14 @@ trait RecordActivity
                 $this->getChanges(), 'updated_at'
             ),
         ];
+    }
+
+    /**
+     * Resolve the user ID for the activity.
+     */
+    private function resolveUserId(): int
+    {
+        return auth()->id() ?? ($this->project ?? $this)
+            ->user->id;
     }
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Feature\Api\V1;
 
 use App\Models\User;
@@ -45,12 +47,12 @@ class SearchableTest extends TestCase
     /** @test */
     public function test_search_returns_filtered_users(): void
     {
-        $matchingUsers = User::factory(5)->create(['name' => 'Test User']);
+        User::factory(5)->create(['name' => 'Test User']);
 
         User::factory(3)->create(['name' => 'Other User']);
 
         $searchTerm = 'Test';
-        $request = new Request(['query' => $searchTerm]);
+        new Request(['query' => $searchTerm]);
 
         // Act
         $response = $this->withoutExceptionHandling()->getJson(route('users.search', [

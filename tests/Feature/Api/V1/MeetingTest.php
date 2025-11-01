@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Feature\Api\V1;
 
 use App\Models\Meeting;
@@ -35,10 +37,10 @@ class MeetingTest extends TestCase
     {
         $this->actingAs($this->user);
         // Create 5 meetings: 3 scheduled, 2 previous
-        $scheduledMeetings = Meeting::factory()->count(3)->for($this->project)->for($this->user)->create([
+        Meeting::factory()->count(3)->for($this->project)->for($this->user)->create([
             'start_time' => now()->addDays(1),
         ]);
-        $previousMeetings = Meeting::factory()->count(2)->for($this->project)->for($this->user)->create([
+        Meeting::factory()->count(2)->for($this->project)->for($this->user)->create([
             'start_time' => now()->subDays(1),
         ]);
 

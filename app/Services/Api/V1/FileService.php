@@ -1,15 +1,19 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Services\Api\V1;
 
 use App\Enums\FileType;
 use App\Models\User;
+use Exception;
 use File;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
+use InvalidArgumentException;
 use Spatie\ImageOptimizer\OptimizerChainFactory;
 
 class FileService
@@ -36,13 +40,44 @@ class FileService
 
     }
 
+    /**
+     * Deletes the user's avatar file from S3 and clears the avatar_path.
+     * Handles both int and string (UUID) user IDs.
+     *
+     * @throws Exception
+     */
+    public function deleteFile(User $user): void
+    {
+        DB::transaction(function () use ($user): void {
+            // Use avatar_path if available, fallback to avatar (for legacy)
+            $avatarUrl = $user->avatar_path ?? $user->avatar;
+            if (! $avatarUrl) {
+                return;
+            }
+
+            // Extract the S3 file path robustly
+            $parsed = parse_url($avatarUrl);
+            $filePath = ltrim($parsed['path'] ?? '', '/');
+            if ($filePath === '' || $filePath === '0') {
+                // If parsing fails, fallback to Str::after
+                $filePath = Str::after($avatarUrl, '.com/');
+            }
+
+            if ($filePath) {
+                Storage::disk('s3')->delete($filePath);
+            }
+
+            $user->update(['avatar_path' => null]);
+        });
+    }
+
     /* Returns the appropriate folder name for the file type. */
     private function getFolderName(string $fileType): string
     {
         return match ($fileType) {
             FileType::CONVERSATION => 'conversations',
             FileType::AVATAR => 'avatars',
-            default => throw new \InvalidArgumentException('Invalid file type'),
+            default => throw new InvalidArgumentException('Invalid file type'),
         };
     }
 
@@ -65,41 +100,10 @@ class FileService
 
         try {
             $path = $s3Disk->putFileAs($folderName, $file, $fileName, 'public');
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             throw ValidationException::withMessages(['File upload failed: '.$e->getMessage()]);
         }
 
         return $s3Disk->url($path);
-    }
-
-    /**
-     * Deletes the user's avatar file from S3 and clears the avatar_path.
-     * Handles both int and string (UUID) user IDs.
-     *
-     * @throws \Exception
-     */
-    public function deleteFile(User $user): void
-    {
-        DB::transaction(function () use ($user) {
-            // Use avatar_path if available, fallback to avatar (for legacy)
-            $avatarUrl = $user->avatar_path ?? $user->avatar;
-            if (! $avatarUrl) {
-                return;
-            }
-
-            // Extract the S3 file path robustly
-            $parsed = parse_url($avatarUrl);
-            $filePath = ltrim($parsed['path'] ?? '', '/');
-            if ($filePath === '' || $filePath === '0') {
-                // If parsing fails, fallback to Str::after
-                $filePath = Str::after($avatarUrl, '.com/');
-            }
-
-            if ($filePath) {
-                Storage::disk('s3')->delete($filePath);
-            }
-
-            $user->update(['avatar_path' => null]);
-        });
     }
 }

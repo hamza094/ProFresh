@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Requests\Api\V1;
 
 use App\Models\Project;
@@ -11,26 +13,12 @@ class TaskRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
-     *
-     * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         // Authorization is handled at the route level via `can:access,project`
         // Returning true here ensures validation runs when the middleware passes.
         return true;
-    }
-
-    protected function prepareForValidation(): void
-    {
-
-        /** @var Project|null $project */
-        $project = $this->route('project');
-
-        throw_if($project->tasksReachedItsLimit(),
-            ValidationException::withMessages(
-                ['tasks' => 'Project tasks reached their limit'])
-        );
     }
 
     public function rules()
@@ -68,5 +56,17 @@ class TaskRequest extends FormRequest
             'title.max' => 'Your task title is too long.',
             'title.unique' => 'Task with same title already exists.',
         ];
+    }
+
+    protected function prepareForValidation(): void
+    {
+
+        /** @var Project|null $project */
+        $project = $this->route('project');
+
+        throw_if($project->tasksReachedItsLimit(),
+            ValidationException::withMessages(
+                ['tasks' => 'Project tasks reached their limit'])
+        );
     }
 }

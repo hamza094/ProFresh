@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Services\Api\V1\Zoom;
 
 use App\DataTransferObjects\Zoom\AccessTokenDetails;
@@ -58,7 +60,7 @@ final class ZoomService implements Zoom
             expectedState: $callbackDetails->expectedState,
             requestModifier: function (
                 GetAccessTokenRequest $saloonRequest
-            ) use ($callbackDetails) {
+            ) use ($callbackDetails): void {
                 $saloonRequest->body()->add(
                     'code_verifier',
                     $callbackDetails->codeVerifier,
@@ -70,51 +72,6 @@ final class ZoomService implements Zoom
             accessToken: $tokenDetails->accessToken,
             refreshToken: $tokenDetails->refreshToken,
             expiresAt: $tokenDetails->expiresAt,
-        );
-    }
-
-    private function connector(): ZoomConnector
-    {
-        return new ZoomConnector;
-    }
-
-    private function connectorForUser(User $user): ZoomConnector
-    {
-        $accessTokenDetails = $this->getZoomOAuthDetails($user);
-
-        $connector = $this->connector()->authenticate($accessTokenDetails);
-
-        if ($accessTokenDetails->hasExpired()) {
-
-            $newAccessTokenDetails =
-
-            $connector->refreshAccessToken($accessTokenDetails);
-
-            $connector->authenticate($newAccessTokenDetails);
-
-            $this->updateZoomOAuthDetails($newAccessTokenDetails, $user);
-        }
-
-        return $connector;
-    }
-
-    private function getZoomOAuthDetails(User $user): AccessTokenAuthenticator
-    {
-        return new AccessTokenAuthenticator(
-            $user->zoom_access_token,
-            $user->zoom_refresh_token,
-            $user->zoom_expires_at->toDateTimeImmutable(),
-        );
-    }
-
-    private function updateZoomOAuthDetails(
-        AccessTokenAuthenticator $newAccessTokenDetails,
-        User $user
-    ): void {
-        $user->updateZoomOAuthDetails(
-            $newAccessTokenDetails->getAccessToken(),
-            $newAccessTokenDetails->getRefreshToken(),
-            $newAccessTokenDetails->getExpiresAt(),
         );
     }
 
@@ -168,5 +125,50 @@ final class ZoomService implements Zoom
             ->json();
 
         return $response['token'];
+    }
+
+    private function connector(): ZoomConnector
+    {
+        return new ZoomConnector;
+    }
+
+    private function connectorForUser(User $user): ZoomConnector
+    {
+        $accessTokenDetails = $this->getZoomOAuthDetails($user);
+
+        $connector = $this->connector()->authenticate($accessTokenDetails);
+
+        if ($accessTokenDetails->hasExpired()) {
+
+            $newAccessTokenDetails =
+
+            $connector->refreshAccessToken($accessTokenDetails);
+
+            $connector->authenticate($newAccessTokenDetails);
+
+            $this->updateZoomOAuthDetails($newAccessTokenDetails, $user);
+        }
+
+        return $connector;
+    }
+
+    private function getZoomOAuthDetails(User $user): AccessTokenAuthenticator
+    {
+        return new AccessTokenAuthenticator(
+            $user->zoom_access_token,
+            $user->zoom_refresh_token,
+            $user->zoom_expires_at->toDateTimeImmutable(),
+        );
+    }
+
+    private function updateZoomOAuthDetails(
+        AccessTokenAuthenticator $newAccessTokenDetails,
+        User $user
+    ): void {
+        $user->updateZoomOAuthDetails(
+            $newAccessTokenDetails->getAccessToken(),
+            $newAccessTokenDetails->getRefreshToken(),
+            $newAccessTokenDetails->getExpiresAt(),
+        );
     }
 }

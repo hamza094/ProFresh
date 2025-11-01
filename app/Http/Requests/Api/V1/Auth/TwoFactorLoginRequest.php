@@ -1,8 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Requests\Api\V1\Auth;
 
 use App\Models\User;
+use Exception;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Validator;
@@ -44,7 +47,7 @@ class TwoFactorLoginRequest extends FormRequest
      */
     public function withValidator(Validator $validator): void
     {
-        $validator->after(function (Validator $validator) {
+        $validator->after(function (Validator $validator): void {
             $code = $this->input('code');
             $this->validateTwoFactorSession($validator, $code);
         });
@@ -72,7 +75,7 @@ class TwoFactorLoginRequest extends FormRequest
         }
 
         // Attach user to request for controller use
-        $this->setUserResolver(fn () => $user);
+        $this->setUserResolver(fn (): User => $user);
     }
 
     /**
@@ -88,7 +91,7 @@ class TwoFactorLoginRequest extends FormRequest
 
         try {
             $creds = decrypt($encryptedCreds);
-        } catch (\Exception) {
+        } catch (Exception) {
             return null;
         }
 

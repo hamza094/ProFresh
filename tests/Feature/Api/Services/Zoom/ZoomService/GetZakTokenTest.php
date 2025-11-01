@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Feature\Api\Services\Zoom\ZoomService;
 
 use App\Http\Integrations\Zoom\Requests\GetZakToken;
@@ -31,7 +33,7 @@ class GetZakTokenTest extends TestCase
 
         $user = $this->userCreate(now()->addWeek());
 
-        $service = (new ZoomService)->getZakToken($user);
+        (new ZoomService)->getZakToken($user);
 
         Saloon::assertSent(static fn (GetZakToken $request): bool => $request->resolveEndpoint() === 'users/me/token?type=zak' && $request->getMethod() === Method::GET);
     }

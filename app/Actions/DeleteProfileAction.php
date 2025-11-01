@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Actions;
 
 use App\Models\Project;
@@ -21,7 +23,7 @@ class DeleteProfileAction
 
     private function handleUserProjects(User $user): void
     {
-        $user->projects()->withTrashed()->get()->each(function ($project) use ($user) {
+        $user->projects()->withTrashed()->get()->each(function ($project) use ($user): void {
             if ($this->permanentDeleteProject($project)) {
                 return;
             }

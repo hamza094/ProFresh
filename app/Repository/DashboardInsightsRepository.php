@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Repository;
 
 use App\Models\Project;
@@ -13,9 +15,9 @@ class DashboardInsightsRepository
 
     public function getUserProjects(int $userId): Collection
     {
-        return Project::where(function ($query) use ($userId) {
+        return Project::where(function ($query) use ($userId): void {
             $query->where('user_id', $userId)
-                ->orWhereHas('activeMembers', function ($memberQuery) use ($userId) {
+                ->orWhereHas('activeMembers', function ($memberQuery) use ($userId): void {
                     $memberQuery->where('user_id', $userId);
                 });
         })
@@ -64,7 +66,7 @@ class DashboardInsightsRepository
             ->groupBy('project_id')
             ->pluck('overdue_count', 'project_id');
 
-        return $projects->sum(fn ($project) => ($overdueCounts[$project->id] ?? 0) > $threshold ? 1 : 0);
+        return $projects->sum(fn ($project): int => ($overdueCounts[$project->id] ?? 0) > $threshold ? 1 : 0);
     }
 
     // Status evaluation moved to service layer.
@@ -76,11 +78,11 @@ class DashboardInsightsRepository
     {
         // Optimized with joins instead of nested whereHas for better performance
         return Task::join('projects', 'tasks.project_id', '=', 'projects.id')
-            ->leftJoin('project_members', function ($join) {
+            ->leftJoin('project_members', function ($join): void {
                 $join->on('projects.id', '=', 'project_members.project_id')
                     ->where('project_members.active', 1);
             })
-            ->where(function ($query) use ($userId) {
+            ->where(function ($query) use ($userId): void {
                 $query->where('projects.user_id', $userId)
                     ->orWhere('project_members.user_id', $userId);
             })

@@ -2,6 +2,6 @@
 
 // variadic-method-App\Models\Task-project-D:\apps\profresh\app\Models\Task.php
 return \PHPStan\Cache\CacheItem::__set_state(array(
-   'variableKey' => '1761061122-v4',
+   'variableKey' => '1762008596-v4',
    'data' => false,
 ));

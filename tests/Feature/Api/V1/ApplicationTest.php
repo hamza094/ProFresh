@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Feature\Api\V1;
 
 use App\Exports\ProjectsExport;
@@ -34,7 +36,7 @@ class ApplicationTest extends TestCase
 
         $this->expectException(AuthorizationException::class);
 
-        $response = $this->postJson($this->project->path().
+        $this->postJson($this->project->path().
            '/tasks');
     }
 
@@ -44,10 +46,8 @@ class ApplicationTest extends TestCase
         Excel::fake();
         $this->getJson($this->project->path().'/export');
 
-        Excel::assertDownloaded('Project '.$this->project->name.'.xls', function (ProjectsExport $export) {
-
+        Excel::assertDownloaded('Project '.$this->project->name.'.xls', fn (ProjectsExport $export) =>
             // Assert that the correct export is downloaded.
-            return $export->query()->get()->contains('name', $this->project->name);
-        });
+            $export->query()->get()->contains('name', $this->project->name));
     }
 }

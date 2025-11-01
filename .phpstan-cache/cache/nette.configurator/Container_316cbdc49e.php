@@ -8,7 +8,7 @@
 
 declare(strict_types=1);
 
-class Container_ce39c94141 extends _PHPStan_b22655c3f\Nette\DI\Container
+class Container_316cbdc49e extends _PHPStan_b22655c3f\Nette\DI\Container
 {
 	protected $tags = [
 		'phpstan.parser.richParserNodeVisitor' => [
@@ -2491,6 +2491,16 @@ class Container_ce39c94141 extends _PHPStan_b22655c3f\Nette\DI\Container
 					'path' => 'D:\apps\profresh\app\Console\Kernel.php',
 				],
 				[
+					'message' => '#^Parameter \$created_at of class App\\\DataTransferObjects\\\Zoom\\\Meeting constructor expects string, Carbon\\\Carbon given\.$#',
+					'count' => 1,
+					'path' => 'D:\apps\profresh\app\DataTransferObjects\Zoom\Meeting.php',
+				],
+				[
+					'message' => '#^Parameter \$start_time of class App\\\DataTransferObjects\\\Zoom\\\Meeting constructor expects string, Carbon\\\Carbon given\.$#',
+					'count' => 1,
+					'path' => 'D:\apps\profresh\app\DataTransferObjects\Zoom\Meeting.php',
+				],
+				[
 					'message' => '#^Method App\\\Enums\\\TaskDueNotifies\:\:values\(\) return type has no value type specified in iterable type array\.$#',
 					'count' => 1,
 					'path' => 'D:\apps\profresh\app\Enums\TaskDueNotifies.php',
@@ -2709,6 +2719,11 @@ class Container_ce39c94141 extends _PHPStan_b22655c3f\Nette\DI\Container
 					'message' => '#^Property App\\\Http\\\Kernel\:\:\$middlewareGroups type has no value type specified in iterable type array\.$#',
 					'count' => 1,
 					'path' => 'D:\apps\profresh\app\Http\Kernel.php',
+				],
+				[
+					'message' => '#^Method App\\\Http\\\Middleware\\\Authenticate\:\:redirectTo\(\) should return string\|null but returns Illuminate\\\Http\\\RedirectResponse\.$#',
+					'count' => 1,
+					'path' => 'D:\apps\profresh\app\Http\Middleware\Authenticate.php',
 				],
 				[
 					'message' => '#^PHPDoc type array of property App\\\Http\\\Middleware\\\CheckForMaintenanceMode\:\:\$except is not covariant with PHPDoc type array\<int, string\> of overridden property Illuminate\\\Foundation\\\Http\\\Middleware\\\PreventRequestsDuringMaintenance\:\:\$except\.$#',
@@ -3316,11 +3331,6 @@ class Container_ce39c94141 extends _PHPStan_b22655c3f\Nette\DI\Container
 					'path' => 'D:\apps\profresh\app\Jobs\MailMessage.php',
 				],
 				[
-					'message' => '#^Property App\\\Jobs\\\SmsMessage\:\:\$message has no type specified\.$#',
-					'count' => 1,
-					'path' => 'D:\apps\profresh\app\Jobs\SmsMessage.php',
-				],
-				[
 					'message' => '#^Property App\\\Jobs\\\SmsMessage\:\:\$project \(App\\\Models\\\Podcast\) does not accept App\\\Models\\\Project\.$#',
 					'count' => 1,
 					'path' => 'D:\apps\profresh\app\Jobs\SmsMessage.php',
@@ -3337,16 +3347,6 @@ class Container_ce39c94141 extends _PHPStan_b22655c3f\Nette\DI\Container
 				],
 				[
 					'message' => '#^Method App\\\Mail\\\ProjectMail\:\:__construct\(\) has parameter \$project with no type specified\.$#',
-					'count' => 1,
-					'path' => 'D:\apps\profresh\app\Mail\ProjectMail.php',
-				],
-				[
-					'message' => '#^Property App\\\Mail\\\ProjectMail\:\:\$message has no type specified\.$#',
-					'count' => 1,
-					'path' => 'D:\apps\profresh\app\Mail\ProjectMail.php',
-				],
-				[
-					'message' => '#^Property App\\\Mail\\\ProjectMail\:\:\$project has no type specified\.$#',
 					'count' => 1,
 					'path' => 'D:\apps\profresh\app\Mail\ProjectMail.php',
 				],
@@ -3461,11 +3461,6 @@ class Container_ce39c94141 extends _PHPStan_b22655c3f\Nette\DI\Container
 					'path' => 'D:\apps\profresh\app\Models\Meeting.php',
 				],
 				[
-					'message' => '#^PHPDoc tag @return with type App\\\Models\\\Activity is incompatible with native type void\.$#',
-					'count' => 1,
-					'path' => 'D:\apps\profresh\app\Models\Meeting.php',
-				],
-				[
 					'message' => '#^Class App\\\Models\\\Message uses generic trait Illuminate\\\Database\\\Eloquent\\\Factories\\\HasFactory but does not specify its types\: TFactory$#',
 					'count' => 1,
 					'path' => 'D:\apps\profresh\app\Models\Message.php',
@@ -3522,11 +3517,6 @@ class Container_ce39c94141 extends _PHPStan_b22655c3f\Nette\DI\Container
 				],
 				[
 					'message' => '#^Method App\\\Models\\\Message\:\:users\(\) should return Illuminate\\\Database\\\Eloquent\\\Relations\\\BelongsToMany\<App\\\Models\\\User\> but returns Illuminate\\\Database\\\Eloquent\\\Relations\\\BelongsToMany\<App\\\Models\\\User, \$this\(App\\\Models\\\Message\)\>\.$#',
-					'count' => 1,
-					'path' => 'D:\apps\profresh\app\Models\Message.php',
-				],
-				[
-					'message' => '#^PHPDoc tag @return with type App\\\Models\\\Activity is incompatible with native type void\.$#',
 					'count' => 1,
 					'path' => 'D:\apps\profresh\app\Models\Message.php',
 				],
@@ -4459,7 +4449,7 @@ class Container_ce39c94141 extends _PHPStan_b22655c3f\Nette\DI\Container
 			private $container;
 
 
-			public function __construct(Container_ce39c94141 $container)
+			public function __construct(Container_316cbdc49e $container)
 			{
 				$this->container = $container;
 			}
@@ -4727,7 +4717,7 @@ class Container_ce39c94141 extends _PHPStan_b22655c3f\Nette\DI\Container
 			private $container;
 
 
-			public function __construct(Container_ce39c94141 $container)
+			public function __construct(Container_316cbdc49e $container)
 			{
 				$this->container = $container;
 			}
@@ -4796,7 +4786,7 @@ class Container_ce39c94141 extends _PHPStan_b22655c3f\Nette\DI\Container
 			private $container;
 
 
-			public function __construct(Container_ce39c94141 $container)
+			public function __construct(Container_316cbdc49e $container)
 			{
 				$this->container = $container;
 			}
@@ -4923,7 +4913,7 @@ class Container_ce39c94141 extends _PHPStan_b22655c3f\Nette\DI\Container
 			private $container;
 
 
-			public function __construct(Container_ce39c94141 $container)
+			public function __construct(Container_316cbdc49e $container)
 			{
 				$this->container = $container;
 			}
@@ -4943,7 +4933,7 @@ class Container_ce39c94141 extends _PHPStan_b22655c3f\Nette\DI\Container
 			private $container;
 
 
-			public function __construct(Container_ce39c94141 $container)
+			public function __construct(Container_316cbdc49e $container)
 			{
 				$this->container = $container;
 			}
@@ -5015,7 +5005,7 @@ class Container_ce39c94141 extends _PHPStan_b22655c3f\Nette\DI\Container
 			private $container;
 
 
-			public function __construct(Container_ce39c94141 $container)
+			public function __construct(Container_316cbdc49e $container)
 			{
 				$this->container = $container;
 			}
@@ -6729,7 +6719,7 @@ class Container_ce39c94141 extends _PHPStan_b22655c3f\Nette\DI\Container
 			private $container;
 
 
-			public function __construct(Container_ce39c94141 $container)
+			public function __construct(Container_316cbdc49e $container)
 			{
 				$this->container = $container;
 			}
@@ -8489,7 +8479,7 @@ class Container_ce39c94141 extends _PHPStan_b22655c3f\Nette\DI\Container
 	}
 
 
-	public function createServiceContainer(): Container_ce39c94141
+	public function createServiceContainer(): Container_316cbdc49e
 	{
 		return $this;
 	}
@@ -10102,6 +10092,16 @@ class Container_ce39c94141 extends _PHPStan_b22655c3f\Nette\DI\Container
 					'path' => 'D:\apps\profresh\app\Console\Kernel.php',
 				],
 				[
+					'message' => '#^Parameter \$created_at of class App\\\DataTransferObjects\\\Zoom\\\Meeting constructor expects string, Carbon\\\Carbon given\.$#',
+					'count' => 1,
+					'path' => 'D:\apps\profresh\app\DataTransferObjects\Zoom\Meeting.php',
+				],
+				[
+					'message' => '#^Parameter \$start_time of class App\\\DataTransferObjects\\\Zoom\\\Meeting constructor expects string, Carbon\\\Carbon given\.$#',
+					'count' => 1,
+					'path' => 'D:\apps\profresh\app\DataTransferObjects\Zoom\Meeting.php',
+				],
+				[
 					'message' => '#^Method App\\\Enums\\\TaskDueNotifies\:\:values\(\) return type has no value type specified in iterable type array\.$#',
 					'count' => 1,
 					'path' => 'D:\apps\profresh\app\Enums\TaskDueNotifies.php',
@@ -10320,6 +10320,11 @@ class Container_ce39c94141 extends _PHPStan_b22655c3f\Nette\DI\Container
 					'message' => '#^Property App\\\Http\\\Kernel\:\:\$middlewareGroups type has no value type specified in iterable type array\.$#',
 					'count' => 1,
 					'path' => 'D:\apps\profresh\app\Http\Kernel.php',
+				],
+				[
+					'message' => '#^Method App\\\Http\\\Middleware\\\Authenticate\:\:redirectTo\(\) should return string\|null but returns Illuminate\\\Http\\\RedirectResponse\.$#',
+					'count' => 1,
+					'path' => 'D:\apps\profresh\app\Http\Middleware\Authenticate.php',
 				],
 				[
 					'message' => '#^PHPDoc type array of property App\\\Http\\\Middleware\\\CheckForMaintenanceMode\:\:\$except is not covariant with PHPDoc type array\<int, string\> of overridden property Illuminate\\\Foundation\\\Http\\\Middleware\\\PreventRequestsDuringMaintenance\:\:\$except\.$#',
@@ -10927,11 +10932,6 @@ class Container_ce39c94141 extends _PHPStan_b22655c3f\Nette\DI\Container
 					'path' => 'D:\apps\profresh\app\Jobs\MailMessage.php',
 				],
 				[
-					'message' => '#^Property App\\\Jobs\\\SmsMessage\:\:\$message has no type specified\.$#',
-					'count' => 1,
-					'path' => 'D:\apps\profresh\app\Jobs\SmsMessage.php',
-				],
-				[
 					'message' => '#^Property App\\\Jobs\\\SmsMessage\:\:\$project \(App\\\Models\\\Podcast\) does not accept App\\\Models\\\Project\.$#',
 					'count' => 1,
 					'path' => 'D:\apps\profresh\app\Jobs\SmsMessage.php',
@@ -10948,16 +10948,6 @@ class Container_ce39c94141 extends _PHPStan_b22655c3f\Nette\DI\Container
 				],
 				[
 					'message' => '#^Method App\\\Mail\\\ProjectMail\:\:__construct\(\) has parameter \$project with no type specified\.$#',
-					'count' => 1,
-					'path' => 'D:\apps\profresh\app\Mail\ProjectMail.php',
-				],
-				[
-					'message' => '#^Property App\\\Mail\\\ProjectMail\:\:\$message has no type specified\.$#',
-					'count' => 1,
-					'path' => 'D:\apps\profresh\app\Mail\ProjectMail.php',
-				],
-				[
-					'message' => '#^Property App\\\Mail\\\ProjectMail\:\:\$project has no type specified\.$#',
 					'count' => 1,
 					'path' => 'D:\apps\profresh\app\Mail\ProjectMail.php',
 				],
@@ -11072,11 +11062,6 @@ class Container_ce39c94141 extends _PHPStan_b22655c3f\Nette\DI\Container
 					'path' => 'D:\apps\profresh\app\Models\Meeting.php',
 				],
 				[
-					'message' => '#^PHPDoc tag @return with type App\\\Models\\\Activity is incompatible with native type void\.$#',
-					'count' => 1,
-					'path' => 'D:\apps\profresh\app\Models\Meeting.php',
-				],
-				[
 					'message' => '#^Class App\\\Models\\\Message uses generic trait Illuminate\\\Database\\\Eloquent\\\Factories\\\HasFactory but does not specify its types\: TFactory$#',
 					'count' => 1,
 					'path' => 'D:\apps\profresh\app\Models\Message.php',
@@ -11133,11 +11118,6 @@ class Container_ce39c94141 extends _PHPStan_b22655c3f\Nette\DI\Container
 				],
 				[
 					'message' => '#^Method App\\\Models\\\Message\:\:users\(\) should return Illuminate\\\Database\\\Eloquent\\\Relations\\\BelongsToMany\<App\\\Models\\\User\> but returns Illuminate\\\Database\\\Eloquent\\\Relations\\\BelongsToMany\<App\\\Models\\\User, \$this\(App\\\Models\\\Message\)\>\.$#',
-					'count' => 1,
-					'path' => 'D:\apps\profresh\app\Models\Message.php',
-				],
-				[
-					'message' => '#^PHPDoc tag @return with type App\\\Models\\\Activity is incompatible with native type void\.$#',
 					'count' => 1,
 					'path' => 'D:\apps\profresh\app\Models\Message.php',
 				],

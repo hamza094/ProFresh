@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Requests\Api\V1;
 
 use Closure;
@@ -9,10 +11,8 @@ class StageRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
-     *
-     * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
@@ -30,7 +30,7 @@ class StageRequest extends FormRequest
              * @example 1
              */
             'stage' => ['required', 'int',
-                function (string $attribute, mixed $value, Closure $fail) {
+                function (string $attribute, mixed $value, Closure $fail): void {
                     if ((int) $value === (int) $this->project->stage_id) {
                         $fail('The selected stage must be different from the current project stage.');
                     }

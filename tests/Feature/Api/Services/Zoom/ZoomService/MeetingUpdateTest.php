@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Feature\V1\Services\Zoom\ZoomService;
 
 use App\Http\Integrations\Zoom\Requests\GetRefreshTokenRequest;
@@ -32,7 +34,7 @@ class MeetingUpdateTest extends TestCase
 
         $meetingData = $this->meetingData();
 
-        $meeting = (new ZoomService)->updateMeeting($meetingData, $user);
+        (new ZoomService)->updateMeeting($meetingData, $user);
 
         Saloon::assertNotSent(GetRefreshTokenRequest::class);
 

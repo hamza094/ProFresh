@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Feature\Api\Auth;
 
 use App\Models\User;
@@ -27,7 +29,7 @@ class AuthenticationTest extends TestCase
     /** @test */
     public function register_new_user()
     {
-        $response = $this->postJson(route('auth.register'),
+        $this->postJson(route('auth.register'),
             ['name' => 'Elvis William',
                 'email' => 'mihupocob@mailinator.com',
                 'password' => 'Password4!',
@@ -98,7 +100,7 @@ class AuthenticationTest extends TestCase
     /** @test */
     public function registration_with_existing_email_not_allowed()
     {
-        $response = $this->postJson(route('auth.register'),
+        $this->postJson(route('auth.register'),
             ['name' => 'Elvis William',
                 'email' => 'johndoe@example.org',
                 'password' => 'password',

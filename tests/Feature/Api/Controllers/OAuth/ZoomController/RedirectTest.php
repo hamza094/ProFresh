@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Feature\Api\Controllers\OAuth\ZoomController;
 
 use App\Traits\ProjectSetup;
@@ -23,7 +25,7 @@ class RedirectTest extends TestCase
             codeVerifier: 'dummy-code-verifier',
         );
 
-        $response = $this->get(route('oauth.zoom.redirect'));
+        $this->get(route('oauth.zoom.redirect'));
 
         // Retrieve the cached values from the cache
         $oauthZoomState = session()->get('oauth_zoom_state');

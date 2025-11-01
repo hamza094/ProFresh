@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Feature\Api\V1;
 
 use App\Models\User;
@@ -87,7 +89,7 @@ class NotificationsTest extends TestCase
 
         $this->addMember($this->project, $newUser);
 
-        $response = $this
+        $this
             ->postJson($this->project->path().'/conversations', ['message' => 'random chat conversation with @thanos844',
                 'user_id' => $this->user->id]);
 

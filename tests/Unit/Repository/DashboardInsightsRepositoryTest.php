@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Unit\Repository;
 
 use App\Models\Project;
@@ -30,7 +32,7 @@ class DashboardInsightsRepositoryTest extends TestCase
     public function it_handles_projects_with_no_tasks()
     {
         $user = User::factory()->create();
-        $project = Project::factory()->for($user)->create();
+        Project::factory()->for($user)->create();
         $repo = new DashboardInsightsRepository;
         $projects = $repo->getUserProjects($user->id);
         $this->assertCount(1, $projects);
@@ -42,7 +44,7 @@ class DashboardInsightsRepositoryTest extends TestCase
     /** @test */
     public function it_handles_all_tasks_completed()
     {
-        $status = TaskStatus::factory(['id' => 4])->create();
+        TaskStatus::factory(['id' => 4])->create();
         $user = User::factory()->create();
         $project = Project::factory()->for($user)->create();
 
@@ -61,7 +63,7 @@ class DashboardInsightsRepositoryTest extends TestCase
     /** @test */
     public function it_handles_all_tasks_overdue()
     {
-        $status = TaskStatus::factory()->create();
+        TaskStatus::factory()->create();
         $user = User::factory()->create();
         $project = Project::factory()->for($user)->create();
         Task::factory()->overdue()->for($project)->count(3)->create(['user_id' => $user->id]);
@@ -73,7 +75,7 @@ class DashboardInsightsRepositoryTest extends TestCase
     /** @test */
     public function it_handles_threshold_boundary_for_critical_projects()
     {
-        $status = TaskStatus::factory()->create();
+        TaskStatus::factory()->create();
         $user = User::factory()->create();
         $project = Project::factory()->for($user)->create();
         $threshold = (int) config('dashboard.insights.critical_project.overdue_threshold', 3);
@@ -91,8 +93,8 @@ class DashboardInsightsRepositoryTest extends TestCase
     /** @test */
     public function it_handles_multiple_projects_mixed_states()
     {
-        $status = TaskStatus::factory()->create();
-        $statusCompleted = TaskStatus::factory(['id' => 4])->create();
+        TaskStatus::factory()->create();
+        TaskStatus::factory(['id' => 4])->create();
         $user = User::factory()->create();
         $project1 = Project::factory()->for($user)->create();
         $project2 = Project::factory()->for($user)->create();

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Feature\Api\V1;
 
 use App\Models\Message;
@@ -15,7 +17,7 @@ class MessageTest extends TestCase
     /** @test */
     public function operation_on_send_message()
     {
-        $response = $this->postJson($this->project->path().'/message', [
+        $this->postJson($this->project->path().'/message', [
             'message' => 'this is project message',
             'users' => json_encode([$this->user->id]),
             'subject' => 'this is message subject',
@@ -42,7 +44,7 @@ class MessageTest extends TestCase
     /** @test */
     public function check_schedule_command_working()
     {
-        $messages = Message::factory()->for($this->project)
+        Message::factory()->for($this->project)
             ->count(3)
             ->create(['delivered_at' => Carbon::yesterday()]);
 
@@ -56,10 +58,10 @@ class MessageTest extends TestCase
     /** @test */
     public function get_project_scheduled_messages()
     {
-        $messages = Message::factory()->for($this->project)->count(4)
-            ->create(['delivered_at' => Carbon::now()->addDay(2)]);
+        Message::factory()->for($this->project)->count(4)
+            ->create(['delivered_at' => Carbon::now()->addDay()]);
 
-        $response = $this->getJson($this->project->path().
+        $this->getJson($this->project->path().
          '/messages/scheduled')->assertok();
 
         $this->assertEquals($this->project->scheduledMessages()

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Providers;
 
 use App\Models\Task;
@@ -45,9 +47,9 @@ class AuthServiceProvider extends ServiceProvider
                 ->symbols()
         );
 
-        Gate::before(fn ($user, $ability) => $user->hasRole('Admin') ? true : null);
+        Gate::before(fn ($user, $ability): ?true => $user->hasRole('Admin') ? true : null);
 
-        Gate::define('forbid-when-archived', fn ($user, Task $task) => $task->trashed()
+        Gate::define('forbid-when-archived', fn ($user, Task $task): true => $task->trashed()
         ? throw ValidationException::withMessages(['task' => 'Task is archived. Activate the task to proceed.']) : true);
 
         VerifyEmail::toMailUsing(fn (object $notifiable, string $url) => (new MailMessage)

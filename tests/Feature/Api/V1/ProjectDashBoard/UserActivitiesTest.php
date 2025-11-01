@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Feature\Api\V1\ProjectDashboard;
 
 use App\Models\Activity;
@@ -44,12 +46,12 @@ class UserActivitiesTest extends TestCase
     public function user_can_view_activities_within_date_range()
     {
         // Create activities for different dates
-        $activity1 = Activity::factory()
+        Activity::factory()
             ->forUser($this->user)
             ->forProject($this->project)
             ->create(['created_at' => '2025-08-01 10:00:00']);
 
-        $activity2 = Activity::factory()
+        Activity::factory()
             ->forUser($this->user)
             ->forProject($this->project)
             ->create(['created_at' => '2025-08-15 10:00:00']);
@@ -69,7 +71,7 @@ class UserActivitiesTest extends TestCase
 
         $response = $this->getJson('api/v1/user/activities?start_date=2025-08-01&end_date=2025-08-31');
 
-        $activities = $response->json();
+        $response->json();
 
         $response->assertOk()
             ->assertJsonCount(2) // one user activity from project setup trait
@@ -146,9 +148,6 @@ class UserActivitiesTest extends TestCase
         $repo = new DashBoardRepository;
 
         $collection = $repo->getUserActivities($this->user->id, $start, $end);
-
-        // compute expected key the same way repository does
-        $expectedKey = "activities_{$this->user->id}_{$start->format('Ymd')}_{$end->format('Ymd')}";
 
         Cache::shouldReceive('remember')
             ->andReturnUsing(function ($key, $ttl, $callback) {

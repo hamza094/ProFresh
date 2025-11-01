@@ -76,6 +76,16 @@ parameters:
 			path: app/Console/Kernel.php
 
 		-
+			message: "#^Parameter \\$created_at of class App\\\\DataTransferObjects\\\\Zoom\\\\Meeting constructor expects string, Carbon\\\\Carbon given\\.$#"
+			count: 1
+			path: app/DataTransferObjects/Zoom/Meeting.php
+
+		-
+			message: "#^Parameter \\$start_time of class App\\\\DataTransferObjects\\\\Zoom\\\\Meeting constructor expects string, Carbon\\\\Carbon given\\.$#"
+			count: 1
+			path: app/DataTransferObjects/Zoom/Meeting.php
+
+		-
 			message: "#^Method App\\\\Enums\\\\TaskDueNotifies\\:\\:values\\(\\) return type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: app/Enums/TaskDueNotifies.php
@@ -151,7 +161,6 @@ parameters:
 			path: app/Http/Controllers/Api/V1/ActivityController.php
 
 		-
-
 			message: "#^Parameter \\#2 \\$user of method App\\\\Services\\\\Api\\\\V1\\\\InvitationService\\:\\:rejectInvitation\\(\\) expects App\\\\Models\\\\User, Illuminate\\\\Contracts\\\\Auth\\\\Authenticatable\\|null given\\.$#"
 			count: 1
 			path: app/Http/Controllers/Api/V1/InvitationController.php
@@ -295,6 +304,11 @@ parameters:
 			message: "#^Property App\\\\Http\\\\Kernel\\:\\:\\$middlewareGroups type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: app/Http/Kernel.php
+
+		-
+			message: "#^Method App\\\\Http\\\\Middleware\\\\Authenticate\\:\\:redirectTo\\(\\) should return string\\|null but returns Illuminate\\\\Http\\\\RedirectResponse\\.$#"
+			count: 1
+			path: app/Http/Middleware/Authenticate.php
 
 		-
 			message: "#^PHPDoc type array of property App\\\\Http\\\\Middleware\\\\CheckForMaintenanceMode\\:\\:\\$except is not covariant with PHPDoc type array\\<int, string\\> of overridden property Illuminate\\\\Foundation\\\\Http\\\\Middleware\\\\PreventRequestsDuringMaintenance\\:\\:\\$except\\.$#"

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Paypal;
 
 use PayPal\Api\ChargeModel;
@@ -30,6 +32,41 @@ class CreatePlan extends Paypal
         $plan->setMerchantPreferences($merchantPreferences);
 
         return $plan->create($this->apiContext);
+    }
+
+    public function listPlan()
+    {
+        $params = ['page_size' => '5'];
+
+        return Plan::all($params, $this->apiContext);
+    }
+
+    public function planDetail($id)
+    {
+        return Plan::get($id, $this->apiContext);
+    }
+
+    public function active($id)
+    {
+        $createdPlan = $this->planDetail($id);
+
+        $patch = new Patch;
+
+        $value = new PayPalModel('{
+           "state":"ACTIVE"
+         }');
+
+        $patch->setOp('replace')
+            ->setPath('/')
+            ->setValue($value);
+
+        $patchRequest = new PatchRequest;
+
+        $patchRequest->addPatch($patch);
+
+        $createdPlan->update($patchRequest, $this->apiContext);
+
+        return Plan::get($createdPlan->getId(), $this->apiContext);
     }
 
     protected function Plan(): Plan
@@ -78,40 +115,5 @@ class CreatePlan extends Paypal
             ->setSetupFee(new Currency(['value' => 1, 'currency' => 'USD']));
 
         return $merchantPreferences;
-    }
-
-    public function listPlan()
-    {
-        $params = ['page_size' => '5'];
-
-        return Plan::all($params, $this->apiContext);
-    }
-
-    public function planDetail($id)
-    {
-        return Plan::get($id, $this->apiContext);
-    }
-
-    public function active($id)
-    {
-        $createdPlan = $this->planDetail($id);
-
-        $patch = new Patch;
-
-        $value = new PayPalModel('{
-           "state":"ACTIVE"
-         }');
-
-        $patch->setOp('replace')
-            ->setPath('/')
-            ->setValue($value);
-
-        $patchRequest = new PatchRequest;
-
-        $patchRequest->addPatch($patch);
-
-        $createdPlan->update($patchRequest, $this->apiContext);
-
-        return Plan::get($createdPlan->getId(), $this->apiContext);
     }
 }

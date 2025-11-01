@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Integrations\Zoom;
 
 use App\Exceptions\Integrations\Zoom\NotFoundException;
@@ -26,6 +28,28 @@ class ZoomConnector extends Connector
     public function resolveBaseUrl(): string
     {
         return 'https://api.zoom.us/v2/';
+    }
+
+    public function getRequestException(
+        Response $response, ?Throwable $senderException
+    ): ?Throwable {
+        return match ($response->status()) {
+            403 => new UnauthorizedException(
+                message: $response->body(),
+                code: $response->status(),
+                previous: $senderException,
+            ),
+            404 => new NotFoundException(
+                message: $response->body(),
+                code: $response->status(),
+                previous: $senderException,
+            ),
+            default => new ZoomException(
+                message: $response->body(),
+                code: $response->status(),
+                previous: $senderException,
+            ),
+        };
     }
 
     /**
@@ -75,27 +99,5 @@ class ZoomConnector extends Connector
         string $refreshToken
     ): Request {
         return new GetRefreshTokenRequest($oauthConfig, $refreshToken);
-    }
-
-    public function getRequestException(
-        Response $response, ?Throwable $senderException
-    ): ?Throwable {
-        return match ($response->status()) {
-            403 => new UnauthorizedException(
-                message: $response->body(),
-                code: $response->status(),
-                previous: $senderException,
-            ),
-            404 => new NotFoundException(
-                message: $response->body(),
-                code: $response->status(),
-                previous: $senderException,
-            ),
-            default => new ZoomException(
-                message: $response->body(),
-                code: $response->status(),
-                previous: $senderException,
-            ),
-        };
     }
 }

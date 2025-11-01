@@ -2,6 +2,6 @@
 
 // variadic-method-App\Repository\UserTasksDataRepository-appliedFilters-D:\apps\profresh\app\Repository\UserTasksDataRepository.php
 return \PHPStan\Cache\CacheItem::__set_state(array(
-   'variableKey' => '1761061135-v4',
+   'variableKey' => '1762008628-v4',
    'data' => false,
 ));

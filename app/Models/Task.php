@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use App\QueryBuilder\TaskQueryBuilder;
@@ -22,22 +24,6 @@ class Task extends Model
     protected $casts = [
         'due_at' => 'datetime',
     ];
-
-    // Use default SoftDeletes column 'deleted_at' (matches migrations)
-
-    protected static function booted(): void
-    {
-        static::creating(function ($task) {
-            if (! $task->status_id) {
-                $task->status_id = 1;
-            }
-        });
-
-        static::forceDeleting(function ($task) {
-            $task->activities()->delete();
-        });
-
-    }
 
     /**
      * The events that should be recorded.
@@ -108,5 +94,21 @@ class Task extends Model
     public function state(): string
     {
         return $this->deleted_at ? 'trashed' : 'active';
+    }
+
+    // Use default SoftDeletes column 'deleted_at' (matches migrations)
+
+    protected static function booted(): void
+    {
+        static::creating(function ($task): void {
+            if (! $task->status_id) {
+                $task->status_id = 1;
+            }
+        });
+
+        static::forceDeleting(function ($task): void {
+            $task->activities()->delete();
+        });
+
     }
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Feature\Api\V1;
 
 use App\Models\Task;
@@ -76,7 +78,7 @@ class RecordActivityTest extends TestCase
     /** @test */
     public function record_on_creating_task()
     {
-        $task = $this->project->addTask('Test Task');
+        $this->project->addTask('Test Task');
 
         $this->assertEquals(2, $this->project->activities()->count());
 
@@ -177,7 +179,7 @@ class RecordActivityTest extends TestCase
     /** @test */
     public function it_records_activity_on_creating_message()
     {
-        $response = $this->postJson($this->project->path().'/message', [
+        $this->postJson($this->project->path().'/message', [
             'message' => 'this is project message',
             'users' => json_encode([User::first()->id]),
             'subject' => 'this is message subject',

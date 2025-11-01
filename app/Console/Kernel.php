@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Console;
 
 use App\Models\Task;
@@ -32,7 +34,7 @@ class Kernel extends ConsoleKernel
             ->withoutOverlapping()
             ->runInBackground()
             ->everyTwoMinutes()
-            ->when(fn () => Task::dueForNotifications()
+            ->when(fn (): bool => Task::dueForNotifications()
                 ->count() > 0);
 
         $schedule->command('remove:abandon')->daily();

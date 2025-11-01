@@ -1,35 +1,21 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Requests\Api\V1\Zoom;
 
-use DateTime;
+use DateTimeImmutable;
+use Exception;
 use Illuminate\Foundation\Http\FormRequest;
 
 class MeetingUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
-     *
-     * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
-    }
-
-    protected function prepareForValidation()
-    {
-        if ($this->has('start_time')) {
-            try {
-                $this->merge([
-                    'start_time' => (new DateTime($this->input('start_time')))->format('Y-m-d H:i:s'),
-                ]);
-            } catch (\Exception) {
-                $this->merge([
-                    'start_time' => null,
-                ]);
-            }
-        }
     }
 
     /**
@@ -49,5 +35,20 @@ class MeetingUpdateRequest extends FormRequest
             'password' => 'string|max:10|sometimes',
             'join_before_host' => 'boolean|sometimes',
         ];
+    }
+
+    protected function prepareForValidation()
+    {
+        if ($this->has('start_time')) {
+            try {
+                $this->merge([
+                    'start_time' => (new DateTimeImmutable($this->input('start_time')))->format('Y-m-d H:i:s'),
+                ]);
+            } catch (Exception) {
+                $this->merge([
+                    'start_time' => null,
+                ]);
+            }
+        }
     }
 }

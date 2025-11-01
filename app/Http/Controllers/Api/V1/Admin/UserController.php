@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Api\V1\Admin;
 
 use App\Http\Controllers\Controller;
@@ -15,7 +17,7 @@ class UserController extends Controller
 
         $users = User::with('subscriptions', 'roles')
             ->withCount('projects')
-            ->when($request->search, function ($query) use ($request) {
+            ->when($request->search, function ($query) use ($request): void {
                 $query->where('name', 'like', '%'.$request->search.'%')
                     ->orWhere('username', 'like', '%'.$request->search.'%')
                     ->orWhere('email', 'like', '%'.$request->search.'%');

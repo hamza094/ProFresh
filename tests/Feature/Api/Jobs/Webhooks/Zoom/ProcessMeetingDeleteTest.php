@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Feature\Api\Jobs\Webhooks\Zoom;
 
 use App\Jobs\Webhooks\Zoom\DeleteMeetingWebhook;
@@ -42,7 +44,7 @@ class ProcessMeetingDeleteTest extends TestCase
     /** @test */
     public function throw_exception_if_meeting_not_found()
     {
-        $meeting = Meeting::factory()->create([
+        Meeting::factory()->create([
             'meeting_id' => 413,
         ]);
 

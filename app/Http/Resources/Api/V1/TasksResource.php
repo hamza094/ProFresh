@@ -1,10 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Resources\Api\V1;
 
 use Carbon\Carbon;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Str;
+use JsonSerializable;
+use Timezone;
 
 /**
  * @mixin \App\Models\Task
@@ -15,7 +19,7 @@ class TasksResource extends JsonResource
      * Transform the resource into an array.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable
+     * @return array|\Illuminate\Contracts\Support\Arrayable|JsonSerializable
      */
     public function toArray($request)
     {
@@ -44,7 +48,7 @@ class TasksResource extends JsonResource
              *
              * @example '19th December 2024 3:25:pm'
              */
-            'due_at' => $this->when($this->due_at, fn () => \Timezone::convertToLocal(Carbon::parse($this->due_at))),
+            'due_at' => $this->when($this->due_at, fn () => Timezone::convertToLocal(Carbon::parse($this->due_at))),
             /**
              * Task created date time
              *

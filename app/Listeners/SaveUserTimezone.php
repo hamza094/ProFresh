@@ -1,9 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Listeners;
 
 use App\Events\UserLogin;
+use Exception;
 use Illuminate\Support\Facades\Http;
+use Log;
 
 class SaveUserTimezone
 {
@@ -32,11 +36,11 @@ class SaveUserTimezone
                 $event->user->timezone = $tz;
                 $event->user->save();
             } else {
-                \Log::warning("Could not determine timezone for IP {$ip}", ['response' => $getTz]);
+                Log::warning("Could not determine timezone for IP {$ip}", ['response' => $getTz]);
             }
 
-        } catch (\Exception $e) {
-            \Log::error('Failed to update user timezone: '.$e->getMessage());
+        } catch (Exception $e) {
+            Log::error('Failed to update user timezone: '.$e->getMessage());
         }
     }
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Integrations\Paddle\Requests;
 
 use App\DataTransferObjects\Paddle\Data;
@@ -32,16 +34,6 @@ class SubscriptionUsersList extends Request implements HasBody, Paginatable
         return '/users';
     }
 
-    protected function defaultBody(): array
-    {
-        return [
-            'vendor_id' => $this->UserSubscriptionData->vendorID,
-            'vendor_auth_code' => $this->UserSubscriptionData->vendorAuthCode,
-            'results_per_page' => $this->UserSubscriptionData->resultsPerPage,
-            'page' => 1,
-        ];
-    }
-
     /**
      * @return array<int, Data>
      */
@@ -53,5 +45,15 @@ class SubscriptionUsersList extends Request implements HasBody, Paginatable
         return collect($items)
             ->map(fn (array $data): Data => Data::fromResponse($data))
             ->all();
+    }
+
+    protected function defaultBody(): array
+    {
+        return [
+            'vendor_id' => $this->UserSubscriptionData->vendorID,
+            'vendor_auth_code' => $this->UserSubscriptionData->vendorAuthCode,
+            'results_per_page' => $this->UserSubscriptionData->resultsPerPage,
+            'page' => 1,
+        ];
     }
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Api\Auth;
 
 use App\Http\Controllers\Api\ApiController;
@@ -8,6 +10,7 @@ use App\Http\Requests\Api\V1\Auth\RegisterUserRequest;
 use App\Http\Resources\Api\V1\UsersResource;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
+use Exception;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\JsonResponse;
 
@@ -53,7 +56,7 @@ class RegisterController extends ApiController
                 'user' => new UsersResource($user),
             ], 201);
 
-        } catch (\Exception) {
+        } catch (Exception) {
             return response()->json(['error' => 'User registration failed.'], 500);
         }
 

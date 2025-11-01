@@ -2,6 +2,6 @@
 
 // variadic-method-App\Actions\ZoomAction-handle-D:\apps\profresh\app\Actions\ZoomAction.php
 return \PHPStan\Cache\CacheItem::__set_state(array(
-   'variableKey' => '1761061073-v4',
+   'variableKey' => '1761981343-v4',
    'data' => false,
 ));

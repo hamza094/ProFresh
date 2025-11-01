@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Feature\Api\Controllers\OAuth\ZoomController;
 
 use App\Exceptions\Integrations\Zoom\ZoomException;
@@ -62,13 +64,6 @@ class CallbackTest extends TestCase
         $this->assertUserWasNotUpdated($this->user->fresh());
     }
 
-    private function assertUserWasNotUpdated(User $user): void
-    {
-        $this->assertNull($user->zoom_access_token);
-        $this->assertNull($user->zoom_refresh_token);
-        $this->assertNull($user->zoom_expires_at);
-    }
-
     /** @test */
     public function error_is_returned_if_the_code_is_missing_from_the_request()
     {
@@ -78,8 +73,15 @@ class CallbackTest extends TestCase
 
         session()->put('oauth_zoom_code_verifier', 'dummy-code-verifier');
 
-        $response = $this->getJson(route('oauth.zoom.callback').'?state=dummy-state')->assertBadRequest();
+        $this->getJson(route('oauth.zoom.callback').'?state=dummy-state')->assertBadRequest();
 
         $this->assertUserWasNotUpdated($this->user);
+    }
+
+    private function assertUserWasNotUpdated(User $user): void
+    {
+        $this->assertNull($user->zoom_access_token);
+        $this->assertNull($user->zoom_refresh_token);
+        $this->assertNull($user->zoom_expires_at);
     }
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Feature\Api\Auth;
 
 use App\Models\User;
@@ -44,7 +46,7 @@ class ResetPasswordTest extends TestCase
 
         $token = Password::createToken($user);
 
-        $response = $this->postJson('/api/v1/reset-password', [
+        $this->postJson('/api/v1/reset-password', [
             'token' => $token,
             'email' => $user->email,
             'password' => 'password',

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Feature\Api\Jobs\Webhooks\Zoom;
 
 use App\Jobs\Webhooks\Zoom\UpdateMeetingWebhook;

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Feature\Api\Auth;
 
 use App\Enums\OAuthProvider;
@@ -32,7 +34,7 @@ class OAuthTest extends TestCase
 
         $this->performOAuthCallback();
 
-        $response = $this->get(route('oauth.callback', ['provider' => 'github']))->assertSuccessful();
+        $this->get(route('oauth.callback', ['provider' => 'github']))->assertSuccessful();
 
         $this->assertDatabaseHas('users', [
             'name' => $user->name,
@@ -53,7 +55,7 @@ class OAuthTest extends TestCase
     {
         $this->performOAuthCallback();
 
-        $response = $this->get(route('oauth.callback', ['provider' => 'github']))->assertSuccessful()
+        $this->get(route('oauth.callback', ['provider' => 'github']))->assertSuccessful()
             ->assertJsonStructure([
                 'user' => ['uuid', 'name', 'email'],
                 'access_token',
@@ -74,22 +76,6 @@ class OAuthTest extends TestCase
         $this->assertEquals('refresh-token', $user->oauth_refresh_token);
     }
 
-    /**
-     * Perform the OAuth callback for testing.
-     */
-    private function performOAuthCallback()
-    {
-        $this->mockSocialite('github', [
-            'id' => '123',
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-            'token' => 'access-token',
-            'nickname' => 'jinx004',
-            'avatar' => 'https://example.com/avatar.jpg',
-            'refreshToken' => 'refresh-token',
-        ]);
-    }
-
     protected function mockSocialite($provider, $user = null)
     {
         $mock = Socialite::shouldReceive('stateless')
@@ -105,5 +91,21 @@ class OAuthTest extends TestCase
             $mock->shouldReceive('redirect')
                 ->andReturn(redirect('https://url-to-provider'));
         }
+    }
+
+    /**
+     * Perform the OAuth callback for testing.
+     */
+    private function performOAuthCallback()
+    {
+        $this->mockSocialite('github', [
+            'id' => '123',
+            'name' => 'Test User',
+            'email' => 'test@example.com',
+            'token' => 'access-token',
+            'nickname' => 'jinx004',
+            'avatar' => 'https://example.com/avatar.jpg',
+            'refreshToken' => 'refresh-token',
+        ]);
     }
 }

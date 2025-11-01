@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Repository\Api\V1;
 
 use App\Http\Resources\Api\V1\ConversationResource;
@@ -21,7 +23,7 @@ class ConversationRepository
             ->with(['user', 'project:id,slug'])
             ->orderBy('id')
             ->lazyById(100) // Memory efficient
-            ->map(fn ($conversation) => new ConversationResource($conversation))
+            ->map(fn ($conversation): ConversationResource => new ConversationResource($conversation))
             ->collect();
     }
 }

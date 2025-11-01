@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Services\Api\V1;
 
 use App\Models\Project;
@@ -7,6 +9,7 @@ use App\Models\User;
 use App\Notifications\AcceptInvitation;
 use App\Notifications\ProjectInvitation;
 use Auth;
+use Exception;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Illuminate\Http\Request;
@@ -33,7 +36,7 @@ class InvitationService
             ));
 
             DB::commit();
-        } catch (\Exception $ex) {
+        } catch (Exception $ex) {
             DB::rollBack();
 
             throw $ex;
@@ -62,7 +65,7 @@ class InvitationService
 
             DB::commit();
 
-        } catch (\Exception $ex) {
+        } catch (Exception $ex) {
 
             DB::rollBack();
 
@@ -74,7 +77,7 @@ class InvitationService
     {
         $this->validateRemoval($project, $user);
 
-        DB::transaction(function () use ($project, $user) {
+        DB::transaction(function () use ($project, $user): void {
 
             $project->members()->detach($user);
 

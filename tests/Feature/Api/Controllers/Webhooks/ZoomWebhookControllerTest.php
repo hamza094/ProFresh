@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Feature\Api\Controllers\Webhooks;
 
 use App\Jobs\Webhooks\Zoom\DeleteMeetingWebhook;
@@ -37,7 +39,7 @@ class ZoomWebhookControllerTest extends TestCase
     {
         $this->withoutMiddleware([\App\Http\Middleware\VerifyZoomWebhook::class]);
 
-        $meeting = Meeting::factory()->create([
+        Meeting::factory()->create([
             'meeting_id' => 813,
             'topic' => 'shining in the sky',
         ]);
@@ -51,13 +53,11 @@ class ZoomWebhookControllerTest extends TestCase
         $meetingId = $object['id'];
         $updateData = collect($object)->except(['id', 'uuid'])->toArray();
 
-        $response = $this->post(route('webhooks.meetings.update'), $postBody)
+        $this->post(route('webhooks.meetings.update'), $postBody)
             ->assertOk()
             ->assertExactJson(['status' => 'success']);
 
-        Queue::assertPushed(UpdateMeetingWebhook::class, function ($job) use ($meetingId, $updateData) {
-            return $job->meeting_id === $meetingId && $job->update_data === $updateData;
-        });
+        Queue::assertPushed(UpdateMeetingWebhook::class, fn ($job) => $job->meeting_id === $meetingId && $job->update_data === $updateData);
     }
 
     /** @test */
@@ -65,7 +65,7 @@ class ZoomWebhookControllerTest extends TestCase
     {
         $this->withoutMiddleware([\App\Http\Middleware\VerifyZoomWebhook::class]);
 
-        $meeting = Meeting::factory()->create([
+        Meeting::factory()->create([
             'meeting_id' => 813,
         ]);
 
@@ -77,13 +77,11 @@ class ZoomWebhookControllerTest extends TestCase
         $object = $postBody['payload']['object'];
         $meetingId = $object['id'];
 
-        $response = $this->post(route('webhooks.meetings.delete'), $postBody)
+        $this->post(route('webhooks.meetings.delete'), $postBody)
             ->assertOk()
             ->assertExactJson(['status' => 'success']);
 
-        Queue::assertPushed(DeleteMeetingWebhook::class, function ($job) use ($meetingId) {
-            return $job->meeting_id === $meetingId;
-        });
+        Queue::assertPushed(DeleteMeetingWebhook::class, fn ($job) => $job->meeting_id === $meetingId);
     }
 
     /** @test */
@@ -91,7 +89,7 @@ class ZoomWebhookControllerTest extends TestCase
     {
         $this->withoutMiddleware([\App\Http\Middleware\VerifyZoomWebhook::class]);
 
-        $meeting = Meeting::factory()->create([
+        Meeting::factory()->create([
             'meeting_id' => 813,
         ]);
 
@@ -104,13 +102,11 @@ class ZoomWebhookControllerTest extends TestCase
         $meetingId = $object['id'];
         $startTime = $object['start_time'] ?? null;
 
-        $response = $this->post(route('webhooks.meetings.start'), $postBody)
+        $this->post(route('webhooks.meetings.start'), $postBody)
             ->assertOk()
             ->assertExactJson(['status' => 'success']);
 
-        Queue::assertPushed(StartMeetingWebhook::class, function ($job) use ($meetingId, $startTime) {
-            return $job->meeting_id === (string) $meetingId && $job->start_time === $startTime;
-        });
+        Queue::assertPushed(StartMeetingWebhook::class, fn ($job) => $job->meeting_id === (string) $meetingId && $job->start_time === $startTime);
     }
 
     /** @test */
@@ -118,7 +114,7 @@ class ZoomWebhookControllerTest extends TestCase
     {
         $this->withoutMiddleware([\App\Http\Middleware\VerifyZoomWebhook::class]);
 
-        $meeting = Meeting::factory()->create([
+        Meeting::factory()->create([
             'meeting_id' => 813,
         ]);
 
@@ -132,20 +128,18 @@ class ZoomWebhookControllerTest extends TestCase
         $startTime = $object['start_time'] ?? null;
         $endTime = $object['end_time'] ?? null;
 
-        $response = $this->post(route('webhooks.meetings.ended'), $postBody)
+        $this->post(route('webhooks.meetings.ended'), $postBody)
             ->assertOk()
             ->assertExactJson(['status' => 'success']);
 
-        Queue::assertPushed(MeetingEndsWebhook::class, function ($job) use ($meetingId, $startTime, $endTime) {
-            return $job->meeting_id === (string) $meetingId && $job->start_time === $startTime && $job->end_time === $endTime;
-        });
+        Queue::assertPushed(MeetingEndsWebhook::class, fn ($job) => $job->meeting_id === (string) $meetingId && $job->start_time === $startTime && $job->end_time === $endTime);
 
     }
 
     /** @test */
     public function error_is_returned_if_the_request_was_not_sent_from_zoom()
     {
-        $response = $this->post(route('webhooks.meetings.update'), ['invalid_key' => 'invalid_value'])->assertForbidden();
+        $this->post(route('webhooks.meetings.update'), ['invalid_key' => 'invalid_value'])->assertForbidden();
 
         Queue::assertNothingPushed();
     }

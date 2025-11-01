@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Repository;
 
 use App\Models\Project;
@@ -52,7 +54,7 @@ class ProjectRepository
      */
     protected function filterActivityByTasks($activities): Collection
     {
-        return $activities->filter(fn ($activity) => str_contains((string) $activity['description'], '_task'));
+        return $activities->filter(fn ($activity): bool => str_contains((string) $activity['description'], '_task'));
     }
 
     /**
@@ -62,7 +64,7 @@ class ProjectRepository
      */
     protected function filterActivityByProjectSpecified($activities): Collection
     {
-        return $activities->filter(fn ($activity) => str_contains((string) $activity['description'], '_project'));
+        return $activities->filter(fn ($activity): bool => str_contains((string) $activity['description'], '_project'));
     }
 
     /**
@@ -78,7 +80,7 @@ class ProjectRepository
             'member_removed',
         ];
 
-        return $activities->filter(fn ($activity) => in_array($activity['description'], $types));
+        return $activities->filter(fn ($activity): bool => in_array($activity['description'], $types));
 
     }
 }

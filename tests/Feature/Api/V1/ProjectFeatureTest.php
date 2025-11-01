@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Feature\Api\V1;
 
 use App\Models\Project;
@@ -15,7 +17,7 @@ class ProjectFeatureTest extends TestCase
     /** @test */
     public function auth_user_can_create_project()
     {
-        $response = $this->postJson('api/v1/projects',
+        $this->postJson('api/v1/projects',
             [
                 'name' => 'My Project name',
                 'about' => 'about this project',
@@ -202,7 +204,7 @@ class ProjectFeatureTest extends TestCase
         $this->assertCount(1, $this->user->projects()
             ->onlyTrashed()->get());
 
-        $project = Project::factory()
+        Project::factory()
             ->for($this->user)
             ->create(['deleted_at' => Carbon::now()->subDays(91)]);
 

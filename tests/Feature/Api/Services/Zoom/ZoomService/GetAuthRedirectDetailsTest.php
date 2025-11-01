@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Feature\Api\Services\Zoom\ZoomService;
 
 use App\Services\Api\V1\Zoom\ZoomService;

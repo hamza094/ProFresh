@@ -119,8 +119,8 @@
       "@rector:test"
     ],
     "qa:fix": [
-      "@php vendor/bin/pint",
-      "@php vendor/bin/rector"
+      "@php vendor/bin/rector",
+      "@php vendor/bin/pint"
     ],
     "qa:all": [
       "@php tools/qa-all.php"

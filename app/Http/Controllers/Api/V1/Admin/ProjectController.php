@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Api\V1\Admin;
 
 use App\Http\Controllers\Api\ApiController;
@@ -43,7 +45,7 @@ class ProjectController extends ApiController
     {
         $projectIds = $request->input('project_ids', []);
 
-        Project::withTrashed()->whereIn('id', $projectIds)->each(function ($project) {
+        Project::withTrashed()->whereIn('id', $projectIds)->each(function ($project): void {
             $project->forceDelete();
         });
 

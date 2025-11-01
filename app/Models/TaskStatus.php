@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -14,15 +16,6 @@ class TaskStatus extends Model
     protected $guarded = [];
 
     protected $table = 'statuses';
-
-    protected static function boot(): void
-    {
-        parent::boot();
-
-        static::deleting(function ($taskStatus) {
-            $taskStatus->tasks()->update(['status_id' => null]);
-        });
-    }
 
     /**
      * Get all tasks associated to TaskStatus.
@@ -42,5 +35,14 @@ class TaskStatus extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    protected static function boot(): void
+    {
+        parent::boot();
+
+        static::deleting(function ($taskStatus): void {
+            $taskStatus->tasks()->update(['status_id' => null]);
+        });
     }
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Feature\Api\V1;
 
 use App\Models\Project;
@@ -176,7 +178,7 @@ class TaskTest extends TestCase
             'task' => $task->id,
         ]));
 
-        $response = $this->putJson($task->path(), [
+        $this->putJson($task->path(), [
             'title' => 'updated task',
         ])->assertJsonValidationErrors([
             'task' => 'Task is archived. Activate the task to proceed.',

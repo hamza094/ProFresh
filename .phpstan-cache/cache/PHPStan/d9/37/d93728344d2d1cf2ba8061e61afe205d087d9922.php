@@ -2,6 +2,6 @@
 
 // variadic-method-App\Services\Api\V1\ProjectInsightService-shouldIncludeInsight-D:\apps\profresh\app\Services\Api\V1\ProjectInsightService.php
 return \PHPStan\Cache\CacheItem::__set_state(array(
-   'variableKey' => '1761228494-v4',
+   'variableKey' => '1762008626-v4',
    'data' => false,
 ));

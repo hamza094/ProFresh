@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
@@ -73,7 +75,7 @@ class ZoomMeetingController extends Controller
     {
         $this->authorize('manage', $project);
 
-        DB::transaction(function () use ($zoom, $meeting, $request) {
+        DB::transaction(function () use ($zoom, $meeting, $request): void {
             $meeting->update($request->validated());
             $zoom->updateMeeting($request->validated(), auth()->user());
         });
@@ -92,7 +94,7 @@ class ZoomMeetingController extends Controller
 
         $meetingId = $meeting->meeting_id;
 
-        DB::transaction(function () use ($zoom, $meeting, $meetingId) {
+        DB::transaction(function () use ($zoom, $meeting, $meetingId): void {
             $meeting->delete();
             $zoom->deleteMeeting($meetingId, auth()->user());
         });

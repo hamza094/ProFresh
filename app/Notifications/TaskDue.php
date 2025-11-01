@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Notifications;
 
 use Carbon\Carbon;
@@ -34,11 +36,6 @@ class TaskDue extends Notification implements ShouldBroadcast, ShouldQueue
     public function via(mixed $notifiable): array
     {
         return ['mail', 'database', 'broadcast'];
-    }
-
-    private function notificationMessage(): string
-    {
-        return "Your task '{$this->taskTitle}' due '{$this->dueDate}' is approaching. You selected to be notified '{$this->notifiedOption}'.";
     }
 
     /**
@@ -76,5 +73,10 @@ class TaskDue extends Notification implements ShouldBroadcast, ShouldQueue
         return new BroadcastMessage(
             $this->toArray($notifiable)
         );
+    }
+
+    private function notificationMessage(): string
+    {
+        return "Your task '{$this->taskTitle}' due '{$this->dueDate}' is approaching. You selected to be notified '{$this->notifiedOption}'.";
     }
 }

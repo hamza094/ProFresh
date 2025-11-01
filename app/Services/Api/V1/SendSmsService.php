@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Services\Api\V1;
 
 class SendSmsService
@@ -31,7 +33,7 @@ class SendSmsService
 
         $msg = $response->current();
 
-        if ($msg->getStatus() == 0) {
+        if ($msg->getStatus() === 0) {
             return "The message was sent successfully\n";
         }
 

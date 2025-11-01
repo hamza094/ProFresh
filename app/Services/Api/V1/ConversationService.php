@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Services\Api\V1;
 
 use App\Enums\FileType;
@@ -9,6 +11,7 @@ use App\Http\Requests\Api\V1\ConversationRequest;
 use App\Models\Conversation;
 use App\Models\Project;
 use App\Notifications\UserMentioned;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Notification;
@@ -42,7 +45,7 @@ class ConversationService
 
             return $conversation;
 
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             Log::error('Error storing conversation', [
                 'message' => $e->getMessage(),
                 'trace' => $e->getTraceAsString(),
@@ -50,6 +53,44 @@ class ConversationService
 
             return null;
         }
+    }
+
+    public function userMentioned(Conversation $conversation, Project $project): void
+    {
+        if (! $conversation->message) {
+            return;
+        }
+
+        $mentionedUsers = $conversation->mentionedUsersData();
+
+        if ($mentionedUsers->isEmpty()) {
+            return;
+        }
+
+        try {
+            Notification::send($mentionedUsers,
+                new UserMentioned(
+                    $project->name,
+                    $project->path(),
+                    auth()->user()->getNotifierData())
+            );
+
+        } catch (Exception $e) {
+            Log::error('Failed to send notifications', [
+                'error' => $e->getMessage(),
+                'users' => $mentionedUsers->pluck('uuid')->toArray(),
+            ]);
+        }
+    }
+
+    public function deleteConversation(Conversation $conversation, Project $project): void
+    {
+        DeleteConversation::dispatch($conversation->id, $project->slug);
+
+        // Need updated and use laravel 11 defered function
+        $this->deleteFileIfExists($conversation->file);
+
+        $conversation->delete();
     }
 
     /**
@@ -78,51 +119,13 @@ class ConversationService
         ]));
     }
 
-    public function userMentioned(Conversation $conversation, Project $project): void
-    {
-        if (! $conversation->message) {
-            return;
-        }
-
-        $mentionedUsers = $conversation->mentionedUsersData();
-
-        if ($mentionedUsers->isEmpty()) {
-            return;
-        }
-
-        try {
-            Notification::send($mentionedUsers,
-                new UserMentioned(
-                    $project->name,
-                    $project->path(),
-                    auth()->user()->getNotifierData())
-            );
-
-        } catch (\Exception $e) {
-            Log::error('Failed to send notifications', [
-                'error' => $e->getMessage(),
-                'users' => $mentionedUsers->pluck('uuid')->toArray(),
-            ]);
-        }
-    }
-
-    public function deleteConversation(Conversation $conversation, Project $project): void
-    {
-        DeleteConversation::dispatch($conversation->id, $project->slug);
-
-        // Need updated and use laravel 11 defered function
-        $this->deleteFileIfExists($conversation->file);
-
-        $conversation->delete();
-    }
-
     private function deleteFileIfExists(?string $filePath): void
     {
         if ($filePath) {
             try {
                 $path = parse_url($filePath, PHP_URL_PATH) ?: '';
                 Storage::disk('s3')->delete(ltrim($path, '/'));
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 Log::error('S3 file deletion error', ['file' => $filePath, 'error' => $e->getMessage()]);
             }
         }

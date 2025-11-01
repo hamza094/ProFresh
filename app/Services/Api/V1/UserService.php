@@ -1,9 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Services\Api\V1;
 
 use App\Events\PasswordUpdateEvent;
 use App\Models\User;
+use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
@@ -15,7 +18,7 @@ class UserService
      */
     public function updateUser(User $user, array $data): void
     {
-        DB::transaction(function () use ($user, $data) {
+        DB::transaction(function () use ($user, $data): void {
             $data = collect($data);
             $userKeys = ['name', 'email', 'username'];
 
@@ -35,7 +38,7 @@ class UserService
             $user->password = Hash::make($password);
             $user->save();
             event(new PasswordUpdateEvent($user, now()->toDayDateTimeString()));
-        } catch (\Exception) {
+        } catch (Exception) {
             throw ValidationException::withMessages([
                 'password' => 'Unable to update password. Please try again later.',
             ]);

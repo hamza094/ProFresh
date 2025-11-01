@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Feature\Api\Controllers\Zoom;
 
 use App\Exceptions\Integrations\Zoom\ZoomException;
@@ -16,13 +18,11 @@ class DeleteMeetingTest extends TestCase
     /** @test */
     public function meeting_can_be_deleted()
     {
-        $zoomFake = $this->fakeZoom();
+        $this->fakeZoom();
 
         $meeting = Meeting::factory()
             ->for($this->project)
             ->create(['user_id' => $this->user->id]);
-
-        $meetingId = $meeting->id;
 
         $this->deleteJson('/api/v1/projects/'.$this->project->slug.'/meetings/'.$meeting->id);
 
@@ -38,7 +38,7 @@ class DeleteMeetingTest extends TestCase
 
         $meetingId = $meeting->id;
 
-        $zoomFake = $this->fakeZoom()->shouldFailWithException(
+        $this->fakeZoom()->shouldFailWithException(
             new ZoomException('Test error message')
         );
 

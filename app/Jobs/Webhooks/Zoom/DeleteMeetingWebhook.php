@@ -1,8 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Jobs\Webhooks\Zoom;
 
 use App\Models\Meeting;
+use Exception;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -52,7 +55,7 @@ class DeleteMeetingWebhook implements ShouldQueue
         }
     }
 
-    public function failed(\Exception $exception): void
+    public function failed(Exception $exception): void
     {
         Log::channel('webhook')->error('Delete Meeting webhook job failed', [
             'error' => $exception->getMessage(),

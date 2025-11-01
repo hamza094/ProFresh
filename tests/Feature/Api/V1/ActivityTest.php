@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Feature\Api\V1;
 
 use App\Traits\ProjectSetup;
@@ -41,7 +43,7 @@ class ActivityTest extends TestCase
     /** @test */
     public function it_filters_activities_by_authenticated_user()
     {
-        $task = $this->project->addTask('test task');
+        $this->project->addTask('test task');
 
         $response = $this->getJson($this->project->path().'/activities?mine='.$this->project->user->id)->assertOk();
 
@@ -51,7 +53,7 @@ class ActivityTest extends TestCase
     /** @test */
     public function it_shows_error_when_no_related_activities_are_found()
     {
-        $task = $this->project->addTask('test task');
+        $this->project->addTask('test task');
 
         $response = $this->getJson($this->project->path().'/activities?members=1')
             ->assertOk();

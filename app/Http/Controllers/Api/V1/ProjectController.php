@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Api\ApiController;
@@ -10,6 +12,7 @@ use App\Http\Resources\Api\V1\ProjectsResource;
 use App\Models\Project;
 use App\Services\Api\V1\ProjectService;
 use Auth;
+use Exception;
 use F9Web\ApiResponseHelpers;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -41,7 +44,7 @@ class ProjectController extends ApiController
 
             DB::commit();
 
-        } catch (\Exception $ex) {
+        } catch (Exception $ex) {
 
             DB::rollBack();
 

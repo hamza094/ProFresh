@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Feature\Api\V1\ProjectDashboard;
 
 use App\Models\Project;
@@ -97,7 +99,7 @@ class UserProjectsPageTest extends TestCase
     /** @test */
     public function auth_user_can_sort_projects_by_latest()
     {
-        $oldProject = Project::factory()->create([
+        Project::factory()->create([
             'name' => 'Old Project',
             'user_id' => $this->user->id,
             'created_at' => now()->subDays(5),
@@ -113,13 +115,12 @@ class UserProjectsPageTest extends TestCase
     /** @test */
     public function auth_user_can_sort_projects_by_oldest()
     {
-        $oldProject = Project::factory()->create([
+        Project::factory()->create([
             'name' => 'Old Project',
             'user_id' => $this->user->id,
             'created_at' => now()->subDays(5),
         ]);
-
-        $latestProject = $this->project; // Assuming this is the default project created in ProjectSetup
+        // Assuming this is the default project created in ProjectSetup
 
         $response = $this->getJson(route('user.projects', ['sort' => 'oldest']));
         $projects = $response->json('projects.data');

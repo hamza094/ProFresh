@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Services\Api\V1\Admin\Integration;
 
 use App\Collections\Paddle\DataCollection;
@@ -11,11 +13,6 @@ use App\Interfaces\PaddleApi;
 
 final class PaddleService implements PaddleApi
 {
-    private function connector(): PaddleConnector
-    {
-        return app(PaddleConnector::class);
-    }
-
     public function subscriptionUsersList(UserSubscriptionData $listData): DataCollection
     {
         $subscriptionsData = $this->connector()
@@ -24,7 +21,7 @@ final class PaddleService implements PaddleApi
 
         $subscriptions = collect($subscriptionsData['response']);
 
-        $filteredSubscriptions = $subscriptions->map(fn ($subscription) => new Data(
+        $filteredSubscriptions = $subscriptions->map(fn ($subscription): Data => new Data(
             $subscription['user_id'] ?? 0,
             $subscription['user_email'] ?? 0,
             $subscription['signup_date'] ?? 0,
@@ -35,5 +32,10 @@ final class PaddleService implements PaddleApi
         ))->filter();
 
         return DataCollection::make($filteredSubscriptions);
+    }
+
+    private function connector(): PaddleConnector
+    {
+        return app(PaddleConnector::class);
     }
 }

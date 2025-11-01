@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Services\Api\V1\Dashboard;
 
 use App\Enums\InsightPriority;

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Feature\Api\V1;
 
 use App\Models\User;
@@ -17,7 +19,7 @@ class UserTokenTest extends TestCase
     {
         parent::setUp();
         // create a user
-        $user = User::factory()->create([
+        User::factory()->create([
             'email' => 'johndoe@example.org',
             'password' => Hash::make('testpassword'),
             'name' => 'jon doe',
@@ -34,7 +36,7 @@ class UserTokenTest extends TestCase
             ['*'],
         );
 
-        $token = $user->createToken('Test Token', ['*']);
+        $user->createToken('Test Token', ['*']);
         $response = $this->getJson('/api/v1/api-tokens');
         $response->assertOk();
         $response->assertJsonFragment(['name' => 'Test Token']);

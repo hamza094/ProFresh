@@ -20,37 +20,6 @@ class ProjectInsightsRequest extends FormRequest
         return true;
     }
 
-    protected function prepareForValidation(): void
-    {
-        $rawSections = $this->input('sections');
-
-        if ($rawSections === null) {
-            $this->merge(['sections' => self::DEFAULT_SECTIONS]);
-
-            return;
-        }
-
-        if (is_array($rawSections)) {
-            $this->merge(['sections' => $this->normalizeSectionsArray($rawSections)]);
-        }
-    }
-
-    /**
-     * Normalize a raw sections array to a cleaned list of strings
-     *
-     * @param  array<int,mixed>  $sections
-     * @return array<int,string>
-     */
-    private function normalizeSectionsArray(array $sections): array
-    {
-        return collect($sections)
-            ->map(fn ($value) => is_scalar($value) ? trim((string) $value) : null)
-            ->filter(fn ($value) => $value !== null && $value !== '')
-            ->unique(null, true)
-            ->values()
-            ->all();
-    }
-
     /**
      * @return array<string, mixed>
      */
@@ -86,5 +55,36 @@ class ProjectInsightsRequest extends FormRequest
             'sections.*.string' => 'Each section must be a string.',
             'sections.*.in' => "Invalid section selected. Allowed values: {$allowed}.",
         ];
+    }
+
+    protected function prepareForValidation(): void
+    {
+        $rawSections = $this->input('sections');
+
+        if ($rawSections === null) {
+            $this->merge(['sections' => self::DEFAULT_SECTIONS]);
+
+            return;
+        }
+
+        if (is_array($rawSections)) {
+            $this->merge(['sections' => $this->normalizeSectionsArray($rawSections)]);
+        }
+    }
+
+    /**
+     * Normalize a raw sections array to a cleaned list of strings
+     *
+     * @param  array<int,mixed>  $sections
+     * @return array<int,string>
+     */
+    private function normalizeSectionsArray(array $sections): array
+    {
+        return collect($sections)
+            ->map(fn ($value): ?string => is_scalar($value) ? trim((string) $value) : null)
+            ->filter(fn ($value): bool => $value !== null && $value !== '')
+            ->unique(null, true)
+            ->values()
+            ->all();
     }
 }

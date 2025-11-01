@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Services\Api\V1;
 
 use App\Enums\StageStatus;
@@ -13,7 +15,7 @@ class FeatureService
 
     public function updateStageStatus($project, array $data)
     {
-        DB::transaction(function () use ($project, $data) {
+        DB::transaction(function () use ($project, $data): void {
 
             $project->stage()->associate($data['stage']);
 
@@ -25,13 +27,6 @@ class FeatureService
         });
 
         return $project;
-    }
-
-    private function getPostponedReason($project, array $data): ?string
-    {
-        return ($project->stage->name === StageStatus::Postponed->value && ! empty($data['postponed_reason']))
-            ? $data['postponed_reason']
-            : null;
     }
 
     public function excelExport($project)
@@ -48,5 +43,12 @@ class FeatureService
     public function recordActivity($project, $activity, $info)
     {
         $project->recordActivity($activity, $info);
+    }
+
+    private function getPostponedReason($project, array $data): ?string
+    {
+        return ($project->stage->name === StageStatus::Postponed->value && ! empty($data['postponed_reason']))
+            ? $data['postponed_reason']
+            : null;
     }
 }

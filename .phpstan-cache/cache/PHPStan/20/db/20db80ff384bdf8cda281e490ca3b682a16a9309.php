@@ -2,6 +2,6 @@
 
 // variadic-method-App\Actions\DeleteProfileAction-execute-D:\apps\profresh\app\Actions\DeleteProfileAction.php
 return \PHPStan\Cache\CacheItem::__set_state(array(
-   'variableKey' => '1761209531-v4',
+   'variableKey' => '1761981342-v4',
    'data' => false,
 ));

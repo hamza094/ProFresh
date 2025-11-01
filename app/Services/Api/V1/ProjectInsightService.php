@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Services\Api\V1;
 
 use App\Actions\ProjectMetrics\TaskHealthMetricAction;
@@ -34,28 +36,6 @@ final class ProjectInsightService
     }
 
     /**
-     * Setup insight builders mapping
-     */
-    private function setupBuilders(): void
-    {
-        // Each builder receives the metrics DTO and an optional Project instance
-        $this->insightBuilders = [
-            'health' => fn (ProjectMetricsDto $m, ?Project $project = null) => $this->healthBuilder->build($m->health),
-
-            'task-health' => fn (ProjectMetricsDto $m, ?Project $project = null) => $this->taskHealthBuilder->build(
-                $m->taskHealth,
-                $project instanceof Project ? ['summary' => $this->taskHealthAction->summary($project)] : []
-            ),
-            'collaboration' => fn (ProjectMetricsDto $m, ?Project $project = null) => $this->collaborationBuilder->build(
-                $m->collaborationScore,
-                ['details' => $this->getCollaborationDetails($project)]
-            ),
-            'risk' => fn (ProjectMetricsDto $m, ?Project $project = null) => $this->riskBuilder->build($m->upcomingRisk),
-            'stage' => fn (ProjectMetricsDto $m, ?Project $project = null) => $this->stageBuilder->build($m->stageProgress),
-        ];
-    }
-
-    /**
      * Get comprehensive project insights with actionable recommendations
      *
      * @param  array<string>  $sections
@@ -73,6 +53,28 @@ final class ProjectInsightService
     }
 
     /**
+     * Setup insight builders mapping
+     */
+    private function setupBuilders(): void
+    {
+        // Each builder receives the metrics DTO and an optional Project instance
+        $this->insightBuilders = [
+            'health' => fn (ProjectMetricsDto $m, ?Project $project = null): array => $this->healthBuilder->build($m->health),
+
+            'task-health' => fn (ProjectMetricsDto $m, ?Project $project = null): array => $this->taskHealthBuilder->build(
+                $m->taskHealth,
+                $project instanceof Project ? ['summary' => $this->taskHealthAction->summary($project)] : []
+            ),
+            'collaboration' => fn (ProjectMetricsDto $m, ?Project $project = null): array => $this->collaborationBuilder->build(
+                $m->collaborationScore,
+                ['details' => $this->getCollaborationDetails($project)]
+            ),
+            'risk' => fn (ProjectMetricsDto $m, ?Project $project = null): array => $this->riskBuilder->build($m->upcomingRisk),
+            'stage' => fn (ProjectMetricsDto $m, ?Project $project = null): array => $this->stageBuilder->build($m->stageProgress),
+        ];
+    }
+
+    /**
      * Generate actionable insights based on project data
      *
      * @param  array<string>  $sections
@@ -81,9 +83,9 @@ final class ProjectInsightService
     private function buildInsights(ProjectMetricsDto $metrics, array $sections, ?Project $project = null): array
     {
         return collect($this->insightBuilders)
-            ->filter(fn ($builder, $section) => $this->shouldIncludeInsight($section, $sections))
-            ->filter(fn ($builder, $section) => $this->hasData($metrics, $section))
-            ->map(fn ($builder) => $builder($metrics, $project))
+            ->filter(fn ($builder, $section): bool => $this->shouldIncludeInsight($section, $sections))
+            ->filter(fn ($builder, $section): bool => $this->hasData($metrics, $section))
+            ->map(fn ($builder): mixed => $builder($metrics, $project))
             ->values()
             ->toArray();
     }

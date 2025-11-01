@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Unit\Api\V1;
 
 use App\Traits\HasSubscription;
@@ -9,7 +11,7 @@ class DummyUserWithSubscription
 {
     use HasSubscription;
 
-    public $mockSubscription = null;
+    public $mockSubscription;
 
     public function subscription($name)
     {

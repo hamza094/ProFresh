@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Providers;
 
 use App\Interfaces\Paddle;
@@ -53,7 +55,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Scramble::afterOpenApiGenerated(function (OpenApi $openApi) {
+        Scramble::afterOpenApiGenerated(function (OpenApi $openApi): void {
             $openApi->secure(
                 SecurityScheme::http('bearer')
             );

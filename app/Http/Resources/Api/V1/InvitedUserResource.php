@@ -1,10 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Resources\Api\V1;
 
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use JsonSerializable;
 
 /**
  * @mixin \App\Models\User
@@ -14,7 +17,7 @@ class InvitedUserResource extends JsonResource
     /**
      * Transform the resource into an array.
      *
-     * @return array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable
+     * @return array|\Illuminate\Contracts\Support\Arrayable|JsonSerializable
      */
     public function toArray(Request $request): array
     {
@@ -52,7 +55,7 @@ class InvitedUserResource extends JsonResource
 
             'invitation_sent_at' => $this->when(
                 $request->routeIs('project.pending.invitation') && $this->pivot,
-                fn () => Carbon::parse($this->pivot->created_at)->format('M j, Y \a\t g:i A')
+                fn (): string => Carbon::parse($this->pivot->created_at)->format('M j, Y \a\t g:i A')
             ),
 
             /**

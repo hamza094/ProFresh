@@ -1,11 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use App\Enums\OAuthProvider;
 use App\Jobs\QueuedPasswordResetJob;
 use App\Jobs\QueuedVerifyEmailJob;
 use App\Traits\HasSubscription;
+use DateTimeImmutable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -27,40 +30,6 @@ class User extends Authenticatable implements MustVerifyEmail, TwoFactorAuthenti
     use Billable, HasApiTokens, HasFactory, HasRoles, HasSubscription, Notifiable, SoftDeletes,TwoFactorAuthentication;
 
     protected $guarded = [];
-
-    public function guardName(): string
-    {
-        return 'sanctum';
-    }
-
-    public function getRouteKeyName(): string
-    {
-        return 'uuid';
-    }
-
-    // protected $appends = ['LastSeen'];
-
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
-    protected static function boot()
-    {
-        parent::boot();
-
-        static::creating(function ($user) {
-            $user->uuid = (string) Str::uuid();
-        });
-
-        static::deleting(function ($user) {
-            $user->projects()->delete();
-        });
-
-        static::forceDeleting(function ($user) {
-            $user->notifications()->delete();
-        });
-    }
 
     /**
      * The attributes that should be hidden for arrays.
@@ -92,6 +61,16 @@ class User extends Authenticatable implements MustVerifyEmail, TwoFactorAuthenti
         'zoom_refresh_token' => 'encrypted',
         'zoom_expires_at' => 'datetime',
     ];
+
+    public function guardName(): string
+    {
+        return 'sanctum';
+    }
+
+    public function getRouteKeyName(): string
+    {
+        return 'uuid';
+    }
 
     public function sendEmailVerificationNotification(): void
     {
@@ -211,7 +190,7 @@ class User extends Authenticatable implements MustVerifyEmail, TwoFactorAuthenti
     public function updateZoomOAuthDetails(
         string $accessToken,
         string $refreshToken,
-        \DateTimeImmutable $expiresAt
+        DateTimeImmutable $expiresAt
     ): void {
         $this->zoom_access_token = $accessToken;
         $this->zoom_refresh_token = $refreshToken;
@@ -248,5 +227,29 @@ class User extends Authenticatable implements MustVerifyEmail, TwoFactorAuthenti
             'avatar_path' => $this->avatar_path,
             'email' => $this->email,
         ];
+    }
+
+    // protected $appends = ['LastSeen'];
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($user): void {
+            $user->uuid = (string) Str::uuid();
+        });
+
+        static::deleting(function ($user): void {
+            $user->projects()->delete();
+        });
+
+        static::forceDeleting(function ($user): void {
+            $user->notifications()->delete();
+        });
     }
 }

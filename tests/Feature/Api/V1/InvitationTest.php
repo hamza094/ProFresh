@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Feature\Api\V1;
 
 use App\Models\User;
@@ -17,7 +19,7 @@ class InvitationTest extends TestCase
     {
         $InvitedUser = User::factory()->create();
 
-        $response = $this->postJson($this->project->path().
+        $this->postJson($this->project->path().
          '/invitations',
             [
                 'email' => $InvitedUser->email,
@@ -41,7 +43,7 @@ class InvitationTest extends TestCase
         ])
             ->assertUnprocessable();
 
-        $response = $this->postJson($this->project->path().'/invitations',
+        $this->postJson($this->project->path().'/invitations',
             ['email' => $this->project->user->email])
             ->assertUnprocessable();
     }
@@ -66,7 +68,7 @@ class InvitationTest extends TestCase
 
         Sanctum::actingAs($invitedUser);
 
-        $response = $this->getJson($this->project->path().
+        $this->getJson($this->project->path().
             '/accept-invitation')
             ->assertJson([
                 'message' => 'You have accepted Project invitation',
@@ -87,7 +89,7 @@ class InvitationTest extends TestCase
 
         Sanctum::actingAs($user);
 
-        $response = $this->getJson($this->project->path().
+        $this->getJson($this->project->path().
             '/accept-invitation')
             ->assertForbidden();
     }
@@ -101,7 +103,7 @@ class InvitationTest extends TestCase
 
         Sanctum::actingAs($invitedUser);
 
-        $response = $this->getJson($this->project->path().'/reject/invitation')
+        $this->getJson($this->project->path().'/reject/invitation')
             ->assertJson([
                 'message' => 'You have rejected the invitation to join the project.',
                 'project' => ['id' => $this->project->id],
@@ -125,7 +127,7 @@ class InvitationTest extends TestCase
 
         $this->project->invite($invitedUser);
 
-        $response = $this->getJson(route('projects.cancel-invitation',
+        $this->getJson(route('projects.cancel-invitation',
             ['project' => $this->project, 'user' => $invitedUser,
             ]))
             ->assertJson([
@@ -146,7 +148,7 @@ class InvitationTest extends TestCase
 
         $this->project->members()->attach($memberUser, ['active' => true]);
 
-        $response = $this->getJson($this->project->path().'/remove/member/'.$memberUser->uuid)
+        $this->getJson($this->project->path().'/remove/member/'.$memberUser->uuid)
             ->assertJson([
                 'message' => "Member {$memberUser->name} has been removed from the project",
             ]);

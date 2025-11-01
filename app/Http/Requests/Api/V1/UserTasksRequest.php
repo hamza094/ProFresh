@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Requests\Api\V1;
 
 use Illuminate\Foundation\Http\FormRequest;
@@ -30,6 +32,20 @@ class UserTasksRequest extends FormRequest
     }
 
     /**
+     * Convenience: return only known filter keys
+     */
+    public function filters(): array
+    {
+        return $this->only([
+            'user_created',
+            'task_assigned',
+            'completed',
+            'overdue',
+            'remaining',
+        ]);
+    }
+
+    /**
      * Handle a passed validation attempt.
      */
     protected function passedValidation(): void
@@ -55,19 +71,5 @@ class UserTasksRequest extends FormRequest
         }
 
         return false;
-    }
-
-    /**
-     * Convenience: return only known filter keys
-     */
-    public function filters(): array
-    {
-        return $this->only([
-            'user_created',
-            'task_assigned',
-            'completed',
-            'overdue',
-            'remaining',
-        ]);
     }
 }

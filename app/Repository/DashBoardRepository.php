@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Repository;
 
 use App\Models\Activity;
@@ -22,12 +24,12 @@ class DashBoardRepository
         $year = $request->get('year');
         $month = $request->get('month');
 
-        $query = Project::leftJoin('project_members as pm', function ($join) use ($userId) {
+        $query = Project::leftJoin('project_members as pm', function ($join) use ($userId): void {
             $join->on('projects.id', '=', 'pm.project_id')
                 ->where('pm.user_id', $userId)
                 ->where('pm.active', 1);
         })
-            ->where(function ($query) use ($userId) {
+            ->where(function ($query) use ($userId): void {
                 $query->where('projects.user_id', $userId)
                     ->orWhere('pm.user_id', $userId);
             })
@@ -74,7 +76,7 @@ class DashBoardRepository
             ->whereBetween('created_at', [$startDate, $endDate])
             ->with([
                 'subject',
-                'project' => function ($query) {
+                'project' => function ($query): void {
                     $query->withTrashed();
                 },
                 'project.stage',

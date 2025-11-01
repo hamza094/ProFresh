@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Feature\Api\Services\Zoom\ZoomService;
 
 use App\Http\Integrations\Zoom\Requests\DeleteMeeting;
@@ -27,7 +29,7 @@ class MeetingDeleteTest extends TestCase
 
         $user = $this->userCreate(now()->addWeek());
 
-        $meeting = (new ZoomService)->deleteMeeting($meetingId, $user);
+        (new ZoomService)->deleteMeeting($meetingId, $user);
 
         Saloon::assertNotSent(GetRefreshTokenRequest::class);
 

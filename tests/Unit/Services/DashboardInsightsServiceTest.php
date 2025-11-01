@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Unit\Services;
 
 use App\Repository\DashboardInsightsRepository;
@@ -50,21 +52,9 @@ class DashboardInsightsServiceTest extends TestCase
         // Assert
         $this->assertNotEmpty($insights);
 
-        $this->assertTrue(collect($insights)->contains(function ($item) {
-            return $item['type'] === 'critical';
+        $this->assertTrue(collect($insights)->contains(fn ($item) => $item['type'] === 'critical'));
 
-            return $item['title'] === 'High Overdue TaskCount';
-
-            return $item['priority'] === 'high';
-        }));
-
-        $this->assertTrue(collect($insights)->contains(function ($item) {
-            return $item['type'] === 'warning';
-
-            return $item['title'] === 'Project Needs Attention';
-
-            return $item['priority'] === 'medium';
-        }));
+        $this->assertTrue(collect($insights)->contains(fn ($item) => $item['type'] === 'warning'));
     }
 
     /** @test */
@@ -83,13 +73,7 @@ class DashboardInsightsServiceTest extends TestCase
 
         // Assert
         $this->assertNotEmpty($insights);
-        $this->assertTrue(collect($insights)->contains(function ($item) {
-            return $item['type'] === 'info';
-
-            return $item['title'] === 'No Active Projects';
-
-            return $item['priority'] === 'medium';
-        }));
+        $this->assertTrue(collect($insights)->contains(fn ($item) => $item['type'] === 'info'));
     }
 
     /** @test */
@@ -108,13 +92,7 @@ class DashboardInsightsServiceTest extends TestCase
 
         // Assert
         $this->assertNotEmpty($insights);
-        $this->assertTrue(collect($insights)->contains(function ($item) {
-            return $item['type'] === 'success';
-
-            return $item['title'] === 'Portfolio Healthy';
-
-            return $item['priority'] === 'low';
-        }));
+        $this->assertTrue(collect($insights)->contains(fn ($item) => $item['type'] === 'success'));
     }
 
     /** @test */
@@ -133,12 +111,6 @@ class DashboardInsightsServiceTest extends TestCase
 
         // Assert
         $this->assertNotEmpty($insights);
-        $this->assertTrue(collect($insights)->contains(function ($item) {
-            return $item['type'] === 'warning';
-
-            return $item['title'] === 'Overdue Tasks Detected';
-
-            return $item['priority'] === 'high';
-        }));
+        $this->assertTrue(collect($insights)->contains(fn ($item) => $item['type'] === 'warning'));
     }
 }

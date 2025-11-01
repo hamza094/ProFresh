@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Resources\Api\V1;
 
 use App\Http\Resources\Api\V1\Admin\RolesResource;
@@ -68,7 +70,7 @@ class UserResource extends JsonResource
              *
              * @example 2 hours ago
              */
-            'verified' => $this->when($this->id == auth()->id(), fn () => $this->email_verified_at?->diffForHumans()),
+            'verified' => $this->when($this->id === auth()->id(), fn () => $this->email_verified_at?->diffForHumans()),
 
             /**
              * Additional user info (profile details)

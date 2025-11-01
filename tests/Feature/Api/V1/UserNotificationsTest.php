@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Feature\Api\V1;
 
 use App\Enums\NotificationFilter;
@@ -16,7 +18,7 @@ class UserNotificationsTest extends TestCase
     /** @test */
     public function auth_user_can_fetch_there_notifications()
     {
-        $user = $this->actingAsInvitedUser();
+        $this->actingAsInvitedUser();
 
         $response = $this->withoutExceptionHandling()->getJson('/api/v1/notifications');
 
@@ -79,8 +81,13 @@ class UserNotificationsTest extends TestCase
         $this->assertNotNull($notification->fresh()->read_at);
 
         // Update status to unread
-        $response = $this->patchJson("/api/v1/notifications/{$notification->id}/status", ['status' => 'unread']);
+        $this->patchJson("/api/v1/notifications/{$notification->id}/status", ['status' => 'unread']);
         $this->assertNull($notification->fresh()->read_at);
+    }
+
+    public function projectUpdate($project, $user)
+    {
+        $this->patchJson($project->path(), ['notes' => 'Project notes updated.']);
     }
 
     protected function sendInvitationToUser($project, $user)
@@ -97,11 +104,6 @@ class UserNotificationsTest extends TestCase
         Sanctum::actingAs($user);
 
         return $user;
-    }
-
-    public function projectUpdate($project, $user)
-    {
-        $this->patchJson($project->path(), ['notes' => 'Project notes updated.']);
     }
 
     protected function addMember($project, $user)

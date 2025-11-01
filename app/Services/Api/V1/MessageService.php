@@ -1,13 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Services\Api\V1;
 
 use App\Models\Message;
 use App\Models\Project;
+use DateTimeImmutable;
 use F9Web\ApiResponseHelpers;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Bus;
 use Illuminate\Validation\ValidationException;
+use Timezone;
 
 class MessageService
 {
@@ -50,7 +54,7 @@ class MessageService
             'message' => request()->message,
         ]);
 
-        if ($message->type == 'mail') {
+        if ($message->type === 'mail') {
             $message->subject = request()->get('subject');
             $message->save();
         }
@@ -69,19 +73,19 @@ class MessageService
 
     public function sendNow(Project $project, Message $message): void
     {
-        $message->type == 'mail' ? $job = \App\Jobs\MailMessage::class :
+        $message->type === 'mail' ? $job = \App\Jobs\MailMessage::class :
         $job = \App\Jobs\SmsMessage::class;
 
         $jobs = $message->users
-            ->map(fn ($user) => new $job($project, $message, $user));
+            ->map(fn ($user): \App\Jobs\MailMessage|\App\Jobs\SmsMessage => new $job($project, $message, $user));
 
         $batch = Bus::batch($jobs)
             ->allowFailures()
-            ->then(function () use ($message) {
+            ->then(function () use ($message): void {
                 $message->delivered = true;
                 $message->save();
                 // notify user on batch success
-            })->catch(function (Batch $batch, Throwable $e) {
+            })->catch(function (Batch $batch, Throwable $e): void {
                 // notify on job failure
             })->dispatch();
 
@@ -97,11 +101,11 @@ class MessageService
 
     private function saveMessageDateAndTime(Message $message)
     {
-        $datetime = new \DateTime(request()->date.' '.request()->time);
+        $datetime = new DateTimeImmutable(request()->date.' '.request()->time);
 
         $formattedTime = $datetime->format('Y-m-d H:i:s');
 
-        $message->delivered_at = \Timezone::convertFromLocal($formattedTime);
+        $message->delivered_at = Timezone::convertFromLocal($formattedTime);
 
         $message->save();
     }

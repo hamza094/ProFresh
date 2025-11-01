@@ -1,8 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Jobs\Webhooks\Zoom;
 
 use App\Models\Meeting;
+use Exception;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -55,21 +58,7 @@ class UpdateMeetingWebhook implements ShouldQueue
         }
     }
 
-    /**
-     * @param  array<string, mixed>  $updateData
-     */
-    private function isMeetingUpdated(Meeting $meeting, array $updateData): bool
-    {
-        foreach ($updateData as $key => $value) {
-            if ($value !== $meeting->$key) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    public function failed(\Exception $exception): void
+    public function failed(Exception $exception): void
     {
         Log::channel('webhook')->error('Update Meeting webhook job failed', [
             'error' => $exception->getMessage(),
@@ -83,5 +72,19 @@ class UpdateMeetingWebhook implements ShouldQueue
     public function backoff(): array
     {
         return [5, 30];
+    }
+
+    /**
+     * @param  array<string, mixed>  $updateData
+     */
+    private function isMeetingUpdated(Meeting $meeting, array $updateData): bool
+    {
+        foreach ($updateData as $key => $value) {
+            if ($value !== $meeting->$key) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

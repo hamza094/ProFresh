@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Feature\Api\Auth;
 
 use App\Models\User;
@@ -36,9 +38,7 @@ class VerificationTest extends TestCase
             ->assertSuccessful()
             ->assertJsonFragment(['status' => 'verification.verified']);
 
-        Event::assertDispatched(Verified::class, function (Verified $e) use ($user) {
-            return $e->user->is($user);
-        });
+        Event::assertDispatched(Verified::class, fn (Verified $e) => $e->user->is($user));
     }
 
     /** @test */
@@ -85,7 +85,7 @@ class VerificationTest extends TestCase
 
         Notification::fake();
 
-        $response = $this->postJson('/api/v1/email/resend/'.$user->uuid, ['email' => $user->email])
+        $this->postJson('/api/v1/email/resend/'.$user->uuid, ['email' => $user->email])
             ->assertUnprocessable()
             ->assertJsonFragment([
                 'errors' => [

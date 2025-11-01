@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Feature\Api\Jobs\Webhooks\Zoom;
 
 use App\Events\MeetingStatusUpdate;
@@ -60,13 +62,9 @@ class StartMeetingWebhookTest extends TestCase
 
         $this->assertEquals('started', $meeting->fresh()->status);
 
-        Event::assertDispatched(function (MeetingStatusUpdate $event) use ($meeting) {
-            return $event->meeting->id === $meeting->id;
-        });
+        Event::assertDispatched(fn (MeetingStatusUpdate $event) => $event->meeting->id === $meeting->id);
 
-        Notification::assertSentTo($users, MeetingStarted::class, function ($notification, $channels) {
-            return $channels === ['mail', 'database', 'broadcast'];
-        });
+        Notification::assertSentTo($users, MeetingStarted::class, fn ($notification, $channels) => $channels === ['mail', 'database', 'broadcast']);
     }
 
     private function inviteAndActivateUser($project, $user)

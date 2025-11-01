@@ -1,9 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Resources\Api\V1;
 
 use Carbon\Carbon;
 use Illuminate\Http\Resources\Json\JsonResource;
+use JsonSerializable;
+use Timezone;
 
 class ReceiptResource extends JsonResource
 {
@@ -11,13 +15,13 @@ class ReceiptResource extends JsonResource
      * Transform the resource into an array.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable
+     * @return array|\Illuminate\Contracts\Support\Arrayable|JsonSerializable
      */
     public function toArray($request)
     {
         return [
             'id' => $this->id,
-            'created_at' => \Timezone::convertToLocal(Carbon::parse($this->created_at)),
+            'created_at' => Timezone::convertToLocal(Carbon::parse($this->created_at)),
             'currency' => $this->currency,
             'quantity' => $this->quantity,
             'receipt_url' => $this->receipt_url,
