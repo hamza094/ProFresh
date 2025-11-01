@@ -23,6 +23,8 @@ use Saloon\Http\Response as SaloonResponse;
 
 final class ZoomService implements Zoom
 {
+    private const USER_NOT_CONNECTED = 'User is not connected to Zoom.';
+
     public function getAuthRedirectDetails(): AuthorizationRedirectDetails
     {
         $codeVerifier = Str::random(random_int(43, 128));
@@ -81,7 +83,7 @@ final class ZoomService implements Zoom
     public function createMeeting(array $validated, User $user): Meeting
     {
         if (! $user->isConnectedToZoom()) {
-            throw new ZoomException('User is not connected to Zoom.');
+            throw new ZoomException(self::USER_NOT_CONNECTED);
         }
 
         return $this->connectorForUser($user)
@@ -95,7 +97,7 @@ final class ZoomService implements Zoom
     public function updateMeeting(array $validated, User $user): SaloonResponse
     {
         if (! $user->isConnectedToZoom()) {
-            throw new ZoomException('User is not connected to Zoom.');
+            throw new ZoomException(self::USER_NOT_CONNECTED);
         }
 
         return $this->connectorForUser($user)
@@ -106,7 +108,7 @@ final class ZoomService implements Zoom
     public function deleteMeeting(int $meetingId, User $user): SaloonResponse
     {
         if (! $user->isConnectedToZoom()) {
-            throw new ZoomException('User is not connected to Zoom.');
+            throw new ZoomException(self::USER_NOT_CONNECTED);
         }
 
         return $this->connectorForUser($user)
@@ -117,7 +119,7 @@ final class ZoomService implements Zoom
     public function getZakToken(User $user): string
     {
         if (! $user->isConnectedToZoom()) {
-            throw new ZoomException('User is not connected to Zoom.');
+            throw new ZoomException(self::USER_NOT_CONNECTED);
         }
 
         $response = $this->connectorForUser($user)

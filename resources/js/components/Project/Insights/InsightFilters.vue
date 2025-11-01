@@ -78,7 +78,15 @@ export default {
     },
 
     emitChange(next) {
-      const value = Array.isArray(next) ? next : Array.isArray(this.activeSections) ? this.activeSections : ['all'];
+      let value;
+      if (Array.isArray(next)) {
+        value = next;
+      } else if (Array.isArray(this.activeSections)) {
+        value = this.activeSections;
+      } else {
+        value = ['all'];
+      }
+
       this.$emit('filter-change', [...value]);
     },
   },

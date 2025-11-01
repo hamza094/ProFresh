@@ -41,7 +41,7 @@ class TaskMembersRequest extends FormRequest
 
     protected function membersValidation()
     {
-        return function ($attribute, $value, $fail): void {
+        return function ($value, $fail): void {
             $existingMembersCount = $this->task->assignee()
                 ->whereIn('user_id', $value)
                 ->count();

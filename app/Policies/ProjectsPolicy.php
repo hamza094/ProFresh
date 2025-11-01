@@ -23,7 +23,7 @@ class ProjectsPolicy
         //
     }
 
-    public function before(User $user, string $ability): ?bool
+    public function before(User $user): ?bool
     {
         if ($user->isAdmin()) {
             return true;

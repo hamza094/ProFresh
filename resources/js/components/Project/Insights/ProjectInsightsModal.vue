@@ -153,7 +153,7 @@ export default {
       try {
         // Treat empty or ['all'] as null so backend defaults apply
         const current = Array.isArray(this.activeSections) ? this.activeSections.filter(Boolean) : [];
-        const useSections = !current.length || current.indexOf('all') !== -1 ? null : current;
+        const useSections = !current.length || current.includes('all') ? null : current;
 
         const result = await this.loadCurrentProjectInsights(useSections, !bypassCache);
         // Assign from flattened API response

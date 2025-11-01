@@ -53,9 +53,8 @@ class ProjectInsightsPreloader
         $metricTypes = collect($sections)
             ->flatMap(function (string $section) use ($sectionToTypesMap): array {
                 /** @var array<int,string> $types */
-                $types = $sectionToTypesMap[$section] ?? [];
+                return $sectionToTypesMap[$section] ?? [];
 
-                return $types;
             })
             ->unique()
             ->values();

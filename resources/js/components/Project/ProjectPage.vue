@@ -313,7 +313,8 @@ export default {
       if (!this.projectId) {
         return;
       }
-      $event = Echo.private(`project.${this.projectId}.health`).listen('ProjectHealthUpdated', (e) => {
+      
+      Echo.private(`project.${this.projectId}.health`).listen('ProjectHealthUpdated', (e) => {
         // Prefer concise alias `score`, fallback to `health_score`
         const newScore = e.health_score ?? null;
         const status = e.health_status ?? null;

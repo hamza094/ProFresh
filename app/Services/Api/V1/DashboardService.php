@@ -50,18 +50,17 @@ class DashboardService
     private function filterProjects(User $user, DashboardProjectRequest $request): Collection
     {
         $filters = $this->getFilters($request);
+
         $query = $filters['member']
             ? $user->members(true)
             : $user->projects();
-        $results = $query
+
+        return $query
             ->with(['stage', 'user'])
             ->when($filters['abandoned'], fn ($query) => $query->trashed())
             ->when($filters['search'], fn ($query) => $query->search($filters['search']))
             ->sortBy($filters['sort'])
             ->get();
-
-        /** @var Collection<int, \App\Models\Project> $results */
-        return $results;
     }
 
     /**

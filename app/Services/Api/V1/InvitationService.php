@@ -101,7 +101,7 @@ class InvitationService
     /**
      * @return EloquentCollection<int, User>
      */
-    public function usersSearch(Project $project, Request $request): Collection
+    public function usersSearch(Request $request): Collection
     {
         $searchTerm = $request->input('query');
 

@@ -30,7 +30,7 @@ class UserInfoFactory extends Factory
             'company' => $this->faker->company,
             'position' => $this->faker->jobTitle,
             'address' => $this->faker->address,
-            'bio' => $this->faker->text($maxNbChars = 1000),
+            'bio' => $this->faker->text(1000),
         ];
     }
 }

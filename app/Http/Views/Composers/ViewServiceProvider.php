@@ -27,12 +27,6 @@ class ViewServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        // Using class based composers...
-        // View::composer('profile', ProfileComposer::class);
 
-        // Using closure based composers...
-        View::composer('dashboard', function ($view): void {
-            //
-        });
     }
 }

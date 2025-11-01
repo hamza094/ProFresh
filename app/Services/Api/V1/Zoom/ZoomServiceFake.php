@@ -118,7 +118,9 @@ final class ZoomServiceFake implements Zoom
             throw $this->failureException;
         }
 
-        return response()->json(204);
+        // Simulate a successful deletion: return an empty JSON response with 204 No Content.
+        
+        return response()->json(null, 204);
     }
 
     public function getZakToken(User $user): string
