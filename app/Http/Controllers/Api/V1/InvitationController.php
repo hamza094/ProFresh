@@ -33,7 +33,7 @@ class InvitationController extends ApiController
      */
     public function search(Project $project, Request $request): AnonymousResourceCollection
     {
-        $results = $this->invitationService->usersSearch($project, $request);
+        $results = $this->invitationService->usersSearch($request);
 
         return TaskMemberResource::collection($results);
     }

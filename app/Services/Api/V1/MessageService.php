@@ -17,7 +17,7 @@ class MessageService
 {
     use ApiResponseHelpers;
 
-    public function checkOptionSelect($request)
+    public function checkOptionSelect($request): void
     {
         if (! $request->mail && ! $request->sms) {
             throw ValidationException::withMessages([
@@ -64,7 +64,7 @@ class MessageService
         return $message;
     }
 
-    public function sendOrScheduledMessage($project, $message)
+    public function sendOrScheduledMessage($project, $message): void
     {
         request()->date ?
         $this->scheduledMessage($message) :
@@ -99,7 +99,7 @@ class MessageService
         $this->saveMessageDateAndTime($message);
     }
 
-    private function saveMessageDateAndTime(Message $message)
+    private function saveMessageDateAndTime(Message $message): void
     {
         $datetime = new DateTimeImmutable(request()->date.' '.request()->time);
 

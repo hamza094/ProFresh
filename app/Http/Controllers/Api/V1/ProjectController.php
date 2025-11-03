@@ -62,7 +62,7 @@ class ProjectController extends ApiController
      *
      * Returns detailed information about a project including its members, conversations, and activities
      */
-    public function show(Project $project)
+    public function show(Project $project): ProjectResource
     {
         $project->load(['stage', 'meetings', 'activeMembers', 'limitedActivities']);
 
@@ -101,7 +101,7 @@ class ProjectController extends ApiController
      *
      * @param  int  $project
      */
-    public function destroy(Project $project)
+    public function destroy(Project $project): JsonResponse
     {
         $this->authorize('manage', $project);
 
@@ -112,7 +112,7 @@ class ProjectController extends ApiController
         ]);
     }
 
-    public function restore(Project $project)
+    public function restore(Project $project): JsonResponse
     {
         $project->restore();
 
@@ -121,7 +121,7 @@ class ProjectController extends ApiController
         ]);
     }
 
-    public function delete(Project $project)
+    public function delete(Project $project): JsonResponse
     {
         $project->forceDelete();
 

@@ -19,7 +19,7 @@ class MeetingDeleteTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    public function meeting_can_be_deleted_in_zoom()
+    public function meeting_can_be_deleted_in_zoom(): void
     {
         $meetingId = 12378;
 

@@ -35,7 +35,7 @@ class Message extends Model
         return $this->belongsToMany(User::class);
     }
 
-    public function scopeMessageScheduled($query)
+    public function scopeMessageScheduled($query): void
     {
         $query
             ->where('delivered', false)

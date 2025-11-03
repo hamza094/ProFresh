@@ -22,12 +22,10 @@ class StartMeetingWebhookTest extends TestCase
 
     /**
      * A basic feature test example.
-     *
-     * @return void
      */
 
     /** @test */
-    public function notifies_project_members_on_meeting_start()
+    public function notifies_project_members_on_meeting_start(): void
     {
         Notification::fake();
         Event::fake();
@@ -62,12 +60,12 @@ class StartMeetingWebhookTest extends TestCase
 
         $this->assertEquals('started', $meeting->fresh()->status);
 
-        Event::assertDispatched(fn (MeetingStatusUpdate $event) => $event->meeting->id === $meeting->id);
+        Event::assertDispatched(fn (MeetingStatusUpdate $event): bool => $event->meeting->id === $meeting->id);
 
-        Notification::assertSentTo($users, MeetingStarted::class, fn ($notification, $channels) => $channels === ['mail', 'database', 'broadcast']);
+        Notification::assertSentTo($users, MeetingStarted::class, fn ($notification, $channels): bool => $channels === ['mail', 'database', 'broadcast']);
     }
 
-    private function inviteAndActivateUser($project, $user)
+    private function inviteAndActivateUser($project, \Illuminate\Database\Eloquent\Model $user): void
     {
         $project->invite($user);
         $project->members()->updateExistingPivot($user->id, ['active' => true]);

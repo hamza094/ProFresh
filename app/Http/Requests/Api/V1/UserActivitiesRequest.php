@@ -19,10 +19,8 @@ class UserActivitiesRequest extends FormRequest
 
     /**
      * Get the validation rules that apply to the request.
-     *
-     * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             'start_date' => 'required|date_format:Y-m-d',

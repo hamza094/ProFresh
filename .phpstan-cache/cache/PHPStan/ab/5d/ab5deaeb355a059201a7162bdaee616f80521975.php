@@ -7,7 +7,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
   array (
     'D:\\apps\\profresh\\vendor\\nette\\schema\\src\\Schema\\Context.php' => 
     array (
-      0 => 'a1f0b34eac134ead52282f3747a21b7d735c11d9',
+      0 => 'e42b7ff1a83d6ce0575bfb1351e457abc6770998',
       1 => 
       array (
         0 => 'nette\\schema\\context',
@@ -38,7 +38,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'D:\\apps\\profresh\\vendor\\nette\\schema\\src\\Schema\\Elements\\AnyOf.php' => 
     array (
-      0 => '414710a9e3262ad6d561e713773c3e268f34b44f',
+      0 => 'abb95c11af0f5f48025d83d34ae43abe8452ca53',
       1 => 
       array (
         0 => 'nette\\schema\\elements\\anyof',
@@ -61,7 +61,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'D:\\apps\\profresh\\vendor\\nette\\schema\\src\\Schema\\Elements\\Base.php' => 
     array (
-      0 => '5f17f0632b72113e75e11c4a3320bcf02efe9703',
+      0 => 'acc9af449a6664ad322de07c01274562fc7c8266',
       1 => 
       array (
         0 => 'nette\\schema\\elements\\base',
@@ -89,7 +89,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'D:\\apps\\profresh\\vendor\\nette\\schema\\src\\Schema\\Elements\\Structure.php' => 
     array (
-      0 => '0c281fc9427ca572c25a47af46579c29b1474e6e',
+      0 => '7a8ad015015796768136799f026cafc1945dbddf',
       1 => 
       array (
         0 => 'nette\\schema\\elements\\structure',
@@ -116,7 +116,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'D:\\apps\\profresh\\vendor\\nette\\schema\\src\\Schema\\Elements\\Type.php' => 
     array (
-      0 => 'ce314fdc4a731e5d3d5999c86954ee5c2b9776ac',
+      0 => '3a5643c9c47ef0bd09008187aa8db6c25c9bfdcf',
       1 => 
       array (
         0 => 'nette\\schema\\elements\\type',
@@ -142,7 +142,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'D:\\apps\\profresh\\vendor\\nette\\schema\\src\\Schema\\Expect.php' => 
     array (
-      0 => '8055b66c2364b901934ef6b57c27f1d7b1496ed8',
+      0 => '7afdb71012d8c0e0833ea690e6bc762e8f3e5cc3',
       1 => 
       array (
         0 => 'nette\\schema\\expect',
@@ -164,7 +164,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'D:\\apps\\profresh\\vendor\\nette\\schema\\src\\Schema\\Helpers.php' => 
     array (
-      0 => '0f8d327f5a4b38e63b15474096cdda91292bb20e',
+      0 => 'f9ea82ab63f9f00cab7f2fd6edd6db74884c5621',
       1 => 
       array (
         0 => 'nette\\schema\\helpers',
@@ -187,7 +187,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'D:\\apps\\profresh\\vendor\\nette\\schema\\src\\Schema\\Message.php' => 
     array (
-      0 => '2525526ec0028931fc3d2ca20207a9060c564059',
+      0 => 'ed4467647efc08d0fffd1f6a8cbcedd95bdc1bde',
       1 => 
       array (
         0 => 'nette\\schema\\message',

@@ -15,7 +15,7 @@ class ProjectMailableTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    public function project_message_maialable_content()
+    public function project_message_maialable_content(): void
     {
         $project = Project::factory()
             ->has(Message::factory(['type' => 'mail'])->count(1))->create();

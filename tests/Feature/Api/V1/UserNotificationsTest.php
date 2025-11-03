@@ -16,7 +16,7 @@ class UserNotificationsTest extends TestCase
     use ProjectSetup, RefreshDatabase;
 
     /** @test */
-    public function auth_user_can_fetch_there_notifications()
+    public function auth_user_can_fetch_there_notifications(): void
     {
         $this->actingAsInvitedUser();
 
@@ -26,7 +26,7 @@ class UserNotificationsTest extends TestCase
     }
 
     /** @test */
-    public function auth_user_can_fetch_notifications_by_status()
+    public function auth_user_can_fetch_notifications_by_status(): void
     {
         $user = $this->actingAsInvitedUser();
 
@@ -39,7 +39,7 @@ class UserNotificationsTest extends TestCase
     }
 
     /** @test */
-    public function auth_user_can_mark_all_notifications_as_read()
+    public function auth_user_can_mark_all_notifications_as_read(): void
     {
         $user = User::factory()->create();
 
@@ -56,7 +56,7 @@ class UserNotificationsTest extends TestCase
     }
 
     /** @test */
-    public function auth_user_can_delete_a_notification()
+    public function auth_user_can_delete_a_notification(): void
     {
         $user = $this->actingAsInvitedUser();
 
@@ -70,14 +70,14 @@ class UserNotificationsTest extends TestCase
     }
 
     /** @test */
-    public function auth_user_can_update_notification_status()
+    public function auth_user_can_update_notification_status(): void
     {
         $user = $this->actingAsInvitedUser();
 
         $notification = $user->notifications()->latest()->first();
 
         // Update status to read
-        $response = $this->patchJson("/api/v1/notifications/{$notification->id}/status", ['status' => 'read']);
+        $this->patchJson("/api/v1/notifications/{$notification->id}/status", ['status' => 'read']);
         $this->assertNotNull($notification->fresh()->read_at);
 
         // Update status to unread
@@ -85,7 +85,7 @@ class UserNotificationsTest extends TestCase
         $this->assertNull($notification->fresh()->read_at);
     }
 
-    public function projectUpdate($project, $user)
+    public function projectUpdate($project, $user): void
     {
         $this->patchJson($project->path(), ['notes' => 'Project notes updated.']);
     }

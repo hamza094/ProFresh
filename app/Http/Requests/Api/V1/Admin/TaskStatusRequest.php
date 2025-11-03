@@ -19,10 +19,8 @@ class TaskStatusRequest extends FormRequest
 
     /**
      * Get the validation rules that apply to the request.
-     *
-     * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             'label' => $this->isMethod('post') ? 'required|max:25|min:3' : 'sometimes|max:25|min:3',

@@ -16,7 +16,7 @@ class UserProjectsPageTest extends TestCase
     use ProjectSetup, RefreshDatabase;
 
     /** @test */
-    public function it_validates_sort_parameter()
+    public function it_validates_sort_parameter(): void
     {
         $response = $this->getJson(route('user.projects', ['sort' => 'invalid_sort']));
 
@@ -31,7 +31,7 @@ class UserProjectsPageTest extends TestCase
     }
 
     /** @test */
-    public function it_validates_member_parameter()
+    public function it_validates_member_parameter(): void
     {
         $response = $this->getJson(route('user.projects', ['member' => 'not_a_boolean']));
 
@@ -46,7 +46,7 @@ class UserProjectsPageTest extends TestCase
     }
 
     /** @test */
-    public function it_validates_page_parameter()
+    public function it_validates_page_parameter(): void
     {
         $response = $this->getJson(route('user.projects', ['page' => 0]));
 
@@ -61,7 +61,7 @@ class UserProjectsPageTest extends TestCase
     }
 
     /** @test */
-    public function it_accepts_valid_parameters()
+    public function it_accepts_valid_parameters(): void
     {
         Project::factory()->create(['name' => 'Test Project', 'user_id' => $this->user->id]);
 
@@ -78,7 +78,7 @@ class UserProjectsPageTest extends TestCase
     }
 
     /** @test */
-    public function auth_user_can_filter_projects_by_search()
+    public function auth_user_can_filter_projects_by_search(): void
     {
         // Create projects with different names
         Project::factory()->create(['name' => 'Frontend Project', 'user_id' => $this->user->id]);
@@ -97,7 +97,7 @@ class UserProjectsPageTest extends TestCase
     }
 
     /** @test */
-    public function auth_user_can_sort_projects_by_latest()
+    public function auth_user_can_sort_projects_by_latest(): void
     {
         Project::factory()->create([
             'name' => 'Old Project',
@@ -113,7 +113,7 @@ class UserProjectsPageTest extends TestCase
     }
 
     /** @test */
-    public function auth_user_can_sort_projects_by_oldest()
+    public function auth_user_can_sort_projects_by_oldest(): void
     {
         Project::factory()->create([
             'name' => 'Old Project',
@@ -128,7 +128,7 @@ class UserProjectsPageTest extends TestCase
     }
 
     /** @test */
-    public function auth_user_can_view_member_projects()
+    public function auth_user_can_view_member_projects(): void
     {
         // Create a project owned by another user
         $otherUser = User::factory()->create();
@@ -152,7 +152,7 @@ class UserProjectsPageTest extends TestCase
     }
 
     /** @test */
-    public function auth_user_can_view_trashed_projects()
+    public function auth_user_can_view_trashed_projects(): void
     {
         // Soft delete the default project
         $this->project->delete();

@@ -17,7 +17,7 @@ class OAuthTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    public function test_o_auth_redirect()
+    public function test_o_auth_redirect(): void
     {
         $provider = OAuthProvider::GitHub;
 
@@ -28,7 +28,7 @@ class OAuthTest extends TestCase
     }
 
     /** @test */
-    public function give_old_user_if_its_present()
+    public function give_old_user_if_its_present(): void
     {
         $user = User::factory(['email' => 'test@example.com'])->create();
 
@@ -51,7 +51,7 @@ class OAuthTest extends TestCase
     }
 
     /** @test */
-    public function test_o_auth_callback()
+    public function test_o_auth_callback(): void
     {
         $this->performOAuthCallback();
 
@@ -96,7 +96,7 @@ class OAuthTest extends TestCase
     /**
      * Perform the OAuth callback for testing.
      */
-    private function performOAuthCallback()
+    private function performOAuthCallback(): void
     {
         $this->mockSocialite('github', [
             'id' => '123',

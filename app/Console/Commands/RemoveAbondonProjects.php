@@ -35,10 +35,8 @@ class RemoveAbondonProjects extends Command
 
     /**
      * Execute the console command.
-     *
-     * @return int
      */
-    public function handle()
+    public function handle(): void
     {
         $projects = Project::onlyTrashed()
             ->pastAbandonedLimit()

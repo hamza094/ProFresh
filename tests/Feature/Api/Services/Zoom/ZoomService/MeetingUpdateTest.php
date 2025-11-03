@@ -19,12 +19,10 @@ class MeetingUpdateTest extends TestCase
     use RefreshDatabase;
     /**
      * A basic feature test example.
-     *
-     * @return void
      */
 
     /** @test */
-    public function meeting_can_be_updated_in_zoom()
+    public function meeting_can_be_updated_in_zoom(): void
     {
         Saloon::fake([
             '/meetings/1234' => MockResponse::make(status: 204),
@@ -57,7 +55,7 @@ class MeetingUpdateTest extends TestCase
 
     }
 
-    private function meetingData()
+    private function meetingData(): array
     {
         return [
             'meeting_id' => 1234,

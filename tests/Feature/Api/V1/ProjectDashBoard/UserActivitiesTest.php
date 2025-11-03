@@ -19,7 +19,7 @@ class UserActivitiesTest extends TestCase
     use ProjectSetup, RefreshDatabase;
 
     /** @test */
-    public function activities_endpoint_validates_date_parameters()
+    public function activities_endpoint_validates_date_parameters(): void
     {
         // Test missing parameters
         $response = $this->getJson('api/v1/user/activities');
@@ -43,7 +43,7 @@ class UserActivitiesTest extends TestCase
     }
 
     /** @test */
-    public function user_can_view_activities_within_date_range()
+    public function user_can_view_activities_within_date_range(): void
     {
         // Create activities for different dates
         Activity::factory()
@@ -97,7 +97,7 @@ class UserActivitiesTest extends TestCase
     }
 
     /** @test */
-    public function activities_include_soft_deleted_projects()
+    public function activities_include_soft_deleted_projects(): void
     {
         // Create a project and its activity
         $project = $this->project;
@@ -121,7 +121,7 @@ class UserActivitiesTest extends TestCase
     }
 
     /** @test */
-    public function it_returns_empty_array_when_no_activities_in_range()
+    public function it_returns_empty_array_when_no_activities_in_range(): void
     {
         // Create activity outside the requested date range
         Activity::factory()
@@ -136,7 +136,7 @@ class UserActivitiesTest extends TestCase
             ->assertJson([]);
     }
 
-    public function test_get_user_activities_is_cached()
+    public function test_get_user_activities_is_cached(): void
     {
         // create an activity inside the date range
         Activity::factory()->forUser($this->user)->forProject($this->project)

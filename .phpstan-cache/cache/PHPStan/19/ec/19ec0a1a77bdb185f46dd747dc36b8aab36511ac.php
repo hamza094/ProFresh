@@ -273,7 +273,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'D:\\apps\\profresh\\app\\Console\\Commands\\RemoveAbondonProjects.php' => 
     array (
-      0 => '9841c339d49661dce415f1f551f3be17a05152cf',
+      0 => '6cf95725dfd874a4c69973ec4dd615d95611f378',
       1 => 
       array (
         0 => 'app\\console\\commands\\removeabondonprojects',
@@ -289,7 +289,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'D:\\apps\\profresh\\app\\Console\\Commands\\ScheduledMessages.php' => 
     array (
-      0 => 'cf84abfcde2e5ab8068e028277d402dbdbd83861',
+      0 => '1da6c5494fdc8d43270359d7835a228ec23ce2f7',
       1 => 
       array (
         0 => 'app\\console\\commands\\scheduledmessages',
@@ -305,7 +305,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'D:\\apps\\profresh\\app\\Console\\Commands\\TaskNotify.php' => 
     array (
-      0 => '4137ad06d4f8e6c97756d24aac4fa8f9b78f2636',
+      0 => '68b1dca665cd7b4fb04567d21655a4feac4cab52',
       1 => 
       array (
         0 => 'app\\console\\commands\\tasknotify',
@@ -689,7 +689,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'D:\\apps\\profresh\\app\\Events\\DashboardActivity.php' => 
     array (
-      0 => '1224789e21cc0c91a40257e5b74907bcc615f94d',
+      0 => 'bbce6ddee746322e357d941af0f53d24b8c6d148',
       1 => 
       array (
         0 => 'app\\events\\dashboardactivity',
@@ -789,7 +789,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'D:\\apps\\profresh\\app\\Events\\UserHasRegistered.php' => 
     array (
-      0 => 'bfd1c9a6a6b7c3e49c303d0cec349e211243f5da',
+      0 => 'fd3d253c7393e6a59d6892d7faa4cc3a088d2c9e',
       1 => 
       array (
         0 => 'app\\events\\userhasregistered',
@@ -820,7 +820,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'D:\\apps\\profresh\\app\\Exceptions\\Handler.php' => 
     array (
-      0 => '040f7772549745c251b112eefa766d42f985fa99',
+      0 => '0cd07a804c4135287d87e2b598c9407cd6167130',
       1 => 
       array (
         0 => 'app\\exceptions\\handler',
@@ -1122,7 +1122,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\InvitationController.php' => 
     array (
-      0 => '15e62a53c83d591c139878306b80693d597ad13e',
+      0 => '19a018863b3fb74176a30199db8130a9f016e28b',
       1 => 
       array (
         0 => 'app\\http\\controllers\\api\\v1\\invitationcontroller',
@@ -1144,7 +1144,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\MessageController.php' => 
     array (
-      0 => '3a0166d35f83095f02babe9ba149bca94ea97c85',
+      0 => '512f3b1ba2873baea0faa1262f00db688e496fe0',
       1 => 
       array (
         0 => 'app\\http\\controllers\\api\\v1\\messagecontroller',
@@ -1179,7 +1179,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\ProjectController.php' => 
     array (
-      0 => '9a46266103cb12db210b53ad868240ec5599e7f2',
+      0 => 'e9bf58916932b06026083e465a54dc3a03754c04',
       1 => 
       array (
         0 => 'app\\http\\controllers\\api\\v1\\projectcontroller',
@@ -1269,7 +1269,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\TaskController.php' => 
     array (
-      0 => 'aab96569461fa8d1bc5c1afeda88114ae07e12be',
+      0 => '85c0db0db0c27b351fffa9f28d9071bc0230b882',
       1 => 
       array (
         0 => 'app\\http\\controllers\\api\\v1\\taskcontroller',
@@ -1407,7 +1407,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\ZoomMeetingController.php' => 
     array (
-      0 => 'c7257cae9dc2a41e67079d0c33afcd8933a0d699',
+      0 => '2e64976f0d20d34951d4d06ab4a63cc5825060bf',
       1 => 
       array (
         0 => 'app\\http\\controllers\\api\\v1\\zoommeetingcontroller',
@@ -1491,7 +1491,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'D:\\apps\\profresh\\app\\Http\\Integrations\\Zoom\\Requests\\CreateMeeting.php' => 
     array (
-      0 => 'a200759c4f480ae64f9e598c8f19b98da56b7212',
+      0 => 'a4dce65415a2b87cb0cb47b13e47a6090fd62b27',
       1 => 
       array (
         0 => 'app\\http\\integrations\\zoom\\requests\\createmeeting',
@@ -1820,7 +1820,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'D:\\apps\\profresh\\app\\Http\\Requests\\Api\\V1\\Auth\\LoginUserRequest.php' => 
     array (
-      0 => 'f4d52ebb1fde8fbd186b846f11505b8be78575e0',
+      0 => 'f19c080e3a856ca728d718fcc0eca8acf2d5bb62',
       1 => 
       array (
         0 => 'app\\http\\requests\\api\\v1\\auth\\loginuserrequest',
@@ -1854,7 +1854,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'D:\\apps\\profresh\\app\\Http\\Requests\\Api\\V1\\Auth\\RegisterUserRequest.php' => 
     array (
-      0 => '307373ac417461ea148cd736e8f114a84213b3b5',
+      0 => '35a807e0f6a7a349d70eb070e2000b601de0d82b',
       1 => 
       array (
         0 => 'app\\http\\requests\\api\\v1\\auth\\registeruserrequest',
@@ -1928,7 +1928,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'D:\\apps\\profresh\\app\\Http\\Requests\\Api\\V1\\InvitationUsersRequest.php' => 
     array (
-      0 => 'd453df39a02870c6ae60c3b1374f484d29073f6b',
+      0 => '30b3048090d143f079416c60fc9ce67e621e0d57',
       1 => 
       array (
         0 => 'app\\http\\requests\\api\\v1\\invitationusersrequest',
@@ -1945,7 +1945,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'D:\\apps\\profresh\\app\\Http\\Requests\\Api\\V1\\MessageRequest.php' => 
     array (
-      0 => 'cd2bbe73139db6caf5761c5370fa444baf2abe88',
+      0 => 'd8d22427fbbbad71538fa13ec205ffaf091355fb',
       1 => 
       array (
         0 => 'app\\http\\requests\\api\\v1\\messagerequest',
@@ -1984,7 +1984,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'D:\\apps\\profresh\\app\\Http\\Requests\\Api\\V1\\ProjectStoreRequest.php' => 
     array (
-      0 => 'bd5b0fa21c26bb5b437e3fe0d1cac64b5979f9b6',
+      0 => '9d3e9f4d97d5b8c80a338a6dec82795006aef6cd',
       1 => 
       array (
         0 => 'app\\http\\requests\\api\\v1\\projectstorerequest',
@@ -2000,7 +2000,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'D:\\apps\\profresh\\app\\Http\\Requests\\Api\\V1\\ProjectUpdateRequest.php' => 
     array (
-      0 => '2176d7a316c26397329ddcab611d0837eae40c0d',
+      0 => '235d6e098db85f614e1a677c5b6de937ff096d93',
       1 => 
       array (
         0 => 'app\\http\\requests\\api\\v1\\projectupdaterequest',
@@ -2017,7 +2017,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'D:\\apps\\profresh\\app\\Http\\Requests\\Api\\V1\\StageRequest.php' => 
     array (
-      0 => '958adf733ab62c5893ff15ba996453871b6de8bd',
+      0 => '60fcb0983254cf39ab5d42e971a2f865a9460047',
       1 => 
       array (
         0 => 'app\\http\\requests\\api\\v1\\stagerequest',
@@ -2051,7 +2051,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'D:\\apps\\profresh\\app\\Http\\Requests\\Api\\V1\\TaskMembersRequest.php' => 
     array (
-      0 => '18d4ce4b0d140bf2ac0eddead8d5e567ce5eb989',
+      0 => 'eb609af94f3ec7df27faa3eddf1667f59628cc0c',
       1 => 
       array (
         0 => 'app\\http\\requests\\api\\v1\\taskmembersrequest',
@@ -2068,7 +2068,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'D:\\apps\\profresh\\app\\Http\\Requests\\Api\\V1\\TaskRequest.php' => 
     array (
-      0 => '8d4cbf44cdadecf48f3d235cb8b584dd98fdf460',
+      0 => '24f8c8e9978a5d0268e400865115ba00b5e043ab',
       1 => 
       array (
         0 => 'app\\http\\requests\\api\\v1\\taskrequest',
@@ -2086,7 +2086,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'D:\\apps\\profresh\\app\\Http\\Requests\\Api\\V1\\TaskUpdate.php' => 
     array (
-      0 => '72da075d059376675bec9f61ac249376d2d0290a',
+      0 => '7f821014b3b56f8f338df8bc57261e26d02acebb',
       1 => 
       array (
         0 => 'app\\http\\requests\\api\\v1\\taskupdate',
@@ -2103,7 +2103,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'D:\\apps\\profresh\\app\\Http\\Requests\\Api\\V1\\UserActivitiesRequest.php' => 
     array (
-      0 => 'e9689f90762245c7d7e4606c14d09cd3c929a445',
+      0 => 'fa30e5784ae0a13823abd7f727d14cae8fd07323',
       1 => 
       array (
         0 => 'app\\http\\requests\\api\\v1\\useractivitiesrequest',
@@ -2156,7 +2156,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'D:\\apps\\profresh\\app\\Http\\Requests\\Api\\V1\\UserTokenRequest.php' => 
     array (
-      0 => 'c1a69f8560010d27614f62b3a307a4ff278ad334',
+      0 => '45ca13c72fbd3538b1e596319981d78525b7247a',
       1 => 
       array (
         0 => 'app\\http\\requests\\api\\v1\\usertokenrequest',
@@ -2238,7 +2238,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\ActivityResource.php' => 
     array (
-      0 => '5497742aeedee1be904e8a59f5048797d44e7887',
+      0 => 'd1e2c684af64852b427be5bcf9a89ed90a25e1d5',
       1 => 
       array (
         0 => 'app\\http\\resources\\api\\v1\\activityresource',
@@ -2525,7 +2525,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\UserActivitiesResource.php' => 
     array (
-      0 => '3b6964c18877fe3b8761309dcf90e8ce7bab88da',
+      0 => '6f6d61cfbaa9ebaf575fbeabd258fc03b06b568b',
       1 => 
       array (
         0 => 'app\\http\\resources\\api\\v1\\useractivitiesresource',
@@ -2663,7 +2663,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'D:\\apps\\profresh\\app\\Http\\Views\\Composers\\ViewServiceProvider.php' => 
     array (
-      0 => 'de506e4bf528b0ba3e137445de8631fa653075a5',
+      0 => '1a45349828524a8330b1eb0010cbb31105873c57',
       1 => 
       array (
         0 => 'app\\providers\\viewserviceprovider',
@@ -2731,7 +2731,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'D:\\apps\\profresh\\app\\Jobs\\MailMessage.php' => 
     array (
-      0 => 'b370a0c059f111cf27ce6f7e33cb7cba5c8ada85',
+      0 => '634baf13dd96a4153d167be37d59f9ae912c4839',
       1 => 
       array (
         0 => 'app\\jobs\\mailmessage',
@@ -2747,7 +2747,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'D:\\apps\\profresh\\app\\Jobs\\QueuedPasswordResetJob.php' => 
     array (
-      0 => '826be75c43f3d979582aa86f53369b45851f8042',
+      0 => '8af4e3b71af9a1ea4c5f95f4841363251a95a17b',
       1 => 
       array (
         0 => 'app\\jobs\\queuedpasswordresetjob',
@@ -2763,7 +2763,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'D:\\apps\\profresh\\app\\Jobs\\QueuedVerifyEmailJob.php' => 
     array (
-      0 => '1021b704f538bb5092d46a3dbbc5d89a7441db91',
+      0 => 'd8f1777654a418c8c6a4a7592eb222911bd83839',
       1 => 
       array (
         0 => 'app\\jobs\\queuedverifyemailjob',
@@ -2802,7 +2802,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'D:\\apps\\profresh\\app\\Jobs\\SmsMessage.php' => 
     array (
-      0 => '258e510eefed8e6eeb4a02bf96765e969c5123f6',
+      0 => '036085ec43f78590c56f621ac61de8628bd44fc9',
       1 => 
       array (
         0 => 'app\\jobs\\smsmessage',
@@ -2818,7 +2818,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'D:\\apps\\profresh\\app\\Jobs\\Webhooks\\Mailgun\\ProcessEmailStatusWebhook.php' => 
     array (
-      0 => 'c530081502272361fd084e7cbb29f70b54ee822d',
+      0 => '40bd5b26aae3a4f9d4c47ea16079814e42f2be30',
       1 => 
       array (
         0 => 'app\\jobs\\webhooks\\mailgun\\processemailstatuswebhook',
@@ -2852,7 +2852,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'D:\\apps\\profresh\\app\\Jobs\\Webhooks\\Zoom\\MeetingEndsWebhook.php' => 
     array (
-      0 => 'fece164b4974beb75383fd411c42272bfe1275ec',
+      0 => 'e6f536ca4ae90b3fcd20076c5b7905bce8cf9c97',
       1 => 
       array (
         0 => 'app\\jobs\\webhooks\\zoom\\meetingendswebhook',
@@ -2873,7 +2873,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'D:\\apps\\profresh\\app\\Jobs\\Webhooks\\Zoom\\StartMeetingWebhook.php' => 
     array (
-      0 => '580ca387a5562a8fca609c47bae6fe620e28c658',
+      0 => '745d3aaeee627d653a6d9ae37a4c3ef8d1c88773',
       1 => 
       array (
         0 => 'app\\jobs\\webhooks\\zoom\\startmeetingwebhook',
@@ -2944,7 +2944,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'D:\\apps\\profresh\\app\\Listeners\\SaveUserTimezone.php' => 
     array (
-      0 => '0add104f7297bc699f9b449f3d81dca93120f8f6',
+      0 => '842ec12780044a7bfca622eb53cc4cbf711b4b00',
       1 => 
       array (
         0 => 'app\\listeners\\saveusertimezone',
@@ -3025,7 +3025,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'D:\\apps\\profresh\\app\\Models\\Conversation.php' => 
     array (
-      0 => 'c5d0b213e4d38a59ae5e9de5b935295f66ee3be8',
+      0 => '3ac8608f836e2c316b39a7e3f2b098525bb3e373',
       1 => 
       array (
         0 => 'app\\models\\conversation',
@@ -3062,7 +3062,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'D:\\apps\\profresh\\app\\Models\\Message.php' => 
     array (
-      0 => '6876e5eb3da970bb666d9991f6a71c1c74e5cbf0',
+      0 => 'cc3f5f51b50cbb2b910cc487d2cdb1b00e92d606',
       1 => 
       array (
         0 => 'app\\models\\message',
@@ -3431,7 +3431,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'D:\\apps\\profresh\\app\\Policies\\ProjectsPolicy.php' => 
     array (
-      0 => 'b13420f17d3d12a29d849d461bd9769140fd23f4',
+      0 => '359a78a3d14af91abd9f6b5c6bd64c9f4c551519',
       1 => 
       array (
         0 => 'app\\policies\\projectspolicy',
@@ -3451,7 +3451,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'D:\\apps\\profresh\\app\\Policies\\TasksPolicy.php' => 
     array (
-      0 => '7410370c65abdec683cf3abeeb783c9f8d3e3ead',
+      0 => 'e6660a0750883995a2b064e4be009eae7c3c9b6b',
       1 => 
       array (
         0 => 'app\\policies\\taskspolicy',
@@ -3468,7 +3468,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'D:\\apps\\profresh\\app\\Policies\\UsersPolicy.php' => 
     array (
-      0 => '839fd36837cb6bffe4599516df818e544a93fe2d',
+      0 => '0b80fed4903f67c2358c7139db4f1641d74778ae',
       1 => 
       array (
         0 => 'app\\policies\\userspolicy',
@@ -3485,7 +3485,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'D:\\apps\\profresh\\app\\Providers\\AppServiceProvider.php' => 
     array (
-      0 => 'e9fa2700680991dcd152d8f12e2292efd589fc55',
+      0 => '05b7277e4e7e496c4377633e0e532d9438cf6260',
       1 => 
       array (
         0 => 'app\\providers\\appserviceprovider',
@@ -3501,7 +3501,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'D:\\apps\\profresh\\app\\Providers\\AuthServiceProvider.php' => 
     array (
-      0 => '36fb620cde69fde44e3912af9039bea479a37ca0',
+      0 => '3b49c5f6b7fb3d3b3520402deb9eea94df348a37',
       1 => 
       array (
         0 => 'app\\providers\\authserviceprovider',
@@ -3516,7 +3516,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'D:\\apps\\profresh\\app\\Providers\\BroadcastServiceProvider.php' => 
     array (
-      0 => '58f39e0db356ef6ad12b466007b0f594664f9546',
+      0 => '55492fb88f7b2cfce03b98b1080103b62f82bd34',
       1 => 
       array (
         0 => 'app\\providers\\broadcastserviceprovider',
@@ -3546,7 +3546,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'D:\\apps\\profresh\\app\\Providers\\RouteServiceProvider.php' => 
     array (
-      0 => '224d256bf38fb3377e2bd433f4e11df64dad60e1',
+      0 => '1cbe94c1542d371eec21cb260c10f6298a8cd0fe',
       1 => 
       array (
         0 => 'app\\providers\\routeserviceprovider',
@@ -3786,7 +3786,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'D:\\apps\\profresh\\app\\Rules\\MeetingDateTime.php' => 
     array (
-      0 => 'b8f6c612e72f81be949d33850cf79c1f406e21a5',
+      0 => '7805b8e5319adb7d506ded0cd0e6006b6e02eb59',
       1 => 
       array (
         0 => 'app\\rules\\meetingdatetime',
@@ -3820,7 +3820,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'D:\\apps\\profresh\\app\\Services\\Api\\V1\\Admin\\DashboardService.php' => 
     array (
-      0 => '2694d24f7da056c408468fc779e92471da176ca2',
+      0 => 'ee4064028983527083f093a4a42618429011683e',
       1 => 
       array (
         0 => 'app\\services\\api\\v1\\admin\\dashboardservice',
@@ -3913,7 +3913,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'D:\\apps\\profresh\\app\\Services\\Api\\V1\\DashboardService.php' => 
     array (
-      0 => '0da74da69f4561706da7183a28f88ef524a370be',
+      0 => '5d88a337ea7f881fd51eb6d211a4bf9bc3062313',
       1 => 
       array (
         0 => 'app\\services\\api\\v1\\dashboardservice',
@@ -3947,7 +3947,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'D:\\apps\\profresh\\app\\Services\\Api\\V1\\FeatureService.php' => 
     array (
-      0 => 'c24776f7a233e26b57b34f8be486b3781da7f4c3',
+      0 => '10c5acfddded8802a69db4b6281cb86f8d1f8d1b',
       1 => 
       array (
         0 => 'app\\services\\api\\v1\\featureservice',
@@ -3985,7 +3985,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'D:\\apps\\profresh\\app\\Services\\Api\\V1\\InvitationService.php' => 
     array (
-      0 => '97409b53717a94c349610314ef31fbf8828c8696',
+      0 => '1ab460fcfb9f0cb819a823604cf6d336fa843258',
       1 => 
       array (
         0 => 'app\\services\\api\\v1\\invitationservice',
@@ -4026,7 +4026,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'D:\\apps\\profresh\\app\\Services\\Api\\V1\\MessageService.php' => 
     array (
-      0 => '73156d657463502a7f7c995374b718fc3d6ce5c6',
+      0 => 'a5eda3eb02ff115d33f94a28c43bf373cc8f7088',
       1 => 
       array (
         0 => 'app\\services\\api\\v1\\messageservice',
@@ -4118,7 +4118,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'D:\\apps\\profresh\\app\\Services\\Api\\V1\\ProjectService.php' => 
     array (
-      0 => 'd99f4d8d3ceca91bc50aef89c484c303fc9dafdf',
+      0 => 'bebc1328983804a4c0a4ee66176486b9a571dfa7',
       1 => 
       array (
         0 => 'app\\services\\api\\v1\\projectservice',
@@ -4134,7 +4134,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'D:\\apps\\profresh\\app\\Services\\Api\\V1\\SendSmsService.php' => 
     array (
-      0 => '897b7791fc31adeb7254c58a1125eed653438187',
+      0 => '4d8e72bdb35819caf9be32598365d6d60d4ab5e0',
       1 => 
       array (
         0 => 'app\\services\\api\\v1\\sendsmsservice',
@@ -4150,7 +4150,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'D:\\apps\\profresh\\app\\Services\\Api\\V1\\Task\\TaskFeatureService.php' => 
     array (
-      0 => '6bc252fbfa4dd51ddff7cdd56b99874b1949e079',
+      0 => 'f05f89514bc3c660406b05af84a7682a326e4251',
       1 => 
       array (
         0 => 'app\\services\\api\\v1\\task\\taskfeatureservice',
@@ -4217,7 +4217,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'D:\\apps\\profresh\\app\\Services\\Api\\V1\\Zoom\\ZoomService.php' => 
     array (
-      0 => 'dae8d0912cebc8098ca50a320c74a31e30720f50',
+      0 => '1a769a2729946784410ae9d3ae294d3ad6780b16',
       1 => 
       array (
         0 => 'app\\services\\api\\v1\\zoom\\zoomservice',
@@ -4241,7 +4241,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'D:\\apps\\profresh\\app\\Services\\Api\\V1\\Zoom\\ZoomServiceFake.php' => 
     array (
-      0 => 'ae790d6b1689e680a894726a56104a8695a933eb',
+      0 => 'f50f6c938c78b9ccb259e446ea5b30def75a62f7',
       1 => 
       array (
         0 => 'app\\services\\api\\v1\\zoom\\zoomservicefake',
@@ -4395,7 +4395,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'D:\\apps\\profresh\\app\\Services\\ProjectInsightsPreloader.php' => 
     array (
-      0 => '7acfce075a9b52bd67095ae5cc2fba1a718ffc50',
+      0 => 'be19e1276ddb9bf30e6d47c99563686f330a6731',
       1 => 
       array (
         0 => 'app\\services\\projectinsightspreloader',

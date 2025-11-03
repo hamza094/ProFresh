@@ -21,21 +21,21 @@ class DummyUserWithSubscription
 
 class HasSubscriptionTest extends TestCase
 {
-    public function test_is_subscribed_returns_true_when_subscription_exists()
+    public function test_is_subscribed_returns_true_when_subscription_exists(): void
     {
         $user = new DummyUserWithSubscription;
         $user->mockSubscription = 'fakeSubscription';
         $this->assertTrue($user->isSubscribed());
     }
 
-    public function test_is_subscribed_returns_false_when_no_subscription()
+    public function test_is_subscribed_returns_false_when_no_subscription(): void
     {
         $user = new DummyUserWithSubscription;
         $user->mockSubscription = null;
         $this->assertFalse($user->isSubscribed());
     }
 
-    public function test_subscribed_plan_variants()
+    public function test_subscribed_plan_variants(): void
     {
         $user = new DummyUserWithSubscription;
         // Not Subscribed
@@ -54,13 +54,13 @@ class HasSubscriptionTest extends TestCase
         $this->assertEquals('Unknown', $user->subscribedPlan($monthlyPlanId, $yearlyPlanId));
     }
 
-    public function test_has_grace_period_true_and_false()
+    public function test_has_grace_period_true_and_false(): void
     {
         $user = new DummyUserWithSubscription;
         // True
         $user->mockSubscription = new class
         {
-            public function onGracePeriod()
+            public function onGracePeriod(): bool
             {
                 return true;
             }
@@ -69,7 +69,7 @@ class HasSubscriptionTest extends TestCase
         // False
         $user->mockSubscription = new class
         {
-            public function onGracePeriod()
+            public function onGracePeriod(): bool
             {
                 return false;
             }
@@ -80,13 +80,13 @@ class HasSubscriptionTest extends TestCase
         $this->assertFalse($user->hasGracePeriod());
     }
 
-    public function test_payment_returns_next_payment_and_no_active_subscription()
+    public function test_payment_returns_next_payment_and_no_active_subscription(): void
     {
         $user = new DummyUserWithSubscription;
         // Next payment
         $user->mockSubscription = new class
         {
-            public function nextPayment()
+            public function nextPayment(): string
             {
                 return 'next payment date';
             }

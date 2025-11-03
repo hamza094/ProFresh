@@ -1,0 +1,7 @@
+<?php declare(strict_types = 1);
+
+// variadic-method-Database\Factories\ActivityFactory-forUser-D:\apps\profresh\database\factories\ActivityFactory.php
+return \PHPStan\Cache\CacheItem::__set_state(array(
+   'variableKey' => '1762177811-v4',
+   'data' => false,
+));

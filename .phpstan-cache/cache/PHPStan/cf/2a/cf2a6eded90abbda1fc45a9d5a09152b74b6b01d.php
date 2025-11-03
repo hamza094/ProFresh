@@ -2,6 +2,6 @@
 
 // variadic-method-App\Services\Api\V1\ConversationService-userMentioned-D:\apps\profresh\app\Services\Api\V1\ConversationService.php
 return \PHPStan\Cache\CacheItem::__set_state(array(
-   'variableKey' => '1761997087-v4',
+   'variableKey' => '1762177788-v4',
    'data' => false,
 ));

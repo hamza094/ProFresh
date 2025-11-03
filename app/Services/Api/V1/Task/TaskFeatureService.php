@@ -48,7 +48,7 @@ class TaskFeatureService
         $task->forceDelete();
     }
 
-    private function notifyAssignees($members, Task $task, Project $project)
+    private function notifyAssignees(array $members, Task $task, Project $project): void
     {
         $usersToNotify = User::whereIn('id', $members)
             ->where('id', '!=', Auth::id())

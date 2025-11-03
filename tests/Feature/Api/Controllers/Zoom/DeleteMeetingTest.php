@@ -16,7 +16,7 @@ class DeleteMeetingTest extends TestCase
     use InteractsWithZoom,ProjectSetup,RefreshDatabase;
 
     /** @test */
-    public function meeting_can_be_deleted()
+    public function meeting_can_be_deleted(): void
     {
         $this->fakeZoom();
 
@@ -30,7 +30,7 @@ class DeleteMeetingTest extends TestCase
     }
 
     /** @test */
-    public function database_changes_are_rolled_back_if_meeting_delete_fails()
+    public function database_changes_are_rolled_back_if_meeting_delete_fails(): void
     {
         $meeting = Meeting::factory()
             ->for($this->project)

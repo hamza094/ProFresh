@@ -14,7 +14,7 @@ class MeetingTest extends TestCase
     use LazilyRefreshDatabase, ProjectSetup;
 
     /** @test */
-    public function it_can_show_a_meeting()
+    public function it_can_show_a_meeting(): void
     {
         $meeting = Meeting::factory()->for($this->project)->for($this->user)->create();
 
@@ -33,7 +33,7 @@ class MeetingTest extends TestCase
     }
 
     /** @test */
-    public function it_can_list_meetings_for_a_project()
+    public function it_can_list_meetings_for_a_project(): void
     {
         $this->actingAs($this->user);
         // Create 5 meetings: 3 scheduled, 2 previous

@@ -17,11 +17,10 @@ class ProcessMeetingUpdateWebhookTest extends TestCase
     /**
      * A basic feature test example.
      *
-     * @return void
      *
 
     /** @test */
-    public function zoom_meeting_can_be_updated()
+    public function zoom_meeting_can_be_updated(): void
     {
         $meeting = Meeting::factory()->create([
             'meeting_id' => 813,

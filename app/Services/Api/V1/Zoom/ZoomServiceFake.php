@@ -119,7 +119,7 @@ final class ZoomServiceFake implements Zoom
         }
 
         // Simulate a successful deletion: return an empty JSON response with 204 No Content.
-        
+
         return response()->json(null, 204);
     }
 

@@ -29,7 +29,7 @@ class AuthenticationTest extends TestCase
     }
 
     /** @test */
-    public function register_new_user()
+    public function register_new_user(): void
     {
         $this->postJson(route('auth.register'),
             ['name' => 'Elvis William',
@@ -42,7 +42,7 @@ class AuthenticationTest extends TestCase
     }
 
     /** @test */
-    public function return_user_and_access_token_after_successful_login()
+    public function return_user_and_access_token_after_successful_login(): void
     {
         $response = $this->postJson(route('auth.login'), [
             'email' => 'johndoe@example.org',
@@ -54,7 +54,7 @@ class AuthenticationTest extends TestCase
     }
 
     /** @test */
-    public function show_validation_email_error()
+    public function show_validation_email_error(): void
     {
         $response = $this->postJson(route('auth.login'), [
             'email' => 'test@test.com',
@@ -66,7 +66,7 @@ class AuthenticationTest extends TestCase
     }
 
     /** @test */
-    public function show_validation_password_errors()
+    public function show_validation_password_errors(): void
     {
         $response = $this->postJson(route('auth.register'),
             ['name' => 'Elvis William',
@@ -89,7 +89,7 @@ class AuthenticationTest extends TestCase
     }
 
     /** @test */
-    public function authenticated_user_can_logout()
+    public function authenticated_user_can_logout(): void
     {
         Sanctum::actingAs(
             User::first(),
@@ -100,7 +100,7 @@ class AuthenticationTest extends TestCase
     }
 
     /** @test */
-    public function registration_with_existing_email_not_allowed()
+    public function registration_with_existing_email_not_allowed(): void
     {
         $this->postJson(route('auth.register'),
             ['name' => 'Elvis William',

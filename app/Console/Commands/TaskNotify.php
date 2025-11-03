@@ -16,13 +16,9 @@ class TaskNotify extends Command
 
     protected $description = 'Send tasks due notification on scheduled time';
 
-    protected $taskDueAction;
-
-    public function __construct(TaskDueAction $taskDueAction)
+    public function __construct(protected TaskDueAction $taskDueAction)
     {
         parent::__construct();
-
-        $this->taskDueAction = $taskDueAction;
     }
 
     /**
@@ -46,9 +42,8 @@ class TaskNotify extends Command
      * Process each task in the chunk.
      *
      * @param  \Illuminate\Database\Eloquent\Collection  $tasks
-     * @return void
      */
-    private function processTasks($tasks)
+    private function processTasks($tasks): void
     {
         foreach ($tasks as $task) {
             try {

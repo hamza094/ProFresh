@@ -18,7 +18,7 @@ class TaskNotifyTest extends TestCase
     use ProjectSetup,RefreshDatabase;
 
     /** @test */
-    public function test_task_notify_command_handles_notifications()
+    public function test_task_notify_command_handles_notifications(): void
     {
         Notification::fake();
 

@@ -8,14 +8,12 @@ use App\Repository\Admin\DashboardRepository;
 
 class DashboardService
 {
-    protected $dashboardRepository;
+    public function __construct(protected DashboardRepository $dashboardRepository) {}
 
-    public function __construct(DashboardRepository $dashboardRepository)
-    {
-        $this->dashboardRepository = $dashboardRepository;
-    }
-
-    public function fetchDataForMonths($startDate, $endDate)
+    /**
+     * @return array<mixed, array<'active_projects'|'active_tasks'|'month'|'projects_count'|'tasks_count'|'trashed_projects'|'trashed_tasks', mixed>>
+     */
+    public function fetchDataForMonths($startDate, $endDate): array
     {
         $data = [];
         $result = $this->dashboardRepository->fetchDataForMonths($startDate, $endDate);

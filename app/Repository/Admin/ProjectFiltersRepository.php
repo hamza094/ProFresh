@@ -108,7 +108,7 @@ class ProjectFiltersRepository
 
     protected function applyStatusFilter($query, $status, &$appliedFilters)
     {
-        return $query->filter(function ($project) use ($status, &$appliedFilters) {
+        return $query->filter(function ($project) use ($status, &$appliedFilters): bool {
             if ($project->status === $status) {
                 $appliedFilters[] = "Filter by status $status";
 

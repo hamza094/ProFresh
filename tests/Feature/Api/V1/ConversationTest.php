@@ -18,7 +18,7 @@ class ConversationTest extends TestCase
     use ProjectSetup,RefreshDatabase;
 
     /** @test */
-    public function allowed_user_can_see_project_conversations()
+    public function allowed_user_can_see_project_conversations(): void
     {
         $conversation = Conversation::factory()->create(['project_id' => $this->project->id,
         ]);
@@ -31,7 +31,7 @@ class ConversationTest extends TestCase
     }
 
     /** @test */
-    public function allowed_user_participates_in_project_chat()
+    public function allowed_user_participates_in_project_chat(): void
     {
         Event::fake();
 
@@ -47,7 +47,7 @@ class ConversationTest extends TestCase
     }
 
     /** @test */
-    public function chat_validation_check()
+    public function chat_validation_check(): void
     {
         $response = $this->postJson($this->project->path().'/conversations', ['message' => null,
             'user_id' => $this->user->id]);
@@ -56,7 +56,7 @@ class ConversationTest extends TestCase
     }
 
     /** @test */
-    public function allowed_user_store_file_in_chat()
+    public function allowed_user_store_file_in_chat(): void
     {
         Storage::fake('s3');
 
@@ -73,7 +73,7 @@ class ConversationTest extends TestCase
     }
 
     /** @test */
-    public function allowed_user_can_delete_conversation()
+    public function allowed_user_can_delete_conversation(): void
     {
         Storage::fake('s3');
 

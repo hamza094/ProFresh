@@ -16,7 +16,7 @@ class UpdateMeetingTest extends TestCase
     use InteractsWithZoom,ProjectSetup,RefreshDatabase;
 
     /** @test */
-    public function meeting_in_database_can_be_updated()
+    public function meeting_in_database_can_be_updated(): void
     {
         $this->fakeZoom();
 
@@ -40,7 +40,7 @@ class UpdateMeetingTest extends TestCase
     }
 
     /** @test */
-    public function database_changes_are_rolled_back_if_zoom_update_fails()
+    public function database_changes_are_rolled_back_if_zoom_update_fails(): void
     {
         $meeting = Meeting::factory()
             ->for($this->project)
@@ -65,7 +65,7 @@ class UpdateMeetingTest extends TestCase
     }
 
     /** @test */
-    public function it_validates_update_request()
+    public function it_validates_update_request(): void
     {
         $meeting = Meeting::factory()
             ->for($this->project)

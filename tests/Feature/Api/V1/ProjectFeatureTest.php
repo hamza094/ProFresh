@@ -17,7 +17,7 @@ class ProjectFeatureTest extends TestCase
     private const PROJECTS_ROUTE = 'projects.store';
 
     /** @test */
-    public function auth_user_can_create_project()
+    public function auth_user_can_create_project(): void
     {
         $this->postJson(route(self::PROJECTS_ROUTE),
             [
@@ -30,7 +30,7 @@ class ProjectFeatureTest extends TestCase
     }
 
     /** @test */
-    public function tasks_can_be_added_when_new_project_created()
+    public function tasks_can_be_added_when_new_project_created(): void
     {
         $attributes = Project::factory()->raw([
             'user_id' => auth()->id(),
@@ -41,7 +41,7 @@ class ProjectFeatureTest extends TestCase
             ['title' => 'task 2'],
         ];
 
-    $response = $this->postJson(route(self::PROJECTS_ROUTE), $attributes);
+        $response = $this->postJson(route(self::PROJECTS_ROUTE), $attributes);
 
         $project = Project::where('slug', '=', $response->json('project.slug'))->firstOrFail();
 
@@ -49,17 +49,17 @@ class ProjectFeatureTest extends TestCase
     }
 
     /** @test */
-    public function project_requires_a_name()
+    public function project_requires_a_name(): void
     {
         $project = Project::factory()->make(['name' => null]);
 
-    $response = $this->postJson(route(self::PROJECTS_ROUTE), $project->toArray());
+        $response = $this->postJson(route(self::PROJECTS_ROUTE), $project->toArray());
 
         $response->assertJsonValidationErrors('name');
     }
 
     /** @test */
-    public function tasks_validated_on_creating_a_new_project()
+    public function tasks_validated_on_creating_a_new_project(): void
     {
         $response = $this->postJson('/api/v1/projects', [
             'name' => 'project name',
@@ -76,7 +76,7 @@ class ProjectFeatureTest extends TestCase
     }
 
     /** @test */
-    public function project_cannot_have_more_than_three_tasks()
+    public function project_cannot_have_more_than_three_tasks(): void
     {
         $attributes = Project::factory()->raw([
             'user_id' => auth()->id(),
@@ -95,7 +95,7 @@ class ProjectFeatureTest extends TestCase
     }
 
     /** @test */
-    public function auth_user_can_get_project_resource()
+    public function auth_user_can_get_project_resource(): void
     {
         $response = $this->getJson($this->project->path())
             ->assertOk();
@@ -107,7 +107,7 @@ class ProjectFeatureTest extends TestCase
     }
 
     /** @test */
-    public function allowed_user_can_update_project()
+    public function allowed_user_can_update_project(): void
     {
         $name = 'My First Project';
         $notes = 'My project first notes';
@@ -132,7 +132,7 @@ class ProjectFeatureTest extends TestCase
     }
 
     /** @test */
-    public function updated_project_requires_a_name()
+    public function updated_project_requires_a_name(): void
     {
         $response = $this->patchJson($this->project->path(),
             ['name' => null])->assertUnprocessable();
@@ -141,7 +141,7 @@ class ProjectFeatureTest extends TestCase
     }
 
     /** @test */
-    public function it_does_not_update_with_invalid_fields()
+    public function it_does_not_update_with_invalid_fields(): void
     {
         $response = $this->patchJson($this->project->path(),
             ['invalid_field' => 'Some value'])
@@ -153,7 +153,7 @@ class ProjectFeatureTest extends TestCase
     }
 
     /** @test */
-    public function it_does_not_update_field_with_same_data()
+    public function it_does_not_update_field_with_same_data(): void
     {
         $project = Project::factory()->create(['name' => 'Xepra Tech']);
 
@@ -168,7 +168,7 @@ class ProjectFeatureTest extends TestCase
     }
 
     /** @test */
-    public function project_owner_can_get_abandoned_project()
+    public function project_owner_can_get_abandoned_project(): void
     {
         $this->assertCount(1, $this->user->projects()->get());
 
@@ -179,7 +179,7 @@ class ProjectFeatureTest extends TestCase
         $this->assertSoftDeleted($this->project);
     }
 
-    public function project_owner_can_restore_project()
+    public function project_owner_can_restore_project(): void
     {
         $this->project->touch('deleted_at');
 
@@ -192,14 +192,14 @@ class ProjectFeatureTest extends TestCase
         $this->assertEquals($this->project->deleted_at, null);
     }
 
-    public function project_owner_can_delete_project()
+    public function project_owner_can_delete_project(): void
     {
         $this->getJson($this->project->path().'/delete');
 
         $this->assertModelMissing($this->project);
     }
 
-    public function delete_abandon_projects_after_limit_past()
+    public function delete_abandon_projects_after_limit_past(): void
     {
         $this->project->touch('deleted_at');
 

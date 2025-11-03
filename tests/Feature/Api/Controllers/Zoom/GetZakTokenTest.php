@@ -14,7 +14,7 @@ class GetZakTokenTest extends TestCase
     use InteractsWithZoom,ProjectSetup,RefreshDatabase;
 
     /** @test */
-    public function successfully_get_zak_token()
+    public function successfully_get_zak_token(): void
     {
         $this->fakeZoom();
 

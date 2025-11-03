@@ -23,10 +23,8 @@ class SaveUserTimezone
 
     /**
      * Handle the event.
-     *
-     * @return void
      */
-    public function handle(UserLogin $event)
+    public function handle(UserLogin $event): void
     {
         try {
             $ip = Http::get('https://ipecho.net/plain')->body();

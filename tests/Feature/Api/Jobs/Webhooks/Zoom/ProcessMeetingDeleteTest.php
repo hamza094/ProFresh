@@ -15,12 +15,10 @@ class ProcessMeetingDeleteTest extends TestCase
     use RefreshDatabase;
     /**
      * A basic feature test example.
-     *
-     * @return void
      */
 
     /** @test */
-    public function zoom_meeting_can_be_deleted()
+    public function zoom_meeting_can_be_deleted(): void
     {
         $meeting = Meeting::factory()->create([
             'meeting_id' => 813,
@@ -42,7 +40,7 @@ class ProcessMeetingDeleteTest extends TestCase
     }
 
     /** @test */
-    public function throw_exception_if_meeting_not_found()
+    public function throw_exception_if_meeting_not_found(): void
     {
         Meeting::factory()->create([
             'meeting_id' => 413,

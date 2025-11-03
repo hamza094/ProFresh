@@ -2,6 +2,6 @@
 
 // variadic-method-Symfony\Component\Console\Command\Command-__construct-D:\apps\profresh\vendor\composer\..\symfony\console\Command\Command.php
 return \PHPStan\Cache\CacheItem::__set_state(array(
-   'variableKey' => '1758555060-v4',
+   'variableKey' => '1760456786-v4',
    'data' => false,
 ));

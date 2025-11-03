@@ -31,7 +31,7 @@ class ProjectHealthScoreFeatureTest extends TestCase
         $action->handle($project, ['health']);
 
         // assert
-        Bus::assertDispatched(RecalculateProjectHealth::class, fn (RecalculateProjectHealth $job) => $job->projectId === $project->id && $job->broadcast);
+        Bus::assertDispatched(RecalculateProjectHealth::class, fn (RecalculateProjectHealth $job): bool => $job->projectId === $project->id && $job->broadcast);
     }
 
     public function test_does_not_dispatch_when_health_not_requested(): void
@@ -83,7 +83,7 @@ class ProjectHealthScoreFeatureTest extends TestCase
         // assert
         $this->assertSame(77.5, $project->health_score);
         $this->assertNotNull($project->health_score_calculated_at);
-        Event::assertDispatched(ProjectHealthUpdated::class, function (ProjectHealthUpdated $event) use ($project) {
+        Event::assertDispatched(ProjectHealthUpdated::class, function (ProjectHealthUpdated $event) use ($project): bool {
             // The broadcasting layer may prefix private channels with "private-".
             // Normalize the channel name before asserting the logical name.
             $channel = $event->broadcastOn();
@@ -121,7 +121,7 @@ class ProjectHealthScoreFeatureTest extends TestCase
         $action = $this->createMock(ProjectHealthMetricAction::class);
         $action->expects($this->once())
             ->method('execute')
-            ->with($this->callback(fn ($arg) => $arg instanceof Project && $arg->id === $project->id))
+            ->with($this->callback(fn ($arg): bool => $arg instanceof Project && $arg->id === $project->id))
             ->willReturn(42.5);
 
         // act

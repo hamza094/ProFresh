@@ -2,6 +2,6 @@
 
 // variadic-method-App\Actions\ProjectMetrics\CommunicationHealthMetricAction-getRecentConversationCount-D:\apps\profresh\app\Actions\ProjectMetrics\CommunicationHealthMetricAction.php
 return \PHPStan\Cache\CacheItem::__set_state(array(
-   'variableKey' => '1761981342-v4',
+   'variableKey' => '1762177719-v4',
    'data' => false,
 ));

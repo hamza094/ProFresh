@@ -21,13 +21,13 @@ class TwoFactorAuthenticationTest extends TestCase
 {
     use RefreshDatabase;
 
+    private const TWO_FA_SESSION = '2fa_login';
+
     protected User $user;
 
     protected string $testPassword = 'Testpassword@3';
 
     protected string $testEmail = '2fauser@example.com';
-
-    private const TWO_FA_SESSION = '2fa_login';
 
     protected function setUp(): void
     {
@@ -46,7 +46,7 @@ class TwoFactorAuthenticationTest extends TestCase
     // =========================================================================
 
     /** @test */
-    public function it_returns_2fa_status_disabled_by_default()
+    public function it_returns_2fa_status_disabled_by_default(): void
     {
         Sanctum::actingAs($this->user);
 
@@ -57,7 +57,7 @@ class TwoFactorAuthenticationTest extends TestCase
     }
 
     /** @test */
-    public function it_can_prepare_two_factor()
+    public function it_can_prepare_two_factor(): void
     {
         Sanctum::actingAs($this->user);
 
@@ -83,7 +83,7 @@ class TwoFactorAuthenticationTest extends TestCase
     }
 
     /** @test */
-    public function it_can_confirm_two_factor()
+    public function it_can_confirm_two_factor(): void
     {
         $mockedUser = $this->createMockedUser([
             'confirmTwoFactorAuth' => ['123456', true],
@@ -106,7 +106,7 @@ class TwoFactorAuthenticationTest extends TestCase
     }
 
     /** @test */
-    public function it_can_show_and_regenerate_recovery_codes()
+    public function it_can_show_and_regenerate_recovery_codes(): void
     {
         $mockedUser = $this->createMockedUser([
             'hasTwoFactorEnabled' => true,
@@ -125,7 +125,7 @@ class TwoFactorAuthenticationTest extends TestCase
     }
 
     /** @test */
-    public function it_can_disable_two_factor()
+    public function it_can_disable_two_factor(): void
     {
         Sanctum::actingAs($this->user);
 
@@ -142,7 +142,7 @@ class TwoFactorAuthenticationTest extends TestCase
     }
 
     /** @test */
-    public function it_shows_2fa_required_message_during_login_when_enabled()
+    public function it_shows_2fa_required_message_during_login_when_enabled(): void
     {
         $this->enableTwoFactorForUser();
 
@@ -159,10 +159,10 @@ class TwoFactorAuthenticationTest extends TestCase
 
         // Assert session exists and is encrypted
 
-    $this->assertTrue(session()->has(self::TWO_FA_SESSION));
+        $this->assertTrue(session()->has(self::TWO_FA_SESSION));
 
         // Verify encrypted session contents
-    $encryptedSession = session(self::TWO_FA_SESSION);
+        $encryptedSession = session(self::TWO_FA_SESSION);
         $this->assertIsString($encryptedSession);
 
         $decryptedSession = decrypt($encryptedSession);
@@ -172,7 +172,7 @@ class TwoFactorAuthenticationTest extends TestCase
     }
 
     /** @test */
-    public function it_fails_two_factor_login_with_missing_session()
+    public function it_fails_two_factor_login_with_missing_session(): void
     {
         $response = $this->postJson('/api/v1/twofactor/login-confirm', [
             'code' => '123456',
@@ -188,7 +188,7 @@ class TwoFactorAuthenticationTest extends TestCase
     }
 
     /** @test */
-    public function it_fails_two_factor_login_with_expired_session()
+    public function it_fails_two_factor_login_with_expired_session(): void
     {
         // Setup encrypted session data with expired timestamp
         session()->put(self::TWO_FA_SESSION, encrypt([

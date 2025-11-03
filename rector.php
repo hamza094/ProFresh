@@ -8,10 +8,11 @@ return RectorConfig::configure()
     ->withPhpSets()
     ->withPaths([
         __DIR__.'/app',
+        __DIR__.'/tests',
     ])
     ->withPreparedSets(
         deadCode: true,
         codeQuality: true,
         privatization: true,
-    )
-    ->withTypeCoverageLevel(6);
+        typeDeclarations: true
+    );

@@ -25,10 +25,8 @@ class QueuedPasswordResetJob implements ShouldQueue
 
     /**
      * Execute the job.
-     *
-     * @return void
      */
-    public function handle()
+    public function handle(): void
     {
         // This queued job sends
         // Illuminate\Auth\Notifications\ResetPassword notification

@@ -2,6 +2,6 @@
 
 // variadic-method-App\Http\Requests\Api\V1\UserActivitiesRequest-getDateRange-D:\apps\profresh\app\Http\Requests\Api\V1\UserActivitiesRequest.php
 return \PHPStan\Cache\CacheItem::__set_state(array(
-   'variableKey' => '1762008597-v4',
+   'variableKey' => '1762181696-v4',
    'data' => false,
 ));

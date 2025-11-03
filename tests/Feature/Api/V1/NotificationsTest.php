@@ -21,12 +21,10 @@ class NotificationsTest extends TestCase
     use ProjectSetup,RefreshDatabase;
     /**
      * A notification feature test.
-     *
-     * @return void
      */
 
     /** @test */
-    public function invited_user_can_get_project_invitation()
+    public function invited_user_can_get_project_invitation(): void
     {
         Notification::fake();
 
@@ -38,7 +36,7 @@ class NotificationsTest extends TestCase
     }
 
     /** @test */
-    public function project_owner_get_notified_by_member()
+    public function project_owner_get_notified_by_member(): void
     {
         Notification::fake();
 
@@ -52,7 +50,7 @@ class NotificationsTest extends TestCase
     }
 
     /** @test */
-    public function allowed_user_notified_on_project_update()
+    public function allowed_user_notified_on_project_update(): void
     {
         Notification::fake();
 
@@ -66,7 +64,7 @@ class NotificationsTest extends TestCase
     }
 
     /** @test */
-    public function project_member_notified_when_task_added()
+    public function project_member_notified_when_task_added(): void
     {
         Notification::fake();
 
@@ -80,7 +78,7 @@ class NotificationsTest extends TestCase
     }
 
     /** @test */
-    public function mentioned_user_in_a_chat_are_notified()
+    public function mentioned_user_in_a_chat_are_notified(): void
     {
         Notification::fake();
 
@@ -99,7 +97,7 @@ class NotificationsTest extends TestCase
     }
 
     /** @test */
-    public function user_should_not_receive_task_notification_when_adding_a_task()
+    public function user_should_not_receive_task_notification_when_adding_a_task(): void
     {
         Notification::fake();
 

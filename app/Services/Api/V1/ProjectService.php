@@ -9,14 +9,14 @@ use App\Notifications\ProjectUpdated;
 
 class ProjectService
 {
-    public function addTasksToProject($project, $tasks): void
+    public function addTasksToProject($project, array $tasks): void
     {
         $tasksWithUser = collect($tasks['tasks'])->map(fn ($task) => [...$task, 'user_id' => auth()->id()]);
 
         $project->addTasks($tasksWithUser->toArray());
     }
 
-    public function sendNotification($project)
+    public function sendNotification($project): void
     {
         if ($project->activeMembers->isEmpty()) {
             return;

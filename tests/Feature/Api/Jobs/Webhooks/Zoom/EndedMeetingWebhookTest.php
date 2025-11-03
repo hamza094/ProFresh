@@ -21,7 +21,7 @@ class EndedMeetingWebhookTest extends TestCase
     use ProjectSetup,RefreshDatabase;
 
     /** @test */
-    public function notifies_project_members_on_meeting_ended()
+    public function notifies_project_members_on_meeting_ended(): void
     {
         Notification::fake();
         Event::fake();
@@ -56,12 +56,12 @@ class EndedMeetingWebhookTest extends TestCase
 
         $this->assertEquals('ended', $meeting->fresh()->status);
 
-        Event::assertDispatched(fn (MeetingStatusUpdate $event) => $event->meeting->id === $meeting->id);
+        Event::assertDispatched(fn (MeetingStatusUpdate $event): bool => $event->meeting->id === $meeting->id);
 
-        Notification::assertSentTo($users, MeetingEnded::class, fn ($notification, $channels) => $channels === ['mail', 'database', 'broadcast']);
+        Notification::assertSentTo($users, MeetingEnded::class, fn ($notification, $channels): bool => $channels === ['mail', 'database', 'broadcast']);
     }
 
-    private function inviteAndActivateUser($project, $user)
+    private function inviteAndActivateUser($project, \Illuminate\Database\Eloquent\Model $user): void
     {
         $project->invite($user);
         $project->members()->updateExistingPivot($user->id, ['active' => true]);

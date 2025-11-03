@@ -51,14 +51,14 @@ class UserActivitiesResource extends JsonResource
         ];
     }
 
-    protected function created_project()
+    protected function created_project(): string
     {
         return $this->project
           ? "Project {$this->project->name} created"
           : 'Project (deleted) created';
     }
 
-    protected function updated_project()
+    protected function updated_project(): string
     {
         if (! $this->project) {
             return 'Project (deleted) updated';
@@ -82,21 +82,21 @@ class UserActivitiesResource extends JsonResource
         return "Project {$this->project->name} ".($updatedKey ?? '').' updated';
     }
 
-    protected function deleted_project()
+    protected function deleted_project(): string
     {
         return $this->project
           ? "Project {$this->project->name} archived"
           : 'Project (deleted) archived';
     }
 
-    protected function restored_project()
+    protected function restored_project(): string
     {
         return $this->project
           ? "Project {$this->project->name} restored"
           : 'Project (deleted) restored';
     }
 
-    protected function created_task()
+    protected function created_task(): string
     {
         if ($this->subject && $this->subject->title) {
             $projectName = $this->project ? $this->project->name : '(deleted)';
@@ -108,7 +108,7 @@ class UserActivitiesResource extends JsonResource
         return "Task added in {$projectName}";
     }
 
-    protected function updated_task()
+    protected function updated_task(): string
     {
         $task = $this->subject;
         $updatedKey = isset($this->changes['after']) ? key($this->changes['after']) : null;
@@ -122,7 +122,7 @@ class UserActivitiesResource extends JsonResource
         return "Task '$taskTitle' ".($updatedKey ? Str::headline($updatedKey) : '')." updated in project {$projectName}";
     }
 
-    protected function deleted_task()
+    protected function deleted_task(): string
     {
         $projectName = $this->project ? $this->project->name : '(deleted)';
         if (! $this->subject) {
@@ -133,7 +133,7 @@ class UserActivitiesResource extends JsonResource
         return "Task '$taskTitle' archived from the project {$projectName}";
     }
 
-    protected function created_message()
+    protected function created_message(): string
     {
         $status = ($this->subject && property_exists($this->subject, 'delivered_at') && $this->subject->delivered_at === null) ? 'scheduled' : 'sent';
         $message = $this->subject && property_exists($this->subject, 'message') ? Str::limit($this->subject->message, 12, '..') : '';
@@ -141,7 +141,7 @@ class UserActivitiesResource extends JsonResource
         return 'Message '.$message.' '.$status;
     }
 
-    protected function sent_invitation_member()
+    protected function sent_invitation_member(): string
     {
         $projectName = $this->project ? $this->project->name : '(deleted)';
 
@@ -155,21 +155,21 @@ class UserActivitiesResource extends JsonResource
         return "Project {$projectName} invitation accepted";
     }
 
-    protected function accept_invitation_member()
+    protected function accept_invitation_member(): string
     {
         $projectName = $this->project ? $this->project->name : '(deleted)';
 
         return "Project {$projectName} invitation accepted";
     }
 
-    protected function remove_project_member()
+    protected function remove_project_member(): string
     {
         $projectName = $this->project ? $this->project->name : '(deleted)';
 
         return "Project {$projectName} member removed";
     }
 
-    protected function created_meeting()
+    protected function created_meeting(): string
     {
         $projectName = $this->project ? $this->project->name : '(deleted)';
         $topic = $this->subject && property_exists($this->subject, 'topic') ? $this->subject->topic : '';
@@ -177,7 +177,7 @@ class UserActivitiesResource extends JsonResource
         return "Meeting {$topic} created in project {$projectName}";
     }
 
-    protected function updated_meeting()
+    protected function updated_meeting(): string
     {
         $projectName = $this->project ? $this->project->name : '(deleted)';
         $topic = $this->subject && property_exists($this->subject, 'topic') ? $this->subject->topic : '';
@@ -185,14 +185,14 @@ class UserActivitiesResource extends JsonResource
         return "Meeting {$topic} updated in project {$projectName}";
     }
 
-    protected function deleted_meeting()
+    protected function deleted_meeting(): string
     {
         $projectName = $this->project ? $this->project->name : '(deleted)';
 
         return "Meeting deleted from project {$projectName}";
     }
 
-    protected function color()
+    protected function color(): string
     {
         $desc = method_exists($this, $this->description) ? $this->{$this->description}() : '';
         if (Str::startsWith($desc, 'Project')) {

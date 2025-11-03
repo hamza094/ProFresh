@@ -129,12 +129,10 @@ export default {
     this.form.address = this.user.info.address;
     this.form.bio = this.user.info.bio;
 
-    // Prefer structuredClone (native, faster) when available. Fall back to _.cloneDeep for older browsers.
-    if (typeof structuredClone === 'function') {
-      this.originalData = structuredClone(this.form);
-    } else {
-      this.originalData = _.cloneDeep(this.form);
-    }
+    // Prefer structuredClone (native, faster). Fallback to JSON clone for older browsers.
+    this.originalData = typeof structuredClone === 'function'
+      ? structuredClone(this.form)
+      : JSON.parse(JSON.stringify(this.form));
   },
   methods: {
     ...mapMutations('profile', ['updateUser']),

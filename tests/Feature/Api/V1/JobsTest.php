@@ -20,12 +20,10 @@ class JobsTest extends TestCase
 
     /**
      * Job Tests.
-     *
-     * @return void
      */
 
     /** @test */
-    public function send_mail_job()
+    public function send_mail_job(): void
     {
         $message = Message::factory()->for($this->project)
             ->create([
@@ -48,7 +46,7 @@ class JobsTest extends TestCase
     }
 
     /** @test */
-    public function mock_send_sms_job()
+    public function mock_send_sms_job(): void
     {
         $project = $this->project;
 
@@ -61,7 +59,7 @@ class JobsTest extends TestCase
 
         $message->users()->attach($this->user);
 
-        $mock = $this->mock(SendSmsService::class, function (MockInterface $mock) {
+        $mock = $this->mock(SendSmsService::class, function (MockInterface $mock): void {
             $mock->shouldReceive('send')
                 ->once()
             // ->with($project,$message)

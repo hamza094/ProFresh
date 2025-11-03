@@ -39,10 +39,8 @@ class SmsMessage implements ShouldQueue
 
     /**
      * Execute the job.
-     *
-     * @return void
      */
-    public function handle(SendSmsService $service)
+    public function handle(SendSmsService $service): void
     {
         $service->send($this->project, $this->message);
     }

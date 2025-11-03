@@ -17,6 +17,7 @@ class UserAvatarTest extends TestCase
     use RefreshDatabase;
 
     private const USER_AVATAR_ROUTE = 'user.avatar';
+
     private const USER_AVATAR_REMOVE_ROUTE = 'user.avatar.remove';
 
     protected function setUp(): void
@@ -35,7 +36,7 @@ class UserAvatarTest extends TestCase
     }
 
     /** @test */
-    public function a_valid_avatar_must_be_provided()
+    public function a_valid_avatar_must_be_provided(): void
     {
         $user = User::first();
 
@@ -43,7 +44,7 @@ class UserAvatarTest extends TestCase
     }
 
     /** @test */
-    public function authorize_user_may_add_avatar_to_his_profile()
+    public function authorize_user_may_add_avatar_to_his_profile(): void
     {
         $user = User::first();
 
@@ -61,7 +62,7 @@ class UserAvatarTest extends TestCase
     }
 
     /** @test */
-    public function profile_owner_can_delete_his_avatar()
+    public function profile_owner_can_delete_his_avatar(): void
     {
         Storage::fake('s3');
 
@@ -73,7 +74,7 @@ class UserAvatarTest extends TestCase
             'avatar_path' => $file,
         ]);
 
-    $response = $this->patchJson(route(self::USER_AVATAR_REMOVE_ROUTE, ['user' => $user->uuid]));
+        $response = $this->patchJson(route(self::USER_AVATAR_REMOVE_ROUTE, ['user' => $user->uuid]));
 
         $response
             ->assertJson([
@@ -84,7 +85,7 @@ class UserAvatarTest extends TestCase
 
         Storage::disk('s3')->assertMissing($file);
 
-    $response = $this->patchJson(route(self::USER_AVATAR_REMOVE_ROUTE, ['user' => $user->uuid]));
+        $response = $this->patchJson(route(self::USER_AVATAR_REMOVE_ROUTE, ['user' => $user->uuid]));
 
         $response
             ->assertJson([

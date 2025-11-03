@@ -69,7 +69,7 @@ class TaskController extends ApiController
      *
      * This endpoint retrieves detailed information about a specific task within a project.
      */
-    public function show(Project $project, Task $task)
+    public function show(Project $project, Task $task): TaskResource
     {
         $task->load(['status', 'assignee']);
 

@@ -14,7 +14,7 @@ class DashboardInsightsServiceTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    public function it_returns_correct_kpis_for_user()
+    public function it_returns_correct_kpis_for_user(): void
     {
         // Arrange
         $mockRepo = $this->createMock(DashboardInsightsRepository::class);
@@ -36,7 +36,7 @@ class DashboardInsightsServiceTest extends TestCase
     }
 
     /** @test */
-    public function it_returns_actionable_insights_for_various_scenarios()
+    public function it_returns_actionable_insights_for_various_scenarios(): void
     {
         // Arrange
         $mockRepo = $this->createMock(DashboardInsightsRepository::class);
@@ -52,13 +52,13 @@ class DashboardInsightsServiceTest extends TestCase
         // Assert
         $this->assertNotEmpty($insights);
 
-        $this->assertTrue(collect($insights)->contains(fn ($item) => $item['type'] === 'critical'));
+        $this->assertTrue(collect($insights)->contains(fn ($item): bool => $item['type'] === 'critical'));
 
-        $this->assertTrue(collect($insights)->contains(fn ($item) => $item['type'] === 'warning'));
+        $this->assertTrue(collect($insights)->contains(fn ($item): bool => $item['type'] === 'warning'));
     }
 
     /** @test */
-    public function it_returns_no_active_projects_insight()
+    public function it_returns_no_active_projects_insight(): void
     {
         // Arrange
         $mockRepo = $this->createMock(DashboardInsightsRepository::class);
@@ -73,11 +73,11 @@ class DashboardInsightsServiceTest extends TestCase
 
         // Assert
         $this->assertNotEmpty($insights);
-        $this->assertTrue(collect($insights)->contains(fn ($item) => $item['type'] === 'info'));
+        $this->assertTrue(collect($insights)->contains(fn ($item): bool => $item['type'] === 'info'));
     }
 
     /** @test */
-    public function it_returns_portfolio_healthy_insight_when_no_issues()
+    public function it_returns_portfolio_healthy_insight_when_no_issues(): void
     {
         // Arrange
         $mockRepo = $this->createMock(DashboardInsightsRepository::class);
@@ -92,11 +92,11 @@ class DashboardInsightsServiceTest extends TestCase
 
         // Assert
         $this->assertNotEmpty($insights);
-        $this->assertTrue(collect($insights)->contains(fn ($item) => $item['type'] === 'success'));
+        $this->assertTrue(collect($insights)->contains(fn ($item): bool => $item['type'] === 'success'));
     }
 
     /** @test */
-    public function it_returns_warning_insight_for_some_overdue_tasks_below_critical()
+    public function it_returns_warning_insight_for_some_overdue_tasks_below_critical(): void
     {
         // Arrange
         $mockRepo = $this->createMock(DashboardInsightsRepository::class);
@@ -111,6 +111,6 @@ class DashboardInsightsServiceTest extends TestCase
 
         // Assert
         $this->assertNotEmpty($insights);
-        $this->assertTrue(collect($insights)->contains(fn ($item) => $item['type'] === 'warning'));
+        $this->assertTrue(collect($insights)->contains(fn ($item): bool => $item['type'] === 'warning'));
     }
 }

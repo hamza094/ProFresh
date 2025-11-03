@@ -17,7 +17,7 @@ class PaypalAgreement extends Paypal
         return redirect($this->agreement($id));
     }
 
-    public function execute($token)
+    public function execute($token): void
     {
         $agreement = new Agreement;
         try {

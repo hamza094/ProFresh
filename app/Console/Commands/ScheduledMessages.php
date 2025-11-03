@@ -36,10 +36,8 @@ class ScheduledMessages extends Command
 
     /**
      * Execute the console command.
-     *
-     * @return int
      */
-    public function handle(MessageService $service)
+    public function handle(MessageService $service): void
     {
         $messages = Message::messageScheduled()->with('project', 'users')->get();
 

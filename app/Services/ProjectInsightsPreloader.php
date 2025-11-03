@@ -51,11 +51,9 @@ class ProjectInsightsPreloader
 
         /** @var \Illuminate\Support\Collection<int,string> $metricTypes */
         $metricTypes = collect($sections)
-            ->flatMap(function (string $section) use ($sectionToTypesMap): array {
+            ->flatMap(fn (string $section): array =>
                 /** @var array<int,string> $types */
-                return $sectionToTypesMap[$section] ?? [];
-
-            })
+                $sectionToTypesMap[$section] ?? [])
             ->unique()
             ->values();
 

@@ -2,6 +2,6 @@
 
 // variadic-method-App\Services\Api\V1\FeatureService-updateStageStatus-D:\apps\profresh\app\Services\Api\V1\FeatureService.php
 return \PHPStan\Cache\CacheItem::__set_state(array(
-   'variableKey' => '1762008613-v4',
+   'variableKey' => '1762181711-v4',
    'data' => false,
 ));

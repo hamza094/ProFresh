@@ -19,7 +19,7 @@ class UserTokenRequest extends FormRequest
     /**
      * @return array<string, mixed>
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             /*
@@ -37,7 +37,7 @@ class UserTokenRequest extends FormRequest
             'expires_at' => [
                 'nullable',
                 'date',
-                function ($attribute, $value, $fail): void {
+                function (string $attribute, $value, $fail): void {
                     if ($value) {
                         $maxDate = now()->addDays(180);
                         if (now()->parse($value)->gt($maxDate)) {

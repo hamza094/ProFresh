@@ -18,7 +18,7 @@ class RecordActivityTest extends TestCase
     // Since the project is automatically with ProjectSetup trait it should already have one activity
 
     /** @test */
-    public function creating_a_project()
+    public function creating_a_project(): void
     {
 
         $this->assertDatabaseHas('activities', [
@@ -32,7 +32,7 @@ class RecordActivityTest extends TestCase
     }
 
     /** @test */
-    public function record_activity_on_updating_a_project()
+    public function record_activity_on_updating_a_project(): void
     {
         $initialAttributes = $this->project->only(['name', 'slug']);
 
@@ -51,7 +51,7 @@ class RecordActivityTest extends TestCase
     }
 
     /** @test */
-    public function it_removes_project_activities_when_deleted()
+    public function it_removes_project_activities_when_deleted(): void
     {
         $this->assertEquals(1, $this->project->activities()->count());
 
@@ -63,7 +63,7 @@ class RecordActivityTest extends TestCase
     }
 
     /** @test */
-    public function record_on_restoring_project()
+    public function record_on_restoring_project(): void
     {
         $this->project->delete();
 
@@ -76,7 +76,7 @@ class RecordActivityTest extends TestCase
     }
 
     /** @test */
-    public function record_on_creating_task()
+    public function record_on_creating_task(): void
     {
         $this->project->addTask('Test Task');
 
@@ -92,7 +92,7 @@ class RecordActivityTest extends TestCase
     }
 
     /** @test */
-    public function record_on_updating_task()
+    public function record_on_updating_task(): void
     {
         $task = $this->project->addTask('test task');
 
@@ -109,7 +109,7 @@ class RecordActivityTest extends TestCase
     }
 
     /** @test */
-    public function record_on_task_deletion()
+    public function record_on_task_deletion(): void
     {
         $task = $this->project->addTask('test task');
 
@@ -121,7 +121,7 @@ class RecordActivityTest extends TestCase
     }
 
     /** @test */
-    public function remove_project_task_activities_on_archived_task_deletion()
+    public function remove_project_task_activities_on_archived_task_deletion(): void
     {
         $task = $this->project->addTask('test task');
 
@@ -137,7 +137,7 @@ class RecordActivityTest extends TestCase
     }
 
     /** @test */
-    public function records_activity_when_invitation_sent_to_user()
+    public function records_activity_when_invitation_sent_to_user(): void
     {
         $user = User::factory()->create();
 
@@ -151,7 +151,7 @@ class RecordActivityTest extends TestCase
     }
 
     /** @test */
-    public function records_activity_when_user_accepted_project_invitation()
+    public function records_activity_when_user_accepted_project_invitation(): void
     {
         $this->project->invite($user = User::factory()->create());
 
@@ -165,7 +165,7 @@ class RecordActivityTest extends TestCase
     }
 
     /** @test */
-    public function it_records_activity_when_a_project_member_is_removed()
+    public function it_records_activity_when_a_project_member_is_removed(): void
     {
         $user = User::factory()->create();
 
@@ -177,7 +177,7 @@ class RecordActivityTest extends TestCase
     }
 
     /** @test */
-    public function it_records_activity_on_creating_message()
+    public function it_records_activity_on_creating_message(): void
     {
         $this->postJson($this->project->path().'/message', [
             'message' => 'this is project message',

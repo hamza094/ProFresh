@@ -19,15 +19,7 @@ use Illuminate\Support\Facades\DB;
 
 class ZoomMeetingController extends Controller
 {
-    /**
-     * @var ExceptionService
-     */
-    protected $exceptionService;
-
-    public function __construct(ExceptionService $exceptionService)
-    {
-        $this->exceptionService = $exceptionService;
-    }
+    public function __construct(protected ExceptionService $exceptionService) {}
 
     public function index(Project $project, Request $request, MeetingService $meetingService): JsonResponse
     {

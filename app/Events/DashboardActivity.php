@@ -16,6 +16,9 @@ class DashboardActivity implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
+    /**
+     * @var Activity
+     */
     public $activity;
 
     /**

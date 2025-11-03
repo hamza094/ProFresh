@@ -21,7 +21,7 @@ class InvitationUsersRequest extends FormRequest
      *
      * @return array<string, string>
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             /**

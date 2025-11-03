@@ -22,7 +22,7 @@ class StageController extends Controller
         return StageResource::collection($stages);
     }
 
-    public function store(StageRequest $request)
+    public function store(StageRequest $request): \Illuminate\Http\JsonResponse
     {
         $stage = Stage::create($request->validated());
 
@@ -32,7 +32,7 @@ class StageController extends Controller
         ]);
     }
 
-    public function update(Request $request, Stage $stage)
+    public function update(Request $request, Stage $stage): \Illuminate\Http\JsonResponse
     {
         $stage->update($request->validate(['name' => 'required|string|max:255']));
 
@@ -42,7 +42,7 @@ class StageController extends Controller
         ]);
     }
 
-    public function destroy(Stage $stage)
+    public function destroy(Stage $stage): \Illuminate\Http\JsonResponse
     {
         $stage->delete();
 

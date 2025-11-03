@@ -15,7 +15,7 @@ class InvitationTest extends TestCase
     use ProjectSetup,RefreshDatabase;
 
     /** @test */
-    public function project_owner_can_invite_user()
+    public function project_owner_can_invite_user(): void
     {
         $InvitedUser = User::factory()->create();
 
@@ -33,12 +33,12 @@ class InvitationTest extends TestCase
     }
 
     /** @test */
-    public function project_owner_can_not_reinvite_user_and_himself()
+    public function project_owner_can_not_reinvite_user_and_himself(): void
     {
         $invitedUser = User::factory()->create();
         $this->project->invite($invitedUser);
 
-        $response = $this->postJson($this->project->path().'/invitations', [
+        $this->postJson($this->project->path().'/invitations', [
             'email' => $invitedUser->email,
         ])
             ->assertUnprocessable();
@@ -49,7 +49,7 @@ class InvitationTest extends TestCase
     }
 
     /** @test */
-    public function it_allows_valid_email()
+    public function it_allows_valid_email(): void
     {
         $user = User::factory()->create(['email' => 'valid@example.com']);
 
@@ -61,7 +61,7 @@ class InvitationTest extends TestCase
     }
 
     /** @test */
-    public function auth_user_accept_project_invitation_sent_to_him()
+    public function auth_user_accept_project_invitation_sent_to_him(): void
     {
         $invitedUser = User::factory()->create();
         $this->project->invite($invitedUser);
@@ -83,7 +83,7 @@ class InvitationTest extends TestCase
     }
 
     /** @test */
-    public function uninvited_user_cannot_accept_invitation()
+    public function uninvited_user_cannot_accept_invitation(): void
     {
         $user = User::factory()->create();
 
@@ -95,7 +95,7 @@ class InvitationTest extends TestCase
     }
 
     /** @test */
-    public function authorized_user_can_reject_project_invitation()
+    public function authorized_user_can_reject_project_invitation(): void
     {
         $invitedUser = User::factory()->create();
 
@@ -116,11 +116,11 @@ class InvitationTest extends TestCase
     }
 
     /** @test */
-    public function project_owner_can_cancel_project_invitation()
+    public function project_owner_can_cancel_project_invitation(): void
     {
         $invitedUser = User::factory()->create();
 
-        $response = $this->getJson(route('projects.cancel-invitation',
+        $this->getJson(route('projects.cancel-invitation',
             ['project' => $this->project, 'user' => $invitedUser,
             ]))
             ->assertForbidden();
@@ -142,7 +142,7 @@ class InvitationTest extends TestCase
     }
 
     /** @test */
-    public function project_owner_can_remove_member()
+    public function project_owner_can_remove_member(): void
     {
         $memberUser = User::factory()->create();
 
@@ -160,7 +160,7 @@ class InvitationTest extends TestCase
     }
 
     /** @test */
-    public function project_owner_can_view_pending_member_invitations()
+    public function project_owner_can_view_pending_member_invitations(): void
     {
         $pendingUsers = User::factory()->count(3)->create();
 

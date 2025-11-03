@@ -17,7 +17,7 @@ class RolePermissionController extends Controller
 {
     use ApiResponseHelpers;
 
-    public function assignRolePermission(Role $role, Permission $permission)
+    public function assignRolePermission(Role $role, Permission $permission): \Illuminate\Http\JsonResponse
     {
         throw_if($role->hasPermissionTo($permission),
             ValidationException::withMessages(
@@ -34,7 +34,7 @@ class RolePermissionController extends Controller
 
     }
 
-    public function unAssignPermission(Role $role, Permission $permission)
+    public function unAssignPermission(Role $role, Permission $permission): \Illuminate\Http\JsonResponse
     {
         throw_if(! $role->hasPermissionTo($permission),
             ValidationException::withMessages(
@@ -51,7 +51,7 @@ class RolePermissionController extends Controller
 
     }
 
-    public function assignUserRole(User $user, Role $role)
+    public function assignUserRole(User $user, Role $role): \Illuminate\Http\JsonResponse
     {
         throw_if($user->hasRole($role),
             ValidationException::withMessages(

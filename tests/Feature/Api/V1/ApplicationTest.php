@@ -18,7 +18,7 @@ class ApplicationTest extends TestCase
     use ProjectSetup,RefreshDatabase;
 
     /** @test */
-    public function only_allowed_users_can_access_project_features()
+    public function only_allowed_users_can_access_project_features(): void
     {
         $this->withoutExceptionHandling()->postJson($this->project->path().'/tasks',
             ['title' => 'My Project Task'])->assertCreated();
@@ -41,7 +41,7 @@ class ApplicationTest extends TestCase
     }
 
     /** @test */
-    public function auth_user_can_export_project_file()
+    public function auth_user_can_export_project_file(): void
     {
         Excel::fake();
         $this->getJson($this->project->path().'/export');

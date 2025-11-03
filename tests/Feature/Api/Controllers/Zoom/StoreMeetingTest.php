@@ -16,12 +16,10 @@ class StoreMeetingTest extends TestCase
     use InteractsWithZoom,ProjectSetup,RefreshDatabase;
     /**
      * A basic feature test example.
-     *
-     * @return void
      */
 
     /** @test */
-    public function meeting_can_be_created_successfully()
+    public function meeting_can_be_created_successfully(): void
     {
         $zoomFake = $this->fakeZoom();
 
@@ -73,7 +71,7 @@ class StoreMeetingTest extends TestCase
     }
 
     /** @test */
-    public function it_validates_meeting_creation_request()
+    public function it_validates_meeting_creation_request(): void
     {
         $postBody = [
             'topic' => '',

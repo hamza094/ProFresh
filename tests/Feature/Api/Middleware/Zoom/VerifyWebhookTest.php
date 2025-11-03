@@ -11,11 +11,11 @@ use Tests\TestCase;
 
 class VerifyWebhookTest extends TestCase
 {
+    private const WEBHOOK_TEST_PATH = '/_test/webhook';
+
     public $payload;
 
     public $timestamp;
-
-    private const WEBHOOK_TEST_PATH = '/_test/webhook';
 
     protected function setUp(): void
     {
@@ -23,7 +23,7 @@ class VerifyWebhookTest extends TestCase
 
         config('services.zoom.webhook_secret', 'secret');
 
-    Route::middleware('zoom.webhook')->any(self::WEBHOOK_TEST_PATH, fn () => 'OK');
+        Route::middleware('zoom.webhook')->any(self::WEBHOOK_TEST_PATH, fn (): string => 'OK');
 
         $this->payload = [
             'event' => 'meeting.started',
@@ -41,7 +41,7 @@ class VerifyWebhookTest extends TestCase
     }
 
     /** @test */
-    public function it_aborts_with_an_invalid_signature()
+    public function it_aborts_with_an_invalid_signature(): void
     {
         try {
             $this->post(self::WEBHOOK_TEST_PATH, $this->payload, [
@@ -59,13 +59,13 @@ class VerifyWebhookTest extends TestCase
     }
 
     /** @test */
-    public function it_passes_with_a_valid_signature()
+    public function it_passes_with_a_valid_signature(): void
     {
         $timestamp = time();
 
         $signature = $this->buildSignature($timestamp, $this->payload);
 
-        $response = $this->postJson(self::WEBHOOK_TEST_PATH, $this->payload, [
+        $this->postJson(self::WEBHOOK_TEST_PATH, $this->payload, [
             'x-zm-request-timestamp' => $this->timestamp,
             'x-zm-signature' => $signature,
         ]);
@@ -74,7 +74,7 @@ class VerifyWebhookTest extends TestCase
     }
 
     /** @test */
-    public function it_fails_with_an_old_timestamp()
+    public function it_fails_with_an_old_timestamp(): void
     {
 
         $oldTimestamp = $this->timestamp - 600;
@@ -96,7 +96,7 @@ class VerifyWebhookTest extends TestCase
         $this->fail('The timestamp should have failed verification.');
     }
 
-    protected function buildSignature($timestamp, $payload)
+    protected function buildSignature(string $timestamp, $payload): string
     {
         $message = 'v0:'.$timestamp.':'.json_encode($payload, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
 

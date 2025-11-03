@@ -40,7 +40,7 @@ class FeatureService
         // self::recordActivity($project,'export_project','default');
     }
 
-    public function recordActivity($project, $activity, $info)
+    public function recordActivity($project, $activity, $info): void
     {
         $project->recordActivity($activity, $info);
     }

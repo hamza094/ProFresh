@@ -27,12 +27,12 @@ class ActivitiesResource extends JsonResource
         ];
     }
 
-    protected function created_project()
+    protected function created_project(): string
     {
         return 'Created Project';
     }
 
-    protected function updated_project()
+    protected function updated_project(): string
     {
         $updatedKey = key($this->changes['after']);
 
@@ -49,17 +49,17 @@ class ActivitiesResource extends JsonResource
         return $status;
     }
 
-    protected function deleted_project()
+    protected function deleted_project(): string
     {
         return 'Abandoned Project';
     }
 
-    protected function restored_project()
+    protected function restored_project(): string
     {
         return 'Restores back Project';
     }
 
-    protected function created_task()
+    protected function created_task(): string
     {
         if ($this->subject && $this->subject->title) {
             return 'Added new task  '.Str::limit($this->subject->title, 7, '..').' '.'in';
@@ -68,7 +68,7 @@ class ActivitiesResource extends JsonResource
         return 'Added new Task in';
     }
 
-    protected function updated_task()
+    protected function updated_task(): string
     {
         $task = $this->subject;
         $updatedKey = key($this->changes['after']);
@@ -81,63 +81,63 @@ class ActivitiesResource extends JsonResource
         return "Updated Task '$taskName' title in";
     }
 
-    protected function deleted_task()
+    protected function deleted_task(): string
     {
         return 'Archived Task archived in';
     }
 
-    protected function updated_taskstatus()
+    protected function updated_taskstatus(): string
     {
         $label = $this->subject->label;
 
         return "Updated Task Status with label '$label'";
     }
 
-    protected function created_taskstatus()
+    protected function created_taskstatus(): string
     {
         return 'Created new Task Status';
     }
 
-    protected function deleted_taskstatus()
+    protected function deleted_taskstatus(): string
     {
         return 'Deleted Task status';
     }
 
-    protected function updated_stage()
+    protected function updated_stage(): string
     {
         $name = $this->subject->name;
 
         return "Updated Stage with name '$name'";
     }
 
-    protected function created_stage()
+    protected function created_stage(): string
     {
         return 'Created new Stage';
     }
 
-    protected function deleted_stage()
+    protected function deleted_stage(): string
     {
         return 'Deleted Stage';
     }
 
-    protected function created_message()
+    protected function created_message(): string
     {
         $status = $this->subject->delivered_at === null ? 'scheduled' : 'sent';
 
         return $status.Str::limit($this->subject->message, 17, '..').' '.'Message in';
     }
 
-    protected function sent_invitation_member()
+    protected function sent_invitation_member(): string
     {
         return 'Sent invitation '.$this->info.''.'to Project';
     }
 
-    protected function accept_invitation_member()
+    protected function accept_invitation_member(): string
     {
         return 'Invitation accepted by '.$this->info.' of Project';
     }
 
-    protected function remove_project_member()
+    protected function remove_project_member(): string
     {
         return 'Member '.$this->info.' '.' removed from project';
     }

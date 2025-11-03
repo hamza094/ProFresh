@@ -15,12 +15,10 @@ class UsersTest extends TestCase
     use RefreshDatabase;
     /**
      * A user activity test.
-     *
-     * @return void
      */
 
     /** @test */
-    public function record_user_last_activity()
+    public function record_user_last_activity(): void
     {
         $user = User::factory()->create();
 

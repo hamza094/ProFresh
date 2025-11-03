@@ -21,7 +21,7 @@ class TaskRequest extends FormRequest
         return true;
     }
 
-    public function rules()
+    public function rules(): array
     {
         /** @var Project $project */
         $project = $this->route('project');

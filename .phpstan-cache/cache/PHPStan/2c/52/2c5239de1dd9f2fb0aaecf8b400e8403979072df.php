@@ -2,6 +2,6 @@
 
 // variadic-method-App\Services\Api\V1\MessageService-saveMessageDateAndTime-D:\apps\profresh\app\Services\Api\V1\MessageService.php
 return \PHPStan\Cache\CacheItem::__set_state(array(
-   'variableKey' => '1762009298-v4',
+   'variableKey' => '1762181714-v4',
    'data' => false,
 ));

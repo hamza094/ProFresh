@@ -64,7 +64,7 @@ class UserTasksDataTest extends TestCase
     }
 
     /** @test */
-    public function auth_user_can_view_tasks_with_user_created_and_task_assigned_filters()
+    public function auth_user_can_view_tasks_with_user_created_and_task_assigned_filters(): void
     {
         // Create tasks for the authenticated user
         Task::factory(['user_id' => $this->user->id, 'project_id' => $this->project->id])->count(3)->create();
@@ -94,7 +94,7 @@ class UserTasksDataTest extends TestCase
     }
 
     /** @test */
-    public function auth_user_can_filter_tasks_by_user_created_only()
+    public function auth_user_can_filter_tasks_by_user_created_only(): void
     {
         // Create tasks for the authenticated user
         Task::factory(['user_id' => $this->user->id, 'project_id' => $this->project->id])->count(2)->create();
@@ -114,7 +114,7 @@ class UserTasksDataTest extends TestCase
     }
 
     /** @test */
-    public function auth_user_can_filter_tasks_by_task_assigned_only()
+    public function auth_user_can_filter_tasks_by_task_assigned_only(): void
     {
         // Create a task by another user and assign to authenticated user
         $randomUser = User::factory()->create();
@@ -136,7 +136,7 @@ class UserTasksDataTest extends TestCase
     }
 
     /** @test */
-    public function auth_user_can_filter_tasks_by_completed_status()
+    public function auth_user_can_filter_tasks_by_completed_status(): void
     {
         // Create completed tasks
         Task::factory([
@@ -163,7 +163,7 @@ class UserTasksDataTest extends TestCase
     }
 
     /** @test */
-    public function auth_user_can_filter_tasks_by_overdue_status()
+    public function auth_user_can_filter_tasks_by_overdue_status(): void
     {
         // Create overdue tasks
         Task::factory([
@@ -191,7 +191,7 @@ class UserTasksDataTest extends TestCase
     }
 
     /** @test */
-    public function auth_user_can_filter_tasks_by_remaining_status()
+    public function auth_user_can_filter_tasks_by_remaining_status(): void
     {
         // Create remaining (not completed) tasks
         Task::factory([
@@ -217,7 +217,7 @@ class UserTasksDataTest extends TestCase
     }
 
     /** @test */
-    public function request_requires_at_least_one_filter()
+    public function request_requires_at_least_one_filter(): void
     {
         $response = $this->getJson('api/v1/tasksdata');
 
@@ -226,7 +226,7 @@ class UserTasksDataTest extends TestCase
     }
 
     /** @test */
-    public function request_with_false_values_requires_at_least_one_filter()
+    public function request_with_false_values_requires_at_least_one_filter(): void
     {
         $response = $this->getJson('api/v1/tasksdata?user_created=0&completed=0');
 
@@ -235,7 +235,7 @@ class UserTasksDataTest extends TestCase
     }
 
     /** @test */
-    public function status_filters_without_user_context_default_to_user_tasks()
+    public function status_filters_without_user_context_default_to_user_tasks(): void
     {
         // Create overdue task by authenticated user
         Task::factory([

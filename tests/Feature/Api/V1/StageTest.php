@@ -42,7 +42,7 @@ class StageTest extends TestCase
     }
 
     /** @test */
-    public function stages_loaded_sucessfully()
+    public function stages_loaded_sucessfully(): void
     {
         $stages = Stage::all();
 
@@ -53,7 +53,7 @@ class StageTest extends TestCase
     }
 
     /** @test */
-    public function allowed_user_can_change_project_stage()
+    public function allowed_user_can_change_project_stage(): void
     {
         $this->assertEquals('Planing', $this->project->stage->name);
 
@@ -78,7 +78,7 @@ class StageTest extends TestCase
     }
 
     /** @test */
-    public function allowed_user_can_update_postponed_reason()
+    public function allowed_user_can_update_postponed_reason(): void
     {
         $postponed_reason = 'Unable to reach';
 

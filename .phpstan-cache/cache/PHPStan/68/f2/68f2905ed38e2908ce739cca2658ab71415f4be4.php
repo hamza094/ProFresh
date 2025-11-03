@@ -2,6 +2,6 @@
 
 // variadic-method-App\QueryBuilder\TaskQueryBuilder-archived-D:\apps\profresh\app\QueryBuilder\TaskQueryBuilder.php
 return \PHPStan\Cache\CacheItem::__set_state(array(
-   'variableKey' => '1761981361-v4',
+   'variableKey' => '1762177782-v4',
    'data' => false,
 ));

@@ -14,9 +14,9 @@ class FileUploadTest extends TestCase
 {
     use RefreshDatabase;
 
-    private $fileService;
+    private FileService $fileService;
 
-    private $fileType;
+    private string $fileType;
 
     protected function setUp(): void
     {

@@ -14,7 +14,7 @@ class UserInvitationTest extends TestCase
     use ProjectSetup,RefreshDatabase;
 
     /** @test */
-    public function it_returns_pending_project_invitations_for_authenticated_user()
+    public function it_returns_pending_project_invitations_for_authenticated_user(): void
     {
         // Create a project and attach as pending invitation
         $project = project::factory()->create();
@@ -34,7 +34,7 @@ class UserInvitationTest extends TestCase
     }
 
     /** @test */
-    public function it_returns_empty_array_and_message_if_no_pending_invitations()
+    public function it_returns_empty_array_and_message_if_no_pending_invitations(): void
     {
 
         $response = $this->getJson('/api/v1/me/invitations');

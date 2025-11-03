@@ -26,10 +26,8 @@ class AppServiceProvider extends ServiceProvider
 {
     /**
      * Register any application services.
-     *
-     * @return void
      */
-    public function register()
+    public function register(): void
     {
         JsonResource::withoutWrapping();
 
@@ -50,10 +48,8 @@ class AppServiceProvider extends ServiceProvider
 
     /**
      * Bootstrap any application services.
-     *
-     * @return void
      */
-    public function boot()
+    public function boot(): void
     {
         Scramble::afterOpenApiGenerated(function (OpenApi $openApi): void {
             $openApi->secure(
@@ -61,7 +57,7 @@ class AppServiceProvider extends ServiceProvider
             );
         });
 
-        Scramble::routes(function (Route $route) {
+        Scramble::routes(function (Route $route): bool {
             $excludedPrefixes = [
                 'api/v1/admin',
                 'api/v1/webhooks',
@@ -95,7 +91,7 @@ class AppServiceProvider extends ServiceProvider
          * @param  string  $pageName
          * @return PaginationService
          */
-        Collection::macro('paginate', function ($perPage, $total = null, $page = null, $pageName = 'page') {
+        Collection::macro('paginate', function ($perPage, $total = null, $page = null, $pageName = 'page'): PaginationService {
             $page = $page ?: PaginationService::resolveCurrentPage($pageName);
 
             return new PaginationService(

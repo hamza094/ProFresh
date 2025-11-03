@@ -17,7 +17,7 @@ class DashboardInsightsRepositoryTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    public function it_handles_no_projects()
+    public function it_handles_no_projects(): void
     {
         $user = User::factory()->create();
         $repo = new DashboardInsightsRepository;
@@ -29,7 +29,7 @@ class DashboardInsightsRepositoryTest extends TestCase
     }
 
     /** @test */
-    public function it_handles_projects_with_no_tasks()
+    public function it_handles_projects_with_no_tasks(): void
     {
         $user = User::factory()->create();
         Project::factory()->for($user)->create();
@@ -42,7 +42,7 @@ class DashboardInsightsRepositoryTest extends TestCase
     }
 
     /** @test */
-    public function it_handles_all_tasks_completed()
+    public function it_handles_all_tasks_completed(): void
     {
         TaskStatus::factory(['id' => 4])->create();
         $user = User::factory()->create();
@@ -61,7 +61,7 @@ class DashboardInsightsRepositoryTest extends TestCase
     }
 
     /** @test */
-    public function it_handles_all_tasks_overdue()
+    public function it_handles_all_tasks_overdue(): void
     {
         TaskStatus::factory()->create();
         $user = User::factory()->create();
@@ -73,7 +73,7 @@ class DashboardInsightsRepositoryTest extends TestCase
     }
 
     /** @test */
-    public function it_handles_threshold_boundary_for_critical_projects()
+    public function it_handles_threshold_boundary_for_critical_projects(): void
     {
         TaskStatus::factory()->create();
         $user = User::factory()->create();
@@ -91,7 +91,7 @@ class DashboardInsightsRepositoryTest extends TestCase
     }
 
     /** @test */
-    public function it_handles_multiple_projects_mixed_states()
+    public function it_handles_multiple_projects_mixed_states(): void
     {
         TaskStatus::factory()->create();
         TaskStatus::factory(['id' => 4])->create();
@@ -109,7 +109,7 @@ class DashboardInsightsRepositoryTest extends TestCase
     }
 
     /** @test */
-    public function it_handles_user_as_active_member_not_owner()
+    public function it_handles_user_as_active_member_not_owner(): void
     {
         $user = User::factory()->create();
         $owner = User::factory()->create();
@@ -129,7 +129,7 @@ class DashboardInsightsRepositoryTest extends TestCase
     }
 
     /** @test */
-    public function it_excludes_inactive_members_from_results()
+    public function it_excludes_inactive_members_from_results(): void
     {
         $user = User::factory()->create();
         $owner = User::factory()->create();

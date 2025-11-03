@@ -26,17 +26,7 @@ parameters:
 			path: app/Actions/OAuthAction.php
 
 		-
-			message: "#^Method App\\\\Console\\\\Commands\\\\RemoveAbondonProjects\\:\\:handle\\(\\) should return int but return statement is missing\\.$#"
-			count: 1
-			path: app/Console/Commands/RemoveAbondonProjects.php
-
-		-
 			message: "#^Access to an undefined property App\\\\Models\\\\Message\\:\\:\\$project\\.$#"
-			count: 1
-			path: app/Console/Commands/ScheduledMessages.php
-
-		-
-			message: "#^Method App\\\\Console\\\\Commands\\\\ScheduledMessages\\:\\:handle\\(\\) should return int but return statement is missing\\.$#"
 			count: 1
 			path: app/Console/Commands/ScheduledMessages.php
 
@@ -56,7 +46,12 @@ parameters:
 			path: app/Console/Commands/TaskNotify.php
 
 		-
-			message: "#^Property App\\\\Console\\\\Commands\\\\TaskNotify\\:\\:\\$taskDueAction has no type specified\\.$#"
+			message: "#^Parameter \\#1 \\$task of method App\\\\Actions\\\\TaskDueAction\\:\\:sendNotification\\(\\) expects App\\\\Models\\\\Task, Illuminate\\\\Database\\\\Eloquent\\\\Model given\\.$#"
+			count: 1
+			path: app/Console/Commands/TaskNotify.php
+
+		-
+			message: "#^Parameter \\#1 \\$task of method App\\\\Actions\\\\TaskDueAction\\:\\:shouldNotify\\(\\) expects App\\\\Models\\\\Task, Illuminate\\\\Database\\\\Eloquent\\\\Model given\\.$#"
 			count: 1
 			path: app/Console/Commands/TaskNotify.php
 
@@ -111,14 +106,14 @@ parameters:
 			path: app/Events/DashboardActivity.php
 
 		-
-			message: "#^Property App\\\\Events\\\\DashboardActivity\\:\\:\\$activity has no type specified\\.$#"
-			count: 1
-			path: app/Events/DashboardActivity.php
-
-		-
 			message: "#^PHPDoc tag @return with type array\\|Illuminate\\\\Broadcasting\\\\Channel is not subtype of native type Illuminate\\\\Broadcasting\\\\PrivateChannel\\.$#"
 			count: 1
 			path: app/Events/NewMessage.php
+
+		-
+			message: "#^PHPDoc tag @return with type array\\<int, Illuminate\\\\Broadcasting\\\\Channel\\>\\|Illuminate\\\\Broadcasting\\\\Channel is not subtype of native type Illuminate\\\\Broadcasting\\\\PrivateChannel\\.$#"
+			count: 1
+			path: app/Events/UserHasRegistered.php
 
 		-
 			message: "#^PHPDoc type array of property App\\\\Exceptions\\\\Handler\\:\\:\\$dontFlash is not covariant with PHPDoc type array\\<int, string\\> of overridden property Illuminate\\\\Foundation\\\\Exceptions\\\\Handler\\:\\:\\$dontFlash\\.$#"
@@ -166,17 +161,12 @@ parameters:
 			path: app/Http/Controllers/Api/V1/InvitationController.php
 
 		-
-			message: "#^Method App\\\\Http\\\\Controllers\\\\Api\\\\V1\\\\MessageController\\:\\:delete\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: app/Http/Controllers/Api/V1/MessageController.php
-
-		-
 			message: "#^Method App\\\\Http\\\\Controllers\\\\Api\\\\V1\\\\MessageController\\:\\:message\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: app/Http/Controllers/Api/V1/MessageController.php
 
 		-
-			message: "#^Method App\\\\Http\\\\Controllers\\\\Api\\\\V1\\\\MessageController\\:\\:scheduled\\(\\) has no return type specified\\.$#"
+			message: "#^Method App\\\\Http\\\\Controllers\\\\Api\\\\V1\\\\MessageController\\:\\:scheduled\\(\\) return type with generic class Illuminate\\\\Support\\\\Collection does not specify its types\\: TKey, TValue$#"
 			count: 1
 			path: app/Http/Controllers/Api/V1/MessageController.php
 
@@ -211,26 +201,6 @@ parameters:
 			path: app/Http/Controllers/Api/V1/NotificationsController.php
 
 		-
-			message: "#^Method App\\\\Http\\\\Controllers\\\\Api\\\\V1\\\\ProjectController\\:\\:delete\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: app/Http/Controllers/Api/V1/ProjectController.php
-
-		-
-			message: "#^Method App\\\\Http\\\\Controllers\\\\Api\\\\V1\\\\ProjectController\\:\\:destroy\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: app/Http/Controllers/Api/V1/ProjectController.php
-
-		-
-			message: "#^Method App\\\\Http\\\\Controllers\\\\Api\\\\V1\\\\ProjectController\\:\\:restore\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: app/Http/Controllers/Api/V1/ProjectController.php
-
-		-
-			message: "#^Method App\\\\Http\\\\Controllers\\\\Api\\\\V1\\\\ProjectController\\:\\:show\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: app/Http/Controllers/Api/V1/ProjectController.php
-
-		-
 			message: "#^Method App\\\\Http\\\\Controllers\\\\Api\\\\V1\\\\ProjectController\\:\\:update\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: app/Http/Controllers/Api/V1/ProjectController.php
@@ -239,11 +209,6 @@ parameters:
 			message: "#^Method App\\\\Http\\\\Controllers\\\\Api\\\\V1\\\\StageController\\:\\:index\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: app/Http/Controllers/Api/V1/StageController.php
-
-		-
-			message: "#^Method App\\\\Http\\\\Controllers\\\\Api\\\\V1\\\\TaskController\\:\\:show\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: app/Http/Controllers/Api/V1/TaskController.php
 
 		-
 			message: "#^Method App\\\\Http\\\\Controllers\\\\Api\\\\V1\\\\TaskController\\:\\:update\\(\\) has no return type specified\\.$#"
@@ -456,7 +421,7 @@ parameters:
 			path: app/Http/Requests/Api/V1/TaskRequest.php
 
 		-
-			message: "#^Method App\\\\Http\\\\Requests\\\\Api\\\\V1\\\\TaskRequest\\:\\:rules\\(\\) has no return type specified\\.$#"
+			message: "#^Method App\\\\Http\\\\Requests\\\\Api\\\\V1\\\\TaskRequest\\:\\:rules\\(\\) return type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: app/Http/Requests/Api/V1/TaskRequest.php
 
@@ -521,27 +486,12 @@ parameters:
 			path: app/Http/Resources/Api/V1/ActivityResource.php
 
 		-
-			message: "#^Method App\\\\Http\\\\Resources\\\\Api\\\\V1\\\\ActivityResource\\:\\:created_meeting\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: app/Http/Resources/Api/V1/ActivityResource.php
-
-		-
-			message: "#^Method App\\\\Http\\\\Resources\\\\Api\\\\V1\\\\ActivityResource\\:\\:deleted_meeting\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: app/Http/Resources/Api/V1/ActivityResource.php
-
-		-
 			message: "#^Method App\\\\Http\\\\Resources\\\\Api\\\\V1\\\\ActivityResource\\:\\:getSubjectDetails\\(\\) return type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: app/Http/Resources/Api/V1/ActivityResource.php
 
 		-
 			message: "#^Method App\\\\Http\\\\Resources\\\\Api\\\\V1\\\\ActivityResource\\:\\:loadAffectedUsers\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: app/Http/Resources/Api/V1/ActivityResource.php
-
-		-
-			message: "#^Method App\\\\Http\\\\Resources\\\\Api\\\\V1\\\\ActivityResource\\:\\:updated_meeting\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: app/Http/Resources/Api/V1/ActivityResource.php
 
@@ -801,67 +751,7 @@ parameters:
 			path: app/Http/Resources/Api/V1/UserActivitiesResource.php
 
 		-
-			message: "#^Method App\\\\Http\\\\Resources\\\\Api\\\\V1\\\\UserActivitiesResource\\:\\:accept_invitation_member\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: app/Http/Resources/Api/V1/UserActivitiesResource.php
-
-		-
-			message: "#^Method App\\\\Http\\\\Resources\\\\Api\\\\V1\\\\UserActivitiesResource\\:\\:color\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: app/Http/Resources/Api/V1/UserActivitiesResource.php
-
-		-
-			message: "#^Method App\\\\Http\\\\Resources\\\\Api\\\\V1\\\\UserActivitiesResource\\:\\:created_meeting\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: app/Http/Resources/Api/V1/UserActivitiesResource.php
-
-		-
-			message: "#^Method App\\\\Http\\\\Resources\\\\Api\\\\V1\\\\UserActivitiesResource\\:\\:created_message\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: app/Http/Resources/Api/V1/UserActivitiesResource.php
-
-		-
-			message: "#^Method App\\\\Http\\\\Resources\\\\Api\\\\V1\\\\UserActivitiesResource\\:\\:created_project\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: app/Http/Resources/Api/V1/UserActivitiesResource.php
-
-		-
-			message: "#^Method App\\\\Http\\\\Resources\\\\Api\\\\V1\\\\UserActivitiesResource\\:\\:created_task\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: app/Http/Resources/Api/V1/UserActivitiesResource.php
-
-		-
-			message: "#^Method App\\\\Http\\\\Resources\\\\Api\\\\V1\\\\UserActivitiesResource\\:\\:deleted_meeting\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: app/Http/Resources/Api/V1/UserActivitiesResource.php
-
-		-
-			message: "#^Method App\\\\Http\\\\Resources\\\\Api\\\\V1\\\\UserActivitiesResource\\:\\:deleted_project\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: app/Http/Resources/Api/V1/UserActivitiesResource.php
-
-		-
-			message: "#^Method App\\\\Http\\\\Resources\\\\Api\\\\V1\\\\UserActivitiesResource\\:\\:deleted_task\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: app/Http/Resources/Api/V1/UserActivitiesResource.php
-
-		-
 			message: "#^Method App\\\\Http\\\\Resources\\\\Api\\\\V1\\\\UserActivitiesResource\\:\\:getSubjectDetails\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: app/Http/Resources/Api/V1/UserActivitiesResource.php
-
-		-
-			message: "#^Method App\\\\Http\\\\Resources\\\\Api\\\\V1\\\\UserActivitiesResource\\:\\:remove_project_member\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: app/Http/Resources/Api/V1/UserActivitiesResource.php
-
-		-
-			message: "#^Method App\\\\Http\\\\Resources\\\\Api\\\\V1\\\\UserActivitiesResource\\:\\:restored_project\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: app/Http/Resources/Api/V1/UserActivitiesResource.php
-
-		-
-			message: "#^Method App\\\\Http\\\\Resources\\\\Api\\\\V1\\\\UserActivitiesResource\\:\\:sent_invitation_member\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: app/Http/Resources/Api/V1/UserActivitiesResource.php
 
@@ -872,21 +762,6 @@ parameters:
 
 		-
 			message: "#^Method App\\\\Http\\\\Resources\\\\Api\\\\V1\\\\UserActivitiesResource\\:\\:toArray\\(\\) return type with generic interface Illuminate\\\\Contracts\\\\Support\\\\Arrayable does not specify its types\\: TKey, TValue$#"
-			count: 1
-			path: app/Http/Resources/Api/V1/UserActivitiesResource.php
-
-		-
-			message: "#^Method App\\\\Http\\\\Resources\\\\Api\\\\V1\\\\UserActivitiesResource\\:\\:updated_meeting\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: app/Http/Resources/Api/V1/UserActivitiesResource.php
-
-		-
-			message: "#^Method App\\\\Http\\\\Resources\\\\Api\\\\V1\\\\UserActivitiesResource\\:\\:updated_project\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: app/Http/Resources/Api/V1/UserActivitiesResource.php
-
-		-
-			message: "#^Method App\\\\Http\\\\Resources\\\\Api\\\\V1\\\\UserActivitiesResource\\:\\:updated_task\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: app/Http/Resources/Api/V1/UserActivitiesResource.php
 
@@ -972,11 +847,6 @@ parameters:
 
 		-
 			message: "#^Method App\\\\Models\\\\Conversation\\:\\:project\\(\\) should return Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsTo\\<App\\\\Models\\\\Project, App\\\\Models\\\\Conversation\\> but returns Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsTo\\<App\\\\Models\\\\Project, \\$this\\(App\\\\Models\\\\Conversation\\)\\>\\.$#"
-			count: 1
-			path: app/Models/Conversation.php
-
-		-
-			message: "#^Method App\\\\Models\\\\Conversation\\:\\:setMessageAttribute\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: app/Models/Conversation.php
 
@@ -1087,11 +957,6 @@ parameters:
 
 		-
 			message: "#^Method App\\\\Models\\\\Message\\:\\:recordActivity\\(\\) has parameter \\$affectedUserIds with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: app/Models/Message.php
-
-		-
-			message: "#^Method App\\\\Models\\\\Message\\:\\:scopeMessageScheduled\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: app/Models/Message.php
 
@@ -1631,22 +1496,12 @@ parameters:
 			path: app/Rules/maxStatusCount.php
 
 		-
-			message: "#^Method App\\\\Services\\\\Api\\\\V1\\\\Admin\\\\DashboardService\\:\\:fetchDataForMonths\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: app/Services/Api/V1/Admin/DashboardService.php
-
-		-
 			message: "#^Method App\\\\Services\\\\Api\\\\V1\\\\Admin\\\\DashboardService\\:\\:fetchDataForMonths\\(\\) has parameter \\$endDate with no type specified\\.$#"
 			count: 1
 			path: app/Services/Api/V1/Admin/DashboardService.php
 
 		-
 			message: "#^Method App\\\\Services\\\\Api\\\\V1\\\\Admin\\\\DashboardService\\:\\:fetchDataForMonths\\(\\) has parameter \\$startDate with no type specified\\.$#"
-			count: 1
-			path: app/Services/Api/V1/Admin/DashboardService.php
-
-		-
-			message: "#^Property App\\\\Services\\\\Api\\\\V1\\\\Admin\\\\DashboardService\\:\\:\\$dashboardRepository has no type specified\\.$#"
 			count: 1
 			path: app/Services/Api/V1/Admin/DashboardService.php
 
@@ -1711,11 +1566,6 @@ parameters:
 			path: app/Services/Api/V1/FeatureService.php
 
 		-
-			message: "#^Method App\\\\Services\\\\Api\\\\V1\\\\FeatureService\\:\\:recordActivity\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: app/Services/Api/V1/FeatureService.php
-
-		-
 			message: "#^Method App\\\\Services\\\\Api\\\\V1\\\\FeatureService\\:\\:recordActivity\\(\\) has parameter \\$activity with no type specified\\.$#"
 			count: 1
 			path: app/Services/Api/V1/FeatureService.php
@@ -1761,11 +1611,6 @@ parameters:
 			path: app/Services/Api/V1/MessageService.php
 
 		-
-			message: "#^Method App\\\\Services\\\\Api\\\\V1\\\\MessageService\\:\\:checkOptionSelect\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: app/Services/Api/V1/MessageService.php
-
-		-
 			message: "#^Method App\\\\Services\\\\Api\\\\V1\\\\MessageService\\:\\:checkOptionSelect\\(\\) has parameter \\$request with no type specified\\.$#"
 			count: 1
 			path: app/Services/Api/V1/MessageService.php
@@ -1776,22 +1621,12 @@ parameters:
 			path: app/Services/Api/V1/MessageService.php
 
 		-
-			message: "#^Method App\\\\Services\\\\Api\\\\V1\\\\MessageService\\:\\:saveMessageDateAndTime\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: app/Services/Api/V1/MessageService.php
-
-		-
 			message: "#^Method App\\\\Services\\\\Api\\\\V1\\\\MessageService\\:\\:send\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: app/Services/Api/V1/MessageService.php
 
 		-
 			message: "#^Method App\\\\Services\\\\Api\\\\V1\\\\MessageService\\:\\:send\\(\\) has parameter \\$users with generic class Illuminate\\\\Support\\\\Collection but does not specify its types\\: TKey, TValue$#"
-			count: 1
-			path: app/Services/Api/V1/MessageService.php
-
-		-
-			message: "#^Method App\\\\Services\\\\Api\\\\V1\\\\MessageService\\:\\:sendOrScheduledMessage\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: app/Services/Api/V1/MessageService.php
 
@@ -1831,12 +1666,7 @@ parameters:
 			path: app/Services/Api/V1/ProjectService.php
 
 		-
-			message: "#^Method App\\\\Services\\\\Api\\\\V1\\\\ProjectService\\:\\:addTasksToProject\\(\\) has parameter \\$tasks with no type specified\\.$#"
-			count: 1
-			path: app/Services/Api/V1/ProjectService.php
-
-		-
-			message: "#^Method App\\\\Services\\\\Api\\\\V1\\\\ProjectService\\:\\:sendNotification\\(\\) has no return type specified\\.$#"
+			message: "#^Method App\\\\Services\\\\Api\\\\V1\\\\ProjectService\\:\\:addTasksToProject\\(\\) has parameter \\$tasks with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: app/Services/Api/V1/ProjectService.php
 
@@ -1856,11 +1686,6 @@ parameters:
 			path: app/Services/Api/V1/ProjectService.php
 
 		-
-			message: "#^Method App\\\\Services\\\\Api\\\\V1\\\\SendSmsService\\:\\:send\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: app/Services/Api/V1/SendSmsService.php
-
-		-
 			message: "#^Method App\\\\Services\\\\Api\\\\V1\\\\SendSmsService\\:\\:send\\(\\) has parameter \\$message with no type specified\\.$#"
 			count: 1
 			path: app/Services/Api/V1/SendSmsService.php
@@ -1871,27 +1696,12 @@ parameters:
 			path: app/Services/Api/V1/SendSmsService.php
 
 		-
-			message: "#^Property App\\\\Services\\\\Api\\\\V1\\\\SendSmsService\\:\\:\\$basic has no type specified\\.$#"
-			count: 1
-			path: app/Services/Api/V1/SendSmsService.php
-
-		-
-			message: "#^Property App\\\\Services\\\\Api\\\\V1\\\\SendSmsService\\:\\:\\$client has no type specified\\.$#"
-			count: 1
-			path: app/Services/Api/V1/SendSmsService.php
-
-		-
 			message: "#^Method App\\\\Services\\\\Api\\\\V1\\\\Task\\\\TaskFeatureService\\:\\:assignMembers\\(\\) has parameter \\$members with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: app/Services/Api/V1/Task/TaskFeatureService.php
 
 		-
-			message: "#^Method App\\\\Services\\\\Api\\\\V1\\\\Task\\\\TaskFeatureService\\:\\:notifyAssignees\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: app/Services/Api/V1/Task/TaskFeatureService.php
-
-		-
-			message: "#^Method App\\\\Services\\\\Api\\\\V1\\\\Task\\\\TaskFeatureService\\:\\:notifyAssignees\\(\\) has parameter \\$members with no type specified\\.$#"
+			message: "#^Method App\\\\Services\\\\Api\\\\V1\\\\Task\\\\TaskFeatureService\\:\\:notifyAssignees\\(\\) has parameter \\$members with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: app/Services/Api/V1/Task/TaskFeatureService.php
 
@@ -1954,3 +1764,1643 @@ parameters:
 			message: "#^Parameter \\#1 \\$items of class App\\\\Collections\\\\Paddle\\\\DataCollection constructor expects Illuminate\\\\Contracts\\\\Support\\\\Arrayable\\<int, App\\\\DataTransferObjects\\\\Paddle\\\\Data\\>\\|iterable\\<int, App\\\\DataTransferObjects\\\\Paddle\\\\Data\\>\\|null, array\\{array\\{id\\: 1, name\\: 'Test User', email\\: 'testuser@example\\.com', plan\\: 'monthly'\\}\\} given\\.$#"
 			count: 1
 			path: app/Services/PaddleApi/FakePaddleService.php
+
+		-
+			message: "#^Class App\\\\Actions\\\\ZoomAction constructor invoked with 2 parameters, 0 required\\.$#"
+			count: 1
+			path: tests/Feature/Api/Actions/ZoomActionTest.php
+
+		-
+			message: "#^Property Tests\\\\Feature\\\\Api\\\\Actions\\\\ZoomActionTest\\:\\:\\$action has no type specified\\.$#"
+			count: 1
+			path: tests/Feature/Api/Actions/ZoomActionTest.php
+
+		-
+			message: "#^Property Tests\\\\Feature\\\\Api\\\\Actions\\\\ZoomActionTest\\:\\:\\$sdkKey has no type specified\\.$#"
+			count: 1
+			path: tests/Feature/Api/Actions/ZoomActionTest.php
+
+		-
+			message: "#^Property Tests\\\\Feature\\\\Api\\\\Actions\\\\ZoomActionTest\\:\\:\\$sdkSecret has no type specified\\.$#"
+			count: 1
+			path: tests/Feature/Api/Actions/ZoomActionTest.php
+
+		-
+			message: "#^Access to an undefined property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$avatar_path\\.$#"
+			count: 1
+			path: tests/Feature/Api/Auth/OAuthTest.php
+
+		-
+			message: "#^Access to an undefined property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$name\\.$#"
+			count: 1
+			path: tests/Feature/Api/Auth/OAuthTest.php
+
+		-
+			message: "#^Access to an undefined property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$username\\.$#"
+			count: 1
+			path: tests/Feature/Api/Auth/OAuthTest.php
+
+		-
+			message: "#^Call to an undefined method Mockery\\\\Expectation\\:\\:shouldReceive\\(\\)\\.$#"
+			count: 1
+			path: tests/Feature/Api/Auth/OAuthTest.php
+
+		-
+			message: "#^Method Tests\\\\Feature\\\\Api\\\\Auth\\\\OAuthTest\\:\\:mockSocialite\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: tests/Feature/Api/Auth/OAuthTest.php
+
+		-
+			message: "#^Method Tests\\\\Feature\\\\Api\\\\Auth\\\\OAuthTest\\:\\:mockSocialite\\(\\) has parameter \\$provider with no type specified\\.$#"
+			count: 1
+			path: tests/Feature/Api/Auth/OAuthTest.php
+
+		-
+			message: "#^Method Tests\\\\Feature\\\\Api\\\\Auth\\\\OAuthTest\\:\\:mockSocialite\\(\\) has parameter \\$user with no type specified\\.$#"
+			count: 1
+			path: tests/Feature/Api/Auth/OAuthTest.php
+
+		-
+			message: "#^Access to an undefined property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$email\\.$#"
+			count: 2
+			path: tests/Feature/Api/Auth/ResetPasswordTest.php
+
+		-
+			message: "#^Access to an undefined property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$password\\.$#"
+			count: 1
+			path: tests/Feature/Api/Auth/ResetPasswordTest.php
+
+		-
+			message: "#^Parameter \\#1 \\$user of static method Illuminate\\\\Support\\\\Facades\\\\Password\\:\\:createToken\\(\\) expects Illuminate\\\\Contracts\\\\Auth\\\\CanResetPassword, Illuminate\\\\Database\\\\Eloquent\\\\Model given\\.$#"
+			count: 1
+			path: tests/Feature/Api/Auth/ResetPasswordTest.php
+
+		-
+			message: "#^Access to an undefined property Mockery\\\\LegacyMockInterface\\:\\:\\$email\\.$#"
+			count: 1
+			path: tests/Feature/Api/Auth/TwoFactorAuthenticationTest.php
+
+		-
+			message: "#^Access to an undefined property Mockery\\\\LegacyMockInterface\\:\\:\\$id\\.$#"
+			count: 1
+			path: tests/Feature/Api/Auth/TwoFactorAuthenticationTest.php
+
+		-
+			message: "#^Access to an undefined property Mockery\\\\LegacyMockInterface\\:\\:\\$password\\.$#"
+			count: 1
+			path: tests/Feature/Api/Auth/TwoFactorAuthenticationTest.php
+
+		-
+			message: "#^Call to an undefined method Mockery\\\\ExpectationInterface\\|Mockery\\\\HigherOrderMessage\\:\\:with\\(\\)\\.$#"
+			count: 1
+			path: tests/Feature/Api/Auth/TwoFactorAuthenticationTest.php
+
+		-
+			message: "#^Method Tests\\\\Feature\\\\Api\\\\Auth\\\\TwoFactorAuthenticationTest\\:\\:createMockedUser\\(\\) has parameter \\$expectations with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: tests/Feature/Api/Auth/TwoFactorAuthenticationTest.php
+
+		-
+			message: "#^Method Tests\\\\Feature\\\\Api\\\\Auth\\\\TwoFactorAuthenticationTest\\:\\:createMockedUser\\(\\) should return App\\\\Models\\\\User but returns Mockery\\\\LegacyMockInterface\\.$#"
+			count: 1
+			path: tests/Feature/Api/Auth/TwoFactorAuthenticationTest.php
+
+		-
+			message: "#^Property Tests\\\\Feature\\\\Api\\\\Auth\\\\TwoFactorAuthenticationTest\\:\\:\\$user \\(App\\\\Models\\\\User\\) does not accept Illuminate\\\\Database\\\\Eloquent\\\\Model\\.$#"
+			count: 1
+			path: tests/Feature/Api/Auth/TwoFactorAuthenticationTest.php
+
+		-
+			message: "#^Access to an undefined property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$email\\.$#"
+			count: 2
+			path: tests/Feature/Api/Auth/VerificationTest.php
+
+		-
+			message: "#^Access to an undefined property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$uuid\\.$#"
+			count: 4
+			path: tests/Feature/Api/Auth/VerificationTest.php
+
+		-
+			message: "#^Call to an undefined method Illuminate\\\\Contracts\\\\Auth\\\\MustVerifyEmail\\:\\:is\\(\\)\\.$#"
+			count: 1
+			path: tests/Feature/Api/Auth/VerificationTest.php
+
+		-
+			message: "#^Parameter \\#1 \\$user of static method Laravel\\\\Sanctum\\\\Sanctum\\<Laravel\\\\Sanctum\\\\PersonalAccessToken\\>\\:\\:actingAs\\(\\) expects Illuminate\\\\Contracts\\\\Auth\\\\Authenticatable\\|Laravel\\\\Sanctum\\\\HasApiTokens, Illuminate\\\\Database\\\\Eloquent\\\\Model given\\.$#"
+			count: 4
+			path: tests/Feature/Api/Auth/VerificationTest.php
+
+		-
+			message: "#^Method Tests\\\\Feature\\\\Api\\\\Controllers\\\\OAuth\\\\ZoomController\\\\CallbackTest\\:\\:fakeZoom\\(\\) return type with generic class App\\\\Services\\\\Api\\\\V1\\\\Zoom\\\\ZoomServiceFake does not specify its types\\: TKey, TValue$#"
+			count: 1
+			path: tests/Feature/Api/Controllers/OAuth/ZoomController/CallbackTest.php
+
+		-
+			message: "#^Parameter \\#1 \\$user of static method Laravel\\\\Sanctum\\\\Sanctum\\<Laravel\\\\Sanctum\\\\PersonalAccessToken\\>\\:\\:actingAs\\(\\) expects Illuminate\\\\Contracts\\\\Auth\\\\Authenticatable\\|Laravel\\\\Sanctum\\\\HasApiTokens, Illuminate\\\\Database\\\\Eloquent\\\\Model given\\.$#"
+			count: 1
+			path: tests/Feature/Api/Controllers/OAuth/ZoomController/CallbackTest.php
+
+		-
+			message: "#^Property Tests\\\\Feature\\\\Api\\\\Controllers\\\\OAuth\\\\ZoomController\\\\CallbackTest\\:\\:\\$project has no type specified\\.$#"
+			count: 1
+			path: tests/Feature/Api/Controllers/OAuth/ZoomController/CallbackTest.php
+
+		-
+			message: "#^Property Tests\\\\Feature\\\\Api\\\\Controllers\\\\OAuth\\\\ZoomController\\\\CallbackTest\\:\\:\\$status has no type specified\\.$#"
+			count: 1
+			path: tests/Feature/Api/Controllers/OAuth/ZoomController/CallbackTest.php
+
+		-
+			message: "#^Property Tests\\\\Feature\\\\Api\\\\Controllers\\\\OAuth\\\\ZoomController\\\\CallbackTest\\:\\:\\$user has no type specified\\.$#"
+			count: 1
+			path: tests/Feature/Api/Controllers/OAuth/ZoomController/CallbackTest.php
+
+		-
+			message: "#^Method Tests\\\\Feature\\\\Api\\\\Controllers\\\\OAuth\\\\ZoomController\\\\RedirectTest\\:\\:fakeZoom\\(\\) return type with generic class App\\\\Services\\\\Api\\\\V1\\\\Zoom\\\\ZoomServiceFake does not specify its types\\: TKey, TValue$#"
+			count: 1
+			path: tests/Feature/Api/Controllers/OAuth/ZoomController/RedirectTest.php
+
+		-
+			message: "#^Parameter \\#1 \\$user of static method Laravel\\\\Sanctum\\\\Sanctum\\<Laravel\\\\Sanctum\\\\PersonalAccessToken\\>\\:\\:actingAs\\(\\) expects Illuminate\\\\Contracts\\\\Auth\\\\Authenticatable\\|Laravel\\\\Sanctum\\\\HasApiTokens, Illuminate\\\\Database\\\\Eloquent\\\\Model given\\.$#"
+			count: 1
+			path: tests/Feature/Api/Controllers/OAuth/ZoomController/RedirectTest.php
+
+		-
+			message: "#^Property Tests\\\\Feature\\\\Api\\\\Controllers\\\\OAuth\\\\ZoomController\\\\RedirectTest\\:\\:\\$project has no type specified\\.$#"
+			count: 1
+			path: tests/Feature/Api/Controllers/OAuth/ZoomController/RedirectTest.php
+
+		-
+			message: "#^Property Tests\\\\Feature\\\\Api\\\\Controllers\\\\OAuth\\\\ZoomController\\\\RedirectTest\\:\\:\\$status has no type specified\\.$#"
+			count: 1
+			path: tests/Feature/Api/Controllers/OAuth/ZoomController/RedirectTest.php
+
+		-
+			message: "#^Property Tests\\\\Feature\\\\Api\\\\Controllers\\\\OAuth\\\\ZoomController\\\\RedirectTest\\:\\:\\$user has no type specified\\.$#"
+			count: 1
+			path: tests/Feature/Api/Controllers/OAuth/ZoomController/RedirectTest.php
+
+		-
+			message: "#^Parameter \\#1 \\$user of static method Laravel\\\\Sanctum\\\\Sanctum\\<Laravel\\\\Sanctum\\\\PersonalAccessToken\\>\\:\\:actingAs\\(\\) expects Illuminate\\\\Contracts\\\\Auth\\\\Authenticatable\\|Laravel\\\\Sanctum\\\\HasApiTokens, Illuminate\\\\Database\\\\Eloquent\\\\Model given\\.$#"
+			count: 1
+			path: tests/Feature/Api/Controllers/Paddle/SubscriptionTest.php
+
+		-
+			message: "#^Unable to resolve the template type TKey in call to function collect$#"
+			count: 1
+			path: tests/Feature/Api/Controllers/Webhooks/ZoomWebhookControllerTest.php
+
+		-
+			message: "#^Unable to resolve the template type TValue in call to function collect$#"
+			count: 1
+			path: tests/Feature/Api/Controllers/Webhooks/ZoomWebhookControllerTest.php
+
+		-
+			message: "#^Access to an undefined property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$id\\.$#"
+			count: 3
+			path: tests/Feature/Api/Controllers/Zoom/DeleteMeetingTest.php
+
+		-
+			message: "#^Method Tests\\\\Feature\\\\Api\\\\Controllers\\\\Zoom\\\\DeleteMeetingTest\\:\\:fakeZoom\\(\\) return type with generic class App\\\\Services\\\\Api\\\\V1\\\\Zoom\\\\ZoomServiceFake does not specify its types\\: TKey, TValue$#"
+			count: 1
+			path: tests/Feature/Api/Controllers/Zoom/DeleteMeetingTest.php
+
+		-
+			message: "#^Parameter \\#1 \\$user of static method Laravel\\\\Sanctum\\\\Sanctum\\<Laravel\\\\Sanctum\\\\PersonalAccessToken\\>\\:\\:actingAs\\(\\) expects Illuminate\\\\Contracts\\\\Auth\\\\Authenticatable\\|Laravel\\\\Sanctum\\\\HasApiTokens, Illuminate\\\\Database\\\\Eloquent\\\\Model given\\.$#"
+			count: 1
+			path: tests/Feature/Api/Controllers/Zoom/DeleteMeetingTest.php
+
+		-
+			message: "#^Property Tests\\\\Feature\\\\Api\\\\Controllers\\\\Zoom\\\\DeleteMeetingTest\\:\\:\\$project has no type specified\\.$#"
+			count: 1
+			path: tests/Feature/Api/Controllers/Zoom/DeleteMeetingTest.php
+
+		-
+			message: "#^Property Tests\\\\Feature\\\\Api\\\\Controllers\\\\Zoom\\\\DeleteMeetingTest\\:\\:\\$status has no type specified\\.$#"
+			count: 1
+			path: tests/Feature/Api/Controllers/Zoom/DeleteMeetingTest.php
+
+		-
+			message: "#^Property Tests\\\\Feature\\\\Api\\\\Controllers\\\\Zoom\\\\DeleteMeetingTest\\:\\:\\$user has no type specified\\.$#"
+			count: 1
+			path: tests/Feature/Api/Controllers/Zoom/DeleteMeetingTest.php
+
+		-
+			message: "#^Method Tests\\\\Feature\\\\Api\\\\Controllers\\\\Zoom\\\\GetZakTokenTest\\:\\:fakeZoom\\(\\) return type with generic class App\\\\Services\\\\Api\\\\V1\\\\Zoom\\\\ZoomServiceFake does not specify its types\\: TKey, TValue$#"
+			count: 1
+			path: tests/Feature/Api/Controllers/Zoom/GetZakTokenTest.php
+
+		-
+			message: "#^Parameter \\#1 \\$user of static method Laravel\\\\Sanctum\\\\Sanctum\\<Laravel\\\\Sanctum\\\\PersonalAccessToken\\>\\:\\:actingAs\\(\\) expects Illuminate\\\\Contracts\\\\Auth\\\\Authenticatable\\|Laravel\\\\Sanctum\\\\HasApiTokens, Illuminate\\\\Database\\\\Eloquent\\\\Model given\\.$#"
+			count: 1
+			path: tests/Feature/Api/Controllers/Zoom/GetZakTokenTest.php
+
+		-
+			message: "#^Property Tests\\\\Feature\\\\Api\\\\Controllers\\\\Zoom\\\\GetZakTokenTest\\:\\:\\$project has no type specified\\.$#"
+			count: 1
+			path: tests/Feature/Api/Controllers/Zoom/GetZakTokenTest.php
+
+		-
+			message: "#^Property Tests\\\\Feature\\\\Api\\\\Controllers\\\\Zoom\\\\GetZakTokenTest\\:\\:\\$status has no type specified\\.$#"
+			count: 1
+			path: tests/Feature/Api/Controllers/Zoom/GetZakTokenTest.php
+
+		-
+			message: "#^Property Tests\\\\Feature\\\\Api\\\\Controllers\\\\Zoom\\\\GetZakTokenTest\\:\\:\\$user has no type specified\\.$#"
+			count: 1
+			path: tests/Feature/Api/Controllers/Zoom/GetZakTokenTest.php
+
+		-
+			message: "#^Method Tests\\\\Feature\\\\Api\\\\Controllers\\\\Zoom\\\\StoreMeetingTest\\:\\:fakeZoom\\(\\) return type with generic class App\\\\Services\\\\Api\\\\V1\\\\Zoom\\\\ZoomServiceFake does not specify its types\\: TKey, TValue$#"
+			count: 1
+			path: tests/Feature/Api/Controllers/Zoom/StoreMeetingTest.php
+
+		-
+			message: "#^Parameter \\#1 \\$user of static method Laravel\\\\Sanctum\\\\Sanctum\\<Laravel\\\\Sanctum\\\\PersonalAccessToken\\>\\:\\:actingAs\\(\\) expects Illuminate\\\\Contracts\\\\Auth\\\\Authenticatable\\|Laravel\\\\Sanctum\\\\HasApiTokens, Illuminate\\\\Database\\\\Eloquent\\\\Model given\\.$#"
+			count: 1
+			path: tests/Feature/Api/Controllers/Zoom/StoreMeetingTest.php
+
+		-
+			message: "#^Property Tests\\\\Feature\\\\Api\\\\Controllers\\\\Zoom\\\\StoreMeetingTest\\:\\:\\$project has no type specified\\.$#"
+			count: 1
+			path: tests/Feature/Api/Controllers/Zoom/StoreMeetingTest.php
+
+		-
+			message: "#^Property Tests\\\\Feature\\\\Api\\\\Controllers\\\\Zoom\\\\StoreMeetingTest\\:\\:\\$status has no type specified\\.$#"
+			count: 1
+			path: tests/Feature/Api/Controllers/Zoom/StoreMeetingTest.php
+
+		-
+			message: "#^Property Tests\\\\Feature\\\\Api\\\\Controllers\\\\Zoom\\\\StoreMeetingTest\\:\\:\\$user has no type specified\\.$#"
+			count: 1
+			path: tests/Feature/Api/Controllers/Zoom/StoreMeetingTest.php
+
+		-
+			message: "#^Access to an undefined property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$id\\.$#"
+			count: 3
+			path: tests/Feature/Api/Controllers/Zoom/UpdateMeetingTest.php
+
+		-
+			message: "#^Method Tests\\\\Feature\\\\Api\\\\Controllers\\\\Zoom\\\\UpdateMeetingTest\\:\\:fakeZoom\\(\\) return type with generic class App\\\\Services\\\\Api\\\\V1\\\\Zoom\\\\ZoomServiceFake does not specify its types\\: TKey, TValue$#"
+			count: 1
+			path: tests/Feature/Api/Controllers/Zoom/UpdateMeetingTest.php
+
+		-
+			message: "#^Parameter \\#1 \\$user of static method Laravel\\\\Sanctum\\\\Sanctum\\<Laravel\\\\Sanctum\\\\PersonalAccessToken\\>\\:\\:actingAs\\(\\) expects Illuminate\\\\Contracts\\\\Auth\\\\Authenticatable\\|Laravel\\\\Sanctum\\\\HasApiTokens, Illuminate\\\\Database\\\\Eloquent\\\\Model given\\.$#"
+			count: 1
+			path: tests/Feature/Api/Controllers/Zoom/UpdateMeetingTest.php
+
+		-
+			message: "#^Property Tests\\\\Feature\\\\Api\\\\Controllers\\\\Zoom\\\\UpdateMeetingTest\\:\\:\\$project has no type specified\\.$#"
+			count: 1
+			path: tests/Feature/Api/Controllers/Zoom/UpdateMeetingTest.php
+
+		-
+			message: "#^Property Tests\\\\Feature\\\\Api\\\\Controllers\\\\Zoom\\\\UpdateMeetingTest\\:\\:\\$status has no type specified\\.$#"
+			count: 1
+			path: tests/Feature/Api/Controllers/Zoom/UpdateMeetingTest.php
+
+		-
+			message: "#^Property Tests\\\\Feature\\\\Api\\\\Controllers\\\\Zoom\\\\UpdateMeetingTest\\:\\:\\$user has no type specified\\.$#"
+			count: 1
+			path: tests/Feature/Api/Controllers/Zoom/UpdateMeetingTest.php
+
+		-
+			message: "#^Access to an undefined property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$id\\.$#"
+			count: 2
+			path: tests/Feature/Api/Jobs/Webhooks/Zoom/EndedMeetingWebhookTest.php
+
+		-
+			message: "#^Access to an undefined property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$status\\.$#"
+			count: 1
+			path: tests/Feature/Api/Jobs/Webhooks/Zoom/EndedMeetingWebhookTest.php
+
+		-
+			message: "#^Method Tests\\\\Feature\\\\Api\\\\Jobs\\\\Webhooks\\\\Zoom\\\\EndedMeetingWebhookTest\\:\\:inviteAndActivateUser\\(\\) has parameter \\$project with no type specified\\.$#"
+			count: 1
+			path: tests/Feature/Api/Jobs/Webhooks/Zoom/EndedMeetingWebhookTest.php
+
+		-
+			message: "#^Parameter \\#1 \\$user of static method Laravel\\\\Sanctum\\\\Sanctum\\<Laravel\\\\Sanctum\\\\PersonalAccessToken\\>\\:\\:actingAs\\(\\) expects Illuminate\\\\Contracts\\\\Auth\\\\Authenticatable\\|Laravel\\\\Sanctum\\\\HasApiTokens, Illuminate\\\\Database\\\\Eloquent\\\\Model given\\.$#"
+			count: 1
+			path: tests/Feature/Api/Jobs/Webhooks/Zoom/EndedMeetingWebhookTest.php
+
+		-
+			message: "#^Property Tests\\\\Feature\\\\Api\\\\Jobs\\\\Webhooks\\\\Zoom\\\\EndedMeetingWebhookTest\\:\\:\\$project has no type specified\\.$#"
+			count: 1
+			path: tests/Feature/Api/Jobs/Webhooks/Zoom/EndedMeetingWebhookTest.php
+
+		-
+			message: "#^Property Tests\\\\Feature\\\\Api\\\\Jobs\\\\Webhooks\\\\Zoom\\\\EndedMeetingWebhookTest\\:\\:\\$status has no type specified\\.$#"
+			count: 1
+			path: tests/Feature/Api/Jobs/Webhooks/Zoom/EndedMeetingWebhookTest.php
+
+		-
+			message: "#^Property Tests\\\\Feature\\\\Api\\\\Jobs\\\\Webhooks\\\\Zoom\\\\EndedMeetingWebhookTest\\:\\:\\$user has no type specified\\.$#"
+			count: 1
+			path: tests/Feature/Api/Jobs/Webhooks/Zoom/EndedMeetingWebhookTest.php
+
+		-
+			message: "#^Access to an undefined property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$topic\\.$#"
+			count: 1
+			path: tests/Feature/Api/Jobs/Webhooks/Zoom/ProcessMeetingUpdateWebhookTest.php
+
+		-
+			message: "#^Unable to resolve the template type TKey in call to function collect$#"
+			count: 1
+			path: tests/Feature/Api/Jobs/Webhooks/Zoom/ProcessMeetingUpdateWebhookTest.php
+
+		-
+			message: "#^Unable to resolve the template type TValue in call to function collect$#"
+			count: 1
+			path: tests/Feature/Api/Jobs/Webhooks/Zoom/ProcessMeetingUpdateWebhookTest.php
+
+		-
+			message: "#^Access to an undefined property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$id\\.$#"
+			count: 2
+			path: tests/Feature/Api/Jobs/Webhooks/Zoom/StartMeetingWebhookTest.php
+
+		-
+			message: "#^Access to an undefined property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$status\\.$#"
+			count: 1
+			path: tests/Feature/Api/Jobs/Webhooks/Zoom/StartMeetingWebhookTest.php
+
+		-
+			message: "#^Method Tests\\\\Feature\\\\Api\\\\Jobs\\\\Webhooks\\\\Zoom\\\\StartMeetingWebhookTest\\:\\:inviteAndActivateUser\\(\\) has parameter \\$project with no type specified\\.$#"
+			count: 1
+			path: tests/Feature/Api/Jobs/Webhooks/Zoom/StartMeetingWebhookTest.php
+
+		-
+			message: "#^Parameter \\#1 \\$user of static method Laravel\\\\Sanctum\\\\Sanctum\\<Laravel\\\\Sanctum\\\\PersonalAccessToken\\>\\:\\:actingAs\\(\\) expects Illuminate\\\\Contracts\\\\Auth\\\\Authenticatable\\|Laravel\\\\Sanctum\\\\HasApiTokens, Illuminate\\\\Database\\\\Eloquent\\\\Model given\\.$#"
+			count: 1
+			path: tests/Feature/Api/Jobs/Webhooks/Zoom/StartMeetingWebhookTest.php
+
+		-
+			message: "#^Property Tests\\\\Feature\\\\Api\\\\Jobs\\\\Webhooks\\\\Zoom\\\\StartMeetingWebhookTest\\:\\:\\$project has no type specified\\.$#"
+			count: 1
+			path: tests/Feature/Api/Jobs/Webhooks/Zoom/StartMeetingWebhookTest.php
+
+		-
+			message: "#^Property Tests\\\\Feature\\\\Api\\\\Jobs\\\\Webhooks\\\\Zoom\\\\StartMeetingWebhookTest\\:\\:\\$status has no type specified\\.$#"
+			count: 1
+			path: tests/Feature/Api/Jobs/Webhooks/Zoom/StartMeetingWebhookTest.php
+
+		-
+			message: "#^Property Tests\\\\Feature\\\\Api\\\\Jobs\\\\Webhooks\\\\Zoom\\\\StartMeetingWebhookTest\\:\\:\\$user has no type specified\\.$#"
+			count: 1
+			path: tests/Feature/Api/Jobs/Webhooks/Zoom/StartMeetingWebhookTest.php
+
+		-
+			message: "#^Method Tests\\\\Feature\\\\Api\\\\Middleware\\\\Zoom\\\\VerifyWebhookTest\\:\\:buildSignature\\(\\) has parameter \\$payload with no type specified\\.$#"
+			count: 1
+			path: tests/Feature/Api/Middleware/Zoom/VerifyWebhookTest.php
+
+		-
+			message: "#^Parameter \\#1 \\$timestamp of method Tests\\\\Feature\\\\Api\\\\Middleware\\\\Zoom\\\\VerifyWebhookTest\\:\\:buildSignature\\(\\) expects string, \\(float\\|int\\) given\\.$#"
+			count: 1
+			path: tests/Feature/Api/Middleware/Zoom/VerifyWebhookTest.php
+
+		-
+			message: "#^Parameter \\#1 \\$timestamp of method Tests\\\\Feature\\\\Api\\\\Middleware\\\\Zoom\\\\VerifyWebhookTest\\:\\:buildSignature\\(\\) expects string, int\\<1, max\\> given\\.$#"
+			count: 1
+			path: tests/Feature/Api/Middleware/Zoom/VerifyWebhookTest.php
+
+		-
+			message: "#^Property Tests\\\\Feature\\\\Api\\\\Middleware\\\\Zoom\\\\VerifyWebhookTest\\:\\:\\$payload has no type specified\\.$#"
+			count: 1
+			path: tests/Feature/Api/Middleware/Zoom/VerifyWebhookTest.php
+
+		-
+			message: "#^Property Tests\\\\Feature\\\\Api\\\\Middleware\\\\Zoom\\\\VerifyWebhookTest\\:\\:\\$timestamp has no type specified\\.$#"
+			count: 1
+			path: tests/Feature/Api/Middleware/Zoom/VerifyWebhookTest.php
+
+		-
+			message: "#^Undefined variable\\: \\$response$#"
+			count: 1
+			path: tests/Feature/Api/Middleware/Zoom/VerifyWebhookTest.php
+
+		-
+			message: "#^Parameter \\#1 \\$user of method App\\\\Services\\\\Api\\\\V1\\\\Paddle\\\\SubscriptionService\\:\\:cancel\\(\\) expects App\\\\Models\\\\User, Mockery\\\\MockInterface given\\.$#"
+			count: 1
+			path: tests/Feature/Api/Services/Paddle/SubscriptionTest.php
+
+		-
+			message: "#^Parameter \\#1 \\$user of method App\\\\Services\\\\Api\\\\V1\\\\Paddle\\\\SubscriptionService\\:\\:subscribe\\(\\) expects App\\\\Models\\\\User, Mockery\\\\MockInterface given\\.$#"
+			count: 1
+			path: tests/Feature/Api/Services/Paddle/SubscriptionTest.php
+
+		-
+			message: "#^Parameter \\#1 \\$user of method App\\\\Services\\\\Api\\\\V1\\\\Paddle\\\\SubscriptionService\\:\\:swap\\(\\) expects App\\\\Models\\\\User, Mockery\\\\MockInterface given\\.$#"
+			count: 1
+			path: tests/Feature/Api/Services/Paddle/SubscriptionTest.php
+
+		-
+			message: "#^Method Tests\\\\Feature\\\\Api\\\\Services\\\\Zoom\\\\ZoomService\\\\GetZakTokenTest\\:\\:userCreate\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: tests/Feature/Api/Services/Zoom/ZoomService/GetZakTokenTest.php
+
+		-
+			message: "#^Method Tests\\\\Feature\\\\Api\\\\Services\\\\Zoom\\\\ZoomService\\\\GetZakTokenTest\\:\\:userCreate\\(\\) has parameter \\$expireAt with no type specified\\.$#"
+			count: 1
+			path: tests/Feature/Api/Services/Zoom/ZoomService/GetZakTokenTest.php
+
+		-
+			message: "#^Method Tests\\\\Feature\\\\Api\\\\Services\\\\Zoom\\\\ZoomService\\\\MeetingCreateTest\\:\\:createAndAssertMeeting\\(\\) has parameter \\$meetingData with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: tests/Feature/Api/Services/Zoom/ZoomService/MeetingCreateTest.php
+
+		-
+			message: "#^Method Tests\\\\Feature\\\\Api\\\\Services\\\\Zoom\\\\ZoomService\\\\MeetingCreateTest\\:\\:userCreate\\(\\) has parameter \\$expireAt with no type specified\\.$#"
+			count: 1
+			path: tests/Feature/Api/Services/Zoom/ZoomService/MeetingCreateTest.php
+
+		-
+			message: "#^Method Tests\\\\Feature\\\\Api\\\\Services\\\\Zoom\\\\ZoomService\\\\MeetingCreateTest\\:\\:userCreate\\(\\) should return App\\\\Models\\\\User but returns Illuminate\\\\Database\\\\Eloquent\\\\Model\\.$#"
+			count: 1
+			path: tests/Feature/Api/Services/Zoom/ZoomService/MeetingCreateTest.php
+
+		-
+			message: "#^Property Tests\\\\Feature\\\\Api\\\\Services\\\\Zoom\\\\ZoomService\\\\MeetingCreateTest\\:\\:\\$meetingData type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: tests/Feature/Api/Services/Zoom/ZoomService/MeetingCreateTest.php
+
+		-
+			message: "#^Method Tests\\\\Feature\\\\Api\\\\Services\\\\Zoom\\\\ZoomService\\\\MeetingDeleteTest\\:\\:userCreate\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: tests/Feature/Api/Services/Zoom/ZoomService/MeetingDeleteTest.php
+
+		-
+			message: "#^Method Tests\\\\Feature\\\\Api\\\\Services\\\\Zoom\\\\ZoomService\\\\MeetingDeleteTest\\:\\:userCreate\\(\\) has parameter \\$expireAt with no type specified\\.$#"
+			count: 1
+			path: tests/Feature/Api/Services/Zoom/ZoomService/MeetingDeleteTest.php
+
+		-
+			message: "#^Method Tests\\\\Feature\\\\V1\\\\Services\\\\Zoom\\\\ZoomService\\\\MeetingUpdateTest\\:\\:meetingData\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: tests/Feature/Api/Services/Zoom/ZoomService/MeetingUpdateTest.php
+
+		-
+			message: "#^Method Tests\\\\Feature\\\\V1\\\\Services\\\\Zoom\\\\ZoomService\\\\MeetingUpdateTest\\:\\:userCreate\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: tests/Feature/Api/Services/Zoom/ZoomService/MeetingUpdateTest.php
+
+		-
+			message: "#^Method Tests\\\\Feature\\\\V1\\\\Services\\\\Zoom\\\\ZoomService\\\\MeetingUpdateTest\\:\\:userCreate\\(\\) has parameter \\$expireAt with no type specified\\.$#"
+			count: 1
+			path: tests/Feature/Api/Services/Zoom/ZoomService/MeetingUpdateTest.php
+
+		-
+			message: "#^Parameter \\#1 \\$user of static method Laravel\\\\Sanctum\\\\Sanctum\\<Laravel\\\\Sanctum\\\\PersonalAccessToken\\>\\:\\:actingAs\\(\\) expects Illuminate\\\\Contracts\\\\Auth\\\\Authenticatable\\|Laravel\\\\Sanctum\\\\HasApiTokens, Illuminate\\\\Database\\\\Eloquent\\\\Model given\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/ActivityTest.php
+
+		-
+			message: "#^Parameter \\#2 \\$key of method Illuminate\\\\Testing\\\\TestResponse\\<Symfony\\\\Component\\\\HttpFoundation\\\\Response\\>\\:\\:assertJsonCount\\(\\) expects string\\|null, array\\<int, string\\> given\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/ActivityTest.php
+
+		-
+			message: "#^Property Tests\\\\Feature\\\\Api\\\\V1\\\\ActivityTest\\:\\:\\$project has no type specified\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/ActivityTest.php
+
+		-
+			message: "#^Property Tests\\\\Feature\\\\Api\\\\V1\\\\ActivityTest\\:\\:\\$status has no type specified\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/ActivityTest.php
+
+		-
+			message: "#^Property Tests\\\\Feature\\\\Api\\\\V1\\\\ActivityTest\\:\\:\\$user has no type specified\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/ActivityTest.php
+
+		-
+			message: "#^Access to an undefined property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$last_active_at\\.$#"
+			count: 2
+			path: tests/Feature/Api/V1/Admin/UsersTest.php
+
+		-
+			message: "#^Parameter \\#1 \\$user of static method Laravel\\\\Sanctum\\\\Sanctum\\<Laravel\\\\Sanctum\\\\PersonalAccessToken\\>\\:\\:actingAs\\(\\) expects Illuminate\\\\Contracts\\\\Auth\\\\Authenticatable\\|Laravel\\\\Sanctum\\\\HasApiTokens, Illuminate\\\\Database\\\\Eloquent\\\\Model given\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/Admin/UsersTest.php
+
+		-
+			message: "#^Called 'contains' on Laravel collection, but could have been retrieved as a query\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/ApplicationTest.php
+
+		-
+			message: "#^Parameter \\#1 \\$user of static method Laravel\\\\Sanctum\\\\Sanctum\\<Laravel\\\\Sanctum\\\\PersonalAccessToken\\>\\:\\:actingAs\\(\\) expects Illuminate\\\\Contracts\\\\Auth\\\\Authenticatable\\|Laravel\\\\Sanctum\\\\HasApiTokens, Illuminate\\\\Database\\\\Eloquent\\\\Model given\\.$#"
+			count: 3
+			path: tests/Feature/Api/V1/ApplicationTest.php
+
+		-
+			message: "#^Property Tests\\\\Feature\\\\Api\\\\V1\\\\ApplicationTest\\:\\:\\$project has no type specified\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/ApplicationTest.php
+
+		-
+			message: "#^Property Tests\\\\Feature\\\\Api\\\\V1\\\\ApplicationTest\\:\\:\\$status has no type specified\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/ApplicationTest.php
+
+		-
+			message: "#^Property Tests\\\\Feature\\\\Api\\\\V1\\\\ApplicationTest\\:\\:\\$user has no type specified\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/ApplicationTest.php
+
+		-
+			message: "#^Access to an undefined property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$id\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/ConversationTest.php
+
+		-
+			message: "#^Access to an undefined property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$message\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/ConversationTest.php
+
+		-
+			message: "#^Parameter \\#1 \\$user of static method Laravel\\\\Sanctum\\\\Sanctum\\<Laravel\\\\Sanctum\\\\PersonalAccessToken\\>\\:\\:actingAs\\(\\) expects Illuminate\\\\Contracts\\\\Auth\\\\Authenticatable\\|Laravel\\\\Sanctum\\\\HasApiTokens, Illuminate\\\\Database\\\\Eloquent\\\\Model given\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/ConversationTest.php
+
+		-
+			message: "#^Property Tests\\\\Feature\\\\Api\\\\V1\\\\ConversationTest\\:\\:\\$project has no type specified\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/ConversationTest.php
+
+		-
+			message: "#^Property Tests\\\\Feature\\\\Api\\\\V1\\\\ConversationTest\\:\\:\\$status has no type specified\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/ConversationTest.php
+
+		-
+			message: "#^Property Tests\\\\Feature\\\\Api\\\\V1\\\\ConversationTest\\:\\:\\$user has no type specified\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/ConversationTest.php
+
+		-
+			message: "#^Access to an undefined property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$email\\.$#"
+			count: 3
+			path: tests/Feature/Api/V1/InvitationTest.php
+
+		-
+			message: "#^Access to an undefined property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$id\\.$#"
+			count: 4
+			path: tests/Feature/Api/V1/InvitationTest.php
+
+		-
+			message: "#^Access to an undefined property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$name\\.$#"
+			count: 3
+			path: tests/Feature/Api/V1/InvitationTest.php
+
+		-
+			message: "#^Access to an undefined property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$uuid\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/InvitationTest.php
+
+		-
+			message: "#^Parameter \\#1 \\$user of static method Laravel\\\\Sanctum\\\\Sanctum\\<Laravel\\\\Sanctum\\\\PersonalAccessToken\\>\\:\\:actingAs\\(\\) expects Illuminate\\\\Contracts\\\\Auth\\\\Authenticatable\\|Laravel\\\\Sanctum\\\\HasApiTokens, Illuminate\\\\Database\\\\Eloquent\\\\Model given\\.$#"
+			count: 4
+			path: tests/Feature/Api/V1/InvitationTest.php
+
+		-
+			message: "#^Property Tests\\\\Feature\\\\Api\\\\V1\\\\InvitationTest\\:\\:\\$project has no type specified\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/InvitationTest.php
+
+		-
+			message: "#^Property Tests\\\\Feature\\\\Api\\\\V1\\\\InvitationTest\\:\\:\\$status has no type specified\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/InvitationTest.php
+
+		-
+			message: "#^Property Tests\\\\Feature\\\\Api\\\\V1\\\\InvitationTest\\:\\:\\$user has no type specified\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/InvitationTest.php
+
+		-
+			message: "#^Call to an undefined method Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:users\\(\\)\\.$#"
+			count: 2
+			path: tests/Feature/Api/V1/JobsTest.php
+
+		-
+			message: "#^Call to an undefined method Mockery\\\\ExpectationInterface\\|Mockery\\\\HigherOrderMessage\\:\\:once\\(\\)\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/JobsTest.php
+
+		-
+			message: "#^Parameter \\#1 \\$user of static method Laravel\\\\Sanctum\\\\Sanctum\\<Laravel\\\\Sanctum\\\\PersonalAccessToken\\>\\:\\:actingAs\\(\\) expects Illuminate\\\\Contracts\\\\Auth\\\\Authenticatable\\|Laravel\\\\Sanctum\\\\HasApiTokens, Illuminate\\\\Database\\\\Eloquent\\\\Model given\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/JobsTest.php
+
+		-
+			message: "#^Property Tests\\\\Feature\\\\Api\\\\V1\\\\JobsTest\\:\\:\\$project has no type specified\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/JobsTest.php
+
+		-
+			message: "#^Property Tests\\\\Feature\\\\Api\\\\V1\\\\JobsTest\\:\\:\\$status has no type specified\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/JobsTest.php
+
+		-
+			message: "#^Property Tests\\\\Feature\\\\Api\\\\V1\\\\JobsTest\\:\\:\\$user has no type specified\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/JobsTest.php
+
+		-
+			message: "#^Access to an undefined property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$id\\.$#"
+			count: 2
+			path: tests/Feature/Api/V1/MeetingTest.php
+
+		-
+			message: "#^Access to an undefined property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$meeting_id\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/MeetingTest.php
+
+		-
+			message: "#^Parameter \\#1 \\$user of static method Laravel\\\\Sanctum\\\\Sanctum\\<Laravel\\\\Sanctum\\\\PersonalAccessToken\\>\\:\\:actingAs\\(\\) expects Illuminate\\\\Contracts\\\\Auth\\\\Authenticatable\\|Laravel\\\\Sanctum\\\\HasApiTokens, Illuminate\\\\Database\\\\Eloquent\\\\Model given\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/MeetingTest.php
+
+		-
+			message: "#^Property Tests\\\\Feature\\\\Api\\\\V1\\\\MeetingTest\\:\\:\\$project has no type specified\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/MeetingTest.php
+
+		-
+			message: "#^Property Tests\\\\Feature\\\\Api\\\\V1\\\\MeetingTest\\:\\:\\$status has no type specified\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/MeetingTest.php
+
+		-
+			message: "#^Property Tests\\\\Feature\\\\Api\\\\V1\\\\MeetingTest\\:\\:\\$user has no type specified\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/MeetingTest.php
+
+		-
+			message: "#^Access to an undefined property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$id\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/MessageTest.php
+
+		-
+			message: "#^Parameter \\#1 \\$user of static method Laravel\\\\Sanctum\\\\Sanctum\\<Laravel\\\\Sanctum\\\\PersonalAccessToken\\>\\:\\:actingAs\\(\\) expects Illuminate\\\\Contracts\\\\Auth\\\\Authenticatable\\|Laravel\\\\Sanctum\\\\HasApiTokens, Illuminate\\\\Database\\\\Eloquent\\\\Model given\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/MessageTest.php
+
+		-
+			message: "#^Property Tests\\\\Feature\\\\Api\\\\V1\\\\MessageTest\\:\\:\\$project has no type specified\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/MessageTest.php
+
+		-
+			message: "#^Property Tests\\\\Feature\\\\Api\\\\V1\\\\MessageTest\\:\\:\\$status has no type specified\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/MessageTest.php
+
+		-
+			message: "#^Property Tests\\\\Feature\\\\Api\\\\V1\\\\MessageTest\\:\\:\\$user has no type specified\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/MessageTest.php
+
+		-
+			message: "#^Parameter \\#1 \\$user of static method Laravel\\\\Sanctum\\\\Sanctum\\<Laravel\\\\Sanctum\\\\PersonalAccessToken\\>\\:\\:actingAs\\(\\) expects Illuminate\\\\Contracts\\\\Auth\\\\Authenticatable\\|Laravel\\\\Sanctum\\\\HasApiTokens, Illuminate\\\\Database\\\\Eloquent\\\\Model given\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/MessageValidationTest.php
+
+		-
+			message: "#^Property Tests\\\\Feature\\\\Api\\\\V1\\\\MessageValidationTest\\:\\:\\$project has no type specified\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/MessageValidationTest.php
+
+		-
+			message: "#^Property Tests\\\\Feature\\\\Api\\\\V1\\\\MessageValidationTest\\:\\:\\$status has no type specified\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/MessageValidationTest.php
+
+		-
+			message: "#^Property Tests\\\\Feature\\\\Api\\\\V1\\\\MessageValidationTest\\:\\:\\$user has no type specified\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/MessageValidationTest.php
+
+		-
+			message: "#^Method Tests\\\\Feature\\\\Api\\\\V1\\\\NotificationsTest\\:\\:addMember\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/NotificationsTest.php
+
+		-
+			message: "#^Method Tests\\\\Feature\\\\Api\\\\V1\\\\NotificationsTest\\:\\:addMember\\(\\) has parameter \\$project with no type specified\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/NotificationsTest.php
+
+		-
+			message: "#^Method Tests\\\\Feature\\\\Api\\\\V1\\\\NotificationsTest\\:\\:addMember\\(\\) has parameter \\$user with no type specified\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/NotificationsTest.php
+
+		-
+			message: "#^Method Tests\\\\Feature\\\\Api\\\\V1\\\\NotificationsTest\\:\\:sendInvitationToUser\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/NotificationsTest.php
+
+		-
+			message: "#^Method Tests\\\\Feature\\\\Api\\\\V1\\\\NotificationsTest\\:\\:sendInvitationToUser\\(\\) has parameter \\$project with no type specified\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/NotificationsTest.php
+
+		-
+			message: "#^Method Tests\\\\Feature\\\\Api\\\\V1\\\\NotificationsTest\\:\\:sendInvitationToUser\\(\\) has parameter \\$user with no type specified\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/NotificationsTest.php
+
+		-
+			message: "#^Parameter \\#1 \\$user of static method Laravel\\\\Sanctum\\\\Sanctum\\<Laravel\\\\Sanctum\\\\PersonalAccessToken\\>\\:\\:actingAs\\(\\) expects Illuminate\\\\Contracts\\\\Auth\\\\Authenticatable\\|Laravel\\\\Sanctum\\\\HasApiTokens, Illuminate\\\\Database\\\\Eloquent\\\\Model given\\.$#"
+			count: 3
+			path: tests/Feature/Api/V1/NotificationsTest.php
+
+		-
+			message: "#^Property Tests\\\\Feature\\\\Api\\\\V1\\\\NotificationsTest\\:\\:\\$project has no type specified\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/NotificationsTest.php
+
+		-
+			message: "#^Property Tests\\\\Feature\\\\Api\\\\V1\\\\NotificationsTest\\:\\:\\$status has no type specified\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/NotificationsTest.php
+
+		-
+			message: "#^Property Tests\\\\Feature\\\\Api\\\\V1\\\\NotificationsTest\\:\\:\\$user has no type specified\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/NotificationsTest.php
+
+		-
+			message: "#^Parameter \\#1 \\$user of static method Laravel\\\\Sanctum\\\\Sanctum\\<Laravel\\\\Sanctum\\\\PersonalAccessToken\\>\\:\\:actingAs\\(\\) expects Illuminate\\\\Contracts\\\\Auth\\\\Authenticatable\\|Laravel\\\\Sanctum\\\\HasApiTokens, Illuminate\\\\Database\\\\Eloquent\\\\Model given\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/ProjectDashBoard/DashboardTest.php
+
+		-
+			message: "#^Property Tests\\\\Feature\\\\Api\\\\V1\\\\DashboardTest\\:\\:\\$project has no type specified\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/ProjectDashBoard/DashboardTest.php
+
+		-
+			message: "#^Property Tests\\\\Feature\\\\Api\\\\V1\\\\DashboardTest\\:\\:\\$status has no type specified\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/ProjectDashBoard/DashboardTest.php
+
+		-
+			message: "#^Property Tests\\\\Feature\\\\Api\\\\V1\\\\DashboardTest\\:\\:\\$user has no type specified\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/ProjectDashBoard/DashboardTest.php
+
+		-
+			message: "#^Call to static method create\\(\\) on an unknown class Tests\\\\Feature\\\\Api\\\\V1\\\\ProjectDashboard\\\\Carbon\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/ProjectDashBoard/ProjectChartTests.php
+
+		-
+			message: "#^Call to static method factory\\(\\) on an unknown class Tests\\\\Feature\\\\Api\\\\V1\\\\ProjectDashboard\\\\Project\\.$#"
+			count: 6
+			path: tests/Feature/Api/V1/ProjectDashBoard/ProjectChartTests.php
+
+		-
+			message: "#^Call to static method table\\(\\) on an unknown class Tests\\\\Feature\\\\Api\\\\V1\\\\ProjectDashboard\\\\DB\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/ProjectDashBoard/ProjectChartTests.php
+
+		-
+			message: "#^Parameter \\#1 \\$user of static method Laravel\\\\Sanctum\\\\Sanctum\\<Laravel\\\\Sanctum\\\\PersonalAccessToken\\>\\:\\:actingAs\\(\\) expects Illuminate\\\\Contracts\\\\Auth\\\\Authenticatable\\|Laravel\\\\Sanctum\\\\HasApiTokens, Illuminate\\\\Database\\\\Eloquent\\\\Model given\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/ProjectDashBoard/ProjectChartTests.php
+
+		-
+			message: "#^Property Tests\\\\Feature\\\\Api\\\\V1\\\\ProjectDashboard\\\\ProjectChartTests\\:\\:\\$project has no type specified\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/ProjectDashBoard/ProjectChartTests.php
+
+		-
+			message: "#^Property Tests\\\\Feature\\\\Api\\\\V1\\\\ProjectDashboard\\\\ProjectChartTests\\:\\:\\$status has no type specified\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/ProjectDashBoard/ProjectChartTests.php
+
+		-
+			message: "#^Property Tests\\\\Feature\\\\Api\\\\V1\\\\ProjectDashboard\\\\ProjectChartTests\\:\\:\\$user has no type specified\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/ProjectDashBoard/ProjectChartTests.php
+
+		-
+			message: "#^Access to an undefined property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$id\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/ProjectDashBoard/UserActivitiesTest.php
+
+		-
+			message: "#^Parameter \\#1 \\$user of method Database\\\\Factories\\\\ActivityFactory\\:\\:forUser\\(\\) expects App\\\\Models\\\\User, Illuminate\\\\Database\\\\Eloquent\\\\Model given\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/ProjectDashBoard/UserActivitiesTest.php
+
+		-
+			message: "#^Parameter \\#1 \\$user of static method Laravel\\\\Sanctum\\\\Sanctum\\<Laravel\\\\Sanctum\\\\PersonalAccessToken\\>\\:\\:actingAs\\(\\) expects Illuminate\\\\Contracts\\\\Auth\\\\Authenticatable\\|Laravel\\\\Sanctum\\\\HasApiTokens, Illuminate\\\\Database\\\\Eloquent\\\\Model given\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/ProjectDashBoard/UserActivitiesTest.php
+
+		-
+			message: "#^Property Tests\\\\Feature\\\\Api\\\\V1\\\\ProjectDashboard\\\\UserActivitiesTest\\:\\:\\$project has no type specified\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/ProjectDashBoard/UserActivitiesTest.php
+
+		-
+			message: "#^Property Tests\\\\Feature\\\\Api\\\\V1\\\\ProjectDashboard\\\\UserActivitiesTest\\:\\:\\$status has no type specified\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/ProjectDashBoard/UserActivitiesTest.php
+
+		-
+			message: "#^Property Tests\\\\Feature\\\\Api\\\\V1\\\\ProjectDashboard\\\\UserActivitiesTest\\:\\:\\$user has no type specified\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/ProjectDashBoard/UserActivitiesTest.php
+
+		-
+			message: "#^Parameter \\#1 \\$user of static method Laravel\\\\Sanctum\\\\Sanctum\\<Laravel\\\\Sanctum\\\\PersonalAccessToken\\>\\:\\:actingAs\\(\\) expects Illuminate\\\\Contracts\\\\Auth\\\\Authenticatable\\|Laravel\\\\Sanctum\\\\HasApiTokens, Illuminate\\\\Database\\\\Eloquent\\\\Model given\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/ProjectDashBoard/UserKpiMetricesTest.php
+
+		-
+			message: "#^Property Tests\\\\Feature\\\\Api\\\\V1\\\\ProjectDashboard\\\\UserKpiMetricesTest\\:\\:\\$project has no type specified\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/ProjectDashBoard/UserKpiMetricesTest.php
+
+		-
+			message: "#^Property Tests\\\\Feature\\\\Api\\\\V1\\\\ProjectDashboard\\\\UserKpiMetricesTest\\:\\:\\$status has no type specified\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/ProjectDashBoard/UserKpiMetricesTest.php
+
+		-
+			message: "#^Property Tests\\\\Feature\\\\Api\\\\V1\\\\ProjectDashboard\\\\UserKpiMetricesTest\\:\\:\\$user has no type specified\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/ProjectDashBoard/UserKpiMetricesTest.php
+
+		-
+			message: "#^Access to an undefined property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$id\\.$#"
+			count: 2
+			path: tests/Feature/Api/V1/ProjectDashBoard/UserProjectsPageTest.php
+
+		-
+			message: "#^Access to an undefined property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$name\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/ProjectDashBoard/UserProjectsPageTest.php
+
+		-
+			message: "#^Parameter \\#1 \\$user of static method Laravel\\\\Sanctum\\\\Sanctum\\<Laravel\\\\Sanctum\\\\PersonalAccessToken\\>\\:\\:actingAs\\(\\) expects Illuminate\\\\Contracts\\\\Auth\\\\Authenticatable\\|Laravel\\\\Sanctum\\\\HasApiTokens, Illuminate\\\\Database\\\\Eloquent\\\\Model given\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/ProjectDashBoard/UserProjectsPageTest.php
+
+		-
+			message: "#^Property Tests\\\\Feature\\\\Api\\\\V1\\\\ProjectDashboard\\\\UserProjectsPageTest\\:\\:\\$project has no type specified\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/ProjectDashBoard/UserProjectsPageTest.php
+
+		-
+			message: "#^Property Tests\\\\Feature\\\\Api\\\\V1\\\\ProjectDashboard\\\\UserProjectsPageTest\\:\\:\\$status has no type specified\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/ProjectDashBoard/UserProjectsPageTest.php
+
+		-
+			message: "#^Property Tests\\\\Feature\\\\Api\\\\V1\\\\ProjectDashboard\\\\UserProjectsPageTest\\:\\:\\$user has no type specified\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/ProjectDashBoard/UserProjectsPageTest.php
+
+		-
+			message: "#^Access to an undefined property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$id\\.$#"
+			count: 5
+			path: tests/Feature/Api/V1/ProjectDashBoard/UserTasksDataTest.php
+
+		-
+			message: "#^Access to an undefined property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$title\\.$#"
+			count: 2
+			path: tests/Feature/Api/V1/ProjectDashBoard/UserTasksDataTest.php
+
+		-
+			message: "#^Call to an undefined method Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:assignee\\(\\)\\.$#"
+			count: 3
+			path: tests/Feature/Api/V1/ProjectDashBoard/UserTasksDataTest.php
+
+		-
+			message: "#^Parameter \\#1 \\$user of static method Laravel\\\\Sanctum\\\\Sanctum\\<Laravel\\\\Sanctum\\\\PersonalAccessToken\\>\\:\\:actingAs\\(\\) expects Illuminate\\\\Contracts\\\\Auth\\\\Authenticatable\\|Laravel\\\\Sanctum\\\\HasApiTokens, Illuminate\\\\Database\\\\Eloquent\\\\Model given\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/ProjectDashBoard/UserTasksDataTest.php
+
+		-
+			message: "#^Property Tests\\\\Feature\\\\Api\\\\V1\\\\ProjectDashboard\\\\UserTasksDataTest\\:\\:\\$project has no type specified\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/ProjectDashBoard/UserTasksDataTest.php
+
+		-
+			message: "#^Property Tests\\\\Feature\\\\Api\\\\V1\\\\ProjectDashboard\\\\UserTasksDataTest\\:\\:\\$status has no type specified\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/ProjectDashBoard/UserTasksDataTest.php
+
+		-
+			message: "#^Property Tests\\\\Feature\\\\Api\\\\V1\\\\ProjectDashboard\\\\UserTasksDataTest\\:\\:\\$user has no type specified\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/ProjectDashBoard/UserTasksDataTest.php
+
+		-
+			message: "#^Access to an undefined property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$name\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/ProjectFeatureTest.php
+
+		-
+			message: "#^Call to an undefined method Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:path\\(\\)\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/ProjectFeatureTest.php
+
+		-
+			message: "#^Parameter \\#1 \\$user of static method Laravel\\\\Sanctum\\\\Sanctum\\<Laravel\\\\Sanctum\\\\PersonalAccessToken\\>\\:\\:actingAs\\(\\) expects Illuminate\\\\Contracts\\\\Auth\\\\Authenticatable\\|Laravel\\\\Sanctum\\\\HasApiTokens, Illuminate\\\\Database\\\\Eloquent\\\\Model given\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/ProjectFeatureTest.php
+
+		-
+			message: "#^Property Tests\\\\Feature\\\\Api\\\\V1\\\\ProjectFeatureTest\\:\\:\\$project has no type specified\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/ProjectFeatureTest.php
+
+		-
+			message: "#^Property Tests\\\\Feature\\\\Api\\\\V1\\\\ProjectFeatureTest\\:\\:\\$status has no type specified\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/ProjectFeatureTest.php
+
+		-
+			message: "#^Property Tests\\\\Feature\\\\Api\\\\V1\\\\ProjectFeatureTest\\:\\:\\$user has no type specified\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/ProjectFeatureTest.php
+
+		-
+			message: "#^Access to an undefined property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$health_score\\.$#"
+			count: 2
+			path: tests/Feature/Api/V1/ProjectHealthScoreFeatureTest.php
+
+		-
+			message: "#^Access to an undefined property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$health_score_calculated_at\\.$#"
+			count: 2
+			path: tests/Feature/Api/V1/ProjectHealthScoreFeatureTest.php
+
+		-
+			message: "#^Access to an undefined property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$health_status\\.$#"
+			count: 3
+			path: tests/Feature/Api/V1/ProjectHealthScoreFeatureTest.php
+
+		-
+			message: "#^Access to an undefined property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$id\\.$#"
+			count: 8
+			path: tests/Feature/Api/V1/ProjectHealthScoreFeatureTest.php
+
+		-
+			message: "#^Call to function is_string\\(\\) with Illuminate\\\\Broadcasting\\\\PrivateChannel will always evaluate to false\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/ProjectHealthScoreFeatureTest.php
+
+		-
+			message: "#^Parameter \\#1 \\$project of method App\\\\Actions\\\\ProjectMetrics\\\\ProjectHealthRecalculationAction\\:\\:handle\\(\\) expects App\\\\Models\\\\Project, Illuminate\\\\Database\\\\Eloquent\\\\Model given\\.$#"
+			count: 4
+			path: tests/Feature/Api/V1/ProjectHealthScoreFeatureTest.php
+
+		-
+			message: "#^Property Illuminate\\\\Broadcasting\\\\Channel\\:\\:\\$name \\(string\\) on left side of \\?\\? is not nullable\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/ProjectHealthScoreFeatureTest.php
+
+		-
+			message: "#^Access to an undefined property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$id\\.$#"
+			count: 6
+			path: tests/Feature/Api/V1/ProjectInsightsApiTest.php
+
+		-
+			message: "#^Access to an undefined property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$slug\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/ProjectInsightsApiTest.php
+
+		-
+			message: "#^Call to an undefined method Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:members\\(\\)\\.$#"
+			count: 2
+			path: tests/Feature/Api/V1/ProjectInsightsApiTest.php
+
+		-
+			message: "#^Method Tests\\\\Feature\\\\Api\\\\V1\\\\ProjectInsightsApiTest\\:\\:assertInsightValue\\(\\) has parameter \\$insight with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/ProjectInsightsApiTest.php
+
+		-
+			message: "#^Property Tests\\\\Feature\\\\Api\\\\V1\\\\ProjectInsightsApiTest\\:\\:\\$nonMember \\(App\\\\Models\\\\User\\) does not accept Illuminate\\\\Database\\\\Eloquent\\\\Model\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/ProjectInsightsApiTest.php
+
+		-
+			message: "#^Property Tests\\\\Feature\\\\Api\\\\V1\\\\ProjectInsightsApiTest\\:\\:\\$nonMember is never read, only written\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/ProjectInsightsApiTest.php
+
+		-
+			message: "#^Property Tests\\\\Feature\\\\Api\\\\V1\\\\ProjectInsightsApiTest\\:\\:\\$project \\(App\\\\Models\\\\Project\\) does not accept Illuminate\\\\Database\\\\Eloquent\\\\Model\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/ProjectInsightsApiTest.php
+
+		-
+			message: "#^Property Tests\\\\Feature\\\\Api\\\\V1\\\\ProjectInsightsApiTest\\:\\:\\$stage \\(App\\\\Models\\\\Stage\\) does not accept Illuminate\\\\Database\\\\Eloquent\\\\Model\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/ProjectInsightsApiTest.php
+
+		-
+			message: "#^Property Tests\\\\Feature\\\\Api\\\\V1\\\\ProjectInsightsApiTest\\:\\:\\$status \\(App\\\\Models\\\\TaskStatus\\) does not accept Illuminate\\\\Database\\\\Eloquent\\\\Model\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/ProjectInsightsApiTest.php
+
+		-
+			message: "#^Property Tests\\\\Feature\\\\Api\\\\V1\\\\ProjectInsightsApiTest\\:\\:\\$status is never read, only written\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/ProjectInsightsApiTest.php
+
+		-
+			message: "#^Property Tests\\\\Feature\\\\Api\\\\V1\\\\ProjectInsightsApiTest\\:\\:\\$user \\(App\\\\Models\\\\User\\) does not accept Illuminate\\\\Database\\\\Eloquent\\\\Model\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/ProjectInsightsApiTest.php
+
+		-
+			message: "#^Access to an undefined property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$messages\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/ProjectMailableTest.php
+
+		-
+			message: "#^Access to an undefined property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$name\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/ProjectMailableTest.php
+
+		-
+			message: "#^Access to an undefined property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$email\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/RecordActivityTest.php
+
+		-
+			message: "#^Access to an undefined property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$uuid\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/RecordActivityTest.php
+
+		-
+			message: "#^Parameter \\#1 \\$user of static method Laravel\\\\Sanctum\\\\Sanctum\\<Laravel\\\\Sanctum\\\\PersonalAccessToken\\>\\:\\:actingAs\\(\\) expects Illuminate\\\\Contracts\\\\Auth\\\\Authenticatable\\|Laravel\\\\Sanctum\\\\HasApiTokens, Illuminate\\\\Database\\\\Eloquent\\\\Model given\\.$#"
+			count: 2
+			path: tests/Feature/Api/V1/RecordActivityTest.php
+
+		-
+			message: "#^Property Tests\\\\Feature\\\\Api\\\\V1\\\\RecordActivityTest\\:\\:\\$project has no type specified\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/RecordActivityTest.php
+
+		-
+			message: "#^Property Tests\\\\Feature\\\\Api\\\\V1\\\\RecordActivityTest\\:\\:\\$status has no type specified\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/RecordActivityTest.php
+
+		-
+			message: "#^Property Tests\\\\Feature\\\\Api\\\\V1\\\\RecordActivityTest\\:\\:\\$user has no type specified\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/RecordActivityTest.php
+
+		-
+			message: "#^Call to an undefined method App\\\\Services\\\\Api\\\\V1\\\\InvitationService\\:\\:memberSearch\\(\\)\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/SearchableTest.php
+
+		-
+			message: "#^Parameter \\#1 \\$user of static method Laravel\\\\Sanctum\\\\Sanctum\\<Laravel\\\\Sanctum\\\\PersonalAccessToken\\>\\:\\:actingAs\\(\\) expects Illuminate\\\\Contracts\\\\Auth\\\\Authenticatable\\|Laravel\\\\Sanctum\\\\HasApiTokens, Illuminate\\\\Database\\\\Eloquent\\\\Model given\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/SearchableTest.php
+
+		-
+			message: "#^Property Tests\\\\Feature\\\\Api\\\\V1\\\\SearchableTest\\:\\:\\$project has no type specified\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/SearchableTest.php
+
+		-
+			message: "#^Property Tests\\\\Feature\\\\Api\\\\V1\\\\SearchableTest\\:\\:\\$status has no type specified\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/SearchableTest.php
+
+		-
+			message: "#^Property Tests\\\\Feature\\\\Api\\\\V1\\\\SearchableTest\\:\\:\\$user has no type specified\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/SearchableTest.php
+
+		-
+			message: "#^Parameter \\#1 \\$user of static method Laravel\\\\Sanctum\\\\Sanctum\\<Laravel\\\\Sanctum\\\\PersonalAccessToken\\>\\:\\:actingAs\\(\\) expects Illuminate\\\\Contracts\\\\Auth\\\\Authenticatable\\|Laravel\\\\Sanctum\\\\HasApiTokens, Illuminate\\\\Database\\\\Eloquent\\\\Model given\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/StageTest.php
+
+		-
+			message: "#^Property Tests\\\\Feature\\\\Api\\\\V1\\\\StageTest\\:\\:\\$project has no type specified\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/StageTest.php
+
+		-
+			message: "#^Access to an undefined property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$id\\.$#"
+			count: 8
+			path: tests/Feature/Api/V1/TaskFeaturesTest.php
+
+		-
+			message: "#^Access to an undefined property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$notifications\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/TaskFeaturesTest.php
+
+		-
+			message: "#^Call to an undefined method Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:assignee\\(\\)\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/TaskFeaturesTest.php
+
+		-
+			message: "#^Call to an undefined method Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:can\\(\\)\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/TaskFeaturesTest.php
+
+		-
+			message: "#^Call to an undefined method Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:members\\(\\)\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/TaskFeaturesTest.php
+
+		-
+			message: "#^Method Tests\\\\Feature\\\\Api\\\\V1\\\\TaskFeaturesTest\\:\\:assignMembersToTask\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/TaskFeaturesTest.php
+
+		-
+			message: "#^Method Tests\\\\Feature\\\\Api\\\\V1\\\\TaskFeaturesTest\\:\\:assignMembersToTask\\(\\) has parameter \\$members with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/TaskFeaturesTest.php
+
+		-
+			message: "#^Method Tests\\\\Feature\\\\Api\\\\V1\\\\TaskFeaturesTest\\:\\:unassignMemberFromTask\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/TaskFeaturesTest.php
+
+		-
+			message: "#^Parameter \\#1 \\$user of static method Laravel\\\\Sanctum\\\\Sanctum\\<Laravel\\\\Sanctum\\\\PersonalAccessToken\\>\\:\\:actingAs\\(\\) expects Illuminate\\\\Contracts\\\\Auth\\\\Authenticatable\\|Laravel\\\\Sanctum\\\\HasApiTokens, Illuminate\\\\Database\\\\Eloquent\\\\Model given\\.$#"
+			count: 2
+			path: tests/Feature/Api/V1/TaskFeaturesTest.php
+
+		-
+			message: "#^Property Tests\\\\Feature\\\\Api\\\\V1\\\\TaskFeaturesTest\\:\\:\\$project has no type specified\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/TaskFeaturesTest.php
+
+		-
+			message: "#^Property Tests\\\\Feature\\\\Api\\\\V1\\\\TaskFeaturesTest\\:\\:\\$status has no type specified\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/TaskFeaturesTest.php
+
+		-
+			message: "#^Property Tests\\\\Feature\\\\Api\\\\V1\\\\TaskFeaturesTest\\:\\:\\$user has no type specified\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/TaskFeaturesTest.php
+
+		-
+			message: "#^Access to an undefined property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$id\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/TaskNotifyTest.php
+
+		-
+			message: "#^Access to an undefined property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$notify_sent\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/TaskNotifyTest.php
+
+		-
+			message: "#^Call to an undefined method Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:assignee\\(\\)\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/TaskNotifyTest.php
+
+		-
+			message: "#^Parameter \\#1 \\$user of static method Laravel\\\\Sanctum\\\\Sanctum\\<Laravel\\\\Sanctum\\\\PersonalAccessToken\\>\\:\\:actingAs\\(\\) expects Illuminate\\\\Contracts\\\\Auth\\\\Authenticatable\\|Laravel\\\\Sanctum\\\\HasApiTokens, Illuminate\\\\Database\\\\Eloquent\\\\Model given\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/TaskNotifyTest.php
+
+		-
+			message: "#^Property Tests\\\\Feature\\\\Api\\\\V1\\\\TaskNotifyTest\\:\\:\\$project has no type specified\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/TaskNotifyTest.php
+
+		-
+			message: "#^Property Tests\\\\Feature\\\\Api\\\\V1\\\\TaskNotifyTest\\:\\:\\$status has no type specified\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/TaskNotifyTest.php
+
+		-
+			message: "#^Property Tests\\\\Feature\\\\Api\\\\V1\\\\TaskNotifyTest\\:\\:\\$user has no type specified\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/TaskNotifyTest.php
+
+		-
+			message: "#^Access to an undefined property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$id\\.$#"
+			count: 4
+			path: tests/Feature/Api/V1/TaskTest.php
+
+		-
+			message: "#^Call to an undefined method Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:path\\(\\)\\.$#"
+			count: 3
+			path: tests/Feature/Api/V1/TaskTest.php
+
+		-
+			message: "#^Parameter \\#1 \\$user of static method Laravel\\\\Sanctum\\\\Sanctum\\<Laravel\\\\Sanctum\\\\PersonalAccessToken\\>\\:\\:actingAs\\(\\) expects Illuminate\\\\Contracts\\\\Auth\\\\Authenticatable\\|Laravel\\\\Sanctum\\\\HasApiTokens, Illuminate\\\\Database\\\\Eloquent\\\\Model given\\.$#"
+			count: 2
+			path: tests/Feature/Api/V1/TaskTest.php
+
+		-
+			message: "#^Property Tests\\\\Feature\\\\Api\\\\V1\\\\TaskTest\\:\\:\\$project has no type specified\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/TaskTest.php
+
+		-
+			message: "#^Property Tests\\\\Feature\\\\Api\\\\V1\\\\TaskTest\\:\\:\\$status has no type specified\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/TaskTest.php
+
+		-
+			message: "#^Property Tests\\\\Feature\\\\Api\\\\V1\\\\TaskTest\\:\\:\\$user has no type specified\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/TaskTest.php
+
+		-
+			message: "#^Parameter \\#1 \\$path of method Illuminate\\\\Filesystem\\\\FilesystemAdapter\\:\\:assertMissing\\(\\) expects array\\|string, Illuminate\\\\Http\\\\Testing\\\\File given\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/UserAvatarTest.php
+
+		-
+			message: "#^Parameter \\#1 \\$user of static method Laravel\\\\Sanctum\\\\Sanctum\\<Laravel\\\\Sanctum\\\\PersonalAccessToken\\>\\:\\:actingAs\\(\\) expects Illuminate\\\\Contracts\\\\Auth\\\\Authenticatable\\|Laravel\\\\Sanctum\\\\HasApiTokens, Illuminate\\\\Database\\\\Eloquent\\\\Model given\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/UserAvatarTest.php
+
+		-
+			message: "#^Access to an undefined property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$id\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/UserInvitationTest.php
+
+		-
+			message: "#^Call to an undefined method Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:members\\(\\)\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/UserInvitationTest.php
+
+		-
+			message: "#^Class App\\\\Models\\\\Project referenced with incorrect case\\: App\\\\Models\\\\project\\.$#"
+			count: 2
+			path: tests/Feature/Api/V1/UserInvitationTest.php
+
+		-
+			message: "#^Parameter \\#1 \\$user of static method Laravel\\\\Sanctum\\\\Sanctum\\<Laravel\\\\Sanctum\\\\PersonalAccessToken\\>\\:\\:actingAs\\(\\) expects Illuminate\\\\Contracts\\\\Auth\\\\Authenticatable\\|Laravel\\\\Sanctum\\\\HasApiTokens, Illuminate\\\\Database\\\\Eloquent\\\\Model given\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/UserInvitationTest.php
+
+		-
+			message: "#^Property Tests\\\\Feature\\\\Api\\\\V1\\\\UserInvitationTest\\:\\:\\$project has no type specified\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/UserInvitationTest.php
+
+		-
+			message: "#^Property Tests\\\\Feature\\\\Api\\\\V1\\\\UserInvitationTest\\:\\:\\$status has no type specified\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/UserInvitationTest.php
+
+		-
+			message: "#^Property Tests\\\\Feature\\\\Api\\\\V1\\\\UserInvitationTest\\:\\:\\$user has no type specified\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/UserInvitationTest.php
+
+		-
+			message: "#^Access to an undefined property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$unreadNotifications\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/UserNotificationsTest.php
+
+		-
+			message: "#^Method Tests\\\\Feature\\\\Api\\\\V1\\\\UserNotificationsTest\\:\\:actingAsInvitedUser\\(\\) should return App\\\\Models\\\\User but returns Illuminate\\\\Database\\\\Eloquent\\\\Model\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/UserNotificationsTest.php
+
+		-
+			message: "#^Method Tests\\\\Feature\\\\Api\\\\V1\\\\UserNotificationsTest\\:\\:addMember\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/UserNotificationsTest.php
+
+		-
+			message: "#^Method Tests\\\\Feature\\\\Api\\\\V1\\\\UserNotificationsTest\\:\\:addMember\\(\\) has parameter \\$project with no type specified\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/UserNotificationsTest.php
+
+		-
+			message: "#^Method Tests\\\\Feature\\\\Api\\\\V1\\\\UserNotificationsTest\\:\\:addMember\\(\\) has parameter \\$user with no type specified\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/UserNotificationsTest.php
+
+		-
+			message: "#^Method Tests\\\\Feature\\\\Api\\\\V1\\\\UserNotificationsTest\\:\\:projectUpdate\\(\\) has parameter \\$project with no type specified\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/UserNotificationsTest.php
+
+		-
+			message: "#^Method Tests\\\\Feature\\\\Api\\\\V1\\\\UserNotificationsTest\\:\\:projectUpdate\\(\\) has parameter \\$user with no type specified\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/UserNotificationsTest.php
+
+		-
+			message: "#^Method Tests\\\\Feature\\\\Api\\\\V1\\\\UserNotificationsTest\\:\\:sendInvitationToUser\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/UserNotificationsTest.php
+
+		-
+			message: "#^Method Tests\\\\Feature\\\\Api\\\\V1\\\\UserNotificationsTest\\:\\:sendInvitationToUser\\(\\) has parameter \\$project with no type specified\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/UserNotificationsTest.php
+
+		-
+			message: "#^Method Tests\\\\Feature\\\\Api\\\\V1\\\\UserNotificationsTest\\:\\:sendInvitationToUser\\(\\) has parameter \\$user with no type specified\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/UserNotificationsTest.php
+
+		-
+			message: "#^Parameter \\#1 \\$user of static method Laravel\\\\Sanctum\\\\Sanctum\\<Laravel\\\\Sanctum\\\\PersonalAccessToken\\>\\:\\:actingAs\\(\\) expects Illuminate\\\\Contracts\\\\Auth\\\\Authenticatable\\|Laravel\\\\Sanctum\\\\HasApiTokens, Illuminate\\\\Database\\\\Eloquent\\\\Model given\\.$#"
+			count: 3
+			path: tests/Feature/Api/V1/UserNotificationsTest.php
+
+		-
+			message: "#^Property Tests\\\\Feature\\\\Api\\\\V1\\\\UserNotificationsTest\\:\\:\\$project has no type specified\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/UserNotificationsTest.php
+
+		-
+			message: "#^Property Tests\\\\Feature\\\\Api\\\\V1\\\\UserNotificationsTest\\:\\:\\$status has no type specified\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/UserNotificationsTest.php
+
+		-
+			message: "#^Property Tests\\\\Feature\\\\Api\\\\V1\\\\UserNotificationsTest\\:\\:\\$user has no type specified\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/UserNotificationsTest.php
+
+		-
+			message: "#^Access to an undefined property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$id\\.$#"
+			count: 8
+			path: tests/Feature/Api/V1/UserTest.php
+
+		-
+			message: "#^Call to an undefined method Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:assignRole\\(\\)\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/UserTest.php
+
+		-
+			message: "#^Call to an undefined method Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:members\\(\\)\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/UserTest.php
+
+		-
+			message: "#^Method Tests\\\\Feature\\\\Api\\\\V1\\\\UserTest\\:\\:dataProvider\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/UserTest.php
+
+		-
+			message: "#^Parameter \\#1 \\$user of static method Laravel\\\\Sanctum\\\\Sanctum\\<Laravel\\\\Sanctum\\\\PersonalAccessToken\\>\\:\\:actingAs\\(\\) expects Illuminate\\\\Contracts\\\\Auth\\\\Authenticatable\\|Laravel\\\\Sanctum\\\\HasApiTokens, Illuminate\\\\Database\\\\Eloquent\\\\Model given\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/UserTest.php
+
+		-
+			message: "#^Property Tests\\\\Feature\\\\Api\\\\V1\\\\UserTest\\:\\:\\$project has no type specified\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/UserTest.php
+
+		-
+			message: "#^Property Tests\\\\Feature\\\\Api\\\\V1\\\\UserTest\\:\\:\\$status has no type specified\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/UserTest.php
+
+		-
+			message: "#^Property Tests\\\\Feature\\\\Api\\\\V1\\\\UserTest\\:\\:\\$user has no type specified\\.$#"
+			count: 1
+			path: tests/Feature/Api/V1/UserTest.php
+
+		-
+			message: "#^Method Tests\\\\Unit\\\\Api\\\\V1\\\\DummyUserWithSubscription\\:\\:subscription\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: tests/Unit/Api/V1/HasSubscriptionTest.php
+
+		-
+			message: "#^Method Tests\\\\Unit\\\\Api\\\\V1\\\\DummyUserWithSubscription\\:\\:subscription\\(\\) has parameter \\$name with no type specified\\.$#"
+			count: 1
+			path: tests/Unit/Api/V1/HasSubscriptionTest.php
+
+		-
+			message: "#^Property Tests\\\\Unit\\\\Api\\\\V1\\\\DummyUserWithSubscription\\:\\:\\$mockSubscription has no type specified\\.$#"
+			count: 1
+			path: tests/Unit/Api/V1/HasSubscriptionTest.php
+
+		-
+			message: "#^Access to an undefined property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$message\\.$#"
+			count: 1
+			path: tests/Unit/MentionedUserTest.php
+
+		-
+			message: "#^Method Tests\\\\Unit\\\\ProjectInsightResponseServiceTest\\:\\:collaborationCasesProvider\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: tests/Unit/ProjectInsightResponseServiceTest.php
+
+		-
+			message: "#^Method Tests\\\\Unit\\\\ProjectInsightResponseServiceTest\\:\\:collaboration_builder_title_and_type_cases\\(\\) has parameter \\$details with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: tests/Unit/ProjectInsightResponseServiceTest.php
+
+		-
+			message: "#^Method Tests\\\\Unit\\\\ProjectInsightResponseServiceTest\\:\\:healthThresholdsProvider\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: tests/Unit/ProjectInsightResponseServiceTest.php
+
+		-
+			message: "#^Method Tests\\\\Unit\\\\ProjectInsightResponseServiceTest\\:\\:riskCasesProvider\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: tests/Unit/ProjectInsightResponseServiceTest.php
+
+		-
+			message: "#^Method Tests\\\\Unit\\\\ProjectInsightResponseServiceTest\\:\\:stageCasesProvider\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: tests/Unit/ProjectInsightResponseServiceTest.php
+
+		-
+			message: "#^Method Tests\\\\Unit\\\\ProjectInsightResponseServiceTest\\:\\:stage_builder_titles_and_types\\(\\) has parameter \\$input with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: tests/Unit/ProjectInsightResponseServiceTest.php
+
+		-
+			message: "#^Method Tests\\\\Unit\\\\ProjectInsightResponseServiceTest\\:\\:taskHealthCasesProvider\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: tests/Unit/ProjectInsightResponseServiceTest.php
+
+		-
+			message: "#^Method Tests\\\\Unit\\\\ProjectInsightResponseServiceTest\\:\\:task_health_builder_types_and_messages\\(\\) has parameter \\$summary with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: tests/Unit/ProjectInsightResponseServiceTest.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Models\\\\Project\\:\\:\\$active_tasks_count\\.$#"
+			count: 1
+			path: tests/Unit/ProjectInsightsCalculationsTest.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Models\\\\Project\\:\\:\\$completed_tasks_count\\.$#"
+			count: 1
+			path: tests/Unit/ProjectInsightsCalculationsTest.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Models\\\\Project\\:\\:\\$overdue_tasks_count\\.$#"
+			count: 1
+			path: tests/Unit/ProjectInsightsCalculationsTest.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Models\\\\Project\\:\\:\\$recent_activities_count\\.$#"
+			count: 1
+			path: tests/Unit/ProjectInsightsCalculationsTest.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Models\\\\Project\\:\\:\\$recent_conversations_count\\.$#"
+			count: 1
+			path: tests/Unit/ProjectInsightsCalculationsTest.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Models\\\\Project\\:\\:\\$recent_meetings_count\\.$#"
+			count: 1
+			path: tests/Unit/ProjectInsightsCalculationsTest.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Models\\\\Project\\:\\:\\$recent_participants_count\\.$#"
+			count: 1
+			path: tests/Unit/ProjectInsightsCalculationsTest.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Models\\\\Project\\:\\:\\$tasks_at_risk_count\\.$#"
+			count: 1
+			path: tests/Unit/ProjectInsightsCalculationsTest.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Models\\\\Project\\:\\:\\$tasks_due_soon_count\\.$#"
+			count: 1
+			path: tests/Unit/ProjectInsightsCalculationsTest.php
+
+		-
+			message: "#^Call to an undefined method Mockery\\\\ExpectationInterface\\|Mockery\\\\HigherOrderMessage\\:\\:with\\(\\)\\.$#"
+			count: 5
+			path: tests/Unit/ProjectInsightsCalculationsTest.php
+
+		-
+			message: "#^Parameter \\#1 \\$taskHealthAction of class App\\\\Actions\\\\ProjectMetrics\\\\ProjectHealthMetricAction constructor expects App\\\\Actions\\\\ProjectMetrics\\\\TaskHealthMetricAction, Mockery\\\\MockInterface given\\.$#"
+			count: 1
+			path: tests/Unit/ProjectInsightsCalculationsTest.php
+
+		-
+			message: "#^Parameter \\#2 \\$collaborationHealthAction of class App\\\\Actions\\\\ProjectMetrics\\\\ProjectHealthMetricAction constructor expects App\\\\Actions\\\\ProjectMetrics\\\\TeamCollaborationMetricAction, Mockery\\\\MockInterface given\\.$#"
+			count: 1
+			path: tests/Unit/ProjectInsightsCalculationsTest.php
+
+		-
+			message: "#^Parameter \\#3 \\$stageProgressAction of class App\\\\Actions\\\\ProjectMetrics\\\\ProjectHealthMetricAction constructor expects App\\\\Actions\\\\ProjectMetrics\\\\StageProgressMetricAction, Mockery\\\\MockInterface given\\.$#"
+			count: 1
+			path: tests/Unit/ProjectInsightsCalculationsTest.php
+
+		-
+			message: "#^Parameter \\#4 \\$communicationHealthAction of class App\\\\Actions\\\\ProjectMetrics\\\\ProjectHealthMetricAction constructor expects App\\\\Actions\\\\ProjectMetrics\\\\CommunicationHealthMetricAction, Mockery\\\\MockInterface given\\.$#"
+			count: 1
+			path: tests/Unit/ProjectInsightsCalculationsTest.php
+
+		-
+			message: "#^Parameter \\#5 \\$activityHealthAction of class App\\\\Actions\\\\ProjectMetrics\\\\ProjectHealthMetricAction constructor expects App\\\\Actions\\\\ProjectMetrics\\\\ActivityHealthMetricAction, Mockery\\\\MockInterface given\\.$#"
+			count: 1
+			path: tests/Unit/ProjectInsightsCalculationsTest.php
+
+		-
+			message: "#^Property App\\\\Models\\\\Project\\:\\:\\$active_members_count is not writable\\.$#"
+			count: 1
+			path: tests/Unit/ProjectInsightsCalculationsTest.php
+
+		-
+			message: "#^Property App\\\\Models\\\\Project\\:\\:\\$tasks_count is not writable\\.$#"
+			count: 2
+			path: tests/Unit/ProjectInsightsCalculationsTest.php
+
+		-
+			message: "#^Access to an undefined property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$id\\.$#"
+			count: 1
+			path: tests/Unit/ProjectTest.php
+
+		-
+			message: "#^Access to an undefined property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$members\\.$#"
+			count: 1
+			path: tests/Unit/ProjectTest.php
+
+		-
+			message: "#^Access to an undefined property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$slug\\.$#"
+			count: 1
+			path: tests/Unit/ProjectTest.php
+
+		-
+			message: "#^Access to an undefined property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$stage\\.$#"
+			count: 1
+			path: tests/Unit/ProjectTest.php
+
+		-
+			message: "#^Access to an undefined property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$tasks\\.$#"
+			count: 2
+			path: tests/Unit/ProjectTest.php
+
+		-
+			message: "#^Access to an undefined property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$user\\.$#"
+			count: 1
+			path: tests/Unit/ProjectTest.php
+
+		-
+			message: "#^Call to an undefined method Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:addTask\\(\\)\\.$#"
+			count: 1
+			path: tests/Unit/ProjectTest.php
+
+		-
+			message: "#^Call to an undefined method Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:invite\\(\\)\\.$#"
+			count: 1
+			path: tests/Unit/ProjectTest.php
+
+		-
+			message: "#^Call to an undefined method Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:path\\(\\)\\.$#"
+			count: 1
+			path: tests/Unit/ProjectTest.php
+
+		-
+			message: "#^Method Tests\\\\Unit\\\\ProjectTest\\:\\:addMember\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: tests/Unit/ProjectTest.php
+
+		-
+			message: "#^Method Tests\\\\Unit\\\\ProjectTest\\:\\:addMember\\(\\) has parameter \\$project with no type specified\\.$#"
+			count: 1
+			path: tests/Unit/ProjectTest.php
+
+		-
+			message: "#^Method Tests\\\\Unit\\\\ProjectTest\\:\\:addMember\\(\\) has parameter \\$user with no type specified\\.$#"
+			count: 1
+			path: tests/Unit/ProjectTest.php
+
+		-
+			message: "#^Parameter \\#1 \\$user of static method Laravel\\\\Sanctum\\\\Sanctum\\<Laravel\\\\Sanctum\\\\PersonalAccessToken\\>\\:\\:actingAs\\(\\) expects Illuminate\\\\Contracts\\\\Auth\\\\Authenticatable\\|Laravel\\\\Sanctum\\\\HasApiTokens, Illuminate\\\\Database\\\\Eloquent\\\\Model given\\.$#"
+			count: 1
+			path: tests/Unit/ProjectTest.php
+
+		-
+			message: "#^Access to an undefined property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$id\\.$#"
+			count: 34
+			path: tests/Unit/Repository/DashboardInsightsRepositoryTest.php
+
+		-
+			message: "#^Call to an undefined method Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:members\\(\\)\\.$#"
+			count: 2
+			path: tests/Unit/Repository/DashboardInsightsRepositoryTest.php
+
+		-
+			message: "#^Access to an undefined property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$project\\.$#"
+			count: 1
+			path: tests/Unit/TaskTest.php

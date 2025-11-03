@@ -13,7 +13,7 @@ use Tests\TestCase;
 class SubscriptionTest extends TestCase
 {
     /** @test */
-    public function it_throws_exception_for_already_subscribed_user()
+    public function it_throws_exception_for_already_subscribed_user(): void
     {
         $user = Mockery::mock(User::class);
         $user->shouldReceive('subscribedPlan')->andReturn('monthly');
@@ -27,7 +27,7 @@ class SubscriptionTest extends TestCase
     }
 
     /** @test */
-    public function it_throws_error_while_swapping_to_the_same_plan()
+    public function it_throws_error_while_swapping_to_the_same_plan(): void
     {
         $user = Mockery::mock(User::class);
         $user->shouldReceive('subscribedPlan')->andReturn('yearly');
@@ -41,7 +41,7 @@ class SubscriptionTest extends TestCase
     }
 
     /** @test */
-    public function it_throws_exception_for_canceling_a_non_subscribed_plan()
+    public function it_throws_exception_for_canceling_a_non_subscribed_plan(): void
     {
         $user = Mockery::mock(User::class);
         $user->shouldReceive('subscribedPlan')->andReturn('monthly');

@@ -28,7 +28,7 @@ class UserHasRegistered
      *
      * @return \Illuminate\Broadcasting\Channel|array<int, \Illuminate\Broadcasting\Channel>
      */
-    public function broadcastOn()
+    public function broadcastOn(): PrivateChannel
     {
         return new PrivateChannel('channel-name');
     }

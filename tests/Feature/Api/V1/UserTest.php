@@ -37,11 +37,8 @@ class UserTest extends TestCase
         ];
     }
 
-    /**
-     * @return void
-     */
     #[Test]
-    public function auth_user_see_all_users()
+    public function auth_user_see_all_users(): void
     {
         $response = $this->getJson('/api/v1/users');
 
@@ -54,7 +51,7 @@ class UserTest extends TestCase
     }
 
     #[Test]
-    public function auth_user_can_get_his_data()
+    public function auth_user_can_get_his_data(): void
     {
         $response = $this->getJson($this->user->path());
 
@@ -68,7 +65,7 @@ class UserTest extends TestCase
 
     #[Test]
     #[DataProvider('dataProvider')]
-    public function owner_can_update_his_data($newName, $newUsername, $newEmail, $newCompany, $newMobile)
+    public function owner_can_update_his_data(string $newName, string $newUsername, string $newEmail, string $newCompany, int $newMobile): void
     {
         UserInfo::factory()->for($this->user)->create();
 
@@ -100,7 +97,7 @@ class UserTest extends TestCase
     }
 
     #[Test]
-    public function it_can_update_user_password()
+    public function it_can_update_user_password(): void
     {
         Mail::fake();
 
@@ -117,7 +114,7 @@ class UserTest extends TestCase
     }
 
     #[Test]
-    public function password_update_mail_contains_time()
+    public function password_update_mail_contains_time(): void
     {
         $time = Carbon::now()->toDayDateTimeString();
 
@@ -127,7 +124,7 @@ class UserTest extends TestCase
     }
 
     #[Test]
-    public function user_can_delete_his_profile()
+    public function user_can_delete_his_profile(): void
     {
         $this->deleteJson('api/v1/users/'.$this->user->uuid);
 
@@ -138,7 +135,7 @@ class UserTest extends TestCase
     }
 
     #[Test]
-    public function it_permanently_deletes_user_and_handles_projects_after_15_days()
+    public function it_permanently_deletes_user_and_handles_projects_after_15_days(): void
     {
         Role::findOrCreate('Admin', 'sanctum');
 
@@ -165,7 +162,7 @@ class UserTest extends TestCase
     }
 
     #[Test]
-    public function test_user_profile_delete_command_runs()
+    public function test_user_profile_delete_command_runs(): void
     {
         $this->artisan('user:profile-delete')
             ->expectsOutput('User profile deletion process completed.')

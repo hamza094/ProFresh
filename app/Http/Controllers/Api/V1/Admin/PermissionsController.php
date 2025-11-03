@@ -31,7 +31,7 @@ class PermissionsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request): \Illuminate\Http\JsonResponse
     {
         $permission = Permission::create(['name' => $request->permission]);
 
@@ -46,9 +46,8 @@ class PermissionsController extends Controller
      * Update the specified resource in storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $id): void
     {
         //
     }
@@ -59,7 +58,7 @@ class PermissionsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Permission $permission)
+    public function destroy(Permission $permission): \Illuminate\Http\JsonResponse
     {
         Permission::where('id', $permission->id)->delete();
 

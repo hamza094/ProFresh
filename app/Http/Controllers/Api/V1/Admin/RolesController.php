@@ -33,7 +33,7 @@ class RolesController extends Controller
      * @param  Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(RoleRequest $request)
+    public function store(RoleRequest $request): \Illuminate\Http\JsonResponse
     {
         $role = Role::create($request->validated());
 
@@ -59,7 +59,7 @@ class RolesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Role $role)
+    public function destroy(Role $role): \Illuminate\Http\JsonResponse
     {
         Role::where('id', $role->id)->delete();
 

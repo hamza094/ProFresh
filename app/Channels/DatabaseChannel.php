@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\DB;
 
 class DatabaseChannel extends Channel
 {
-    public function send($notifiable, Notification $notification)
+    public function send($notifiable, Notification $notification): void
     {
         $data = json_encode($this->getData($notifiable, $notification));
 

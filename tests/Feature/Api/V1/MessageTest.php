@@ -15,7 +15,7 @@ class MessageTest extends TestCase
     use ProjectSetup,RefreshDatabase;
 
     /** @test */
-    public function operation_on_send_message()
+    public function operation_on_send_message(): void
     {
         $this->postJson($this->project->path().'/message', [
             'message' => 'this is project message',
@@ -31,7 +31,7 @@ class MessageTest extends TestCase
     }
 
     /** @test */
-    public function message_option_must_be_selected()
+    public function message_option_must_be_selected(): void
     {
         $response = $this->postJson($this->project->path().'/message', [
             'message' => 'this is project message',
@@ -42,7 +42,7 @@ class MessageTest extends TestCase
     }
 
     /** @test */
-    public function check_schedule_command_working()
+    public function check_schedule_command_working(): void
     {
         Message::factory()->for($this->project)
             ->count(3)
@@ -56,7 +56,7 @@ class MessageTest extends TestCase
     }
 
     /** @test */
-    public function get_project_scheduled_messages()
+    public function get_project_scheduled_messages(): void
     {
         Message::factory()->for($this->project)->count(4)
             ->create(['delivered_at' => Carbon::now()->addDay()]);
@@ -69,7 +69,7 @@ class MessageTest extends TestCase
     }
 
     /** @test */
-    public function project_message_can_be_deleted()
+    public function project_message_can_be_deleted(): void
     {
         $message = Message::factory()->for($this->project)
             ->create();

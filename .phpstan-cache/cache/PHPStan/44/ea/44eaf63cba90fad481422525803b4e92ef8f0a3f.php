@@ -2,6 +2,6 @@
 
 // variadic-method-App\Jobs\SmsMessage-__construct-D:\apps\profresh\app\Jobs\SmsMessage.php
 return \PHPStan\Cache\CacheItem::__set_state(array(
-   'variableKey' => '1761981356-v4',
+   'variableKey' => '1762181703-v4',
    'data' => false,
 ));

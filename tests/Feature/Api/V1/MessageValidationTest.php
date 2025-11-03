@@ -14,7 +14,7 @@ class MessageValidationTest extends TestCase
     use ProjectSetup,RefreshDatabase;
 
     /** @test */
-    public function validate_message_errors()
+    public function validate_message_errors(): void
     {
         $users = json_encode(User::factory(2)->create());
 
@@ -24,7 +24,7 @@ class MessageValidationTest extends TestCase
     }
 
     /** @test */
-    public function check_message_option_select()
+    public function check_message_option_select(): void
     {
         $users = json_encode(User::factory(2)->create());
 

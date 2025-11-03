@@ -41,7 +41,7 @@ class ProjectController extends ApiController
         ]);
     }
 
-    public function bulkDelete(Request $request)
+    public function bulkDelete(Request $request): JsonResponse
     {
         $projectIds = $request->input('project_ids', []);
 

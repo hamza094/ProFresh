@@ -27,7 +27,7 @@ class UserTokenTest extends TestCase
     }
 
     #[Test]
-    public function user_can_list_their_tokens()
+    public function user_can_list_their_tokens(): void
     {
         $user = User::first();
 
@@ -43,7 +43,7 @@ class UserTokenTest extends TestCase
     }
 
     #[Test]
-    public function user_can_create_a_token()
+    public function user_can_create_a_token(): void
     {
         $user = User::first();
 
@@ -64,7 +64,7 @@ class UserTokenTest extends TestCase
     }
 
     #[Test]
-    public function user_can_delete_a_token()
+    public function user_can_delete_a_token(): void
     {
         $user = User::first();
 
@@ -83,7 +83,7 @@ class UserTokenTest extends TestCase
     }
 
     #[Test]
-    public function user_cannot_delete_current_session_token_via_route()
+    public function user_cannot_delete_current_session_token_via_route(): void
     {
         $user = User::first();
         $tokenResult = $user->createToken('Session Token', ['*']);

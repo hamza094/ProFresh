@@ -17,10 +17,8 @@ class SearchableTest extends TestCase
 
     /**
      * A search feature test example.
-     *
-     * @return void
      */
-    public function it_returns_an_empty_collection_when_no_query_is_provided()
+    public function it_returns_an_empty_collection_when_no_query_is_provided(): void
     {
         $request = new Request;
 
@@ -32,7 +30,7 @@ class SearchableTest extends TestCase
     }
 
     /** @test */
-    public function it_searches_for_users_by_name_or_email()
+    public function it_searches_for_users_by_name_or_email(): void
     {
         $user = User::first();
 

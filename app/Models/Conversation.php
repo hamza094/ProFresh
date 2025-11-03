@@ -35,7 +35,7 @@ class Conversation extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function setMessageAttribute($message)
+    public function setMessageAttribute($message): void
     {
         $this->attributes['message'] = preg_replace(
             '/@([\w\-]+)/',

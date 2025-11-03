@@ -6,7 +6,7 @@ namespace App\Paypal;
 
 class Paypal
 {
-    protected $apiContext;
+    protected \PayPal\Rest\ApiContext $apiContext;
 
     public function __construct()
     {

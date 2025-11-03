@@ -19,7 +19,7 @@ class VerificationTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    public function can_verify_email()
+    public function can_verify_email(): void
     {
 
         $user = User::factory()->create([
@@ -42,7 +42,7 @@ class VerificationTest extends TestCase
     }
 
     /** @test */
-    public function can_not_verify_if_already_verified()
+    public function can_not_verify_if_already_verified(): void
     {
         $user = User::factory()->create();
 
@@ -58,7 +58,7 @@ class VerificationTest extends TestCase
     }
 
     /** @test */
-    public function can_resend_verification_notification()
+    public function can_resend_verification_notification(): void
     {
         $user = User::factory()->create(['email_verified_at' => null]);
 
@@ -75,7 +75,7 @@ class VerificationTest extends TestCase
     }
 
     /** @test */
-    public function can_not_resend_verification_notification_if_email_already_verified()
+    public function can_not_resend_verification_notification_if_email_already_verified(): void
     {
         $user = User::factory()->create();
 

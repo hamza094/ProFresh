@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\DB;
 
 class DashboardRepository
 {
-    public function fetchDataForMonths($startDate, $endDate)
+    public function fetchDataForMonths($startDate, $endDate): array
     {
         $projectsData = DB::table('projects')
             ->selectRaw('

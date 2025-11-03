@@ -19,7 +19,7 @@ class TaskTest extends TestCase
     use ProjectSetup,RefreshDatabase;
 
     /** @test */
-    public function allowed_user_see_archived_tasks()
+    public function allowed_user_see_archived_tasks(): void
     {
         Task::factory(['deleted_at' => now()])
             ->count(3)
@@ -33,7 +33,7 @@ class TaskTest extends TestCase
     }
 
     /** @test */
-    public function allowed_user_see_active_tasks_and_paginate()
+    public function allowed_user_see_active_tasks_and_paginate(): void
     {
         Task::factory()
             ->count(9)
@@ -52,7 +52,7 @@ class TaskTest extends TestCase
     }
 
     /** @test */
-    public function task_requires_a_title()
+    public function task_requires_a_title(): void
     {
         $task = Task::factory()->make(['title' => null, 'project_id' => $this->project->id]);
 
@@ -60,7 +60,7 @@ class TaskTest extends TestCase
     }
 
     /** @test */
-    public function allowed_user_can_create_projects_task()
+    public function allowed_user_can_create_projects_task(): void
     {
         $this->postJson($this->project->path().'/tasks', [
             'title' => 'My Project Task',
@@ -76,7 +76,7 @@ class TaskTest extends TestCase
     }
 
     /** @test */
-    public function duplicate_project_task_can_not_be_created()
+    public function duplicate_project_task_can_not_be_created(): void
     {
         $this->project->tasks()->create([
             'title' => 'Project Task',
@@ -96,7 +96,7 @@ class TaskTest extends TestCase
     }
 
     /** @test */
-    public function task_limit_per_project()
+    public function task_limit_per_project(): void
     {
         Task::factory()->count(config('app.project.taskLimit'))
             ->for($this->project)->create();
@@ -108,7 +108,7 @@ class TaskTest extends TestCase
     }
 
     /** @test */
-    public function allowed_user_can_get_task_resource()
+    public function allowed_user_can_get_task_resource(): void
     {
         $task = $this->project->tasks()->create([
             'title' => 'Project Task',
@@ -124,7 +124,7 @@ class TaskTest extends TestCase
     }
 
     /** @test */
-    public function allowed_user_can_update_project_task()
+    public function allowed_user_can_update_project_task(): void
     {
         $task = $this->project->addTask('test task');
 
@@ -149,7 +149,7 @@ class TaskTest extends TestCase
     }
 
     /** @test */
-    public function due_at_timezone_works_as_expected()
+    public function due_at_timezone_works_as_expected(): void
     {
         $this->user->update([
             'timezone' => 'Asia/Karachi',
@@ -169,7 +169,7 @@ class TaskTest extends TestCase
     }
 
     /** @test */
-    public function task_gate_check()
+    public function task_gate_check(): void
     {
         $task = Task::factory()->for($this->project)->create();
 
@@ -186,7 +186,7 @@ class TaskTest extends TestCase
     }
 
     /** @test */
-    public function task_policy_check()
+    public function task_policy_check(): void
     {
         $task = Task::factory()->for($this->project)->create();
 

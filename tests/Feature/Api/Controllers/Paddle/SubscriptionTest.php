@@ -33,7 +33,7 @@ class SubscriptionTest extends TestCase
     }
 
     /** @test */
-    public function it_creates_a_paylink_for_subscription()
+    public function it_creates_a_paylink_for_subscription(): void
     {
         $plan = 'monthly';
         $response = $this->getJson('/api/v1/user/subscribe/'.$plan);
@@ -45,7 +45,7 @@ class SubscriptionTest extends TestCase
     }
 
     /** @test */
-    public function it_swaps_a_subscription_plan()
+    public function it_swaps_a_subscription_plan(): void
     {
         $this->withoutMiddleware(CheckSubscription::class);
 
@@ -60,7 +60,7 @@ class SubscriptionTest extends TestCase
     }
 
     /** @test */
-    public function it_cancels_a_subscription()
+    public function it_cancels_a_subscription(): void
     {
         $this->withoutMiddleware(CheckSubscription::class);
 
@@ -74,7 +74,7 @@ class SubscriptionTest extends TestCase
     }
 
     /** @test */
-    public function it_denies_access_for_non_subscribed_users()
+    public function it_denies_access_for_non_subscribed_users(): void
     {
         $plan = 'monthly';
         $response = $this->getJson('/api/v1/user/subscription/swap/'.$plan);
@@ -86,7 +86,7 @@ class SubscriptionTest extends TestCase
     }
 
     /** @test */
-    public function it_fails_validation_for_invalid_plan()
+    public function it_fails_validation_for_invalid_plan(): void
     {
         $invalidPlan = 'weekly';
         $response = $this->getJson('/api/v1/user/subscribe/'.$invalidPlan);

@@ -2,6 +2,6 @@
 
 // variadic-method-App\Services\Insights\HealthInsightBuilder-generateTitle-D:\apps\profresh\app\Services\Insights\HealthInsightBuilder.php
 return \PHPStan\Cache\CacheItem::__set_state(array(
-   'variableKey' => '1761981366-v4',
+   'variableKey' => '1762177798-v4',
    'data' => false,
 ));

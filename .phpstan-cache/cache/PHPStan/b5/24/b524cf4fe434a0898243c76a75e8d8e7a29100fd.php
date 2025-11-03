@@ -2,6 +2,6 @@
 
 // variadic-method-App\Services\Api\V1\Zoom\ZoomService-getZoomOAuthDetails-D:\apps\profresh\app\Services\Api\V1\Zoom\ZoomService.php
 return \PHPStan\Cache\CacheItem::__set_state(array(
-   'variableKey' => '1762008630-v4',
+   'variableKey' => '1762177797-v4',
    'data' => false,
 ));

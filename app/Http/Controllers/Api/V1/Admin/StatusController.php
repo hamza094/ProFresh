@@ -21,7 +21,7 @@ class StatusController extends Controller
         return TaskStatusResource::collection($statuses);
     }
 
-    public function store(TaskStatusRequest $request)
+    public function store(TaskStatusRequest $request): \Illuminate\Http\JsonResponse
     {
         $status = Status::create($request->validated());
 
@@ -31,7 +31,7 @@ class StatusController extends Controller
         ]);
     }
 
-    public function update(TaskStatusRequest $request, Status $status)
+    public function update(TaskStatusRequest $request, Status $status): \Illuminate\Http\JsonResponse
     {
         $status->update($request->validated());
 
@@ -41,7 +41,7 @@ class StatusController extends Controller
         ]);
     }
 
-    public function destroy(Status $status)
+    public function destroy(Status $status): \Illuminate\Http\JsonResponse
     {
         $status->delete();
 

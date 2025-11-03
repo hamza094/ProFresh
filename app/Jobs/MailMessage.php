@@ -18,33 +18,24 @@ class MailMessage implements ShouldQueue
 {
     use Batchable, Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    // public $tries = 3;
-
-    // public $timeout = 60;
-
-    /**
-     * The project instance.
-     *
-     * @var Project
-     */
-    protected $project;
-
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct(Project $project, protected $message, protected $user)
-    {
-        $this->project = $project;
-    }
+    public function __construct(
+        /**
+         * The project instance.
+         */
+        protected Project $project,
+        protected $message,
+        protected $user
+    ) {}
 
     /**
      * Execute the job.
-     *
-     * @return void
      */
-    public function handle()
+    public function handle(): void
     {
         Mail::to($this->user)
             ->send(new ProjectMail($this->project, $this->message));

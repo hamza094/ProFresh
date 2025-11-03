@@ -2,6 +2,6 @@
 
 // variadic-method-Laravel\Telescope\IncomingEntry-isFailedRequest-D:\apps\profresh\vendor\composer\..\laravel\telescope\src\IncomingEntry.php
 return \PHPStan\Cache\CacheItem::__set_state(array(
-   'variableKey' => '1760278954-v4',
+   'variableKey' => '1761232775-v4',
    'data' => false,
 ));

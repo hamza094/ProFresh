@@ -6,9 +6,9 @@ namespace App\Services\Api\V1;
 
 class SendSmsService
 {
-    private $client;
+    private readonly \Vonage\Client $client;
 
-    private $basic;
+    private readonly \Vonage\Client\Credentials\Basic $basic;
 
     public function __construct()
     {
@@ -21,7 +21,7 @@ class SendSmsService
         $this->client = new \Vonage\Client($this->basic);
     }
 
-    public function send($project, $message)
+    public function send($project, $message): string
     {
         $response = $this->client->sms()->send(
             new \Vonage\SMS\Message\SMS(

@@ -18,12 +18,10 @@ class GetZakTokenTest extends TestCase
     use RefreshDatabase;
     /**
      * A basic feature test example.
-     *
-     * @return void
      */
 
     /** @test */
-    public function auth_user_can_get_his_zak_token()
+    public function auth_user_can_get_his_zak_token(): void
     {
         Saloon::fake([
             'users/me/token?type=zak' => MockResponse::make([

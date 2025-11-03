@@ -2,6 +2,6 @@
 
 // variadic-method-App\Traits\RecordActivity-recordableEvents-D:\apps\profresh\app\Traits\RecordActivity.php
 return \PHPStan\Cache\CacheItem::__set_state(array(
-   'variableKey' => '1762008631-v4',
+   'variableKey' => '1762177804-v4',
    'data' => false,
 ));

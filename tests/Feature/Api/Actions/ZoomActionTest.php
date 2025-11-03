@@ -34,7 +34,7 @@ class ZoomActionTest extends TestCase
     }
 
     /** @test */
-    public function it_generates_a_valid_jwt_token()
+    public function it_generates_a_valid_jwt_token(): void
     {
         $meetingNumber = 1234567890;
         $role = 1;

@@ -2,6 +2,6 @@
 
 // variadic-method-App\Models\Meeting-scopePrevious-D:\apps\profresh\app\Models\Meeting.php
 return \PHPStan\Cache\CacheItem::__set_state(array(
-   'variableKey' => '1761981358-v4',
+   'variableKey' => '1762177771-v4',
    'data' => false,
 ));

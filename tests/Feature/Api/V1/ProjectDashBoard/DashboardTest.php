@@ -15,7 +15,7 @@ class DashboardTest extends TestCase
     use ProjectSetup, RefreshDatabase;
 
     /** @test */
-    public function auth_user_can_view_dashboard_projects()
+    public function auth_user_can_view_dashboard_projects(): void
     {
         // Create 5 projects for the user
         Project::factory()->count(5)->for($this->user)->create();
@@ -36,7 +36,7 @@ class DashboardTest extends TestCase
     }
 
     /** @test */
-    public function dashboard_projects_returns_empty_message_when_no_projects()
+    public function dashboard_projects_returns_empty_message_when_no_projects(): void
     {
         // Delete the default project from ProjectSetup trait
         $this->project->delete();

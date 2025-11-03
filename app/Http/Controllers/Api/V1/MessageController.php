@@ -24,7 +24,7 @@ class MessageController extends Controller
         return $message->send($project, $users);
     }
 
-    public function scheduled(Project $project)
+    public function scheduled(Project $project): \Illuminate\Http\JsonResponse|\Illuminate\Support\Collection
     {
 
         if ($project->scheduledMessages()->isEmpty()) {
@@ -38,7 +38,7 @@ class MessageController extends Controller
         return $project->scheduledMessages();
     }
 
-    public function delete(Project $project, Message $message)
+    public function delete(Project $project, Message $message): \Illuminate\Http\JsonResponse
     {
 
         $message->activities()->delete();

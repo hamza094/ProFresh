@@ -65,7 +65,7 @@ class CallbackTest extends TestCase
     }
 
     /** @test */
-    public function error_is_returned_if_the_code_is_missing_from_the_request()
+    public function error_is_returned_if_the_code_is_missing_from_the_request(): void
     {
         $this->fakeZoom();
 

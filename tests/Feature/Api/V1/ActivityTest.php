@@ -15,7 +15,7 @@ class ActivityTest extends TestCase
     /** @test */
 
     // filter
-    public function it_filters_activities_by_project_specified()
+    public function it_filters_activities_by_project_specified(): void
     {
         $task = $this->project->addTask('test task');
 
@@ -29,7 +29,7 @@ class ActivityTest extends TestCase
     }
 
     /** @test */
-    public function it_filters_activities_by_tasks()
+    public function it_filters_activities_by_tasks(): void
     {
         $task = $this->project->addTask('test task');
 
@@ -41,7 +41,7 @@ class ActivityTest extends TestCase
     }
 
     /** @test */
-    public function it_filters_activities_by_authenticated_user()
+    public function it_filters_activities_by_authenticated_user(): void
     {
         $this->project->addTask('test task');
 
@@ -51,7 +51,7 @@ class ActivityTest extends TestCase
     }
 
     /** @test */
-    public function it_shows_error_when_no_related_activities_are_found()
+    public function it_shows_error_when_no_related_activities_are_found(): void
     {
         $this->project->addTask('test task');
 

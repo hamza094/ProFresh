@@ -16,12 +16,10 @@ class TaskFeaturesTest extends TestCase
     use ProjectSetup,RefreshDatabase;
     /**
      * Feature test.
-     *
-     * @return void
      */
 
     /** @test */
-    public function members_assign_to_task_and_pervent_duplication()
+    public function members_assign_to_task_and_pervent_duplication(): void
     {
         $task = $this->project->addTask('test task');
 
@@ -52,7 +50,7 @@ class TaskFeaturesTest extends TestCase
     }
 
     /** @test */
-    public function it_unassigns_a_member_from_a_task_and_handles_invalid_requests()
+    public function it_unassigns_a_member_from_a_task_and_handles_invalid_requests(): void
     {
         $task = $this->project->addTask('test task');
         $task->assignee()->attach($this->user);
@@ -72,7 +70,7 @@ class TaskFeaturesTest extends TestCase
     }
 
     /** @test */
-    public function allowed_user_can_archive_and_unarchive_task()
+    public function allowed_user_can_archive_and_unarchive_task(): void
     {
         $task = Task::factory()->for($this->project)->create();
 
@@ -92,7 +90,7 @@ class TaskFeaturesTest extends TestCase
     }
 
     /** @test */
-    public function project_members_does_not_perform_task_operations()
+    public function project_members_does_not_perform_task_operations(): void
     {
         $task = Task::factory()->for($this->project)->create();
 
@@ -108,7 +106,7 @@ class TaskFeaturesTest extends TestCase
     }
 
     /** @test */
-    public function auth_user_can_search_project_members()
+    public function auth_user_can_search_project_members(): void
     {
         $user = User::factory()->create(['name' => 'test_user']);
 
@@ -129,7 +127,7 @@ class TaskFeaturesTest extends TestCase
     }
 
     /** @test */
-    public function allowed_user_can_remove_archived_task_from_database()
+    public function allowed_user_can_remove_archived_task_from_database(): void
     {
         $task = Task::factory()->for($this->project)->create();
 

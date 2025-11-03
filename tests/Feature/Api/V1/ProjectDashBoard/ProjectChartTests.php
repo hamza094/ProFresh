@@ -13,7 +13,7 @@ class ProjectChartTests extends TestCase
     use ProjectSetup, RefreshDatabase;
 
     /** @test */
-    public function auth_user_can_get_chart_data()
+    public function auth_user_can_get_chart_data(): void
     {
         // Create projects with different dates for testing
         Project::factory()->create([
@@ -62,7 +62,7 @@ class ProjectChartTests extends TestCase
     }
 
     /** @test */
-    public function chart_data_respects_year_month_filters()
+    public function chart_data_respects_year_month_filters(): void
     {
         // Arrange
         $currentYear = now()->year;

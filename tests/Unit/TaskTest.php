@@ -14,12 +14,10 @@ class TaskTest extends TestCase
     use RefreshDatabase;
     /**
      * A basic unit test example.
-     *
-     * @return void
      */
 
     /** @test */
-    public function it_belongs_to_a_project()
+    public function it_belongs_to_a_project(): void
     {
         $task = Task::factory()->make();
 

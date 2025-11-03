@@ -17,12 +17,10 @@ class ResetPasswordTest extends TestCase
     use RefreshDatabase;
     /**
      * Sends the password reset email when the user exists.
-     *
-     * @return void
      */
 
     /** @test */
-    public function can_sends_password_reset_email()
+    public function can_sends_password_reset_email(): void
     {
         $user = User::factory()->create();
 
@@ -35,12 +33,10 @@ class ResetPasswordTest extends TestCase
 
     /**
      * Allows a user to reset their password.
-     *
-     * @return void
      */
 
     /** @test */
-    public function user_reset_their_password()
+    public function user_reset_their_password(): void
     {
         $user = User::factory()->create();
 
