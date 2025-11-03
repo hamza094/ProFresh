@@ -204,7 +204,7 @@ Route::middleware(['auth:sanctum'/* ,\App\Http\Middleware\TrackLastActiveAt::cla
 
     Route::group(['prefix' => 'users/{user}'], function () {
 
-        Route::patch('/avatar_remove', [AvatarController::class, 'removeAvatar']);
+    Route::patch('/avatar_remove', [AvatarController::class, 'removeAvatar'])->name('user.avatar.remove');
 
         Route::post('/avatar', [AvatarController::class, 'avatar'])
             ->name('user.avatar');

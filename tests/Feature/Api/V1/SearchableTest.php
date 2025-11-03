@@ -31,6 +31,7 @@ class SearchableTest extends TestCase
         $this->assertTrue($result->isEmpty());
     }
 
+    /** @test */
     public function it_searches_for_users_by_name_or_email()
     {
         $user = User::first();
@@ -52,7 +53,6 @@ class SearchableTest extends TestCase
         User::factory(3)->create(['name' => 'Other User']);
 
         $searchTerm = 'Test';
-        new Request(['query' => $searchTerm]);
 
         // Act
         $response = $this->withoutExceptionHandling()->getJson(route('users.search', [

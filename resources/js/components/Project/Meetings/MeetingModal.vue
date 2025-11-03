@@ -12,10 +12,10 @@
         <div class="panel-form">
           <form class="" @submit.prevent="createMeeting()">
             <div class="panel-top_content">
-              <FormGroup id="topic" label="Topic:" :error="errors.topic">
+              <FormGroup id="meeting-topic" label="Topic:" :error="errors.topic">
                 <input
                   type="text"
-                  id="topic"
+                  id="meeting-topic"
                   class="form-control"
                   name="topic"
                   v-model="form.topic"
@@ -65,8 +65,8 @@
                 </div>
               </FormGroup>
 
-              <FormGroup id="duration" label="Duration:" :error="errors.duration">
-                <select id="duration" v-model="form.duration" class="form-control">
+              <FormGroup id="meeting-duration" label="Duration:" :error="errors.duration">
+                <select id="meeting-duration" v-model="form.duration" class="form-control">
                   <option value="" disabled selected>Select Meeting Duration</option>
                   <option value="15">15 minutes</option>
                   <option value="30">30 minutes</option>
@@ -163,7 +163,9 @@ export default {
     },
 
     booleanJoinBeforeHost() {
-      return (this.form.join_before_host = this.form.join_before_host === 'true');
+      const joinBefore = this.form.join_before_host === 'true';
+      this.form.join_before_host = joinBefore;
+      return joinBefore;
     },
 
     openMeetingModal() {

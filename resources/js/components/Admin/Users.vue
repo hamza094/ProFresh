@@ -51,7 +51,9 @@
                       </router-link>
                     </td>
                     <td>{{ user.username }}</td>
-                    <td><img :src="user.avatar" /></td>
+                    <td>
+                      <img :src="user.avatar" :alt="user.name || 'User avatar'" />
+                    </td>
                     <td>{{ user.email }}</td>
                     <td>{{ user.timezone }}</td>
                     <td>{{ user.created_at }}</td>

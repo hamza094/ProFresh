@@ -9,7 +9,8 @@
           <form v-if="access" id="paper" method="post" @keyup.enter.prevent="ProjectNote">
             <textarea
               placeholder="Write Project Notes"
-              id="text"
+              id="project-note-text"
+              ref="projectNote"
               name="notes"
               rows="4"
               v-model="form.notes"
@@ -21,7 +22,7 @@
           <textarea
             v-if="!access"
             placeholder="Only project members and owners are allowed to write project notes."
-            id="text"
+            id="project-note-text-readonly"
             rows="4"
             v-model="form.notes"
             v-text="notes"
@@ -63,16 +64,17 @@
 
     <div class="project_members">
       <div class="task-top">
-        <p>
-          <b>Project Members</b
-          ><a
+          <p>
+          <b>Project Members</b>
+          <button
+            type="button"
+            class="btn btn-link p-0"
             data-toggle="collapse"
-            href="#memberProject"
-            role="button"
+            data-target="#memberProject"
             aria-expanded="false"
             aria-controls="memberProject">
-            <i class="fas fa-angle-down float-right"></i
-          ></a>
+            <i class="fas fa-angle-down float-right"></i>
+          </button>
         </p>
       </div>
 
@@ -91,14 +93,14 @@
                 </p>
                 <p></p>
               </router-link>
-              <a
-                v-if="ownerLogin && member.uuid !== owner.uuid"
-                rel=""
-                role="button"
-                @click.prevent="removeMember(member.uuid)"
-                class="text-danger"
-                >Remove</a
-              >
+                <button
+                  v-if="ownerLogin && member.uuid !== owner.uuid"
+                  type="button"
+                  @click.prevent="removeMember(member.uuid)"
+                  class="text-danger btn btn-link p-0"
+                >
+                  Remove
+                </button>
             </div>
           </div>
         </div>
@@ -107,16 +109,17 @@
 
     <div class="project_members">
       <div class="task-top">
-        <p>
-          <b>Pending Members</b
-          ><a
+          <p>
+          <b>Pending Members</b>
+          <button
+            type="button"
+            class="btn btn-link p-0"
             data-toggle="collapse"
-            href="#pendingMembers"
-            role="button"
+            data-target="#pendingMembers"
             aria-expanded="false"
             aria-controls="pendingMembers">
-            <i class="fas fa-angle-down float-right"></i
-          ></a>
+            <i class="fas fa-angle-down float-right"></i>
+          </button>
         </p>
       </div>
 
@@ -137,14 +140,14 @@
                 </router-link>
                 <span>{{ member.invitation_sent_at }}</span>
                 <br />
-                <a
+                <button
                   v-if="ownerLogin && member.uuid !== owner.uuid"
-                  rel=""
-                  role="button"
+                  type="button"
                   @click.prevent="cancelRequest(member.uuid, member)"
-                  class="text-danger"
-                  >Cancel</a
+                  class="text-danger btn btn-link p-0"
                 >
+                  Cancel
+                </button>
               </div>
             </div>
           </template>
@@ -221,7 +224,10 @@ export default {
 
     ProjectNote() {
       this.$Progress.start();
-      document.getElementById('text').blur();
+      // Use Vue ref for DOM access instead of document.getElementById
+      if (this.$refs.projectNote && this.$refs.projectNote.blur) {
+        this.$refs.projectNote.blur();
+      }
 
       axios
         .patch('/api/v1/projects/' + this.slug, {

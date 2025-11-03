@@ -28,13 +28,13 @@ export default {
     getIcon(description) {
       const prefix = Object.keys(this.activityData).find((prefix) => description.startsWith(prefix)) || 'default';
 
-      return (this.activityData[prefix] && this.activityData[prefix].icon) || 'fab fa-pagelines';
+      return this.activityData[prefix]?.icon || 'fab fa-pagelines';
     },
 
     getColor(description) {
       const prefix = Object.keys(this.activityData).find((prefix) => description.startsWith(prefix)) || 'default';
 
-      return (this.activityData[prefix] && this.activityData[prefix].color) || 'activity-icon_purple';
+      return this.activityData[prefix]?.color || 'activity-icon_purple';
     },
   },
 };

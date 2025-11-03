@@ -201,7 +201,7 @@ let router = new Router({
 
 router.beforeEach((to, from, next) => {
   if (document.getElementById('zoom-sdk-video-canvas')) {
-    const userConfirmed = window.confirm(
+    const userConfirmed = globalThis.confirm(
       'Are you sure you want to leave this page? Your video session may be interrupted.',
     );
     if (userConfirmed) {

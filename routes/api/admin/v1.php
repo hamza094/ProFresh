@@ -56,8 +56,5 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('/unAssign/roles/{role}/permissions/{permission}', [RolePermissionController::class, 'unAssignPermission']);
 
         Route::get('assign/users/{user}/roles/{role}', [RolePermissionController::class, 'assignUserRole']);
-
-        // Project Route Prefix
-        Route::group(['prefix' => 'projects/{project}'], function () {});
     });
 });

@@ -16,6 +16,9 @@ class UserAvatarTest extends TestCase
 {
     use RefreshDatabase;
 
+    private const USER_AVATAR_ROUTE = 'user.avatar';
+    private const USER_AVATAR_REMOVE_ROUTE = 'user.avatar.remove';
+
     protected function setUp(): void
     {
         parent::setUp();
@@ -48,7 +51,7 @@ class UserAvatarTest extends TestCase
 
         $file = UploadedFile::fake()->image('avatar.jpg');
 
-        $this->withoutExceptionHandling()->postJson('api/v1/users/'.$user->uuid.'/avatar', [
+        $this->withoutExceptionHandling()->postJson(route(self::USER_AVATAR_ROUTE, ['user' => $user->uuid]), [
             'avatar' => $file,
         ])->assertSuccessful();
 
@@ -70,7 +73,7 @@ class UserAvatarTest extends TestCase
             'avatar_path' => $file,
         ]);
 
-        $response = $this->patchJson('api/v1/users/'.$user->uuid.'/avatar_remove');
+    $response = $this->patchJson(route(self::USER_AVATAR_REMOVE_ROUTE, ['user' => $user->uuid]));
 
         $response
             ->assertJson([
@@ -81,7 +84,7 @@ class UserAvatarTest extends TestCase
 
         Storage::disk('s3')->assertMissing($file);
 
-        $response = $this->patchJson('api/v1/users/'.$user->uuid.'/avatar_remove');
+    $response = $this->patchJson(route(self::USER_AVATAR_REMOVE_ROUTE, ['user' => $user->uuid]));
 
         $response
             ->assertJson([

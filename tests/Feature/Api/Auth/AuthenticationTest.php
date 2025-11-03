@@ -14,6 +14,8 @@ class AuthenticationTest extends TestCase
 {
     use RefreshDatabase;
 
+    private const TEST_PASSWORD = 'Testpassword@3';
+
     protected function setUp(): void
     {
         parent::setUp();
@@ -21,7 +23,7 @@ class AuthenticationTest extends TestCase
         // create a user
         User::factory()->create([
             'email' => 'johndoe@example.org',
-            'password' => Hash::make('Testpassword@3'),
+            'password' => Hash::make(self::TEST_PASSWORD),
         ]);
 
     }
@@ -44,7 +46,7 @@ class AuthenticationTest extends TestCase
     {
         $response = $this->postJson(route('auth.login'), [
             'email' => 'johndoe@example.org',
-            'password' => 'Testpassword@3',
+            'password' => self::TEST_PASSWORD,
         ]);
 
         $response->assertOk()
@@ -56,7 +58,7 @@ class AuthenticationTest extends TestCase
     {
         $response = $this->postJson(route('auth.login'), [
             'email' => 'test@test.com',
-            'password' => 'Testpassword@3',
+            'password' => self::TEST_PASSWORD,
         ]);
 
         $response->assertUnprocessable()

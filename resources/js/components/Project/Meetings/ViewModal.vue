@@ -15,14 +15,15 @@
               </div>
             </div>
 
-            <span
+            <button
               v-if="!isEditing"
+              type="button"
               class="panel-exit float-right"
-              role="button"
               aria-label="Close"
               @click.prevent="meetingModalClose"
-              >x</span
             >
+              x
+            </button>
           </div>
         </div>
         <div v-if="meeting && Object.keys(meeting).length > 0" class="meeting">

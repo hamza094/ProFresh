@@ -24,7 +24,14 @@
         <div class="panel-top_content">
           <span class="panel-heading">Project Satge Postponed</span>
 
-          <span class="panel-exit float-right" role="button" @click.prevent="$modal.hide('stage-reason')"> x </span>
+          <button
+            type="button"
+            class="panel-exit float-right"
+            aria-label="Close"
+            @click.prevent="$modal.hide('stage-reason')"
+          >
+            x
+          </button>
         </div>
         <div class="panel-top_content">
           <div class="form-group">
@@ -157,3 +164,17 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.panel-exit {
+  background: transparent;
+  border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+}
+.panel-exit:focus {
+  outline: 2px solid rgba(29, 73, 103, 0.6);
+  outline-offset: 2px;
+}
+</style>

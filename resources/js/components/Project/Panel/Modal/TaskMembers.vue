@@ -144,10 +144,9 @@ export default {
       return [];
     },
     hasError(key) {
-      if (this.errors && typeof this.errors === 'object' && Object.prototype.hasOwnProperty.call(this.errors, key)) {
-        return true;
-      }
-      return false;
+      return !!(
+        this.errors && typeof this.errors === 'object' && Object.hasOwn(this.errors, key)
+      );
     },
   },
 };

@@ -245,7 +245,7 @@
             <p class="text-muted">Enable 2FA to add an extra layer of security to your account.</p>
           </div>
 
-          <button class="btn btn-primary" @click="openModal" aria-label="Enable 2FA">
+          <button class="btn btn-primary" @click="openModal">
             <i class="bi bi-shield-lock me-2" aria-hidden="true"></i>
             Enable Two-Factor Authentication
           </button>

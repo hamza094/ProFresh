@@ -18,7 +18,7 @@ function canonicalSectionsKey(sections) {
         .filter(Boolean)
         .filter((s) => s !== 'all'),
     ),
-  ).sort();
+  ).sort((a, b) => a.localeCompare(b));
   return parts.length ? parts.join(',') : 'all';
 }
 

@@ -15,13 +15,15 @@ class VerifyWebhookTest extends TestCase
 
     public $timestamp;
 
+    private const WEBHOOK_TEST_PATH = '/_test/webhook';
+
     protected function setUp(): void
     {
         parent::setUp();
 
         config('services.zoom.webhook_secret', 'secret');
 
-        Route::middleware('zoom.webhook')->any('/_test/webhook', fn () => 'OK');
+    Route::middleware('zoom.webhook')->any(self::WEBHOOK_TEST_PATH, fn () => 'OK');
 
         $this->payload = [
             'event' => 'meeting.started',
@@ -42,7 +44,7 @@ class VerifyWebhookTest extends TestCase
     public function it_aborts_with_an_invalid_signature()
     {
         try {
-            $this->post('/_test/webhook', $this->payload, [
+            $this->post(self::WEBHOOK_TEST_PATH, $this->payload, [
                 'x-zm-request-timestamp' => $this->timestamp,
                 'x-zm-signature' => 'invalid-signature',
             ]);
@@ -63,7 +65,7 @@ class VerifyWebhookTest extends TestCase
 
         $signature = $this->buildSignature($timestamp, $this->payload);
 
-        $response = $this->postJson('/_test/webhook', $this->payload, [
+        $response = $this->postJson(self::WEBHOOK_TEST_PATH, $this->payload, [
             'x-zm-request-timestamp' => $this->timestamp,
             'x-zm-signature' => $signature,
         ]);
@@ -80,7 +82,7 @@ class VerifyWebhookTest extends TestCase
         $signature = $this->buildSignature($oldTimestamp, $this->payload);
 
         try {
-            $response = $this->postJson('/_test/webhook', $this->payload, [
+            $response = $this->postJson(self::WEBHOOK_TEST_PATH, $this->payload, [
                 'x-zm-request-timestamp' => $oldTimestamp,
                 'x-zm-signature' => $signature,
             ]);

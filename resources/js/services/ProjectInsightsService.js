@@ -14,7 +14,7 @@ const AVAILABLE_SECTIONS = [
 // Extract a concise, user-friendly error message from an axios error
 function extractErrorMessage(error) {
   const resp = error && error.response;
-  if (!resp || resp.status !== 422) {
+  if (resp?.status !== 422) {
     return 'An error occurred. Please try again later.';
   }
   const data = resp.data || {};

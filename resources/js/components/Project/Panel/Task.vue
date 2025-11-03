@@ -1,11 +1,18 @@
 <template>
   <div class="task">
     <div class="task-top">
-      <span
-        ><i class="fas fa-tasks"></i> <b>Tasks</b>
-        <a data-toggle="collapse" href="#taskProject" role="button" aria-expanded="false" aria-controls="taskProject">
-          <i class="fas fa-angle-down float-right"></i></a
-      ></span>
+      <span>
+        <i class="fas fa-tasks"></i> <b>Tasks</b>
+        <button
+          type="button"
+          class="btn btn-link p-0"
+          data-toggle="collapse"
+          data-target="#taskProject"
+          aria-expanded="false"
+          aria-controls="taskProject">
+          <i class="fas fa-angle-down float-right"></i>
+        </button>
+      </span>
     </div>
 
     <!--Task Section-->

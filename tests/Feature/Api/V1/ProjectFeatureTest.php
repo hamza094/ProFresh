@@ -14,10 +14,12 @@ class ProjectFeatureTest extends TestCase
 {
     use ProjectSetup,RefreshDatabase;
 
+    private const PROJECTS_ROUTE = 'projects.store';
+
     /** @test */
     public function auth_user_can_create_project()
     {
-        $this->postJson('api/v1/projects',
+        $this->postJson(route(self::PROJECTS_ROUTE),
             [
                 'name' => 'My Project name',
                 'about' => 'about this project',
@@ -39,7 +41,7 @@ class ProjectFeatureTest extends TestCase
             ['title' => 'task 2'],
         ];
 
-        $response = $this->postJson('api/v1/projects', $attributes);
+    $response = $this->postJson(route(self::PROJECTS_ROUTE), $attributes);
 
         $project = Project::where('slug', '=', $response->json('project.slug'))->firstOrFail();
 
@@ -51,7 +53,7 @@ class ProjectFeatureTest extends TestCase
     {
         $project = Project::factory()->make(['name' => null]);
 
-        $response = $this->postJson('/api/v1/projects', $project->toArray());
+    $response = $this->postJson(route(self::PROJECTS_ROUTE), $project->toArray());
 
         $response->assertJsonValidationErrors('name');
     }

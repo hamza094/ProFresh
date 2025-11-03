@@ -68,8 +68,6 @@ class JobsTest extends TestCase
                 ->andReturn('https://picsum.photos/200/300');
         });
 
-        new SmsMessage($project, $message);
-
         app(SmsMessage::class)->handle($mock);
     }
 }

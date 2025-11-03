@@ -70,10 +70,10 @@ export default {
       }
       const prefix = String(projectSlug) + ':';
       this.projectInsightsCache.forEach(function (_, k, m) {
-        if (String(k).indexOf(prefix) === 0) m.delete(k);
+        if (String(k).startsWith(prefix)) m.delete(k);
       });
       this.projectInsightsPending.forEach(function (_, k, m) {
-        if (String(k).indexOf(prefix) === 0) m.delete(k);
+        if (String(k).startsWith(prefix)) m.delete(k);
       });
     },
 

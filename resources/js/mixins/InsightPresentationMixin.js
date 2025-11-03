@@ -36,7 +36,7 @@ function typeKeyOf(insight) {
 
 // Treat numeric values as percentages by default, unless unit provided
 function isPercentBased(insight) {
-  const data = insight && insight.data;
+  const data = insight?.data;
   if (!data) return false;
   if (data.unit) return data.unit === '%';
   return typeof data.value === 'number' || typeof data.percentage === 'number';
@@ -63,7 +63,7 @@ export default {
       return insight ? insight.message || insight.description || '' : '';
     },
     formatValue(insight) {
-      const data = insight && insight.data;
+      const data = insight?.data;
       if (!data) return '-';
       if (typeof data.value === 'number')
         return isPercentBased(insight) ? Math.round(data.value) : Math.round(data.value * 100) / 100;
@@ -72,7 +72,7 @@ export default {
       return '-';
     },
     getValueUnit(insight) {
-      const data = insight && insight.data;
+      const data = insight?.data;
       if (!data) return '';
       return data.unit || (isPercentBased(insight) ? '%' : '');
     },
@@ -81,7 +81,7 @@ export default {
       return isPercentBased(insight);
     },
     hasMetadata(insight) {
-      const data = insight && insight.data;
+      const data = insight?.data;
       return !!(data && (data.trend || data.threshold || data.score));
     },
   },

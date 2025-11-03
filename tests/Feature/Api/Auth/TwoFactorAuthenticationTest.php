@@ -27,6 +27,8 @@ class TwoFactorAuthenticationTest extends TestCase
 
     protected string $testEmail = '2fauser@example.com';
 
+    private const TWO_FA_SESSION = '2fa_login';
+
     protected function setUp(): void
     {
         parent::setUp();
@@ -156,10 +158,11 @@ class TwoFactorAuthenticationTest extends TestCase
             ]);
 
         // Assert session exists and is encrypted
-        $this->assertTrue(session()->has('2fa_login'));
+
+    $this->assertTrue(session()->has(self::TWO_FA_SESSION));
 
         // Verify encrypted session contents
-        $encryptedSession = session('2fa_login');
+    $encryptedSession = session(self::TWO_FA_SESSION);
         $this->assertIsString($encryptedSession);
 
         $decryptedSession = decrypt($encryptedSession);
@@ -188,7 +191,7 @@ class TwoFactorAuthenticationTest extends TestCase
     public function it_fails_two_factor_login_with_expired_session()
     {
         // Setup encrypted session data with expired timestamp
-        session()->put('2fa_login', encrypt([
+        session()->put(self::TWO_FA_SESSION, encrypt([
             'email' => $this->user->email,
             'password' => $this->testPassword,
             'expires_at' => now()->subMinutes(1), // Expired 1 minute ago
