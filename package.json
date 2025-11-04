@@ -34,7 +34,7 @@
     "@popperjs/core": "^2.11.8",
     "@saeris/vue-spinners": "^1.0.8",
     "@tabler/core": "^1.0.0-beta20",
-    "@zoom/meetingsdk": "^3.8.0",
+    "@zoom/meetingsdk": "^4.0.7",
     "animate.css": "^4.1.1",
     "chart.js": "^2.9.4",
     "emoji-mart-vue-fast": "^11.2.0",
