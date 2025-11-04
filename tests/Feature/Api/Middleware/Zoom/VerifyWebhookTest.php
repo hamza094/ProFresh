@@ -21,7 +21,8 @@ class VerifyWebhookTest extends TestCase
     {
         parent::setUp();
 
-        config('services.zoom.webhook_secret', 'secret');
+        // Ensure the webhook secret is set for signature generation in tests
+        config(['services.zoom.webhook_secret' => 'secret']);
 
         Route::middleware('zoom.webhook')->any(self::WEBHOOK_TEST_PATH, fn (): string => 'OK');
 
@@ -61,12 +62,13 @@ class VerifyWebhookTest extends TestCase
     /** @test */
     public function it_passes_with_a_valid_signature(): void
     {
-        $timestamp = time();
+        // Zoom sends timestamp as a numeric string header; use the same value for header and signature
+        $timestamp = (string) time();
 
         $signature = $this->buildSignature($timestamp, $this->payload);
 
-        $this->postJson(self::WEBHOOK_TEST_PATH, $this->payload, [
-            'x-zm-request-timestamp' => $this->timestamp,
+        $response = $this->postJson(self::WEBHOOK_TEST_PATH, $this->payload, [
+            'x-zm-request-timestamp' => $timestamp,
             'x-zm-signature' => $signature,
         ]);
 
@@ -77,7 +79,7 @@ class VerifyWebhookTest extends TestCase
     public function it_fails_with_an_old_timestamp(): void
     {
 
-        $oldTimestamp = $this->timestamp - 600;
+        $oldTimestamp = (string) ($this->timestamp - 600);
 
         $signature = $this->buildSignature($oldTimestamp, $this->payload);
 

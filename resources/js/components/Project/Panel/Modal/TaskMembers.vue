@@ -144,9 +144,7 @@ export default {
       return [];
     },
     hasError(key) {
-      return !!(
-        this.errors && typeof this.errors === 'object' && Object.hasOwn(this.errors, key)
-      );
+      return !!(this.errors && typeof this.errors === 'object' && Object.hasOwn(this.errors, key));
     },
   },
 };

@@ -28,8 +28,7 @@
             type="button"
             class="panel-exit float-right"
             aria-label="Close"
-            @click.prevent="$modal.hide('stage-reason')"
-          >
+            @click.prevent="$modal.hide('stage-reason')">
             x
           </button>
         </div>

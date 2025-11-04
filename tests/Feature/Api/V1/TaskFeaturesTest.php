@@ -120,8 +120,7 @@ class TaskFeaturesTest extends TestCase
             'project' => $this->project->slug,
             'task' => $task->id,
             'search' => 'test',
-        ]))
-            ->assertSuccessful();
+        ]))->assertSuccessful();
 
         $this->assertCount(1, $response->json());
     }

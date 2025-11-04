@@ -1,7 +1,7 @@
 <?php declare(strict_types = 1);
 
 return [
-	'lastFullAnalysisTime' => 1762182125,
+	'lastFullAnalysisTime' => 1762265922,
 	'meta' => array (
   'cacheVersion' => 'v12-linesToIgnore',
   'phpstanVersion' => '1.12.32',
@@ -17,7 +17,7 @@ return [
   ),
   'composerLocks' => 
   array (
-    'D:/apps/profresh/composer.lock' => '65903be40f3eb953bc27c14b81e237d2bfc98630',
+    'D:/apps/profresh/composer.lock' => 'edc7db320476d125ca223ec0d7e92761a5f6bec1',
   ),
   'composerInstalled' => 
   array (
@@ -3241,41 +3241,6 @@ return [
       ),
     )),
   ),
-  'D:\\apps\\profresh\\app\\DataTransferObjects\\Zoom\\Meeting.php' => 
-  array (
-    0 => 
-    \PHPStan\Analyser\Error::__set_state(array(
-       'message' => 'Parameter $created_at of class App\\DataTransferObjects\\Zoom\\Meeting constructor expects string, Carbon\\Carbon given.',
-       'file' => 'D:\\apps\\profresh\\app\\DataTransferObjects\\Zoom\\Meeting.php',
-       'line' => 36,
-       'canBeIgnored' => true,
-       'filePath' => 'D:\\apps\\profresh\\app\\DataTransferObjects\\Zoom\\Meeting.php',
-       'traitFilePath' => NULL,
-       'tip' => NULL,
-       'nodeLine' => 32,
-       'nodeType' => 'PhpParser\\Node\\Expr\\New_',
-       'identifier' => 'argument.type',
-       'metadata' => 
-      array (
-      ),
-    )),
-    1 => 
-    \PHPStan\Analyser\Error::__set_state(array(
-       'message' => 'Parameter $start_time of class App\\DataTransferObjects\\Zoom\\Meeting constructor expects string, Carbon\\Carbon given.',
-       'file' => 'D:\\apps\\profresh\\app\\DataTransferObjects\\Zoom\\Meeting.php',
-       'line' => 38,
-       'canBeIgnored' => true,
-       'filePath' => 'D:\\apps\\profresh\\app\\DataTransferObjects\\Zoom\\Meeting.php',
-       'traitFilePath' => NULL,
-       'tip' => NULL,
-       'nodeLine' => 32,
-       'nodeType' => 'PhpParser\\Node\\Expr\\New_',
-       'identifier' => 'argument.type',
-       'metadata' => 
-      array (
-      ),
-    )),
-  ),
   'D:\\apps\\profresh\\app\\Enums\\TaskDueNotifies.php' => 
   array (
     0 => 
@@ -4473,30 +4438,14 @@ return [
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Method App\\Http\\Requests\\Api\\V1\\TaskMembersRequest::rules() return type has no value type specified in iterable type array.',
        'file' => 'D:\\apps\\profresh\\app\\Http\\Requests\\Api\\V1\\TaskMembersRequest.php',
-       'line' => 23,
+       'line' => 24,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\app\\Http\\Requests\\Api\\V1\\TaskMembersRequest.php',
        'traitFilePath' => NULL,
        'tip' => 'See: https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type',
-       'nodeLine' => 23,
+       'nodeLine' => 24,
        'nodeType' => 'PHPStan\\Node\\InClassMethodNode',
        'identifier' => 'missingType.iterableValue',
-       'metadata' => 
-      array (
-      ),
-    )),
-    1 => 
-    \PHPStan\Analyser\Error::__set_state(array(
-       'message' => 'Method App\\Http\\Requests\\Api\\V1\\TaskMembersRequest::membersValidation() has no return type specified.',
-       'file' => 'D:\\apps\\profresh\\app\\Http\\Requests\\Api\\V1\\TaskMembersRequest.php',
-       'line' => 40,
-       'canBeIgnored' => true,
-       'filePath' => 'D:\\apps\\profresh\\app\\Http\\Requests\\Api\\V1\\TaskMembersRequest.php',
-       'traitFilePath' => NULL,
-       'tip' => NULL,
-       'nodeLine' => 40,
-       'nodeType' => 'PHPStan\\Node\\InClassMethodNode',
-       'identifier' => 'missingType.return',
        'metadata' => 
       array (
       ),
@@ -11242,62 +11191,14 @@ return [
     )),
     2 => 
     \PHPStan\Analyser\Error::__set_state(array(
-       'message' => 'Parameter #1 $timestamp of method Tests\\Feature\\Api\\Middleware\\Zoom\\VerifyWebhookTest::buildSignature() expects string, int<1, max> given.',
-       'file' => 'D:\\apps\\profresh\\tests\\Feature\\Api\\Middleware\\Zoom\\VerifyWebhookTest.php',
-       'line' => 66,
-       'canBeIgnored' => true,
-       'filePath' => 'D:\\apps\\profresh\\tests\\Feature\\Api\\Middleware\\Zoom\\VerifyWebhookTest.php',
-       'traitFilePath' => NULL,
-       'tip' => NULL,
-       'nodeLine' => 66,
-       'nodeType' => 'PhpParser\\Node\\Expr\\MethodCall',
-       'identifier' => 'argument.type',
-       'metadata' => 
-      array (
-      ),
-    )),
-    3 => 
-    \PHPStan\Analyser\Error::__set_state(array(
-       'message' => 'Undefined variable: $response',
-       'file' => 'D:\\apps\\profresh\\tests\\Feature\\Api\\Middleware\\Zoom\\VerifyWebhookTest.php',
-       'line' => 73,
-       'canBeIgnored' => true,
-       'filePath' => 'D:\\apps\\profresh\\tests\\Feature\\Api\\Middleware\\Zoom\\VerifyWebhookTest.php',
-       'traitFilePath' => NULL,
-       'tip' => NULL,
-       'nodeLine' => 73,
-       'nodeType' => 'PhpParser\\Node\\Expr\\Variable',
-       'identifier' => 'variable.undefined',
-       'metadata' => 
-      array (
-      ),
-    )),
-    4 => 
-    \PHPStan\Analyser\Error::__set_state(array(
-       'message' => 'Parameter #1 $timestamp of method Tests\\Feature\\Api\\Middleware\\Zoom\\VerifyWebhookTest::buildSignature() expects string, (float|int) given.',
-       'file' => 'D:\\apps\\profresh\\tests\\Feature\\Api\\Middleware\\Zoom\\VerifyWebhookTest.php',
-       'line' => 82,
-       'canBeIgnored' => true,
-       'filePath' => 'D:\\apps\\profresh\\tests\\Feature\\Api\\Middleware\\Zoom\\VerifyWebhookTest.php',
-       'traitFilePath' => NULL,
-       'tip' => NULL,
-       'nodeLine' => 82,
-       'nodeType' => 'PhpParser\\Node\\Expr\\MethodCall',
-       'identifier' => 'argument.type',
-       'metadata' => 
-      array (
-      ),
-    )),
-    5 => 
-    \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Method Tests\\Feature\\Api\\Middleware\\Zoom\\VerifyWebhookTest::buildSignature() has parameter $payload with no type specified.',
        'file' => 'D:\\apps\\profresh\\tests\\Feature\\Api\\Middleware\\Zoom\\VerifyWebhookTest.php',
-       'line' => 99,
+       'line' => 101,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\tests\\Feature\\Api\\Middleware\\Zoom\\VerifyWebhookTest.php',
        'traitFilePath' => NULL,
        'tip' => NULL,
-       'nodeLine' => 99,
+       'nodeLine' => 101,
        'nodeType' => 'PHPStan\\Node\\InClassMethodNode',
        'identifier' => 'missingType.parameter',
        'metadata' => 
@@ -14457,22 +14358,6 @@ return [
       array (
       ),
     )),
-    4 => 
-    \PHPStan\Analyser\Error::__set_state(array(
-       'message' => 'Call to an undefined method App\\Services\\Api\\V1\\InvitationService::memberSearch().',
-       'file' => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\SearchableTest.php',
-       'line' => 41,
-       'canBeIgnored' => true,
-       'filePath' => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\SearchableTest.php',
-       'traitFilePath' => NULL,
-       'tip' => NULL,
-       'nodeLine' => 41,
-       'nodeType' => 'PhpParser\\Node\\Expr\\MethodCall',
-       'identifier' => 'method.notFound',
-       'metadata' => 
-      array (
-      ),
-    )),
   ),
   'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\StageTest.php' => 
   array (
@@ -14755,12 +14640,12 @@ return [
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Access to an undefined property Illuminate\\Database\\Eloquent\\Model::$id.',
        'file' => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\TaskFeaturesTest.php',
-       'line' => 136,
+       'line' => 135,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\TaskFeaturesTest.php',
        'traitFilePath' => NULL,
        'tip' => 'Learn more: <fg=cyan>https://phpstan.org/blog/solving-phpstan-access-to-undefined-property</>',
-       'nodeLine' => 136,
+       'nodeLine' => 135,
        'nodeType' => 'PhpParser\\Node\\Expr\\PropertyFetch',
        'identifier' => 'property.notFound',
        'metadata' => 
@@ -14771,12 +14656,12 @@ return [
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Access to an undefined property Illuminate\\Database\\Eloquent\\Model::$id.',
        'file' => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\TaskFeaturesTest.php',
-       'line' => 143,
+       'line' => 142,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\TaskFeaturesTest.php',
        'traitFilePath' => NULL,
        'tip' => 'Learn more: <fg=cyan>https://phpstan.org/blog/solving-phpstan-access-to-undefined-property</>',
-       'nodeLine' => 143,
+       'nodeLine' => 142,
        'nodeType' => 'PhpParser\\Node\\Expr\\PropertyFetch',
        'identifier' => 'property.notFound',
        'metadata' => 
@@ -14787,12 +14672,12 @@ return [
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Method Tests\\Feature\\Api\\V1\\TaskFeaturesTest::assignMembersToTask() has no return type specified.',
        'file' => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\TaskFeaturesTest.php',
-       'line' => 149,
+       'line' => 148,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\TaskFeaturesTest.php',
        'traitFilePath' => NULL,
        'tip' => NULL,
-       'nodeLine' => 149,
+       'nodeLine' => 148,
        'nodeType' => 'PHPStan\\Node\\InClassMethodNode',
        'identifier' => 'missingType.return',
        'metadata' => 
@@ -14803,12 +14688,12 @@ return [
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Method Tests\\Feature\\Api\\V1\\TaskFeaturesTest::assignMembersToTask() has parameter $members with no value type specified in iterable type array.',
        'file' => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\TaskFeaturesTest.php',
-       'line' => 149,
+       'line' => 148,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\TaskFeaturesTest.php',
        'traitFilePath' => NULL,
        'tip' => 'See: https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type',
-       'nodeLine' => 149,
+       'nodeLine' => 148,
        'nodeType' => 'PHPStan\\Node\\InClassMethodNode',
        'identifier' => 'missingType.iterableValue',
        'metadata' => 
@@ -14819,12 +14704,12 @@ return [
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Method Tests\\Feature\\Api\\V1\\TaskFeaturesTest::unassignMemberFromTask() has no return type specified.',
        'file' => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\TaskFeaturesTest.php',
-       'line' => 157,
+       'line' => 156,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\TaskFeaturesTest.php',
        'traitFilePath' => NULL,
        'tip' => NULL,
-       'nodeLine' => 157,
+       'nodeLine' => 156,
        'nodeType' => 'PHPStan\\Node\\InClassMethodNode',
        'identifier' => 'missingType.return',
        'metadata' => 
@@ -17411,21 +17296,21 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Console\\Commands\\RemoveAbondonProjects.php' => 
   array (
-    'fileHash' => '6cf95725dfd874a4c69973ec4dd615d95611f378',
+    'fileHash' => '12eb7d5c399f80822b9a614fd5104942bef56b56',
     'dependentFiles' => 
     array (
     ),
   ),
   'D:\\apps\\profresh\\app\\Console\\Commands\\ScheduledMessages.php' => 
   array (
-    'fileHash' => '1da6c5494fdc8d43270359d7835a228ec23ce2f7',
+    'fileHash' => 'aae73af40b547d52e1e67b8bee520838e3010266',
     'dependentFiles' => 
     array (
     ),
   ),
   'D:\\apps\\profresh\\app\\Console\\Commands\\TaskNotify.php' => 
   array (
-    'fileHash' => '68b1dca665cd7b4fb04567d21655a4feac4cab52',
+    'fileHash' => '883c23da03ff28dab467d3f5197d1c838f217f74',
     'dependentFiles' => 
     array (
     ),
@@ -17506,7 +17391,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\DataTransferObjects\\Zoom\\Meeting.php' => 
   array (
-    'fileHash' => 'e259525867c988b65114ccd7f4d9dabfd3634cd8',
+    'fileHash' => '6b8191677d9ca210eccd49b39283353bbf64a803',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Collections\\Zoom\\MeetingCollection.php',
@@ -17670,7 +17555,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Events\\DashboardActivity.php' => 
   array (
-    'fileHash' => 'bbce6ddee746322e357d941af0f53d24b8c6d148',
+    'fileHash' => 'fa5fd3d2a5461ecdb187356281e1dd9b7931929a',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Providers\\EventServiceProvider.php',
@@ -17728,7 +17613,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Events\\UserHasRegistered.php' => 
   array (
-    'fileHash' => 'fd3d253c7393e6a59d6892d7faa4cc3a088d2c9e',
+    'fileHash' => '7a5737b3c72b31b1c5e24909c1ed33de938deecc',
     'dependentFiles' => 
     array (
     ),
@@ -17746,7 +17631,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Exceptions\\Handler.php' => 
   array (
-    'fileHash' => '0cd07a804c4135287d87e2b598c9407cd6167130',
+    'fileHash' => '700484f19226cce957e3c7d71621be61e7bb68ff',
     'dependentFiles' => 
     array (
     ),
@@ -17915,14 +17800,14 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\InvitationController.php' => 
   array (
-    'fileHash' => '19a018863b3fb74176a30199db8130a9f016e28b',
+    'fileHash' => 'ae3d4319ee92e265a46228a98afdb1c6a5030c24',
     'dependentFiles' => 
     array (
     ),
   ),
   'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\MessageController.php' => 
   array (
-    'fileHash' => '512f3b1ba2873baea0faa1262f00db688e496fe0',
+    'fileHash' => '65086cf5f9376304c301edc6d255510fb9d0e6c6',
     'dependentFiles' => 
     array (
     ),
@@ -17936,7 +17821,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\ProjectController.php' => 
   array (
-    'fileHash' => 'e9bf58916932b06026083e465a54dc3a03754c04',
+    'fileHash' => '56c540d157d0b7dbc881fe83aaf6122ade51a036',
     'dependentFiles' => 
     array (
     ),
@@ -17971,7 +17856,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\TaskController.php' => 
   array (
-    'fileHash' => '85c0db0db0c27b351fffa9f28d9071bc0230b882',
+    'fileHash' => '311770503c43d41406c2b5ecb9a091ff1c7c9228',
     'dependentFiles' => 
     array (
     ),
@@ -18020,7 +17905,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\ZoomMeetingController.php' => 
   array (
-    'fileHash' => '2e64976f0d20d34951d4d06ab4a63cc5825060bf',
+    'fileHash' => '90b9e9bb9780a27ba1337040e2340683cf11b49c',
     'dependentFiles' => 
     array (
     ),
@@ -18296,7 +18181,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Http\\Requests\\Api\\V1\\Auth\\LoginUserRequest.php' => 
   array (
-    'fileHash' => 'f19c080e3a856ca728d718fcc0eca8acf2d5bb62',
+    'fileHash' => 'd708a6ed25cafa330efcd2e85e8a6d1dbe142667',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\Auth\\LoginController.php',
@@ -18312,7 +18197,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Http\\Requests\\Api\\V1\\Auth\\RegisterUserRequest.php' => 
   array (
-    'fileHash' => '35a807e0f6a7a349d70eb070e2000b601de0d82b',
+    'fileHash' => '0291de5212abd3f8677b9519731912191071b34b',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\Auth\\RegisterController.php',
@@ -18346,7 +18231,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Http\\Requests\\Api\\V1\\InvitationUsersRequest.php' => 
   array (
-    'fileHash' => '30b3048090d143f079416c60fc9ce67e621e0d57',
+    'fileHash' => '410e871088915b555a4d948e531b7188e3e3c0bc',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\InvitationController.php',
@@ -18354,7 +18239,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Http\\Requests\\Api\\V1\\MessageRequest.php' => 
   array (
-    'fileHash' => 'd8d22427fbbbad71538fa13ec205ffaf091355fb',
+    'fileHash' => '5c683c0f3404e0999c8a4618ee563ed8f19d7c6a',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\MessageController.php',
@@ -18370,7 +18255,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Http\\Requests\\Api\\V1\\ProjectStoreRequest.php' => 
   array (
-    'fileHash' => '9d3e9f4d97d5b8c80a338a6dec82795006aef6cd',
+    'fileHash' => '1c157cf3e323912d92ff0e1e53e8a2bc038d5389',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\ProjectController.php',
@@ -18378,7 +18263,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Http\\Requests\\Api\\V1\\ProjectUpdateRequest.php' => 
   array (
-    'fileHash' => '235d6e098db85f614e1a677c5b6de937ff096d93',
+    'fileHash' => 'bd9fb8a196f7180dc8909d4a7e75848dd18790de',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\ProjectController.php',
@@ -18386,7 +18271,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Http\\Requests\\Api\\V1\\StageRequest.php' => 
   array (
-    'fileHash' => '60fcb0983254cf39ab5d42e971a2f865a9460047',
+    'fileHash' => '2ff9f4a102bedd9cfac293310284f4edf905cbcc',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\FeaturesController.php',
@@ -18402,7 +18287,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Http\\Requests\\Api\\V1\\TaskMembersRequest.php' => 
   array (
-    'fileHash' => 'eb609af94f3ec7df27faa3eddf1667f59628cc0c',
+    'fileHash' => '2e9237795b944a23897e060a61f9f3c2a6a1826b',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\TaskFeaturesController.php',
@@ -18410,7 +18295,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Http\\Requests\\Api\\V1\\TaskRequest.php' => 
   array (
-    'fileHash' => '24f8c8e9978a5d0268e400865115ba00b5e043ab',
+    'fileHash' => 'e5651eae81c5242e9b5cb6aeaa418adcd1a99067',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\TaskController.php',
@@ -18418,7 +18303,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Http\\Requests\\Api\\V1\\TaskUpdate.php' => 
   array (
-    'fileHash' => '7f821014b3b56f8f338df8bc57261e26d02acebb',
+    'fileHash' => '5839d052addcb722f13aaad8fe6e6041927ca24a',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\TaskController.php',
@@ -18426,7 +18311,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Http\\Requests\\Api\\V1\\UserActivitiesRequest.php' => 
   array (
-    'fileHash' => 'fa30e5784ae0a13823abd7f727d14cae8fd07323',
+    'fileHash' => '6bf8ec5054051c650b264d1be11b3d69ea065f95',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\ProjectDashboardController.php',
@@ -18451,7 +18336,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Http\\Requests\\Api\\V1\\UserTokenRequest.php' => 
   array (
-    'fileHash' => '45ca13c72fbd3538b1e596319981d78525b7247a',
+    'fileHash' => '14d55fc4d2556fae574f517f83e09a8416686d46',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\TokenController.php',
@@ -18491,7 +18376,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\ActivityResource.php' => 
   array (
-    'fileHash' => 'd1e2c684af64852b427be5bcf9a89ed90a25e1d5',
+    'fileHash' => 'd5207adce4de882cf58cccf76755b8e8042be735',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Events\\ActivityLogged.php',
@@ -18656,7 +18541,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\UserActivitiesResource.php' => 
   array (
-    'fileHash' => '6f6d61cfbaa9ebaf575fbeabd258fc03b06b568b',
+    'fileHash' => '53a4276e25b2cc178afe085b74076bf7a8c8f23a',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\ProjectDashboardController.php',
@@ -18727,7 +18612,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Http\\Views\\Composers\\ViewServiceProvider.php' => 
   array (
-    'fileHash' => '1a45349828524a8330b1eb0010cbb31105873c57',
+    'fileHash' => 'e7c456b439c1bb32dfc2b1dc88d207a8eec0cdc0',
     'dependentFiles' => 
     array (
     ),
@@ -18781,7 +18666,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Jobs\\MailMessage.php' => 
   array (
-    'fileHash' => '634baf13dd96a4153d167be37d59f9ae912c4839',
+    'fileHash' => '5523db583481a3a40a2530bc644d5e9f6a84ebf4',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\MessageService.php',
@@ -18790,7 +18675,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Jobs\\QueuedPasswordResetJob.php' => 
   array (
-    'fileHash' => '8af4e3b71af9a1ea4c5f95f4841363251a95a17b',
+    'fileHash' => '622be09fd4053094aaf268187c0be657381280b2',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Models\\User.php',
@@ -18798,7 +18683,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Jobs\\QueuedVerifyEmailJob.php' => 
   array (
-    'fileHash' => 'd8f1777654a418c8c6a4a7592eb222911bd83839',
+    'fileHash' => '710279278b7b95ad928c5e92669cf583a7704904',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Models\\User.php',
@@ -18816,7 +18701,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Jobs\\SmsMessage.php' => 
   array (
-    'fileHash' => '036085ec43f78590c56f621ac61de8628bd44fc9',
+    'fileHash' => 'c77ed1afbc6469a0c3e63107290179678d89bf21',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\MessageService.php',
@@ -18825,7 +18710,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Jobs\\Webhooks\\Mailgun\\ProcessEmailStatusWebhook.php' => 
   array (
-    'fileHash' => '40bd5b26aae3a4f9d4c47ea16079814e42f2be30',
+    'fileHash' => '6efcb30c4ec3a7f6788d36e27b06321254477f23',
     'dependentFiles' => 
     array (
     ),
@@ -18842,7 +18727,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Jobs\\Webhooks\\Zoom\\MeetingEndsWebhook.php' => 
   array (
-    'fileHash' => 'e6f536ca4ae90b3fcd20076c5b7905bce8cf9c97',
+    'fileHash' => 'd8b0711d843c5b06c685c92403935a9c520ac70f',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\Webhooks\\ZoomWebhookController.php',
@@ -18852,7 +18737,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Jobs\\Webhooks\\Zoom\\StartMeetingWebhook.php' => 
   array (
-    'fileHash' => '745d3aaeee627d653a6d9ae37a4c3ef8d1c88773',
+    'fileHash' => '39c1d2c7a59d3a3033b3005fcb8d534e43f7e81e',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\Webhooks\\ZoomWebhookController.php',
@@ -18888,7 +18773,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Listeners\\SaveUserTimezone.php' => 
   array (
-    'fileHash' => '842ec12780044a7bfca622eb53cc4cbf711b4b00',
+    'fileHash' => 'fd393ed2718053bb2ac642e145c25bef9809e575',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Providers\\EventServiceProvider.php',
@@ -18946,7 +18831,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Models\\Conversation.php' => 
   array (
-    'fileHash' => '3ac8608f836e2c316b39a7e3f2b098525bb3e373',
+    'fileHash' => 'b53f0e37e31eb9ca1f0ac28df291a446ad275221',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Events\\NewMessage.php',
@@ -18990,7 +18875,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Models\\Message.php' => 
   array (
-    'fileHash' => 'cc3f5f51b50cbb2b910cc487d2cdb1b00e92d606',
+    'fileHash' => '65cea778042ecada4e1b727b4fda2730daf5e961',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Console\\Commands\\ScheduledMessages.php',
@@ -19013,7 +18898,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Models\\Project.php' => 
   array (
-    'fileHash' => '80966de563b0fcb01a7936e3e4c393fceef885e0',
+    'fileHash' => 'a5a99b49582f495227ba3e323546df80c88fce18',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Actions\\DeleteProfileAction.php',
@@ -19493,21 +19378,21 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Providers\\AppServiceProvider.php' => 
   array (
-    'fileHash' => '05b7277e4e7e496c4377633e0e532d9438cf6260',
+    'fileHash' => '75c9a4f8b08be6a50ab7f0a89405e1015496f7e5',
     'dependentFiles' => 
     array (
     ),
   ),
   'D:\\apps\\profresh\\app\\Providers\\AuthServiceProvider.php' => 
   array (
-    'fileHash' => '3b49c5f6b7fb3d3b3520402deb9eea94df348a37',
+    'fileHash' => '7def7488c8d460f0b3b77a9a87a2c4507b4016f1',
     'dependentFiles' => 
     array (
     ),
   ),
   'D:\\apps\\profresh\\app\\Providers\\BroadcastServiceProvider.php' => 
   array (
-    'fileHash' => '55492fb88f7b2cfce03b98b1080103b62f82bd34',
+    'fileHash' => 'e444ddf2654ebf3a30e301476f9e0c154a025c47',
     'dependentFiles' => 
     array (
     ),
@@ -19521,7 +19406,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Providers\\RouteServiceProvider.php' => 
   array (
-    'fileHash' => '1cbe94c1542d371eec21cb260c10f6298a8cd0fe',
+    'fileHash' => '3fe1da3a65a40c3443239f8577c8ac3699a78aee',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\Auth\\RegisterController.php',
@@ -19667,7 +19552,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Services\\Api\\V1\\Admin\\DashboardService.php' => 
   array (
-    'fileHash' => 'ee4064028983527083f093a4a42618429011683e',
+    'fileHash' => 'db24d1475325168ad551dc5325b667d8b031c66f',
     'dependentFiles' => 
     array (
     ),
@@ -19723,7 +19608,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Services\\Api\\V1\\FeatureService.php' => 
   array (
-    'fileHash' => '10c5acfddded8802a69db4b6281cb86f8d1f8d1b',
+    'fileHash' => '1dedb94fe2d4e0d095839aefe0972a8d45631cb1',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\FeaturesController.php',
@@ -19758,7 +19643,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Services\\Api\\V1\\MessageService.php' => 
   array (
-    'fileHash' => 'a5eda3eb02ff115d33f94a28c43bf373cc8f7088',
+    'fileHash' => 'a3c47b13a7d06878d68e5c81ec393f6159060f50',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Console\\Commands\\ScheduledMessages.php',
@@ -19800,7 +19685,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Services\\Api\\V1\\ProjectService.php' => 
   array (
-    'fileHash' => 'bebc1328983804a4c0a4ee66176486b9a571dfa7',
+    'fileHash' => '3a48c5b4f9c375a34cccab04b1edd4f0b0f5c398',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\FeaturesController.php',
@@ -19809,7 +19694,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Services\\Api\\V1\\SendSmsService.php' => 
   array (
-    'fileHash' => '4d8e72bdb35819caf9be32598365d6d60d4ab5e0',
+    'fileHash' => 'e7132e9576e0d73678cc3fbd37d7b368efa121f5',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Jobs\\SmsMessage.php',
@@ -19819,7 +19704,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Services\\Api\\V1\\Task\\TaskFeatureService.php' => 
   array (
-    'fileHash' => 'f05f89514bc3c660406b05af84a7682a326e4251',
+    'fileHash' => 'da6ba43beea81716b911624e951e5628d13b9694',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\TaskFeaturesController.php',
@@ -19866,7 +19751,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Services\\Api\\V1\\Zoom\\ZoomServiceFake.php' => 
   array (
-    'fileHash' => 'f50f6c938c78b9ccb259e446ea5b30def75a62f7',
+    'fileHash' => 'bf0ae80ade0a6ad54a3335fb54568f30e2556aa4',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\Controllers\\OAuth\\ZoomController\\CallbackTest.php',
@@ -19945,7 +19830,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Services\\ProjectInsightsPreloader.php' => 
   array (
-    'fileHash' => 'be19e1276ddb9bf30e6d47c99563686f330a6731',
+    'fileHash' => 'c50c5e705aa873cfc4912679d05b17d4b8282407',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Jobs\\RecalculateProjectHealth.php',
@@ -20449,49 +20334,49 @@ return [
   ),
   'D:\\apps\\profresh\\tests\\Feature\\Api\\Actions\\ZoomActionTest.php' => 
   array (
-    'fileHash' => '6f06aa8ac579f0b7359444bb3a705cd67654cfa6',
+    'fileHash' => '5c7c48a3dca26b8c099935be7426f0c3dbd759d5',
     'dependentFiles' => 
     array (
     ),
   ),
   'D:\\apps\\profresh\\tests\\Feature\\Api\\Auth\\AuthenticationTest.php' => 
   array (
-    'fileHash' => '87c56e92a68b9a31a05c4466fa1c2034a137882e',
+    'fileHash' => 'e917b29df82cb239ed87bd9d9c18037df705992f',
     'dependentFiles' => 
     array (
     ),
   ),
   'D:\\apps\\profresh\\tests\\Feature\\Api\\Auth\\OAuthTest.php' => 
   array (
-    'fileHash' => '52b7219e32306541548c52a0899814b2496db5db',
+    'fileHash' => '01ef2b9ce2894e5235743d62ec0f8d0121b90d13',
     'dependentFiles' => 
     array (
     ),
   ),
   'D:\\apps\\profresh\\tests\\Feature\\Api\\Auth\\ResetPasswordTest.php' => 
   array (
-    'fileHash' => '70b6ce5c24ded19830f28b2d70d1a10dd01a99fa',
+    'fileHash' => '5e2c8c80b67c2ce38d821f65c4f9b6795f8f40b3',
     'dependentFiles' => 
     array (
     ),
   ),
   'D:\\apps\\profresh\\tests\\Feature\\Api\\Auth\\TwoFactorAuthenticationTest.php' => 
   array (
-    'fileHash' => '9f8142f4430e20f35c6cb803fd6943555b381a4a',
+    'fileHash' => 'a7efaed60e9d7a0d42fce8c3937efa5629d08aa6',
     'dependentFiles' => 
     array (
     ),
   ),
   'D:\\apps\\profresh\\tests\\Feature\\Api\\Auth\\VerificationTest.php' => 
   array (
-    'fileHash' => 'e25008cd102c64586344f29f804115c80b8f5450',
+    'fileHash' => '9c9a1351e44fe6835e2109a0a26b5b2eeeebbc6b',
     'dependentFiles' => 
     array (
     ),
   ),
   'D:\\apps\\profresh\\tests\\Feature\\Api\\Controllers\\OAuth\\ZoomController\\CallbackTest.php' => 
   array (
-    'fileHash' => '1dc407b1d75abad59f0589755eda7b19be37a30f',
+    'fileHash' => '76b7213bf0c920c0a2f0420330517209f4b48006',
     'dependentFiles' => 
     array (
     ),
@@ -20505,84 +20390,84 @@ return [
   ),
   'D:\\apps\\profresh\\tests\\Feature\\Api\\Controllers\\Paddle\\SubscriptionTest.php' => 
   array (
-    'fileHash' => '2c408bf22007b547b876c4f1adfe727a7c0e1bb3',
+    'fileHash' => '626e0fd36c42ba387f42a7bedf38646e152762b4',
     'dependentFiles' => 
     array (
     ),
   ),
   'D:\\apps\\profresh\\tests\\Feature\\Api\\Controllers\\Webhooks\\ZoomWebhookControllerTest.php' => 
   array (
-    'fileHash' => '97c7bb057bf87e501f33610a1ba83f5ad752ea0e',
+    'fileHash' => '1ba6566a9ef421694fbd965b2e89f582593fd20b',
     'dependentFiles' => 
     array (
     ),
   ),
   'D:\\apps\\profresh\\tests\\Feature\\Api\\Controllers\\Zoom\\DeleteMeetingTest.php' => 
   array (
-    'fileHash' => 'e50d5216cd9aa49eea087b322239ce35fcf39bf1',
+    'fileHash' => '5f2d798fd9aed213aa436b328f9599ab47a844cc',
     'dependentFiles' => 
     array (
     ),
   ),
   'D:\\apps\\profresh\\tests\\Feature\\Api\\Controllers\\Zoom\\GetZakTokenTest.php' => 
   array (
-    'fileHash' => 'eef68df123a5a648ce662b306c03c5b968087e80',
+    'fileHash' => '39c2662f16f152de32e78e1ffd379f15325bcd61',
     'dependentFiles' => 
     array (
     ),
   ),
   'D:\\apps\\profresh\\tests\\Feature\\Api\\Controllers\\Zoom\\StoreMeetingTest.php' => 
   array (
-    'fileHash' => '8bbb30bea232029b0954d2de47262ecd4a8a9311',
+    'fileHash' => 'dd9c015daf83476613d5b2761f240f56c483f8f1',
     'dependentFiles' => 
     array (
     ),
   ),
   'D:\\apps\\profresh\\tests\\Feature\\Api\\Controllers\\Zoom\\UpdateMeetingTest.php' => 
   array (
-    'fileHash' => '331191ce57345150e1a8e4cb9303d6b59a67c511',
+    'fileHash' => '4234e282d88d47e5cae78981b1aa9d8dd467c9a4',
     'dependentFiles' => 
     array (
     ),
   ),
   'D:\\apps\\profresh\\tests\\Feature\\Api\\Jobs\\Webhooks\\Zoom\\EndedMeetingWebhookTest.php' => 
   array (
-    'fileHash' => '20bc305c0ec452918d5b466cf819560d453ac4e2',
+    'fileHash' => 'e32a307f937bcb9e02dbafe799ff66b065a880bf',
     'dependentFiles' => 
     array (
     ),
   ),
   'D:\\apps\\profresh\\tests\\Feature\\Api\\Jobs\\Webhooks\\Zoom\\ProcessMeetingDeleteTest.php' => 
   array (
-    'fileHash' => '98837e592a1f6a274fd6fdb092743710fb1e17ce',
+    'fileHash' => 'b01bce87535449bafdd634428cb590705ec642ce',
     'dependentFiles' => 
     array (
     ),
   ),
   'D:\\apps\\profresh\\tests\\Feature\\Api\\Jobs\\Webhooks\\Zoom\\ProcessMeetingUpdateWebhookTest.php' => 
   array (
-    'fileHash' => 'f6243c435d4f502d6923dd346345f3cbfa6c4a7f',
+    'fileHash' => '6cc55c842ca6aa927aeda7e2ae8bdb8b4329c2fe',
     'dependentFiles' => 
     array (
     ),
   ),
   'D:\\apps\\profresh\\tests\\Feature\\Api\\Jobs\\Webhooks\\Zoom\\StartMeetingWebhookTest.php' => 
   array (
-    'fileHash' => '71849daee39c94b0dfe41b063f7e1dc5c0b60ee7',
+    'fileHash' => '35f48d3ed447dab5e3334733e323dda81eaa5f29',
     'dependentFiles' => 
     array (
     ),
   ),
   'D:\\apps\\profresh\\tests\\Feature\\Api\\Middleware\\Zoom\\VerifyWebhookTest.php' => 
   array (
-    'fileHash' => 'e16fc07134012a807acc6fa52925b8bbf3e9588a',
+    'fileHash' => '8bbafb3717f59b8628b5734029bb7f5f37f4bb73',
     'dependentFiles' => 
     array (
     ),
   ),
   'D:\\apps\\profresh\\tests\\Feature\\Api\\Services\\Paddle\\SubscriptionTest.php' => 
   array (
-    'fileHash' => '535d52ca9c0b285fbf00bb5bbc7230d7487d6f07',
+    'fileHash' => '1c8c3b88241c7559e96194398795c3a53cbb31fc',
     'dependentFiles' => 
     array (
     ),
@@ -20603,7 +20488,7 @@ return [
   ),
   'D:\\apps\\profresh\\tests\\Feature\\Api\\Services\\Zoom\\ZoomService\\GetZakTokenTest.php' => 
   array (
-    'fileHash' => '537d6769308ee9bbdc9a31aa6baf005bb7875a48',
+    'fileHash' => 'dd105ba3f60e2c329c87ed0128f5750ab457ca38',
     'dependentFiles' => 
     array (
     ),
@@ -20617,147 +20502,147 @@ return [
   ),
   'D:\\apps\\profresh\\tests\\Feature\\Api\\Services\\Zoom\\ZoomService\\MeetingDeleteTest.php' => 
   array (
-    'fileHash' => 'bfa5c09c236ea6ba212dfc2457a08a8da6c4fe65',
+    'fileHash' => 'abece2b8d5503377318e218a3b51fcf46e690d1e',
     'dependentFiles' => 
     array (
     ),
   ),
   'D:\\apps\\profresh\\tests\\Feature\\Api\\Services\\Zoom\\ZoomService\\MeetingUpdateTest.php' => 
   array (
-    'fileHash' => '25390b36706d603619c57c3137fa6c70061e0bff',
+    'fileHash' => 'be6fa3679fa7d85de8552aed3bc79f997a2f0eb8',
     'dependentFiles' => 
     array (
     ),
   ),
   'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\ActivityTest.php' => 
   array (
-    'fileHash' => '9ed683caee612a515d55a713270173b4cb5789bd',
+    'fileHash' => 'a2ff79ee0a30b65baaa4f69ed562ed41498f2c5d',
     'dependentFiles' => 
     array (
     ),
   ),
   'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\Admin\\UsersTest.php' => 
   array (
-    'fileHash' => '362e40d612d15bc9d6938cada78ec618d6ec02cf',
+    'fileHash' => 'c6662e37ae2d5e92d5773579533e40f09bb5615c',
     'dependentFiles' => 
     array (
     ),
   ),
   'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\ApplicationTest.php' => 
   array (
-    'fileHash' => '34958686f7ce207a66c463a2b9d93b982591f4e4',
+    'fileHash' => 'fcb4c0f892f6cc72ae022c0c208a85120cde8ef7',
     'dependentFiles' => 
     array (
     ),
   ),
   'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\ConversationTest.php' => 
   array (
-    'fileHash' => 'b02b59d3655a2ea4a0565f9ad0709e3028969d95',
+    'fileHash' => '3fc520a09bb19afb7c03451b05f3eede712179cf',
     'dependentFiles' => 
     array (
     ),
   ),
   'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\FileUploadTest.php' => 
   array (
-    'fileHash' => 'e020a215ff1d49f93cffc1f4f6d64482049242ce',
+    'fileHash' => 'bc277e5f05d4318c86e828800522050bc7230db1',
     'dependentFiles' => 
     array (
     ),
   ),
   'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\InvitationTest.php' => 
   array (
-    'fileHash' => '7a7d607329af8d401b1de7aeb271ce84e1b3dbe6',
+    'fileHash' => '9bcba49fc660b87e6442734834b25cd507106cb5',
     'dependentFiles' => 
     array (
     ),
   ),
   'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\JobsTest.php' => 
   array (
-    'fileHash' => 'd1e1c9246c5f5f5fbd71f981e2f3330c1548037a',
+    'fileHash' => '81c3a05cf106156de29a6db053922286a2b55349',
     'dependentFiles' => 
     array (
     ),
   ),
   'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\MeetingTest.php' => 
   array (
-    'fileHash' => '4fad3d8829b00feb9c087105dcb14b16b86f9167',
+    'fileHash' => '18d6636e68817178a8b6075278e119e6c1b2d075',
     'dependentFiles' => 
     array (
     ),
   ),
   'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\MessageTest.php' => 
   array (
-    'fileHash' => 'da2169f1ac7fb4ff21b3016b0f9c807fb77b7f8e',
+    'fileHash' => 'a06eda78352227a93dbf4023e0f8160e8696644c',
     'dependentFiles' => 
     array (
     ),
   ),
   'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\MessageValidationTest.php' => 
   array (
-    'fileHash' => 'be329c4d68a281251340dbff76fb1ba90e8765f6',
+    'fileHash' => 'dc238d41beca758b1c481260a697df3df8a01bcd',
     'dependentFiles' => 
     array (
     ),
   ),
   'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\NotificationsTest.php' => 
   array (
-    'fileHash' => '8d0a47035cb7d652077e32db499f66612d9d7e5d',
+    'fileHash' => '1c6d631c22f80d54eb82ea3ea9da4cb4ae54fb0f',
     'dependentFiles' => 
     array (
     ),
   ),
   'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\ProjectDashBoard\\DashboardTest.php' => 
   array (
-    'fileHash' => 'c2b5ae9ad9d79d014cd1b617fb07b417bd79f9ad',
+    'fileHash' => 'da37ca411c51d68ced610a8c36ebf41dd431c379',
     'dependentFiles' => 
     array (
     ),
   ),
   'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\ProjectDashBoard\\ProjectChartTests.php' => 
   array (
-    'fileHash' => 'ccd6d73d872c6c6ade2e6e605fb56f66b80ce9f7',
+    'fileHash' => '30f5451fbdf196bbdc91b3f32c151a2d6bb2ae99',
     'dependentFiles' => 
     array (
     ),
   ),
   'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\ProjectDashBoard\\UserActivitiesTest.php' => 
   array (
-    'fileHash' => '14c9c490dcff05f180e9600a1266ed91c758d111',
+    'fileHash' => 'c94214c9ff1c1ee5c62366c717c8becc5485bbe1',
     'dependentFiles' => 
     array (
     ),
   ),
   'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\ProjectDashBoard\\UserKpiMetricesTest.php' => 
   array (
-    'fileHash' => '37906029a4995b891113212866a6b7bf22f37633',
+    'fileHash' => '92de87f403c3c9f5a5c39d2bb297695c68cedcfa',
     'dependentFiles' => 
     array (
     ),
   ),
   'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\ProjectDashBoard\\UserProjectsPageTest.php' => 
   array (
-    'fileHash' => '6f410390f6e7dd0b13fc88566e0c713a8f180e57',
+    'fileHash' => 'c93dd148b4a5ca6f9c63f27e0ee454ea348800d3',
     'dependentFiles' => 
     array (
     ),
   ),
   'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\ProjectDashBoard\\UserTasksDataTest.php' => 
   array (
-    'fileHash' => '9c18ffbd64d35f8f71907b7750849e2f675117ce',
+    'fileHash' => '7f2ec25eb2a1e7065eea3cf777fb3df78878608a',
     'dependentFiles' => 
     array (
     ),
   ),
   'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\ProjectFeatureTest.php' => 
   array (
-    'fileHash' => 'c5a0014bf4214af5aabfa2bafe1a6a26c6941f07',
+    'fileHash' => '25794e9ed350662da07041713abe4d8b303f2561',
     'dependentFiles' => 
     array (
     ),
   ),
   'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\ProjectHealthScoreFeatureTest.php' => 
   array (
-    'fileHash' => '2a299a98b96097b799eea3f6a8c26cb8419ef9ed',
+    'fileHash' => '36b27f2ac138c9ee8dc7acdf0cf381e9ef1a0773',
     'dependentFiles' => 
     array (
     ),
@@ -20771,84 +20656,84 @@ return [
   ),
   'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\ProjectMailableTest.php' => 
   array (
-    'fileHash' => '8da04dc1fb15819c723f7b090ca83d0490e62235',
+    'fileHash' => '0019cb92aeeea8b5babd5ea6b029b72e58e5bfa9',
     'dependentFiles' => 
     array (
     ),
   ),
   'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\RecordActivityTest.php' => 
   array (
-    'fileHash' => 'f297a2d5968c21703b6466e3b1fbd6fd2cb81d5e',
+    'fileHash' => 'f34db9119e5dda255d428b985f76279e9dae8e94',
     'dependentFiles' => 
     array (
     ),
   ),
   'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\SearchableTest.php' => 
   array (
-    'fileHash' => '736d3286cc6f4b3deed992e36080bd82f0419484',
+    'fileHash' => 'e7c69c47b94dba05473bbd86723afd53b9f5f180',
     'dependentFiles' => 
     array (
     ),
   ),
   'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\StageTest.php' => 
   array (
-    'fileHash' => 'ae324b926cbf85fbbc529bf18744d19e2c60a802',
+    'fileHash' => 'b8b3efbd2b9368f7bbcdfb278df50461f9de4f7c',
     'dependentFiles' => 
     array (
     ),
   ),
   'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\TaskFeaturesTest.php' => 
   array (
-    'fileHash' => '339ddf8f5322da2c997749fcbc463e06858ec102',
+    'fileHash' => 'c06e00cd8772f467e40282221f6a3de2f42368f7',
     'dependentFiles' => 
     array (
     ),
   ),
   'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\TaskNotifyTest.php' => 
   array (
-    'fileHash' => 'b8ce48ade50c5af3a3f30d5048fd9ba48ac048b9',
+    'fileHash' => '6e271e5a70e6104b62c6690c72f20dc5d6ccf77b',
     'dependentFiles' => 
     array (
     ),
   ),
   'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\TaskTest.php' => 
   array (
-    'fileHash' => 'e4e86a7add335b8afa1d633513c16ec6092fa56c',
+    'fileHash' => '4bcbca8053d60d3cad710756abb06637c82a339f',
     'dependentFiles' => 
     array (
     ),
   ),
   'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\UserAvatarTest.php' => 
   array (
-    'fileHash' => 'f46b2a8699e050ce637087e83c617830fc980f9e',
+    'fileHash' => 'e7767224efa4395d00bdb7f7c7e220acc2beb309',
     'dependentFiles' => 
     array (
     ),
   ),
   'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\UserInvitationTest.php' => 
   array (
-    'fileHash' => 'e868df00286e9d410e5aeca8ee35e70f477ed78b',
+    'fileHash' => '28be0bebbb62d1e4c52bd62a2c7c96f93cd94cb3',
     'dependentFiles' => 
     array (
     ),
   ),
   'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\UserNotificationsTest.php' => 
   array (
-    'fileHash' => 'be64f0fa36974740799958c0183dfed9c583e03c',
+    'fileHash' => 'b94ebc516b39c4102c97d242e7f9839f9f8d8e62',
     'dependentFiles' => 
     array (
     ),
   ),
   'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\UserTest.php' => 
   array (
-    'fileHash' => '99b1be11a42b968613daef22ad4f468f2f03ab58',
+    'fileHash' => '892a734566e97ba3faf70f15bad6c2c71d223538',
     'dependentFiles' => 
     array (
     ),
   ),
   'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\UserTokenTest.php' => 
   array (
-    'fileHash' => 'ec742c74066a78578ac027bba09357d7526f2aac',
+    'fileHash' => 'af3f8105795ef27d1452a8299283362712334faa',
     'dependentFiles' => 
     array (
     ),
@@ -20973,14 +20858,14 @@ return [
   ),
   'D:\\apps\\profresh\\tests\\Unit\\Api\\V1\\HasSubscriptionTest.php' => 
   array (
-    'fileHash' => 'c345fbfcbe88e62ffa8a968a0cbc961c23610e87',
+    'fileHash' => '309c8db373bb5c27378449f1041258ae89ef573c',
     'dependentFiles' => 
     array (
     ),
   ),
   'D:\\apps\\profresh\\tests\\Unit\\MentionedUserTest.php' => 
   array (
-    'fileHash' => '163ce0799fbca1fdc9b7729e89444cacc1100756',
+    'fileHash' => 'cf4443f36f377faf22e31c50611d6b528ddc97f4',
     'dependentFiles' => 
     array (
     ),
@@ -21001,28 +20886,28 @@ return [
   ),
   'D:\\apps\\profresh\\tests\\Unit\\ProjectTest.php' => 
   array (
-    'fileHash' => '089467bc78d7a49d3a8f067948201e3fae755c1e',
+    'fileHash' => '54581f8a930e51c420ed47ec50f14b7c33ad97b7',
     'dependentFiles' => 
     array (
     ),
   ),
   'D:\\apps\\profresh\\tests\\Unit\\Repository\\DashboardInsightsRepositoryTest.php' => 
   array (
-    'fileHash' => '9bfc88f10dd042dcd984df572760a33fdb03d59e',
+    'fileHash' => '5a70fecf22a600cea82a5de28e4b3571abbd45a8',
     'dependentFiles' => 
     array (
     ),
   ),
   'D:\\apps\\profresh\\tests\\Unit\\Services\\DashboardInsightsServiceTest.php' => 
   array (
-    'fileHash' => '74e3efe868a5a03454d25b5f77044e77b064b327',
+    'fileHash' => '661d4d88168686aa9ad75a3d325598f9424c0836',
     'dependentFiles' => 
     array (
     ),
   ),
   'D:\\apps\\profresh\\tests\\Unit\\TaskTest.php' => 
   array (
-    'fileHash' => '58bf4d907edf2d46385f36019ac498f1ec22732e',
+    'fileHash' => '58407b0af91fd5229468e5efd8dcec8c43db59ae',
     'dependentFiles' => 
     array (
     ),
@@ -37214,6 +37099,7 @@ return [
              'uses' => 
             array (
               'activeprojectmember' => 'App\\Rules\\ActiveProjectMember',
+              'closure' => 'Closure',
               'formrequest' => 'Illuminate\\Foundation\\Http\\FormRequest',
             ),
              'constUses' => 
@@ -37246,6 +37132,7 @@ return [
              'uses' => 
             array (
               'activeprojectmember' => 'App\\Rules\\ActiveProjectMember',
+              'closure' => 'Closure',
               'formrequest' => 'Illuminate\\Foundation\\Http\\FormRequest',
             ),
              'constUses' => 
@@ -37276,7 +37163,7 @@ return [
            'abstract' => false,
            'final' => false,
            'static' => false,
-           'returnType' => NULL,
+           'returnType' => 'Closure',
            'parameters' => 
           array (
           ),
@@ -43005,7 +42892,7 @@ return [
             0 => 'meeting_id',
           ),
            'phpDoc' => NULL,
-           'type' => 'string',
+           'type' => 'int',
            'public' => true,
            'private' => false,
            'static' => false,
@@ -43213,7 +43100,7 @@ return [
             0 => 'meeting_id',
           ),
            'phpDoc' => NULL,
-           'type' => 'string',
+           'type' => 'int',
            'public' => true,
            'private' => false,
            'static' => false,

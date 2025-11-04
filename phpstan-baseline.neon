@@ -71,16 +71,6 @@ parameters:
 			path: app/Console/Kernel.php
 
 		-
-			message: "#^Parameter \\$created_at of class App\\\\DataTransferObjects\\\\Zoom\\\\Meeting constructor expects string, Carbon\\\\Carbon given\\.$#"
-			count: 1
-			path: app/DataTransferObjects/Zoom/Meeting.php
-
-		-
-			message: "#^Parameter \\$start_time of class App\\\\DataTransferObjects\\\\Zoom\\\\Meeting constructor expects string, Carbon\\\\Carbon given\\.$#"
-			count: 1
-			path: app/DataTransferObjects/Zoom/Meeting.php
-
-		-
 			message: "#^Method App\\\\Enums\\\\TaskDueNotifies\\:\\:values\\(\\) return type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: app/Enums/TaskDueNotifies.php
@@ -404,11 +394,6 @@ parameters:
 			message: "#^Method App\\\\Http\\\\Requests\\\\Api\\\\V1\\\\StageRequest\\:\\:rules\\(\\) return type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: app/Http/Requests/Api/V1/StageRequest.php
-
-		-
-			message: "#^Method App\\\\Http\\\\Requests\\\\Api\\\\V1\\\\TaskMembersRequest\\:\\:membersValidation\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: app/Http/Requests/Api/V1/TaskMembersRequest.php
 
 		-
 			message: "#^Method App\\\\Http\\\\Requests\\\\Api\\\\V1\\\\TaskMembersRequest\\:\\:rules\\(\\) return type has no value type specified in iterable type array\\.$#"
@@ -2156,27 +2141,12 @@ parameters:
 			path: tests/Feature/Api/Middleware/Zoom/VerifyWebhookTest.php
 
 		-
-			message: "#^Parameter \\#1 \\$timestamp of method Tests\\\\Feature\\\\Api\\\\Middleware\\\\Zoom\\\\VerifyWebhookTest\\:\\:buildSignature\\(\\) expects string, \\(float\\|int\\) given\\.$#"
-			count: 1
-			path: tests/Feature/Api/Middleware/Zoom/VerifyWebhookTest.php
-
-		-
-			message: "#^Parameter \\#1 \\$timestamp of method Tests\\\\Feature\\\\Api\\\\Middleware\\\\Zoom\\\\VerifyWebhookTest\\:\\:buildSignature\\(\\) expects string, int\\<1, max\\> given\\.$#"
-			count: 1
-			path: tests/Feature/Api/Middleware/Zoom/VerifyWebhookTest.php
-
-		-
 			message: "#^Property Tests\\\\Feature\\\\Api\\\\Middleware\\\\Zoom\\\\VerifyWebhookTest\\:\\:\\$payload has no type specified\\.$#"
 			count: 1
 			path: tests/Feature/Api/Middleware/Zoom/VerifyWebhookTest.php
 
 		-
 			message: "#^Property Tests\\\\Feature\\\\Api\\\\Middleware\\\\Zoom\\\\VerifyWebhookTest\\:\\:\\$timestamp has no type specified\\.$#"
-			count: 1
-			path: tests/Feature/Api/Middleware/Zoom/VerifyWebhookTest.php
-
-		-
-			message: "#^Undefined variable\\: \\$response$#"
 			count: 1
 			path: tests/Feature/Api/Middleware/Zoom/VerifyWebhookTest.php
 
@@ -2864,11 +2834,6 @@ parameters:
 			message: "#^Property Tests\\\\Feature\\\\Api\\\\V1\\\\RecordActivityTest\\:\\:\\$user has no type specified\\.$#"
 			count: 1
 			path: tests/Feature/Api/V1/RecordActivityTest.php
-
-		-
-			message: "#^Call to an undefined method App\\\\Services\\\\Api\\\\V1\\\\InvitationService\\:\\:memberSearch\\(\\)\\.$#"
-			count: 1
-			path: tests/Feature/Api/V1/SearchableTest.php
 
 		-
 			message: "#^Parameter \\#1 \\$user of static method Laravel\\\\Sanctum\\\\Sanctum\\<Laravel\\\\Sanctum\\\\PersonalAccessToken\\>\\:\\:actingAs\\(\\) expects Illuminate\\\\Contracts\\\\Auth\\\\Authenticatable\\|Laravel\\\\Sanctum\\\\HasApiTokens, Illuminate\\\\Database\\\\Eloquent\\\\Model given\\.$#"

@@ -98,7 +98,7 @@ class TaskTest extends TestCase
     /** @test */
     public function task_limit_per_project(): void
     {
-        Task::factory()->count(config('app.project.taskLimit'))
+        Task::factory()->count((int) config('app.project.taskLimit'))
             ->for($this->project)->create();
 
         $this->postJson($this->project->path().'/tasks',

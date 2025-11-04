@@ -106,7 +106,7 @@ class ZoomWebhookControllerTest extends TestCase
             ->assertOk()
             ->assertExactJson(['status' => 'success']);
 
-        Queue::assertPushed(StartMeetingWebhook::class, fn ($job): bool => $job->meeting_id === (string) $meetingId && $job->start_time === $startTime);
+        Queue::assertPushed(StartMeetingWebhook::class, fn ($job): bool => (int) $job->meeting_id === (int) $meetingId && $job->start_time === $startTime);
     }
 
     /** @test */
@@ -132,7 +132,7 @@ class ZoomWebhookControllerTest extends TestCase
             ->assertOk()
             ->assertExactJson(['status' => 'success']);
 
-        Queue::assertPushed(MeetingEndsWebhook::class, fn ($job): bool => $job->meeting_id === (string) $meetingId && $job->start_time === $startTime && $job->end_time === $endTime);
+        Queue::assertPushed(MeetingEndsWebhook::class, fn ($job): bool => (int) $job->meeting_id === (int) $meetingId && $job->start_time === $startTime && $job->end_time === $endTime);
 
     }
 

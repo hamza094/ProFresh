@@ -38,7 +38,7 @@ class SearchableTest extends TestCase
         $request = new Request(['query' => $query]);
 
         $service = new InvitationService;
-        $result = $service->memberSearch($request);
+        $result = $service->usersSearch($request);
 
         $this->assertCount(1, $result);
     }

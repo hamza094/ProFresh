@@ -2,6 +2,6 @@
 
 // variadic-method-App\Jobs\MailMessage-handle-D:\apps\profresh\app\Jobs\MailMessage.php
 return \PHPStan\Cache\CacheItem::__set_state(array(
-   'variableKey' => '1762181828-v4',
+   'variableKey' => '1762187075-v4',
    'data' => false,
 ));

@@ -2,6 +2,6 @@
 
 // variadic-method-Tests\Feature\Api\V1\NotificationsTest-sendInvitationToUser-D:\apps\profresh\tests\Feature\Api\V1\NotificationsTest.php
 return \PHPStan\Cache\CacheItem::__set_state(array(
-   'variableKey' => '1762177847-v4',
+   'variableKey' => '1762187076-v4',
    'data' => false,
 ));

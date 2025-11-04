@@ -2,6 +2,6 @@
 
 // variadic-method-App\Console\Commands\TaskNotify-processTasks-D:\apps\profresh\app\Console\Commands\TaskNotify.php
 return \PHPStan\Cache\CacheItem::__set_state(array(
-   'variableKey' => '1762181816-v4',
+   'variableKey' => '1762187075-v4',
    'data' => false,
 ));

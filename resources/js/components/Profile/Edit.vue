@@ -130,9 +130,8 @@ export default {
     this.form.bio = this.user.info.bio;
 
     // Prefer structuredClone (native, faster). Fallback to JSON clone for older browsers.
-    this.originalData = typeof structuredClone === 'function'
-      ? structuredClone(this.form)
-      : JSON.parse(JSON.stringify(this.form));
+    this.originalData =
+      typeof structuredClone === 'function' ? structuredClone(this.form) : JSON.parse(JSON.stringify(this.form));
   },
   methods: {
     ...mapMutations('profile', ['updateUser']),

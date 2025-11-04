@@ -2,6 +2,6 @@
 
 // variadic-method-App\Providers\RouteServiceProvider-mapAuthRoutes-D:\apps\profresh\app\Providers\RouteServiceProvider.php
 return \PHPStan\Cache\CacheItem::__set_state(array(
-   'variableKey' => '1762181707-v4',
+   'variableKey' => '1762187075-v4',
    'data' => false,
 ));

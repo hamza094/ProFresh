@@ -64,7 +64,7 @@
 
     <div class="project_members">
       <div class="task-top">
-          <p>
+        <p>
           <b>Project Members</b>
           <button
             type="button"
@@ -93,14 +93,13 @@
                 </p>
                 <p></p>
               </router-link>
-                <button
-                  v-if="ownerLogin && member.uuid !== owner.uuid"
-                  type="button"
-                  @click.prevent="removeMember(member.uuid)"
-                  class="text-danger btn btn-link p-0"
-                >
-                  Remove
-                </button>
+              <button
+                v-if="ownerLogin && member.uuid !== owner.uuid"
+                type="button"
+                @click.prevent="removeMember(member.uuid)"
+                class="text-danger btn btn-link p-0">
+                Remove
+              </button>
             </div>
           </div>
         </div>
@@ -109,7 +108,7 @@
 
     <div class="project_members">
       <div class="task-top">
-          <p>
+        <p>
           <b>Pending Members</b>
           <button
             type="button"
@@ -144,8 +143,7 @@
                   v-if="ownerLogin && member.uuid !== owner.uuid"
                   type="button"
                   @click.prevent="cancelRequest(member.uuid, member)"
-                  class="text-danger btn btn-link p-0"
-                >
+                  class="text-danger btn btn-link p-0">
                   Cancel
                 </button>
               </div>

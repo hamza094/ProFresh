@@ -20,8 +20,7 @@
               type="button"
               class="panel-exit float-right"
               aria-label="Close"
-              @click.prevent="meetingModalClose"
-            >
+              @click.prevent="meetingModalClose">
               x
             </button>
           </div>

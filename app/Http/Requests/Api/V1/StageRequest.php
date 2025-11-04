@@ -28,7 +28,7 @@ class StageRequest extends FormRequest
              * @example 1
              */
             'stage' => ['required', 'int',
-                function (mixed $value, Closure $fail): void {
+                function (string $attribute, mixed $value, Closure $fail): void {
                     if ((int) $value === (int) $this->project->stage_id) {
                         $fail('The selected stage must be different from the current project stage.');
                     }
@@ -48,7 +48,6 @@ class StageRequest extends FormRequest
         return [
             'stage.required' => 'The stage field is required.',
             'stage.in' => 'The selected stage is invalid. Please choose a valid stage.',
-            // Add more custom messages here
         ];
     }
 }

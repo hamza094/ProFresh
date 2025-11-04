@@ -229,7 +229,7 @@ class Project extends Model
     {
         $this->loadCount('tasks');
 
-        return $this->tasks_count === config('app.project.taskLimit');
+        return $this->tasks_count === (int) config('app.project.taskLimit');
     }
 
     /**

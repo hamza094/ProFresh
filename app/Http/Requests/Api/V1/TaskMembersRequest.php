@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Requests\Api\V1;
 
 use App\Rules\ActiveProjectMember;
+use Closure;
 use Illuminate\Foundation\Http\FormRequest;
 
 class TaskMembersRequest extends FormRequest
@@ -37,9 +38,10 @@ class TaskMembersRequest extends FormRequest
         ];
     }
 
-    protected function membersValidation()
+    protected function membersValidation(): Closure
     {
-        return function ($value, $fail): void {
+        return function (string $attribute, $value, Closure $fail): void {
+
             $existingMembersCount = $this->task->assignee()
                 ->whereIn('user_id', $value)
                 ->count();

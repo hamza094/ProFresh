@@ -92,11 +92,14 @@ class AppServiceProvider extends ServiceProvider
          * @return PaginationService
          */
         Collection::macro('paginate', function ($perPage, $total = null, $page = null, $pageName = 'page'): PaginationService {
-            $page = $page ?: PaginationService::resolveCurrentPage($pageName);
+            // Coerce scalar inputs to integers to satisfy strict_types and paginator requirements
+            $perPage = (int) $perPage;
+            $page = $page !== null ? (int) $page : PaginationService::resolveCurrentPage($pageName);
+            $resolvedTotal = $total !== null ? (int) $total : $this->count();
 
             return new PaginationService(
                 $this->forPage($page, $perPage)->values(),
-                $total ?: $this->count(),
+                $resolvedTotal,
                 $perPage,
                 $page,
                 [

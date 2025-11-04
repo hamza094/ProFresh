@@ -23,7 +23,7 @@ class StartMeetingWebhook implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    public string $meeting_id;
+    public int $meeting_id;
 
     public string $start_time;
 
@@ -33,7 +33,7 @@ class StartMeetingWebhook implements ShouldQueue
      */
     public function __construct(array $data)
     {
-        $this->meeting_id = $data['meeting_id'];
+        $this->meeting_id = (int) $data['meeting_id'];
         $this->start_time = $data['start_time'];
     }
 

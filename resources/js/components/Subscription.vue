@@ -67,7 +67,11 @@
           </button>
 
           <!-- Paddle payment iframe -->
-          <iframe :src="iframeSrc" class="subscription-modal-iframe" title="Paddle payment" @load="isOpeningIframe = false"></iframe>
+          <iframe
+            :src="iframeSrc"
+            class="subscription-modal-iframe"
+            title="Paddle payment"
+            @load="isOpeningIframe = false"></iframe>
 
           <!-- Spinner while iframe is loading -->
           <div v-if="isOpeningIframe" class="subscription-modal-spinner">Loading...</div>
