@@ -1,13 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Events;
 
+use App\Http\Resources\Api\V1\Admin\ActivitiesResource;
 use App\Models\Activity;
 use Illuminate\Broadcasting\Channel;
-use App\Http\Resources\Api\V1\Admin\ActivitiesResource;
 use Illuminate\Broadcasting\InteractsWithSockets;
-use Illuminate\Broadcasting\PresenceChannel;
-use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
@@ -16,6 +16,9 @@ class DashboardActivity implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
+    /**
+     * @var Activity
+     */
     public $activity;
 
     /**
@@ -31,7 +34,7 @@ class DashboardActivity implements ShouldBroadcast
     /**
      * Get the channels the event should broadcast on.
      *
-     * @return \Illuminate\Broadcasting\Channel|array
+     * @return Channel|array
      */
     public function broadcastOn()
     {
@@ -40,6 +43,6 @@ class DashboardActivity implements ShouldBroadcast
 
     public function broadcastWith()
     {
-       return (new ActivitiesResource($this->activity))->resolve();
+        return (new ActivitiesResource($this->activity))->resolve();
     }
 }

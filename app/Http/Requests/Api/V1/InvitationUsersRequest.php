@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Requests\Api\V1;
 
 use Illuminate\Foundation\Http\FormRequest;
@@ -8,10 +10,8 @@ class InvitationUsersRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
-     *
-     * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
@@ -21,22 +21,23 @@ class InvitationUsersRequest extends FormRequest
      *
      * @return array<string, string>
      */
-    public function rules()
+    public function rules(): array
     {
         return [
-         /**
-          * - Email must be present in database
-          * @example maximillia.koelpin@example.com
-          */    
-        'email' => 'required|email|exists:users,email',
+            /**
+             * - Email must be present in database
+             *
+             * @example maximillia.koelpin@example.com
+             */
+            'email' => 'required|email|exists:users,email',
         ];
     }
- 
+
     /**
-    * Custom error messages for validation.
-    *
-    * @return array<string, string>
-    */
+     * Custom error messages for validation.
+     *
+     * @return array<string, string>
+     */
     public function messages()
     {
         return [

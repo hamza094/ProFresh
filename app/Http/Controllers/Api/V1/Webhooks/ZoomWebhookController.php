@@ -1,15 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Api\V1\Webhooks;
 
 use App\Http\Controllers\Controller;
-use App\Jobs\Webhooks\Zoom\UpdateMeetingWebhook;
-use App\Jobs\Webhooks\Zoom\DeleteMeetingWebhook;
-use App\Jobs\Webhooks\Zoom\StartMeetingWebhook;
-use App\Jobs\Webhooks\Zoom\MeetingEndsWebhook;
 use App\Http\Requests\Api\V1\Zoom\WebhookRequest;
-
-use Illuminate\Http\Request;
+use App\Jobs\Webhooks\Zoom\DeleteMeetingWebhook;
+use App\Jobs\Webhooks\Zoom\MeetingEndsWebhook;
+use App\Jobs\Webhooks\Zoom\StartMeetingWebhook;
+use App\Jobs\Webhooks\Zoom\UpdateMeetingWebhook;
 use Illuminate\Http\JsonResponse;
 
 class ZoomWebhookController extends Controller
@@ -21,7 +21,7 @@ class ZoomWebhookController extends Controller
         /** @var array<string, mixed> $object */
         UpdateMeetingWebhook::dispatch([
             'meeting_id' => $object['id'],
-            'update_data' => collect($object)->except(['id', 'uuid'])->toArray()
+            'update_data' => collect($object)->except(['id', 'uuid'])->toArray(),
         ]);
 
         return response()->json(['status' => 'success'], 200);
@@ -40,12 +40,12 @@ class ZoomWebhookController extends Controller
 
     public function start(WebhookRequest $request): JsonResponse
     {
-       $object = $request->input('payload.object');
+        $object = $request->input('payload.object');
 
         StartMeetingWebhook::dispatchAfterResponse([
             'meeting_id' => $object['id'],
             'start_time' => $object['start_time'] ?? null,
-            ]);
+        ]);
 
         return response()->json(['status' => 'success'], 200);
     }
@@ -62,6 +62,4 @@ class ZoomWebhookController extends Controller
 
         return response()->json(['status' => 'success'], 200);
     }
-
 }
-

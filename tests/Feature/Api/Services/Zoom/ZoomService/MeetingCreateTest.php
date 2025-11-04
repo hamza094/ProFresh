@@ -1,29 +1,28 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Feature\Api\Services\Zoom\ZoomService;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
-use App\DataTransferObjects\Zoom\NewMeetingData;
-use App\Exceptions\Integrations\Zoom\ZoomException;
 use App\Http\Integrations\Zoom\Requests\CreateMeeting;
 use App\Http\Integrations\Zoom\Requests\GetRefreshTokenRequest;
+use App\Models\User;
 use App\Services\Api\V1\Zoom\ZoomService;
-use Saloon\RateLimitPlugin\Exceptions\RateLimitReachedException;
+use DateTimeImmutable;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Saloon\Enums\Method;
 use Saloon\Http\Faking\MockResponse;
 use Saloon\Http\PendingRequest;
-use Saloon\Enums\Method;
 use Saloon\Laravel\Facades\Saloon;
+use Saloon\RateLimitPlugin\Exceptions\RateLimitReachedException;
 use Tests\TestCase;
-use App\Models\User;
-use Carbon\Carbon;
-use DateTime;
 
 class MeetingCreateTest extends TestCase
 {
     use RefreshDatabase;
 
     private User $user;
+
     private array $meetingData;
 
     protected function setUp(): void
@@ -35,7 +34,7 @@ class MeetingCreateTest extends TestCase
             'duration' => 30,
             'password' => 'hacker',
             'join_before_host' => false,
-            'start_time' => (new DateTime('2024-06-18T18:00:07Z'))->format('Y-m-d H:i:s'),
+            'start_time' => (new DateTimeImmutable('2024-06-18T18:00:07Z'))->format('Y-m-d H:i:s'),
             'timezone' => 'UTC',
         ];
         $this->user = $this->userCreate(now()->addWeek());
@@ -54,7 +53,7 @@ class MeetingCreateTest extends TestCase
             ]),
             'users/me/meetings' => $this->mockMeetingResponse(),
         ]);
-        $meeting = (new ZoomService())->createMeeting($this->meetingData, $expiredUser);
+        (new ZoomService)->createMeeting($this->meetingData, $expiredUser);
         Saloon::assertSent(GetRefreshTokenRequest::class);
         $expiredUser->refresh();
         $this->assertEquals('new-access-token-here', $expiredUser->zoom_access_token);
@@ -69,8 +68,7 @@ class MeetingCreateTest extends TestCase
             'users/me/meetings' => $this->mockMeetingResponse(),
         ]);
         $this->createAndAssertMeeting($this->meetingData, $this->user);
-        Saloon::assertSent(fn(CreateMeeting $request): bool =>
-            $request->resolveEndpoint() === '/users/me/meetings'
+        Saloon::assertSent(fn (CreateMeeting $request): bool => $request->resolveEndpoint() === '/users/me/meetings'
             && $request->getMethod() === Method::POST
             && $request->body()->all() === [
                 'topic' => $this->meetingData['topic'],
@@ -78,7 +76,7 @@ class MeetingCreateTest extends TestCase
                 'duration' => $this->meetingData['duration'],
                 'password' => $this->meetingData['password'],
                 'join_before_host' => $this->meetingData['join_before_host'],
-                'start_time' => (new DateTime('2024-06-18T18:00:07Z'))->format('Y-m-d\TH:i:s\Z'),
+                'start_time' => (new DateTimeImmutable('2024-06-18T18:00:07Z'))->format('Y-m-d\TH:i:s\Z'),
                 'timezone' => $this->meetingData['timezone'],
             ]
         );
@@ -94,13 +92,14 @@ class MeetingCreateTest extends TestCase
                 if ($requestCount > 2) {
                     return MockResponse::make(['error' => 'Rate limit exceeded'], 429);
                 }
+
                 return $this->mockMeetingResponse();
             },
         ]);
         $this->createAndAssertMeeting($this->meetingData, $this->user);
         $this->createAndAssertMeeting($this->meetingData, $this->user);
         $this->expectException(RateLimitReachedException::class);
-        (new ZoomService())->createMeeting($this->meetingData, $this->user);
+        (new ZoomService)->createMeeting($this->meetingData, $this->user);
     }
 
     private function userCreate($expireAt): User
@@ -131,7 +130,7 @@ class MeetingCreateTest extends TestCase
 
     private function createAndAssertMeeting(array $meetingData, User $user): void
     {
-        $meeting = (new ZoomService())->createMeeting($meetingData, $user);
+        $meeting = (new ZoomService)->createMeeting($meetingData, $user);
         $expectedAttributes = [
             'meeting_id' => 124,
             'topic' => $meetingData['topic'],

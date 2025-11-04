@@ -1,0 +1,7 @@
+<?php declare(strict_types = 1);
+
+// variadic-method-Tests\Feature\V1\Services\Zoom\ZoomService\MeetingUpdateTest-userCreate-D:\apps\profresh\tests\Feature\Api\Services\Zoom\ZoomService\MeetingUpdateTest.php
+return \PHPStan\Cache\CacheItem::__set_state(array(
+   'variableKey' => '1762187076-v4',
+   'data' => false,
+));

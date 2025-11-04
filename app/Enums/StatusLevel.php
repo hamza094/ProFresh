@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Enums;
 
 enum StatusLevel: string
@@ -12,6 +14,7 @@ enum StatusLevel: string
     public static function fromOverdue(int $count): self
     {
         $warnMax = (int) config('dashboard.statuses.overdue.warning_max', 3);
+
         return match (true) {
             $count === 0 => self::GOOD,
             $count <= $warnMax => self::WARNING,
@@ -22,6 +25,7 @@ enum StatusLevel: string
     public static function fromCriticalProjects(int $count): self
     {
         $warnMax = (int) config('dashboard.statuses.critical_projects.warning_max', 2);
+
         return match (true) {
             $count === 0 => self::GOOD,
             $count <= $warnMax => self::WARNING,
@@ -80,6 +84,7 @@ enum StatusLevel: string
     public static function fromProjectOverdue(int $count): self
     {
         $warnMax = (int) config('dashboard.project.statuses.overdue.warning_max', 2);
+
         return match (true) {
             $count === 0 => self::GOOD,
             $count <= $warnMax => self::WARNING,
@@ -90,6 +95,7 @@ enum StatusLevel: string
     public static function fromUpcomingRisk(int $count): self
     {
         $warnMax = (int) config('dashboard.project.statuses.upcoming_risk.warning_max', 2);
+
         return match (true) {
             $count === 0 => self::GOOD,
             $count <= $warnMax => self::WARNING,

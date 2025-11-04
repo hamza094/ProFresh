@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Actions\ProjectMetrics;
 
 use App\Models\Project;
@@ -15,6 +17,7 @@ class CommunicationHealthMetricAction
         $conversationCount = $this->getRecentConversationCount($project);
         $config = $this->resolveCommunicationConfig();
         $rawScore = $this->computeRawScore($conversationCount, $config['logBase'], $config['scale']);
+
         return $this->clampScore($rawScore, $config['maxScore']);
     }
 

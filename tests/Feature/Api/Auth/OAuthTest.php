@@ -1,45 +1,41 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Feature\Api\Auth;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
+use App\Enums\OAuthProvider;
 use App\Models\User;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Laravel\Socialite\Facades\Socialite;
 use Laravel\Socialite\Two\User as SocialiteUser;
-use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Mockery as m;
-use Faker\Factory as Faker;
-use App\Enums\OAuthProvider;
-use Illuminate\Support\Facades\Crypt;
 use Tests\TestCase;
 
 class OAuthTest extends TestCase
-{ 
+{
     use RefreshDatabase;
 
     /** @test */
-    public function test_OAuth_redirect()
+    public function test_o_auth_redirect(): void
     {
         $provider = OAuthProvider::GitHub;
 
-        $response = $this->getJson('/api/v1/auth/redirect/'.$provider->value);        
+        $response = $this->getJson('/api/v1/auth/redirect/'.$provider->value);
 
         $response->assertStatus(200)
-                 ->assertJsonStructure(['redirect_url']);
+            ->assertJsonStructure(['redirect_url']);
     }
 
     /** @test */
-    public function give_old_user_if_its_present()
+    public function give_old_user_if_its_present(): void
     {
-        $user=User::factory(['email' => 'test@example.com'])->create();
+        $user = User::factory(['email' => 'test@example.com'])->create();
 
         $this->performOAuthCallback();
 
-        $response=$this->get(route('oauth.callback', ['provider' => 'github']))->assertSuccessful();
-        
+        $this->get(route('oauth.callback', ['provider' => 'github']))->assertSuccessful();
+
         $this->assertDatabaseHas('users', [
             'name' => $user->name,
             'username' => $user->username,
@@ -54,19 +50,18 @@ class OAuthTest extends TestCase
         $this->assertEquals('refresh-token', $user->oauth_refresh_token);
     }
 
-
     /** @test */
-    public function test_OAuth_callback()
+    public function test_o_auth_callback(): void
     {
         $this->performOAuthCallback();
 
-        $response=$this->get(route('oauth.callback', ['provider' => 'github']))->assertSuccessful()
-                        ->assertJsonStructure([
-                         'user' => ['uuid','name','email'],
-                         'access_token',
-                         'message'
-                        ]);
-        
+        $this->get(route('oauth.callback', ['provider' => 'github']))->assertSuccessful()
+            ->assertJsonStructure([
+                'user' => ['uuid', 'name', 'email'],
+                'access_token',
+                'message',
+            ]);
+
         $this->assertDatabaseHas('users', [
             'name' => 'Test User',
             'username' => 'jinx004',
@@ -79,22 +74,6 @@ class OAuthTest extends TestCase
 
         $this->assertEquals('access-token', $user->oauth_token);
         $this->assertEquals('refresh-token', $user->oauth_refresh_token);
-    }
-
-    /**
-      * Perform the OAuth callback for testing.
-    */
-    private function performOAuthCallback()
-    {
-      $this->mockSocialite('github', [
-         'id' => '123',
-         'name' => 'Test User',
-         'email' => 'test@example.com',
-         'token' => 'access-token',
-         'nickname' => 'jinx004',
-         'avatar' => 'https://example.com/avatar.jpg',
-         'refreshToken' => 'refresh-token',
-      ]); 
     }
 
     protected function mockSocialite($provider, $user = null)
@@ -114,4 +93,19 @@ class OAuthTest extends TestCase
         }
     }
 
+    /**
+     * Perform the OAuth callback for testing.
+     */
+    private function performOAuthCallback(): void
+    {
+        $this->mockSocialite('github', [
+            'id' => '123',
+            'name' => 'Test User',
+            'email' => 'test@example.com',
+            'token' => 'access-token',
+            'nickname' => 'jinx004',
+            'avatar' => 'https://example.com/avatar.jpg',
+            'refreshToken' => 'refresh-token',
+        ]);
+    }
 }

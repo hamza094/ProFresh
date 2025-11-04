@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:noNamespaceSchemaLocation="./vendor/phpunit/phpunit/phpunit.xsd"
+         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.1/phpunit.xsd"
          bootstrap="vendor/autoload.php"
          colors="true"
 >
@@ -12,11 +12,21 @@
             <directory suffix="Test.php">./tests/Feature</directory>
         </testsuite>
     </testsuites>
-    <coverage processUncoveredFiles="true">
+    <source>
         <include>
             <directory suffix=".php">./app</directory>
         </include>
-    </coverage>
+        <exclude>
+            <directory>./app/Console</directory>
+            <directory>./app/Exceptions</directory>
+            <directory>./app/Providers</directory>
+            <directory>./app/Http/Controllers/Api/v1/Admin</directory>
+            <directory>./app/Http/Requests/Api/V1/Admin</directory>
+            <directory>./app/Http/Requests/Api/V1/Admin</directory>
+            <directory>./app/Services/Api/V1/Admin</directory>
+            <file>./app/Http/Kernel.php</file>
+        </exclude>
+    </source>
     <php>
         <server name="APP_ENV" value="testing"/>
         <server name="BCRYPT_ROUNDS" value="4"/>

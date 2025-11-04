@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
 use App\Models\Stage;
+use Illuminate\Database\Seeder;
 
 class StageSeeder extends Seeder
 {
@@ -14,7 +16,7 @@ class StageSeeder extends Seeder
      */
     public function run()
     {
-        $stages = ['design', 'develop', 'testing','deliver','completed','postponed'];
+        $stages = ['design', 'develop', 'testing', 'deliver', 'completed', 'postponed'];
 
         $stageFactory = Stage::factory()->count(1);
         $stageFactory->create();

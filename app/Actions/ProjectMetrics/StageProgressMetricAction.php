@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Actions\ProjectMetrics;
 
-use App\Models\Project;
 use App\Enums\ProjectStage;
+use App\Models\Project;
 
 class StageProgressMetricAction
 {

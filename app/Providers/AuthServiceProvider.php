@@ -1,16 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Providers;
 
-use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
-use Illuminate\Support\Facades\Gate;
 use App\Models\Task;
-use Illuminate\Validation\Rules\Password;
-use Illuminate\Notifications\Messages\MailMessage;
-use Illuminate\Validation\ValidationException;
 use Illuminate\Auth\Notifications\VerifyEmail;
-use Illuminate\Support\Facades\URL;
+use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\URL;
+use Illuminate\Validation\Rules\Password;
+use Illuminate\Validation\ValidationException;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -21,59 +23,47 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         'App\Model' => 'App\Policies\ModelPolicy',
-        'App\Models\Project' => 'App\Policies\ProjectsPolicy',
-        'App\Models\User' => 'App\Policies\UsersPolicy',
-        'App\Models\Task' => 'App\Policies\TasksPolicy',
-        'App\Models\Conversation' => 'App\Policies\ConversationPolicy',
+        \App\Models\Project::class => \App\Policies\ProjectsPolicy::class,
+        \App\Models\User::class => \App\Policies\UsersPolicy::class,
+        Task::class => \App\Policies\TasksPolicy::class,
+        \App\Models\Conversation::class => \App\Policies\ConversationPolicy::class,
 
     ];
 
     /**
      * Register any authentication / authorization services.
-     *
-     * @return void
      */
-    public function boot()
+    public function boot(): void
     {
         $this->registerPolicies();
 
         Password::defaults(
-            fn () =>
-        Password::min(8)
-            ->letters()
-             ->mixedCase()
-            ->numbers()
-            ->symbols()
+            fn () => Password::min(8)
+                ->letters()
+                ->mixedCase()
+                ->numbers()
+                ->symbols()
         );
 
-        Gate::before(function ($user, $ability) {
-            return $user->hasRole('Admin') ? true : null;
-        });
+        Gate::before(fn ($user, $ability): ?true => $user->hasRole('Admin') ? true : null);
 
+        Gate::define('forbid-when-archived', fn ($user, Task $task): true => $task->trashed()
+        ? throw ValidationException::withMessages(['task' => 'Task is archived. Activate the task to proceed.']) : true);
 
-        Gate::define('forbid-when-archived', function ($user, Task $task) {
-            return $task->trashed()
-            ? throw ValidationException::withMessages(['task' => 'Task is archived. Activate the task to proceed.']) : true;
-        });
+        VerifyEmail::toMailUsing(fn (object $notifiable, string $url) => (new MailMessage)
+            ->subject('Verify Email Address')
+            ->line('Click the button below to verify your email address.This link will expire after 60 minutes.Please Remember you must be login to get your account verified')
+            ->action('Verify Email Address', $url));
 
-
-        VerifyEmail::toMailUsing(function (object $notifiable, string $url) {
-            return (new MailMessage())
-                ->subject('Verify Email Address')
-                ->line('Click the button below to verify your email address.This link will expire after 60 minutes.Please Remember you must be login to get your account verified')
-                ->action('Verify Email Address', $url);
-        });
-
-        VerifyEmail::$createUrlCallback = function ($notifiable) {
-            return URL::temporarySignedRoute(
-                'verification.verify',
-                Carbon::now()->addMinutes(60),
-                [
-                    'user' => $notifiable->uuid,
-                    'hash' => sha1($notifiable->getEmailForVerification()),
-                ]
-            );
-        };
+        VerifyEmail::$createUrlCallback = fn ($notifiable) => URL::temporarySignedRoute(
+            'verification.verify',
+            Carbon::now()->addMinutes(60),
+            [
+                'user' => $notifiable->uuid,
+                // sha1 is expected by Laravel's verification flow; the URL itself is HMAC-signed via temporarySignedRoute. NOSONAR
+                'hash' => sha1((string) $notifiable->getEmailForVerification()),
+            ]
+        );
 
     }
 }

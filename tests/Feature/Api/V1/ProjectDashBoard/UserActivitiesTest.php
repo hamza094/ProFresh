@@ -1,23 +1,25 @@
 <?php
+
+declare(strict_types=1);
+
 namespace Tests\Feature\Api\V1\ProjectDashboard;
 
-use Tests\TestCase;
-use App\Models\User;
 use App\Models\Activity;
 use App\Models\Project;
-use Carbon\Carbon;
-use App\Traits\ProjectSetup;
-use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use App\Models\User;
 use App\Repository\DashBoardRepository;
+use App\Traits\ProjectSetup;
+use Carbon\Carbon;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Cache;
+use Tests\TestCase;
 
 class UserActivitiesTest extends TestCase
 {
-    use RefreshDatabase, ProjectSetup;
+    use ProjectSetup, RefreshDatabase;
 
     /** @test */
-    public function activities_endpoint_validates_date_parameters()
+    public function activities_endpoint_validates_date_parameters(): void
     {
         // Test missing parameters
         $response = $this->getJson('api/v1/user/activities');
@@ -41,15 +43,15 @@ class UserActivitiesTest extends TestCase
     }
 
     /** @test */
-    public function user_can_view_activities_within_date_range()
+    public function user_can_view_activities_within_date_range(): void
     {
         // Create activities for different dates
-        $activity1 = Activity::factory()
+        Activity::factory()
             ->forUser($this->user)
             ->forProject($this->project)
             ->create(['created_at' => '2025-08-01 10:00:00']);
 
-        $activity2 = Activity::factory()
+        Activity::factory()
             ->forUser($this->user)
             ->forProject($this->project)
             ->create(['created_at' => '2025-08-15 10:00:00']);
@@ -68,9 +70,9 @@ class UserActivitiesTest extends TestCase
             ->create(['created_at' => '2025-08-10 10:00:00']);
 
         $response = $this->getJson('api/v1/user/activities?start_date=2025-08-01&end_date=2025-08-31');
-                
-        $activities = $response->json();
-        
+
+        $response->json();
+
         $response->assertOk()
             ->assertJsonCount(2) // one user activity from project setup trait
             ->assertJsonStructure([
@@ -79,23 +81,23 @@ class UserActivitiesTest extends TestCase
                     'description',
                     'created_at',
                     'user_id',
-                    'project'
-                ]
+                    'project',
+                ],
             ])
             ->assertJsonFragment([
                 'user_id' => $this->user->id,
-                'created_at' => '2025-08-01 10:00:00'
+                'created_at' => '2025-08-01 10:00:00',
             ])
             ->assertJsonFragment([
                 'user_id' => $this->user->id,
-                'created_at' => '2025-08-15 10:00:00'
+                'created_at' => '2025-08-15 10:00:00',
             ])
             ->assertJsonMissing(['user_id' => $otherUser->id]);
 
     }
 
     /** @test */
-    public function activities_include_soft_deleted_projects()
+    public function activities_include_soft_deleted_projects(): void
     {
         // Create a project and its activity
         $project = $this->project;
@@ -105,10 +107,10 @@ class UserActivitiesTest extends TestCase
 
         // Use current month's start and end dates to avoid future flakiness
         $start = Carbon::now()->startOfMonth()->toDateString();
-        $end   = Carbon::now()->endOfMonth()->toDateString();
+        $end = Carbon::now()->endOfMonth()->toDateString();
 
         $response = $this->getJson("api/v1/user/activities?start_date={$start}&end_date={$end}");
-        
+
         $response->assertOk()
             ->assertJsonCount(2);
 
@@ -119,7 +121,7 @@ class UserActivitiesTest extends TestCase
     }
 
     /** @test */
-    public function it_returns_empty_array_when_no_activities_in_range()
+    public function it_returns_empty_array_when_no_activities_in_range(): void
     {
         // Create activity outside the requested date range
         Activity::factory()
@@ -128,41 +130,33 @@ class UserActivitiesTest extends TestCase
             ->create(['created_at' => '2025-07-01 10:00:00']);
 
         $response = $this->getJson('api/v1/user/activities?start_date=2025-08-01&end_date=2025-08-10');
-        
+
         $response->assertOk()
             ->assertJsonCount(0)
             ->assertJson([]);
     }
-    
 
-    public function test_get_user_activities_is_cached()
+    public function test_get_user_activities_is_cached(): void
     {
         // create an activity inside the date range
         Activity::factory()->forUser($this->user)->forProject($this->project)
             ->create(['created_at' => '2025-08-05 10:00:00']);
 
         $start = Carbon::parse('2025-08-01')->startOfDay();
-        $end   = Carbon::parse('2025-08-31')->endOfDay();
+        $end = Carbon::parse('2025-08-31')->endOfDay();
 
-        $repo = new DashBoardRepository();
+        $repo = new DashBoardRepository;
 
         $collection = $repo->getUserActivities($this->user->id, $start, $end);
 
-        // compute expected key the same way repository does
-        $expectedKey = "activities_{$this->user->id}_{$start->format('Ymd')}_{$end->format('Ymd')}";
-  
         Cache::shouldReceive('remember')
-    ->andReturnUsing(function ($key, $ttl, $callback) {
-        return $callback(); // run the original query callback
-    });
+            ->andReturnUsing(function ($key, $ttl, $callback) {
+                return $callback(); // run the original query callback
+            });
 
         // ✅ On second call, should retrieve from cache
-    $collection2 = $repo->getUserActivities($this->user->id, $start, $end);
+        $collection2 = $repo->getUserActivities($this->user->id, $start, $end);
 
-    $this->assertEquals($collection->pluck('id')->all(), $collection2->pluck('id')->all());
+        $this->assertEquals($collection->pluck('id')->all(), $collection2->pluck('id')->all());
     }
 }
-
-
-
-

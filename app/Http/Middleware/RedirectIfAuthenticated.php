@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Middleware;
 
 use App\Providers\RouteServiceProvider;
@@ -12,25 +14,25 @@ class RedirectIfAuthenticated
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
+     * @param  Request  $request
      * @param  string|null  $guard
      * @return mixed
      */
     public function handle($request, Closure $next, $guard = null)
     {
-      $guards = empty($guards) ? [null] : $guards;
+        $guards = empty($guards) ? [null] : $guards;
 
-      foreach ($guards as $guard) {
-          if (Auth::guard($guard)->check()) {
-              if ($request->expectsJson()) {
-                  return response()->json(['error' => 'Already authenticated.'], 400);
-              } else {
-                  return redirect(RouteServiceProvider::HOME);
-              }
-          }
-      }
+        foreach ($guards as $guard) {
+            if (Auth::guard($guard)->check()) {
+                if ($request->expectsJson()) {
+                    return response()->json(['error' => 'Already authenticated.'], 400);
+                }
 
-      return $next($request);
+                return redirect(RouteServiceProvider::HOME);
+
+            }
+        }
+
+        return $next($request);
     }
 }

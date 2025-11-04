@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Factories;
 
 use App\Models\Conversation;
-use App\Models\User;
 use App\Models\Project;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class ConversationFactory extends Factory
@@ -24,9 +26,9 @@ class ConversationFactory extends Factory
     public function definition()
     {
         return [
-        'message'=> $this->faker->sentence,
-        'user_id'=>User::factory(),
-        'project_id'=>Project::factory(),
+            'message' => $this->faker->sentence,
+            'user_id' => User::factory(),
+            'project_id' => Project::factory(),
         ];
     }
 }

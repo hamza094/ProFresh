@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
 
     /*
@@ -39,7 +41,7 @@ return [
     */
 
     'format' => 'jS F Y g:i:a',
-    
+
     /*
     |--------------------------------------------------------------------------
     | Enable translated output

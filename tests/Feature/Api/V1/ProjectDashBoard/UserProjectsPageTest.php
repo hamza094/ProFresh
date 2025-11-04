@@ -1,22 +1,22 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Feature\Api\V1\ProjectDashboard;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
-use App\Traits\ProjectSetup;
 use App\Models\Project;
 use App\Models\User;
+use App\Traits\ProjectSetup;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
 use Tests\TestCase;
-use Laravel\Sanctum\Sanctum;
 
 class UserProjectsPageTest extends TestCase
 {
-    use RefreshDatabase, ProjectSetup;
+    use ProjectSetup, RefreshDatabase;
 
     /** @test */
-    public function it_validates_sort_parameter()
+    public function it_validates_sort_parameter(): void
     {
         $response = $this->getJson(route('user.projects', ['sort' => 'invalid_sort']));
 
@@ -25,13 +25,13 @@ class UserProjectsPageTest extends TestCase
             ->assertJson([
                 'message' => 'Validation Error',
                 'errors' => [
-                    'sort' => ['Sort must be either latest or oldest']
-                ]
+                    'sort' => ['Sort must be either latest or oldest'],
+                ],
             ]);
     }
 
     /** @test */
-    public function it_validates_member_parameter()
+    public function it_validates_member_parameter(): void
     {
         $response = $this->getJson(route('user.projects', ['member' => 'not_a_boolean']));
 
@@ -40,13 +40,13 @@ class UserProjectsPageTest extends TestCase
             ->assertJson([
                 'message' => 'Validation Error',
                 'errors' => [
-                    'member' => ['The member field must be true or false.']
-                ]
+                    'member' => ['The member field must be true or false.'],
+                ],
             ]);
     }
 
     /** @test */
-    public function it_validates_page_parameter()
+    public function it_validates_page_parameter(): void
     {
         $response = $this->getJson(route('user.projects', ['page' => 0]));
 
@@ -55,22 +55,22 @@ class UserProjectsPageTest extends TestCase
             ->assertJson([
                 'message' => 'Validation Error',
                 'errors' => [
-                    'page' => ['Page must be at least 1']
-                ]
+                    'page' => ['Page must be at least 1'],
+                ],
             ]);
     }
 
     /** @test */
-    public function it_accepts_valid_parameters()
+    public function it_accepts_valid_parameters(): void
     {
         Project::factory()->create(['name' => 'Test Project', 'user_id' => $this->user->id]);
-        
+
         $response = $this->getJson(route('user.projects', [
             'sort' => 'latest',
-            'member' => true,    
-            'abandoned' => false, 
-            'page' => 1,         
-            'search' => 'Test'
+            'member' => true,
+            'abandoned' => false,
+            'page' => 1,
+            'search' => 'Test',
         ]));
 
         $response->assertOk()
@@ -78,7 +78,7 @@ class UserProjectsPageTest extends TestCase
     }
 
     /** @test */
-    public function auth_user_can_filter_projects_by_search()
+    public function auth_user_can_filter_projects_by_search(): void
     {
         // Create projects with different names
         Project::factory()->create(['name' => 'Frontend Project', 'user_id' => $this->user->id]);
@@ -96,14 +96,13 @@ class UserProjectsPageTest extends TestCase
         $this->assertEquals('Frontend Project', $projects[0]['name']);
     }
 
-
     /** @test */
-    public function auth_user_can_sort_projects_by_latest()
+    public function auth_user_can_sort_projects_by_latest(): void
     {
-        $oldProject = Project::factory()->create([
+        Project::factory()->create([
             'name' => 'Old Project',
             'user_id' => $this->user->id,
-            'created_at' => now()->subDays(5)
+            'created_at' => now()->subDays(5),
         ]);
 
         $latestProject = $this->project; // Assuming this is the default project created in ProjectSetup
@@ -114,15 +113,14 @@ class UserProjectsPageTest extends TestCase
     }
 
     /** @test */
-    public function auth_user_can_sort_projects_by_oldest()
+    public function auth_user_can_sort_projects_by_oldest(): void
     {
-        $oldProject = Project::factory()->create([
+        Project::factory()->create([
             'name' => 'Old Project',
             'user_id' => $this->user->id,
-            'created_at' => now()->subDays(5)
+            'created_at' => now()->subDays(5),
         ]);
-
-        $latestProject = $this->project; // Assuming this is the default project created in ProjectSetup
+        // Assuming this is the default project created in ProjectSetup
 
         $response = $this->getJson(route('user.projects', ['sort' => 'oldest']));
         $projects = $response->json('projects.data');
@@ -130,7 +128,7 @@ class UserProjectsPageTest extends TestCase
     }
 
     /** @test */
-    public function auth_user_can_view_member_projects()
+    public function auth_user_can_view_member_projects(): void
     {
         // Create a project owned by another user
         $otherUser = User::factory()->create();
@@ -154,7 +152,7 @@ class UserProjectsPageTest extends TestCase
     }
 
     /** @test */
-    public function auth_user_can_view_trashed_projects()
+    public function auth_user_can_view_trashed_projects(): void
     {
         // Soft delete the default project
         $this->project->delete();

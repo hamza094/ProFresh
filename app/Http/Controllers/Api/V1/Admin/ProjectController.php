@@ -1,17 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Api\V1\Admin;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use App\Models\User;
-use App\Models\Project;
-use App\Http\Resources\Api\V1\Admin\ProjectResource;
 use App\Http\Controllers\Api\ApiController;
+use App\Http\Requests\Api\V1\Admin\ProjectFilterRequest;
+use App\Http\Resources\Api\V1\Admin\ProjectResource;
+use App\Models\Project;
+use App\Repository\Admin\ProjectFiltersRepository;
 use F9Web\ApiResponseHelpers;
 use Illuminate\Http\JsonResponse;
-use App\Repository\Admin\ProjectFiltersRepository;
-use App\Http\Requests\Api\V1\Admin\ProjectFilterRequest;
+use Illuminate\Http\Request;
 
 class ProjectController extends ApiController
 {
@@ -29,9 +29,9 @@ class ProjectController extends ApiController
 
         if ($projects->isEmpty()) {
             return $this->respondWithSuccess([
-        'message' => 'Sorry no result found',
-        'appliedFilters' => $appliedFilters,
-    ]);
+                'message' => 'Sorry no result found',
+                'appliedFilters' => $appliedFilters,
+            ]);
 
         }
 
@@ -41,17 +41,17 @@ class ProjectController extends ApiController
         ]);
     }
 
-    public function bulkDelete(Request $request)
+    public function bulkDelete(Request $request): JsonResponse
     {
         $projectIds = $request->input('project_ids', []);
 
-        Project::withTrashed()->whereIn('id', $projectIds)->each(function ($project) {
+        Project::withTrashed()->whereIn('id', $projectIds)->each(function ($project): void {
             $project->forceDelete();
         });
 
         return $this->respondWithSuccess([
-        'message' => 'Projects deleted Successfully',
-    ]);
+            'message' => 'Projects deleted Successfully',
+        ]);
 
     }
 }

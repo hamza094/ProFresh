@@ -1,16 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Jobs\Webhooks\Zoom;
 
+use App\Models\Meeting;
+use Exception;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
-use App\Models\Meeting;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Log;
 
 class DeleteMeetingWebhook implements ShouldQueue
 {
@@ -27,7 +29,7 @@ class DeleteMeetingWebhook implements ShouldQueue
     public $tries = 2;
 
     /**
-     * @param array<string, mixed> $data
+     * @param  array<string, mixed>  $data
      * @return void
      */
     public function __construct(array $data)
@@ -37,8 +39,6 @@ class DeleteMeetingWebhook implements ShouldQueue
 
     /**
      * Execute the job.
-     *
-     * @return void
      */
     public function handle(): void
     {
@@ -50,19 +50,16 @@ class DeleteMeetingWebhook implements ShouldQueue
             Log::channel('webhook')->info('Meeting deleted successfully', ['meeting_id' => $this->meeting_id]);
         } catch (ModelNotFoundException $e) {
             Log::channel('webhook')->info('Meeting not available in database', ['meeting_id' => $this->meeting_id]);
-            
+
             throw new ModelNotFoundException('Meeting not available in database', 0, $e);
         }
     }
 
-    /**
-     * @return void
-     */
-    public function failed(\Exception $exception): void
+    public function failed(Exception $exception): void
     {
         Log::channel('webhook')->error('Delete Meeting webhook job failed', [
             'error' => $exception->getMessage(),
-            'trace' => $exception->getTraceAsString()
+            'trace' => $exception->getTraceAsString(),
         ]);
     }
 
@@ -71,6 +68,6 @@ class DeleteMeetingWebhook implements ShouldQueue
      */
     public function backoff(): array
     {
-      return [5, 30];
+        return [5, 30];
     }
 }

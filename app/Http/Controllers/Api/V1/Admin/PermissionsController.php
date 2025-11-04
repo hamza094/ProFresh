@@ -1,17 +1,19 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Api\V1\Admin;
 
 use App\Http\Controllers\Controller;
-use Spatie\Permission\Models\Permission;
 use App\Http\Resources\Api\V1\Admin\PermissionsResource;
-use Illuminate\Http\Request;
 use F9Web\ApiResponseHelpers;
-use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
+use Spatie\Permission\Models\Permission;
 
 class PermissionsController extends Controller
 {
     use ApiResponseHelpers;
+
     /**
      * Display a listing of the resource.
      *
@@ -27,28 +29,25 @@ class PermissionsController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request): \Illuminate\Http\JsonResponse
     {
-      $permission = Permission::create(['name' => $request->permission]);
+        $permission = Permission::create(['name' => $request->permission]);
 
-      return $this->respondCreated([
-        'message'=>'Permission Created Successfully',
-        'data'=> new PermissionsResource($permission)
-    ]);
+        return $this->respondCreated([
+            'message' => 'Permission Created Successfully',
+            'data' => new PermissionsResource($permission),
+        ]);
 
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $id): void
     {
         //
     }
@@ -59,12 +58,12 @@ class PermissionsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Permission $permission)
+    public function destroy(Permission $permission): \Illuminate\Http\JsonResponse
     {
-        Permission::where('id',$permission->id)->delete();
+        Permission::where('id', $permission->id)->delete();
 
         return $this->respondNoContent([
-            'message'=>'Permission Deleted Successfully'
+            'message' => 'Permission Deleted Successfully',
         ]);
     }
 }

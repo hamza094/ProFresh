@@ -1,22 +1,22 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Providers;
 
+use App\Events\PasswordUpdateEvent;
+use App\Events\UserLogin;
+use App\Listeners\PaddleErrorListener;
+use App\Listeners\PaddleEventListener;
+use App\Listeners\SaveUserTimezone;
+use App\Listeners\SendPasswordUpdateEmail;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Events\Verified;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
-use App\Events\UserLogin;
-use App\Listeners\SaveUserTimezone;
 use Illuminate\Support\Facades\Event;
-use Laravel\Paddle\Events\WebhookReceived;
-use App\Listeners\PaddleEventListener;
 use Laravel\Paddle\Events\WebhookHandled;
-use App\Listeners\PaddleErrorListener;
-use App\Events\PasswordUpdateEvent;
-use App\Listeners\SendPasswordUpdateEmail;
-use App\Models\Project;
-use App\Models\Task;
+use Laravel\Paddle\Events\WebhookReceived;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -26,36 +26,34 @@ class EventServiceProvider extends ServiceProvider
      * @var array<string, array<int, string>>
      */
     protected $listen = [
-       WebhookReceived::class => [
+        WebhookReceived::class => [
             PaddleEventListener::class,
         ],
-         WebhookHandled::class => [
-        PaddleErrorListener::class,
-    ],
+        WebhookHandled::class => [
+            PaddleErrorListener::class,
+        ],
         Registered::class => [
-          SendEmailVerificationNotification::class,
-      ],
-      UserLogin::class => [
-        SaveUserTimezone::class,
-    ],
-      PasswordUpdateEvent::class => [
-        SendPasswordUpdateEmail::class,
-    ],
-     'App\Events\DashboardActivity' => [],
-     'App\Events\ActivityLogged' => [],
-     'App\Events\NewMessage' => [],
-     'App\Events\MeetingStatusUpdate' => [],
-     'App\Events\ProjectHealthUpdated' => [],
+            SendEmailVerificationNotification::class,
+        ],
+        UserLogin::class => [
+            SaveUserTimezone::class,
+        ],
+        PasswordUpdateEvent::class => [
+            SendPasswordUpdateEmail::class,
+        ],
+        \App\Events\DashboardActivity::class => [],
+        \App\Events\ActivityLogged::class => [],
+        \App\Events\NewMessage::class => [],
+        \App\Events\MeetingStatusUpdate::class => [],
+        \App\Events\ProjectHealthUpdated::class => [],
 
-      /*Verified::class => [
+        /*Verified::class => [
       'App\Listeners\LogVerifiedUser',
     ],*/
     ];
 
     /**
      * Register any events for your application.
-     *
-     * @return void
      */
     public function boot(): void
     {

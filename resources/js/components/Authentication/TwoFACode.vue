@@ -1,6 +1,6 @@
 <template>
-  <div class="container mt-5 d-flex justify-content-center align-items-center" style="min-height: 60vh;">
-    <div class="card shadow-sm p-4" style="max-width: 400px; width: 100%;">
+  <div class="container mt-5 d-flex justify-content-center align-items-center" style="min-height: 60vh">
+    <div class="card shadow-sm p-4" style="max-width: 400px; width: 100%">
       <div v-if="status === 'enabled'">
         <h5 class="mb-3 text-center text-success">✅ 2FA is enabled on your account.</h5>
         <button class="btn btn-primary w-100 mb-2" @click="$router.push('/home')">Go to Dashboard</button>
@@ -17,8 +17,7 @@
               placeholder="6-digit code"
               autocomplete="one-time-code"
               required
-              autofocus
-            />
+              autofocus />
           </div>
           <button type="submit" class="btn btn-primary w-100" :disabled="loading">
             <span v-if="loading" class="spinner-border spinner-border-sm mr-1" role="status"></span>
@@ -41,6 +40,9 @@ export default {
       error: '',
       status: '',
     };
+  },
+  async mounted() {
+    await this.fetch2FAStatus();
   },
   methods: {
     ...mapActions('currentUser', ['twoFactorLogin']),
@@ -66,15 +68,12 @@ export default {
       try {
         const res = await this.$axios.get('/api/v1/twofactor/fetch-user');
         this.status = res.data.status;
-      } catch (e) {
+      } catch {
         this.status = '';
       }
     },
   },
-  async mounted() {
-    await this.fetch2FAStatus();
-  }
-}
+};
 </script>
 
 <style scoped>

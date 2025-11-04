@@ -1,11 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Listeners;
 
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Queue\InteractsWithQueue;
-use Laravel\Paddle\Events\WebhookHandled;
 use Illuminate\Support\Facades\Log;
+use Laravel\Paddle\Events\WebhookHandled;
 
 class PaddleErrorListener
 {
@@ -22,7 +22,7 @@ class PaddleErrorListener
      */
     public function handle(WebhookHandled $event): void
     {
-             Log::info('Paddle webhook handled', [
+        Log::info('Paddle webhook handled', [
             'payload' => $event->payload,
         ]);
 

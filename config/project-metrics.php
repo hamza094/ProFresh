@@ -1,13 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'health' => [
         'weights' => [
-        'tasks' => 0.3,
-        'communication' => 0.15, 
-        'collaboration' => 0.2,
-        'stage' => 0.2,
-        'activity' => 0.15,
+            'tasks' => 0.3,
+            'communication' => 0.15,
+            'collaboration' => 0.2,
+            'stage' => 0.2,
+            'activity' => 0.15,
         ],
         'communication' => [
             // Score caps and scaling for conversation-derived communication health
@@ -19,7 +21,7 @@ return [
             // Component weights (should sum to 100)
             'weights' => [
                 'member_base' => 40,      // Base score from team size
-                'meeting_activity' => 30,  // Recent meeting activity  
+                'meeting_activity' => 30,  // Recent meeting activity
                 'participation' => 30,     // Member participation rate
             ],
             // Ideal targets for 100% normalization
@@ -34,14 +36,14 @@ return [
 
         ],
     ],
-    
+
     'time_periods' => [
         'recent_activity_days' => 7,
         'meeting_lookback_days' => 14,
         'risk_assessment_hours' => 48,
         'task_inactivity_days' => 5,
     ],
-    
+
     'progress' => [
         'activity_count_for_full' => 75, // number of recent activities that count as 100%
     ],

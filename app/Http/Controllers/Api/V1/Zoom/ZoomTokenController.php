@@ -1,27 +1,28 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Api\V1\Zoom;
 
-use App\Http\Controllers\Controller;
-use App\Interfaces\Zoom;
 use App\Actions\ZoomAction;
-use Illuminate\Http\Request;
-use Illuminate\Http\JsonResponse;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\V1\Zoom\JwtTokenRequest;
+use App\Interfaces\Zoom;
 use Dedoc\Scramble\Attributes\ExcludeAllRoutesFromDocs;
+use Illuminate\Http\JsonResponse;
 
 #[ExcludeAllRoutesFromDocs]
 class ZoomTokenController extends Controller
 {
     public function getUserToken(Zoom $zoom): JsonResponse
     {
-      $token = $zoom->getZakToken(auth()->user());
+        $token = $zoom->getZakToken(auth()->user());
 
-      return response()->json(['zak_token'=>$token]);
+        return response()->json(['zak_token' => $token]);
     }
 
-    public function getJwtToken(JwtTokenRequest $request,ZoomAction $action): JsonResponse
-    {        
+    public function getJwtToken(JwtTokenRequest $request, ZoomAction $action): JsonResponse
+    {
         $role = $request->role;
 
         $meetingId = $request->meetingId;
@@ -30,5 +31,4 @@ class ZoomTokenController extends Controller
 
         return response()->json(['jwt_token' => $token]);
     }
-   
 }

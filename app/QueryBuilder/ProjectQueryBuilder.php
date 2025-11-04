@@ -1,12 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\QueryBuilder;
 
-use Illuminate\Database\Eloquent\Builder;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 
 /**
  * @extends Builder<\App\Models\Project>
+ *
  * @method $this onlyTrashed()
  */
 class ProjectQueryBuilder extends Builder
@@ -31,7 +34,6 @@ class ProjectQueryBuilder extends Builder
         };
     }
 
-
     /**
      * Filter trashed projects
      */
@@ -49,5 +51,4 @@ class ProjectQueryBuilder extends Builder
 
         return $this->where('deleted_at', '<', Carbon::now()->subDays($abandonedLimit));
     }
-
-} 
+}

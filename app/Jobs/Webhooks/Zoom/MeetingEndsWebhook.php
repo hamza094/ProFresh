@@ -1,53 +1,54 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Jobs\Webhooks\Zoom;
 
-use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldBeUnique;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Foundation\Bus\Dispatchable;
+use App\Enums\MeetingState;
+use App\Events\MeetingStatusUpdate;
+use App\Models\Meeting;
 use App\Notifications\Zoom\MeetingEnded;
+use Exception;
+use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use Throwable;
-use Illuminate\Support\Facades\Notification;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
-use App\Events\MeetingStatusUpdate;
 use Illuminate\Support\Facades\Log;
-use App\Enums\MeetingState;
-use App\Models\Meeting;
-use Carbon\Carbon;
+use Illuminate\Support\Facades\Notification;
+use Throwable;
 
 class MeetingEndsWebhook implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    public string $meeting_id;
+    public int $meeting_id;
+
     public ?string $start_time;
+
     public ?string $end_time;
 
     /**
-     * @param array<string, mixed> $data
+     * @param  array<string, mixed>  $data
      * @return void
      */
     public function __construct(array $data)
     {
-        $this->meeting_id = $data['meeting_id'];
+        $this->meeting_id = (int) $data['meeting_id'];
         $this->start_time = $data['start_time'] ?? null;
         $this->end_time = $data['end_time'] ?? null;
     }
 
     /**
      * Execute the job.
-     *
-     * @return void
      */
-    public function handle()
+    public function handle(): void
     {
         try {
             $meeting = $this->getMeeting();
 
-            if (!$this->validateStatus($meeting)) {
+            if (! $this->validateStatus($meeting)) {
                 return;
             }
 
@@ -56,10 +57,19 @@ class MeetingEndsWebhook implements ShouldQueue
         } catch (ModelNotFoundException $e) {
             Log::channel('webhook')->error("Meeting with ID {$this->meeting_id} not found in the database.");
             throw $e;
-        } catch (\Exception $e) {
-            Log::channel('webhook')->error("Error processing meeting ending webhook: " . $e->getMessage(), ['exception' => $e]);
+        } catch (Exception $e) {
+            Log::channel('webhook')->error('Error processing meeting ending webhook: '.$e->getMessage(), ['exception' => $e]);
             throw $e;
         }
+    }
+
+    public function failed(Throwable $exception): void
+    {
+        Log::error('Meeting Ended webhook job failed', [
+            'meeting_id' => $this->meeting_id,
+            'error' => $exception->getMessage(),
+            'trace' => $exception->getTraceAsString(),
+        ]);
     }
 
     private function getMeeting(): Meeting
@@ -75,7 +85,7 @@ class MeetingEndsWebhook implements ShouldQueue
 
     private function sendNotifications(Meeting $meeting): void
     {
-        $project = $meeting->project()->with(['asignees','user'])->firstOrFail();
+        $project = $meeting->project()->with(['asignees', 'user'])->firstOrFail();
         $user = $project->user;
         $members = $project->asignees;
 
@@ -93,27 +103,14 @@ class MeetingEndsWebhook implements ShouldQueue
         Notification::send($members, new MeetingEnded($notificationData));
     }
 
-    /**
-     * @param \App\Models\Meeting $meeting
-     */
-    private function validateStatus(\App\Models\Meeting $meeting): bool
+    private function validateStatus(Meeting $meeting): bool
     {
         if ($meeting->status === MeetingState::ENDS->value) {
             Log::channel('webhook')->info("Meeting already ended for meeting_id: {$this->meeting_id}");
+
             return false;
         }
-        return true;
-    }
 
-    /**
-     * @return void
-     */
-    public function failed(\Throwable $exception): void
-    {
-        Log::error('Meeting Ended webhook job failed', [
-            'meeting_id' => $this->meeting_id,
-            'error' => $exception->getMessage(),
-            'trace' => $exception->getTraceAsString(),
-        ]);
+        return true;
     }
 }

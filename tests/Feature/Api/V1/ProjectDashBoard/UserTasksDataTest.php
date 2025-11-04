@@ -1,26 +1,29 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Feature\Api\V1\ProjectDashboard;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
+use App\Enums\TaskStatus as TaskStatusEnum;
+use App\Models\Project;
 use App\Models\Task;
 use App\Models\TaskStatus;
 use App\Models\User;
-use App\Traits\ProjectSetup;
-use App\Enums\TaskStatus as TaskStatusEnum;
 use Carbon\Carbon;
-use App\Models\Project;
-use Laravel\Sanctum\Sanctum;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Hash;
+use Laravel\Sanctum\Sanctum;
+use Tests\TestCase;
 
 class UserTasksDataTest extends TestCase
 {
-   public $project;
-   public $user;
-   public $status;
-
     use RefreshDatabase;
+
+    public $project;
+
+    public $user;
+
+    public $status;
 
     protected function setUp(): void
     {
@@ -31,23 +34,23 @@ class UserTasksDataTest extends TestCase
             'password' => Hash::make('testpassword'),
         ]);
 
-   Sanctum::actingAs(
-       $this->user,
-   );
+        Sanctum::actingAs(
+            $this->user,
+        );
 
-   $this->status = TaskStatus::factory()->create();
+        $this->status = TaskStatus::factory()->create();
 
-   $this->project = Project::factory()->for($this->user)->create();
+        $this->project = Project::factory()->for($this->user)->create();
 
-    //if ($this instanceof \Tests\Feature\TaskTest) {
-            //$this->status = TaskStatus::factory()->create();
-        //}
+        // if ($this instanceof \Tests\Feature\TaskTest) {
+        // $this->status = TaskStatus::factory()->create();
+        // }
 
-   $middlewaresToRemove = [
+        $middlewaresToRemove = [
             \App\Http\Middleware\CheckSubscription::class,
         ];
 
-   $this->withoutMiddleware($middlewaresToRemove);
+        $this->withoutMiddleware($middlewaresToRemove);
 
         // Seed canonical TaskStatus rows needed by these tests
         TaskStatus::query()->firstOrCreate(
@@ -61,7 +64,7 @@ class UserTasksDataTest extends TestCase
     }
 
     /** @test */
-    public function auth_user_can_view_tasks_with_user_created_and_task_assigned_filters()
+    public function auth_user_can_view_tasks_with_user_created_and_task_assigned_filters(): void
     {
         // Create tasks for the authenticated user
         Task::factory(['user_id' => $this->user->id, 'project_id' => $this->project->id])->count(3)->create();
@@ -78,8 +81,8 @@ class UserTasksDataTest extends TestCase
                 'data' => [],
                 'meta' => [
                     'applied_filters',
-                    'total'
-                ]
+                    'total',
+                ],
             ]);
 
         $responseData = $response->json();
@@ -91,7 +94,7 @@ class UserTasksDataTest extends TestCase
     }
 
     /** @test */
-    public function auth_user_can_filter_tasks_by_user_created_only()
+    public function auth_user_can_filter_tasks_by_user_created_only(): void
     {
         // Create tasks for the authenticated user
         Task::factory(['user_id' => $this->user->id, 'project_id' => $this->project->id])->count(2)->create();
@@ -111,7 +114,7 @@ class UserTasksDataTest extends TestCase
     }
 
     /** @test */
-    public function auth_user_can_filter_tasks_by_task_assigned_only()
+    public function auth_user_can_filter_tasks_by_task_assigned_only(): void
     {
         // Create a task by another user and assign to authenticated user
         $randomUser = User::factory()->create();
@@ -133,20 +136,20 @@ class UserTasksDataTest extends TestCase
     }
 
     /** @test */
-    public function auth_user_can_filter_tasks_by_completed_status()
+    public function auth_user_can_filter_tasks_by_completed_status(): void
     {
         // Create completed tasks
         Task::factory([
             'user_id' => $this->user->id,
             'project_id' => $this->project->id,
-            'status_id' => TaskStatusEnum::COMPLETED
+            'status_id' => TaskStatusEnum::COMPLETED,
         ])->count(2)->create();
 
         // Create non-completed task
         Task::factory([
             'user_id' => $this->user->id,
             'project_id' => $this->project->id,
-            'status_id' => TaskStatusEnum::IN_PROGRESS
+            'status_id' => TaskStatusEnum::IN_PROGRESS,
         ])->create();
 
         $response = $this->withoutExceptionHandling()->getJson('api/v1/tasksdata?user_created=1&completed=1');
@@ -160,14 +163,14 @@ class UserTasksDataTest extends TestCase
     }
 
     /** @test */
-    public function auth_user_can_filter_tasks_by_overdue_status()
+    public function auth_user_can_filter_tasks_by_overdue_status(): void
     {
         // Create overdue tasks
         Task::factory([
             'user_id' => $this->user->id,
             'project_id' => $this->project->id,
             'due_at' => Carbon::yesterday(),
-            'status_id' => TaskStatusEnum::IN_PROGRESS
+            'status_id' => TaskStatusEnum::IN_PROGRESS,
         ])->count(2)->create();
 
         // Create non-overdue task
@@ -175,7 +178,7 @@ class UserTasksDataTest extends TestCase
             'user_id' => $this->user->id,
             'project_id' => $this->project->id,
             'due_at' => Carbon::tomorrow(),
-            'status_id' => TaskStatusEnum::IN_PROGRESS
+            'status_id' => TaskStatusEnum::IN_PROGRESS,
         ])->create();
 
         $response = $this->getJson('api/v1/tasksdata?user_created=1&overdue=1');
@@ -188,20 +191,20 @@ class UserTasksDataTest extends TestCase
     }
 
     /** @test */
-    public function auth_user_can_filter_tasks_by_remaining_status()
+    public function auth_user_can_filter_tasks_by_remaining_status(): void
     {
         // Create remaining (not completed) tasks
         Task::factory([
             'user_id' => $this->user->id,
             'project_id' => $this->project->id,
-            'status_id' => TaskStatusEnum::IN_PROGRESS
+            'status_id' => TaskStatusEnum::IN_PROGRESS,
         ])->count(2)->create();
 
         // Create completed task
         Task::factory([
             'user_id' => $this->user->id,
             'project_id' => $this->project->id,
-            'status_id' => TaskStatusEnum::COMPLETED
+            'status_id' => TaskStatusEnum::COMPLETED,
         ])->create();
 
         $response = $this->getJson('api/v1/tasksdata?user_created=1&remaining=1');
@@ -214,7 +217,7 @@ class UserTasksDataTest extends TestCase
     }
 
     /** @test */
-    public function request_requires_at_least_one_filter()
+    public function request_requires_at_least_one_filter(): void
     {
         $response = $this->getJson('api/v1/tasksdata');
 
@@ -223,7 +226,7 @@ class UserTasksDataTest extends TestCase
     }
 
     /** @test */
-    public function request_with_false_values_requires_at_least_one_filter()
+    public function request_with_false_values_requires_at_least_one_filter(): void
     {
         $response = $this->getJson('api/v1/tasksdata?user_created=0&completed=0');
 
@@ -232,14 +235,14 @@ class UserTasksDataTest extends TestCase
     }
 
     /** @test */
-    public function status_filters_without_user_context_default_to_user_tasks()
+    public function status_filters_without_user_context_default_to_user_tasks(): void
     {
         // Create overdue task by authenticated user
         Task::factory([
             'user_id' => $this->user->id,
             'project_id' => $this->project->id,
             'due_at' => Carbon::yesterday(),
-            'status_id' => TaskStatusEnum::IN_PROGRESS
+            'status_id' => TaskStatusEnum::IN_PROGRESS,
         ])->create();
 
         // Create overdue task by another user (should not appear)
@@ -247,14 +250,14 @@ class UserTasksDataTest extends TestCase
         Task::factory([
             'user_id' => $otherUser->id,
             'due_at' => Carbon::yesterday(),
-            'status_id' => TaskStatusEnum::IN_PROGRESS
+            'status_id' => TaskStatusEnum::IN_PROGRESS,
         ])->create();
 
         // Create overdue task assigned to authenticated user
         $assignedTask = Task::factory([
             'user_id' => $otherUser->id,
             'due_at' => Carbon::yesterday(),
-            'status_id' => TaskStatusEnum::IN_PROGRESS
+            'status_id' => TaskStatusEnum::IN_PROGRESS,
         ])->create();
         $assignedTask->assignee()->attach($this->user);
 

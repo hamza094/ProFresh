@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Monolog\Handler\NullHandler;
 use Monolog\Handler\StreamHandler;
 use Monolog\Handler\SyslogUdpHandler;
@@ -37,14 +39,14 @@ return [
     'channels' => [
         'stack' => [
             'driver' => 'stack',
-            'channels' => ['daily','bugsnag'],
+            'channels' => ['daily', 'bugsnag'],
             'ignore_exceptions' => false,
         ],
 
         // Create a bugsnag logging channel:
-      'bugsnag' => [
-           'driver' => 'bugsnag',
-       ],
+        'bugsnag' => [
+            'driver' => 'bugsnag',
+        ],
 
         'single' => [
             'driver' => 'single',
@@ -104,10 +106,10 @@ return [
         'emergency' => [
             'path' => storage_path('logs/laravel.log'),
         ],
-        'webhook'=>[
-           'driver' => 'single',
-           'path' => storage_path('logs/webhook.log'),
-           'level' => 'debug',
+        'webhook' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/webhook.log'),
+            'level' => 'debug',
         ],
     ],
 

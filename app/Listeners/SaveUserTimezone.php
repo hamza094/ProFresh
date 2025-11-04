@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Listeners;
 
 use App\Events\UserLogin;
-use Illuminate\Contracts\Queue\ShouldQueue;
+use Exception;
 use Illuminate\Support\Facades\Http;
-use Illuminate\Queue\InteractsWithQueue;
+use Log;
 
 class SaveUserTimezone
 {
@@ -21,21 +23,22 @@ class SaveUserTimezone
 
     /**
      * Handle the event.
-     *
-     * @param  \App\Events\UserLogin  $event
-     * @return void
      */
-    public function handle(UserLogin $event)
+    public function handle(UserLogin $event): void
     {
-      try{
-      $ip = Http::get("http://ipecho.net/plain")->body();
-      $getTz = Http::get("http://ip-api.com/json/$ip")->json();
-      $tz=$getTz['timezone'];
-      $event->user->timezone=$tz;
-      $event->user->save();
+        try {
+            $ip = Http::get('https://ipecho.net/plain')->body();
+            $getTz = Http::get("https://ipapi.co/{$ip}/json/")->json();
+            $tz = $getTz['timezone'] ?? $getTz['time_zone'] ?? null;
+            if ($tz) {
+                $event->user->timezone = $tz;
+                $event->user->save();
+            } else {
+                Log::warning("Could not determine timezone for IP {$ip}", ['response' => $getTz]);
+            }
 
-     } catch(\Exception $e){
-        \Log::error('Failed to update user timezone: ' . $e->getMessage());
-     }
+        } catch (Exception $e) {
+            Log::error('Failed to update user timezone: '.$e->getMessage());
+        }
     }
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Services\Insights;
 
 use App\Enums\InsightType;
@@ -7,23 +9,25 @@ use App\Enums\InsightType;
 final class TeamCollaborationInsightBuilder implements InsightBuilderInterface
 {
     private const EXCELLENT_THRESHOLD = 85;
+
     private const GOOD_THRESHOLD = 65;
+
     private const WARNING_THRESHOLD = 40;
+
     private const LOW_PARTICIPATION_THRESHOLD = 0.3; // 30% participation rate
 
     /**
-     * @param mixed $input
-     * @param array<string,mixed> $context
+     * @param  array<string,mixed>  $context
      * @return array<string,mixed>
      */
     public function build(mixed $input, array $context = []): array
     {
-        if ($input === null || !is_numeric($input)) {
+        if ($input === null || ! is_numeric($input)) {
             return [
                 'type' => InsightType::INFO->value,
                 'title' => 'No Collaboration Data',
                 'message' => 'No collaboration data available.',
-                'data' => ['value' => null]
+                'data' => ['value' => null],
             ];
         }
 
@@ -32,7 +36,7 @@ final class TeamCollaborationInsightBuilder implements InsightBuilderInterface
         $memberCount = (int) ($details['member_count'] ?? 0);
         $meetingCount = (int) ($details['meeting_count'] ?? 0);
         $participantCount = (int) ($details['participant_count'] ?? 0);
-        
+
         // Calculate participation rate once and reuse
         $participationRate = $this->calculateParticipationRate($memberCount, $participantCount);
 
@@ -40,7 +44,7 @@ final class TeamCollaborationInsightBuilder implements InsightBuilderInterface
             'type' => $type = $this->determineInsightType($score, $participationRate),
             'title' => $this->generateTitle($score, $participationRate),
             'message' => $this->generateMessage($score, $memberCount, $meetingCount, $participationRate, $participantCount),
-            'data' => ['value' => $score]
+            'data' => ['value' => $score],
         ];
     }
 
@@ -65,20 +69,21 @@ final class TeamCollaborationInsightBuilder implements InsightBuilderInterface
         if ($participationRate < self::LOW_PARTICIPATION_THRESHOLD) {
             return 'Low Team Participation';
         }
+
         return match (true) {
             $score >= self::EXCELLENT_THRESHOLD => 'Excellent Team Collaboration',
             $score >= self::GOOD_THRESHOLD => 'Good Team Collaboration',
-            $score >= self::WARNING_THRESHOLD => 'Limited Team Collaboration', 
+            $score >= self::WARNING_THRESHOLD => 'Limited Team Collaboration',
             default => 'Poor Team Collaboration',
         };
     }
 
     private function generateMessage(float $score, int $memberCount, int $meetingCount, float $participationRate, int $participantCount): string
     {
-    $participationPercent = (int) ($participationRate * 100);
-    $lookbackDays = $this->getMeetingLookbackDays();
-    $idealMeetings = $this->getIdealMeetings();
-    $participationDays = $this->getParticipationLookbackDays();
+        $participationPercent = (int) ($participationRate * 100);
+        $lookbackDays = $this->getMeetingLookbackDays();
+        $idealMeetings = $this->getIdealMeetings();
+        $participationDays = $this->getParticipationLookbackDays();
 
         $participationDaysLabel = $this->pluralize($participationDays, 'day', 'days');
         $meetingDaysLabel = $this->pluralize($lookbackDays, 'day', 'days');
@@ -104,6 +109,7 @@ final class TeamCollaborationInsightBuilder implements InsightBuilderInterface
         if ($insights !== null) {
             return (int) $insights;
         }
+
         return (int) config('project-metrics.time_periods.meeting_lookback_days', 14);
     }
 
@@ -118,6 +124,7 @@ final class TeamCollaborationInsightBuilder implements InsightBuilderInterface
         if ($insights !== null) {
             return (int) $insights;
         }
+
         return (int) config('project-metrics.time_periods.collaboration_activity_days', 30);
     }
 

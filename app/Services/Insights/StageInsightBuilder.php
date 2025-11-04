@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Services\Insights;
 
 use App\Enums\InsightType;
@@ -8,16 +10,16 @@ use App\Enums\ProjectStage;
 final class StageInsightBuilder implements InsightBuilderInterface
 {
     private const SUCCESS_THRESHOLD = 70;
+
     private const INFO_THRESHOLD = 40;
 
     /**
-     * @param mixed $input
-     * @param array<string,mixed> $context
+     * @param  array<string,mixed>  $context
      * @return array<string,mixed>
      */
     public function build(mixed $input, array $context = []): array
     {
-        if (!is_array($input) || !isset($input['percentage'])) {
+        if (! is_array($input) || ! isset($input['percentage'])) {
             return [
                 'type' => InsightType::INFO->value,
                 'title' => 'No Stage Data',
@@ -36,7 +38,7 @@ final class StageInsightBuilder implements InsightBuilderInterface
 
         return [
             'type' => $this->determineInsightType($percentage, $status),
-            'title' => $this->generateTitle($stageEnum, $currentStage, $percentage),
+            'title' => $this->generateTitle($stageEnum, $percentage),
             'message' => $this->generateMessage($stageEnum, $currentStage, $percentage, $status),
             'data' => [
                 'value' => $percentage,
@@ -62,9 +64,9 @@ final class StageInsightBuilder implements InsightBuilderInterface
         };
     }
 
-    private function generateTitle(?ProjectStage $stageEnum, string $stageLabel, float $percentage): string
+    private function generateTitle(?ProjectStage $stageEnum, float $percentage): string
     {
-        if ($stageEnum) {
+        if ($stageEnum instanceof ProjectStage) {
             return match ($stageEnum) {
                 ProjectStage::Completed => 'Project Completed',
                 ProjectStage::Postponed => 'Project Postponed',
@@ -93,7 +95,7 @@ final class StageInsightBuilder implements InsightBuilderInterface
             return sprintf('Project postponed in %s stage.', $stageLabel);
         }
 
-        if ($stageEnum) {
+        if ($stageEnum instanceof ProjectStage) {
             return match ($stageEnum) {
                 ProjectStage::Delivery => sprintf('Delivery phase (%.1f%% complete) - preparing for launch.', $percentage),
                 ProjectStage::Testing => sprintf('Testing phase (%.1f%% complete) - quality assurance underway.', $percentage),
@@ -106,5 +108,4 @@ final class StageInsightBuilder implements InsightBuilderInterface
 
         return sprintf('In %s stage (%.1f%% complete).', $stageLabel, $percentage);
     }
-
 }

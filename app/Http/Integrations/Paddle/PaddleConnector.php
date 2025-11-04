@@ -1,11 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Integrations\Paddle;
 
 use Saloon\Http\Connector;
 use Saloon\Http\Request;
 use Saloon\Traits\Plugins\AcceptsJson;
-use Saloon\Http\Response;
 
 class PaddleConnector extends Connector
 {
@@ -34,5 +35,4 @@ class PaddleConnector extends Connector
     {
         return [];
     }
-
 }

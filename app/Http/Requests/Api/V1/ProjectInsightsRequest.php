@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Http\Requests\Api\V1;
@@ -17,36 +18,6 @@ class ProjectInsightsRequest extends FormRequest
     public function authorize(): bool
     {
         return true;
-    }
-
-    protected function prepareForValidation(): void
-    {
-        $rawSections = $this->input('sections');
-
-        if ($rawSections === null) {
-            $this->merge(['sections' => self::DEFAULT_SECTIONS]);
-            return;
-        }
-
-        if (is_array($rawSections)) {
-            $this->merge(['sections' => $this->normalizeSectionsArray($rawSections)]);
-        }
-    }
-
-    /**
-     * Normalize a raw sections array to a cleaned list of strings
-     *
-     * @param array<int,mixed> $sections
-     * @return array<int,string>
-     */
-    private function normalizeSectionsArray(array $sections): array
-    {
-        return collect($sections)
-            ->map(fn($value) => is_scalar($value) ? trim((string) $value) : null)
-            ->filter(fn($value) => $value !== null && $value !== '')
-            ->unique(null, true)
-            ->values()
-            ->all();
     }
 
     /**
@@ -86,4 +57,34 @@ class ProjectInsightsRequest extends FormRequest
         ];
     }
 
+    protected function prepareForValidation(): void
+    {
+        $rawSections = $this->input('sections');
+
+        if ($rawSections === null) {
+            $this->merge(['sections' => self::DEFAULT_SECTIONS]);
+
+            return;
+        }
+
+        if (is_array($rawSections)) {
+            $this->merge(['sections' => $this->normalizeSectionsArray($rawSections)]);
+        }
+    }
+
+    /**
+     * Normalize a raw sections array to a cleaned list of strings
+     *
+     * @param  array<int,mixed>  $sections
+     * @return array<int,string>
+     */
+    private function normalizeSectionsArray(array $sections): array
+    {
+        return collect($sections)
+            ->map(fn ($value): ?string => is_scalar($value) ? trim((string) $value) : null)
+            ->filter(fn ($value): bool => $value !== null && $value !== '')
+            ->unique(null, true)
+            ->values()
+            ->all();
+    }
 }

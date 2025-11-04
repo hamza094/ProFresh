@@ -1,19 +1,20 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Feature\Api\V1\ProjectDashboard;
 
+use App\Traits\ProjectSetup;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
-use App\Models\User;
-use App\Traits\ProjectSetup;
 
 class UserKpiMetricesTest extends TestCase
 {
-    use RefreshDatabase, WithFaker, ProjectSetup;
+    use ProjectSetup, RefreshDatabase, WithFaker;
 
     /** @test */
-    public function it_returns_dashboard_kpis_and_insights_for_authenticated_user()
+    public function it_returns_dashboard_kpis_and_insights_for_authenticated_user(): void
     {
         $response = $this->getJson(route('dashboard.insights'));
 

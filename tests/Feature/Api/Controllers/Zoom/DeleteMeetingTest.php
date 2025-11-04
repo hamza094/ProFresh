@@ -1,54 +1,53 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Feature\Api\Controllers\Zoom;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use App\Exceptions\Integrations\Zoom\ZoomException;
-use Tests\Traits\InteractsWithZoom;
 use App\Models\Meeting;
 use App\Traits\ProjectSetup;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
+use Tests\Traits\InteractsWithZoom;
 
 class DeleteMeetingTest extends TestCase
 {
-    use RefreshDatabase,InteractsWithZoom,ProjectSetup;
-   
+    use InteractsWithZoom,ProjectSetup,RefreshDatabase;
+
     /** @test */
-    public function meeting_can_be_deleted()
+    public function meeting_can_be_deleted(): void
     {
-        $zoomFake = $this->fakeZoom();
+        $this->fakeZoom();
 
-        $meeting=Meeting::factory()
-               ->for($this->project)
-               ->create(['user_id'=>$this->user->id]);
+        $meeting = Meeting::factory()
+            ->for($this->project)
+            ->create(['user_id' => $this->user->id]);
 
-        $meetingId=$meeting->id;
-        
         $this->deleteJson('/api/v1/projects/'.$this->project->slug.'/meetings/'.$meeting->id);
 
-         $this->assertModelMissing($meeting);
+        $this->assertModelMissing($meeting);
     }
 
-        /** @test */
-public function database_changes_are_rolled_back_if_meeting_delete_fails()
-{
-    $meeting = Meeting::factory()
-        ->for($this->project)
-        ->create(['user_id' => $this->user->id]);
+    /** @test */
+    public function database_changes_are_rolled_back_if_meeting_delete_fails(): void
+    {
+        $meeting = Meeting::factory()
+            ->for($this->project)
+            ->create(['user_id' => $this->user->id]);
 
-    $meetingId = $meeting->id;
+        $meetingId = $meeting->id;
 
-    $zoomFake = $this->fakeZoom()->shouldFailWithException(
-         new ZoomException('Test error message')
+        $this->fakeZoom()->shouldFailWithException(
+            new ZoomException('Test error message')
         );
 
-     $response=$this->deleteJson('/api/v1/projects/'.$this->project->slug.'/meetings/'.$meeting->id);
+        $response = $this->deleteJson('/api/v1/projects/'.$this->project->slug.'/meetings/'.$meeting->id);
 
-    $response->assertStatus(400);
+        $response->assertStatus(400);
 
-    $this->assertDatabaseHas('meetings', [
-        'id' => $meetingId,
-    ]);
-}
+        $this->assertDatabaseHas('meetings', [
+            'id' => $meetingId,
+        ]);
+    }
 }

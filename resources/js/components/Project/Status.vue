@@ -14,9 +14,8 @@
         class="score-point"
         :class="'score-point_' + status"
         @keydown.enter.prevent="isPop = !isPop"
-        @keydown.space.prevent="isPop = !isPop"
-      >
-  {{ displayScore }}
+        @keydown.space.prevent="isPop = !isPop">
+        {{ displayScore }}
       </span>
 
       <div class="score-dropdown_item" v-show="isPop">
@@ -39,7 +38,10 @@
 
             <div class="mt-2">
               <div v-if="healthLoading" class="d-flex align-items-center text-muted small py-1">
-                <div class="spinner-border spinner-border-sm text-primary me-2" role="status" aria-label="Loading"></div>
+                <div
+                  class="spinner-border spinner-border-sm text-primary me-2"
+                  role="status"
+                  aria-label="Loading"></div>
                 <span>Loading health...</span>
               </div>
               <div v-else-if="healthError" class="text-danger small">{{ healthError }}</div>
@@ -57,12 +59,16 @@
                     <span class="display-6 fw-bold text-dark">{{ formatHealthValue(healthInsight) }}</span>
                     <span class="fs-6 text-muted ms-1">%</span>
                   </div>
-                  <p v-if="healthInsight.message" class="card-text text-muted small mb-0"><b>{{ healthInsight.message }}</b></p>
+                  <p v-if="healthInsight.message" class="card-text text-muted small mb-0">
+                    <b>{{ healthInsight.message }}</b>
+                  </p>
                 </div>
               </div>
 
               <div class="insights-actions mt-2 text-end">
-                <button class="btn-full-insights d-inline-flex align-items-center" @click.stop="openInsightsModal($event)">
+                <button
+                  class="btn-full-insights d-inline-flex align-items-center"
+                  @click.stop="openInsightsModal($event)">
                   <i class="fas fa-chart-bar"></i>
                   View Complete Insights
                 </button>
@@ -78,8 +84,8 @@
 </template>
 
 <script>
-import ProjectInsightsModal from './Insights/ProjectInsightsModal.vue'
-import ProjectInsightsMixin from '../../mixins/ProjectInsightsMixin.js'
+import ProjectInsightsModal from './Insights/ProjectInsightsModal.vue';
+import ProjectInsightsMixin from '../../mixins/ProjectInsightsMixin.js';
 
 export default {
   name: 'ProjectStatus',
@@ -94,78 +100,80 @@ export default {
       clickOutsideHandler: null,
       healthLoading: false,
       healthError: null,
-      healthInsight: null
-    }
+      healthInsight: null,
+    };
   },
   computed: {
     projectInitial() {
-      return this.project && this.project.name ? this.project.name.substring(0,1).toUpperCase() : ''
+      return this.project && this.project.name ? this.project.name.substring(0, 1).toUpperCase() : '';
     },
     displayScore() {
-      if (!this.project || this.project.score == null) return 'N/A'
-      const n = Number(this.project.score)
-      return Number.isFinite(n) ? Math.round(n) : 'N/A'
+      if (!this.project || this.project.score == null) return 'N/A';
+      const n = Number(this.project.score);
+      return Number.isFinite(n) ? Math.round(n) : 'N/A';
     },
     status() {
-      return this.project && this.project.status ? this.project.status : 'cold'
-    }
+      return this.project && this.project.status ? this.project.status : 'cold';
+    },
   },
   watch: {
     isPop(open) {
       if (open) {
-        this.addClickOutsideListener()
-        if (this.project) this.fetchHealth()
+        this.addClickOutsideListener();
+        if (this.project) this.fetchHealth();
       } else {
-        this.removeClickOutsideListener()
+        this.removeClickOutsideListener();
       }
-    }
+    },
   },
   beforeDestroy() {
-    this.removeClickOutsideListener()
+    this.removeClickOutsideListener();
   },
   methods: {
-    toggle() { this.isPop = !this.isPop },
+    toggle() {
+      this.isPop = !this.isPop;
+    },
     addClickOutsideListener() {
-      if (this.clickOutsideHandler) return
-      this.$nextTick(() => {
+      if (this.clickOutsideHandler) return;
+      this.$nextTick().then(() => {
         this.clickOutsideHandler = (e) => {
-          if (this.$refs.dropdown && !this.$refs.dropdown.contains(e.target)) this.isPop = false
-        }
-        document.addEventListener('click', this.clickOutsideHandler)
-      })
+          if (this.$refs.dropdown && !this.$refs.dropdown.contains(e.target)) this.isPop = false;
+        };
+        document.addEventListener('click', this.clickOutsideHandler);
+      });
     },
     removeClickOutsideListener() {
-      if (!this.clickOutsideHandler) return
-      document.removeEventListener('click', this.clickOutsideHandler)
-      this.clickOutsideHandler = null
+      if (!this.clickOutsideHandler) return;
+      document.removeEventListener('click', this.clickOutsideHandler);
+      this.clickOutsideHandler = null;
     },
     openInsightsModal() {
-      if (!this.project) return
-      this.isPop = false
-      this.$modal.show('project-insights-modal', { project: this.project })
+      if (!this.project) return;
+      this.isPop = false;
+      this.$modal.show('project-insights-modal', { project: this.project });
     },
     async fetchHealth() {
-      this.healthLoading = true
-      this.healthError = null
-      this.healthInsight = null
+      this.healthLoading = true;
+      this.healthError = null;
+      this.healthInsight = null;
       try {
-        const result = await this.loadCurrentProjectInsights(['health'])
-        if (!result || !result.success) throw new Error('Failed to load health insight')
-        const arr = Array.isArray(result.insights) ? result.insights : []
-        this.healthInsight = arr[0] || null
+        const result = await this.loadCurrentProjectInsights(['health']);
+        if (!result || !result.success) throw new Error('Failed to load health insight');
+        const arr = Array.isArray(result.insights) ? result.insights : [];
+        this.healthInsight = arr[0] || null;
       } catch (e) {
-        this.healthError = (e && e.message) ? e.message : 'Failed to load health insight'
+        this.healthError = e && e.message ? e.message : 'Failed to load health insight';
       } finally {
-        this.healthLoading = false
+        this.healthLoading = false;
       }
     },
     formatHealthValue(insight) {
-      if (!insight || !insight.data) return 'N/A'
-      const { value, percentage } = insight.data
-      if (typeof percentage === 'number') return Math.round(percentage)
-      if (typeof value === 'number') return Math.round(value)
-      return 'N/A'
-    }
-  }
-}
+      if (!insight || !insight.data) return 'N/A';
+      const { value, percentage } = insight.data;
+      if (typeof percentage === 'number') return Math.round(percentage);
+      if (typeof value === 'number') return Math.round(value);
+      return 'N/A';
+    },
+  },
+};
 </script>

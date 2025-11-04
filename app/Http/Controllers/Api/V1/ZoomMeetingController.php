@@ -1,37 +1,25 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
-use App\DataTransferObjects\Zoom\UpdateMeetingData;
-use App\DataTransferObjects\Zoom\Meeting as MeetingDto;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Http\Request;
-use App\Http\Integrations\Zoom\ZoomConnector;
-use App\Http\Requests\Api\V1\Zoom\MeetingUpdateRequest;
 use App\Http\Requests\Api\V1\Zoom\MeetingStoreRequest;
+use App\Http\Requests\Api\V1\Zoom\MeetingUpdateRequest;
 use App\Http\Resources\Api\V1\Zoom\MeetingResource;
-use App\Services\Api\V1\MeetingService;
 use App\Interfaces\Zoom;
-use DateTime;
-use Illuminate\Support\Facades\Cache;
-use App\Models\Project;
 use App\Models\Meeting;
+use App\Models\Project;
 use App\Services\Api\V1\ExceptionService;
+use App\Services\Api\V1\MeetingService;
 use Illuminate\Http\JsonResponse;
-use App\Exceptions\Integrations\Zoom\ZoomException;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ZoomMeetingController extends Controller
 {
-    /**
-     * @var \App\Services\Api\V1\ExceptionService
-     */
-    protected $exceptionService;
-
-    public function __construct(ExceptionService $exceptionService)
-    {
-        $this->exceptionService = $exceptionService;
-    }
+    public function __construct(protected ExceptionService $exceptionService) {}
 
     public function index(Project $project, Request $request, MeetingService $meetingService): JsonResponse
     {
@@ -44,7 +32,7 @@ class ZoomMeetingController extends Controller
         return response()->json([
             'success' => true,
             'message' => $meetingsData['message'],
-            'meetingsData' => $meetingsData['meetingsData']
+            'meetingsData' => $meetingsData['meetingsData'],
         ], 200);
     }
 
@@ -52,6 +40,7 @@ class ZoomMeetingController extends Controller
     {
         $this->authorize('access', $project);
         $meeting->load(['user']);
+
         return response()->json(['success' => true, 'data' => new MeetingResource($meeting)], 200);
     }
 
@@ -64,6 +53,7 @@ class ZoomMeetingController extends Controller
         $projectMeeting = DB::transaction(function () use ($zoom, $project, $user, $request) {
             $meeting = $zoom->createMeeting($request->validated(), $user);
             $meetingArray = (array) $meeting + ['user_id' => $user->id];
+
             return $project->meetings()->create($meetingArray);
         });
 
@@ -77,7 +67,7 @@ class ZoomMeetingController extends Controller
     {
         $this->authorize('manage', $project);
 
-        DB::transaction(function () use ($zoom, $meeting, $request) {
+        DB::transaction(function () use ($zoom, $meeting, $request): void {
             $meeting->update($request->validated());
             $zoom->updateMeeting($request->validated(), auth()->user());
         });
@@ -96,7 +86,7 @@ class ZoomMeetingController extends Controller
 
         $meetingId = $meeting->meeting_id;
 
-        DB::transaction(function () use ($zoom, $meeting, $meetingId) {
+        DB::transaction(function () use ($zoom, $meeting, $meetingId): void {
             $meeting->delete();
             $zoom->deleteMeeting($meetingId, auth()->user());
         });

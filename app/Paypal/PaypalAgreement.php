@@ -1,81 +1,84 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Paypal;
 
+use Exception;
 use PayPal\Api\Agreement;
 use PayPal\Api\Payer;
 use PayPal\Api\Plan;
 use PayPal\Api\ShippingAddress;
 
-
-class PaypalAgreement extends Paypal{
-
-public function create($id)
+class PaypalAgreement extends Paypal
 {
-  return redirect($this->agreement($id));
-}
+    public function create($id)
+    {
+        return redirect($this->agreement($id));
+    }
 
-  protected function agreement($id): string
-  {
-    $agreement = new Agreement();
-     $agreement->setName('ProFresh Agreement')
-    ->setDescription('ProFresh Agreement')
-    ->setStartDate(gmdate("Y-m-d\TH:i:s\Z", strtotime("+1 day")));
+    public function execute($token): void
+    {
+        $agreement = new Agreement;
+        try {
+            $agreement->execute($token, $this->apiContext);
+        } catch (Exception $ex) {
+            dd($ex);
 
-     $agreement->setPlan($this->plan($id));
+        }
+    }
 
-    $agreement->setPayer($this->payer());
-   
-    $agreement->setShippingAddress($this->shippingAddress());
+    protected function agreement($id): string
+    {
+        $agreement = new Agreement;
+        $agreement->setName('ProFresh Agreement')
+            ->setDescription('ProFresh Agreement')
+            ->setStartDate(gmdate("Y-m-d\TH:i:s\Z", strtotime('+1 day')));
 
-    try {
+        $agreement->setPlan($this->plan($id));
 
-    $agreement = $agreement->create($this->apiContext);
+        $agreement->setPayer($this->payer());
 
-    return $agreement->getApprovalLink();
-  } catch (\Exception $ex) {
-    dd($ex);
-  }
-  }
+        $agreement->setShippingAddress($this->shippingAddress());
 
-protected function plan($id): Plan
-{
-	$plan = new Plan();
+        try {
 
-  $plan->setId($id);
+            $agreement = $agreement->create($this->apiContext);
 
-  return $plan;
+            return $agreement->getApprovalLink();
+        } catch (Exception $ex) {
+            dd($ex);
+        }
+    }
 
-}
+    protected function plan($id): Plan
+    {
+        $plan = new Plan;
 
-  protected function payer(): Payer
-  {
-   $payer = new Payer();
+        $plan->setId($id);
 
-    $payer->setPaymentMethod('paypal');
+        return $plan;
 
-    return $payer;
-  }
+    }
 
-protected function shippingAddress(): ShippingAddress
-{
-  $shippingAddress = new ShippingAddress();
-  $shippingAddress->setLine1('111 First Street')
-    ->setCity('Saratoga')
-    ->setState('CA')
-    ->setPostalCode('95070')
-    ->setCountryCode('US');
-    return $shippingAddress;
-}
+    protected function payer(): Payer
+    {
+        $payer = new Payer;
 
-  public function execute($token)
-  {
-    $agreement = new Agreement();
-    try {
-        $agreement->execute($token, $this->apiContext);
-} catch (\Exception $ex) {
-    dd($ex);
+        $payer->setPaymentMethod('paypal');
 
-}    
-  } 
+        return $payer;
+    }
+
+    protected function shippingAddress(): ShippingAddress
+    {
+        $shippingAddress = new ShippingAddress;
+        $shippingAddress->setLine1('111 First Street')
+            ->setCity('Saratoga')
+            ->setState('CA')
+            ->setPostalCode('95070')
+            ->setCountryCode('US');
+
+        return $shippingAddress;
+    }
 }

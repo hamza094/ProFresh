@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Jobs;
 
 use App\Actions\ProjectMetrics\ProjectHealthMetricAction;
@@ -22,7 +24,10 @@ class RecalculateProjectHealth implements ShouldQueue
      * Number of attempts and timeout per attempt.
      */
     public int $tries = 2;
+
     public int $timeout = 60; // seconds
+
+    public function __construct(public int $projectId, public ?float $precomputedScore = null, public bool $broadcast = false) {}
 
     /**
      * Exponential-like backoff between retries.
@@ -34,15 +39,10 @@ class RecalculateProjectHealth implements ShouldQueue
         return [40, 60];
     }
 
-
-    public function __construct(public int $projectId, public ?float $precomputedScore = null, public bool $broadcast = false)
-    {
-    }
-
-    public function handle(ProjectHealthMetricAction $action, ?ProjectInsightsPreloader $preloader = null)
+    public function handle(ProjectHealthMetricAction $action, ?ProjectInsightsPreloader $preloader = null): void
     {
         $project = $this->findProject();
-        if (! $project) {
+        if (! $project instanceof Project) {
             return;
         }
 
@@ -82,7 +82,7 @@ class RecalculateProjectHealth implements ShouldQueue
             return;
         }
 
-        $preloader = $preloader ?? app(ProjectInsightsPreloader::class);
+        $preloader ??= app(ProjectInsightsPreloader::class);
 
         $preloader->preloadForHealth($project);
 
@@ -98,7 +98,7 @@ class RecalculateProjectHealth implements ShouldQueue
             return $this->precomputedScore; // Trust upstream provided value
         }
 
-        return (float) $action->execute($project);
+        return $action->execute($project);
     }
 
     /**
@@ -123,5 +123,4 @@ class RecalculateProjectHealth implements ShouldQueue
 
         event(new ProjectHealthUpdated($project));
     }
-
 }

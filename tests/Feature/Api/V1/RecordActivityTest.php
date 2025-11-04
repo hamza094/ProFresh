@@ -1,200 +1,194 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Feature\Api\V1;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
-use App\Traits\ProjectSetup;
-use Laravel\Sanctum\Sanctum;
 use App\Models\Task;
 use App\Models\User;
+use App\Traits\ProjectSetup;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
 
 class RecordActivityTest extends TestCase
 {
-  use RefreshDatabase,ProjectSetup;
+    use ProjectSetup,RefreshDatabase;
 
-  // Since the project is automatically with ProjectSetup trait it should already have one activity
+    // Since the project is automatically with ProjectSetup trait it should already have one activity
 
-  /** @test */
-  public function creating_a_project()
-  {
+    /** @test */
+    public function creating_a_project(): void
+    {
 
-    $this->assertDatabaseHas('activities', [
-        'project_id'  => $this->project->id,
-        'description' => 'created_project',
-    ]);
+        $this->assertDatabaseHas('activities', [
+            'project_id' => $this->project->id,
+            'description' => 'created_project',
+        ]);
 
-    $activity = $this->project->activities()->latest()->first();
-    
-    $this->assertEquals('created_project',$activity->description);
-  }
+        $activity = $this->project->activities()->latest()->first();
 
-   /** @test */
-   public function record_activity_on_updating_a_project()
-   {
-     $initialAttributes = $this->project->only(['name', 'slug']);
+        $this->assertEquals('created_project', $activity->description);
+    }
 
-    $this->project->update(['name'=>'changed name']);
+    /** @test */
+    public function record_activity_on_updating_a_project(): void
+    {
+        $initialAttributes = $this->project->only(['name', 'slug']);
 
-    $this->assertCount(2, $this->project->activities);
+        $this->project->update(['name' => 'changed name']);
 
-    $activity = $this->project->activities->last();
+        $this->assertEquals(2, $this->project->activities()->count());
 
-    $this->assertEquals('updated_project', $activity->description);
+        $activity = $this->project->activities()->first();
 
-     $this->assertEquals([
-        'before' => ['name' => $initialAttributes['name'], 'slug' => $initialAttributes['slug']],
-        'after'  => ['name' => 'changed name', 'slug' => $this->project->slug],
-    ], $activity->changes);
-}
+        $this->assertEquals('updated_project', $activity->description);
 
-  /** @test */
-  public function it_removes_project_activities_when_deleted()
-  {
-    $this->assertCount(1, $this->project->activities);
+        $this->assertEquals([
+            'before' => ['name' => $initialAttributes['name'], 'slug' => $initialAttributes['slug']],
+            'after' => ['name' => 'changed name', 'slug' => $this->project->slug],
+        ], $activity->changes);
+    }
 
-      $this->project->delete();
+    /** @test */
+    public function it_removes_project_activities_when_deleted(): void
+    {
+        $this->assertEquals(1, $this->project->activities()->count());
 
-     $this->project->forceDelete();
+        $this->project->delete();
 
-    $this->assertDatabaseMissing('activities', ['project_id' => $this->project->id]);
-  }
+        $this->project->forceDelete();
 
-  /** @test */
-  public function record_on_restoring_project()
-  {
-    $this->project->delete();
+        $this->assertDatabaseMissing('activities', ['project_id' => $this->project->id]);
+    }
 
-    $this->getJson($this->project->path().'/restore')->assertOk();
+    /** @test */
+    public function record_on_restoring_project(): void
+    {
+        $this->project->delete();
 
-    $this->project->refresh();
+        $this->getJson($this->project->path().'/restore')->assertOk();
 
-    $this->assertEquals('restored_project',
-      $this->project->activities->last()->description);
- }
+        $this->project->refresh();
 
-   /** @test */
-   public function record_on_creating_task()
-   {
-    $task = $this->project->addTask('Test Task');
+        $this->assertEquals('restored_project',
+            $this->project->activities()->first()->description);
+    }
 
-    $this->assertCount(2, $this->project->activities);
+    /** @test */
+    public function record_on_creating_task(): void
+    {
+        $this->project->addTask('Test Task');
 
-    $activity = $this->project->activities->last();
+        $this->assertEquals(2, $this->project->activities()->count());
 
-    $activity->refresh();
+        $activity = $this->project->activities()->first();
 
-    $this->assertEquals('created_task', $activity->description);
+        $this->assertEquals('created_task', $activity->description);
 
-    $this->assertInstanceOf(Task::class, $activity->subject);
+        $this->assertInstanceOf(Task::class, $activity->subject);
 
-    $this->assertEquals('Test Task', $activity->subject->title);
-  }
+        $this->assertEquals('Test Task', $activity->subject->title);
+    }
 
-   /** @test */
-   public function record_on_updating_task()
-   {
-     $task=$this->project->addTask('test task');
+    /** @test */
+    public function record_on_updating_task(): void
+    {
+        $task = $this->project->addTask('test task');
 
-     $this->putJson($task->path(), ['title' => 'changed']);
+        $this->putJson($task->path(), ['title' => 'changed']);
 
-     $activity = $this->project->activities->last();
+        $activity = $this->project->activities()->first();
 
-     $activity->refresh();
+        $this->assertEquals('updated_task', $activity->description);
 
-     $this->assertEquals('updated_task',$activity->description);
+        $this->assertEquals([
+            'before' => ['title' => $task->title],
+            'after' => ['title' => 'changed'],
+        ], $activity->changes);
+    }
 
-     $this->assertEquals([
-          'before' => ['title' => $task->title],
-          'after' =>  ['title' => 'changed']
-      ], $activity->changes);
-  }
+    /** @test */
+    public function record_on_task_deletion(): void
+    {
+        $task = $this->project->addTask('test task');
 
-   /** @test */
-   public function record_on_task_deletion()
-   {
-     $task=$this->project->addTask('test task');
+        $task->delete();
 
-     $task->delete();
+        $this->assertEquals(3, $this->project->activities()->count());
 
-     $this->assertCount(3,$this->project->activities);
+        $this->assertEquals('deleted_task', $this->project->activities()->first()->description);
+    }
 
-     $this->assertEquals('deleted_task',$this->project->activities->last()->description);
-   }
+    /** @test */
+    public function remove_project_task_activities_on_archived_task_deletion(): void
+    {
+        $task = $this->project->addTask('test task');
 
-   /** @test */
-   public function remove_project_task_activities_on_archived_task_deletion()
-   {
-      $task=$this->project->addTask('test task');
+        $this->deleteJson(route('task.archive', [
+            'project' => $this->project->slug,
+            'task' => $task->id,
+        ]));
 
-      $this->deleteJson(route('task.archive', [
-        'project' => $this->project->slug,
-        'task' => $task->id
-      ]));
+        $this->deleteJson($task->path().'/remove');
 
-      $this->deleteJson($task->path().'/remove');
-
-       tap($this->project->activities->last(), function ($activity) {
+        $activity = $this->project->activities()->first();
         $this->assertEquals('deleted_task', $activity->description);
-      });       
-   }
+    }
 
+    /** @test */
+    public function records_activity_when_invitation_sent_to_user(): void
+    {
+        $user = User::factory()->create();
 
-  /** @test */
-  public function records_activity_when_invitation_sent_to_user()
-  {
-    $user=User::factory()->create();
+        $this->postJson($this->project->path().'/invitations', [
+            'email' => $user->email,
+        ]);
 
-    $this->postJson($this->project->path().'/invitations',[
-        'email'=>$user->email
-     ]);
+        $this->assertEquals(2, $this->project->activities()->count());
 
-    $this->assertCount(2,$this->project->activities);
+        $this->assertEquals('invitation_sent', $this->project->activities()->first()->description);
+    }
 
-    $this->assertEquals('invitation_sent',$this->project->activities->last()->description);
-  }
+    /** @test */
+    public function records_activity_when_user_accepted_project_invitation(): void
+    {
+        $this->project->invite($user = User::factory()->create());
 
-   /** @test */
-   public function records_activity_when_user_accepted_project_invitation()
-   {
-     $this->project->invite($user=User::factory()->create());
+        Sanctum::actingAs(
+            $user,
+        );
 
-     Sanctum::actingAs(
-         $user,
-     );
+        $this->getJson($this->project->path().'/accept-invitation');
 
-    $this->getJson($this->project->path().'/accept-invitation');
+        $this->assertEquals('invitation_accepted', $this->project->activities()->first()->description);
+    }
 
-    $this->assertEquals('invitation_accepted',$this->project->activities->last()->description);
-  }
+    /** @test */
+    public function it_records_activity_when_a_project_member_is_removed(): void
+    {
+        $user = User::factory()->create();
 
-  /** @test */
-  public function it_records_activity_when_a_project_member_is_removed()
-  {
-    $user=User::factory()->create();
+        $this->project->members()->attach($user, ['active' => true]);
 
-     $this->project->members()->attach($user,['active'=>true]);
+        $this->getJson($this->project->path().'/remove/member/'.$user->uuid);
 
-     $this->getJson($this->project->path().'/remove/member/'.$user->uuid);
+        $this->assertEquals('member_removed', $this->project->activities()->first()->description);
+    }
 
-    $this->assertEquals('member_removed',$this->project->activities->last()->description);
-  }
+    /** @test */
+    public function it_records_activity_on_creating_message(): void
+    {
+        $this->postJson($this->project->path().'/message', [
+            'message' => 'this is project message',
+            'users' => json_encode([User::first()->id]),
+            'subject' => 'this is message subject',
+            'sms' => true,
+            'mail' => true,
+        ]);
 
-  /** @test */
-  public function it_records_activity_on_creating_message()
-  {
-    $response=$this->postJson($this->project->path().'/message',[
-        'message'=>'this is project message',
-        'users'=>json_encode([User::first()->id]),
-        'subject'=>'this is message subject',
-        'sms'=>true,
-        'mail'=>true,
-      ]);
+        $this->assertEquals(3, $this->project->activities()->count());
 
-      $this->assertCount(3,$this->project->activities);
-
-      $this->assertEquals('created_message',$this->project->activities->last()->description);
-  }     
-
+        $this->assertEquals('created_message', $this->project->activities()->first()->description);
+    }
 }

@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
-use App\Models\UserInfo;
 use App\Models\User;
+use App\Models\UserInfo;
+use Illuminate\Database\Seeder;
 
 class InfoSeeder extends Seeder
 {
@@ -15,13 +17,13 @@ class InfoSeeder extends Seeder
      */
     public function run()
     {
-      $users= User::all();
+        $users = User::all();
 
-      $users->each(function ($user) {
-        UserInfo::factory()
-            ->for($user)
-            ->create();
-      });
+        $users->each(function ($user) {
+            UserInfo::factory()
+                ->for($user)
+                ->create();
+        });
 
     }
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     // Time windows and thresholds used by insights repository
     'time_periods' => [

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Enums;
 
 enum TwoFactorStatus: string
@@ -9,4 +11,4 @@ enum TwoFactorStatus: string
     case DISABLED = 'disabled';
     case TWO_FA_REQUIRED = '2fa_required';
     case SUCCESS = 'success';
-} 
+}

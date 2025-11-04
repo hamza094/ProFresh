@@ -1,23 +1,21 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Feature\Api\V1;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Tests\TestCase;
 use App\Models\Project;
-use App\Models\Task;
 use App\Models\User;
 use App\Traits\ProjectSetup;
-use Illuminate\Support\Facades\DB;
-use Carbon\Carbon;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 class DashboardTest extends TestCase
 {
-    use RefreshDatabase, ProjectSetup;
+    use ProjectSetup, RefreshDatabase;
 
     /** @test */
-    public function auth_user_can_view_dashboard_projects()
+    public function auth_user_can_view_dashboard_projects(): void
     {
         // Create 5 projects for the user
         Project::factory()->count(5)->for($this->user)->create();
@@ -28,7 +26,7 @@ class DashboardTest extends TestCase
             ->assertJsonStructure([
                 'projects',
                 'projectsCount',
-                'message'
+                'message',
             ]);
 
         // Should only return 3 projects (latest)
@@ -38,7 +36,7 @@ class DashboardTest extends TestCase
     }
 
     /** @test */
-    public function dashboard_projects_returns_empty_message_when_no_projects()
+    public function dashboard_projects_returns_empty_message_when_no_projects(): void
     {
         // Delete the default project from ProjectSetup trait
         $this->project->delete();
@@ -51,5 +49,4 @@ class DashboardTest extends TestCase
         $this->assertEquals(0, $response->json('projectsCount'));
         $this->assertEquals('No active projects found', $response->json('message'));
     }
-    
 }

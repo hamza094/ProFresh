@@ -1,19 +1,20 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Feature\Api\Controllers\Paddle;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Tests\Traits\InteractsWithPaddle;
-use Laravel\Sanctum\Sanctum;
 use App\Http\Middleware\CheckSubscription;
-use Illuminate\Support\Facades\Hash;
 use App\Models\User;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Hash;
+use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
+use Tests\Traits\InteractsWithPaddle;
 
 class SubscriptionTest extends TestCase
 {
-    use RefreshDatabase, InteractsWithPaddle;
+    use InteractsWithPaddle, RefreshDatabase;
 
     protected function setUp(): void
     {
@@ -22,7 +23,7 @@ class SubscriptionTest extends TestCase
         // Create a user
         $user = User::factory()->create([
             'email' => 'johndoe@example.org',
-            'password' => Hash::make('testpassword')
+            'password' => Hash::make('testpassword'),
         ]);
 
         Sanctum::actingAs($user);
@@ -32,7 +33,7 @@ class SubscriptionTest extends TestCase
     }
 
     /** @test */
-    public function it_creates_a_paylink_for_subscription()
+    public function it_creates_a_paylink_for_subscription(): void
     {
         $plan = 'monthly';
         $response = $this->getJson('/api/v1/user/subscribe/'.$plan);
@@ -44,7 +45,7 @@ class SubscriptionTest extends TestCase
     }
 
     /** @test */
-    public function it_swaps_a_subscription_plan()
+    public function it_swaps_a_subscription_plan(): void
     {
         $this->withoutMiddleware(CheckSubscription::class);
 
@@ -59,7 +60,7 @@ class SubscriptionTest extends TestCase
     }
 
     /** @test */
-    public function it_cancels_a_subscription()
+    public function it_cancels_a_subscription(): void
     {
         $this->withoutMiddleware(CheckSubscription::class);
 
@@ -73,7 +74,7 @@ class SubscriptionTest extends TestCase
     }
 
     /** @test */
-    public function it_denies_access_for_non_subscribed_users()
+    public function it_denies_access_for_non_subscribed_users(): void
     {
         $plan = 'monthly';
         $response = $this->getJson('/api/v1/user/subscription/swap/'.$plan);
@@ -85,10 +86,10 @@ class SubscriptionTest extends TestCase
     }
 
     /** @test */
-    public function it_fails_validation_for_invalid_plan()
+    public function it_fails_validation_for_invalid_plan(): void
     {
         $invalidPlan = 'weekly';
-        $response = $this->getJson('/api/v1/user/subscribe/' . $invalidPlan);
+        $response = $this->getJson('/api/v1/user/subscribe/'.$invalidPlan);
 
         $response->assertStatus(422)
             ->assertJsonValidationErrors(['plan']);

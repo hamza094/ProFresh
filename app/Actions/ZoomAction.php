@@ -1,19 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Actions;
 
 use Firebase\JWT\JWT;
 
 class ZoomAction
 {
-    /**
-     * @var string
-     */
     protected string $sdkKey;
 
-    /**
-     * @var string
-     */
     protected string $sdkSecret;
 
     public function __construct()
@@ -23,9 +19,7 @@ class ZoomAction
     }
 
     /**
-     * @param int|string $meetingNumber
-     * @param int $role
-     * @return string
+     * @param  int|string  $meetingNumber
      */
     public function handle($meetingNumber, int $role): string
     {
@@ -45,7 +39,3 @@ class ZoomAction
         return JWT::encode($payload, $this->sdkSecret, 'HS256');
     }
 }
-
-
-
-?>

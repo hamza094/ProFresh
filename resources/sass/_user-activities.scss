@@ -57,7 +57,9 @@ $dot-size: 8px;
 }
 
 @keyframes spin {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .calendar-error {
@@ -121,7 +123,9 @@ $dot-size: 8px;
   &-link {
     color: white;
     text-decoration: none;
-    transition: color 0.2s ease, text-decoration 0.2s ease;
+    transition:
+      color 0.2s ease,
+      text-decoration 0.2s ease;
 
     &:hover,
     &:focus {

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Events;
 
 use App\Models\Project;
@@ -12,16 +14,14 @@ class ProjectHealthUpdated implements ShouldBroadcast
 {
     use InteractsWithSockets, SerializesModels;
 
-    public function __construct(public Project $project)
-    {
-    }
+    public string $broadcastQueue = 'metrics';
 
-    public $broadcastQueue = 'metrics';
+    public function __construct(public Project $project) {}
 
     public function broadcastOn(): PrivateChannel
     {
         // Use a dedicated channel for health updates so listeners can subscribe specifically
-        return new PrivateChannel('project.' . $this->project->id . '.health');
+        return new PrivateChannel('project.'.$this->project->id.'.health');
     }
 
     /**

@@ -1,16 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
+use App\Traits\RecordActivity;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use App\Traits\RecordActivity;
 use Illuminate\Database\Eloquent\Model;
-use Carbon\Carbon;
 
 class Meeting extends Model
 {
-    use RecordActivity, HasFactory;
+    use HasFactory, RecordActivity;
 
     protected $guarded = [];
 
@@ -29,11 +31,11 @@ class Meeting extends Model
     protected $casts = [
         'password' => 'encrypted',
         'join_url' => 'encrypted',
-        'start_url'=>'encrypted',
+        'start_url' => 'encrypted',
     ];
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\User, self>
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<User, self>
      */
     public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
@@ -41,7 +43,7 @@ class Meeting extends Model
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Project, self>
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<Project, self>
      */
     public function project(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
@@ -49,8 +51,8 @@ class Meeting extends Model
     }
 
     /**
-     * @param Builder<\App\Models\Meeting> $query
-     * @return Builder<\App\Models\Meeting>
+     * @param  Builder<Meeting>  $query
+     * @return Builder<Meeting>
      */
     public function scopePrevious(Builder $query): Builder
     {
@@ -58,8 +60,8 @@ class Meeting extends Model
     }
 
     /**
-     * @param Builder<\App\Models\Meeting> $query
-     * @return Builder<\App\Models\Meeting>
+     * @param  Builder<Meeting>  $query
+     * @return Builder<Meeting>
      */
     public function scopeScheduled(Builder $query): Builder
     {

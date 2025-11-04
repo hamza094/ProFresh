@@ -1,55 +1,43 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Jobs;
 
-use App\Models\Project;
 use App\Mail\ProjectMail;
-use Illuminate\Bus\Queueable;
+use App\Models\Project;
 use Illuminate\Bus\Batchable;
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Queue\SerializesModels;
-use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
-use Illuminate\Contracts\Queue\ShouldBeUnique;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Mail;
 
 class MailMessage implements ShouldQueue
 {
     use Batchable, Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
-
-    //public $tries = 3;
-
-    //public $timeout = 60;
-
-    /**
-     * The project instance.
-     *
-     * @var \App\Models\Project
-     */
-    protected $project;
-    protected $message;
-    protected $user;
 
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct(Project $project,$message,$user)
-    {
-        $this->project=$project;
-        $this->message=$message;
-        $this->user=$user;
-    }
+    public function __construct(
+        /**
+         * The project instance.
+         */
+        protected Project $project,
+        protected $message,
+        protected $user
+    ) {}
 
     /**
      * Execute the job.
-     *
-     * @return void
      */
-    public function handle()
+    public function handle(): void
     {
         Mail::to($this->user)
-      ->send(new ProjectMail($this->project,$this->message));
+            ->send(new ProjectMail($this->project, $this->message));
     }
 }

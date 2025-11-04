@@ -1,72 +1,35 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Contracts\Auth\CanResetPassword;
-use Illuminate\Notifications\Notifiable;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Support\Facades\Redis;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Support\Str;
-use Laravel\Paddle\Billable;
 use App\Enums\OAuthProvider;
-use Laravel\Sanctum\HasApiTokens;
-use App\Jobs\QueuedVerifyEmailJob;
 use App\Jobs\QueuedPasswordResetJob;
-use Illuminate\Database\Eloquent\Concerns\HasUuids;
-use Spatie\Permission\Traits\HasRoles;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\HasOne;
+use App\Jobs\QueuedVerifyEmailJob;
 use App\Traits\HasSubscription;
+use DateTimeImmutable;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Laragear\TwoFactor\TwoFactorAuthentication;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Redis;
+use Illuminate\Support\Str;
 use Laragear\TwoFactor\Contracts\TwoFactorAuthenticatable;
+use Laragear\TwoFactor\TwoFactorAuthentication;
+use Laravel\Paddle\Billable;
+use Laravel\Sanctum\HasApiTokens;
+use Spatie\Permission\Traits\HasRoles;
 
-class User extends Authenticatable implements MustVerifyEmail,TwoFactorAuthenticatable
+class User extends Authenticatable implements MustVerifyEmail, TwoFactorAuthenticatable
 {
-    use HasFactory, Notifiable, Billable, HasApiTokens, HasRoles, HasSubscription, SoftDeletes,TwoFactorAuthentication;
-    
+    use Billable, HasApiTokens, HasFactory, HasRoles, HasSubscription, Notifiable, SoftDeletes,TwoFactorAuthentication;
+
     protected $guarded = [];
-
-    public function guardName(): string 
-    { 
-        return 'sanctum'; 
-    }
-
-    public function getRouteKeyName(): string
-    {
-      return 'uuid';
-    }
-
-
-    //protected $appends = ['LastSeen'];
-
-
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
-
-      protected static function boot()
-    {
-        parent::boot();
-
-        static::creating(function ($user) {
-            $user->uuid = (string) Str::uuid();
-        });
-        
-        static::deleting(function ($user) {
-          $user->projects()->delete();
-        });
-
-        static::forceDeleting(function ($user) {
-            $user->notifications()->delete();
-        });
-    }
-
 
     /**
      * The attributes that should be hidden for arrays.
@@ -93,24 +56,33 @@ class User extends Authenticatable implements MustVerifyEmail,TwoFactorAuthentic
         'oauth_provider' => OAuthProvider::class,
         'oauth_token' => 'encrypted',
         'oauth_refresh_token' => 'encrypted',
-        'last_active_at'=>'datetime',
-         'zoom_access_token' => 'encrypted',
-         'zoom_refresh_token' => 'encrypted',
-         'zoom_expires_at' => 'datetime',
+        'last_active_at' => 'datetime',
+        'zoom_access_token' => 'encrypted',
+        'zoom_refresh_token' => 'encrypted',
+        'zoom_expires_at' => 'datetime',
     ];
 
+    public function guardName(): string
+    {
+        return 'sanctum';
+    }
+
+    public function getRouteKeyName(): string
+    {
+        return 'uuid';
+    }
 
     public function sendEmailVerificationNotification(): void
-   {
-       //dispactches the job to the queue passing it this User object
+    {
+        // dispactches the job to the queue passing it this User object
         QueuedVerifyEmailJob::dispatch($this);
-   }
+    }
 
-   public function sendPasswordResetNotification($token): void
-   {
-       //dispactches the job to the queue passing it this User object
-       QueuedPasswordResetJob::dispatch($this,$token);
-   }
+    public function sendPasswordResetNotification($token): void
+    {
+        // dispactches the job to the queue passing it this User object
+        QueuedPasswordResetJob::dispatch($this, $token);
+    }
 
     public function path(): string
     {
@@ -121,10 +93,10 @@ class User extends Authenticatable implements MustVerifyEmail,TwoFactorAuthentic
      * Get projects created by user.
      *
      * @return HasMany<Project>
-     */ 
+     */
     public function projects(): HasMany
     {
-       return $this->hasMany(Project::class);
+        return $this->hasMany(Project::class);
     }
 
     /*public function lastseen() {
@@ -133,28 +105,28 @@ class User extends Authenticatable implements MustVerifyEmail,TwoFactorAuthentic
     }*/
 
     public function activities()
-   {
-     return $this->hasMany(Activity::class);
-   }
-    
-    /**
-    * Get all conversation associated by user
-    *
-    * @return HasMany<Conversation>
-    */
-    public function conversations():HasMany
     {
-      return $this->hasMany(Conversation::class);
+        return $this->hasMany(Activity::class);
     }
 
-     /**
-    * Get user profile information
-    *
-    * @return HasOne<UserInfo>
-    */
+    /**
+     * Get all conversation associated by user
+     *
+     * @return HasMany<Conversation>
+     */
+    public function conversations(): HasMany
+    {
+        return $this->hasMany(Conversation::class);
+    }
+
+    /**
+     * Get user profile information
+     *
+     * @return HasOne<UserInfo>
+     */
     public function info(): HasOne
     {
-       return $this->hasOne(UserInfo::class);
+        return $this->hasOne(UserInfo::class);
     }
 
     /**
@@ -164,9 +136,9 @@ class User extends Authenticatable implements MustVerifyEmail,TwoFactorAuthentic
      */
     public function members(bool $active = false): BelongsToMany
     {
-     return $this->belongsToMany(Project::class, 'project_members')
-        ->wherePivot('active', $active)
-        ->withTimestamps();
+        return $this->belongsToMany(Project::class, 'project_members')
+            ->wherePivot('active', $active)
+            ->withTimestamps();
     }
 
     /*public function getlastSeenAttribute()
@@ -180,33 +152,33 @@ class User extends Authenticatable implements MustVerifyEmail,TwoFactorAuthentic
     }
 
     /**
-    * Get all messages created by user
-    *
-    * @return belongsToMany<Message>
-    */
+     * Get all messages created by user
+     *
+     * @return BelongsToMany<Message>
+     */
     public function messages(): BelongsToMany
     {
-      return $this->belongsToMany(Message::class);
+        return $this->belongsToMany(Message::class);
     }
 
     /**
-    * Get all tasks created by the user
-    *
-    * @return HasMany<Task>
-    */
+     * Get all tasks created by the user
+     *
+     * @return HasMany<Task>
+     */
     public function tasks(): HasMany
     {
-      return $this->hasMany(Task::class);
+        return $this->hasMany(Task::class);
     }
 
     /**
-    * Get tasks assigned to user
-    *
-    * @return BelongsToMany<Task>
-    */
+     * Get tasks assigned to user
+     *
+     * @return BelongsToMany<Task>
+     */
     public function assigned(): BelongsToMany
     {
-      return $this->belongsToMany(Task::class);
+        return $this->belongsToMany(Task::class);
     }
 
     public function isAdmin(): bool
@@ -218,43 +190,66 @@ class User extends Authenticatable implements MustVerifyEmail,TwoFactorAuthentic
     public function updateZoomOAuthDetails(
         string $accessToken,
         string $refreshToken,
-        \DateTimeImmutable $expiresAt
-  ): void {
+        DateTimeImmutable $expiresAt
+    ): void {
         $this->zoom_access_token = $accessToken;
         $this->zoom_refresh_token = $refreshToken;
         $this->zoom_expires_at = $expiresAt;
         $this->save();
-  }
+    }
 
     public function isConnectedToZoom(): bool
     {
-       return $this->zoom_access_token
-       && $this->zoom_refresh_token
-       && $this->zoom_expires_at;
+        return $this->zoom_access_token
+        && $this->zoom_refresh_token
+        && $this->zoom_expires_at;
     }
 
-     /**
+    /**
      * Get meetings created by user.
      *
      * @return HasMany<Meeting>
-     */ 
+     */
     public function meetings(): HasMany
     {
-      return $this->hasMany(Meeting::class); 
-    } 
-
-    /**
-    * @return array<string, mixed>
-    */
-    public function getNotifierData(): array
-    {
-    return [
-        'uuid'         => $this->uuid,
-        'name'         => $this->name,
-        'username'     => $this->username,
-        'avatar_path'  => $this->avatar_path,
-        'email'        => $this->email,
-    ];
+        return $this->hasMany(Meeting::class);
     }
 
+    /**
+     * @return array<string, mixed>
+     */
+    public function getNotifierData(): array
+    {
+        return [
+            'uuid' => $this->uuid,
+            'name' => $this->name,
+            'username' => $this->username,
+            'avatar_path' => $this->avatar_path,
+            'email' => $this->email,
+        ];
+    }
+
+    // protected $appends = ['LastSeen'];
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($user): void {
+            $user->uuid = (string) Str::uuid();
+        });
+
+        static::deleting(function ($user): void {
+            $user->projects()->delete();
+        });
+
+        static::forceDeleting(function ($user): void {
+            $user->notifications()->delete();
+        });
+    }
 }

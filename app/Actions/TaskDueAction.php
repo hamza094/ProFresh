@@ -1,10 +1,11 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Actions;
 
-use App\Models\Task;
 use App\Enums\TaskDueNotifies;
+use App\Models\Task;
 use App\Notifications\TaskDue;
 use Illuminate\Support\Facades\DB;
 
@@ -25,7 +26,7 @@ class TaskDueAction
 
     public function sendNotification(Task $task): void
     {
-        DB::transaction(function () use ($task) {
+        DB::transaction(function () use ($task): void {
             $task->notify_sent = true;
             $task->saveQuietly();
 
@@ -34,8 +35,8 @@ class TaskDueAction
                     new TaskDue(
                         $task->due_at,
                         $task->title,
-                        $task->notified, 
-                        $task->owner->getNotifierData(), 
+                        $task->notified,
+                        $task->owner->getNotifierData(),
                         $task->project->name,
                         $task->project->path()
                     ));
@@ -43,5 +44,3 @@ class TaskDueAction
         });
     }
 }
-
-

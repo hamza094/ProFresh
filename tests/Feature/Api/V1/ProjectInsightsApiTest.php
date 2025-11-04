@@ -1,44 +1,50 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Feature\Api\V1;
 
-use Tests\TestCase;
-use App\Models\User;
 use App\Models\Project;
 use App\Models\Stage;
 use App\Models\TaskStatus;
-use Laravel\Sanctum\Sanctum;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Config;
+use Laravel\Sanctum\Sanctum;
 use Tests\Support\BuildsInsightTestData;
+use Tests\TestCase;
 
 class ProjectInsightsApiTest extends TestCase
 {
-    use RefreshDatabase;
     use BuildsInsightTestData;
+    use RefreshDatabase;
 
     private User $user;
+
     private User $nonMember;
+
     private Project $project;
+
     private Stage $stage;
+
     private TaskStatus $status;
 
     protected function setUp(): void
     {
         parent::setUp();
-        
+
         $this->user = User::factory()->create();
         $this->status = TaskStatus::factory()->create();
         $this->stage = Stage::factory()->create();
         $this->nonMember = User::factory()->create();
         $this->project = Project::factory()->create([
             'name' => 'Test Project',
-            'stage_id' => $this->stage->id
+            'stage_id' => $this->stage->id,
         ]);
-        
+
         // Make user a project member
         $this->project->members()->attach($this->user->id);
-        
+
         // Set up test config
         Config::set('project-metrics.health.weights.tasks', 0.4);
         Config::set('project-metrics.time_periods.recent_activity_days', 7);
@@ -48,7 +54,7 @@ class ProjectInsightsApiTest extends TestCase
     public function can_get_project_insights_with_realistic_data(): void
     {
         // Arrange: Create realistic project data
-    $this->seedRealisticData($this->project, $this->user);
+        $this->seedRealisticData($this->project, $this->user);
 
         Sanctum::actingAs($this->user);
 
@@ -63,7 +69,7 @@ class ProjectInsightsApiTest extends TestCase
                 'project_id',
                 'project_name',
                 'insights' => [
-                    '*' => ['type', 'title', 'message', 'data']
+                    '*' => ['type', 'title', 'message', 'data'],
                 ],
                 'sections_requested',
                 'generated_at',
@@ -71,7 +77,7 @@ class ProjectInsightsApiTest extends TestCase
             ]);
 
         // Assert: Key business logic
-    $data = $response->json();
+        $data = $response->json();
         $this->assertEquals($this->project->id, $data['project_id']);
         $this->assertEquals('Test Project', $data['project_name']);
         $this->assertNotEmpty($data['insights']);
@@ -82,7 +88,7 @@ class ProjectInsightsApiTest extends TestCase
     public function can_get_specific_sections_only(): void
     {
         // Arrange
-    $this->seedRealisticData($this->project, $this->user);
+        $this->seedRealisticData($this->project, $this->user);
 
         Sanctum::actingAs($this->user);
 
@@ -90,21 +96,21 @@ class ProjectInsightsApiTest extends TestCase
         $response = $this
             ->getJson("/api/v1/projects/{$this->project->slug}/insights?sections[]=health&sections[]=task-health");
 
-            // Assert
+        // Assert
         $response->assertOk()
             ->assertJsonStructure([
                 'success',
                 'project_id',
                 'project_name',
                 'insights' => [
-                    '*' => ['type', 'title', 'message', 'data']
+                    '*' => ['type', 'title', 'message', 'data'],
                 ],
                 'sections_requested',
                 'generated_at',
                 'message',
             ]);
 
-    $data = $response->json();
+        $data = $response->json();
         $this->assertEquals(['health', 'task-health'], $data['sections_requested']);
         $this->assertIsArray($data['insights']);
         $this->assertNotEmpty($data['insights']);
@@ -130,19 +136,19 @@ class ProjectInsightsApiTest extends TestCase
                 'project_id',
                 'project_name',
                 'insights' => [
-                    '*' => ['type', 'title', 'message', 'data']
+                    '*' => ['type', 'title', 'message', 'data'],
                 ],
                 'sections_requested',
                 'generated_at',
                 'message',
             ]);
-        
-    $data = $response->json();
+
+        $data = $response->json();
         $this->assertEquals(['health'], $data['sections_requested']);
 
         $insights = $data['insights'];
         $this->assertCount(1, $insights);
-    // Basic structure verified by assertJsonStructure
+        // Basic structure verified by assertJsonStructure
     }
 
     /** @test */
@@ -162,13 +168,13 @@ class ProjectInsightsApiTest extends TestCase
                 'project_id',
                 'project_name',
                 'insights' => [
-                    '*' => ['type', 'title', 'message', 'data']
+                    '*' => ['type', 'title', 'message', 'data'],
                 ],
                 'sections_requested',
                 'generated_at',
                 'message',
             ]);
-    $data = $response->json();
+        $data = $response->json();
         // Expect normalized unique order as first-seen
         $this->assertEquals(['health', 'task-health'], $data['sections_requested']);
         $this->assertIsArray($data['insights']);
@@ -184,7 +190,6 @@ class ProjectInsightsApiTest extends TestCase
         $this->getJson("/api/v1/projects/{$this->project->slug}/insights")
             ->assertStatus(401);
     }
-
 
     /** @test */
     public function validates_invalid_sections_parameter(): void
@@ -220,17 +225,17 @@ class ProjectInsightsApiTest extends TestCase
                 'project_id',
                 'project_name',
                 'insights' => [
-                    '*' => ['type', 'title', 'message', 'data']
+                    '*' => ['type', 'title', 'message', 'data'],
                 ],
                 'sections_requested',
                 'generated_at',
                 'message',
             ]);
-        
-    $data = $response->json();
+
+        $data = $response->json();
         $this->assertEquals($emptyProject->id, $data['project_id']);
         $this->assertIsArray($data['insights']);
-        
+
         // Verify each insight handles empty data gracefully
         foreach ($data['insights'] as $insight) {
             $this->assertArrayHasKey('data', $insight);

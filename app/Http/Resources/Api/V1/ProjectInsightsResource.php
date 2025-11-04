@@ -1,10 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Resources\Api\V1;
 
 use Illuminate\Http\Resources\Json\JsonResource;
-use App\Http\Resources\Api\V1\InsightResource;
-
 
 class ProjectInsightsResource extends JsonResource
 {
@@ -23,7 +23,7 @@ class ProjectInsightsResource extends JsonResource
         $sections = $this['sections'];
 
         return [
-            /** 
+            /**
              * @example true
              * */
             'success' => true,
@@ -41,15 +41,15 @@ class ProjectInsightsResource extends JsonResource
             'insights' => InsightResource::collection($insights ?? []),
 
             /**
-               * @example "2025-09-27T20:15:32Z"
-            */
+             * @example "2025-09-27T20:15:32Z"
+             */
             'generated_at' => now()->toISOString(),
 
             /**
              * @example ['health']
              * */
             'sections_requested' => $sections,
-            
+
             'message' => 'Project insights retrieved successfully',
         ];
     }

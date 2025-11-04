@@ -8,6 +8,11 @@
 
 <script>
 export default {
-  props: ['id', 'label', 'error']
+  props: {
+    id: { type: [String, Number], required: false },
+    label: { type: String, required: true },
+    // `error` can be an array of messages (from API), a string, or null
+    error: { type: [Array, String, Object], default: null },
+  },
 };
 </script>

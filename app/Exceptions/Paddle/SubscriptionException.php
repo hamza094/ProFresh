@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Exceptions\Paddle;
 
 use Exception;
-use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 
 class SubscriptionException extends Exception
 {
@@ -15,6 +17,7 @@ class SubscriptionException extends Exception
                 'message' => $this->getMessage(),
             ], 409);
         }
+
         return false;
     }
 }

@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Factories;
 
+use App\Enums\TaskStatus as TaskStatusEnum;
+use App\Models\Project;
 use App\Models\Task;
 use App\Models\User;
-use App\Models\Project;
-use App\Enums\TaskStatus as TaskStatusEnum;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -26,11 +28,11 @@ class TaskFactory extends Factory
     public function definition()
     {
         return [
-        'title' => $this->faker->text(55),
-        'user_id'=>User::factory(),
-        'project_id'=>Project::factory(),
-        'description'=>$this->faker->text($maxNbChars = 250),
-        'status_id'=>TaskStatusEnum::PENDING
+            'title' => $this->faker->text(55),
+            'user_id' => User::factory(),
+            'project_id' => Project::factory(),
+            'description' => $this->faker->text($maxNbChars = 250),
+            'status_id' => TaskStatusEnum::PENDING,
         ];
     }
 
@@ -54,30 +56,29 @@ class TaskFactory extends Factory
     public function overdue(): Factory
     {
         return $this->state(function (array $attributes) {
-        return [
-            'due_at' => Carbon::now()->subDays($this->faker->numberBetween(3, 28)),
-        ];
-    });      
+            return [
+                'due_at' => Carbon::now()->subDays($this->faker->numberBetween(3, 28)),
+            ];
+        });
     }
 
     public function completed(): Factory
     {
-       return $this->state(function (array $attributes) {
-        return [
-            'status_id'=>TaskStatusEnum::COMPLETED,
-            'due_at' => Carbon::now()->addDays($this->faker->numberBetween(1, 5)),
-        ];
-    });
-    }
-     
-     public function remaining(): Factory
-    {
-       return $this->state(function (array $attributes) {
-        return [
-            'status_id'=>TaskStatusEnum::IN_PROGRESS,
-            'due_at' => Carbon::now()->addDays($this->faker->numberBetween(5, 30)),
-        ];
-    });
+        return $this->state(function (array $attributes) {
+            return [
+                'status_id' => TaskStatusEnum::COMPLETED,
+                'due_at' => Carbon::now()->addDays($this->faker->numberBetween(1, 5)),
+            ];
+        });
     }
 
+    public function remaining(): Factory
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'status_id' => TaskStatusEnum::IN_PROGRESS,
+                'due_at' => Carbon::now()->addDays($this->faker->numberBetween(5, 30)),
+            ];
+        });
+    }
 }

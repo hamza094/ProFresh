@@ -1,14 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Integrations\Zoom\Requests;
 
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
-use Saloon\Contracts\Authenticator;
 
 class GetZakToken extends Request
 {
-    
     /**
      * The HTTP method of the request
      */
@@ -28,7 +28,4 @@ class GetZakToken extends Request
     {
         return 'users/me/token?type=zak';
     }
-
-
-
 }

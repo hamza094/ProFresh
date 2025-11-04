@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
 
     /*
@@ -163,7 +165,7 @@ return [
         Illuminate\View\ViewServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
         Bugsnag\BugsnagLaravel\BugsnagServiceProvider::class,
-        \Torann\GeoIP\GeoIPServiceProvider::class,
+        Torann\GeoIP\GeoIPServiceProvider::class,
 
         /*
          * Package Service Providers...
@@ -231,22 +233,21 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'Image' => Intervention\Image\Facades\Image::class,
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
-        'GeoIP' => \Torann\GeoIP\Facades\GeoIP::class,
+        'GeoIP' => Torann\GeoIP\Facades\GeoIP::class,
 
     ],
 
-    'project'=>[
-      'taskLimit' => '18',
-      'abandonedLimit'=>'90',
-      'filters'=>'10',
-      'items_limit' => '6',
+    'project' => [
+        'taskLimit' => '18',
+        'abandonedLimit' => '90',
+        'filters' => '10',
+        'items_limit' => '6',
     ],
-    'tasks'=>[
-      'limit'=>'3',
+    'tasks' => [
+        'limit' => '3',
     ],
 
-   'date_formats' => [
-       'exact'=>'F j, Y, g:i a',
-   ]
+    'date_formats' => [
+        'exact' => 'F j, Y, g:i a',
+    ],
 ];
-

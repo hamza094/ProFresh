@@ -1,12 +1,14 @@
 <?php
 
-  namespace App\DataTransferObjects\Paddle;
-  
-  final  class UserSubscriptionData
-  {
+declare(strict_types=1);
+
+namespace App\DataTransferObjects\Paddle;
+
+final class UserSubscriptionData
+{
     public function __construct(
-    public int $vendorID,
-    public string $vendorAuthCode,
-    public int $resultsPerPage,
+        public int $vendorID,
+        public string $vendorAuthCode,
+        public int $resultsPerPage,
     ) {}
-  }
+}

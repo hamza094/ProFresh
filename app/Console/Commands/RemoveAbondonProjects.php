@@ -1,10 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Console\Commands;
 
-use Illuminate\Console\Command;
-
 use App\Models\Project;
+use Illuminate\Console\Command;
 
 class RemoveAbondonProjects extends Command
 {
@@ -34,18 +35,16 @@ class RemoveAbondonProjects extends Command
 
     /**
      * Execute the console command.
-     *
-     * @return int
      */
-    public function handle()
+    public function handle(): void
     {
-      $projects=Project::onlyTrashed()
-        ->pastAbandonedLimit()
-        ->get();
+        $projects = Project::onlyTrashed()
+            ->pastAbandonedLimit()
+            ->get();
 
-      $projects->each(function($project){
-        $project->forceDelete();
-      });
+        $projects->each(function ($project): void {
+            $project->forceDelete();
+        });
 
     }
 }

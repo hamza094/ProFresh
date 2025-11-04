@@ -1,19 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Providers;
 
-use App\Http\View\Composers\ProfileComposer;
-use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
 class ViewServiceProvider extends ServiceProvider
 {
     /**
      * Register any application services.
-     *
-     * @return void
      */
-    public function register()
+    public function register(): void
     {
         //
     }
@@ -23,14 +21,5 @@ class ViewServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot()
-    {
-        // Using class based composers...
-        //View::composer('profile', ProfileComposer::class);
-
-        // Using closure based composers...
-        View::composer('dashboard', function ($view) {
-            //
-        });
-    }
+    public function boot() {}
 }

@@ -1,45 +1,50 @@
 <?php
+
+declare(strict_types=1);
+
 namespace App\Traits;
 
-use App\Models\User;
 use App\Models\Project;
 use App\Models\TaskStatus;
-use Laravel\Sanctum\Sanctum;
+use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Laravel\Sanctum\Sanctum;
 
 trait ProjectSetup
 {
+    public $project;
 
-   public $project;
-   public $user;
-   public $status;
+    public $user;
 
-   protected function setUp(): void{
+    public $status;
 
-      parent::setUp();
+    protected function setUp(): void
+    {
+
+        parent::setUp();
 
         $this->user = User::factory()->create([
             'email' => 'johndoe@example.org',
             'password' => Hash::make('testpassword'),
         ]);
 
-   Sanctum::actingAs(
-       $this->user,
-   );
+        Sanctum::actingAs(
+            $this->user,
+        );
 
-   $this->status = TaskStatus::factory()->create();
+        $this->status = TaskStatus::factory()->create();
 
-   $this->project = Project::factory()->for($this->user)->create();
+        $this->project = Project::factory()->for($this->user)->create();
 
-    //if ($this instanceof \Tests\Feature\TaskTest) {
-            //$this->status = TaskStatus::factory()->create();
-        //}
+        // if ($this instanceof \Tests\Feature\TaskTest) {
+        // $this->status = TaskStatus::factory()->create();
+        // }
 
-   $middlewaresToRemove = [
+        $middlewaresToRemove = [
             \App\Http\Middleware\CheckSubscription::class,
         ];
 
-   $this->withoutMiddleware($middlewaresToRemove);
+        $this->withoutMiddleware($middlewaresToRemove);
 
-   }
+    }
 }

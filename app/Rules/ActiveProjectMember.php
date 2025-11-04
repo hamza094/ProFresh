@@ -1,21 +1,19 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Rules;
 
 use Illuminate\Contracts\Validation\Rule;
 
 class ActiveProjectMember implements Rule
 {
-    protected $task;
     /**
      * Create a new rule instance.
      *
      * @return void
      */
-    public function __construct($task)
-    {
-        $this->task = $task;
-    }
+    public function __construct(protected $task) {}
 
     /**
      * Determine if the validation rule passes.
@@ -26,10 +24,10 @@ class ActiveProjectMember implements Rule
      */
     public function passes($attribute, $value)
     {
-       $activeProjectMemberIds = $this->task->project->activeMembers()->pluck('users.id')->toArray();
-    $invalidMembers = array_diff($value, $activeProjectMemberIds);
+        $activeProjectMemberIds = $this->task->project->activeMembers()->pluck('users.id')->toArray();
+        $invalidMembers = array_diff($value, $activeProjectMemberIds);
 
-    return empty($invalidMembers);
+        return $invalidMembers === [];
     }
 
     /**

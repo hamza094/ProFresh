@@ -1,17 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Feature\Api\V1;
 
+use App\Actions\ProjectMetrics\ProjectHealthMetricAction;
 use App\Actions\ProjectMetrics\ProjectHealthRecalculationAction;
 use App\Events\ProjectHealthUpdated;
 use App\Jobs\RecalculateProjectHealth;
 use App\Models\Project;
-use App\Actions\ProjectMetrics\ProjectHealthMetricAction;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\RateLimiter;
-use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
 
 class ProjectHealthScoreFeatureTest extends TestCase
@@ -24,15 +25,13 @@ class ProjectHealthScoreFeatureTest extends TestCase
         Bus::fake();
         $project = Project::factory()->create();
         RateLimiter::clear("project:{$project->id}:health-persist");
-        $action = new ProjectHealthRecalculationAction();
+        $action = new ProjectHealthRecalculationAction;
 
         // act
         $action->handle($project, ['health']);
 
         // assert
-        Bus::assertDispatched(RecalculateProjectHealth::class, function (RecalculateProjectHealth $job) use ($project) {
-            return $job->projectId === $project->id && $job->broadcast === true;
-        });
+        Bus::assertDispatched(RecalculateProjectHealth::class, fn (RecalculateProjectHealth $job): bool => $job->projectId === $project->id && $job->broadcast);
     }
 
     public function test_does_not_dispatch_when_health_not_requested(): void
@@ -40,7 +39,7 @@ class ProjectHealthScoreFeatureTest extends TestCase
         // arrange
         Bus::fake();
         $project = Project::factory()->create();
-        $action = new ProjectHealthRecalculationAction();
+        $action = new ProjectHealthRecalculationAction;
 
         // act
         $action->handle($project, ['task-health']);
@@ -53,10 +52,10 @@ class ProjectHealthScoreFeatureTest extends TestCase
     {
         // arrange
         Bus::fake();
-        RateLimiter::clear("project:1:health-persist");
+        RateLimiter::clear('project:1:health-persist');
         $project = Project::factory()->create(['id' => 1]);
         config()->set('project-metrics.health.persist_throttle_seconds', 60);
-        $action = new ProjectHealthRecalculationAction();
+        $action = new ProjectHealthRecalculationAction;
 
         // act
         $action->handle($project, ['health']);
@@ -84,13 +83,14 @@ class ProjectHealthScoreFeatureTest extends TestCase
         // assert
         $this->assertSame(77.5, $project->health_score);
         $this->assertNotNull($project->health_score_calculated_at);
-        Event::assertDispatched(ProjectHealthUpdated::class, function (ProjectHealthUpdated $event) use ($project) {
+        Event::assertDispatched(ProjectHealthUpdated::class, function (ProjectHealthUpdated $event) use ($project): bool {
             // The broadcasting layer may prefix private channels with "private-".
             // Normalize the channel name before asserting the logical name.
             $channel = $event->broadcastOn();
             $channelName = $channel->name ?? (is_string($channel) ? $channel : '');
             $normalized = preg_replace('/^private-/', '', $channelName);
-            $this->assertSame('project.' . $project->id . '.health', $normalized);
+            $this->assertSame('project.'.$project->id.'.health', $normalized);
+
             return $event->project->id === $project->id;
         });
     }
@@ -121,9 +121,7 @@ class ProjectHealthScoreFeatureTest extends TestCase
         $action = $this->createMock(ProjectHealthMetricAction::class);
         $action->expects($this->once())
             ->method('execute')
-            ->with($this->callback(function ($arg) use ($project) {
-                return $arg instanceof Project && $arg->id === $project->id;
-            }))
+            ->with($this->callback(fn ($arg): bool => $arg instanceof Project && $arg->id === $project->id))
             ->willReturn(42.5);
 
         // act
@@ -162,5 +160,4 @@ class ProjectHealthScoreFeatureTest extends TestCase
         // assert
         Bus::assertDispatched(RecalculateProjectHealth::class, 3);
     }
-     
 }

@@ -1,104 +1,98 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Feature\Api\Auth;
 
-use Tests\TestCase;
-use Laravel\Sanctum\Sanctum;
 use App\Models\User;
-use Illuminate\Support\Facades\Hash;
-
-
-use Illuminate\{
-  Foundation\Testing\RefreshDatabase,
-  Foundation\Testing\WithFaker,
-  Auth\Events\Verified,
-  Support\Facades\Event,
-  Support\Facades\URL,
-  Auth\Notifications\VerifyEmail,
-  Support\Facades\Notification
-};
+use Illuminate\Auth\Events\Verified;
+use Illuminate\Auth\Notifications\VerifyEmail;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\Notification;
+use Illuminate\Support\Facades\URL;
+use Laravel\Sanctum\Sanctum;
+use Tests\TestCase;
 
 class VerificationTest extends TestCase
 {
-  use RefreshDatabase;
-  /** @test */
- public function can_verify_email()
- {
+    use RefreshDatabase;
 
-     $user=User::factory()->create([
+    /** @test */
+    public function can_verify_email(): void
+    {
+
+        $user = User::factory()->create([
             'email_verified_at' => null,
         ]);
 
-     Sanctum::actingAs(
+        Sanctum::actingAs(
             $user
         );
 
-     $url = URL::temporarySignedRoute('verification.verify', now()->addMinutes(60), ['user' => $user->uuid]);
+        $url = URL::temporarySignedRoute('verification.verify', now()->addMinutes(60), ['user' => $user->uuid]);
 
-     Event::fake();
+        Event::fake();
 
-     $this->postJson($url)
-         ->assertSuccessful()
-         ->assertJsonFragment(['status' => 'verification.verified']);
+        $this->postJson($url)
+            ->assertSuccessful()
+            ->assertJsonFragment(['status' => 'verification.verified']);
 
-     Event::assertDispatched(Verified::class, function (Verified $e) use ($user) {
-         return $e->user->is($user);
-     });
- }
+        Event::assertDispatched(Verified::class, fn (Verified $e) => $e->user->is($user));
+    }
 
-/** @test */
- public function can_not_verify_if_already_verified()
- {
-     $user = User::factory()->create();
+    /** @test */
+    public function can_not_verify_if_already_verified(): void
+    {
+        $user = User::factory()->create();
 
-      Sanctum::actingAs(
+        Sanctum::actingAs(
             $user
         );
 
-     $url = URL::temporarySignedRoute('verification.verify', now()->addMinutes(60), ['user' => $user->uuid]);
+        $url = URL::temporarySignedRoute('verification.verify', now()->addMinutes(60), ['user' => $user->uuid]);
 
-     $this->postJson($url)
-         ->assertStatus(400)
-         ->assertJsonFragment(['status' => 'verification.already_verified']);
- }
+        $this->postJson($url)
+            ->assertStatus(400)
+            ->assertJsonFragment(['status' => 'verification.already_verified']);
+    }
 
-   /** @test */
-  public function can_resend_verification_notification()
-  {
-     $user = User::factory()->create(['email_verified_at' => null]);
+    /** @test */
+    public function can_resend_verification_notification(): void
+    {
+        $user = User::factory()->create(['email_verified_at' => null]);
 
-     Sanctum::actingAs(
-         $user,
-     );
+        Sanctum::actingAs(
+            $user,
+        );
 
-     Notification::fake();
+        Notification::fake();
 
-    $this->postJson('/api/v1/email/resend/'.$user->uuid, ['email' => $user->email])
-       ->assertSuccessful();
+        $this->postJson('/api/v1/email/resend/'.$user->uuid, ['email' => $user->email])
+            ->assertSuccessful();
 
-    Notification::assertSentTo($user, VerifyEmail::class);
-  }
+        Notification::assertSentTo($user, VerifyEmail::class);
+    }
 
-  
- /** @test */ 
- public function can_not_resend_verification_notification_if_email_already_verified()
- {
-     $user = User::factory()->create();
+    /** @test */
+    public function can_not_resend_verification_notification_if_email_already_verified(): void
+    {
+        $user = User::factory()->create();
 
-     Sanctum::actingAs(
-         $user,
-     );
+        Sanctum::actingAs(
+            $user,
+        );
 
-     Notification::fake();
+        Notification::fake();
 
-     $response=$this->postJson('/api/v1/email/resend/'.$user->uuid, ['email' => $user->email])
-         ->assertUnprocessable()
-         ->assertJsonFragment([
-            'errors' => [
-       'email' => ['verification.already_verified']
-   ]
-  ]);
+        $this->postJson('/api/v1/email/resend/'.$user->uuid, ['email' => $user->email])
+            ->assertUnprocessable()
+            ->assertJsonFragment([
+                'errors' => [
+                    'email' => ['verification.already_verified'],
+                ],
+            ]);
 
-     Notification::assertNotSentTo($user, VerifyEmail::class);
- }
+        Notification::assertNotSentTo($user, VerifyEmail::class);
+    }
 }

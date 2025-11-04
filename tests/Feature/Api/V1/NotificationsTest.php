@@ -1,132 +1,128 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Feature\Api\V1;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Laravel\Sanctum\Sanctum;
-use App\Notifications\ProjectInvitation;
-use App\Notifications\AcceptInvitation;
-use App\Notifications\ProjectUpdated;
-use App\Notifications\ProjectTask;
-use App\Notifications\UserMentioned;
-use Illuminate\Support\Facades\Notification;
-use App\Traits\ProjectSetup;
 use App\Models\User;
+use App\Notifications\AcceptInvitation;
+use App\Notifications\ProjectInvitation;
+use App\Notifications\ProjectTask;
+use App\Notifications\ProjectUpdated;
+use App\Notifications\UserMentioned;
+use App\Traits\ProjectSetup;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Notification;
+use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
 
 class NotificationsTest extends TestCase
 {
-  use RefreshDatabase,ProjectSetup;
+    use ProjectSetup,RefreshDatabase;
     /**
      * A notification feature test.
-     *
-     * @return void
      */
 
-     /** @test */
-     public function invited_user_can_get_project_invitation()
-     {
-       Notification::fake();
-
-       $user=User::factory()->create();
-
-       $this->sendInvitationToUser($this->project,$user);
-
-       Notification::assertSentTo($user, ProjectInvitation::class);
-      }
-
-
-    /** @test */ 
-    public function project_owner_get_notified_by_member()
+    /** @test */
+    public function invited_user_can_get_project_invitation(): void
     {
-      Notification::fake();
+        Notification::fake();
 
-      $this->project->invite($user=User::factory()->create());
+        $user = User::factory()->create();
 
-      Sanctum::actingAs($user,);
+        $this->sendInvitationToUser($this->project, $user);
 
-      $this->getJson($this->project->path().'/accept-invitation');
+        Notification::assertSentTo($user, ProjectInvitation::class);
+    }
 
-      Notification::assertSentTo($this->project->user, AcceptInvitation::class);
-   }
+    /** @test */
+    public function project_owner_get_notified_by_member(): void
+    {
+        Notification::fake();
 
+        $this->project->invite($user = User::factory()->create());
 
-  /** @test */
-  public function allowed_user_notified_on_project_update()
-  {
-    Notification::fake();
+        Sanctum::actingAs($user);
 
-    $user=User::factory()->create();
+        $this->getJson($this->project->path().'/accept-invitation');
 
-    $this->addMember($this->project,$user);
+        Notification::assertSentTo($this->project->user, AcceptInvitation::class);
+    }
 
-    $this->patchJson($this->project->path(),['notes'=>'Project notes updated.']);
+    /** @test */
+    public function allowed_user_notified_on_project_update(): void
+    {
+        Notification::fake();
 
-    Notification::assertSentTo($user, ProjectUpdated::class);
-   } 
+        $user = User::factory()->create();
 
-  /** @test */
-  public function project_member_notified_when_task_added()
-  {
-    Notification::fake();
+        $this->addMember($this->project, $user);
 
-    $user=User::factory()->create();
- 
-    $this->addMember($this->project,$user);
+        $this->patchJson($this->project->path(), ['notes' => 'Project notes updated.']);
 
-    $this->postJson($this->project->path().'/tasks',['title'=>'new task added']);
+        Notification::assertSentTo($user, ProjectUpdated::class);
+    }
 
-    Notification::assertSentTo($user, ProjectTask::class);    
-  }
+    /** @test */
+    public function project_member_notified_when_task_added(): void
+    {
+        Notification::fake();
 
-  /** @test */
-  public function mentioned_user_in_a_chat_are_notified()
-  {
-    Notification::fake();
+        $user = User::factory()->create();
 
-    $newUser=User::factory(['username'=>'thanos844'])
-          ->create();
- 
-      $this->addMember($this->project,$newUser);
+        $this->addMember($this->project, $user);
 
-      $response=$this
-         ->postJson($this->project->path().'/conversations',['message'=>'random chat conversation with @thanos844',
-        'user_id' => $this->user->id]);
+        $this->postJson($this->project->path().'/tasks', ['title' => 'new task added']);
 
-      Notification::assertSentTo($newUser, UserMentioned::class);
+        Notification::assertSentTo($user, ProjectTask::class);
+    }
+
+    /** @test */
+    public function mentioned_user_in_a_chat_are_notified(): void
+    {
+        Notification::fake();
+
+        $newUser = User::factory(['username' => 'thanos844'])
+            ->create();
+
+        $this->addMember($this->project, $newUser);
+
+        $this
+            ->postJson($this->project->path().'/conversations', ['message' => 'random chat conversation with @thanos844',
+                'user_id' => $this->user->id]);
+
+        Notification::assertSentTo($newUser, UserMentioned::class);
 
         Notification::assertCount(1);
     }
 
+    /** @test */
+    public function user_should_not_receive_task_notification_when_adding_a_task(): void
+    {
+        Notification::fake();
 
-  /** @test */
-  public function user_should_not_receive_task_notification_when_adding_a_task()
-  {
-    Notification::fake();
+        $user = User::factory()->create();
 
-    $user=User::factory()->create();
+        $this->addMember($this->project, $user);
 
-    $this->addMember($this->project,$user);
+        Sanctum::actingAs($user);
 
-    Sanctum::actingAs($user);
-     
-    $this->postJson($this->project->path().'/task',['body'=>'another new task added']);
+        $this->postJson($this->project->path().'/task', ['body' => 'another new task added']);
 
-    Notification::assertNotSentTo($user, ProjectTask::class);
-  }
+        Notification::assertNotSentTo($user, ProjectTask::class);
+    }
 
-   protected function sendInvitationToUser($project,$user)
-   {
-      $this->postJson($this->project->path().'/invitations',[
-          'email'=>$user->email
-      ]);
-   }
+    protected function sendInvitationToUser($project, $user)
+    {
+        $this->postJson($this->project->path().'/invitations', [
+            'email' => $user->email,
+        ]);
+    }
 
-   protected function addMember($project,$user)
-   {
-     $this->project
-          ->members()
-           ->attach($user, ['active' => true]);
-   }
+    protected function addMember($project, $user)
+    {
+        $this->project
+            ->members()
+            ->attach($user, ['active' => true]);
+    }
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Requests\Api\V1;
 
 use Illuminate\Foundation\Http\FormRequest;
@@ -8,10 +10,8 @@ class SubscriptionRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
-     *
-     * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
@@ -28,10 +28,10 @@ class SubscriptionRequest extends FormRequest
         ];
     }
 
-     protected function prepareForValidation()
+    protected function prepareForValidation()
     {
         // Merge the route parameter "plan" into the request data if it's not already present.
-        if (!$this->has('plan') && $this->route('plan')) {
+        if (! $this->has('plan') && $this->route('plan')) {
             $this->merge(['plan' => $this->route('plan')]);
         }
     }

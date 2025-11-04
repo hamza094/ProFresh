@@ -1,32 +1,30 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Api\V1;
 
+use App\Http\Controllers\Controller;
+use App\Http\Requests\Api\V1\UserTokenRequest;
 use App\Http\Resources\Api\V1\TokenResource;
 use Carbon\Carbon;
-use App\Http\Requests\Api\V1\UserTokenRequest;
-use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 
 class TokenController extends Controller
 {
-
     /**
      * List all personal access tokens
      *
      * This endpoint returns all personal access tokens for the authenticated user.
-     *
      */
     public function index(): JsonResponse
     {
         $tokens = auth()->user()->tokens;
 
         return response()->json([
-            'tokens' => TokenResource::collection($tokens)
+            'tokens' => TokenResource::collection($tokens),
         ], 200);
     }
-
 
     /**
      * Create a new personal access token
@@ -46,7 +44,7 @@ class TokenController extends Controller
         return response()->json([
             'token' => $token->plainTextToken,
             'token_resource' => new TokenResource($token->accessToken),
-            'message' => 'Token created successfully.'
+            'message' => 'Token created successfully.',
         ], 201);
     }
 
@@ -54,23 +52,21 @@ class TokenController extends Controller
      * Delete a personal access token
      *
      * This endpoint deletes a personal access token by ID for the authenticated user. Cannot delete the current session token via this route.
-     *
      */
     public function destroy(int $tokenId): JsonResponse
     {
         $user = auth()->user();
-        $tokenId = (int) $tokenId;
         $currentToken = $user->currentAccessToken();
 
         // @phpstan-ignore-next-line
-        if (!$currentToken) {
+        if (! $currentToken) {
             return response()->json(['message' => 'No current access token found.'], 403);
         }
 
         /** @var \Laravel\Sanctum\PersonalAccessToken $currentToken */
         if ($currentToken->id === $tokenId) {
             return response()->json([
-                'message' => 'Cannot delete the current session token via this route.'
+                'message' => 'Cannot delete the current session token via this route.',
             ], 403);
         }
 

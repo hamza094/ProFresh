@@ -1,34 +1,35 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Feature\Api\V1\ProjectDashboard;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\Traits\ProjectSetup;
-use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class ProjectChartTests extends TestCase
 {
-    use RefreshDatabase, ProjectSetup;
+    use ProjectSetup, RefreshDatabase;
 
     /** @test */
-    public function auth_user_can_get_chart_data()
+    public function auth_user_can_get_chart_data(): void
     {
         // Create projects with different dates for testing
         Project::factory()->create([
             'user_id' => $this->user->id,
-            'created_at' => now()->subMonth()
+            'created_at' => now()->subMonth(),
         ]);
 
         Project::factory()->create([
             'user_id' => $this->user->id,
-            'created_at' => now()
+            'created_at' => now(),
         ]);
 
         // Create a trashed project
         Project::factory()->create([
             'user_id' => $this->user->id,
-            'deleted_at' => now()
+            'deleted_at' => now(),
         ]);
 
         // Create a project where user is a member
@@ -44,9 +45,9 @@ class ProjectChartTests extends TestCase
         $response->assertOk()
             ->assertJsonStructure([
                 'active_projects',
-                'trashed_projects', 
+                'trashed_projects',
                 'member_projects',
-                'total_projects'
+                'total_projects',
             ]);
 
         $data = $response->json();
@@ -61,7 +62,7 @@ class ProjectChartTests extends TestCase
     }
 
     /** @test */
-    public function chart_data_respects_year_month_filters()
+    public function chart_data_respects_year_month_filters(): void
     {
         // Arrange
         $currentYear = now()->year;
@@ -74,13 +75,13 @@ class ProjectChartTests extends TestCase
         // Create project in current year/month
         Project::factory()->create([
             'user_id' => $this->user->id,
-            'created_at' => now()
+            'created_at' => now(),
         ]);
 
         // Create project in previous year
         Project::factory()->create([
             'user_id' => $this->user->id,
-            'created_at' => Carbon::create($previousYear, 6, 15)
+            'created_at' => Carbon::create($previousYear, 6, 15),
         ]);
 
         // Act & Assert
@@ -97,7 +98,7 @@ class ProjectChartTests extends TestCase
         $this->assertEquals(1, $monthFilterResponse->json('active_projects'));
 
         // 4. No filters
-        $noFilterResponse = $this->getJson("/api/v1/dashboard/chart-data");
+        $noFilterResponse = $this->getJson('/api/v1/dashboard/chart-data');
         $this->assertEquals(2, $noFilterResponse->json('active_projects'));
 
         // Assert all responses were successful
@@ -105,8 +106,7 @@ class ProjectChartTests extends TestCase
             $currentYearResponse,
             $previousYearResponse,
             $monthFilterResponse,
-            $noFilterResponse
+            $noFilterResponse,
         ])->each->assertOk();
     }
-
 }

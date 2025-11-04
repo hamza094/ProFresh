@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Rules;
 
+use DateTimeImmutable;
 use Illuminate\Contracts\Validation\Rule;
-use DateTime;
 
 class MeetingDateTime implements Rule
 {
@@ -26,8 +28,9 @@ class MeetingDateTime implements Rule
      */
     public function passes($attribute, $value)
     {
-        if ($value instanceof DateTime) {
-            $now = new DateTime();
+        if ($value instanceof DateTimeImmutable) {
+            $now = new DateTimeImmutable;
+
             return $value > $now;
         }
 

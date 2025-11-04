@@ -1,16 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Requests\Api\V1\Auth;
 
-use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\ValidationException;
-use Illuminate\Validation\Validator;
 use App\Models\User;
+use Exception;
+use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Validator;
 
 /**
  * Form Request for Two-Factor Authentication Login
- * 
+ *
  * Handles validation for 2FA code submission during login process.
  * Validates session data, user credentials, and 2FA code.
  */
@@ -18,8 +20,6 @@ class TwoFactorLoginRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
-     * 
-     * @return bool
      */
     public function authorize(): bool
     {
@@ -29,7 +29,7 @@ class TwoFactorLoginRequest extends FormRequest
 
     /**
      * Get the validation rules that apply to the request.
-     * 
+     *
      * @return array<string, mixed>
      */
     public function rules(): array
@@ -44,13 +44,10 @@ class TwoFactorLoginRequest extends FormRequest
 
     /**
      * Configure the validator instance.
-     * 
-     * @param \Illuminate\Validation\Validator $validator
-     * @return void
      */
     public function withValidator(Validator $validator): void
     {
-        $validator->after(function (Validator $validator) {
+        $validator->after(function (Validator $validator): void {
             $code = $this->input('code');
             $this->validateTwoFactorSession($validator, $code);
         });
@@ -58,83 +55,71 @@ class TwoFactorLoginRequest extends FormRequest
 
     /**
      * Validate 2FA session and code
-     * 
-     * @param \Illuminate\Validation\Validator $validator
-     * @return void
-     */
-    /**
-     * @param Validator $validator
-     * @param string|null $code
      */
     private function validateTwoFactorSession(Validator $validator, ?string $code): void
     {
         // Get user from encrypted session data
         $user = $this->getUserFromSession();
-        
-        if (!$user) {
+
+        if (! $user instanceof User) {
             $this->addSessionError($validator);
-                return;
-            }
+
+            return;
+        }
 
         // Validate 2FA code
-        if (!$user->validateTwoFactorCode($code)) {
+        if (! $user->validateTwoFactorCode($code)) {
             $this->addCodeError($validator);
-                return;
-            }
+
+            return;
+        }
 
         // Attach user to request for controller use
-        $this->setUserResolver(fn() => $user);
+        $this->setUserResolver(fn (): User => $user);
     }
 
     /**
      * Retrieve and validate user from session data
-     * 
-     * @return User|null
      */
     private function getUserFromSession(): ?User
     {
         $encryptedCreds = session('2fa_login');
-        
-        if (!$encryptedCreds) {
+
+        if (! $encryptedCreds) {
             return null;
         }
 
         try {
             $creds = decrypt($encryptedCreds);
-        } catch (\Exception $e) {
+        } catch (Exception) {
             return null;
         }
 
-        if (!$this->isValidSessionData($creds)) {
+        if (! $this->isValidSessionData($creds)) {
             return null;
         }
 
         // Look up the user from database
         $user = User::where('email', $creds['email'])->first();
-        
+
         return $this->isValidUser($user, $creds['password']) ? $user : null;
     }
 
     /**
      * Check if session data is valid and not expired
      *
-     * @param array<string, mixed> $creds
-     * @return bool
+     * @param  array<string, mixed>  $creds
      */
     private function isValidSessionData(array $creds): bool
     {
-        return !empty($creds['email']) 
-            && !empty($creds['password']) 
-            && !empty($creds['expires_at']) 
-            && !now()->greaterThan($creds['expires_at']);
+        return ! empty($creds['email'])
+            && ! empty($creds['password'])
+            && ! empty($creds['expires_at'])
+            && ! now()->greaterThan($creds['expires_at']);
     }
 
     /**
      * Validate user exists and password matches
-     * 
-     * @param User|null $user
-     * @param string $password
-     * @return bool
      */
     private function isValidUser(?User $user, string $password): bool
     {
@@ -143,9 +128,6 @@ class TwoFactorLoginRequest extends FormRequest
 
     /**
      * Add session error to validator
-     * 
-     * @param \Illuminate\Validation\Validator $validator
-     * @return void
      */
     private function addSessionError(Validator $validator): void
     {
@@ -154,9 +136,6 @@ class TwoFactorLoginRequest extends FormRequest
 
     /**
      * Add invalid code error to validator
-     * 
-     * @param \Illuminate\Validation\Validator $validator
-     * @return void
      */
     private function addCodeError(Validator $validator): void
     {

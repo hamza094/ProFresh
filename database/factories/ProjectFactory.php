@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Factories;
 
 use App\Models\Project;
-use App\Models\User;
 use App\Models\Stage;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -25,12 +27,12 @@ class ProjectFactory extends Factory
     public function definition()
     {
         return [
-        'user_id' => User::factory(),
-        'stage_id' => Stage::factory(),
-        'name' => $this->faker->catchPhrase,
-        'slug' => $this->faker->slug,
-        'about' => $this->faker->text($maxNbChars = 250),
-        'stage_updated_at' => Carbon::now(),
+            'user_id' => User::factory(),
+            'stage_id' => Stage::factory(),
+            'name' => $this->faker->catchPhrase,
+            'slug' => $this->faker->slug,
+            'about' => $this->faker->text($maxNbChars = 250),
+            'stage_updated_at' => Carbon::now(),
         ];
     }
 }

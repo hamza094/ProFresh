@@ -1,40 +1,41 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Repository;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Collection;
+use App\Models\Activity;
 use App\Models\Project;
 use App\Models\Task;
-use App\Models\Stage;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
-
-use App\Models\Activity;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 
 class DashBoardRepository
 {
-    
+    /**
+     * @return array{active_projects:int, trashed_projects:int, member_projects:int, total_projects:int}
+     */
     public function getProjectStats(Request $request): array
     {
-         $userId = Auth::id();
-    $year = $request->get('year');
-    $month = $request->get('month');
+        $userId = Auth::id();
+        $year = $request->get('year');
+        $month = $request->get('month');
 
-    $query = Project::leftJoin('project_members as pm', function($join) use($userId) {
-        $join->on('projects.id', '=', 'pm.project_id')
-             ->where('pm.user_id', $userId)
-             ->where('pm.active', 1);
-    })
-    ->where(function($query) use ($userId) {
-        $query->where('projects.user_id', $userId)
-              ->orWhere('pm.user_id', $userId);
-    })
-    ->createdIn($year, $month);
+        $query = Project::leftJoin('project_members as pm', function ($join) use ($userId): void {
+            $join->on('projects.id', '=', 'pm.project_id')
+                ->where('pm.user_id', $userId)
+                ->where('pm.active', 1);
+        })
+            ->where(function ($query) use ($userId): void {
+                $query->where('projects.user_id', $userId)
+                    ->orWhere('pm.user_id', $userId);
+            })
+            ->createdIn($year, $month);
 
-    $result = $query->selectRaw("
+        $result = $query->selectRaw('
     SUM(CASE 
         WHEN projects.user_id = ? AND projects.deleted_at IS NULL 
         THEN 1 ELSE 0 
@@ -47,43 +48,41 @@ class DashBoardRepository
         WHEN pm.user_id IS NOT NULL AND projects.deleted_at IS NULL 
         THEN 1 ELSE 0 
     END) AS member_projects
-", [$userId, $userId])
-->first();
+', [$userId, $userId])
+            ->first();
 
-return [
-    'active_projects' => (int) ($result->active_projects ?? 0),
-    'trashed_projects' => (int) ($result->trashed_projects ?? 0),
-    'member_projects' => (int) ($result->member_projects ?? 0),
-    'total_projects' => (int) (($result->active_projects ?? 0) + ($result->trashed_projects ?? 0) + ($result->member_projects ?? 0))
-];
-}
+        return [
+            'active_projects' => (int) ($result->active_projects ?? 0),
+            'trashed_projects' => (int) ($result->trashed_projects ?? 0),
+            'member_projects' => (int) ($result->member_projects ?? 0),
+            'total_projects' => (int) (($result->active_projects ?? 0) + ($result->trashed_projects ?? 0) + ($result->member_projects ?? 0)),
+        ];
+    }
 
     /**
      * Get user activities for a specific date range
      *
-     * @param int $userId
-     * @param Carbon $startDate
-     * @param Carbon $endDate
      * @return \Illuminate\Database\Eloquent\Collection
+     */
+    /**
+     * @return \Illuminate\Database\Eloquent\Collection<int, Activity>
      */
     public function getUserActivities(int $userId, Carbon $startDate, Carbon $endDate)
     {
         $cacheKey = "activities_{$userId}_{$startDate->format('Ymd')}_{$endDate->format('Ymd')}";
 
-        return Cache::remember($cacheKey, now()->addSeconds(60), function () use ($userId, $startDate, $endDate) {
-            return Activity::query()
-                ->where('user_id', $userId)
-                ->whereBetween('created_at', [$startDate, $endDate])
-                ->with([
-                    'subject',
-                    'project' => function ($query) {
-                        $query->withTrashed();
-                    },
-                    'project.stage'
-                ])
-                ->orderBy('created_at')
-                ->get();
-        });
+        return Cache::remember($cacheKey, now()->addSeconds(60), fn (): \Illuminate\Database\Eloquent\Collection => Activity::query()
+            ->where('user_id', $userId)
+            ->whereBetween('created_at', [$startDate, $endDate])
+            ->with([
+                'subject',
+                'project' => function ($query): void {
+                    $query->withTrashed();
+                },
+                'project.stage',
+            ])
+            ->orderBy('created_at')
+            ->get());
     }
 
     /*public function fetchTaskStatistics(): object
@@ -141,4 +140,3 @@ return [
             ->first();
     }*/
 }
-?>

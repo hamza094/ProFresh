@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Interfaces;
 
 use App\DataTransferObjects\Zoom\AccessTokenDetails;
@@ -17,12 +19,12 @@ interface Zoom
     ): AccessTokenDetails;
 
     /**
-     * @param array<string, mixed> $validated
+     * @param  array<string, mixed>  $validated
      */
     public function createMeeting(array $validated, User $user): Meeting;
 
     /**
-     * @param array<string, mixed> $validated
+     * @param  array<string, mixed>  $validated
      */
     public function updateMeeting(array $validated, User $user): mixed;
 

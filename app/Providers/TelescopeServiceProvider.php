@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Providers;
 
 use Illuminate\Support\Facades\Gate;
@@ -20,14 +22,12 @@ class TelescopeServiceProvider extends TelescopeApplicationServiceProvider
 
         $isLocal = $this->app->environment('local');
 
-        Telescope::filter(function (IncomingEntry $entry) use ($isLocal) {
-            return $isLocal ||
-                   $entry->isReportableException() ||
-                   $entry->isFailedRequest() ||
-                   $entry->isFailedJob() ||
-                   $entry->isScheduledTask() ||
-                   $entry->hasMonitoredTag();
-        });
+        Telescope::filter(fn (IncomingEntry $entry): bool => $isLocal ||
+               $entry->isReportableException() ||
+               $entry->isFailedRequest() ||
+               $entry->isFailedJob() ||
+               $entry->isScheduledTask() ||
+               $entry->hasMonitoredTag());
     }
 
     /**
@@ -55,10 +55,8 @@ class TelescopeServiceProvider extends TelescopeApplicationServiceProvider
      */
     protected function gate(): void
     {
-        Gate::define('viewTelescope', function ($user) {
-            return in_array($user->email, [
-                //
-            ]);
-        });
+        Gate::define('viewTelescope', fn ($user): bool => in_array($user->email, [
+            //
+        ]));
     }
 }

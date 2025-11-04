@@ -1,17 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Api\V1;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Http\Response;
+use App\Enums\NotificationFilter;
 use App\Http\Controllers\Api\ApiController;
 use App\Http\Resources\Api\V1\NotificationResource;
 use App\Models\User;
-use App\Enums\NotificationFilter;
-use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\Auth;
 
 class NotificationsController extends ApiController
 {
@@ -23,10 +23,10 @@ class NotificationsController extends ApiController
         $notifications = Auth::user()
             ->notifications()
             ->latest()
-            ->when($request->filter === NotificationFilter::READ->value, fn($query) => $query->whereNotNull('read_at'))
-            ->when($request->filter === NotificationFilter::UNREAD->value, fn($query) => $query->whereNull('read_at'))
+            ->when($request->filter === NotificationFilter::READ->value, fn ($query) => $query->whereNotNull('read_at'))
+            ->when($request->filter === NotificationFilter::UNREAD->value, fn ($query) => $query->whereNull('read_at'))
             ->get();
-          
+
         return NotificationResource::collection($notifications)->paginate(25);
     }
 
@@ -38,7 +38,7 @@ class NotificationsController extends ApiController
         Auth::user()->unreadNotifications->markAsRead();
 
         return response()->json([
-            'message' => 'All users notifications marked as read.'
+            'message' => 'All users notifications marked as read.',
         ], 200);
     }
 
@@ -51,7 +51,7 @@ class NotificationsController extends ApiController
             ->findOrFail($notification)->delete();
 
         return response()->json([
-            'message' => 'Notification deleted successfully.'
+            'message' => 'Notification deleted successfully.',
         ], 200);
     }
 

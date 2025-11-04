@@ -1,46 +1,39 @@
 <?php
+
+declare(strict_types=1);
+
 namespace App\Repository\Admin;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Collection;
-use App\Models\Project;
-use App\Models\Stage;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
 class DashboardRepository
 {
-    public function fetchDataForMonths($startDate, $endDate)
+    public function fetchDataForMonths($startDate, $endDate): array
     {
         $projectsData = DB::table('projects')
-        ->selectRaw('
+            ->selectRaw('
          DATE_FORMAT(created_at, ?) as month,
          COUNT(*) as total_projects,
          SUM(CASE WHEN deleted_at IS NULL THEN 1 ELSE 0 END) AS active_projects,
          SUM(CASE WHEN deleted_at IS NOT NULL THEN 1 ELSE 0 END) AS trashed_projects
-         ',['%Y-%m'])
-     ->whereBetween('created_at', [$startDate, $endDate])
-     ->groupBy('month')
-     ->orderBy('month')
-     ->get();
+         ', ['%Y-%m'])
+            ->whereBetween('created_at', [$startDate, $endDate])
+            ->groupBy('month')
+            ->orderBy('month')
+            ->get();
 
-     $tasksData = DB::table('tasks')
-     ->selectRaw('
+        $tasksData = DB::table('tasks')
+            ->selectRaw('
         DATE_FORMAT(created_at, ?) as month,
         COUNT(*) as total_tasks,
         SUM(CASE WHEN deleted_at IS NULL THEN 1 ELSE 0 END) AS active_tasks,
         SUM(CASE WHEN deleted_at IS NOT NULL THEN 1 ELSE 0 END) AS trashed_tasks
-    ',['%Y-%m'])
-    ->whereBetween('created_at', [$startDate, $endDate])
-    ->groupBy('month')
-    ->orderBy('month')
-    ->get();
+    ', ['%Y-%m'])
+            ->whereBetween('created_at', [$startDate, $endDate])
+            ->groupBy('month')
+            ->orderBy('month')
+            ->get();
 
-     return compact('projectsData', 'tasksData');
+        return ['projectsData' => $projectsData, 'tasksData' => $tasksData];
     }
-
-
- 
 }
-
-?>

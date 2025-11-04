@@ -1,51 +1,52 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Feature\Api\V1;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Facades\Auth;
-use Laravel\Sanctum\Sanctum;
-use App\Models\User;
-use Tests\TestCase;
-use App\Traits\ProjectSetup;
 use App\Enums\NotificationFilter;
+use App\Models\User;
+use App\Traits\ProjectSetup;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Laravel\Sanctum\Sanctum;
+use Tests\TestCase;
 
 class UserNotificationsTest extends TestCase
-{   
-    use RefreshDatabase, ProjectSetup;
+{
+    use ProjectSetup, RefreshDatabase;
 
     /** @test */
-    public function auth_user_can_fetch_there_notifications()
+    public function auth_user_can_fetch_there_notifications(): void
     {
-        $user = $this->actingAsInvitedUser();
+        $this->actingAsInvitedUser();
 
-        $response=$this->withoutExceptionHandling()->getJson("/api/v1/notifications");
+        $response = $this->withoutExceptionHandling()->getJson('/api/v1/notifications');
 
         $this->assertCount(1, $response->json('data'));
     }
 
     /** @test */
-    public function auth_user_can_fetch_notifications_by_status()
+    public function auth_user_can_fetch_notifications_by_status(): void
     {
         $user = $this->actingAsInvitedUser();
 
-        $unreadResponse = $this->getJson('/api/v1/notifications?filter=' . NotificationFilter::UNREAD->value);
+        $unreadResponse = $this->getJson('/api/v1/notifications?filter='.NotificationFilter::UNREAD->value);
         $this->assertCount(1, $unreadResponse->json('data'));
 
         $user->notifications()->latest()->first()->markAsRead();
-        $readResponse = $this->getJson('/api/v1/notifications?filter=' . NotificationFilter::READ->value);
+        $readResponse = $this->getJson('/api/v1/notifications?filter='.NotificationFilter::READ->value);
         $this->assertCount(1, $readResponse->json('data'));
     }
 
     /** @test */
-    public function auth_user_can_mark_all_notifications_as_read()
+    public function auth_user_can_mark_all_notifications_as_read(): void
     {
         $user = User::factory()->create();
 
         // Create a read notification
-        $this->sendInvitationToUser($this->project,$user);
-        $this->addMember($this->project,$user);
-        $this->postJson($this->project->path().'/tasks',['title'=>'new task added']);
+        $this->sendInvitationToUser($this->project, $user);
+        $this->addMember($this->project, $user);
+        $this->postJson($this->project->path().'/tasks', ['title' => 'new task added']);
         Sanctum::actingAs($user);
 
         $response = $this->withoutExceptionHandling()->getJson('/api/v1/notifications/mark-all-read');
@@ -55,13 +56,13 @@ class UserNotificationsTest extends TestCase
     }
 
     /** @test */
-    public function auth_user_can_delete_a_notification()
+    public function auth_user_can_delete_a_notification(): void
     {
         $user = $this->actingAsInvitedUser();
 
-        $notification=$user->notifications()->latest()->first();
+        $notification = $user->notifications()->latest()->first();
 
-        $response = $this->deleteJson('/api/v1/notifications/' . $notification->id);
+        $response = $this->deleteJson('/api/v1/notifications/'.$notification->id);
 
         $response->assertStatus(200);
         $response->assertJson(['message' => 'Notification deleted successfully.']);
@@ -69,26 +70,31 @@ class UserNotificationsTest extends TestCase
     }
 
     /** @test */
-    public function auth_user_can_update_notification_status()
+    public function auth_user_can_update_notification_status(): void
     {
         $user = $this->actingAsInvitedUser();
 
-        $notification=$user->notifications()->latest()->first();
+        $notification = $user->notifications()->latest()->first();
 
         // Update status to read
-        $response = $this->patchJson("/api/v1/notifications/{$notification->id}/status", ['status' => 'read']);
+        $this->patchJson("/api/v1/notifications/{$notification->id}/status", ['status' => 'read']);
         $this->assertNotNull($notification->fresh()->read_at);
 
         // Update status to unread
-        $response = $this->patchJson("/api/v1/notifications/{$notification->id}/status", ['status' => 'unread']);
+        $this->patchJson("/api/v1/notifications/{$notification->id}/status", ['status' => 'unread']);
         $this->assertNull($notification->fresh()->read_at);
     }
 
-    protected function sendInvitationToUser($project,$user)
+    public function projectUpdate($project, $user): void
     {
-       $this->postJson($this->project->path().'/invitations',[
-           'email'=>$user->email
-       ]);
+        $this->patchJson($project->path(), ['notes' => 'Project notes updated.']);
+    }
+
+    protected function sendInvitationToUser($project, $user)
+    {
+        $this->postJson($this->project->path().'/invitations', [
+            'email' => $user->email,
+        ]);
     }
 
     protected function actingAsInvitedUser(): User
@@ -96,18 +102,14 @@ class UserNotificationsTest extends TestCase
         $user = User::factory()->create();
         $this->sendInvitationToUser($this->project, $user);
         Sanctum::actingAs($user);
+
         return $user;
     }
 
-    public function projectUpdate($project,$user){
-        $this->patchJson($project->path(),['notes'=>'Project notes updated.']);
+    protected function addMember($project, $user)
+    {
+        $this->project
+            ->members()
+            ->attach($user, ['active' => true]);
     }
-
-
-    protected function addMember($project,$user)
-   {
-     $this->project
-          ->members()
-           ->attach($user, ['active' => true]);
-   }
 }

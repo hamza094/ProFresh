@@ -1,23 +1,19 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests;
 
-use App\Exceptions\Handler;
-use App\Models\User;
-use Saloon\Config;
-use Illuminate\Contracts\Debug\ExceptionHandler;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
+use Saloon\Config;
 
 abstract class TestCase extends BaseTestCase
 {
     use CreatesApplication;
 
-    protected function setUp() :void
+    protected function setUp(): void
     {
         parent::setUp();
         Config::preventStrayRequests();
     }
-
 }
-
-

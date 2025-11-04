@@ -1,61 +1,63 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Feature\Api\V1;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use App\Traits\ProjectSetup;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class ActivityTest extends TestCase
 {
-    use RefreshDatabase,ProjectSetup;
+    use ProjectSetup,RefreshDatabase;
 
     /** @test */
-    public function it_filters_activities_by_project_specified()
+
+    // filter
+    public function it_filters_activities_by_project_specified(): void
     {
-      $task=$this->project->addTask('test task');
+        $task = $this->project->addTask('test task');
 
-      $response=$this->getJson($this->project->path().'/activities')->assertOk();
+        $response = $this->getJson($this->project->path().'/activities')->assertOk();
 
-      $data = $response->json()['data'];
+        $data = $response->json()['data'];
 
-      $this->assertCount(2,$data);
-      $this->assertEquals('New project created', $data[0]['description']);
-      $this->assertEquals('Task "'.($task->title).'" added', $data[1]['description']);
+        $this->assertCount(2, $data);
+        $this->assertEquals('Task "'.($task->title).'" added', $data[0]['description']);
+        $this->assertEquals('New project created', $data[1]['description']);
     }
 
     /** @test */
-    public function it_filters_activities_by_tasks()
+    public function it_filters_activities_by_tasks(): void
     {
-      $task=$this->project->addTask('test task');
+        $task = $this->project->addTask('test task');
 
-      $response=$this->getJson($this->project->path().'/activities?tasks=1')
-        ->assertJsonCount(1,['data'])
-       ->assertOk();
-      
+        $response = $this->getJson($this->project->path().'/activities?tasks=1')
+            ->assertJsonCount(1, ['data'])
+            ->assertOk();
+
         $this->assertEquals('Task "'.($task->title).'" added', $response->json()['data'][0]['description']);
     }
 
     /** @test */
-    public function it_filters_activities_by_authenticated_user()
+    public function it_filters_activities_by_authenticated_user(): void
     {
-      $task=$this->project->addTask('test task');
+        $this->project->addTask('test task');
 
-  $response=$this->getJson($this->project->path().'/activities?mine='.$this->project->user->id)->assertOk(); 
+        $response = $this->getJson($this->project->path().'/activities?mine='.$this->project->user->id)->assertOk();
 
-  $this->assertEquals('New project created', $response->json()['data'][0]['description']);
+        $this->assertEquals('New project created', $response->json()['data'][1]['description']);
     }
 
     /** @test */
-    public function it_shows_error_when_no_related_activities_are_found()
+    public function it_shows_error_when_no_related_activities_are_found(): void
     {
-      $task=$this->project->addTask('test task');
+        $this->project->addTask('test task');
 
-      $response=$this->getJson($this->project->path().'/activities?members=1')
-      ->assertOk(); 
+        $response = $this->getJson($this->project->path().'/activities?members=1')
+            ->assertOk();
 
-      $this->assertEquals($response->json(),['message'=>'No related activities found']);
+        $this->assertEquals($response->json(), ['message' => 'No related activities found']);
     }
-
 }

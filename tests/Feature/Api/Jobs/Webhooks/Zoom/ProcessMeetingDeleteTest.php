@@ -1,12 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Feature\Api\Jobs\Webhooks\Zoom;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\Jobs\Webhooks\Zoom\DeleteMeetingWebhook;
 use App\Models\Meeting;
-use Illuminate\Support\Facades\Exceptions;
-use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\File;
 use Tests\TestCase;
 
@@ -15,13 +15,10 @@ class ProcessMeetingDeleteTest extends TestCase
     use RefreshDatabase;
     /**
      * A basic feature test example.
-     *
-     * @return void
      */
 
-
     /** @test */
-    public function zoom_meeting_can_be_deleted()
+    public function zoom_meeting_can_be_deleted(): void
     {
         $meeting = Meeting::factory()->create([
             'meeting_id' => 813,
@@ -43,9 +40,9 @@ class ProcessMeetingDeleteTest extends TestCase
     }
 
     /** @test */
-    public function throw_exception_if_meeting_not_found()
+    public function throw_exception_if_meeting_not_found(): void
     {
-        $meeting = Meeting::factory()->create([
+        Meeting::factory()->create([
             'meeting_id' => 413,
         ]);
 
@@ -64,7 +61,7 @@ class ProcessMeetingDeleteTest extends TestCase
         ]);
 
         $this->assertThrows(
-            fn() => $job->handle(),
+            fn () => $job->handle(),
             \Illuminate\Database\Eloquent\ModelNotFoundException::class
         );
     }

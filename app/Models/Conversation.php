@@ -1,17 +1,19 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Collection;
 
 class Conversation extends Model
 {
     use HasFactory;
 
-	protected $guarded=[];
+    protected $guarded = [];
 
     /**
      * Get the project associated with the conversation.
@@ -30,16 +32,16 @@ class Conversation extends Model
      */
     public function user(): BelongsTo
     {
-       return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class);
     }
 
-    public function setMessageAttribute($message)
+    public function setMessageAttribute($message): void
     {
-      $this->attributes['message'] = preg_replace(
+        $this->attributes['message'] = preg_replace(
             '/@([\w\-]+)/',
-             '<a href="/user/$1/profile" target="_blank">$0</a>',
-            $message
-      );
+            '<a href="/user/$1/profile" target="_blank">$0</a>',
+            (string) $message
+        );
     }
 
     public function mentionedUsers(): array
@@ -58,7 +60,7 @@ class Conversation extends Model
         $seen = [];
         $unique = [];
         foreach ($usernames as $name) {
-            if (!isset($seen[$name])) {
+            if (! isset($seen[$name])) {
                 $seen[$name] = true;
                 $unique[] = $name;
             }
@@ -67,16 +69,12 @@ class Conversation extends Model
         return $unique;
     }
 
-    public function mentionedUsersData(): Collection 
+    public function mentionedUsersData(): Collection
     {
-        return empty($this->mentionedUsers()) 
-        ? collect() 
+        return $this->mentionedUsers() === []
+        ? collect()
         : User::whereIn('username', $this->mentionedUsers())
             ->select('id', 'uuid', 'name', 'username')
             ->get();
     }
-
-
 }
-
-

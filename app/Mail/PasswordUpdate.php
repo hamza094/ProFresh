@@ -1,41 +1,39 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailable;
+use Illuminate\Mail\Mailables\Content;
 use Illuminate\Queue\SerializesModels;
 
 class PasswordUpdate extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
 
+    public function __construct(
+        /**
+         * Create a new message instance.
+         *
+         * @return void
+         */
+        protected string $time
+    ) {}
+
     /**
-     * Create a new message instance.
-     *
-     * @return void
+     * Get the message content definition.
      */
-    protected string $time;
-
-    public function __construct(string $time)
-    {
-      $this->time=$time;
-    }
-
-    /**
-      * Get the message content definition.
-    */
-
     public function content(): Content
     {
-      return new Content(
-         markdown: 'emails.user.update',
-         with: [
-            'url' => config('app.url'),
-            'time' => $this->time
-        ],
-     );
+        return new Content(
+            markdown: 'emails.user.update',
+            with: [
+                'url' => config('app.url'),
+                'time' => $this->time,
+            ],
+        );
     }
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'kpi' => [
         // Optional: thresholds for completion rate status mapping (not fully used yet)

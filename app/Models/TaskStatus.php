@@ -1,28 +1,21 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class TaskStatus extends Model
 {
     use HasFactory;
 
-    protected $guarded=[];
+    protected $guarded = [];
 
     protected $table = 'statuses';
-
-    protected static function boot(): void
-    {
-        parent::boot();
-
-          static::deleting(function ($taskStatus) {
-            $taskStatus->tasks()->update(['status_id' => null]);
-        });
-    }
 
     /**
      * Get all tasks associated to TaskStatus.
@@ -33,7 +26,7 @@ class TaskStatus extends Model
     {
         return $this->hasMany(Task::class, 'status_id');
     }
-    
+
     /**
      * Get user who created TaskStatus.
      *
@@ -42,5 +35,14 @@ class TaskStatus extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    protected static function boot(): void
+    {
+        parent::boot();
+
+        static::deleting(function ($taskStatus): void {
+            $taskStatus->tasks()->update(['status_id' => null]);
+        });
     }
 }

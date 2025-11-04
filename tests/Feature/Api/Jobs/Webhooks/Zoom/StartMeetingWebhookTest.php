@@ -1,32 +1,31 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Feature\Api\Jobs\Webhooks\Zoom;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use App\Models\Meeting;
-use App\Traits\ProjectSetup;
-use Illuminate\Support\Facades\File;
-use App\Jobs\Webhooks\Zoom\StartMeetingWebhook;
-use App\Models\User;
-use Illuminate\Support\Facades\Notification;
-use App\Notifications\Zoom\MeetingStarted;
-use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Support\Facades\Event;
 use App\Events\MeetingStatusUpdate;
+use App\Jobs\Webhooks\Zoom\StartMeetingWebhook;
+use App\Models\Meeting;
+use App\Models\User;
+use App\Notifications\Zoom\MeetingStarted;
+use App\Traits\ProjectSetup;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Notification;
 use Tests\TestCase;
 
 class StartMeetingWebhookTest extends TestCase
 {
-    use RefreshDatabase,ProjectSetup;
+    use ProjectSetup,RefreshDatabase;
 
     /**
      * A basic feature test example.
-     *
-     * @return void
      */
 
     /** @test */
-    public function notifies_project_members_on_meeting_start()
+    public function notifies_project_members_on_meeting_start(): void
     {
         Notification::fake();
         Event::fake();
@@ -39,8 +38,7 @@ class StartMeetingWebhookTest extends TestCase
             'status' => 'waiting',
         ]);
 
-        $users = User::factory()->count(2)->create()->each(fn($user) =>
-            $this->inviteAndActivateUser($this->project, $user)
+        $users = User::factory()->count(2)->create()->each(fn ($user) => $this->inviteAndActivateUser($this->project, $user)
         );
 
         $fixture = File::json(
@@ -62,16 +60,12 @@ class StartMeetingWebhookTest extends TestCase
 
         $this->assertEquals('started', $meeting->fresh()->status);
 
-        Event::assertDispatched(function (MeetingStatusUpdate $event) use ($meeting) {
-            return $event->meeting->id === $meeting->id;
-        });
+        Event::assertDispatched(fn (MeetingStatusUpdate $event): bool => $event->meeting->id === $meeting->id);
 
-        Notification::assertSentTo($users, MeetingStarted::class, function ($notification, $channels) {
-            return $channels === ['mail', 'database', 'broadcast'];
-        });
+        Notification::assertSentTo($users, MeetingStarted::class, fn ($notification, $channels): bool => $channels === ['mail', 'database', 'broadcast']);
     }
 
-    private function inviteAndActivateUser($project, $user)
+    private function inviteAndActivateUser($project, \Illuminate\Database\Eloquent\Model $user): void
     {
         $project->invite($user);
         $project->members()->updateExistingPivot($user->id, ['active' => true]);

@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Exceptions\Integrations\Zoom;
+declare(strict_types=1);
 
-use Exception;
+namespace App\Exceptions\Integrations\Zoom;
 
 class UnauthorizedException extends ZoomException
 {

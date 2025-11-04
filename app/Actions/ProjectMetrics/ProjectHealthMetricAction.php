@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Actions\ProjectMetrics;
 
 use App\Models\Project;
@@ -19,17 +21,17 @@ use App\Models\Project;
 class ProjectHealthMetricAction
 {
     public function __construct(
-        private TaskHealthMetricAction $taskHealthAction,
-        private TeamCollaborationMetricAction $collaborationHealthAction,
-        private StageProgressMetricAction $stageProgressAction,
-        private CommunicationHealthMetricAction $communicationHealthAction,
-        private ActivityHealthMetricAction $activityHealthAction
+        private readonly TaskHealthMetricAction $taskHealthAction,
+        private readonly TeamCollaborationMetricAction $collaborationHealthAction,
+        private readonly StageProgressMetricAction $stageProgressAction,
+        private readonly CommunicationHealthMetricAction $communicationHealthAction,
+        private readonly ActivityHealthMetricAction $activityHealthAction
     ) {}
 
     public function execute(Project $project): float
     {
         $weights = $this->getHealthWeights();
-        
+
         $taskHealth = $this->taskHealthAction->execute($project);
         $communicationHealth = $this->communicationHealthAction->execute($project);
         $collaborationHealth = $this->collaborationHealthAction->execute($project);
@@ -37,10 +39,10 @@ class ProjectHealthMetricAction
         $activityPercentage = $this->activityHealthAction->execute($project);
 
         // Calculate final composite weighted health score
-        $weightedScore = 
-            ($taskHealth * $weights['tasks']) + 
-            ($communicationHealth * $weights['communication']) + 
-            ($collaborationHealth * $weights['collaboration']) + 
+        $weightedScore =
+            ($taskHealth * $weights['tasks']) +
+            ($communicationHealth * $weights['communication']) +
+            ($collaborationHealth * $weights['collaboration']) +
             ($stagePercentage * $weights['stage']) +
             ($activityPercentage * $weights['activity']);
 
@@ -74,7 +76,7 @@ class ProjectHealthMetricAction
     private function calculateStagePercentage(Project $project): float
     {
         $stageData = $this->stageProgressAction->execute($project);
-        
+
         $percentage = $stageData['percentage'];
 
         return $this->normalizePercentage($percentage);
@@ -84,7 +86,7 @@ class ProjectHealthMetricAction
 
     private function normalizePercentage(float|int $value): float
     {
-        if (!is_numeric($value)) {
+        if (! is_numeric($value)) {
             return 0.0;
         }
 
