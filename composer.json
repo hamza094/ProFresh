@@ -12,7 +12,7 @@
     "barryvdh/laravel-debugbar": "^3.5",
     "bugsnag/bugsnag-laravel": "^2.0",
     "cviebrock/eloquent-sluggable": "^11.0",
-    "dedoc/scramble": "^0.11.16",
+    "dedoc/scramble": "^0.13.2",
     "doctrine/dbal": "^3.7",
     "f9webltd/laravel-api-response-helpers": "^2.1.1",
     "firebase/php-jwt": "^6.10",
