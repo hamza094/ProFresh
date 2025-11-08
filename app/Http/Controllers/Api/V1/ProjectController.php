@@ -64,6 +64,8 @@ class ProjectController extends ApiController
      */
     public function show(Project $project): ProjectResource
     {
+        $this->authorize('access', $project);
+
         $project->load(['stage', 'meetings', 'activeMembers', 'limitedActivities']);
 
         return new ProjectResource($project);

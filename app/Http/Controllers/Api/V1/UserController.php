@@ -83,7 +83,9 @@ class UserController extends ApiController
      */
     public function forceDestroy(User $user): JsonResponse
     {
-        $getUser = User::withTrashed()->findOrFail($user);
+        $this->authorize('owner', $user);
+
+        $getUser = User::withTrashed()->findOrFail($user->id);
         $getUser->forceDelete();
 
         return response()->json([

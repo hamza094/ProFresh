@@ -122,7 +122,7 @@ class TaskFeaturesTest extends TestCase
             'search' => 'test',
         ]))->assertSuccessful();
 
-        $this->assertCount(1, $response->json());
+        $response->assertJsonCount(1, 'data');
     }
 
     /** @test */
