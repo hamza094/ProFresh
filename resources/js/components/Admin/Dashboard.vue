@@ -4,7 +4,7 @@
     <div class="container" v-if="admin.access">
       <div class="row">
         <div class="col-md-4">
-          <router-link to="/admin/projects" class="admin-dashboard-link">
+          <router-link :to="{ name: 'ProjectPanel' }" class="admin-dashboard-link">
             <div class="card">
               <div class="ribbon ribbon-top bg-blue">
                 <svg
@@ -34,7 +34,7 @@
           </router-link>
         </div>
         <div class="col-md-4">
-          <router-link to="/admin/tasks" class="admin-dashboard-link">
+          <router-link :to="{ name: 'TaskPanel' }" class="admin-dashboard-link">
             <div class="card">
               <div class="ribbon ribbon-top bg-yellow">
                 <svg
@@ -68,7 +68,7 @@
           </router-link>
         </div>
         <div class="col-md-4">
-          <router-link to="/admin/users" class="admin-dashboard-link">
+          <router-link :to="{ name: 'UserPanel' }" class="admin-dashboard-link">
             <div class="card">
               <div class="ribbon ribbon-top bg-green">
                 <svg
@@ -100,6 +100,7 @@
           </router-link>
         </div>
       </div>
+
       <div class="row row-cards mt-4">
         <div class="col-sm-6 col-lg-3">
           <div class="card card-sm">
@@ -179,7 +180,7 @@
                       href=""
                       class="btn btn-outline-success w-100 btn-sm"
                       target="_blank"
-                      @click.pervent="runBackup()">
+                      @click.prevent="runBackup()">
                       Run Backup
                     </button>
                   </div>
@@ -222,7 +223,6 @@
             </div>
           </div>
         </div>
-
         <div class="col-sm-6 col-lg-3">
           <div class="card card-sm">
             <div class="card-body">
@@ -265,6 +265,7 @@
           </div>
         </div>
       </div>
+
       <div class="row mt-5">
         <div class="col-md-6">
           <div class="card" style="height: 28rem">
@@ -273,11 +274,13 @@
             </div>
             <div class="card-body card-body-scrollable card-body-scrollable-shadow">
               <div class="divide-y">
-                <div v-for="activity in activities">
+                <div
+                  v-for="activity in activities"
+                  :key="activity.id || (activity.user && activity.user.id) || activity.time">
                   <div class="row">
                     <div class="col-auto">
                       <span class="avatar">
-                        <router-link :to="`/user/${activity.user.id}/profile`">
+                        <router-link :to="{ name: 'Profile', params: { uuid: activity.user.id } }">
                           <img class="avatar" :src="activity.user.avatar" alt="Avatar" />
                         </router-link>
                       </span>
@@ -287,7 +290,7 @@
                         <strong>{{ activity.user.name }}</strong> {{ activity.description }}
                         <span v-if="activity.project !== null">
                           <strong>
-                            <router-link :to="`/projects/${activity.project.slug}`">{{
+                            <router-link :to="{ name: 'ProjectPage', params: { slug: activity.project.slug } }">{{
                               activity.project.name
                             }}</router-link>
                           </strong>
@@ -309,6 +312,7 @@
           <Chart></Chart>
         </div>
       </div>
+
       <div class="card mt-5">
         <div class="card-header">
           <h3 class="card-title">Invoices</h3>
@@ -326,20 +330,16 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="subscription in subscriptions">
+              <tr v-for="subscription in subscriptions" :key="subscription.userId + '-' + subscription.nextPaymentDate">
                 <td>
                   <span class="text-secondary">{{ subscription.userId }}</span>
                 </td>
                 <td>
                   <a href="invoice.html" class="text-reset" tabindex="-1">{{ subscription.email }}</a>
                 </td>
-                <td>
-                  {{ subscription.signUpDate }}
-                </td>
+                <td>{{ subscription.signUpDate }}</td>
                 <td>{{ subscription.lastPaymentAmount }}{{ subscription.lastPaymentCurrency }}</td>
-                <td>
-                  {{ subscription.lastPaymentDate }}
-                </td>
+                <td>{{ subscription.lastPaymentDate }}</td>
                 <td>{{ subscription.nextPaymentDate }}</td>
               </tr>
             </tbody>
