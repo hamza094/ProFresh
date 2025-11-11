@@ -12,11 +12,11 @@
         <FeatureDropdown :feature-pop="featurePop">
           <ul v-if="owner">
             <li v-if="user.avatar" class="feature-dropdown_item-content" @click="deleteAvatar">
-              <i class="far fa-user-circle"></i> Remove Avatar
+              <i class="fa-regular fa-user-circle"></i> Remove Avatar
             </li>
 
             <li class="feature-dropdown_item-content" @click.prevent="deleteProfile()">
-              <i class="far fa-trash-alt"></i>Delete Profile
+              <i class="fa-regular fa-trash-alt"></i>Delete Profile
             </li>
           </ul>
         </FeatureDropdown>

@@ -9,7 +9,7 @@
             <router-link :to="{ name: 'Dashboard' }" class="panel-list_item">
               <p>
                 <span class="icon">
-                  <i class="icon-logo far fa-calendar"></i>
+                  <i class="icon-logo fa-regular fa-calendar"></i>
                   <span class="icon-name">Dashboard</span>
                 </span>
               </p>
@@ -18,7 +18,7 @@
             <router-link :to="{ name: 'Projects' }" class="panel-list_item">
               <p>
                 <span class="icon">
-                  <i class="icon-logo fab fa-product-hunt"></i>
+                  <i class="icon-logo fa-brands fa-product-hunt"></i>
                   <span class="icon-name">Projects</span>
                 </span>
               </p>
@@ -29,7 +29,7 @@
             <router-link :to="{ name: 'Profile', params: { uuid: user.id } }" class="panel-list_item">
               <p>
                 <span class="icon">
-                  <i class="icon-logo fas fa-user-circle"></i>
+                  <i class="icon-logo fa-solid fa-user-circle"></i>
                   <span class="icon-name">Profile</span>
                 </span>
               </p>
@@ -38,7 +38,7 @@
             <router-link :to="{ name: 'Subscription' }" class="panel-list_item">
               <p>
                 <span class="icon">
-                  <i class="icon-logo far fa-credit-card"></i>
+                  <i class="icon-logo fa-regular fa-credit-card"></i>
                   <span class="icon-name">Subsctiption</span>
                 </span>
               </p>
@@ -47,7 +47,7 @@
             <router-link :to="{ name: 'AdminPanel' }" class="panel-list_item">
               <p>
                 <span class="icon">
-                  <i class="icon-logo fas fa-user-lock"></i>
+                  <i class="icon-logo fa-solid fa-user-lock"></i>
                   <span class="icon-name">Admin Panel</span>
                 </span>
               </p>
@@ -56,7 +56,7 @@
             <a href="" @click.prevent="signOut()" class="panel-list_item">
               <p>
                 <span class="icon"
-                  ><i class="icon-logo fas fa-sign-out-alt"></i><span class="icon-name">Logout</span></span
+                  ><i class="icon-logo fa-solid fa-sign-out-alt"></i><span class="icon-name">Logout</span></span
                 >
               </p>
             </a>

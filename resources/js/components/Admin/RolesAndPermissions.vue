@@ -32,7 +32,7 @@
                             <li class="role-list_items">
                               {{ permission.name }}
                               <span @click.prevent="unAssignPermission(permission.id, role.id)" class="cursor"
-                                ><i class="fas fa-minus-circle"></i
+                                ><i class="fa-solid fa-minus-circle"></i
                               ></span>
                             </li>
                           </ul>

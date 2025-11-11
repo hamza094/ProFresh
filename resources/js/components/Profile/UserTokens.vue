@@ -1,9 +1,9 @@
 <template>
   <div class="card mt-4">
     <div class="card-header d-flex justify-content-between align-items-center">
-      <span><i class="fas fa-key"></i> API Tokens</span>
+      <span><i class="fa-solid fa-key"></i> API Tokens</span>
       <button class="btn btn-sm btn-success" @click="showCreate = !showCreate">
-        <i class="fas fa-plus"></i> New Token
+        <i class="fa-solid fa-plus"></i> New Token
       </button>
     </div>
     <div class="card-body">
@@ -45,10 +45,10 @@
             readonly
             style="max-width: 300px" />
           <button class="btn btn-sm btn-outline-secondary mr-2" @click="toggleShowToken(newTokenId)">
-            <i :class="showTokenMap[newTokenId] ? 'fas fa-eye-slash' : 'fas fa-eye'"></i>
+            <i :class="showTokenMap[newTokenId] ? 'fa-solid fa-eye-slash' : 'fa-solid fa-eye'"></i>
           </button>
           <button class="btn btn-sm btn-outline-primary" @click="copyToken(newToken)">
-            <i class="fas fa-copy"></i>
+            <i class="fa-solid fa-copy"></i>
           </button>
         </div>
       </div>
@@ -85,18 +85,18 @@
                   readonly
                   style="max-width: 300px" />
                 <button class="btn btn-sm btn-outline-secondary mr-2" @click="toggleShowToken(token.id)">
-                  <i :class="showTokenMap[token.id] ? 'fas fa-eye-slash' : 'fas fa-eye'"></i>
+                  <i :class="showTokenMap[token.id] ? 'fa-solid fa-eye-slash' : 'fa-solid fa-eye'"></i>
                 </button>
                 <button
                   class="btn btn-sm btn-outline-primary"
                   :disabled="token.id !== newTokenId"
                   @click="copyToken(token.id === newTokenId ? newToken : '')">
-                  <i class="fas fa-copy"></i>
+                  <i class="fa-solid fa-copy"></i>
                 </button>
               </td>
               <td>
                 <button class="btn btn-sm btn-danger" @click="deleteToken(token.id)">
-                  <i class="fas fa-trash"></i> Delete
+                  <i class="fa-solid fa-trash"></i> Delete
                 </button>
               </td>
             </tr>

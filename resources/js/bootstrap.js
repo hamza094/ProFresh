@@ -33,17 +33,27 @@ window.axios = axios;
 axios.defaults.withCredentials = true;
 
 axios.interceptors.request.use(function (config) {
-  config.headers.common = {
-    Authorization: JSON.parse(localStorage.getItem('token')),
-    'Content-Type': 'application/json',
-    Accept: 'application/json',
-  };
+  // Merge headers instead of overwriting defaults to preserve CSRF header, etc.
+  config.headers = config.headers || {};
+  try {
+    config.headers.Authorization = JSON.parse(localStorage.getItem('token'));
+  } catch {
+    // ignore malformed token in localStorage
+  }
+  if (!config.headers['Content-Type']) config.headers['Content-Type'] = 'application/json';
+  if (!config.headers.Accept) config.headers.Accept = 'application/json';
 
   return config;
 });
 
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
-window.axios.defaults.headers.common['X-CSRF-TOKEN'] = window.Laravel.csrfToken;
+// Read CSRF token from the meta tag instead of relying on a global script
+const tokenMeta = document.head.querySelector('meta[name="csrf-token"]');
+if (tokenMeta) {
+  window.axios.defaults.headers.common['X-CSRF-TOKEN'] = tokenMeta.content;
+} else {
+  console.error('CSRF token meta tag not found: <meta name="csrf-token" content="...">');
+}
 
 /**
  * Echo exposes an expressive API for subscribing to channels and listening

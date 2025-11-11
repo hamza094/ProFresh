@@ -43,14 +43,16 @@
         </div>
 
         <div v-else-if="error" class="text-center py-5">
-          <i class="fas fa-exclamation-triangle display-4 text-danger mb-3"></i>
+          <i class="fa-solid fa-exclamation-triangle display-4 text-danger mb-3"></i>
           <h4 class="text-danger">Unable to Load Insights</h4>
           <p class="text-muted">{{ error }}</p>
-          <button @click="fetchInsights" class="btn btn-primary mt-2"><i class="fas fa-redo me-2"></i> Retry</button>
+          <button @click="fetchInsights" class="btn btn-primary mt-2">
+            <i class="fa-solid fa-redo me-2"></i> Retry
+          </button>
         </div>
 
         <div v-else-if="insights.length === 0" class="text-center py-5">
-          <i class="fas fa-chart-line display-4 text-muted mb-3"></i>
+          <i class="fa-solid fa-chart-line display-4 text-muted mb-3"></i>
           <h4 class="text-muted">No Insights Available</h4>
           <p class="text-muted">No insights match your current filter selection.</p>
         </div>
@@ -59,7 +61,7 @@
           <!-- Detailed Insights -->
           <div>
             <h4 class="h5 d-flex align-items-center mb-4">
-              <i class="fas fa-chart-bar me-2"></i>
+              <i class="fa-solid fa-chart-bar me-2"></i>
               Detailed Analysis
             </h4>
             <div class="row">
@@ -80,7 +82,7 @@
         v-if="!loading && !error">
         <div>
           <small class="text-muted d-flex align-items-center gap-3">
-            <i class="far fa-clock me-2"></i>
+            <i class="fa-regular fa-clock me-2"></i>
             <span v-if="generatedAt">Generated {{ generatedAt }}</span>
             <span v-if="sectionsRequested && sectionsRequested.length">
               • Sections: {{ sectionsRequested.join(', ') }}</span
@@ -89,7 +91,7 @@
         </div>
         <div class="d-flex gap-2">
           <button @click="refreshInsights" class="btn btn-primary btn-sm">
-            <i class="fas fa-sync me-2"></i> Refresh
+            <i class="fa-solid fa-sync me-2"></i> Refresh
           </button>
         </div>
       </div>

@@ -10,12 +10,12 @@
 
         <!-- Grace period alert -->
         <div v-if="subscription.grace_period" class="alert alert-primary" role="alert">
-          <i class="fas fa-exclamation-circle"></i> Alert: Your subscription has been canceled, and you are currently in
-          the grace period.which is valid till <b>{{ subscription.grace_period_ends_at }}</b> Please note that during
-          this time, you still have access to all subscription benefits.
+          <i class="fa-solid fa-exclamation-circle"></i> Alert: Your subscription has been canceled, and you are
+          currently in the grace period.which is valid till <b>{{ subscription.grace_period_ends_at }}</b> Please note
+          that during this time, you still have access to all subscription benefits.
         </div>
         <div v-if="subscription" class="alert alert-success" role="alert">
-          <i class="fas fa-exclamation-circle"> </i> You have created ProFresh Subscription
+          <i class="fa-solid fa-exclamation-circle"> </i> You have created ProFresh Subscription
           <b> {{ subscription.created_at }}</b>
         </div>
 
@@ -68,7 +68,7 @@
 
           <!-- Paddle payment iframe -->
           <iframe
-            :src="iframeSrc"
+            :src="$options.filters.safeUrl(iframeSrc)"
             class="subscription-modal-iframe"
             title="Paddle payment"
             @load="isOpeningIframe = false"></iframe>
@@ -97,7 +97,9 @@
                   <span>{{ receipt.created_at }}</span> -
                   <span>${{ receipt.amount }} {{ receipt.currency }}</span>
                   <span class="float-right">
-                    <a :href="receipt.receipt_url" target="_blank">Download</a>
+                    <a :href="$options.filters.safeUrl(receipt.receipt_url)" target="_blank" rel="noopener noreferrer"
+                      >Download</a
+                    >
                   </span>
                 </p>
               </div>

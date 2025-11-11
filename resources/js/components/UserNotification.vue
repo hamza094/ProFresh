@@ -10,7 +10,7 @@
           data-toggle="dropdown"
           aria-haspopup="true"
           aria-expanded="false">
-          <i class="fas fa-cog"></i>
+          <i class="fa-solid fa-cog"></i>
         </button>
         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownSettings">
           <button class="dropdown-item" @click="markAllAsRead">Mark all as read</button>
@@ -45,7 +45,7 @@
         <div class="d-flex align-items-center">
           <img
             v-if="notification.notifier.avatar"
-            :src="notification.notifier.avatar"
+            :src="$options.filters.safeUrl(notification.notifier.avatar)"
             alt="Avatar"
             class="rounded-circle mr-3"
             style="width: 40px; height: 40px" />
@@ -68,7 +68,7 @@
             data-toggle="dropdown"
             aria-haspopup="true"
             aria-expanded="false">
-            <i class="fas fa-cog"></i>
+            <i class="fa-solid fa-cog"></i>
           </button>
           <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
             <button v-if="notification.read_at" class="dropdown-item" @click="markAsUnread(notification)">

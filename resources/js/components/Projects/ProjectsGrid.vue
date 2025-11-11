@@ -1,7 +1,7 @@
 <template>
   <div class="row ml-1">
     <div class="col-md-6 col-lg-4 mb-4" v-for="project in projects" :key="project.id">
-      <router-link :to="'/projects/' + project.slug" class="dashboard-link">
+      <router-link :to="{ name: 'ProjectPage', params: { slug: project.slug } }" class="dashboard-link">
         <div :class="`dashboard-projects mt-5 ${currentTab}-projects`">
           <div class="project-status">
             <b>{{ getStatusLabel() }}</b>

@@ -19,11 +19,11 @@
     <!-- Quick Actions -->
     <div class="filter-actions">
       <button @click="selectAll" class="action-btn" :class="{ 'action-btn_active': activeSections.includes('all') }">
-        <i class="fas fa-th"></i>
+        <i class="fa-solid fa-th"></i>
         All
       </button>
       <button @click="clearAll" class="action-btn">
-        <i class="fas fa-times"></i>
+        <i class="fa-solid fa-times"></i>
         Clear
       </button>
     </div>

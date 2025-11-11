@@ -35,7 +35,7 @@
       <div v-if="isLoading" class="calendar-loader" role="status" aria-live="polite">
         <div class="loader-backdrop"></div>
         <div class="loader-content">
-          <i class="fas fa-spinner fa-pulse loader-icon" aria-hidden="true"></i>
+          <i class="fa-solid fa-spinner fa-pulse loader-icon" aria-hidden="true"></i>
           <div class="loader-text">Loading activities...</div>
         </div>
       </div>

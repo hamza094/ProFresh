@@ -3,12 +3,12 @@ import { normalizeSectionsForRequest } from '../utils/insightsSections.js';
 const BASE_URL = '/api/v1';
 
 const AVAILABLE_SECTIONS = [
-  { key: 'all', label: 'All', icon: 'fas fa-th' },
-  { key: 'health', label: 'Health', icon: 'fas fa-heartbeat' },
-  { key: 'task-health', label: 'Task Health', icon: 'fas fa-tasks' },
-  { key: 'collaboration', label: 'Collaboration', icon: 'fas fa-handshake' },
-  { key: 'risk', label: 'Risk', icon: 'fas fa-exclamation-triangle' },
-  { key: 'stage', label: 'Stage', icon: 'fas fa-project-diagram' },
+  { key: 'all', label: 'All', icon: 'fa-solid fa-th' },
+  { key: 'health', label: 'Health', icon: 'fa-solid fa-heartbeat' },
+  { key: 'task-health', label: 'Task Health', icon: 'fa-solid fa-tasks' },
+  { key: 'collaboration', label: 'Collaboration', icon: 'fa-solid fa-handshake' },
+  { key: 'risk', label: 'Risk', icon: 'fa-solid fa-exclamation-triangle' },
+  { key: 'stage', label: 'Stage', icon: 'fa-solid fa-project-diagram' },
 ];
 
 // Extract a concise, user-friendly error message from an axios error

@@ -31,7 +31,8 @@
     <div v-if="taskMembers.length > 0" class="mt-3" style="height: 70px; width: 150px; overflow-y: scroll">
       <div v-for="member in taskMembers" :key="member.id || member.username">
         <span
-          >{{ member.username }} <span @click.prevent="removeMember(member)"><i class="fas fa-minus-circle"></i></span>
+          >{{ member.username }}
+          <span @click.prevent="removeMember(member)"><i class="fa-solid fa-minus-circle"></i></span>
         </span>
       </div>
     </div>

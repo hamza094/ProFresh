@@ -137,7 +137,13 @@
                     <span class="text-secondary"><b>Site Logs Viewer</b></span>
                   </div>
                   <div class="text-secondary">
-                    <a href="/log-viewer" class="btn btn-outline-danger w-100 btn-sm" target="_blank">View</a>
+                    <a
+                      href="/log-viewer"
+                      class="btn btn-outline-danger w-100 btn-sm"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      >View</a
+                    >
                   </div>
                 </div>
               </div>
@@ -348,7 +354,10 @@
         <div class="card-footer d-flex align-items-center">
           <p class="m-0 text-secondary">
             Showing <span>1</span> to <span>10 </span>
-            <a href="https://sandbox-vendors.paddle.com/subscriptions/customers" target="_blank"
+            <a
+              href="https://sandbox-vendors.paddle.com/subscriptions/customers"
+              target="_blank"
+              rel="noopener noreferrer"
               >For in-depth analysis, check the Paddle subscriptions dashboard.</a
             >
           </p>

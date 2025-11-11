@@ -1,4 +1,4 @@
-             <h5>Subscribe with card: <i class="fab fa-cc-visa"></i> <i class="fab fa-cc-mastercard"></i> </h5>
+             <h5>Subscribe with card: <i class="fa-brands fa-cc-visa"></i> <i class="fa-brands fa-cc-mastercard"></i> </h5>
              <label for="subscription-plan" class="form-label"><b>Select Subscription Plan:</b></label>
              <select name="plan" class="form-control mb-2" id="subscription-plan">
                             @foreach($plans as $key=>$plan)
@@ -14,7 +14,7 @@
     Subscribe
 </button>
 <hr>
-<h5>Subscribe with Paypal <i class="fab fa-paypal"></i> </h5>
+<h5>Subscribe with Paypal <i class="fa-brands fa-paypal"></i> </h5>
 <p>
     <div class="row">
         <div class="form-group col-xs-6 ml-4">

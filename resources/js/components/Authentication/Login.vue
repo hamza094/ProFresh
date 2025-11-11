@@ -68,10 +68,10 @@
           </div>
           <div class="">
             <button class="btn btn-outline-dark" @click="loginWithProvider('github')">
-              <i class="fab fa-github fa-lg"></i> Github
+              <i class="fa-brands fa-github fa-lg"></i> Github
             </button>
             <button class="btn btn-outline-dark" @click="loginWithProvider('google')">
-              <i class="fab fa-google" aria-hidden="true"></i> Google
+              <i class="fa-brands fa-google" aria-hidden="true"></i> Google
             </button>
           </div>
         </div>

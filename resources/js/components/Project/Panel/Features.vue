@@ -73,7 +73,7 @@
             data-target="#memberProject"
             aria-expanded="false"
             aria-controls="memberProject">
-            <i class="fas fa-angle-down float-right"></i>
+            <i class="fa-solid fa-angle-down float-right"></i>
           </button>
         </p>
       </div>
@@ -117,7 +117,7 @@
             data-target="#pendingMembers"
             aria-expanded="false"
             aria-controls="pendingMembers">
-            <i class="fas fa-angle-down float-right"></i>
+            <i class="fa-solid fa-angle-down float-right"></i>
           </button>
         </p>
       </div>

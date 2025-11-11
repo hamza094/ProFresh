@@ -10,12 +10,17 @@
           <div class="card invitation border-secondary">
             <div class="card-header text-center">
               Project Name:
-              <router-link :to="`/projects/'${project.slug}`">{{ project.name }}</router-link>
+              <router-link :to="{ name: 'ProjectPage', params: { slug: project.slug } }">{{
+                project.name
+              }}</router-link>
             </div>
             <div class="card-body mt-1 text-center">
               <p>
                 Owner Name:
-                <router-link :to="`/user/${project.owner.uuid}/profile`" target="_blank"
+                <router-link
+                  :to="{ name: 'Profile', params: { uuid: project.owner.uuid } }"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   >{{ project.owner.name }}
                 </router-link>
               </p>

@@ -5,7 +5,7 @@
         {{ name.substring(0, 1) }}
       </div>
       <div v-else>
-        <img :src="avatar" alt="" class="main-profile-img" />
+        <img :src="$options.filters.safeUrl(avatar)" alt="" class="main-profile-img" />
       </div>
       <div class="img-avatar_overlay">
         <div class="img-avatar_overlay-text">Update</div>
@@ -18,6 +18,7 @@
         <input type="file" name="avatar" id="file" accept="image/*" value="Upload Avatar" @change="setImage" />
 
         <!-- Image previewer -->
+        <!-- Preview of selected image (data URL). Not sanitized to preserve data:image functionality. -->
         <img :src="imageSrc" width="100" v-if="imageSrc" />
 
         <!-- Cropper container -->
@@ -25,6 +26,7 @@
           <vue-cropper class="mr-2 w-50" ref="cropper" :guides="true" :src="imageSrc" :aspect-ratio="0.9"></vue-cropper>
 
           <!-- Cropped image previewer -->
+          <!-- Cropped image data URL (user-selected); remains unsanitized intentionally. -->
           <img class="ml-2 w-50 bg-light" :src="croppedImageSrc" />
         </div>
 

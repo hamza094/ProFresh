@@ -24,9 +24,11 @@ import 'animate.css';
 import 'cropperjs/dist/cropper.css';
 import VueToastify from 'vue-toastify';
 import { Datetime } from 'vue-datetime';
-// You need a specific loader for CSS files
 import 'vue-datetime/dist/vue-datetime.css';
 import PortalVue from 'portal-vue';
+import '@fortawesome/fontawesome-free/css/all.min.css';
+import { sanitizeUrl } from '@braintree/sanitize-url';
+import '@tabler/core/dist/js/tabler.min.js';
 
 Vue.use(PortalVue);
 Vue.use(Vuex);
@@ -76,6 +78,11 @@ Vue.filter('datetime', function (data) {
 
 Vue.filter('msgTime', function (data) {
   return moment(data).calendar();
+});
+
+// Sanitize potentially user-controlled URLs before binding (href/src)
+Vue.filter('safeUrl', function (value) {
+  return sanitizeUrl(value || '');
 });
 
 import { Settings } from 'luxon';

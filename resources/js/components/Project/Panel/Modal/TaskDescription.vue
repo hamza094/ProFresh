@@ -17,7 +17,7 @@
         v-if="task.description"
         class="task-description_content-link"
         @click="openDescriptionForm(task.id, task)"
-        v-html="task.description"></p>
+        v-text="task.description"></p>
 
       <div v-else>
         <p class="task-description_content">

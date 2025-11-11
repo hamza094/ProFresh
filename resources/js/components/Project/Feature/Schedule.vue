@@ -1,6 +1,6 @@
 <template>
   <div>
-    <a class="btn btn-link" @click.prevent="modalShow()"><i class="far fa-clock"></i></a>
+    <a class="btn btn-link" @click.prevent="modalShow()"><i class="fa-regular fa-clock"></i></a>
     <modal
       name="view-schedules"
       height="auto"
@@ -36,7 +36,9 @@
                 <td>{{ message.message }}</td>
                 <td>
                   <span v-for="user in message.users" :key="user.id || (user.pivot && user.pivot.id) || user.name">
-                    <router-link :to="'/user/' + user.pivot.id + '/profile'" class="btn btn-link">
+                    <router-link
+                      :to="{ name: 'Profile', params: { uuid: (user.pivot && user.pivot.id) || user.id } }"
+                      class="btn btn-link">
                       {{ user.name }} </router-link
                     ><br />
                   </span>
@@ -44,7 +46,7 @@
                 <td>{{ message.delivered_at | datetime }}</td>
                 <td>{{ message.created_at | datetime }}</td>
                 <td>
-                  <a class="btn btn-danger" @click="remove(message.id)"><i class="fas fa-minus-circle"></i></a>
+                  <a class="btn btn-danger" @click="remove(message.id)"><i class="fa-solid fa-minus-circle"></i></a>
                 </td>
               </tr>
             </tbody>

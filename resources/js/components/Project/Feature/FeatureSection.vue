@@ -2,15 +2,17 @@
   <div class="float-right">
     <FeatureDropdown :feature-pop="featurePop">
       <ul>
-        <li class="feature-dropdown_item-content" @click="abandon()"><i class="fas pfa-eye-slash"></i> Abandon</li>
+        <li class="feature-dropdown_item-content" @click="abandon()"><i class="fa-solid fa-eye-slash"></i> Abandon</li>
 
         <li class="feature-dropdown_item-content" @click="$modal.show('project-message')">
-          <i class="far fa-envelope"></i>Send Mail or Sms
+          <i class="fa-regular fa-envelope"></i>Send Mail or Sms
         </li>
 
-        <li class="feature-dropdown_item-content" @click="exportProject()"><i class="fas fa-upload"></i> Export</li>
+        <li class="feature-dropdown_item-content" @click="exportProject()">
+          <i class="fa-solid fa-upload"></i> Export
+        </li>
 
-        <li class="feature-dropdown_item-content" @click="deleteProject"><i class="fas fa-ban"></i> Delete</li>
+        <li class="feature-dropdown_item-content" @click="deleteProject"><i class="fa-solid fa-ban"></i> Delete</li>
       </ul>
     </FeatureDropdown>
 

@@ -8,7 +8,7 @@
       <div class="card chat-card mb-5">
         <div class="card-header d-flex align-items-center justify-content-between bg-primary text-white" id="accordion">
           <div class="d-flex align-items-center">
-            <i class="fas fa-comment-alt mr-2"></i>
+            <i class="fa-solid fa-comment-alt mr-2"></i>
             <span>Group Chat</span>
             <span v-if="conversationCount" class="badge badge-light ml-2">{{ conversationCount }}</span>
             <span class="ml-1">messages</span>
@@ -19,7 +19,7 @@
             class="btn btn-default btn-xs float-right"
             data-toggle="collapse"
             :href="'#collapseOne-' + slug">
-            <i class="fas fa-angle-down"></i>
+            <i class="fa-solid fa-angle-down"></i>
           </a>
         </div>
 
@@ -34,7 +34,7 @@
                     <router-link :to="'/user/' + conversation.user.name + '/profile'">
                       <img
                         v-if="conversation.user.avatar"
-                        :src="conversation.user.avatar"
+                        :src="$options.filters.safeUrl(conversation.user.avatar)"
                         alt="User Avatar"
                         class="chat-user_image" />
                     </router-link>
@@ -42,16 +42,21 @@
                     <strong class="primary-font"> {{ conversation.user.name }}</strong>
                   </div>
                   <p v-if="conversation.message" class="mt-2">
-                    <span class="chat-message" v-html="conversation.message"> </span>
+                    <span class="chat-message" v-text="conversation.message"></span>
                   </p>
 
                   <p v-if="conversation.file" class="mt-2">
                     <span v-if="isImage(conversation.file)"
-                      ><img :src="conversation.file" class="chat-image" alt=""
+                      ><img :src="$options.filters.safeUrl(conversation.file)" class="chat-image" alt=""
                     /></span>
 
                     <span v-else>
-                      <a :href="conversation.file" target="_blank">{{ conversation.file }}</a>
+                      <a
+                        :href="$options.filters.safeUrl(conversation.file)"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        >{{ conversation.file }}</a
+                      >
                     </span>
                   </p>
 
@@ -107,18 +112,18 @@
                   row="1">
                 </textarea>
 
-                <i class="far fa-grin chat-emotion position-absolute" @click="toggleEmojiModal"> </i>
+                <i class="fa-regular fa-grin chat-emotion position-absolute" @click="toggleEmojiModal"> </i>
               </div>
 
               <div class="d-flex align-items-center">
                 <!-- Attach File Button -->
                 <button @click="openFilePicker" class="btn btn-light">
-                  <i class="fas fa-paperclip"></i> Attach File
+                  <i class="fa-solid fa-paperclip"></i> Attach File
                 </button>
 
                 <!-- Show Selected File Name with Delete Option -->
                 <div v-if="file" class="ml-2 d-flex align-items-center">
-                  <i class="fas fa-file-alt mr-1"></i>
+                  <i class="fa-solid fa-file-alt mr-1"></i>
                   <span class="file-name">{{ fileName }}</span>
                   <button @click="removeFile" class="btn btn-sm text-danger p-0 ml-2 file-close-btn">✖</button>
                 </div>

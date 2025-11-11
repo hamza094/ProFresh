@@ -2,7 +2,7 @@
   <div>
     <li class="dropdown mr-5">
       <a href="#" data-toggle="dropdown" class="notification">
-        <i class="far fa-bell notification-icon"></i>
+        <i class="fa-regular fa-bell notification-icon"></i>
         <span v-if="hasUnreadNotifications" class="notification-count"></span>
       </a>
       <ul class="dropdown-menu dropdown-menu-right rt">
@@ -21,7 +21,7 @@
               class="notification-wrapper">
               <img
                 v-if="notification.notifier.avatar"
-                :src="notification.notifier.avatar"
+                :src="$options.filters.safeUrl(notification.notifier.avatar)"
                 :alt="notification.notifier.name"
                 class="notification_avatar" />
               <div class="notification-content">
