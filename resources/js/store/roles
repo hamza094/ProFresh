@@ -35,7 +35,7 @@ const actions = {
         commit('setRoles', response.data);
         })
         .catch(error => {
-          console.log(error.response.data.errors);
+          this.handleErrorResponse(error);
         })
       },
 };

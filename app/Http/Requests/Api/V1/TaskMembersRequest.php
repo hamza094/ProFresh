@@ -42,7 +42,7 @@ class TaskMembersRequest extends FormRequest
     {
         return function (string $attribute, $value, Closure $fail): void {
             // Guard: ensure the input is an array before querying
-            if (! is_array($value) || empty($value)) {
+            if (! is_array($value) || $value === []) {
                 return;
             }
 

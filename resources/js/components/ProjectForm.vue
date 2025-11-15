@@ -132,7 +132,7 @@ export default {
           this.stages = response.data;
         })
         .catch((error) => {
-          console.log(error.response.data.errors);
+          this.handleErrorResponse(error);
         });
     },
     addTask() {

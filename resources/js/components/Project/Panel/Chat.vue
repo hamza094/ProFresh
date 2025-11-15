@@ -331,21 +331,20 @@ export default {
           this.conversations = { data: [] };
         })
         .catch((error) => {
-          console.log(error);
           this.conversations = { data: [] };
+          this.handleErrorResponse(error);
         });
     },
 
     listenForNewMessage() {
       Echo.private(`project.${this.slug}.conversations`)
         .listen('NewMessage', (e) => {
-          console.log('event fired');
           if (!this.conversations.data.find((conv) => conv.id === e.id)) {
             this.conversations.data.push(e);
           }
         })
         .error((error) => {
-          console.error('Echo error:', error);
+          this.handleErrorResponse(error);
         });
     },
 

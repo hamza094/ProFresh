@@ -1,7 +1,9 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 // variadic-method-App\Rules\TaskAssigneeMember-__construct-D:\apps\profresh\app\Rules\TaskAssigneeMember.php
-return \PHPStan\Cache\CacheItem::__set_state(array(
-   'variableKey' => '1762177787-v4',
-   'data' => false,
-));
+return PHPStan\Cache\CacheItem::__set_state([
+    'variableKey' => '1763192882-v4',
+    'data' => false,
+]);

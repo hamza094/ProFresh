@@ -163,8 +163,20 @@ components.forEach(([name, path]) => {
 import LaravelVuePagination from 'laravel-vue-pagination';
 Vue.component('Pagination', LaravelVuePagination);
 
-new Vue({
-  el: '#app',
-  store,
-  router,
-});
+const initializeApp = async () => {
+  try {
+    await store.dispatch('currentUser/bootstrapSession');
+  } catch (error) {
+    if (import.meta.env?.DEV) {
+      console.debug('Failed to bootstrap session', error);
+    }
+  } finally {
+    new Vue({
+      el: '#app',
+      store,
+      router,
+    });
+  }
+};
+
+initializeApp();

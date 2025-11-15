@@ -127,7 +127,7 @@ export default {
           this.activities = response.data;
         })
         .catch((error) => {
-          console.log(error.response.data.errors);
+          this.handleErrorResponse(error);
         });
     },
 

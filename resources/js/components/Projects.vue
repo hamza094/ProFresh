@@ -269,8 +269,6 @@ export default {
      */
     handleApiSuccess(response, type) {
       const data = response.data;
-      console.log('Projects response:', data); // Debug log
-
       this.tabData[type].list = data.projects.data;
       this.tabData[type].count = data.projectsCount;
       this.tabData[type].pagination = data.projects;

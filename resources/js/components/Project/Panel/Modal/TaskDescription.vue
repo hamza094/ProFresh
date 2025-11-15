@@ -5,7 +5,7 @@
       <span class="text-danger font-italic" v-if="errors?.description" v-text="errors?.description?.[0]"></span>
     </p>
 
-    <div v-if="edit == task.id">
+    <div v-if="edit === task.id">
       <vue-editor name="description" v-model="form.description" :editor-toolbar="customToolbar"></vue-editor>
 
       <span class="btn btn-link btn-sm" @click="updateDescription(task.id)">Update</span>

@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Http\Controllers\Api\Auth\LoginController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
@@ -17,6 +18,15 @@ use Illuminate\Support\Facades\Route;
 */
 Route::get('/', function () {
     return view('welcome.home');
+});
+
+// SPA session auth endpoints (cookie-based via Sanctum stateful)
+Route::prefix('api/v1/session')->group(function () {
+    // Login establishes a session; guest-only
+    Route::post('login', [LoginController::class, 'loginSpa'])->middleware('guest');
+
+    // Logout destroys the current session; requires authenticated session (use sanctum to treat stateful requests)
+    Route::post('logout', [LoginController::class, 'logoutSpa'])->middleware('auth:sanctum');
 });
 
 // SPA Routes

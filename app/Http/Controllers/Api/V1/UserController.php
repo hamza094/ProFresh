@@ -11,6 +11,7 @@ use App\Http\Resources\Api\V1\UsersResource;
 use App\Models\User;
 use App\Services\Api\V1\UserService;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 
 class UserController extends ApiController
 {
@@ -25,6 +26,19 @@ class UserController extends ApiController
 
         return response()->json([
             'users' => UsersResource::collection($users),
+        ], 200);
+    }
+
+    /**
+     * Get the currently authenticated user.
+     */
+    public function me(Request $request): JsonResponse
+    {
+        $user = $request->user();
+
+        return response()->json([
+            'message' => 'Authenticated user data',
+            'user' => $user ? new UsersResource($user) : null,
         ], 200);
     }
 

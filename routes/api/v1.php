@@ -55,6 +55,8 @@ Route::controller(ZoomWebhookController::class)
 
 Route::middleware(['auth:sanctum'/* ,\App\Http\Middleware\TrackLastActiveAt::class */])->group(function () {
 
+    Route::get('/me', [UserController::class, 'me'])->name('user.me');
+
     Route::controller(TwoFactorController::class)
         ->prefix('twofactor')
         ->name('twofactor.')

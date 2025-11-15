@@ -403,7 +403,7 @@ export default {
         .get('/api/v1/admin/subscriptions/list')
         .then((response) => {})
         .catch((error) => {
-          console.log(error.response.data.errors);
+          this.handleErrorResponse(error);
         });
     },
     subscriptionList() {
@@ -413,7 +413,7 @@ export default {
           this.subscriptions = response.data.data;
         })
         .catch((error) => {
-          console.log(error.response.data.errors);
+          this.handleErrorResponse(error);
         });
     },
     loadActivities() {
@@ -423,7 +423,7 @@ export default {
           this.activities = response.data;
         })
         .catch((error) => {
-          console.log(error.response.data.errors);
+          this.handleErrorResponse(error);
         });
     },
     /*listenForActivities() {

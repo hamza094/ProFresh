@@ -108,7 +108,7 @@ export default {
       return this.project && this.project.name ? this.project.name.substring(0, 1).toUpperCase() : '';
     },
     displayScore() {
-      if (!this.project || this.project.score == null) return 'N/A';
+      if (!this.project || this.project.score === null) return 'N/A';
       const n = Number(this.project.score);
       return Number.isFinite(n) ? Math.round(n) : 'N/A';
     },

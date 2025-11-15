@@ -151,7 +151,7 @@ export default {
           this.loadPermissions();
         })
         .catch((error) => {
-          console.log(error);
+          this.handleErrorResponse(error);
         });
     },
 

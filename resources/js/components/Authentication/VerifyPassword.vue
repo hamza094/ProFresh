@@ -10,10 +10,10 @@
                 ><h5>Your Account has been verified Successfully. Please log in to continue</h5></span
               >
             </div>
-            <div class="card-body" v-if="error == 'verification.already_verified'">
+            <div class="card-body" v-if="error === 'verification.already_verified'">
               <span class="badge badge-info"><h5>Account already verified. Please log in to continue</h5></span>
             </div>
-            <div class="card-body" v-if="error == 'verification.invalid'">
+            <div class="card-body" v-if="error === 'verification.invalid'">
               <span class="badge badge-danger"
                 ><h5>Verification Error. Please log in to get the verified link again</h5></span
               >

@@ -1,7 +1,9 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 // variadic-method-App\Http\Integrations\Zoom\Requests\CreateMeeting-__construct-D:\apps\profresh\app\Http\Integrations\Zoom\Requests\CreateMeeting.php
-return \PHPStan\Cache\CacheItem::__set_state(array(
-   'variableKey' => '1762177745-v4',
-   'data' => false,
-));
+return PHPStan\Cache\CacheItem::__set_state([
+    'variableKey' => '1763192841-v4',
+    'data' => false,
+]);

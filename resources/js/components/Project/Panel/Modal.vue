@@ -77,7 +77,7 @@
                   @click="changeStatus(status.id, task.id)"
                   :style="{ backgroundColor: status.color }">
                   {{ status.label }}
-                  <span v-if="task.status_id == status.id">
+                  <span v-if="task.status_id === status.id">
                     <i class="fa-solid fa-check-circle" style="color: #2a971c"></i>
                   </span>
                 </p>
@@ -128,7 +128,7 @@
                 <button
                   class="btn btn-sm btn btn-sm btn-outline-info btn-block"
                   @click.prevent="archive(task, task.id)"
-                  v-if="state == 'active'">
+                  v-if="state === 'active'">
                   <i class="fa-solid fa-ban pr-1"></i><b>Archive</b>
                 </button>
 
@@ -144,7 +144,7 @@
                 <button
                   class="btn btn-sm btn btn-sm btn-outline-danger btn-block"
                   @click.prevent="trash(task.id)"
-                  v-if="state == 'archived'">
+                  v-if="state === 'archived'">
                   <i class="fa-solid fa-trash-alt pr-1"></i><b> Delete</b>
                 </button>
               </li>
@@ -311,8 +311,7 @@ export default {
     trash(taskId) {
       axios
         .delete(url(this.slug, taskId) + '/remove', { useProgress: true })
-        .then((response) => {
-          console.log(response);
+        .then(() => {
           this.$vToastify.success('Task deleted successfully');
           this.removeArchivedTask(taskId);
           modalClose(this);

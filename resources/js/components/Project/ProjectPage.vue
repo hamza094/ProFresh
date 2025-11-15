@@ -288,7 +288,7 @@ export default {
         this.archiveTask();
       })
       .catch((error) => {
-        console.log(error.response.data.errors);
+        this.handleErrorResponse(error);
       });
   },
 
@@ -419,7 +419,6 @@ export default {
 
     listenForActivity() {
       Echo.channel('activities.project.' + this.projectId).listen('ActivityLogged', (e) => {
-        console.log('Received activity:', e);
         this.project.activities.unshift(e);
       });
     },

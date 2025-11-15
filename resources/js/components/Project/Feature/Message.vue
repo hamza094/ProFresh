@@ -69,7 +69,7 @@
                   <p class="text-danger" v-if="errors.users">*{{ errors.users[0] }}</p>
                 </div>
 
-                <span class="text-muted" v-if="messageButton() == 'Schedule'"
+                <span class="text-muted" v-if="messageButton() === 'Schedule'"
                   ><i class="fa-regular fa-calendar-alt"></i> Message will send on {{ form.scheduled_at }}
                 </span>
               </div>
