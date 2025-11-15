@@ -1239,16 +1239,16 @@
         },
         {
             "name": "dedoc/scramble",
-            "version": "v0.13.2",
+            "version": "v0.13.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dedoc/scramble.git",
-                "reference": "0879b46a2b398e7e55598f5a25e0783c3e3ae43c"
+                "reference": "fe275b8dbe5ab70d79e375b5b29c62385409f5e6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dedoc/scramble/zipball/0879b46a2b398e7e55598f5a25e0783c3e3ae43c",
-                "reference": "0879b46a2b398e7e55598f5a25e0783c3e3ae43c",
+                "url": "https://api.github.com/repos/dedoc/scramble/zipball/fe275b8dbe5ab70d79e375b5b29c62385409f5e6",
+                "reference": "fe275b8dbe5ab70d79e375b5b29c62385409f5e6",
                 "shasum": ""
             },
             "require": {
@@ -1307,7 +1307,7 @@
             ],
             "support": {
                 "issues": "https://github.com/dedoc/scramble/issues",
-                "source": "https://github.com/dedoc/scramble/tree/v0.13.2"
+                "source": "https://github.com/dedoc/scramble/tree/v0.13.3"
             },
             "funding": [
                 {
@@ -1315,7 +1315,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-10-30T14:12:39+00:00"
+            "time": "2025-11-12T12:16:47+00:00"
         },
         {
             "name": "dflydev/dot-access-data",
@@ -8140,16 +8140,16 @@
         },
         {
             "name": "saloonphp/saloon",
-            "version": "v3.14.0",
+            "version": "v3.14.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/saloonphp/saloon.git",
-                "reference": "b1868db2d7c2eea57592b78797f24e8cddfb86cc"
+                "reference": "339cfe77b10abf520676df7cb8976eaeb1f49ac1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/saloonphp/saloon/zipball/b1868db2d7c2eea57592b78797f24e8cddfb86cc",
-                "reference": "b1868db2d7c2eea57592b78797f24e8cddfb86cc",
+                "url": "https://api.github.com/repos/saloonphp/saloon/zipball/339cfe77b10abf520676df7cb8976eaeb1f49ac1",
+                "reference": "339cfe77b10abf520676df7cb8976eaeb1f49ac1",
                 "shasum": ""
             },
             "require": {
@@ -8209,7 +8209,7 @@
             ],
             "support": {
                 "issues": "https://github.com/saloonphp/saloon/issues",
-                "source": "https://github.com/saloonphp/saloon/tree/v3.14.0"
+                "source": "https://github.com/saloonphp/saloon/tree/v3.14.1"
             },
             "funding": [
                 {
@@ -8217,7 +8217,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-06-21T11:18:37+00:00"
+            "time": "2025-11-11T14:03:47+00:00"
         },
         {
             "name": "sebastian/diff",
