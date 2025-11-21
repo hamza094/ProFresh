@@ -43,7 +43,7 @@
     "laravel-vue-pagination": "^2.3.1",
     "luxon": "^1.27.0",
     "moment": "^2.29.1",
-    "moment-timezone": "^0.5.33",
+    "moment-timezone": "^0.6.0",
     "portal-vue": "^2.1.7",
     "pusher-js": "^8.4.0",
     "sweetalert2": "^11.0.0",
