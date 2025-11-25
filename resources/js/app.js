@@ -144,6 +144,10 @@ Vue.prototype.$axios = axios;
 
 axios.defaults.useProgress = false;
 
+// Register global directive for sanitized HTML rendering
+import safeHtml from './directives/safeHtml';
+Vue.directive('safe-html', safeHtml);
+
 const components = [
   ['project-button', './components/ProjectButton.vue'],
   ['archive-tasks', './components/Project/Panel/ArchiveTasks.vue'],

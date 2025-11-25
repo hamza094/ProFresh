@@ -16,14 +16,13 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/', function () {
-    return view('welcome.home');
-});
+Route::get('/', fn() => view('welcome.home'));
 
 // SPA session auth endpoints (cookie-based via Sanctum stateful)
-Route::prefix('api/v1/session')->group(function () {
+Route::prefix('api/v1/session')->group(function (): void {
     // Login establishes a session; guest-only
-    Route::post('login', [LoginController::class, 'loginSpa'])->middleware('guest');
+    Route::post('login', [LoginController::class, 'loginSpa'])
+        ->middleware(['guest', 'throttle:auth-login']);
 
     // Logout destroys the current session; requires authenticated session (use sanctum to treat stateful requests)
     Route::post('logout', [LoginController::class, 'logoutSpa'])->middleware('auth:sanctum');

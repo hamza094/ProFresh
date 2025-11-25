@@ -122,7 +122,7 @@ export default {
     },
     async getData(suffix) {
       await axios
-        .get(`/api/v1/projects/${this.$route.params.slug}/activities${suffix}`)
+        .get(`/projects/${this.$route.params.slug}/activities${suffix}`)
         .then((response) => {
           this.activities = response.data;
         })

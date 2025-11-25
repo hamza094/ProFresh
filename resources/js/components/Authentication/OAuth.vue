@@ -28,7 +28,7 @@ export default {
         const provider = window.location.pathname.split('/').pop();
         const code = this.$route.query.code;
         axios
-          .get(`/api/v1/auth/callback/${provider}?code=${code}`)
+          .get(`/auth/callback/${encodeURIComponent(provider)}` , { params: { code } })
           .then((response) => {
             this.handleLoginResponse(response);
           })

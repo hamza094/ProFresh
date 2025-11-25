@@ -99,7 +99,7 @@ export default {
 
     updateStage(stage) {
       axios
-        .put('/api/v1/admin/stages/' + stage.id, {
+        .put('/admin/stages/' + stage.id, {
           name: this.form.updateName,
         })
         .then((response) => {
@@ -114,7 +114,7 @@ export default {
     },
     deleteStage(stageId) {
       axios
-        .delete('/api/v1/admin/stages/' + stageId, {
+        .delete('/admin/stages/' + stageId, {
           name: this.form.name,
         })
         .then((response) => {

@@ -155,7 +155,7 @@ export default {
     loadTokens() {
       this.loading = true;
       axios
-        .get('/api/v1/api-tokens')
+        .get('/api-tokens')
         .then((res) => {
           this.tokens = res.data.tokens;
         })
@@ -177,7 +177,7 @@ export default {
         payload.expires_at = expires.toISOString().slice(0, 19).replace('T', ' ');
       }
       axios
-        .post('/api/v1/api-tokens', payload)
+        .post('/api-tokens', payload)
         .then((res) => {
           this.$vToastify.success(res.data.message || 'Token created.');
           this.newToken = res.data.token;
@@ -199,7 +199,7 @@ export default {
         if (result.value) {
           this.$Progress.start();
           axios
-            .delete(`/api/v1/api-tokens/${id}`)
+            .delete(`/api-tokens/${id}`)
             .then((res) => {
               this.$vToastify.success(res.data.message || 'Token deleted.');
               this.loadTokens();

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Integrations\Zoom\Requests;
 
 use App\DataTransferObjects\Zoom\Meeting;
-use DateTimeImmutable;
+use Safe\DateTimeImmutable;
 use Illuminate\Support\Facades\Cache;
 use ReflectionClass;
 use Saloon\Contracts\Body\HasBody;

@@ -184,7 +184,7 @@ export default {
     // Fetch the user's subscription info from the API
     async fetchSubscription() {
       try {
-        const response = await axios.get('api/v1/user/subscriptions');
+        const response = await axios.get('/user/subscriptions');
         this.setSubscription(response.data.subscription);
       } catch (error) {
         this.showError(error);
@@ -203,7 +203,7 @@ export default {
       }
       this.isOpeningIframe = true;
       try {
-        const response = await axios.get(`/api/v1/user/subscribe/${plan}`);
+        const response = await axios.get(`/user/subscribe/${encodeURIComponent(plan)}`);
         this.iframeSrc = response.data.paylink;
         this.isIframeOpen = true;
       } catch (error) {
@@ -219,7 +219,7 @@ export default {
       if (result.value) {
         this.$Progress.start();
         try {
-          const response = await axios.get(`/api/v1/user/subscription/swap/${plan}`);
+          const response = await axios.get(`/user/subscription/swap/${encodeURIComponent(plan)}`);
           this.setSubscription(response.data.subscription);
           this.$vToastify.success(response.data.message);
           // Wait 5 seconds, then refresh subscription data once
@@ -241,7 +241,7 @@ export default {
       if (result.value) {
         this.$Progress.start();
         try {
-          const response = await axios.get(`/api/v1/user/subscription/${plan}/cancel`);
+          const response = await axios.get(`/user/subscription/${encodeURIComponent(plan)}/cancel`);
           this.setSubscription(response.data.subscription);
           this.$vToastify.info(response.data.message);
         } catch (error) {

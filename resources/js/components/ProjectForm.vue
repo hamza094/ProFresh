@@ -127,7 +127,7 @@ export default {
     },
     loadStages() {
       axios
-        .get('/api/v1/stages')
+        .get('/stages')
         .then((response) => {
           this.stages = response.data;
         })
@@ -147,7 +147,7 @@ export default {
         delete formData.tasks;
       }
       axios
-        .post('/api/v1/projects', formData)
+        .post('/projects', formData)
         .then((response) => {
           this.$vToastify.success('New project created');
           this.form = { stage_id: 1, tasks: [] };

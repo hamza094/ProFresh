@@ -173,7 +173,7 @@ export default {
   methods: {
     sendMessage() {
       axios
-        .post('/api/v1/projects/' + this.slug + '/message', {
+        .post('/projects/' + this.slug + '/message', {
           mail: this.form.mail,
           sms: this.form.sms,
           subject: this.form.subject,

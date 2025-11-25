@@ -10,8 +10,9 @@ use App\Events\UserLogin;
 use App\Http\Controllers\Api\ApiController;
 use App\Http\Resources\Api\V1\UsersResource;
 use App\Services\Api\V1\Auth\LoginUserService;
-use Exception;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Log;
+use Throwable;
 use Laravel\Socialite\Facades\Socialite;
 
 class OAuthController extends ApiController
@@ -53,7 +54,7 @@ class OAuthController extends ApiController
 
             event(new UserLogin($user));
 
-            if ($this->loginUserService->handleTwoFactor($user, $user->email, $user->password)) {
+            if ($this->loginUserService->handleTwoFactor($user, $user->email)) {
                 return response()->json([
                     'message' => 'Two-factor authentication is enabled. Please provide the verification code.',
                     'status' => '2fa_required',
@@ -68,8 +69,15 @@ class OAuthController extends ApiController
                     ['*'],
                     now()->addMonth())->plainTextToken,
             ], 200);
-        } catch (Exception $e) {
-            return response()->json(['message' => 'Error processing user data.', 'error' => $e->getMessage()], 500);
+        } catch (Throwable $e) {
+            Log::error('OAuth callback failed', [
+                'provider' => $provider->value,
+                'message' => $e->getMessage(),
+            ]);
+
+            return response()->json([
+                'message' => 'Error processing user data.',
+            ], 500);
         }
 
     }

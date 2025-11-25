@@ -65,7 +65,7 @@ class UserTasksRequest extends FormRequest
     protected function hasAnyFilter(array $keys): bool
     {
         foreach ($keys as $key) {
-            if ($this->filled($key) && filter_var($this->input($key), FILTER_VALIDATE_BOOLEAN)) {
+            if ($this->filled($key) && $this->boolean($key)) {
                 return true;
             }
         }

@@ -28,7 +28,7 @@ setConversations(state,tasks) {
 
 const actions = {
     loadConvesations({ commit }, { slug, page }) {
-       return axios.get(`/api/v1/projects/${slug}/conversations?page=${page}`)
+       return axios.get(`/projects/${slug}/conversations?page=${page}`)
         .then(response => {
           commit('setConversations', response.data);
         }).catch(error=>{

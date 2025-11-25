@@ -14,9 +14,9 @@ export async function getToken(url, errorMessage, toastify) {
 export async function fetchTokens(action, role, meetingId, toastify) {
   return await Promise.all([
     action === 'start'
-      ? getToken('/api/v1/user/token', 'Unable to generate ZAK token', toastify)
+      ? getToken('/user/token', 'Unable to generate ZAK token', toastify)
       : Promise.resolve(null),
-    getToken(`/api/v1/user/jwt/token?role=${role}&meetingId=${meetingId}`, 'Unable to generate JWT token', toastify),
+    getToken(`/user/jwt/token?role=${role}&meetingId=${meetingId}`, 'Unable to generate JWT token', toastify),
   ]);
 }
 

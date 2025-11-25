@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Hash;
 use Laravel\Sanctum\Sanctum;
 use Mockery;
 use Tests\TestCase;
+use function Safe\json_encode;
 
 /**
  * Two-Factor Authentication Feature Tests

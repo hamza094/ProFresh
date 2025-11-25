@@ -115,7 +115,7 @@ export default {
       }
       this.$Progress.start();
       axios
-        .patch(`/api/v1/projects/${this.slug}/stage`, data)
+        .patch(`/projects/${this.slug}/stage`, data)
 
         .then((response) => {
           this.$Progress.finish();
@@ -152,7 +152,7 @@ export default {
 
     loadStages() {
       axios
-        .get('/api/v1/stages')
+        .get('/stages')
         .then((response) => {
           this.stages = response.data;
         })

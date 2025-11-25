@@ -16,13 +16,14 @@ window.Popper = Popper;
 window.$ = window.jQuery = jQuery;
 
 import axios from 'axios';
-window.axios = axios;
 
-axios.defaults.withCredentials = true;
+window.axios = axios;
 
 // Default headers
 axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 axios.defaults.headers.common['Accept'] = 'application/json';
+
+axios.defaults.baseURL = import.meta.env?.VITE_API_BASE_URL || '/api/v1';
 
 // Read CSRF token from the meta tag instead of relying on a global script
 const tokenMeta = document.head.querySelector('meta[name="csrf-token"]');

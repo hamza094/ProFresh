@@ -846,11 +846,6 @@ parameters:
 			path: app/Models/Conversation.php
 
 		-
-			message: "#^Offset 1 on array\\{array\\<int, string\\>, array\\<int, non\\-empty\\-string\\>\\} on left side of \\?\\? always exists and is not nullable\\.$#"
-			count: 1
-			path: app/Models/Conversation.php
-
-		-
 			message: "#^Access to an undefined static property static\\(App\\\\Models\\\\Meeting\\)\\:\\:\\$recordableEvents\\.$#"
 			count: 1
 			path: app/Models/Meeting.php

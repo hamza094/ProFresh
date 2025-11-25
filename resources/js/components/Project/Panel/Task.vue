@@ -141,7 +141,7 @@ export default {
     openModal(task) {
       //this.$Progress.start();
       axios
-        .get('/api/v1/projects/' + this.slug + '/tasks/' + task.id, { useProgress: true })
+        .get('/projects/' + this.slug + '/tasks/' + task.id, { useProgress: true })
         .then((response) => {
           //this.$Progress.finish();
           this.setTask(response.data);
@@ -154,7 +154,7 @@ export default {
 
     add() {
       axios
-        .post('/api/v1/projects/' + this.slug + '/tasks', this.form, { useProgress: true })
+        .post('/projects/' + this.slug + '/tasks', this.form, { useProgress: true })
         .then(() => {
           this.$vToastify.success('Project Task added');
           this.form.title = '';

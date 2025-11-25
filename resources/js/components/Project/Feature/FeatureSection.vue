@@ -51,15 +51,15 @@ export default {
   },
   methods: {
     abandon() {
-      this.performAction('Yes, abandon it!', axios.delete('/api/v1/projects/' + this.slug));
+      this.performAction('Yes, abandon it!', axios.delete('/projects/' + this.slug));
     },
 
     deleteProject() {
-      this.performAction('Yes, delete it!', axios.get('/api/v1/projects/' + this.slug + '/delete'));
+      this.performAction('Yes, delete it!', axios.get('/projects/' + this.slug + '/delete'));
     },
     exportProject() {
       axios
-        .get('/api/v1/projects/' + this.slug + '/export', {
+        .get('/projects/' + this.slug + '/export', {
           responseType: 'blob',
           headers: { Accept: 'multipart/form-data' },
         })

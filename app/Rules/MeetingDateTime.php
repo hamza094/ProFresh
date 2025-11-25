@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Rules;
 
-use DateTimeImmutable;
+use Safe\DateTimeImmutable;
 use Illuminate\Contracts\Validation\Rule;
 
 class MeetingDateTime implements Rule

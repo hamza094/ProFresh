@@ -18,7 +18,10 @@ class PaddleEventListener
         $payload = $event->payload;
 
         // Log all received payloads
-        Log::info('Paddle webhook received', $payload);
+        Log::info('Paddle webhook received', [
+            'event' => $payload['alert_name'] ?? 'unknown',
+            'subscription_id' => $payload['subscription_id'] ?? null,
+        ]);
 
         if ($payload['alert_name'] === 'subscription_payment_succeeded') {
             try {

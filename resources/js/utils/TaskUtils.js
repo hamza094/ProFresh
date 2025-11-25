@@ -31,7 +31,7 @@ export function calculateRemainingTime(task, currentDate) {
 }
 
 export function url($slug, $id) {
-  return '/api/v1/projects/' + $slug + '/tasks/' + $id;
+  return '/projects/' + $slug + '/tasks/' + $id;
 }
 
 export function ErrorHandling(component, error) {

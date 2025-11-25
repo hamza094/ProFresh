@@ -103,7 +103,7 @@ class InvitationService
      */
     public function usersSearch(Request $request): Collection
     {
-        $searchTerm = $request->input('query');
+        $searchTerm = (string) $request->string('query')->trim();
 
         return User::query()
             ->whereAny(['name', 'email'], 'LIKE', '%'.$searchTerm.'%')

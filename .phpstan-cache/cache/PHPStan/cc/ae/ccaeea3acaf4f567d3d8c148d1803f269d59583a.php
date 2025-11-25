@@ -1,9 +1,7 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types = 1);
 
 // variadic-method-App\Models\Conversation-mentionedUsers-D:\apps\profresh\app\Models\Conversation.php
-return PHPStan\Cache\CacheItem::__set_state([
-    'variableKey' => '1763192866-v4',
-    'data' => false,
-]);
+return \PHPStan\Cache\CacheItem::__set_state(array(
+   'variableKey' => '1763223049-v4',
+   'data' => false,
+));

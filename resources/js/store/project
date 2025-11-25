@@ -70,7 +70,7 @@ const mutations = {
 const actions = {
   async loadProject({ commit }, slug) {
     try {
-      const { data } = await axios.get(`/api/v1/projects/${slug}`);
+      const { data } = await axios.get(`/projects/${slug}`);
       commit('setProject', data);
       return data;
     } catch (error) {

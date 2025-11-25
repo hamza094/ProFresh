@@ -8,7 +8,7 @@ use App\Http\Integrations\Zoom\Requests\CreateMeeting;
 use App\Http\Integrations\Zoom\Requests\GetRefreshTokenRequest;
 use App\Models\User;
 use App\Services\Api\V1\Zoom\ZoomService;
-use DateTimeImmutable;
+use Safe\DateTimeImmutable;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Saloon\Enums\Method;
 use Saloon\Http\Faking\MockResponse;

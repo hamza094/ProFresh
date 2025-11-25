@@ -275,7 +275,7 @@ export default {
       }
 
       axios
-        .post('/api/v1/projects/' + this.slug + '/conversations', formData, { useProgress: true })
+        .post('/projects/' + this.slug + '/conversations', formData, { useProgress: true })
         .then(() => {
           this.message = '';
           this.removeFile();
@@ -294,7 +294,7 @@ export default {
 
     deleteConversation(id) {
       axios
-        .delete('/api/v1/projects/' + this.slug + '/conversations/' + id, { useProgress: true })
+        .delete('/projects/' + this.slug + '/conversations/' + id, { useProgress: true })
         .then(() => {
           this.$vToastify.info('Conversation deleted sucessfully');
         })
@@ -317,7 +317,7 @@ export default {
 
     loadConversations() {
       return axios
-        .get('/api/v1/projects/' + this.slug + `/conversations`)
+        .get('/projects/' + this.slug + `/conversations`)
         .then((response) => {
           const payload = response.data;
           if (payload && Array.isArray(payload.data)) {

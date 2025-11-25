@@ -109,7 +109,7 @@ export default {
     },
     loginWithProvider(provider) {
       axios
-        .get(`api/v1/auth/redirect/${provider}`)
+        .get(`/auth/redirect/${provider}`)
         .then((response) => {
           window.location.href = response.data.redirect_url;
         })

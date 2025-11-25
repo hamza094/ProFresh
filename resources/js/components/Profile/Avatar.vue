@@ -120,7 +120,7 @@ export default {
       formData.append('avatar', blob);
 
       axios
-        .post('/api/v1/users/' + this.userId + '/avatar', formData)
+        .post('/users/' + this.userId + '/avatar', formData)
         .then((response) => {
           this.updateUserAvatar(response.data.avatar);
           this.closeAvatarModal();

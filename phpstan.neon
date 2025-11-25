@@ -1,6 +1,9 @@
 includes:
     - vendor/larastan/larastan/extension.neon
     - phpstan-baseline.neon
+    - vendor/thecodingmachine/phpstan-safe-rule/phpstan-safe-rule.neon
+    - vendor/spaze/phpstan-disallowed-calls/extension.neon
+
 
 parameters:
 

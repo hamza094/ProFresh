@@ -136,7 +136,7 @@ export default {
       );
 
       axios
-        .get('/api/v1/admin/users', {
+        .get('/admin/users', {
           params: filteredParameters,
         })
         .then((response) => {
@@ -149,7 +149,7 @@ export default {
     },
     assignUserRole(roleId, userId) {
       axios
-        .get('/api/v1/admin/assign/users/' + userId + '/roles/' + roleId)
+        .get('/admin/assign/users/' + userId + '/roles/' + roleId)
         .then((response) => {
           this.$vToastify.success(response.data.message);
           this.handleUpdateUser(response.data.user);

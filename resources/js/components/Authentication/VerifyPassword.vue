@@ -26,14 +26,15 @@
 </template>
 
 <script>
-const qs = (params) =>
-  Object.keys(params)
-    .map((key) => `${key}=${params[key]}`)
-    .join('&');
+// Use axios `params` for query encoding instead of manual builder
 export default {
   async beforeRouteEnter(to, from, next) {
     try {
-      const { data } = await axios.post(`/api/v1/email/verify/${to.params.user}?${qs(to.query)}`);
+      const { data } = await axios.post(
+        `/email/verify/${encodeURIComponent(to.params.user)}`,
+        null,
+        { params: to.query },
+      );
       next((vm) => {
         vm.success = data.status;
         vm.$store.dispatch('currentUser/updateVerifiedStatus', true);

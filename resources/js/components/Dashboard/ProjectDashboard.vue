@@ -93,7 +93,7 @@ export default {
   },
   methods: {
     loadDashboardProjects() {
-      axios.get('/api/v1/user/dashboard-projects').then(({ data }) => this.getData(data));
+      axios.get('/user/dashboard-projects').then(({ data }) => this.getData(data));
     },
 
     getData(data) {

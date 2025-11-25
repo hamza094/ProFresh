@@ -10,9 +10,10 @@ use App\Http\Requests\Api\V1\Auth\RegisterUserRequest;
 use App\Http\Resources\Api\V1\UsersResource;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
-use Exception;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Log;
+use Throwable;
 
 class RegisterController extends ApiController
 {
@@ -45,7 +46,7 @@ class RegisterController extends ApiController
 
         $validatedData = $request->validated();
 
-        $validatedData['password'] = bcrypt($request->password);
+        $validatedData['password'] = bcrypt($validatedData['password']);
 
         try {
             $user = User::create($validatedData);
@@ -56,7 +57,9 @@ class RegisterController extends ApiController
                 'user' => new UsersResource($user),
             ], 201);
 
-        } catch (Exception) {
+        } catch (Throwable $e) {
+            Log::error('User registration failed', ['exception' => $e]);
+
             return response()->json(['error' => 'User registration failed.'], 500);
         }
 

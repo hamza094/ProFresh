@@ -321,7 +321,7 @@ export default {
   methods: {
     loadStages() {
       axios
-        .get('/api/v1/stages')
+        .get('/stages')
         .then((response) => {
           this.stages = response.data;
         })
@@ -376,7 +376,7 @@ export default {
       );
 
       axios
-        .get(`/api/v1/admin/projects`, {
+        .get(`/admin/projects`, {
           params: filteredParameters,
         })
         .then((response) => {
@@ -409,7 +409,7 @@ export default {
       this.sweetAlert('Yes, Delete Selected ' + this.selectedProjects.length + ' Projects!').then((result) => {
         if (result.value) {
           axios
-            .delete('/api/v1/admin/projects/bulk-delete', {
+            .delete('/admin/projects/bulk-delete', {
               data: { project_ids: this.selectedProjects },
             })
             .then((response) => {

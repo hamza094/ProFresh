@@ -45,7 +45,7 @@ class TaskDue extends Notification implements ShouldBroadcast, ShouldQueue
     {
         return (new MailMessage)
             ->line($this->notificationMessage())
-            ->action('View Task', url(env('APP_URL').'/projects/'.$this->projectPath))
+            ->action('View Task', $this->taskUrl())
             ->line('Thank you for using our application!');
     }
 
@@ -73,6 +73,11 @@ class TaskDue extends Notification implements ShouldBroadcast, ShouldQueue
         return new BroadcastMessage(
             $this->toArray($notifiable)
         );
+    }
+
+    private function taskUrl(): string
+    {
+        return url('/projects/'.$this->projectPath);
     }
 
     private function notificationMessage(): string

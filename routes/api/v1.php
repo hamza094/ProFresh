@@ -34,15 +34,23 @@ use Illuminate\Support\Facades\Route;
 | API V1 Routes
 |--------------------------------------------------------------------------*/
 
-Route::get('/auth/redirect/{provider}', [OAuthController::class, 'redirect'])->name('oauth.redirect');
-Route::get('/auth/callback/{provider}', [OAuthController::class, 'callback'])->name('oauth.callback');
+Route::prefix('auth')
+    ->name('oauth.')
+    ->middleware('throttle:oauth2-socialite')
+    ->group(function () {
+        Route::get('/redirect/{provider}', [OAuthController::class, 'redirect'])
+            ->name('redirect');
+
+        Route::get('/callback/{provider}', [OAuthController::class, 'callback'])
+            ->name('callback');
+});
 
 // Zoom Webhooks
 Route::controller(ZoomWebhookController::class)
     ->middleware(VerifyZoomWebhook::class)
     ->prefix('webhooks/zoom/meetings')
     ->as('webhooks.meetings.')
-    ->group(function () {
+    ->group(function (): void {
         Route::post('update', 'update')->name('update');
 
         Route::post('delete', 'delete')->name('delete');
@@ -53,20 +61,26 @@ Route::controller(ZoomWebhookController::class)
 
     });
 
-Route::middleware(['auth:sanctum'/* ,\App\Http\Middleware\TrackLastActiveAt::class */])->group(function () {
+Route::middleware(['auth:sanctum'/* ,\App\Http\Middleware\TrackLastActiveAt::class */])->group(function (): void {
 
     Route::get('/me', [UserController::class, 'me'])->name('user.me');
 
     Route::controller(TwoFactorController::class)
         ->prefix('twofactor')
         ->name('twofactor.')
-        ->group(function () {
-            Route::post('setup', 'prepareTwoFactor')->name('setup');
-            Route::post('confirm', 'confirmTwoFactor')->name('confirm');
+        ->group(function (): void {
+            Route::post('setup', 'prepareTwoFactor')
+                ->name('setup')
+                ->middleware('throttle:two-factor');
+            Route::post('confirm', 'confirmTwoFactor')
+                ->name('confirm')
+                ->middleware('throttle:two-factor');
             Route::get('fetch-user', 'getUserStatus')->name('fetch-user');
             Route::get('recovery-codes', 'showRecoveryCodes')->middleware('2fa.enabled')->name('recovery-codes');
             Route::delete('disable', 'disableTwoFactorAuth')->name('disable');
-            Route::post('login-confirm', 'twoFactorLogin')->name('login-confirm')->withoutMiddleware(['auth:sanctum']);
+            Route::post('login-confirm', 'twoFactorLogin')->name('login-confirm')
+            ->withoutMiddleware(['auth:sanctum'])
+            ->middleware('throttle:two-factor');
         });
 
     Route::get('/user/token', [ZoomTokenController::class, 'getUserToken']);
@@ -76,7 +90,7 @@ Route::middleware(['auth:sanctum'/* ,\App\Http\Middleware\TrackLastActiveAt::cla
     Route::controller(TokenController::class)
         ->prefix('api-tokens')
         ->name('api-tokens.')
-        ->group(function () {
+        ->group(function (): void {
             Route::get('/', 'index')->name('index');
             Route::post('/', 'store')->name('store');
             Route::delete('/{token}', 'destroy')->name('destroy');
@@ -85,7 +99,7 @@ Route::middleware(['auth:sanctum'/* ,\App\Http\Middleware\TrackLastActiveAt::cla
     Route::get('/me/invitations', [UserInvitationsController::class, 'myInvitations'])
         ->name('user.invitations');
 
-    Route::controller(ProjectDashboardController::class)->group(function () {
+    Route::controller(ProjectDashboardController::class)->group(function (): void {
         Route::get('dashboard/chart-data', 'chartData')->name('dashboard.chart-data');
         Route::get('dashboard/insights', 'kpis')->name('dashboard.insights');
         Route::get('/tasksdata', 'tasksData')->name('tasks.data');
@@ -101,7 +115,8 @@ Route::middleware(['auth:sanctum'/* ,\App\Http\Middleware\TrackLastActiveAt::cla
     Route::apiResource('/projects', ProjectController::class)->except(['show']);
 
     // Project Route Prefix
-    Route::group(['prefix' => 'projects/{project}'], function () {
+    Route::scopeBindings()->group(function (): void {
+    Route::group(['prefix' => 'projects/{project}'], function (): void {
         Route::get('/', [ProjectController::class, 'show'])->name('projects.show')->withTrashed();
 
         Route::get('/insights', [ProjectInsightsController::class, 'index'])->name('projects.insights');
@@ -109,17 +124,17 @@ Route::middleware(['auth:sanctum'/* ,\App\Http\Middleware\TrackLastActiveAt::cla
         Route::get('/delete', [ProjectController::class, 'delete'])->can('manage', 'project');
         Route::get('/restore', [ProjectController::class, 'restore'])->withTrashed()->can('manage', 'project');
 
-        Route::middleware(['can:access,project'])->group(function () {
+        Route::middleware(['can:access,project'])->group(function (): void {
 
             Route::get('/activities', [ActivityController::class, 'index']);
 
             // Project Feature Routes
-            Route::controller(FeaturesController::class)->group(function () {
+            Route::controller(FeaturesController::class)->group(function (): void {
                 Route::get('export', 'export')->middleware('subscription');
                 Route::patch('stage', 'stage');
             });
 
-            Route::controller(MessageController::class)->group(function () {
+            Route::controller(MessageController::class)->group(function (): void {
                 Route::post('message', 'message');
                 Route::get('messages/scheduled', 'scheduled');
                 Route::delete('messages/{message}/delete', 'delete');
@@ -131,7 +146,7 @@ Route::middleware(['auth:sanctum'/* ,\App\Http\Middleware\TrackLastActiveAt::cla
                 ->middleware('subscription');
         });
 
-        Route::middleware(['can:access,project', 'subscription'])->group(function () {
+        Route::middleware(['can:access,project', 'subscription'])->group(function (): void {
             Route::apiResource('/tasks', TaskController::class)
                 ->except(['destroy'])
                 ->withTrashed();
@@ -140,9 +155,9 @@ Route::middleware(['auth:sanctum'/* ,\App\Http\Middleware\TrackLastActiveAt::cla
         Route::controller(TaskFeaturesController::class)
             ->name('task.')
             ->prefix('tasks/{task}')
-            ->group(function () {
+            ->group(function (): void {
 
-                Route::middleware(['can:manage,task'])->group(function () {
+                Route::middleware(['can:manage,task'])->group(function (): void {
 
                     Route::patch('assign', 'assign')
                         ->name('assign')
@@ -158,7 +173,7 @@ Route::middleware(['auth:sanctum'/* ,\App\Http\Middleware\TrackLastActiveAt::cla
 
                 });
 
-                Route::middleware(['can:access,task'])->group(function () {
+                Route::middleware(['can:access,task'])->group(function (): void {
                     Route::delete('archive', 'archive')
                         ->name('archive')
                         ->withTrashed();
@@ -169,12 +184,13 @@ Route::middleware(['auth:sanctum'/* ,\App\Http\Middleware\TrackLastActiveAt::cla
 
                     Route::get('member/search', 'search')
                         ->name('members.search');
-                });
+                    });
             })->middleware('subscription');
 
-        Route::controller(InvitationController::class)->group(function () {
+        Route::controller(InvitationController::class)->group(function (): void {
             Route::post('invitations', 'invite')
                 ->name('send.invitation')
+                ->middleware('throttle:invite-actions')
                 ->can('manage', 'project');
 
             Route::get('accept-invitation', 'accept')
@@ -198,13 +214,15 @@ Route::middleware(['auth:sanctum'/* ,\App\Http\Middleware\TrackLastActiveAt::cla
         Route::apiResource('/meetings', ZoomMeetingController::class);
 
     });
+    });
 
-    Route::get('users/search', [InvitationController::class, 'search'])->name('users.search');
-
+    Route::get('users/search', [InvitationController::class, 'search'])
+        ->name('users.search');
+        
     Route::apiResource('/users', UserController::class)->except(['store']);
     Route::delete('/users/{user}/force', [UserController::class, 'forceDestroy'])->name('users.forceDestroy');
 
-    Route::group(['prefix' => 'users/{user}'], function () {
+    Route::group(['prefix' => 'users/{user}'], function (): void {
 
         Route::patch('/avatar_remove', [AvatarController::class, 'removeAvatar'])->name('user.avatar.remove');
 
@@ -215,7 +233,7 @@ Route::middleware(['auth:sanctum'/* ,\App\Http\Middleware\TrackLastActiveAt::cla
     Route::controller(NotificationsController::class)
         ->prefix('notifications')
         ->name('notifications.')
-        ->group(function () {
+        ->group(function (): void {
             Route::get('/', 'index')->name('index');
             Route::get('/mark-all-read', 'markAllAsRead')->name('markAllAsRead');
             Route::patch('/{notification}/status', 'updateStatus')->name('updateStatus');
@@ -224,7 +242,7 @@ Route::middleware(['auth:sanctum'/* ,\App\Http\Middleware\TrackLastActiveAt::cla
 
     Route::controller(SubscriptionController::class)
         ->prefix('user')
-        ->group(function () {
+        ->group(function (): void {
 
             Route::get('subscribe/{plan}', 'subscribe')
                 ->name('user.subscribe');
@@ -232,7 +250,7 @@ Route::middleware(['auth:sanctum'/* ,\App\Http\Middleware\TrackLastActiveAt::cla
             Route::get('subscriptions', 'subscriptions')
                 ->name('user.subscription');
 
-            Route::middleware(['subscription'])->group(function () {
+            Route::middleware(['subscription'])->group(function (): void {
 
                 Route::get('subscription/swap/{plan}', 'swap')
                     ->name('subscription.swap');
@@ -248,7 +266,8 @@ Route::middleware(['auth:sanctum'/* ,\App\Http\Middleware\TrackLastActiveAt::cla
 
     Route::controller(ZoomAuthController::class)
         ->as('oauth.zoom.')
-        ->group(function () {
+            ->middleware('throttle:oauth2-socialite')
+        ->group(function (): void {
             Route::get('oauth/zoom/redirect', 'redirect')->name('redirect');
             Route::get('oauth/zoom/callback', 'callback')->name('callback');
         });

@@ -164,7 +164,7 @@ export default {
       }
 
       axios
-        .get('/api/v1/admin/tasks', {
+        .get('/admin/tasks', {
           params: queryParameters,
         })
         .then((response) => {
@@ -193,7 +193,7 @@ export default {
       this.sweetAlert('Yes, Delete Selected ' + this.selectedTasks.length + ' Tasks!').then((result) => {
         if (result.value) {
           axios
-            .delete('/api/v1/admin/tasks/bulk-delete', {
+            .delete('/admin/tasks/bulk-delete', {
               data: { task_ids: this.selectedTasks },
             })
             .then((response) => {

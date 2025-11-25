@@ -124,7 +124,7 @@ export default {
       }
 
       axios
-        .get('/api/v1/user/activities', {
+        .get('/user/activities', {
           params: { start_date, end_date },
           cancelToken: this.cancelTokenSource.token,
         })

@@ -26,7 +26,7 @@ class AvatarController extends ApiController
             ],
         ]);
 
-        $user_path = $service->store($user->uuid, 'avatar', FileType::AVATAR);
+        $user_path = $service->store($user->uuid, $request->file('avatar'), FileType::AVATAR);
 
         $user->update(['avatar_path' => $user_path]);
 

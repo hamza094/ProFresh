@@ -50,7 +50,7 @@ export default {
   methods: {
     resetLink() {
       axios
-        .post('/api/v1/forgot-password', this.form, {})
+        .post('/forgot-password', this.form, {})
         .then(() => {
           this.$vToastify.success('Reset Email sent successfully check your inbox');
         })

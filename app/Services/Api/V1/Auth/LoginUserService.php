@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace App\Services\Api\V1\Auth;
 
 use App\Models\User;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 
 class LoginUserService
@@ -34,17 +36,29 @@ class LoginUserService
 
     /**
      * Handle 2FA session setup if enabled.
-     *
-     * @param  User  $user
-     * @param  string  $email
-     * @param  string  $password
      */
-    public function handleTwoFactor($user, $email, $password): bool
+    public function handleTwoFactor(User $user, string $email): bool
     {
         if ($user->hasTwoFactorEnabled()) {
+            $this->forgetPreviousTwoFactorState();
+
+            $token = hash_hmac(
+                'sha256',
+                Str::random(40),
+                (string) (config('app.key') ?? Str::random(32))
+            );
+
+            Cache::put(
+                "2fa_login:{$token}",
+                [
+                    'user_id' => $user->getKey(),
+                    'email' => $email,
+                ],
+                now()->addMinutes(5)
+            );
+
             session(['2fa_login' => encrypt([
-                'email' => $email,
-                'password' => $password,
+                'token' => $token,
                 'expires_at' => now()->addMinutes(5),
             ])]);
 
@@ -52,5 +66,29 @@ class LoginUserService
         }
 
         return false;
+    }
+
+    /**
+     * Remove any stale 2FA session/cache entries before issuing a new token.
+     */
+    private function forgetPreviousTwoFactorState(): void
+    {
+        $encryptedState = session('2fa_login');
+
+        if (! $encryptedState) {
+            return;
+        }
+
+        try {
+            $state = decrypt($encryptedState);
+        } catch (\Throwable) {
+            $state = null;
+        }
+
+        if (is_array($state) && isset($state['token'])) {
+            Cache::forget('2fa_login:'.$state['token']);
+        }
+
+        session()->forget('2fa_login');
     }
 }

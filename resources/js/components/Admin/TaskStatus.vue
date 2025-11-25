@@ -133,7 +133,7 @@ export default {
 
     updateStatus(status) {
       axios
-        .put('/api/v1/admin/statuses/' + status.id, {
+        .put('/admin/statuses/' + status.id, {
           label: this.form.updateLabel,
           color: this.form.updateColor,
         })
@@ -149,7 +149,7 @@ export default {
     },
     deleteStatus(statusId) {
       axios
-        .delete('/api/v1/admin/statuses/' + statusId, {
+        .delete('/admin/statuses/' + statusId, {
           label: this.form.label,
         })
         .then((response) => {

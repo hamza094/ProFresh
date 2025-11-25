@@ -1,9 +1,7 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types = 1);
 
 // variadic-method-App\Services\Api\V1\FileService-optimizeFile-D:\apps\profresh\app\Services\Api\V1\FileService.php
-return PHPStan\Cache\CacheItem::__set_state([
-    'variableKey' => '1763192886-v4',
-    'data' => false,
-]);
+return \PHPStan\Cache\CacheItem::__set_state(array(
+   'variableKey' => '1763223051-v4',
+   'data' => false,
+));

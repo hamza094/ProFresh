@@ -30,7 +30,7 @@ const mutations = {
 
 const actions = {
   loadStatuses({ commit }) {
-      return axios.get(`/api/v1/admin/statuses`)
+    	return axios.get(`/admin/statuses`)
         .then(response => {
         commit('setStatuses', response.data);
         })
@@ -41,7 +41,7 @@ const actions = {
 
     async addNewStatus({ commit }, statusData) {
     try {
-      const response = await axios.post('/api/v1/admin/statuses', statusData);
+      const response = await axios.post('/admin/statuses', statusData);
       commit('addStatus', response.data.status);
     } catch (error) {
       console.error('Error adding status:', error);

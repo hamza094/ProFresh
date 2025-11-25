@@ -6,7 +6,7 @@ const state = {
 
 const actions = {
   userSubscription({commit}){
-    axios.get('/api/v1/user/subscriptions',{
+    axios.get('/user/subscriptions',{
   }).then(response=>{
       commit('setSubscription',response.data.subscription);
 

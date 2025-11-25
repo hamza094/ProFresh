@@ -19,9 +19,9 @@ use Illuminate\Support\Facades\Route;
 | API V1 Routes
 |--------------------------------------------------------------------------*/
 
-Route::group(['prefix' => 'admin'], function () {
+Route::group(['prefix' => 'admin'], function (): void {
 
-    Route::middleware(['auth:sanctum', 'verified'/* \App\Http\Middleware\TrackLastActiveAt::class,'role:Admin' */])->group(function () {
+    Route::middleware(['auth:sanctum', 'verified'/* \App\Http\Middleware\TrackLastActiveAt::class,'role:Admin' */])->group(function (): void {
 
         // Project Api Resource Routes
         Route::get('/projects', [ProjectController::class, 'index']);

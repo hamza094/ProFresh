@@ -85,7 +85,7 @@ export default {
     },
     scheduledMessages() {
       axios
-        .get('/api/v1/projects/' + this.slug + '/messages/scheduled')
+        .get('/projects/' + this.slug + '/messages/scheduled')
         .then((response) => {
           this.messages = response.data;
         })
@@ -96,7 +96,7 @@ export default {
     },
     remove(id) {
       axios
-        .delete('/api/v1/projects/' + this.slug + '/messages/' + id + '/delete')
+        .delete('/projects/' + this.slug + '/messages/' + id + '/delete')
         .then(() => {
           this.scheduledMessages();
         })

@@ -6,7 +6,7 @@ namespace App\Services\Api\V1;
 
 use App\Models\Message;
 use App\Models\Project;
-use DateTimeImmutable;
+use Safe\DateTimeImmutable;
 use F9Web\ApiResponseHelpers;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Bus;

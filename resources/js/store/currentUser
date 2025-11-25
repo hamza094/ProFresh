@@ -46,7 +46,7 @@ const actions = {
     Vue.prototype.$Progress.start();
     try {
       await axios.get('/sanctum/csrf-cookie');
-      const response = await axios.post('/api/v1/session/login', user);
+      const response = await axios.post('/session/login', user);
       dispatch('handleLoginResponse', response);
       Vue.prototype.$Progress.finish();
     } catch (error) {
@@ -62,13 +62,13 @@ const actions = {
   },
 
   async twoFactorLogin({ dispatch }, { code, vm }) {
-    const response = await axios.post('/api/v1/twofactor/login-confirm', { code });
+    const response = await axios.post('/twofactor/login-confirm', { code });
     dispatch('finalizeLogin', { response, vm, toastMsg: '2FA successfully verified.' });
   },
 
   async logoutUser({ commit, dispatch }) {
     try {
-      await axios.post('/api/v1/session/logout');
+      await axios.post('/session/logout');
     } catch (error) {
       Vue.prototype.$vToastify.error(getErrorMessage(error, 'Unable to log out.'));
     } finally {
@@ -88,7 +88,7 @@ const actions = {
 
   async bootstrapSession({ commit, dispatch }) {
     try {
-      const { data } = await axios.get('/api/v1/me');
+      const { data } = await axios.get('/me');
 
       if (data?.user) {
         commit('setUser', data.user);

@@ -33,12 +33,22 @@ class SaveUserTimezone
             if ($tz) {
                 $event->user->timezone = $tz;
                 $event->user->save();
-            } else {
-                Log::warning("Could not determine timezone for IP {$ip}", ['response' => $getTz]);
-            }
+            try {
+                $response = Http::get("http://ip-api.com/json/{$ip}?fields=status,message,timezone");
 
-        } catch (Exception $e) {
-            Log::error('Failed to update user timezone: '.$e->getMessage());
-        }
-    }
-}
+                if (! $response->successful()) {
+                    Log::warning('Could not determine timezone for IP lookup failure', ['reason' => $response->status()]);
+                    return;
+                }
+
+                $timezone = $response->json('timezone');
+                if (! $timezone) {
+                    Log::warning('Could not determine timezone from API response');
+                    return;
+                }
+
+                $user->timezone = $timezone;
+                $user->save();
+            } catch (Exception $e) {
+                Log::error('Failed to update user timezone', ['error' => $e->getMessage()]);
+            }

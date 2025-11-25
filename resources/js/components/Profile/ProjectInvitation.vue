@@ -64,7 +64,7 @@ export default {
     async fetchInvitations() {
       this.loading = true;
       try {
-        const { data } = await axios.get('/api/v1/me/invitations');
+        const { data } = await axios.get('/me/invitations');
         this.invitations = data.invitations || [];
         if (data.message) {
           this.serverMessage = data.message;
@@ -78,7 +78,7 @@ export default {
     async becomeMember(slug) {
       this.$Progress.start();
       try {
-        const { data } = await axios.get(`/api/v1/projects/${slug}/accept-invitation`);
+        const { data } = await axios.get(`/projects/${slug}/accept-invitation`);
         this.$Progress.finish();
         this.$vToastify.success(data.message);
 
@@ -91,7 +91,7 @@ export default {
     async rejectInvitation(slug) {
       this.$Progress.start();
       try {
-        const { data } = await axios.get(`/api/v1/projects/${slug}/reject/invitation`);
+        const { data } = await axios.get(`/projects/${slug}/reject/invitation`);
         this.$Progress.finish();
         this.$vToastify.info(data.message);
 

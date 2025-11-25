@@ -9,6 +9,7 @@ use App\Traits\ProjectSetup;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
+use function Safe\json_encode;
 
 class MessageTest extends TestCase
 {

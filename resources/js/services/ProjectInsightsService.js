@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { normalizeSectionsForRequest } from '../utils/insightsSections.js';
-const BASE_URL = '/api/v1';
+const BASE_URL = '';
 
 const AVAILABLE_SECTIONS = [
   { key: 'all', label: 'All', icon: 'fa-solid fa-th' },

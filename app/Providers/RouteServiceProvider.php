@@ -6,6 +6,10 @@ namespace App\Providers;
 
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\RateLimiter;
+use Illuminate\Cache\RateLimiting\Limit;
+use Illuminate\Http\Request;
+
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -30,9 +34,51 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        $this->configureRateLimiting();
 
         parent::boot();
+    }
+
+    protected function configureRateLimiting(): void
+    {
+        RateLimiter::for('api', function (Request $request) {
+            return Limit::perMinute(60)->by($request->user()?->id ?: $request->ip());
+        });
+
+        RateLimiter::for('oauth2-socialite', function (Request $request) {
+            $provider = strtolower((string) $request->route('provider')) ?: 'generic';
+
+            return Limit::perMinute(8)->by(sprintf('oauth|%s|%s', $request->ip(), $provider));
+        });
+
+        RateLimiter::for('auth-login', function (Request $request) {
+            $email = strtolower((string) $request->input('email'));
+
+            return Limit::perMinute(5)->by(sprintf('login|%s|%s', $request->ip(), $email));
+        });
+
+        RateLimiter::for('auth-register', fn (Request $request) => Limit::perMinute(5)->by(sprintf('register|%s', $request->ip())));
+
+        RateLimiter::for('password-email', function (Request $request) {
+            $email = strtolower((string) $request->input('email'));
+
+            return Limit::perMinute(4)->by(sprintf('pwd-email|%s|%s', $request->ip(), $email));
+        });
+
+        RateLimiter::for('password-reset', fn (Request $request) => Limit::perMinute(5)->by(sprintf('pwd-reset|%s', $request->ip())));
+
+        RateLimiter::for('verification', fn (Request $request) => Limit::perMinute(6)->by(optional($request->user())->id ?: $request->ip()));
+
+        RateLimiter::for('two-factor', function (Request $request) {
+            $key = $request->session()->get('login.id')
+                ?? optional($request->user())->id
+                ?? $request->ip();
+
+            return Limit::perMinute(5)->by(sprintf('2fa|%s', $key));
+        });
+
+        RateLimiter::for('invite-actions', fn (Request $request) => Limit::perMinute(10)->by(optional($request->user())->id ?: $request->ip()));
+
     }
 
     /**

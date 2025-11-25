@@ -7,7 +7,7 @@ namespace App\Http\Requests\Api\V1\Auth;
 use App\Models\User;
 use Exception;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Validation\Validator;
 
 /**
@@ -18,6 +18,8 @@ use Illuminate\Validation\Validator;
  */
 class TwoFactorLoginRequest extends FormRequest
 {
+    private ?string $twoFactorToken = null;
+
     /**
      * Determine if the user is authorized to make this request.
      */
@@ -74,6 +76,8 @@ class TwoFactorLoginRequest extends FormRequest
             return;
         }
 
+        $this->forgetTwoFactorState();
+
         // Attach user to request for controller use
         $this->setUserResolver(fn (): User => $user);
     }
@@ -99,10 +103,27 @@ class TwoFactorLoginRequest extends FormRequest
             return null;
         }
 
-        // Look up the user from database
-        $user = User::where('email', $creds['email'])->first();
+        $this->twoFactorToken = $creds['token'];
+        $cacheKey = $this->cacheKey();
 
-        return $this->isValidUser($user, $creds['password']) ? $user : null;
+        if (! $cacheKey) {
+            return null;
+        }
+
+        // Atomically pull (get+delete) the cache entry so token cannot be reused
+        $cached = Cache::pull($cacheKey);
+
+        if (! is_array($cached) || empty($cached['user_id'])) {
+            return null;
+        }
+
+        $user = User::find($cached['user_id']);
+
+        if (! $user && ! empty($cached['email'])) {
+            $user = User::where('email', $cached['email'])->first();
+        }
+
+        return $user;
     }
 
     /**
@@ -112,18 +133,10 @@ class TwoFactorLoginRequest extends FormRequest
      */
     private function isValidSessionData(array $creds): bool
     {
-        return ! empty($creds['email'])
-            && ! empty($creds['password'])
+        return isset($creds['token'])
+            && is_string($creds['token'])
             && ! empty($creds['expires_at'])
             && ! now()->greaterThan($creds['expires_at']);
-    }
-
-    /**
-     * Validate user exists and password matches
-     */
-    private function isValidUser(?User $user, string $password): bool
-    {
-        return $user && Hash::check($password, $user->password);
     }
 
     /**
@@ -132,6 +145,8 @@ class TwoFactorLoginRequest extends FormRequest
     private function addSessionError(Validator $validator): void
     {
         $validator->errors()->add('code', 'Session expired or invalid. Please login again.');
+
+        $this->forgetTwoFactorState();
     }
 
     /**
@@ -140,5 +155,19 @@ class TwoFactorLoginRequest extends FormRequest
     private function addCodeError(Validator $validator): void
     {
         $validator->errors()->add('code', 'Invalid code provided.');
+    }
+
+    private function forgetTwoFactorState(): void
+    {
+        if ($key = $this->cacheKey()) {
+            Cache::forget($key);
+        }
+
+        session()->forget('2fa_login');
+    }
+
+    private function cacheKey(): ?string
+    {
+        return $this->twoFactorToken ? "2fa_login:{$this->twoFactorToken}" : null;
     }
 }

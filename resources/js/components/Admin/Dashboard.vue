@@ -400,7 +400,7 @@ export default {
   methods: {
     runBackup() {
       axios
-        .get('/api/v1/admin/subscriptions/list')
+        .get('/admin/subscriptions/list')
         .then((response) => {})
         .catch((error) => {
           this.handleErrorResponse(error);
@@ -408,7 +408,7 @@ export default {
     },
     subscriptionList() {
       axios
-        .get('/api/v1/admin/subscriptions/list')
+        .get('/admin/subscriptions/list')
         .then((response) => {
           this.subscriptions = response.data.data;
         })
@@ -418,7 +418,7 @@ export default {
     },
     loadActivities() {
       axios
-        .get('/api/v1/admin/dashboard/activities')
+        .get('/admin/dashboard/activities')
         .then((response) => {
           this.activities = response.data;
         })

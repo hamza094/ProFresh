@@ -35,7 +35,7 @@ class LoginController extends ApiController
 
         UserLogin::dispatchIf(! $user->timezone, $user);
 
-        if ($this->loginUserService->handleTwoFactor($user, $request->email, $request->password)) {
+        if ($this->loginUserService->handleTwoFactor($user, $request->email)) {
             return response()->json([
                 'message' => 'Two-factor authentication is enabled. Please provide the verification code.',
                 'status' => '2fa_required',
@@ -85,7 +85,7 @@ class LoginController extends ApiController
 
         UserLogin::dispatchIf(! $user->timezone, $user);
 
-        if ($this->loginUserService->handleTwoFactor($user, $request->email, $request->password)) {
+        if ($this->loginUserService->handleTwoFactor($user, $request->email)) {
             return response()->json([
                 'message' => 'Two-factor authentication is enabled. Please provide the verification code.',
                 'status' => '2fa_required',

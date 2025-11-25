@@ -30,7 +30,7 @@ const mutations = {
 
 const actions = {
   loadStages({ commit }) {
-      return axios.get(`/api/v1/admin/stages`)
+    	return axios.get(`/admin/stages`)
         .then(response => {
         commit('setStages', response.data);
         })
@@ -41,7 +41,7 @@ const actions = {
 
     async addNewStage({ commit }, stageData) {
     try {
-      const response = await axios.post('/api/v1/admin/stages', stageData);
+      const response = await axios.post('/admin/stages', stageData);
       commit('addStage', response.data.stage);
     } catch (error) {
       console.error('Error adding stage:', error);

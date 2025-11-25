@@ -228,7 +228,7 @@ export default {
       }
 
       axios
-        .patch('/api/v1/projects/' + this.slug, {
+        .patch('/projects/' + this.slug, {
           notes: this.form.notes,
         })
         .then(({ data }) => {
@@ -263,7 +263,7 @@ export default {
       this.isLoading = true;
 
       axios
-        .get('/api/v1/users/search', { params: { query } })
+        .get('/users/search', { params: { query } })
         .then((response) => {
           this.results = response.data;
         })
@@ -278,7 +278,7 @@ export default {
     inviteUser(userEmail) {
       axios
         .post(
-          '/api/v1/projects/' + this.slug + '/invitations',
+          '/projects/' + this.slug + '/invitations',
           {
             email: userEmail,
           },
@@ -311,8 +311,8 @@ export default {
       var self = this;
       this.sweetAlert('Yes, Remove Member').then((result) => {
         if (result.value) {
-          axios
-            .get('/api/v1/projects/' + this.slug + '/remove/member/' + id, { useProgress: true })
+            axios
+            .get('/projects/' + this.slug + '/remove/member/' + id, { useProgress: true })
             .then((response) => {
               this.detachMember(response.data.user.uuid);
               self.$vToastify.info(response.data.message);
@@ -329,7 +329,7 @@ export default {
         if (!result.value) return;
 
         axios
-          .get(`/api/v1/projects/${this.slug}/cancel/invitation/users/${userId}`, { useProgress: true })
+          .get(`/projects/${this.slug}/cancel/invitation/users/${userId}`, { useProgress: true })
           .then((response) => {
             this.pendingMembers = this.pendingMembers.filter((pendingMember) => pendingMember.uuid !== userId);
             this.$vToastify.info(response.data.message);
@@ -342,7 +342,7 @@ export default {
 
     loadPendingRequests() {
       axios
-        .get(`/api/v1/projects/${this.slug}/pending/invitations`)
+        .get(`/projects/${this.slug}/pending/invitations`)
         .then((response) => {
           this.pendingMembers = response.data.pending_invitations;
         })

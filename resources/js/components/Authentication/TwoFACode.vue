@@ -66,7 +66,7 @@ export default {
     },
     async fetch2FAStatus() {
       try {
-        const res = await this.$axios.get('/api/v1/twofactor/fetch-user');
+        const res = await this.$axios.get('/twofactor/fetch-user');
         this.status = res.data.status;
       } catch {
         this.status = '';

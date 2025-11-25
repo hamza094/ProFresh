@@ -7,6 +7,7 @@ namespace Tests\Feature\Api\Middleware\Zoom;
 use Route;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
+use function Safe\json_encode;
 use Tests\TestCase;
 
 class VerifyWebhookTest extends TestCase
