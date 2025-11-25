@@ -129,7 +129,12 @@
                 </div>
 
                 <!-- Hidden File Input -->
-                <input type="file" ref="fileInput" class="d-none" @change="fileUpload" />
+                <input
+                  type="file"
+                  ref="fileInput"
+                  class="d-none"
+                  accept=".jpg,.jpeg,.png,.pdf,.docx"
+                  @change="fileUpload" />
               </div>
 
               <template #no-result>
@@ -145,7 +150,11 @@
               </template>
             </Mentionable>
             <p>
-              <button class="btn btn-primary btn-sm float-right mb-2" id="btn-chat" @click.prevent="send()">
+              <button
+                class="btn btn-primary btn-sm float-right mb-2"
+                id="btn-chat"
+                :disabled="isSendDisabled"
+                @click.prevent="send()">
                 Send
               </button>
             </p>
@@ -192,6 +201,15 @@ export default {
       user: null,
       fileName: '',
       file: '',
+      isSending: false,
+      maxFileBytes: 700 * 1024,
+      allowedFileTypes: [
+        'image/jpeg',
+        'image/png',
+        'image/jpg',
+        'application/pdf',
+        'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+      ],
       items: [],
       conversations: { data: [] },
       errors: [],
@@ -201,7 +219,7 @@ export default {
 
   computed: {
     isSendDisabled() {
-      return this.message.trim().length === 0 && !this.file;
+      return (this.message.trim().length === 0 && !this.file) || this.isSending;
     },
     conversationCount() {
       if (this.conversations && Array.isArray(this.conversations.data)) {
@@ -245,10 +263,26 @@ export default {
     },
 
     fileUpload(event) {
-      this.file = event.target.files[0];
-      if (this.file) {
-        this.fileName = this.file.name;
+      const [file] = event.target.files;
+
+      if (!file) {
+        return;
       }
+
+      if (!this.allowedFileTypes.includes(file.type)) {
+        this.$vToastify.warning('Allowed files: JPG, PNG, PDF, DOCX');
+        this.removeFile();
+        return;
+      }
+
+      if (file.size > this.maxFileBytes) {
+        this.$vToastify.warning('Attachments must be 700KB or smaller');
+        this.removeFile();
+        return;
+      }
+
+      this.file = file;
+      this.fileName = file.name;
     },
 
     removeFile() {
@@ -260,11 +294,15 @@ export default {
     },
 
     send() {
-      if (this.message.length === 0 && !this.file) {
+      if (this.isSendDisabled) {
+        if (this.isSending) {
+          return;
+        }
         this.$vToastify.warning('Please enter a message or upload a file.');
         return;
       }
 
+      this.isSending = true;
       let formData = new FormData();
       if (this.message) {
         formData.append('message', this.message);
@@ -289,6 +327,9 @@ export default {
           } else {
             this.$vToastify.error('Failed to send message.');
           }
+        })
+        .finally(() => {
+          this.isSending = false;
         });
     },
 
