@@ -22,11 +22,12 @@ use Illuminate\Support\Facades\Broadcast;
     return (int) $user->id === (int) $id;
 });*/
 
-Broadcast::channel('App.Models.User.{id}', fn($user, $id): bool => (int) $user->id === (int) $id);
+Broadcast::channel('App.Models.User.{id}', fn ($user, $id): bool => (int) $user->id === (int) $id);
 
 Broadcast::channel('activities.project.{id}', function ($user, $id): bool {
     $project = Project::where('id', $id)
         ->firstOrFail();
+
     return (bool) $user->can('access', $project);
 });
 
@@ -34,6 +35,7 @@ Broadcast::channel('project.{slug}.conversations', function ($user, $slug): bool
 
     $project = Project::with('user')->where('slug', $slug)
         ->firstOrFail();
+
     return (bool) $user->can('access', $project);
 });
 
@@ -77,5 +79,6 @@ Broadcast::channel('meetingStatus.{id}', function ($user, $id): bool {
 // Authorization for project health updates. Users who can `access` the project may listen.
 Broadcast::channel('project.{id}.health', function ($user, $id): bool {
     $project = Project::where('id', $id)->firstOrFail();
+
     return (bool) $user->can('access', $project);
 });

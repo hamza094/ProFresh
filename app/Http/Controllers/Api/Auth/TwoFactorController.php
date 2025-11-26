@@ -86,16 +86,16 @@ class TwoFactorController extends Controller
         // Clear the 2FA session after successful login
         session()->forget('2fa_login');
 
+         Auth::guard('web')->login($user, false);
+        $request->session()->regenerate();
+        $request->session()->regenerateToken();
+
         return response()->json([
             'message' => 'User authenticated successfully',
             'user' => new UsersResource($user),
             'status' => TwoFactorStatus::SUCCESS->value,
-            'access_token' => $user->createToken(
-                'Api Token for '.$user->email,
-                ['*'],
-                now()->addMonth()
-            )->plainTextToken,
         ], 200);
+
     }
 
     /**

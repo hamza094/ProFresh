@@ -69,7 +69,7 @@ class ZoomConnector extends Connector
             $redirect = rtrim($appUrl !== '' ? $appUrl : 'http://localhost:8000', '/').'/oauth/zoom/callback';
         }
 
-        if (empty($clientId) || empty($clientSecret)) {
+        if ($clientId === '' || $clientId === '0' || ($clientSecret === '' || $clientSecret === '0')) {
             throw new ZoomException('Zoom OAuth client credentials are not configured.');
         }
 

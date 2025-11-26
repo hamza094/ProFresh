@@ -13,18 +13,16 @@
       <span class="btn btn-link btn-sm" @click="closeDescriptionForm(task.id, task)">Cancel</span>
     </div>
     <div v-else>
-      <div
-        v-if="task.description"
-        class="task-description_content-link"
-        @click="openDescriptionForm(task.id, task)"
-      >
+      <div v-if="task.description" class="task-description_content-link" @click="openDescriptionForm(task.id, task)">
         <div v-safe-html="task.description"></div>
       </div>
 
       <div v-else>
         <p class="task-description_content">
           Sorry! currently no task description present.
-          <a class="task-description_content-link" @click="openDescriptionForm(task.id, task)">Click here to add description</a>
+          <a class="task-description_content-link" @click="openDescriptionForm(task.id, task)"
+            >Click here to add description</a
+          >
         </p>
       </div>
     </div>

@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Api\Auth;
 
 use App\Http\Controllers\Api\ApiController;
-use App\Http\Requests\Api\V1\Auth\RegisterUserRequest;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Api\V1\Auth\RegisterUserRequest;
 use App\Models\User;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Http\JsonResponse;

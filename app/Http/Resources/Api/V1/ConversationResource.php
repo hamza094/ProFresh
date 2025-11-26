@@ -26,7 +26,7 @@ class ConversationResource extends JsonResource
 
             'message' => $this->whenNotNull($this->message),
 
-            'file' => $this->when($fileUrl, fn () => $fileUrl),
+            'file' => $this->when((bool) $fileUrl, fn () => $fileUrl),
 
             'user' => new InvitedUserResource($this->whenLoaded('user')),
 

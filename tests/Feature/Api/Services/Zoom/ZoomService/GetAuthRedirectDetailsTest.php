@@ -6,8 +6,9 @@ namespace Tests\Feature\Api\Services\Zoom\ZoomService;
 
 use App\Services\Api\V1\Zoom\ZoomService;
 use Illuminate\Support\Str;
-use function Safe\parse_url;
 use Tests\TestCase;
+
+use function Safe\parse_url;
 
 class GetAuthRedirectDetailsTest extends TestCase
 {

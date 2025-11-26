@@ -2,6 +2,6 @@
 
 // variadic-method-App\Services\Api\V1\FileService-optimizeFile-D:\apps\profresh\app\Services\Api\V1\FileService.php
 return \PHPStan\Cache\CacheItem::__set_state(array(
-   'variableKey' => '1763223051-v4',
+   'variableKey' => '1764085453-v4',
    'data' => false,
 ));

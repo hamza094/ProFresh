@@ -12,8 +12,8 @@ use App\Http\Resources\Api\V1\UsersResource;
 use App\Services\Api\V1\Auth\LoginUserService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Log;
-use Throwable;
 use Laravel\Socialite\Facades\Socialite;
+use Throwable;
 
 class OAuthController extends ApiController
 {

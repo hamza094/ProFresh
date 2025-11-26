@@ -31,7 +31,9 @@
         </div>
 
         <button class="btn panel-btn_close" v-if="imageSrc" @click="cropImage">Crop</button>
-        <button class="btn panel-btn_save" v-if="croppedImageSrc" @click="uploadImage()" :disabled="isUploading">Upload</button>
+        <button class="btn panel-btn_save" v-if="croppedImageSrc" @click="uploadImage()" :disabled="isUploading">
+          Upload
+        </button>
       </div>
     </modal>
   </div>
@@ -140,7 +142,7 @@ export default {
       if (event?.target) {
         try {
           event.target.value = '';
-        } catch (e) {
+        } catch {
           /* ignore */
         }
       }
@@ -148,7 +150,7 @@ export default {
       if (this.$refs.fileInput) {
         try {
           this.$refs.fileInput.value = '';
-        } catch (e) {
+        } catch {
           /* ignore */
         }
       }
@@ -156,7 +158,7 @@ export default {
       if (this.objectUrl) {
         try {
           URL.revokeObjectURL(this.objectUrl);
-        } catch (e) {
+        } catch {
           /* ignore */
         }
         this.objectUrl = null;
@@ -171,7 +173,7 @@ export default {
           if (this.objectUrl) {
             try {
               URL.revokeObjectURL(this.objectUrl);
-            } catch (e) {
+            } catch {
               /* ignore */
             }
           }

@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
+use Throwable;
 
 class LoginUserService
 {
@@ -81,7 +82,7 @@ class LoginUserService
 
         try {
             $state = decrypt($encryptedState);
-        } catch (\Throwable) {
+        } catch (Throwable) {
             $state = null;
         }
 

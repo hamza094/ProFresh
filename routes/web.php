@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/', fn() => view('welcome.home'));
+Route::get('/', fn () => view('welcome.home'));
 
 // SPA session auth endpoints (cookie-based via Sanctum stateful)
 Route::prefix('api/v1/session')->group(function (): void {

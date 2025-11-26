@@ -311,7 +311,7 @@ export default {
       var self = this;
       this.sweetAlert('Yes, Remove Member').then((result) => {
         if (result.value) {
-            axios
+          axios
             .get('/projects/' + this.slug + '/remove/member/' + id, { useProgress: true })
             .then((response) => {
               this.detachMember(response.data.user.uuid);

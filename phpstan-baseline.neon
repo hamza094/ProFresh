@@ -131,16 +131,6 @@ parameters:
 			path: app/Exceptions/Handler.php
 
 		-
-			message: "#^Method App\\\\Http\\\\Controllers\\\\Api\\\\Auth\\\\ResetPasswordController\\:\\:resetPassword\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: app/Http/Controllers/Api/Auth/ResetPasswordController.php
-
-		-
-			message: "#^Method App\\\\Http\\\\Controllers\\\\Api\\\\Auth\\\\ResetPasswordController\\:\\:sendResetLink\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: app/Http/Controllers/Api/Auth/ResetPasswordController.php
-
-		-
 			message: "#^Method App\\\\Http\\\\Controllers\\\\Api\\\\V1\\\\ActivityController\\:\\:index\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: app/Http/Controllers/Api/V1/ActivityController.php

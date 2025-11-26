@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Http\Requests\Api\V1\Zoom;
 
-use Safe\DateTimeImmutable;
 use Exception;
 use Illuminate\Foundation\Http\FormRequest;
+use Safe\DateTimeImmutable;
 
 class MeetingStoreRequest extends FormRequest
 {

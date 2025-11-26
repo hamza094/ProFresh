@@ -10,16 +10,18 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
-use function Safe\preg_replace;
+use Throwable;
+
 use function Safe\preg_match_all;
+use function Safe\preg_replace;
 
 class Conversation extends Model
 {
     use HasFactory;
 
-    protected $guarded = [];
-
     private const FILE_URL_TTL_MINUTES = 5;
+
+    protected $guarded = [];
 
     /**
      * Get the project associated with the conversation.
@@ -99,7 +101,7 @@ class Conversation extends Model
                 $this->file,
                 now()->addMinutes(self::FILE_URL_TTL_MINUTES)
             );
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
             Log::warning('Failed generating conversation file URL', [
                 'conversation_id' => $this->id,
                 'error' => $e->getMessage(),

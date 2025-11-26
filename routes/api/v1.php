@@ -43,7 +43,7 @@ Route::prefix('auth')
 
         Route::get('/callback/{provider}', [OAuthController::class, 'callback'])
             ->name('callback');
-});
+    });
 
 // Zoom Webhooks
 Route::controller(ZoomWebhookController::class)
@@ -79,8 +79,8 @@ Route::middleware(['auth:sanctum'/* ,\App\Http\Middleware\TrackLastActiveAt::cla
             Route::get('recovery-codes', 'showRecoveryCodes')->middleware('2fa.enabled')->name('recovery-codes');
             Route::delete('disable', 'disableTwoFactorAuth')->name('disable');
             Route::post('login-confirm', 'twoFactorLogin')->name('login-confirm')
-            ->withoutMiddleware(['auth:sanctum'])
-            ->middleware('throttle:two-factor');
+                ->withoutMiddleware(['auth:sanctum'])
+                ->middleware('throttle:two-factor');
         });
 
     Route::get('/user/token', [ZoomTokenController::class, 'getUserToken']);
@@ -116,109 +116,111 @@ Route::middleware(['auth:sanctum'/* ,\App\Http\Middleware\TrackLastActiveAt::cla
 
     // Project Route Prefix
     Route::scopeBindings()->group(function (): void {
-    Route::group(['prefix' => 'projects/{project}'], function (): void {
-        Route::get('/', [ProjectController::class, 'show'])->name('projects.show')->withTrashed();
+        Route::group(['prefix' => 'projects/{project}'], function (): void {
+            Route::get('/', [ProjectController::class, 'show'])->name('projects.show')->withTrashed();
 
-        Route::get('/insights', [ProjectInsightsController::class, 'index'])->name('projects.insights');
+            Route::get('/insights', [ProjectInsightsController::class, 'index'])->name('projects.insights');
 
-        Route::get('/delete', [ProjectController::class, 'delete'])->can('manage', 'project');
-        Route::get('/restore', [ProjectController::class, 'restore'])->withTrashed()->can('manage', 'project');
+            Route::get('/delete', [ProjectController::class, 'delete'])->can('manage', 'project');
+            Route::get('/restore', [ProjectController::class, 'restore'])->withTrashed()->can('manage', 'project');
 
-        Route::middleware(['can:access,project'])->group(function (): void {
+            Route::middleware(['can:access,project'])->group(function (): void {
 
-            Route::get('/activities', [ActivityController::class, 'index']);
+                Route::get('/activities', [ActivityController::class, 'index']);
 
-            // Project Feature Routes
-            Route::controller(FeaturesController::class)->group(function (): void {
-                Route::get('export', 'export')->middleware('subscription');
-                Route::patch('stage', 'stage');
-            });
-
-            Route::controller(MessageController::class)->group(function (): void {
-                Route::post('message', 'message');
-                Route::get('messages/scheduled', 'scheduled');
-                Route::delete('messages/{message}/delete', 'delete');
-            })->middleware('subscription');
-
-            // Chat Conversation Routes
-            Route::apiResource('/conversations', ConversationController::class)
-                ->only(['store', 'destroy', 'index'])
-                ->middleware('subscription');
-        });
-
-        Route::middleware(['can:access,project', 'subscription'])->group(function (): void {
-            Route::apiResource('/tasks', TaskController::class)
-                ->except(['destroy'])
-                ->withTrashed();
-        });
-
-        Route::controller(TaskFeaturesController::class)
-            ->name('task.')
-            ->prefix('tasks/{task}')
-            ->group(function (): void {
-
-                Route::middleware(['can:manage,task'])->group(function (): void {
-
-                    Route::patch('assign', 'assign')
-                        ->name('assign')
-                        ->withTrashed();
-
-                    Route::patch('unassign', 'unassign')
-                        ->name('unassign')
-                        ->withTrashed();
-
-                    Route::delete('/remove', 'remove')
-                        ->name('remove')
-                        ->withTrashed();
-
+                // Project Feature Routes
+                Route::controller(FeaturesController::class)->group(function (): void {
+                    Route::get('export', 'export')->middleware('subscription');
+                    Route::patch('stage', 'stage');
                 });
 
-                Route::middleware(['can:access,task'])->group(function (): void {
-                    Route::delete('archive', 'archive')
-                        ->name('archive')
-                        ->withTrashed();
+                Route::controller(MessageController::class)->group(function (): void {
+                    Route::post('message', 'message');
+                    Route::get('messages/scheduled', 'scheduled');
+                    Route::delete('messages/{message}/delete', 'delete');
+                })->middleware('subscription');
 
-                    Route::get('unarchive', 'unarchive')
-                        ->name('unarchive')
-                        ->withTrashed();
+                // Chat Conversation Routes
+                Route::apiResource('/conversations', ConversationController::class)
+                    ->only(['store', 'destroy', 'index'])
+                    ->middleware('subscription');
+            });
 
-                    Route::get('member/search', 'search')
-                        ->name('members.search');
+            Route::middleware(['can:access,project', 'subscription'])->group(function (): void {
+                Route::apiResource('/tasks', TaskController::class)
+                    ->except(['destroy'])
+                    ->withTrashed();
+            });
+
+            Route::controller(TaskFeaturesController::class)
+                ->name('task.')
+                ->prefix('tasks/{task}')
+                ->group(function (): void {
+
+                    Route::middleware(['can:manage,task'])->group(function (): void {
+
+                        Route::patch('assign', 'assign')
+                            ->name('assign')
+                            ->withTrashed();
+
+                        Route::patch('unassign', 'unassign')
+                            ->name('unassign')
+                            ->withTrashed();
+
+                        Route::delete('/remove', 'remove')
+                            ->name('remove')
+                            ->withTrashed();
+
                     });
-            })->middleware('subscription');
 
-        Route::controller(InvitationController::class)->group(function (): void {
-            Route::post('invitations', 'invite')
-                ->name('send.invitation')
-                ->middleware('throttle:invite-actions')
-                ->can('manage', 'project');
+                    Route::middleware(['can:access,task'])->group(function (): void {
+                        Route::delete('archive', 'archive')
+                            ->name('archive')
+                            ->withTrashed();
 
-            Route::get('accept-invitation', 'accept')
-                ->name('accept.invitation')
-                ->can('canAcceptInvitation', 'project');
+                        Route::get('unarchive', 'unarchive')
+                            ->name('unarchive')
+                            ->withTrashed();
 
-            Route::get('reject/invitation', 'reject')
-                ->can('canAcceptInvitation', 'project');
+                        Route::get('member/search', 'search')
+                            ->name('members.search');
+                    });
+                })->middleware('subscription');
 
-            Route::get('cancel/invitation/users/{user}', 'cancel')
-                ->name('projects.cancel-invitation');
+            Route::controller(InvitationController::class)->group(function (): void {
+                Route::post('invitations', 'invite')
+                    ->name('send.invitation')
+                    ->middleware('throttle:invite-actions')
+                    ->can('manage', 'project');
 
-            Route::get('remove/member/{user}', 'remove')
-                ->can('manage', 'project');
+                Route::get('accept-invitation', 'accept')
+                    ->name('accept.invitation')
+                    ->can('canAcceptInvitation', 'project');
 
-            Route::get('pending/invitations', 'pending')
-                ->can('manage', 'project')
-                ->name('project.pending.invitation');
+                Route::get('reject/invitation', 'reject')
+                    ->can('canAcceptInvitation', 'project');
+
+                Route::get('cancel/invitation/users/{user}', 'cancel')
+                    ->withoutScopedBindings()
+                    ->name('projects.cancel-invitation');
+
+                Route::get('remove/member/{user}', 'remove')
+                    ->withoutScopedBindings()
+                    ->can('manage', 'project');
+
+                Route::get('pending/invitations', 'pending')
+                    ->can('manage', 'project')
+                    ->name('project.pending.invitation');
+            });
+
+            Route::apiResource('/meetings', ZoomMeetingController::class);
+
         });
-
-        Route::apiResource('/meetings', ZoomMeetingController::class);
-
-    });
     });
 
     Route::get('users/search', [InvitationController::class, 'search'])
         ->name('users.search');
-        
+
     Route::apiResource('/users', UserController::class)->except(['store']);
     Route::delete('/users/{user}/force', [UserController::class, 'forceDestroy'])->name('users.forceDestroy');
 
@@ -266,7 +268,7 @@ Route::middleware(['auth:sanctum'/* ,\App\Http\Middleware\TrackLastActiveAt::cla
 
     Route::controller(ZoomAuthController::class)
         ->as('oauth.zoom.')
-            ->middleware('throttle:oauth2-socialite')
+        ->middleware('throttle:oauth2-socialite')
         ->group(function (): void {
             Route::get('oauth/zoom/redirect', 'redirect')->name('redirect');
             Route::get('oauth/zoom/callback', 'callback')->name('callback');

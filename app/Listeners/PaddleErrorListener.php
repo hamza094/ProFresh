@@ -23,8 +23,8 @@ class PaddleErrorListener
     public function handle(WebhookHandled $event): void
     {
         Log::info('Paddle webhook handled', [
-              'event' => $event->payload['alert_name'] ?? 'unknown',
-              'subscription_id' => $event->payload['subscription_id'] ?? null,
+            'event' => $event->payload['alert_name'] ?? 'unknown',
+            'subscription_id' => $event->payload['subscription_id'] ?? null,
         ]);
 
     }

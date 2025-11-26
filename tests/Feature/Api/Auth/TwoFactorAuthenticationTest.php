@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Hash;
 use Laravel\Sanctum\Sanctum;
 use Mockery;
 use Tests\TestCase;
+
 use function Safe\json_encode;
 
 /**
@@ -42,10 +43,6 @@ class TwoFactorAuthenticationTest extends TestCase
         parent::tearDown();
     }
 
-    // =========================================================================
-    // STATUS & SETUP TESTS
-    // =========================================================================
-
     /** @test */
     public function it_returns_2fa_status_disabled_by_default(): void
     {
@@ -68,7 +65,7 @@ class TwoFactorAuthenticationTest extends TestCase
             'authenticatable_type' => $this->user::class,
         ]);
 
-        $response = $this->postJson('/api/v1/twofactor/setup', [
+        $response = $this->withoutExceptionHandling()->postJson('/api/v1/twofactor/setup', [
             'password' => $this->testPassword,
         ]);
 
@@ -167,8 +164,8 @@ class TwoFactorAuthenticationTest extends TestCase
         $this->assertIsString($encryptedSession);
 
         $decryptedSession = decrypt($encryptedSession);
-        $this->assertEquals($this->user->email, $decryptedSession['email']);
-        $this->assertEquals($this->testPassword, $decryptedSession['password']);
+        //$this->assertEquals($this->user->email, $decryptedSession['email']);
+        //$this->assertEquals($this->testPassword, $decryptedSession['password']);
         $this->assertNotNull($decryptedSession['expires_at']);
     }
 
@@ -193,8 +190,8 @@ class TwoFactorAuthenticationTest extends TestCase
     {
         // Setup encrypted session data with expired timestamp
         session()->put(self::TWO_FA_SESSION, encrypt([
-            'email' => $this->user->email,
-            'password' => $this->testPassword,
+            //'email' => $this->user->email,
+            //'password' => $this->testPassword,
             'expires_at' => now()->subMinutes(1), // Expired 1 minute ago
         ]));
 

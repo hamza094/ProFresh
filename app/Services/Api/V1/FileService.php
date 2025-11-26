@@ -15,6 +15,7 @@ use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 use InvalidArgumentException;
 use Spatie\ImageOptimizer\OptimizerChainFactory;
+
 use function Safe\parse_url;
 
 class FileService
@@ -23,7 +24,9 @@ class FileService
 
     public function store(int|string $id, UploadedFile $file, string $fileType): string
     {
-        if (! $file->isValid()) {
+        // Reject invalid or empty uploads early to avoid attempting remote
+        // storage operations (which require external config like S3 region).
+        if (! $file->isValid() || $file->getSize() === 0) {
             throw ValidationException::withMessages([
                 'file' => 'Invalid file upload',
             ]);

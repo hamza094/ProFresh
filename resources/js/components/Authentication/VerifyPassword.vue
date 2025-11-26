@@ -30,11 +30,9 @@
 export default {
   async beforeRouteEnter(to, from, next) {
     try {
-      const { data } = await axios.post(
-        `/email/verify/${encodeURIComponent(to.params.user)}`,
-        null,
-        { params: to.query },
-      );
+      const { data } = await axios.post(`/email/verify/${encodeURIComponent(to.params.user)}`, null, {
+        params: to.query,
+      });
       next((vm) => {
         vm.success = data.status;
         vm.$store.dispatch('currentUser/updateVerifiedStatus', true);

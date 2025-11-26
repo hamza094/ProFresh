@@ -59,4 +59,4 @@ Route::group(['prefix' => 'v1'], function (): void {
 
 });
 
-Route::fallback(fn() => response()->json(['message' => 'Not Found.'], 404));
+Route::fallback(fn () => response()->json(['message' => 'Not Found.'], 404));

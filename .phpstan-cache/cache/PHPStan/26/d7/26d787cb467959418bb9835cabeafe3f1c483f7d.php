@@ -94,7 +94,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'D:\\apps\\profresh\\tests\\Feature\\Api\\Auth\\TwoFactorAuthenticationTest.php' => 
     array (
-      0 => '7b791462477d4cc816cd140456b087ea212a2962',
+      0 => '7e02d0b7aefe8124a3578ab4a263df051b4cb823',
       1 => 
       array (
         0 => 'tests\\feature\\api\\auth\\twofactorauthenticationtest',
@@ -340,7 +340,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'D:\\apps\\profresh\\tests\\Feature\\Api\\Middleware\\Zoom\\VerifyWebhookTest.php' => 
     array (
-      0 => '2bc5e1afbb35ff8ff7f9654a63ffc48a93fa26b3',
+      0 => '160899cbbb25c0811ba7913dcb0a60247402f6ef',
       1 => 
       array (
         0 => 'tests\\feature\\api\\middleware\\zoom\\verifywebhooktest',
@@ -391,7 +391,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'D:\\apps\\profresh\\tests\\Feature\\Api\\Services\\Zoom\\ZoomService\\GetAuthRedirectDetailsTest.php' => 
     array (
-      0 => '33960fbe79aa33b4846436f67a02d4079ce527f0',
+      0 => '619f434543bdc8ae203157fecb1b8d4653a72937',
       1 => 
       array (
         0 => 'tests\\feature\\api\\services\\zoom\\zoomservice\\getauthredirectdetailstest',
@@ -422,7 +422,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'D:\\apps\\profresh\\tests\\Feature\\Api\\Services\\Zoom\\ZoomService\\MeetingCreateTest.php' => 
     array (
-      0 => '9a2dc41dd9278623725792a805704edb09f2f9a0',
+      0 => '48569bd00c875fa1e0d00080f47d6e36572b4cb0',
       1 => 
       array (
         0 => 'tests\\feature\\api\\services\\zoom\\zoomservice\\meetingcreatetest',
@@ -544,7 +544,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\FileUploadTest.php' => 
     array (
-      0 => 'e020a215ff1d49f93cffc1f4f6d64482049242ce',
+      0 => '076f49dc3e83807db4498a7c3430b288074534bc',
       1 => 
       array (
         0 => 'tests\\feature\\api\\v1\\fileuploadtest',
@@ -615,7 +615,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\MessageTest.php' => 
     array (
-      0 => '979245a20c62219f40fda98340435b53d7bb0879',
+      0 => 'c6aeee83446187e7fbb3b071d0bc6ce6521fc4c5',
       1 => 
       array (
         0 => 'tests\\feature\\api\\v1\\messagetest',
@@ -634,7 +634,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\MessageValidationTest.php' => 
     array (
-      0 => 'd3650a96e044a7329448a35998db212a27b4b81b',
+      0 => 'f5491b5ad836df40d78d475df36a557fa0f308aa',
       1 => 
       array (
         0 => 'tests\\feature\\api\\v1\\messagevalidationtest',
@@ -813,7 +813,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\ProjectHealthScoreFeatureTest.php' => 
     array (
-      0 => '31887cd06f5c2e4960b2db8fc7ea659c1c641eb4',
+      0 => '0a4fed5991e4d064e78eae8bf2e31e774daeeb6f',
       1 => 
       array (
         0 => 'tests\\feature\\api\\v1\\projecthealthscorefeaturetest',
@@ -872,7 +872,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\RecordActivityTest.php' => 
     array (
-      0 => '88ce79b05a3e27e36a1d795ffe820dbb2e668907',
+      0 => 'f4007da939d43714aa3ff6e4400f960e48131091',
       1 => 
       array (
         0 => 'tests\\feature\\api\\v1\\recordactivitytest',
