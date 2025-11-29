@@ -71,7 +71,7 @@ class TwoFactorLoginRequest extends FormRequest
 
         // Validate 2FA code
         if (! $user->validateTwoFactorCode($code)) {
-            $this->addCodeError($validator);
+            $this->handleInvalidCode($validator);
 
             return;
         }
@@ -87,15 +87,9 @@ class TwoFactorLoginRequest extends FormRequest
      */
     private function getUserFromSession(): ?User
     {
-        $encryptedCreds = session('2fa_login');
+        $creds = $this->pullSessionCredentials();
 
-        if (! $encryptedCreds) {
-            return null;
-        }
-
-        try {
-            $creds = decrypt($encryptedCreds);
-        } catch (Exception) {
+        if (! $creds) {
             return null;
         }
 
@@ -113,14 +107,16 @@ class TwoFactorLoginRequest extends FormRequest
         // Atomically pull (get+delete) the cache entry so token cannot be reused
         $cached = Cache::pull($cacheKey);
 
-        if (! is_array($cached) || empty($cached['user_id'])) {
+        if (! is_array($cached)) {
+            $this->forgetTwoFactorState();
+
             return null;
         }
 
-        $user = User::find($cached['user_id']);
+        $user = $this->resolveUserFromCache($cached);
 
-        if (! $user && ! empty($cached['email'])) {
-            $user = User::where('email', $cached['email'])->first();
+        if (! $user) {
+            $this->forgetTwoFactorState();
         }
 
         return $user;
@@ -157,17 +153,69 @@ class TwoFactorLoginRequest extends FormRequest
         $validator->errors()->add('code', 'Invalid code provided.');
     }
 
+    private function handleInvalidCode(Validator $validator): void
+    {
+        $this->addCodeError($validator);
+        $this->forgetTwoFactorState();
+    }
+
     private function forgetTwoFactorState(): void
     {
         if ($key = $this->cacheKey()) {
             Cache::forget($key);
         }
-
-        session()->forget('2fa_login');
     }
 
     private function cacheKey(): ?string
     {
-        return $this->twoFactorToken ? "2fa_login:{$this->twoFactorToken}" : null;
+        return $this->twoFactorToken ? $this->cachePrefix().$this->twoFactorToken : null;
+    }
+
+    private function resolveUserFromCache(array $cached): ?User
+    {
+        if (! empty($cached['user_id'])) {
+            $user = User::find($cached['user_id']);
+            if ($user) {
+                return $user;
+            }
+        }
+
+        if (! empty($cached['email'])) {
+            return User::where('email', $cached['email'])->first();
+        }
+
+        return null;
+    }
+
+    private function decryptCredentials(string $encryptedCreds): ?array
+    {
+        try {
+            $creds = decrypt($encryptedCreds);
+        } catch (Exception) {
+            return null;
+        }
+
+        return is_array($creds) ? $creds : null;
+    }
+
+    private function pullSessionCredentials(): ?array
+    {
+        $encrypted = session()->pull($this->sessionKey());
+
+        if (! $encrypted) {
+            return null;
+        }
+
+        return $this->decryptCredentials($encrypted);
+    }
+
+    private function sessionKey(): string
+    {
+        return (string) config('two-factor.login_state.session_key', '2fa_login');
+    }
+
+    private function cachePrefix(): string
+    {
+        return (string) config('two-factor.login_state.cache_prefix', '2fa_login:');
     }
 }

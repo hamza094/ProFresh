@@ -10,9 +10,9 @@ use App\Http\Requests\Api\V1\Auth\ConfirmTwoFactorRequest;
 use App\Http\Requests\Api\V1\Auth\DisableTwoFactorRequest;
 use App\Http\Requests\Api\V1\Auth\PrepareTwoFactorRequest;
 use App\Http\Requests\Api\V1\Auth\TwoFactorLoginRequest;
-use App\Http\Resources\Api\V1\UsersResource;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use App\Services\Api\V1\Auth\LoginUserService;
 
 /**
  * Two-Factor Authentication Controller
@@ -21,6 +21,7 @@ use Illuminate\Http\Request;
  */
 class TwoFactorController extends Controller
 {
+    public function __construct(protected LoginUserService $loginUserService) {}
     /**
      * Get the current 2FA status for the authenticated user
      */
@@ -83,18 +84,9 @@ class TwoFactorController extends Controller
     {
         $user = $request->user();
 
-        // Clear the 2FA session after successful login
-        session()->forget('2fa_login');
+        $payload = $this->loginUserService->performSessionLogin($user, $request);
 
-         Auth::guard('web')->login($user, false);
-        $request->session()->regenerate();
-        $request->session()->regenerateToken();
-
-        return response()->json([
-            'message' => 'User authenticated successfully',
-            'user' => new UsersResource($user),
-            'status' => TwoFactorStatus::SUCCESS->value,
-        ], 200);
+        return response()->json($payload->toArray(), 200);
 
     }
 

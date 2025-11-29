@@ -5,91 +5,114 @@ declare(strict_types=1);
 namespace App\Services\Api\V1\Auth;
 
 use App\Models\User;
-use Illuminate\Support\Facades\Cache;
+use App\Events\UserLogin;
+use App\Http\Resources\Api\V1\UsersResource;
+use App\DataTransferObjects\Auth\AuthPayload;
+use App\DataTransferObjects\Auth\LoginResult;
+use App\Services\TwoFactor\TwoFactorStateManager;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
-use Throwable;
+use Illuminate\Http\JsonResponse;
 
 class LoginUserService
 {
+    public function __construct(protected TwoFactorStateManager $twoFactorStateManager) {}
+
     /**
-     * Attempt to authenticate the user.
-     *
-     * @param  string  $email
-     * @param  string  $password
-     * @return User
-     *
-     * @throws ValidationException
+     * Start the login flow shared by different controllers.
      */
-    public function attemptLogin($email, $password)
+    public function startLoginFlow(string $email, string $password): LoginResult
     {
         $user = User::where('email', $email)->first();
+        $twoFactor = $this->initializeTwoFactorState($user);
 
-        if (! $user || ! Hash::check($password, $user->password)) {
-            throw ValidationException::withMessages([
-                'email' => ['The provided credentials are incorrect.'],
-            ]);
-        }
+        UserLogin::dispatchIf(! $user->timezone, $user);
 
-        return $user;
+        return new LoginResult($user, $twoFactor);
     }
 
     /**
-     * Handle 2FA session setup if enabled.
+     * Initialize the two-factor state if the user has 2FA enabled.
+     *
+     * The email is read from the provided user to avoid duplication.
      */
-    public function handleTwoFactor(User $user, string $email): bool
+    public function initializeTwoFactorState(User $user): bool
     {
-        if ($user->hasTwoFactorEnabled()) {
-            $this->forgetPreviousTwoFactorState();
-
-            $token = hash_hmac(
-                'sha256',
-                Str::random(40),
-                (string) (config('app.key') ?? Str::random(32))
-            );
-
-            Cache::put(
-                "2fa_login:{$token}",
-                [
-                    'user_id' => $user->getKey(),
-                    'email' => $email,
-                ],
-                now()->addMinutes(5)
-            );
-
-            session(['2fa_login' => encrypt([
-                'token' => $token,
-                'expires_at' => now()->addMinutes(5),
-            ])]);
-
-            return true;
+        if (! $user->hasTwoFactorEnabled()) {
+            return false;
         }
 
-        return false;
+        $this->twoFactorStateManager->forgetStateFromSession();
+
+        $this->twoFactorStateManager->createState($user, $user->email);
+
+        return true;
     }
 
     /**
-     * Remove any stale 2FA session/cache entries before issuing a new token.
+     * Return the standardized two-factor response when required.
      */
-    private function forgetPreviousTwoFactorState(): void
+    public function twoFactorStateResponse(LoginResult $result): ?JsonResponse
     {
-        $encryptedState = session('2fa_login');
-
-        if (! $encryptedState) {
-            return;
+        if ($result->twoFactor) {
+            return $this->buildTwoFactorRequiredResponse();
         }
 
-        try {
-            $state = decrypt($encryptedState);
-        } catch (Throwable) {
-            $state = null;
-        }
+        return null;
+    }
 
-        if (is_array($state) && isset($state['token'])) {
-            Cache::forget('2fa_login:'.$state['token']);
-        }
+    /**
+     * Perform the session login flow for SPA clients and return the auth payload.
+     */
+    public function performSessionLogin(User $user, Request $request): AuthPayload
+    {
+        Auth::guard('web')->login($user, false);
+        $request->session()->regenerate();
+        $request->session()->regenerateToken();
 
-        session()->forget('2fa_login');
+        return $this->buildAuthSuccessPayload($user, null);
+    }
+
+    /**
+     * Complete the login for the requested and return the payload.
+     */
+    public function performApiLogin(User $user, Request $request): AuthPayload
+    {
+        $token = $this->createApiToken($user);
+
+        return $this->buildAuthSuccessPayload($user, $token);
+    }
+
+    /**
+     * Create a personal access token for the given user.
+     *
+     * Centralizes token creation so controllers don't duplicate logic.
+     */
+    public function createApiToken(User $user, ?string $name = null, array $abilities = ['*']): string
+    {
+        $name ??= 'Api Token for '.$user->email;
+
+        return $user->createToken($name, $abilities, now()->addMonth())->plainTextToken;
+    }
+
+    /**
+     * Build the standard authentication success payload used by controllers.
+     */
+    public function buildAuthSuccessPayload(User $user, ?string $token = null): AuthPayload
+    {
+        return new AuthPayload($user, $token);
+    }
+
+    /**
+     * Standardized 2FA required response used across controllers.
+     */
+    public function buildTwoFactorRequiredResponse(): JsonResponse
+    {
+        return response()->json([
+            'message' => 'Two-factor authentication is enabled. Please provide the verification code.',
+            'status' => '2fa_required',
+        ], 200);
     }
 }
