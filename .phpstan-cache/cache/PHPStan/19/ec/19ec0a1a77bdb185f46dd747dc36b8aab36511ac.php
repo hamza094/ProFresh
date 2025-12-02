@@ -938,7 +938,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\Auth\\LoginController.php' => 
     array (
-      0 => '494fccec9512cc02d70c7e55ad111580f8aa50e0',
+      0 => 'dcfd866ca975517dbb0065a869b6d4052dea33ea',
       1 => 
       array (
         0 => 'app\\http\\controllers\\api\\auth\\logincontroller',
@@ -948,8 +948,6 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         0 => 'app\\http\\controllers\\api\\auth\\__construct',
         1 => 'app\\http\\controllers\\api\\auth\\login',
         2 => 'app\\http\\controllers\\api\\auth\\logout',
-        3 => 'app\\http\\controllers\\api\\auth\\loginspa',
-        4 => 'app\\http\\controllers\\api\\auth\\logoutspa',
       ),
       3 => 
       array (
@@ -957,7 +955,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\Auth\\OAuthController.php' => 
     array (
-      0 => '0b7d8630e52df47efd2bf79dd2f38221011c215c',
+      0 => '0bbf03e2a31274190153be71161a6f14cba2ba0a',
       1 => 
       array (
         0 => 'app\\http\\controllers\\api\\auth\\oauthcontroller',
@@ -1005,19 +1003,20 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\Auth\\TwoFactorController.php' => 
     array (
-      0 => '52a7313296581d1a16fe70ac273c1b26441fab21',
+      0 => '223ee00af3bcb37c773d6ccc87424b0cfb90e97f',
       1 => 
       array (
         0 => 'app\\http\\controllers\\api\\auth\\twofactorcontroller',
       ),
       2 => 
       array (
-        0 => 'app\\http\\controllers\\api\\auth\\getuserstatus',
-        1 => 'app\\http\\controllers\\api\\auth\\preparetwofactor',
-        2 => 'app\\http\\controllers\\api\\auth\\confirmtwofactor',
-        3 => 'app\\http\\controllers\\api\\auth\\twofactorlogin',
-        4 => 'app\\http\\controllers\\api\\auth\\showrecoverycodes',
-        5 => 'app\\http\\controllers\\api\\auth\\disabletwofactorauth',
+        0 => 'app\\http\\controllers\\api\\auth\\__construct',
+        1 => 'app\\http\\controllers\\api\\auth\\getuserstatus',
+        2 => 'app\\http\\controllers\\api\\auth\\preparetwofactor',
+        3 => 'app\\http\\controllers\\api\\auth\\confirmtwofactor',
+        4 => 'app\\http\\controllers\\api\\auth\\twofactorlogin',
+        5 => 'app\\http\\controllers\\api\\auth\\showrecoverycodes',
+        6 => 'app\\http\\controllers\\api\\auth\\disabletwofactorauth',
       ),
       3 => 
       array (
@@ -1823,7 +1822,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'D:\\apps\\profresh\\app\\Http\\Requests\\Api\\V1\\Auth\\LoginUserRequest.php' => 
     array (
-      0 => '1e8ca10c288c6081ed454433ee6553e881dbb6a2',
+      0 => 'f6dd3f35c6731698c9472216fb39675fadb0e805',
       1 => 
       array (
         0 => 'app\\http\\requests\\api\\v1\\auth\\loginuserrequest',
@@ -1832,6 +1831,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
       array (
         0 => 'app\\http\\requests\\api\\v1\\auth\\authorize',
         1 => 'app\\http\\requests\\api\\v1\\auth\\rules',
+        2 => 'app\\http\\requests\\api\\v1\\auth\\withvalidator',
       ),
       3 => 
       array (
@@ -1875,7 +1875,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'D:\\apps\\profresh\\app\\Http\\Requests\\Api\\V1\\Auth\\TwoFactorLoginRequest.php' => 
     array (
-      0 => 'c35e2665b59988e0d082723bfa36ae6b418868f2',
+      0 => 'dd3b4cd56ab2144fa0bffdcbd8ba73a899200501',
       1 => 
       array (
         0 => 'app\\http\\requests\\api\\v1\\auth\\twofactorloginrequest',
@@ -1889,9 +1889,13 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         4 => 'app\\http\\requests\\api\\v1\\auth\\getuserfromsession',
         5 => 'app\\http\\requests\\api\\v1\\auth\\isvalidsessiondata',
         6 => 'app\\http\\requests\\api\\v1\\auth\\addsessionerror',
-        7 => 'app\\http\\requests\\api\\v1\\auth\\addcodeerror',
-        8 => 'app\\http\\requests\\api\\v1\\auth\\forgettwofactorstate',
-        9 => 'app\\http\\requests\\api\\v1\\auth\\cachekey',
+        7 => 'app\\http\\requests\\api\\v1\\auth\\addinvalidcodeerror',
+        8 => 'app\\http\\requests\\api\\v1\\auth\\cachekey',
+        9 => 'app\\http\\requests\\api\\v1\\auth\\resolveuserfromcache',
+        10 => 'app\\http\\requests\\api\\v1\\auth\\decryptcredentials',
+        11 => 'app\\http\\requests\\api\\v1\\auth\\pullsessioncredentials',
+        12 => 'app\\http\\requests\\api\\v1\\auth\\sessionkey',
+        13 => 'app\\http\\requests\\api\\v1\\auth\\cacheprefix',
       ),
       3 => 
       array (
@@ -3553,7 +3557,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'D:\\apps\\profresh\\app\\Providers\\RouteServiceProvider.php' => 
     array (
-      0 => 'fccc2ef0db4cd8bcad0686bc85d6b52160e54194',
+      0 => '68a1f6770d070d3dd2d55dbb563ec8d101ff4a12',
       1 => 
       array (
         0 => 'app\\providers\\routeserviceprovider',
@@ -3860,16 +3864,22 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'D:\\apps\\profresh\\app\\Services\\Api\\V1\\Auth\\LoginUserService.php' => 
     array (
-      0 => 'ecda5f7a9386a5d86328c50cf852071d54966a1b',
+      0 => '11431bdcbf2683b773959590918bddb906b1d9da',
       1 => 
       array (
         0 => 'app\\services\\api\\v1\\auth\\loginuserservice',
       ),
       2 => 
       array (
-        0 => 'app\\services\\api\\v1\\auth\\attemptlogin',
-        1 => 'app\\services\\api\\v1\\auth\\handletwofactor',
-        2 => 'app\\services\\api\\v1\\auth\\forgetprevioustwofactorstate',
+        0 => 'app\\services\\api\\v1\\auth\\__construct',
+        1 => 'app\\services\\api\\v1\\auth\\startloginflow',
+        2 => 'app\\services\\api\\v1\\auth\\initializetwofactorstate',
+        3 => 'app\\services\\api\\v1\\auth\\twofactorstateresponse',
+        4 => 'app\\services\\api\\v1\\auth\\performsessionlogin',
+        5 => 'app\\services\\api\\v1\\auth\\performapilogin',
+        6 => 'app\\services\\api\\v1\\auth\\createapitoken',
+        7 => 'app\\services\\api\\v1\\auth\\buildauthsuccesspayload',
+        8 => 'app\\services\\api\\v1\\auth\\buildtwofactorrequiredresponse',
       ),
       3 => 
       array (
@@ -3974,7 +3984,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'D:\\apps\\profresh\\app\\Services\\Api\\V1\\FileService.php' => 
     array (
-      0 => 'c4118894263d9e26d135c51e0d4e1b0cf75fa72a',
+      0 => 'd47d8fbeccef42944f50cfe897184767f8935312',
       1 => 
       array (
         0 => 'app\\services\\api\\v1\\fileservice',
@@ -4496,6 +4506,74 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         8 => 'app\\traits\\resolveprojectid',
         9 => 'app\\traits\\activitychanges',
         10 => 'app\\traits\\resolveuserid',
+      ),
+      3 => 
+      array (
+      ),
+    ),
+    'D:\\apps\\profresh\\app\\DataTransferObjects\\Auth\\AuthPayload.php' => 
+    array (
+      0 => 'e24a14c298aaeba47f422ea6cb14c818e74da331',
+      1 => 
+      array (
+        0 => 'app\\datatransferobjects\\auth\\authpayload',
+      ),
+      2 => 
+      array (
+        0 => 'app\\datatransferobjects\\auth\\__construct',
+        1 => 'app\\datatransferobjects\\auth\\toarray',
+      ),
+      3 => 
+      array (
+      ),
+    ),
+    'D:\\apps\\profresh\\app\\DataTransferObjects\\Auth\\LoginResult.php' => 
+    array (
+      0 => 'e04321ac455b1643ee30b2f0f008da5edf2c40c4',
+      1 => 
+      array (
+        0 => 'app\\datatransferobjects\\auth\\loginresult',
+      ),
+      2 => 
+      array (
+        0 => 'app\\datatransferobjects\\auth\\__construct',
+      ),
+      3 => 
+      array (
+      ),
+    ),
+    'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\Auth\\SpaAuthController.php' => 
+    array (
+      0 => 'e45cbc0a85532d31ec9ad38cdddfb0cb39877b9a',
+      1 => 
+      array (
+        0 => 'app\\http\\controllers\\api\\auth\\spaauthcontroller',
+      ),
+      2 => 
+      array (
+        0 => 'app\\http\\controllers\\api\\auth\\__construct',
+        1 => 'app\\http\\controllers\\api\\auth\\loginspa',
+        2 => 'app\\http\\controllers\\api\\auth\\logoutspa',
+      ),
+      3 => 
+      array (
+      ),
+    ),
+    'D:\\apps\\profresh\\app\\Services\\TwoFactor\\TwoFactorStateManager.php' => 
+    array (
+      0 => 'c7cf6066c6bb41cc46512d7ac231daad439e2c42',
+      1 => 
+      array (
+        0 => 'app\\services\\twofactor\\twofactorstatemanager',
+      ),
+      2 => 
+      array (
+        0 => 'app\\services\\twofactor\\createstate',
+        1 => 'app\\services\\twofactor\\forgetstatefromsession',
+        2 => 'app\\services\\twofactor\\resolve',
+        3 => 'app\\services\\twofactor\\delete',
+        4 => 'app\\services\\twofactor\\getloginstateconfig',
+        5 => 'app\\services\\twofactor\\decryptstate',
       ),
       3 => 
       array (

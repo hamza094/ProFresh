@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\DataTransferObjects\Auth;
 
-use App\Models\User;
 use App\Http\Resources\Api\V1\UsersResource;
+use App\Models\User;
 
 final class AuthPayload
 {
@@ -18,6 +18,8 @@ final class AuthPayload
 
     /**
      * Convert to array suitable for JSON response.
+     *
+     * @return array<string, mixed>
      */
     public function toArray(): array
     {

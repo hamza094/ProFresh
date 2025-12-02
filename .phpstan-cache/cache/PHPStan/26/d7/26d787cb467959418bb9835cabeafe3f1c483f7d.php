@@ -38,7 +38,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'D:\\apps\\profresh\\tests\\Feature\\Api\\Auth\\AuthenticationTest.php' => 
     array (
-      0 => '87c56e92a68b9a31a05c4466fa1c2034a137882e',
+      0 => '7c36c385fe8c6bbc83f662c16636fee74d5a5c65',
       1 => 
       array (
         0 => 'tests\\feature\\api\\auth\\authenticationtest',
@@ -47,11 +47,12 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
       array (
         0 => 'tests\\feature\\api\\auth\\setup',
         1 => 'tests\\feature\\api\\auth\\register_new_user',
-        2 => 'tests\\feature\\api\\auth\\return_user_and_access_token_after_successful_login',
-        3 => 'tests\\feature\\api\\auth\\show_validation_email_error',
-        4 => 'tests\\feature\\api\\auth\\show_validation_password_errors',
-        5 => 'tests\\feature\\api\\auth\\authenticated_user_can_logout',
-        6 => 'tests\\feature\\api\\auth\\registration_with_existing_email_not_allowed',
+        2 => 'tests\\feature\\api\\auth\\api_login_returns_user_and_access_token_after_successful_login',
+        3 => 'tests\\feature\\api\\auth\\spa_session_login_returns_payload_without_access_token',
+        4 => 'tests\\feature\\api\\auth\\show_validation_email_error',
+        5 => 'tests\\feature\\api\\auth\\show_validation_password_errors',
+        6 => 'tests\\feature\\api\\auth\\authenticated_user_can_logout',
+        7 => 'tests\\feature\\api\\auth\\registration_with_existing_email_not_allowed',
       ),
       3 => 
       array (
@@ -59,7 +60,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'D:\\apps\\profresh\\tests\\Feature\\Api\\Auth\\OAuthTest.php' => 
     array (
-      0 => '52b7219e32306541548c52a0899814b2496db5db',
+      0 => 'f34f771086f1959b0aa495dfa431a519474cdfe2',
       1 => 
       array (
         0 => 'tests\\feature\\api\\auth\\oauthtest',
@@ -78,7 +79,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'D:\\apps\\profresh\\tests\\Feature\\Api\\Auth\\ResetPasswordTest.php' => 
     array (
-      0 => '70b6ce5c24ded19830f28b2d70d1a10dd01a99fa',
+      0 => 'b965baba0ea46af98ff615b5e853eba4c5035103',
       1 => 
       array (
         0 => 'tests\\feature\\api\\auth\\resetpasswordtest',
@@ -94,7 +95,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'D:\\apps\\profresh\\tests\\Feature\\Api\\Auth\\TwoFactorAuthenticationTest.php' => 
     array (
-      0 => '7e02d0b7aefe8124a3578ab4a263df051b4cb823',
+      0 => '81e8091fc5ed382b5a3877d389d8da2e59ee4e41',
       1 => 
       array (
         0 => 'tests\\feature\\api\\auth\\twofactorauthenticationtest',
@@ -109,11 +110,20 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         5 => 'tests\\feature\\api\\auth\\it_can_show_and_regenerate_recovery_codes',
         6 => 'tests\\feature\\api\\auth\\it_can_disable_two_factor',
         7 => 'tests\\feature\\api\\auth\\it_shows_2fa_required_message_during_login_when_enabled',
-        8 => 'tests\\feature\\api\\auth\\it_fails_two_factor_login_with_missing_session',
-        9 => 'tests\\feature\\api\\auth\\it_fails_two_factor_login_with_expired_session',
-        10 => 'tests\\feature\\api\\auth\\createtestuser',
-        11 => 'tests\\feature\\api\\auth\\enabletwofactorforuser',
-        12 => 'tests\\feature\\api\\auth\\createmockeduser',
+        8 => 'tests\\feature\\api\\auth\\it_stores_two_factor_state_in_cache_when_login_requires_two_factor',
+        9 => 'tests\\feature\\api\\auth\\it_clears_cached_two_factor_state_when_invalid_code_is_submitted',
+        10 => 'tests\\feature\\api\\auth\\it_logs_in_via_web_guard_and_returns_auth_payload_after_successful_two_factor',
+        11 => 'tests\\feature\\api\\auth\\it_fails_two_factor_login_with_missing_session',
+        12 => 'tests\\feature\\api\\auth\\it_fails_two_factor_login_with_expired_session',
+        13 => 'tests\\feature\\api\\auth\\createtestuser',
+        14 => 'tests\\feature\\api\\auth\\enabletwofactorforuser',
+        15 => 'tests\\feature\\api\\auth\\createmockeduser',
+        16 => 'tests\\feature\\api\\auth\\twofactorsessionkey',
+        17 => 'tests\\feature\\api\\auth\\twofactorcacheprefix',
+        18 => 'tests\\feature\\api\\auth\\twofactorroute',
+        19 => 'tests\\feature\\api\\auth\\posttwofactor',
+        20 => 'tests\\feature\\api\\auth\\enabletwofactorstate',
+        21 => 'tests\\feature\\api\\auth\\begintwofactorlogin',
       ),
       3 => 
       array (
@@ -1319,6 +1329,23 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
       2 => 
       array (
         0 => 'tests\\unit\\it_belongs_to_a_project',
+      ),
+      3 => 
+      array (
+      ),
+    ),
+    'D:\\apps\\profresh\\tests\\Unit\\Services\\TwoFactorStateManagerTest.php' => 
+    array (
+      0 => '653b1728dc76e6a2c77ca3f765082be91a9455ef',
+      1 => 
+      array (
+        0 => 'tests\\unit\\services\\twofactorstatemanagertest',
+      ),
+      2 => 
+      array (
+        0 => 'tests\\unit\\services\\setup',
+        1 => 'tests\\unit\\services\\it_creates_state_with_configured_cache_and_session_keys',
+        2 => 'tests\\unit\\services\\it_forgets_state_from_session_and_cache',
       ),
       3 => 
       array (

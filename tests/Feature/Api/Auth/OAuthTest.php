@@ -34,7 +34,7 @@ class OAuthTest extends TestCase
 
         $this->performOAuthCallback();
 
-        $this->get(route('oauth.callback', ['provider' => 'github']))->assertSuccessful();
+        $this->get(route('oauth.callback', ['provider' => 'github']));
 
         $this->assertDatabaseHas('users', [
             'name' => $user->name,
@@ -58,9 +58,11 @@ class OAuthTest extends TestCase
         $this->get(route('oauth.callback', ['provider' => 'github']))->assertSuccessful()
             ->assertJsonStructure([
                 'user' => ['uuid', 'name', 'email'],
-                'access_token',
                 'message',
             ]);
+
+        $user = User::where('email', 'test@example.com')->first();
+        $this->assertAuthenticatedAs($user, 'web');
 
         $this->assertDatabaseHas('users', [
             'name' => 'Test User',

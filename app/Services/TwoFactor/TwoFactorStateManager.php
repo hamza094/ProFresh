@@ -100,13 +100,12 @@ final class TwoFactorStateManager
     private function getLoginStateConfig(): array
     {
         $cachePrefix = (string) config('two-factor.login_state.cache_prefix', '2fa_login:');
-        $sessionKey  = (string) config('two-factor.login_state.session_key', '2fa_login');
+        $sessionKey = (string) config('two-factor.login_state.session_key', '2fa_login');
 
         return [$cachePrefix, $sessionKey];
     }
 
     /**
-     * @param  string  $encryptedState
      * @return array<string,mixed>|null
      */
     private function decryptState(string $encryptedState): ?array

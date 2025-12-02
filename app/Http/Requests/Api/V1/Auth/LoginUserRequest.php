@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace App\Http\Requests\Api\V1\Auth;
 
 use App\Models\User;
+use Illuminate\Contracts\Validation\Validator as ValidatorContract;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Contracts\Validation\Validator as ValidatorContract;
 
 class LoginUserRequest extends FormRequest
 {

@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-use App\Http\Controllers\Api\Auth\OAuthController;
-use App\Http\Controllers\Api\Auth\TwoFactorController;
 use App\Http\Controllers\Api\OAuth\ZoomAuthController;
 use App\Http\Controllers\Api\V1\ActivityController;
 use App\Http\Controllers\Api\V1\AvatarController;
@@ -34,17 +32,6 @@ use Illuminate\Support\Facades\Route;
 | API V1 Routes
 |--------------------------------------------------------------------------*/
 
-Route::prefix('auth')
-    ->name('oauth.')
-    ->middleware('throttle:oauth2-socialite')
-    ->group(function () {
-        Route::get('/redirect/{provider}', [OAuthController::class, 'redirect'])
-            ->name('redirect');
-
-        Route::get('/callback/{provider}', [OAuthController::class, 'callback'])
-            ->name('callback');
-    });
-
 // Zoom Webhooks
 Route::controller(ZoomWebhookController::class)
     ->middleware(VerifyZoomWebhook::class)
@@ -65,23 +52,8 @@ Route::middleware(['auth:sanctum'/* ,\App\Http\Middleware\TrackLastActiveAt::cla
 
     Route::get('/me', [UserController::class, 'me'])->name('user.me');
 
-    Route::controller(TwoFactorController::class)
-        ->prefix('twofactor')
-        ->name('twofactor.')
-        ->group(function (): void {
-            Route::post('setup', 'prepareTwoFactor')
-                ->name('setup')
-                ->middleware('throttle:two-factor');
-            Route::post('confirm', 'confirmTwoFactor')
-                ->name('confirm')
-                ->middleware('throttle:two-factor');
-            Route::get('fetch-user', 'getUserStatus')->name('fetch-user');
-            Route::get('recovery-codes', 'showRecoveryCodes')->middleware('2fa.enabled')->name('recovery-codes');
-            Route::delete('disable', 'disableTwoFactorAuth')->name('disable');
-            Route::post('login-confirm', 'twoFactorLogin')->name('login-confirm')
-                ->withoutMiddleware(['auth:sanctum'])
-                ->middleware('throttle:two-factor');
-        });
+    // TwoFactor routes moved to `routes/web.php` to keep session-based
+    // endpoints (like `login-confirm`) under the `web` middleware group.
 
     Route::get('/user/token', [ZoomTokenController::class, 'getUserToken']);
 

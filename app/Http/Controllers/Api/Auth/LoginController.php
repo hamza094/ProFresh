@@ -27,7 +27,7 @@ class LoginController extends ApiController
 
         $user = $result->user;
 
-        if ($response = $this->loginUserService->twoFactorStateResponse($result)) {
+        if (($response = $this->loginUserService->twoFactorStateResponse($result)) instanceof JsonResponse) {
             return $response;
         }
 

@@ -18,6 +18,10 @@ use Illuminate\Validation\Validator;
  */
 class TwoFactorLoginRequest extends FormRequest
 {
+    private const SESSION_ERROR_MESSAGE = 'Your session verification window expired. Please log in again.';
+
+    private const CODE_ERROR_MESSAGE = 'That verification code is incorrect or has expired.';
+
     private ?string $twoFactorToken = null;
 
     /**
@@ -71,12 +75,10 @@ class TwoFactorLoginRequest extends FormRequest
 
         // Validate 2FA code
         if (! $user->validateTwoFactorCode($code)) {
-            $this->handleInvalidCode($validator);
+            $this->addInvalidCodeError($validator);
 
             return;
         }
-
-        $this->forgetTwoFactorState();
 
         // Attach user to request for controller use
         $this->setUserResolver(fn (): User => $user);
@@ -108,18 +110,10 @@ class TwoFactorLoginRequest extends FormRequest
         $cached = Cache::pull($cacheKey);
 
         if (! is_array($cached)) {
-            $this->forgetTwoFactorState();
-
             return null;
         }
 
-        $user = $this->resolveUserFromCache($cached);
-
-        if (! $user) {
-            $this->forgetTwoFactorState();
-        }
-
-        return $user;
+        return $this->resolveUserFromCache($cached);
     }
 
     /**
@@ -140,30 +134,15 @@ class TwoFactorLoginRequest extends FormRequest
      */
     private function addSessionError(Validator $validator): void
     {
-        $validator->errors()->add('code', 'Session expired or invalid. Please login again.');
-
-        $this->forgetTwoFactorState();
+        $validator->errors()->add('code', self::SESSION_ERROR_MESSAGE);
     }
 
     /**
      * Add invalid code error to validator
      */
-    private function addCodeError(Validator $validator): void
+    private function addInvalidCodeError(Validator $validator): void
     {
-        $validator->errors()->add('code', 'Invalid code provided.');
-    }
-
-    private function handleInvalidCode(Validator $validator): void
-    {
-        $this->addCodeError($validator);
-        $this->forgetTwoFactorState();
-    }
-
-    private function forgetTwoFactorState(): void
-    {
-        if ($key = $this->cacheKey()) {
-            Cache::forget($key);
-        }
+        $validator->errors()->add('code', self::CODE_ERROR_MESSAGE);
     }
 
     private function cacheKey(): ?string
@@ -171,6 +150,11 @@ class TwoFactorLoginRequest extends FormRequest
         return $this->twoFactorToken ? $this->cachePrefix().$this->twoFactorToken : null;
     }
 
+    /**
+     * Resolve a user from the cached 2FA state.
+     *
+     * @param  array<string, mixed>  $cached
+     */
     private function resolveUserFromCache(array $cached): ?User
     {
         if (! empty($cached['user_id'])) {
@@ -187,6 +171,11 @@ class TwoFactorLoginRequest extends FormRequest
         return null;
     }
 
+    /**
+     * Decrypt the encrypted session credentials.
+     *
+     * @return array<string, mixed>|null
+     */
     private function decryptCredentials(string $encryptedCreds): ?array
     {
         try {
@@ -198,6 +187,11 @@ class TwoFactorLoginRequest extends FormRequest
         return is_array($creds) ? $creds : null;
     }
 
+    /**
+     * Pull and decrypt session credentials.
+     *
+     * @return array<string, mixed>|null
+     */
     private function pullSessionCredentials(): ?array
     {
         $encrypted = session()->pull($this->sessionKey());

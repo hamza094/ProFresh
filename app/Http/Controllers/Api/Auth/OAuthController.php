@@ -8,10 +8,9 @@ use App\Actions\OAuthAction;
 use App\Enums\OAuthProvider;
 use App\Events\UserLogin;
 use App\Http\Controllers\Api\ApiController;
-use App\Http\Requests\Api\V1\Auth\TransportRequest;
-use App\Http\Resources\Api\V1\UsersResource;
 use App\Services\Api\V1\Auth\LoginUserService;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Laravel\Socialite\Facades\Socialite;
 use Throwable;
@@ -43,7 +42,7 @@ class OAuthController extends ApiController
      *
      * API endpoint for creating or updating user and enabling login through OAuth provider callback.
      */
-    public function callback(OAuthProvider $provider, OAuthAction $action, TransportRequest $request): JsonResponse
+    public function callback(OAuthProvider $provider, OAuthAction $action, Request $request): JsonResponse
     {
         try {
             /** @var \Laravel\Socialite\Two\AbstractProvider $socialiteDriver */
@@ -59,9 +58,9 @@ class OAuthController extends ApiController
 
             event(new UserLogin($user));
 
-           $payload = $this->loginUserService->performSessionLogin($user, $request);
+            $payload = $this->loginUserService->performSessionLogin($user, $request);
 
-            return response()->json($payload->toArray(), 200);
+            return response()->json($payload, 200);
         } catch (Throwable $e) {
             Log::error('OAuth callback failed', [
                 'provider' => $provider->value,

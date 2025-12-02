@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Feature\Api\Auth;
 
+use App\Http\Middleware\VerifyCsrfToken;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Hash;
@@ -42,7 +43,7 @@ class AuthenticationTest extends TestCase
     }
 
     /** @test */
-    public function return_user_and_access_token_after_successful_login(): void
+    public function api_login_returns_user_and_access_token_after_successful_login(): void
     {
         $response = $this->postJson(route('auth.login'), [
             'email' => 'johndoe@example.org',
@@ -50,7 +51,27 @@ class AuthenticationTest extends TestCase
         ]);
 
         $response->assertOk()
-            ->assertJsonStructure(['user', 'access_token']);
+            ->assertJsonStructure(['user', 'access_token', 'message', 'status'])
+            ->assertJsonFragment(['status' => 'success']);
+    }
+
+    /** @test */
+    public function spa_session_login_returns_payload_without_access_token(): void
+    {
+        $this->withoutMiddleware(VerifyCsrfToken::class);
+
+        $response = $this->withoutExceptionHandling()->postJson('/api/v1/session/login', [
+            'email' => 'johndoe@example.org',
+            'password' => self::TEST_PASSWORD,
+        ]);
+
+        $user = User::where('email', 'johndoe@example.org')->first();
+        $this->assertAuthenticatedAs($user, 'web');
+
+        $response->assertOk()
+            ->assertJsonStructure(['user', 'message', 'status'])
+            ->assertJsonMissing(['access_token'])
+            ->assertJsonFragment(['status' => 'success']);
     }
 
     /** @test */

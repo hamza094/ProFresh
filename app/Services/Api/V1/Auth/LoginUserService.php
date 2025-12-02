@@ -4,17 +4,14 @@ declare(strict_types=1);
 
 namespace App\Services\Api\V1\Auth;
 
-use App\Models\User;
-use App\Events\UserLogin;
-use App\Http\Resources\Api\V1\UsersResource;
 use App\DataTransferObjects\Auth\AuthPayload;
 use App\DataTransferObjects\Auth\LoginResult;
+use App\Events\UserLogin;
+use App\Models\User;
 use App\Services\TwoFactor\TwoFactorStateManager;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\ValidationException;
-use Illuminate\Http\JsonResponse;
 
 class LoginUserService
 {
@@ -89,6 +86,9 @@ class LoginUserService
      * Create a personal access token for the given user.
      *
      * Centralizes token creation so controllers don't duplicate logic.
+     */
+    /**
+     * @param  array<int, string>  $abilities
      */
     public function createApiToken(User $user, ?string $name = null, array $abilities = ['*']): string
     {
