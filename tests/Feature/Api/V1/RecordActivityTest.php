@@ -11,6 +11,8 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
 
+use function Safe\json_encode;
+
 class RecordActivityTest extends TestCase
 {
     use ProjectSetup,RefreshDatabase;

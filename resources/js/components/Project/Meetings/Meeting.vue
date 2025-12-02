@@ -202,7 +202,7 @@ export default {
     // Authorize the user with Zoom
     authorize() {
       axios
-        .get(`/api/v1/oauth/zoom/redirect`)
+        .get(`/oauth/zoom/redirect`)
         .then((response) => {
           window.location.href = response.data.redirectUrl;
         })

@@ -69,8 +69,8 @@
                   <p class="text-danger" v-if="errors.users">*{{ errors.users[0] }}</p>
                 </div>
 
-                <span class="text-muted" v-if="messageButton() == 'Schedule'"
-                  ><i class="far fa-calendar-alt"></i> Message will send on {{ form.scheduled_at }}
+                <span class="text-muted" v-if="messageButton() === 'Schedule'"
+                  ><i class="fa-regular fa-calendar-alt"></i> Message will send on {{ form.scheduled_at }}
                 </span>
               </div>
 
@@ -80,7 +80,7 @@
                 </div>
                 <div class="panel-top_content float-right">
                   <a class="btn btn-link" @click="$modal.show('schedule-message')"
-                    ><i class="far fa-calendar-alt"></i
+                    ><i class="fa-regular fa-calendar-alt"></i
                   ></a>
                   <button class="btn panel-btn_close" @click.prevent="modalClose">Cancel</button>
                   <button class="btn panel-btn_save" type="submit">{{ messageButton() }}</button>
@@ -173,7 +173,7 @@ export default {
   methods: {
     sendMessage() {
       axios
-        .post('/api/v1/projects/' + this.slug + '/message', {
+        .post('/projects/' + this.slug + '/message', {
           mail: this.form.mail,
           sms: this.form.sms,
           subject: this.form.subject,

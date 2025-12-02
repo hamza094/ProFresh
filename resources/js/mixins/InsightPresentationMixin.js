@@ -1,9 +1,9 @@
 // Icons for severity/notice types (backend guarantees `type`)
 const ICON_BY_TYPE = {
-  critical: 'fas fa-exclamation-triangle',
-  warning: 'fas fa-exclamation-circle',
-  success: 'fas fa-check-circle',
-  info: 'fas fa-info-circle',
+  critical: 'fa-solid fa-exclamation-triangle',
+  warning: 'fa-solid fa-exclamation-circle',
+  success: 'fa-solid fa-check-circle',
+  info: 'fa-solid fa-info-circle',
 };
 
 // Human labels for severity types
@@ -46,7 +46,7 @@ export default {
   methods: {
     getInsightIcon(insight) {
       const key = typeKeyOf(insight);
-      return ICON_BY_TYPE[key] || 'fas fa-chart-bar';
+      return ICON_BY_TYPE[key] || 'fa-solid fa-chart-bar';
     },
     getInsightIconClass(insight) {
       return typeKeyOf(insight);

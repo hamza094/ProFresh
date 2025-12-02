@@ -26,15 +26,15 @@
 
       <div v-if="hasMetadata(insight)" class="insight-metadata d-flex flex-wrap gap-3 mb-3">
         <div v-if="insight.data.trend" class="metadata-item d-flex align-items-center">
-          <div class="metadata-icon trend"><i class="fas fa-chart-line"></i></div>
+          <div class="metadata-icon trend"><i class="fa-solid fa-chart-line"></i></div>
           <span>{{ insight.data.trend }}</span>
         </div>
         <div v-if="insight.data.threshold" class="metadata-item d-flex align-items-center">
-          <div class="metadata-icon target"><i class="fas fa-bullseye"></i></div>
+          <div class="metadata-icon target"><i class="fa-solid fa-bullseye"></i></div>
           <span>{{ insight.data.threshold }}{{ getValueUnit(insight) }}</span>
         </div>
         <div v-if="insight.data.score" class="metadata-item d-flex align-items-center">
-          <div class="metadata-icon score"><i class="fas fa-star"></i></div>
+          <div class="metadata-icon score"><i class="fa-solid fa-star"></i></div>
           <span>{{ insight.data.score }}/10</span>
         </div>
       </div>
@@ -43,7 +43,7 @@
         v-if="insight.recommendations && insight.recommendations.length"
         class="recommendations bg-light rounded p-3">
         <h6 class="d-flex align-items-center mb-2 fw-semibold">
-          <i class="fas fa-lightbulb me-2"></i> Recommendations
+          <i class="fa-solid fa-lightbulb me-2"></i> Recommendations
         </h6>
         <ul class="mb-0 ps-3">
           <li v-for="(rec, index) in insight.recommendations" :key="index" class="small text-muted mb-1">{{ rec }}</li>

@@ -145,4 +145,25 @@ return [
         'size' => 400,
         'margin' => 4,
     ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Profresh: 2FA login state
+    |--------------------------------------------------------------------------
+    |
+    | These values control how long the temporary 2FA login state is kept and
+    | which cache/session keys are used by the TwoFactorStateManager service.
+    |
+    */
+
+    'login_state' => [
+        // Lifetime (in minutes) for a pending 2FA login state
+        'ttl' => env('TWO_FACTOR_TTL', 5),
+
+        // Cache key prefix for storing pending 2FA login state
+        'cache_prefix' => '2fa_login:',
+
+        // Session key used to store the encrypted 2FA login payload
+        'session_key' => '2fa_login',
+    ],
 ];

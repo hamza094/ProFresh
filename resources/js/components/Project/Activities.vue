@@ -9,7 +9,7 @@
             <ol class="breadcrumb">
               <li class="breadcrumb-item">Projects</li>
               <li class="breadcrumb-item">
-                <router-link :to="`/projects/${$route.params.slug}`" class="dashboard-link">
+                <router-link :to="{ name: 'ProjectPage', params: { slug: $route.params.slug } }" class="dashboard-link">
                   {{ $route.params.name }}
                 </router-link>
               </li>
@@ -75,7 +75,7 @@
                     href="#"
                     :class="['activity-icon_' + activity.color, { Activityfont: status === activity.status }]"
                     @click.prevent="fetchActivities(activity)">
-                    <i :class="['fas', activity.icon, 'mr-3', 'activity-icon_' + activity.color]"></i>
+                    <i :class="['fa-solid', activity.icon, 'mr-3', 'activity-icon_' + activity.color]"></i>
                     {{ activity.label }}
                   </a>
                 </li>
@@ -122,12 +122,12 @@ export default {
     },
     async getData(suffix) {
       await axios
-        .get(`/api/v1/projects/${this.$route.params.slug}/activities${suffix}`)
+        .get(`/projects/${this.$route.params.slug}/activities${suffix}`)
         .then((response) => {
           this.activities = response.data;
         })
         .catch((error) => {
-          console.log(error.response.data.errors);
+          this.handleErrorResponse(error);
         });
     },
 

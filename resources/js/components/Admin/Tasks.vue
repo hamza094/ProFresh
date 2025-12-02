@@ -6,12 +6,12 @@
         <div class="col-12">
           <div class="card">
             <div class="card-header">
-              <h3 class="card-title">Tasks > {{ appliedFilter }}</h3>
+              <h3 class="card-title">Tasks &gt; {{ appliedFilter }}</h3>
             </div>
 
             <div class="card-body border-bottom py-3">
-              <div class="d-flex">
-                Search:
+              <div class="d-flex align-items-center w-100">
+                <div>Search:</div>
                 <div class="ms-2 d-inline-block">
                   <input
                     type="text"
@@ -19,7 +19,6 @@
                     placeholder="By Project"
                     name="search"
                     autocomplete="off"
-                    v-model="searchTerm"
                     @keydown="searchTasks()" />
                 </div>
 
@@ -31,11 +30,12 @@
                   </span>
                 </div>
 
-                <div class="ms-auto text-secondary">
-                  <button class="btn btn-sm btn-danger" @click.pervent="bulkDelete()">Bulk Delete</button>
+                <div class="ms-3">
+                  <button class="btn btn-sm btn-danger" @click.prevent="bulkDelete()">Bulk Delete</button>
                 </div>
               </div>
             </div>
+
             <div class="table-responsive" style="max-height: 600px; overflow-y: auto">
               <div v-if="message" class="mt-3 text-center">
                 <h4>{{ message }}</h4>
@@ -83,12 +83,14 @@
                       }}</span>
                     </td>
                     <td>
-                      <router-link :to="'/user/' + task.owner.id + '/profile'" class="admin-panel-link">
+                      <router-link :to="{ name: 'Profile', params: { uuid: task.owner.id } }" class="admin-panel-link">
                         <div>{{ task.owner.name }}</div>
                       </router-link>
                     </td>
                     <td>
-                      <router-link :to="'/projects/' + task.project.slug" class="admin-panel-link">
+                      <router-link
+                        :to="{ name: 'ProjectPage', params: { slug: task.project.slug } }"
+                        class="admin-panel-link">
                         <div>{{ task.project.name }}</div>
                       </router-link>
                     </td>
@@ -97,10 +99,10 @@
                       <span v-else class="bg badge bg-warning me-1">{{ task.state }}</span>
                     </td>
                     <td style="max-height: 100px; overflow-y: auto">
-                      <div v-for="member in task.members">{{ member.name }}</div>
+                      <div v-for="member in task.members" :key="member.id || member.name">{{ member.name }}</div>
                     </td>
                     <td>
-                      <span v-if="task.due_at">{{ task.due_at }} </span>
+                      <span v-if="task.due_at">{{ task.due_at }}</span>
                       <span v-else>Not Defined</span>
                     </td>
                     <td>{{ task.created_at }}</td>
@@ -109,9 +111,10 @@
                 </tbody>
               </table>
             </div>
+
             <div class="card-footer d-flex">
               <p class="float-left">
-                Showing <span>{{ from }}</span> to {{ to }}<span></span> of <span></span>{{ total }} entries
+                Showing <span>{{ from }}</span> to {{ to }} of {{ total }} entries
               </p>
               <pagination :data="tasks" @pagination-change-page="paginate($event, filter)"></pagination>
             </div>
@@ -139,7 +142,6 @@ export default {
       searchTerm: '',
     };
   },
-  watch: {},
   methods: {
     getResults(page = 1, filter = 'all') {
       const queryParameters = {
@@ -160,8 +162,9 @@ export default {
         this.appliedFilter = 'Active Tasks';
         this.filter = 'active';
       }
+
       axios
-        .get('/api/v1/admin/tasks', {
+        .get('/admin/tasks', {
           params: queryParameters,
         })
         .then((response) => {
@@ -171,7 +174,9 @@ export default {
           this.total = this.tasks.meta.total || '';
           this.message = response.data.data ? '' : response.data.message;
         })
-        .catch((error) => {});
+        .catch(() => {
+          // Silent fail, leave existing state
+        });
     },
     searchTasks: debounce(function () {
       this.getResults();
@@ -180,6 +185,7 @@ export default {
     paginate(page, filter) {
       this.getResults(page, filter);
     },
+
     bulkDelete() {
       if (this.selectedTasks.length === 0) {
         return;
@@ -187,14 +193,14 @@ export default {
       this.sweetAlert('Yes, Delete Selected ' + this.selectedTasks.length + ' Tasks!').then((result) => {
         if (result.value) {
           axios
-            .delete('/api/v1/admin/tasks/bulk-delete', {
+            .delete('/admin/tasks/bulk-delete', {
               data: { task_ids: this.selectedTasks },
             })
             .then((response) => {
               this.$vToastify.success(response.data.message);
               this.getResults();
             })
-            .catch((error) => {
+            .catch(() => {
               swal.fire('Failed!', 'There was something wrong.', 'warning');
             });
         }
@@ -202,6 +208,7 @@ export default {
         this.selectAll = false;
       });
     },
+
     selectAllTasks() {
       if (this.selectAll) {
         this.selectedTasks = this.tasks.data.map((task) => task.id);

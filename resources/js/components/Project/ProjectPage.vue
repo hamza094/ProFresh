@@ -288,7 +288,7 @@ export default {
         this.archiveTask();
       })
       .catch((error) => {
-        console.log(error.response.data.errors);
+        this.handleErrorResponse(error);
       });
   },
 
@@ -330,7 +330,7 @@ export default {
     updateName() {
       this.$Progress.start();
       axios
-        .patch(`/api/v1/projects/${this.project.slug}`, {
+        .patch(`/projects/${this.project.slug}`, {
           name: this.projectname,
         })
         .then((response) => {
@@ -370,7 +370,7 @@ export default {
     updateAbout() {
       this.$Progress.start();
       axios
-        .patch(`/api/v1/projects/${this.project.slug}`, {
+        .patch(`/projects/${this.project.slug}`, {
           about: this.projectabout,
         })
         .then((response) => {
@@ -400,7 +400,7 @@ export default {
     },
 
     restore() {
-      this.performAction('Yes, Make live again!', axios.get(`/api/v1/projects/${this.project.slug}/restore`));
+      this.performAction('Yes, Make live again!', axios.get(`/projects/${this.project.slug}/restore`));
     },
 
     //show error messages
@@ -419,7 +419,6 @@ export default {
 
     listenForActivity() {
       Echo.channel('activities.project.' + this.projectId).listen('ActivityLogged', (e) => {
-        console.log('Received activity:', e);
         this.project.activities.unshift(e);
       });
     },

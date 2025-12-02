@@ -15,6 +15,8 @@ use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\RateLimiter;
 use Tests\TestCase;
 
+use function Safe\preg_replace;
+
 class ProjectHealthScoreFeatureTest extends TestCase
 {
     use RefreshDatabase;

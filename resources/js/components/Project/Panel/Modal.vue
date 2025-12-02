@@ -15,9 +15,17 @@
               <small class="ml-2"><b>Members:</b></small>
 
               <span v-for="member in task.members" class="task-member-container" :key="member.id">
-                <router-link :to="`/user/${member.uuid}/profile`" class="task-member mr-1" target="_blank">
+                <router-link
+                  :to="`/user/${member.uuid}/profile`"
+                  class="task-member mr-1"
+                  target="_blank"
+                  rel="noopener noreferrer">
                   <!-- Avatar Image -->
-                  <img v-if="member.avatar" :src="member.avatar" :alt="member.name" class="task-member_avatar" />
+                  <img
+                    v-if="member.avatar"
+                    :src="$options.filters.safeUrl(member.avatar)"
+                    :alt="member.name"
+                    class="task-member_avatar" />
 
                   <span v-else class="task-member_name">
                     {{ member.name.charAt(0) }}
@@ -69,8 +77,8 @@
                   @click="changeStatus(status.id, task.id)"
                   :style="{ backgroundColor: status.color }">
                   {{ status.label }}
-                  <span v-if="task.status_id == status.id">
-                    <i class="fas fa-check-circle" style="color: #2a971c"></i>
+                  <span v-if="task.status_id === status.id">
+                    <i class="fa-solid fa-check-circle" style="color: #2a971c"></i>
                   </span>
                 </p>
               </li>
@@ -81,7 +89,7 @@
                 <button
                   class="btn btn-sm btn-outline-primary btn-block member-dropdown"
                   @click.prevent="toggleMemberPop">
-                  <i class="fas fa-user-alt pr-1"></i> <b>Members</b>
+                  <i class="fa-solid fa-user-alt pr-1"></i> <b>Members</b>
                 </button>
 
                 <TaskMembers :slug="slug" :task-id="task.id" v-show="memberPop"></TaskMembers>
@@ -89,7 +97,7 @@
 
               <li>
                 <button class="btn btn-sm btn btn-sm btn-outline-success btn-block" @click.prevent="datePop = !datePop">
-                  <i class="fas fa-clock pr-1"></i><b>Due Date</b>
+                  <i class="fa-solid fa-clock pr-1"></i><b>Due Date</b>
                 </button>
                 <div class="member-dropdown_item" v-show="datePop">
                   <span
@@ -120,15 +128,15 @@
                 <button
                   class="btn btn-sm btn btn-sm btn-outline-info btn-block"
                   @click.prevent="archive(task, task.id)"
-                  v-if="state == 'active'">
-                  <i class="fas fa-ban pr-1"></i><b>Archive</b>
+                  v-if="state === 'active'">
+                  <i class="fa-solid fa-ban pr-1"></i><b>Archive</b>
                 </button>
 
                 <button
                   v-else
                   class="btn btn-sm btn btn-sm btn-outline-secondary btn-block"
                   @click.prevent="unArchive(task, task.id)">
-                  <i class="fas fa-ban pr-1"></i><b>UnArchive</b>
+                  <i class="fa-solid fa-ban pr-1"></i><b>UnArchive</b>
                 </button>
               </li>
 
@@ -136,8 +144,8 @@
                 <button
                   class="btn btn-sm btn btn-sm btn-outline-danger btn-block"
                   @click.prevent="trash(task.id)"
-                  v-if="state == 'archived'">
-                  <i class="fas fa-trash-alt pr-1"></i><b> Delete</b>
+                  v-if="state === 'archived'">
+                  <i class="fa-solid fa-trash-alt pr-1"></i><b> Delete</b>
                 </button>
               </li>
             </ul>
@@ -303,8 +311,7 @@ export default {
     trash(taskId) {
       axios
         .delete(url(this.slug, taskId) + '/remove', { useProgress: true })
-        .then((response) => {
-          console.log(response);
+        .then(() => {
           this.$vToastify.success('Task deleted successfully');
           this.removeArchivedTask(taskId);
           modalClose(this);

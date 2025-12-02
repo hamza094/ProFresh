@@ -137,7 +137,7 @@ export default {
         if (this.selectedMonth) {
           params.month = this.selectedMonth;
         }
-        const response = await axios.get(`/api/v1/dashboard/chart-data`, { params });
+        const response = await axios.get(`/dashboard/chart-data`, { params });
         // Set chartData and projectStats from the same response
         this.chartData = {
           labels: ['Active Projects', 'Trashed Projects', 'Member Projects'],

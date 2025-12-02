@@ -6,8 +6,9 @@ namespace Tests\Feature\Api\Auth;
 
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Testing\TestResponse;
 use Laravel\Sanctum\Sanctum;
 use Mockery;
 use Tests\TestCase;
@@ -41,16 +42,12 @@ class TwoFactorAuthenticationTest extends TestCase
         parent::tearDown();
     }
 
-    // =========================================================================
-    // STATUS & SETUP TESTS
-    // =========================================================================
-
     /** @test */
     public function it_returns_2fa_status_disabled_by_default(): void
     {
         Sanctum::actingAs($this->user);
 
-        $response = $this->getJson('/api/v1/twofactor/fetch-user');
+        $response = $this->getJson(route('twofactor.fetch-user'));
 
         $response->assertOk()
             ->assertJson(['status' => 'disabled']);
@@ -67,7 +64,7 @@ class TwoFactorAuthenticationTest extends TestCase
             'authenticatable_type' => $this->user::class,
         ]);
 
-        $response = $this->postJson('/api/v1/twofactor/setup', [
+        $response = $this->postTwoFactor('setup', [
             'password' => $this->testPassword,
         ]);
 
@@ -93,7 +90,7 @@ class TwoFactorAuthenticationTest extends TestCase
 
         Sanctum::actingAs($mockedUser);
 
-        $response = $this->postJson('/api/v1/twofactor/confirm', [
+        $response = $this->postTwoFactor('confirm', [
             'code' => '123456',
         ]);
 
@@ -115,7 +112,7 @@ class TwoFactorAuthenticationTest extends TestCase
 
         Sanctum::actingAs($mockedUser);
 
-        $response = $this->getJson('/api/v1/twofactor/recovery-codes');
+        $response = $this->getJson(route('twofactor.recovery-codes'));
 
         $response->assertOk()
             ->assertJson([
@@ -130,12 +127,12 @@ class TwoFactorAuthenticationTest extends TestCase
         Sanctum::actingAs($this->user);
 
         // First setup 2FA
-        $this->postJson('/api/v1/twofactor/setup', [
+        $this->postTwoFactor('setup', [
             'password' => $this->testPassword,
         ]);
 
         // Then disable it
-        $response = $this->deleteJson('/api/v1/twofactor/disable');
+        $response = $this->deleteJson(route('twofactor.disable'));
 
         $response->assertOk()
             ->assertJson(['status' => 'disabled']);
@@ -144,37 +141,90 @@ class TwoFactorAuthenticationTest extends TestCase
     /** @test */
     public function it_shows_2fa_required_message_during_login_when_enabled(): void
     {
-        $this->enableTwoFactorForUser();
+        $this->enableTwoFactorState();
 
-        $response = $this->postJson('/api/v1/login', [
-            'email' => $this->user->email,
-            'password' => $this->testPassword,
+        [$response] = $this->beginTwoFactorLogin();
+
+        $response->assertJson([
+            'message' => 'Two-factor authentication is enabled. Please provide the verification code.',
+            'status' => '2fa_required',
         ]);
 
-        $response->assertOk()
-            ->assertJson([
-                'message' => 'Two-factor authentication is enabled. Please provide the verification code.',
-                'status' => '2fa_required',
-            ]);
-
-        // Assert session exists and is encrypted
-
-        $this->assertTrue(session()->has(self::TWO_FA_SESSION));
-
-        // Verify encrypted session contents
         $encryptedSession = session(self::TWO_FA_SESSION);
         $this->assertIsString($encryptedSession);
 
         $decryptedSession = decrypt($encryptedSession);
-        $this->assertEquals($this->user->email, $decryptedSession['email']);
-        $this->assertEquals($this->testPassword, $decryptedSession['password']);
         $this->assertNotNull($decryptedSession['expires_at']);
+    }
+
+    /** @test */
+    public function it_stores_two_factor_state_in_cache_when_login_requires_two_factor(): void
+    {
+        $this->enableTwoFactorState(true);
+
+        [, $sessionKey, $cacheKey, $state] = $this->beginTwoFactorLogin();
+
+        $encryptedSession = session($sessionKey);
+        $this->assertNotNull($encryptedSession, '2FA session entry missing');
+
+        $this->assertArrayHasKey('token', $state);
+
+        $cached = Cache::get($cacheKey);
+
+        $this->assertNotNull($cached, '2FA cache entry missing');
+        $this->assertSame($this->user->id, $cached['user_id']);
+        $this->assertSame($this->user->email, $cached['email']);
+    }
+
+    /** @test */
+    public function it_clears_cached_two_factor_state_when_invalid_code_is_submitted(): void
+    {
+        $this->enableTwoFactorState(true);
+
+        [, $sessionKey, $cacheKey] = $this->beginTwoFactorLogin();
+
+        $sessionData = session()->all();
+
+        $response = $this->withSession($sessionData)->postJson(route('twofactor.login-confirm'), [
+            'code' => '123456',
+        ]);
+
+        $response->assertUnprocessable()
+            ->assertJsonValidationErrors(['code']);
+
+        $this->assertNull(Cache::get($cacheKey), '2FA cache entry should be cleared');
+        $this->assertFalse(session()->has($sessionKey));
+    }
+
+    /** @test */
+    public function it_logs_in_via_web_guard_and_returns_auth_payload_after_successful_two_factor(): void
+    {
+        $this->enableTwoFactorState(true);
+
+        [, $sessionKey] = $this->beginTwoFactorLogin();
+
+        $this->user = $this->user->fresh();
+        $code = $this->user->makeTwoFactorCode();
+
+        $response = $this->withSession(session()->all())->postJson(route('twofactor.login-confirm'), [
+            'code' => $code,
+        ]);
+
+        $response->assertOk()
+            ->assertJsonStructure([
+                'user' => ['uuid', 'name', 'email'],
+                'message',
+            ]);
+
+        $logged = User::where('email', $this->user->email)->first();
+
+        $this->assertAuthenticatedAs($logged, 'web');
     }
 
     /** @test */
     public function it_fails_two_factor_login_with_missing_session(): void
     {
-        $response = $this->postJson('/api/v1/twofactor/login-confirm', [
+        $response = $this->postJson(route('twofactor.login-confirm'), [
             'code' => '123456',
         ]);
 
@@ -182,7 +232,7 @@ class TwoFactorAuthenticationTest extends TestCase
             ->assertJsonValidationErrors(['code']);
 
         $this->assertStringContainsString(
-            'Session expired or invalid',
+            'Your session verification window expired. Please log in again.',
             $response->json('errors.code.0')
         );
     }
@@ -192,27 +242,20 @@ class TwoFactorAuthenticationTest extends TestCase
     {
         // Setup encrypted session data with expired timestamp
         session()->put(self::TWO_FA_SESSION, encrypt([
-            'email' => $this->user->email,
-            'password' => $this->testPassword,
             'expires_at' => now()->subMinutes(1), // Expired 1 minute ago
         ]));
 
-        $response = $this->postJson('/api/v1/twofactor/login-confirm', [
+        $response = $this->postJson(route('twofactor.login-confirm'), [
             'code' => '123456',
         ]);
 
         $response->assertUnprocessable()
             ->assertJsonValidationErrors(['code']);
-
         $this->assertStringContainsString(
-            'Session expired or invalid',
+            'Your session verification window expired. Please log in again.',
             $response->json('errors.code.0')
         );
     }
-
-    // =========================================================================
-    // SETUP & HELPER METHODS
-    // =========================================================================
 
     /**
      * Create a test user with known credentials
@@ -230,14 +273,15 @@ class TwoFactorAuthenticationTest extends TestCase
      */
     private function enableTwoFactorForUser(): void
     {
-        DB::table('two_factor_authentications')->insert([
-            'authenticatable_type' => User::class,
-            'authenticatable_id' => $this->user->id,
-            'shared_secret' => encrypt('JBSWY3DPEHPK3PXP'),
-            'recovery_codes' => encrypt(json_encode(['RCODE-1234-5678'])),
-            'enabled_at' => now(),
+        $twoFactor = $this->user->createTwoFactorAuth();
+
+        // Ensure deterministic label for assertions if needed
+        /** @var \Illuminate\Database\Eloquent\Model $twoFactor */
+        $twoFactor->forceFill([
             'label' => "ProFresh:{$this->user->email}",
-        ]);
+        ])->save();
+
+        $this->user->enableTwoFactorAuth();
     }
 
     /**
@@ -273,5 +317,65 @@ class TwoFactorAuthenticationTest extends TestCase
         $mockedUser->password = $this->user->password;
 
         return $mockedUser;
+    }
+
+    private function twoFactorSessionKey(): string
+    {
+        return (string) config('two-factor.login_state.session_key', self::TWO_FA_SESSION);
+    }
+
+    private function twoFactorCachePrefix(): string
+    {
+        return (string) config('two-factor.login_state.cache_prefix', '2fa_login:');
+    }
+
+    private function twoFactorRoute(string $name): string
+    {
+        return route("twofactor.$name");
+    }
+
+    /**
+     * @param  array<string, mixed>  $payload
+     * @return TestResponse<\Symfony\Component\HttpFoundation\Response>
+     */
+    private function postTwoFactor(string $name, array $payload = []): TestResponse
+    {
+        return $this->postJson($this->twoFactorRoute($name), $payload);
+    }
+
+    private function enableTwoFactorState(bool $flushCache = false): void
+    {
+        if ($flushCache) {
+            Cache::flush();
+        }
+
+        $this->enableTwoFactorForUser();
+    }
+
+    /**
+     * Start the login flow for a 2FA-enabled user and return the response and state details.
+     *
+     * @param  array<string,mixed>  $overrides
+     * @return array{0:TestResponse<\Symfony\Component\HttpFoundation\Response>,1:string,2:string,3:array<string,mixed>}
+     */
+    private function beginTwoFactorLogin(array $overrides = []): array
+    {
+        $payload = array_merge([
+            'email' => $this->user->email,
+            'password' => $this->testPassword,
+        ], $overrides);
+
+        $response = $this->postJson('/api/v1/login', $payload);
+
+        $response->assertOk()
+            ->assertJson(['status' => '2fa_required']);
+
+        $sessionKey = $this->twoFactorSessionKey();
+        $this->assertTrue(session()->has($sessionKey), '2FA session entry missing');
+
+        $state = decrypt(session($sessionKey));
+        $cacheKey = $this->twoFactorCachePrefix().$state['token'];
+
+        return [$response, $sessionKey, $cacheKey, $state];
     }
 }

@@ -12,7 +12,7 @@
            <p class="intro-left_para">ProFresh is a Project Management Web System that helps teams to manage and track their whole projects in one place. With ProFresh, you'll stay on top of everything.
            </p>
 
-           <a href="/dashboard" target="_blank" class="intro-left_btn">Try For Free</a>
+           <a href="/dashboard" target="_blank" rel="noopener noreferrer" class="intro-left_btn">Try For Free</a>
        </div>
    </div>
    <div class="col-md-6 padding-0">

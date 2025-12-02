@@ -2,6 +2,6 @@
 
 // variadic-method-Tests\Feature\Api\Auth\OAuthTest-mockSocialite-D:\apps\profresh\tests\Feature\Api\Auth\OAuthTest.php
 return \PHPStan\Cache\CacheItem::__set_state(array(
-   'variableKey' => '1762187076-v4',
+   'variableKey' => '1764604083-v4',
    'data' => false,
 ));

@@ -57,39 +57,37 @@ const actions = {
   },
 
   async fetchNotificationsFromApi({ commit }, { filter = null, page = 1, mutation }) {
-    const params = new URLSearchParams();
-    if (filter) params.append('filter', filter);
-    if (page) params.append('page', page);
+    const axiosParams = {};
+    if (filter) axiosParams.filter = filter;
+    if (page) axiosParams.page = page;
 
-    const url = `/api/v1/notifications?${params.toString()}`;
-
-    const { data } = await axios.get(url);
+    const { data } = await axios.get('/notifications', { params: axiosParams });
     commit(mutation, data);
   },
 
   deleteNotification({ commit }, notificationId) {
-    return axios.delete(`/api/v1/notifications/${notificationId}`).then(() => {
+    return axios.delete(`/notifications/${encodeURIComponent(notificationId)}`).then(() => {
       commit('deleteNotification', notificationId);
       commit('deleteAllNotification', notificationId);
     });
   },
 
   markAsRead({ commit }, notification) {
-    return axios.patch(`/api/v1/notifications/${notification.id}/status`, { status: 'read' }).then(() => {
+    return axios.patch(`/notifications/${notification.id}/status`, { status: 'read' }).then(() => {
       commit('updateNotification', { ...notification, read_at: new Date().toISOString() });
       commit('updateAllNotification', { ...notification, read_at: new Date().toISOString() });
     });
   },
 
   markAsUnread({ commit }, notification) {
-    return axios.patch(`/api/v1/notifications/${notification.id}/status`, { status: 'unread' }).then(() => {
+    return axios.patch(`/notifications/${notification.id}/status`, { status: 'unread' }).then(() => {
       commit('updateNotification', { ...notification, read_at: null });
       commit('updateAllNotification', { ...notification, read_at: null });
     });
   },
 
   markAllAsRead({ commit, state }) {
-    return axios.get('/api/v1/notifications/mark-all-read').then(() => {
+    return axios.get('/notifications/mark-all-read').then(() => {
       // Update the `read_at` field for all notifications in the current page
       const updatedNotifications = {
         ...state.notifications,

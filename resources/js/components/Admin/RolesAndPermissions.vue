@@ -32,7 +32,7 @@
                             <li class="role-list_items">
                               {{ permission.name }}
                               <span @click.prevent="unAssignPermission(permission.id, role.id)" class="cursor"
-                                ><i class="fas fa-minus-circle"></i
+                                ><i class="fa-solid fa-minus-circle"></i
                               ></span>
                             </li>
                           </ul>
@@ -142,7 +142,7 @@ export default {
 
     addPermission() {
       axios
-        .post('/api/v1/admin/permissions', {
+        .post('/admin/permissions', {
           permission: this.form.permission,
         })
         .then((response) => {
@@ -151,13 +151,13 @@ export default {
           this.loadPermissions();
         })
         .catch((error) => {
-          console.log(error);
+          this.handleErrorResponse(error);
         });
     },
 
     addNewRole() {
       axios
-        .post('/api/v1/admin/roles', { name: this.form.role })
+        .post('/admin/roles', { name: this.form.role })
         .then((response) => {
           this.addRole(response.data.role);
           this.$vToastify.success(response.data.message);
@@ -175,7 +175,7 @@ export default {
 
     removeRole(roleId) {
       axios
-        .delete('/api/v1/admin/roles/' + roleId)
+        .delete('/admin/roles/' + roleId)
         .then(() => {
           this.$vToastify.success('Permission Deleted Successfully');
           this.roleDelete(roleId);
@@ -187,7 +187,7 @@ export default {
 
     removePermission(permissionId) {
       axios
-        .delete('/api/v1/admin/permissions/' + permissionId)
+        .delete('/admin/permissions/' + permissionId)
         .then(() => {
           this.$vToastify.success('Permission Deleted Successfully');
           this.loadPermissions();
@@ -199,7 +199,7 @@ export default {
 
     assignPermissionRole(permissionId, roleId) {
       axios
-        .get('/api/v1/admin/assign/roles/' + roleId + '/permissions/' + permissionId)
+        .get('/admin/assign/roles/' + roleId + '/permissions/' + permissionId)
         .then((response) => {
           this.$vToastify.success(response.data.message);
           this.roleUpdate(response.data.role);
@@ -215,7 +215,7 @@ export default {
 
     unAssignPermission(permissionId, roleId) {
       axios
-        .get('/api/v1/admin/unAssign/roles/' + roleId + '/permissions/' + permissionId)
+        .get('/admin/unAssign/roles/' + roleId + '/permissions/' + permissionId)
         .then((response) => {
           this.$vToastify.success(response.data.message);
           this.roleUpdate(response.data.role);
@@ -231,7 +231,7 @@ export default {
 
     loadPermissions() {
       axios
-        .get('/api/v1/admin/permissions')
+        .get('/admin/permissions')
         .then((response) => {
           this.permissions = response.data;
         })

@@ -30,12 +30,12 @@ const mutations = {
 
 const actions = {
   loadRoles({ commit }) {
-      return axios.get(`/api/v1/admin/roles`)
+    	return axios.get(`/admin/roles`)
         .then(response => {
         commit('setRoles', response.data);
         })
         .catch(error => {
-          console.log(error.response.data.errors);
+          this.handleErrorResponse(error);
         })
       },
 };

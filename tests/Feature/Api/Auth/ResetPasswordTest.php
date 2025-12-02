@@ -45,10 +45,10 @@ class ResetPasswordTest extends TestCase
         $this->postJson('/api/v1/reset-password', [
             'token' => $token,
             'email' => $user->email,
-            'password' => 'password',
-            'password_confirmation' => 'password',
-        ])->assertStatus(302);
+            'password' => 'Password#333',
+            'password_confirmation' => 'Password#333',
+        ])->assertSuccessful();
 
-        $this->assertTrue(Hash::check('password', $user->fresh()->password));
+        $this->assertTrue(Hash::check('Password#333', $user->fresh()->password));
     }
 }

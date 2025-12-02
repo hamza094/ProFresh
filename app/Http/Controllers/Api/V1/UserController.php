@@ -11,6 +11,7 @@ use App\Http\Resources\Api\V1\UsersResource;
 use App\Models\User;
 use App\Services\Api\V1\UserService;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 
 class UserController extends ApiController
 {
@@ -25,6 +26,19 @@ class UserController extends ApiController
 
         return response()->json([
             'users' => UsersResource::collection($users),
+        ], 200);
+    }
+
+    /**
+     * Get the currently authenticated user.
+     */
+    public function me(Request $request): JsonResponse
+    {
+        $user = $request->user();
+
+        return response()->json([
+            'message' => 'Authenticated user data',
+            'user' => $user ? new UsersResource($user) : null,
         ], 200);
     }
 
@@ -83,7 +97,9 @@ class UserController extends ApiController
      */
     public function forceDestroy(User $user): JsonResponse
     {
-        $getUser = User::withTrashed()->findOrFail($user);
+        $this->authorize('owner', $user);
+
+        $getUser = User::withTrashed()->findOrFail($user->id);
         $getUser->forceDelete();
 
         return response()->json([

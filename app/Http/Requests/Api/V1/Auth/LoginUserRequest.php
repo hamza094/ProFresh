@@ -4,7 +4,10 @@ declare(strict_types=1);
 
 namespace App\Http\Requests\Api\V1\Auth;
 
+use App\Models\User;
+use Illuminate\Contracts\Validation\Validator as ValidatorContract;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Hash;
 
 class LoginUserRequest extends FormRequest
 {
@@ -23,7 +26,28 @@ class LoginUserRequest extends FormRequest
     {
         return [
             'email' => 'required|email',
-            'password' => 'required',
+            'password' => 'required|string',
         ];
+    }
+
+    /**
+     * After base validation, verify credentials belong to a real user.
+     */
+    public function withValidator(ValidatorContract $validator): void
+    {
+        $validator->after(function (ValidatorContract $validator): void {
+            if ($validator->errors()->isNotEmpty()) {
+                return;
+            }
+
+            $email = $this->input('email');
+            $password = $this->input('password');
+
+            $user = User::where('email', $email)->first();
+
+            if (! $user || ! Hash::check($password, $user->password)) {
+                $validator->errors()->add('email', 'The provided credentials are incorrect.');
+            }
+        });
     }
 }

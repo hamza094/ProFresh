@@ -131,16 +131,6 @@ parameters:
 			path: app/Exceptions/Handler.php
 
 		-
-			message: "#^Method App\\\\Http\\\\Controllers\\\\Api\\\\Auth\\\\ResetPasswordController\\:\\:resetPassword\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: app/Http/Controllers/Api/Auth/ResetPasswordController.php
-
-		-
-			message: "#^Method App\\\\Http\\\\Controllers\\\\Api\\\\Auth\\\\ResetPasswordController\\:\\:sendResetLink\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: app/Http/Controllers/Api/Auth/ResetPasswordController.php
-
-		-
 			message: "#^Method App\\\\Http\\\\Controllers\\\\Api\\\\V1\\\\ActivityController\\:\\:index\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: app/Http/Controllers/Api/V1/ActivityController.php
@@ -842,11 +832,6 @@ parameters:
 
 		-
 			message: "#^Method App\\\\Models\\\\Conversation\\:\\:user\\(\\) should return Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsTo\\<App\\\\Models\\\\User, App\\\\Models\\\\Conversation\\> but returns Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsTo\\<App\\\\Models\\\\User, \\$this\\(App\\\\Models\\\\Conversation\\)\\>\\.$#"
-			count: 1
-			path: app/Models/Conversation.php
-
-		-
-			message: "#^Offset 1 on array\\{array\\<int, string\\>, array\\<int, non\\-empty\\-string\\>\\} on left side of \\?\\? always exists and is not nullable\\.$#"
 			count: 1
 			path: app/Models/Conversation.php
 

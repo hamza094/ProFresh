@@ -9,6 +9,8 @@ use App\Traits\ProjectSetup;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
+use function Safe\json_encode;
+
 class MessageValidationTest extends TestCase
 {
     use ProjectSetup,RefreshDatabase;

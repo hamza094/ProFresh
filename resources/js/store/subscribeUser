@@ -1,4 +1,3 @@
-import router from '../router.js'
 
 const state = {
   subscription:{},
@@ -7,19 +6,19 @@ const state = {
 
 const actions = {
   userSubscription({commit}){
-    axios.get('/api/v1/user/subscriptions',{
+    axios.get('/user/subscriptions',{
   }).then(response=>{
       commit('setSubscription',response.data.subscription);
 
-      //commit('setErrors','');
+      commit('setErrors','');
 
      }).catch(error=>{
-       //commit('setErrors',error.response.data.errors);
+       commit('setErrors',error.response.data.errors);
   });
 },
 
 userLogout({commit}){
-  commit('setSubscription',[]);
+  commit('setSubscription',{});
 },
 
 

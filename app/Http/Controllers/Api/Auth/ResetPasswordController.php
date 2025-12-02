@@ -6,10 +6,13 @@ namespace App\Http\Controllers\Api\Auth;
 
 use App\Http\Controllers\Api\ApiController;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Api\V1\Auth\RegisterUserRequest;
 use App\Models\User;
 use Illuminate\Auth\Events\PasswordReset;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
 
@@ -29,7 +32,7 @@ class ResetPasswordController extends ApiController
     /**
      * @unauthenticated
      *  Send Reset Link */
-    public function sendResetLink(Request $request)
+    public function sendResetLink(Request $request): JsonResponse
     {
         $request->validate(['email' => 'required|email']);
 
@@ -37,25 +40,32 @@ class ResetPasswordController extends ApiController
             $request->only('email')
         );
 
-        return $status === Password::RESET_LINK_SENT
-                    ? back()->with(['status' => __($status)])
-                    : back()->withErrors(['email' => __($status)]);
+        if ($status !== Password::RESET_LINK_SENT) {
+            Log::warning('Password reset link request failed', [
+                'status' => $status,
+                'user_id' => optional(User::whereEmail($request->input('email'))->select('uuid')->first())->uuid,
+            ]);
+        }
+
+        return response()->json([
+            'message' => 'If your email exists in our system, you will receive a password reset link shortly.',
+        ], 200);
     }
 
     /**
      * @unauthenticated
      * Reset User's Password */
-    public function resetPassword(Request $request)
+    public function resetPassword(Request $request): JsonResponse
     {
         $request->validate([
             'token' => 'required',
             'email' => 'required|email',
-            'password' => 'required|min:8|confirmed',
+            'password' => RegisterUserRequest::passwordRules(),
         ]);
 
         $status = Password::reset(
             $request->only('email', 'password', 'password_confirmation', 'token'),
-            function ($user, $password): void {
+            function (User $user, string $password): void {
                 $user->forceFill([
                     'password' => Hash::make($password),
                 ])->setRememberToken(Str::random(60));
@@ -66,8 +76,19 @@ class ResetPasswordController extends ApiController
             }
         );
 
-        return $status === Password::PASSWORD_RESET
-               ? back()->with('status', __($status))
-               : back()->withErrors(['email' => [__($status)]]);
+        if ($status === Password::PASSWORD_RESET) {
+            return response()->json([
+                'message' => 'Password reset successfully.',
+            ], 200);
+        }
+
+        Log::warning('Password reset attempt failed', [
+            'status' => $status,
+            'user_id' => optional(User::whereEmail($request->input('email'))->select('uuid')->first())->uuid,
+        ]);
+
+        return response()->json([
+            'message' => 'Unable to reset password with the provided information.',
+        ], 400);
     }
 }

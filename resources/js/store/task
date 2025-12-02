@@ -49,7 +49,7 @@ setTasks(state,tasks) {
 const actions = {
 
     fetchTasks({ commit }, { slug, page }) {
-       return axios.get(`/api/v1/projects/${slug}/tasks?page=${page}`)
+     	return axios.get(`/projects/${slug}/tasks?page=${page}`)
         .then(response => {
           commit('setTasks', response.data.tasksData);
           commit('setMessage', response.data.message);
@@ -60,7 +60,7 @@ const actions = {
     },
 
       loadArchiveTasks({ commit }, slug) {
-      return axios.get(`/api/v1/projects/${slug}/tasks`,{
+     	return axios.get(`/projects/${slug}/tasks`,{
          params: {
         request: 'archived'
       }

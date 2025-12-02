@@ -70,8 +70,12 @@ return [
     ],
 
     'zoom' => [
-        'client_id' => env('ZOOM_CLIENT_ID'),
-        'client_secret' => env('ZOOM_CLIENT_SECRET'),
+        'client_id' => env('ZOOM_CLIENT_ID') ?: env('ZOOM_TEST_CLIENT_ID'),
+        'client_secret' => env('ZOOM_CLIENT_SECRET') ?: env('ZOOM_TEST_CLIENT_SECRET'),
+        'redirect' => env(
+            'ZOOM_REDIRECT_URI',
+            rtrim((string) env('APP_URL', 'http://localhost:8000'), '/').'/oauth/zoom/callback'
+        ),
         'webhook_secret' => env('ZOOM_WEBHOOK_SECRET_TOKEN'),
     ],
 

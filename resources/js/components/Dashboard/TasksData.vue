@@ -20,7 +20,7 @@
               v-model="form.assigned"
               @change="loadTasks" />
             <label class="form-check-label" for="assignedTasks">
-              <i class="fas fa-user-check text-success"></i> Assigned
+              <i class="fa-solid fa-user-check text-success"></i> Assigned
             </label>
           </div>
           <div class="form-check form-check-inline">
@@ -31,7 +31,7 @@
               v-model="form.created"
               @change="loadTasks" />
             <label class="form-check-label" for="createdTasks">
-              <i class="fas fa-user-edit text-primary"></i> Created
+              <i class="fa-solid fa-user-edit text-primary"></i> Created
             </label>
           </div>
         </div>
@@ -46,28 +46,28 @@
             class="btn"
             :class="activeFilter === 'all' ? 'btn-primary' : 'btn-outline-primary'"
             @click="setFilter('all')">
-            <i class="fas fa-list"></i> All Tasks
+            <i class="fa-solid fa-list"></i> All Tasks
           </button>
           <button
             type="button"
             class="btn"
             :class="activeFilter === 'overdue' ? 'btn-danger' : 'btn-outline-danger'"
             @click="setFilter('overdue')">
-            <i class="fas fa-exclamation-triangle"></i> Overdue
+            <i class="fa-solid fa-exclamation-triangle"></i> Overdue
           </button>
           <button
             type="button"
             class="btn"
             :class="activeFilter === 'remaining' ? 'btn-warning' : 'btn-outline-warning'"
             @click="setFilter('remaining')">
-            <i class="fas fa-clock"></i> Remaining
+            <i class="fa-solid fa-clock"></i> Remaining
           </button>
           <button
             type="button"
             class="btn"
             :class="activeFilter === 'completed' ? 'btn-success' : 'btn-outline-success'"
             @click="setFilter('completed')">
-            <i class="fas fa-check-circle"></i> Completed
+            <i class="fa-solid fa-check-circle"></i> Completed
           </button>
         </div>
       </div>
@@ -81,7 +81,7 @@
         </div>
 
         <div v-else-if="userTasks.length === 0" class="text-center py-4 text-muted">
-          <i class="fas fa-tasks fa-2x mb-2"></i>
+          <i class="fa-solid fa-tasks fa-2x mb-2"></i>
           <p>No tasks found</p>
         </div>
 
@@ -91,7 +91,11 @@
               <!-- Task State Icon -->
               <div class="mr-3 mt-1">
                 <i
-                  :class="task.state === 'created' ? 'fas fa-user-edit text-primary' : 'fas fa-user-check text-success'"
+                  :class="
+                    task.state === 'created'
+                      ? 'fa-solid fa-user-edit text-primary'
+                      : 'fa-solid fa-user-check text-success'
+                  "
                   :title="task.state === 'created' ? 'Created by you' : 'Assigned to you'"></i>
               </div>
 
@@ -115,7 +119,7 @@
                     v-if="task.due_at"
                     class="mr-3 due-date-label"
                     :class="isOverdue(task) ? 'text-danger font-weight-bold' : 'text-danger font-weight-semibold'">
-                    <i class="fas fa-calendar-alt text-danger"></i>
+                    <i class="fa-solid fa-calendar-alt text-danger"></i>
                     <strong>Due:</strong> {{ task.due_at }}
                     <span v-if="isOverdue(task)" class="badge badge-danger ml-1 px-2 py-1" style="font-size: 0.65rem">
                       OVERDUE
@@ -124,7 +128,7 @@
 
                   <!-- Project -->
                   <span class="mr-3">
-                    <i class="fas fa-project-diagram"></i>
+                    <i class="fa-solid fa-project-diagram"></i>
                     <router-link
                       :to="'/projects/' + task.project.slug"
                       class="text-decoration-none"
@@ -134,7 +138,7 @@
                   </span>
 
                   <!-- Created At -->
-                  <span> <i class="far fa-clock"></i> {{ task.created_at }} </span>
+                  <span> <i class="fa-regular fa-clock"></i> {{ task.created_at }} </span>
                 </div>
 
                 <!-- Assignees -->
@@ -145,8 +149,9 @@
                       <router-link
                         :to="'/user/' + user.uuid + '/profile'"
                         class="text-decoration-none text-primary small"
-                        target="_blank">
-                        <i class="fas fa-user"></i> {{ user.name }}
+                        target="_blank"
+                        rel="noopener noreferrer">
+                        <i class="fa-solid fa-user"></i> {{ user.name }}
                       </router-link>
                     </span>
                   </div>
@@ -189,7 +194,7 @@ export default {
       if (this.form.created) params.user_created = 1;
 
       axios
-        .get('/api/v1/tasksdata', { params })
+        .get('/tasksdata', { params })
         .then((response) => {
           // Update to match backend API response structure
           this.userTasks = response.data.data || [];

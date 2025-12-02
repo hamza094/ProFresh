@@ -41,6 +41,10 @@ class TaskMembersRequest extends FormRequest
     protected function membersValidation(): Closure
     {
         return function (string $attribute, $value, Closure $fail): void {
+            // Guard: ensure the input is an array before querying
+            if (! is_array($value) || $value === []) {
+                return;
+            }
 
             $existingMembersCount = $this->task->assignee()
                 ->whereIn('user_id', $value)

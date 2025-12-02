@@ -5,45 +5,34 @@ import Vue from 'vue';
 window.Vue = Vue;
 
 Vue.config.productionTip = false;
-
-/**
- * We'll load jQuery and the Bootstrap jQuery plugin which provides support
- * for JavaScript based Bootstrap features such as modals and tabs. This
- * code may be modified to fit the specific needs of your application.
- */
-
 Vue.prototype.$user = '';
 
 import * as Popper from '@popperjs/core';
+
 import jQuery from 'jquery';
 import 'bootstrap';
 
 window.Popper = Popper;
 window.$ = window.jQuery = jQuery;
 
-/**
- * We'll load the axios HTTP library which allows us to easily issue requests
- * to our Laravel back-end. This library automatically handles sending the
- * CSRF token as a header based on the value of the "XSRF" token cookie.
- */
-
 import axios from 'axios';
+
 window.axios = axios;
 
-axios.defaults.withCredentials = true;
+// Default headers
+axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+axios.defaults.headers.common['Accept'] = 'application/json';
 
-axios.interceptors.request.use(function (config) {
-  config.headers.common = {
-    Authorization: JSON.parse(localStorage.getItem('token')),
-    'Content-Type': 'application/json',
-    Accept: 'application/json',
-  };
+axios.defaults.baseURL = import.meta.env?.VITE_API_BASE_URL || '/api/v1';
 
-  return config;
-});
+// Read CSRF token from the meta tag instead of relying on a global script
+const tokenMeta = document.head.querySelector('meta[name="csrf-token"]');
 
-window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
-window.axios.defaults.headers.common['X-CSRF-TOKEN'] = window.Laravel.csrfToken;
+if (tokenMeta) {
+  axios.defaults.headers.common['X-CSRF-TOKEN'] = tokenMeta.content;
+} else {
+  console.error('CSRF token meta tag not found: <meta name="csrf-token" content="...">');
+}
 
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
@@ -60,12 +49,12 @@ window.Echo = new Echo({
   key: import.meta.env.VITE_PUSHER_APP_KEY,
   cluster: import.meta.env.VITE_PUSHER_APP_CLUSTER,
   encrypted: true,
-  forceTLS: false,
+  forceTLS: false, // true for production
   authEndpoint: 'http://localhost:8000/api/broadcasting/auth',
   auth: {
     headers: {
       Accept: 'application/json',
-      Authorization: JSON.parse(localStorage.getItem('token')),
     },
+    withCredentials: true,
   },
 });

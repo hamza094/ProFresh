@@ -22,7 +22,7 @@
         <div class="score">
           <div class="score-content">
             <p class="score-content_para">
-              <i class="far fa-clock"></i>
+              <i class="fa-regular fa-clock"></i>
               The project started {{ project && project.start ? project.start : 'N/A' }}. Currently in its
               <b v-text="project.stage.name"></b> stage
             </p>
@@ -31,7 +31,7 @@
           <div class="insights-section">
             <div class="insights-header d-flex justify-content-between align-items-center mb-2 pb-2 border-bottom-0">
               <h5 class="mb-0 d-flex align-items-center">
-                <i class="fas fa-heartbeat me-2"></i>
+                <i class="fa-solid fa-heartbeat me-2"></i>
                 Project Health
               </h5>
             </div>
@@ -49,7 +49,7 @@
               <div v-else-if="healthInsight" class="card insight-detail-card insight-detail-card_info mb-2">
                 <div class="card-header bg-transparent d-flex justify-content-between align-items-center py-2">
                   <div class="d-flex align-items-center">
-                    <div class="insight-icon health"><i class="fas fa-heartbeat"></i></div>
+                    <div class="insight-icon health"><i class="fa-solid fa-heartbeat"></i></div>
                     <h6 class="card-title mb-0 fw-semibold">{{ healthInsight.title || 'Health' }}</h6>
                   </div>
                   <span class="badge bg-success insight-badge">Health</span>
@@ -69,7 +69,7 @@
                 <button
                   class="btn-full-insights d-inline-flex align-items-center"
                   @click.stop="openInsightsModal($event)">
-                  <i class="fas fa-chart-bar"></i>
+                  <i class="fa-solid fa-chart-bar"></i>
                   View Complete Insights
                 </button>
               </div>
@@ -108,7 +108,7 @@ export default {
       return this.project && this.project.name ? this.project.name.substring(0, 1).toUpperCase() : '';
     },
     displayScore() {
-      if (!this.project || this.project.score == null) return 'N/A';
+      if (!this.project || this.project.score === null) return 'N/A';
       const n = Number(this.project.score);
       return Number.isFinite(n) ? Math.round(n) : 'N/A';
     },

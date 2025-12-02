@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import Router from 'vue-router';
+import currentUserModule from './store/CurrentUser';
 
 Vue.use(Router);
 
@@ -26,16 +27,14 @@ import NotFound from './components/Error.vue';
 import UserNotification from './components/UserNotification.vue';
 
 const guest = (to, from, next) => {
-  const token = localStorage.getItem('token');
-  if (!token) {
+  if (!currentUserModule.state.loggedIn) {
     return next();
   }
   return next('/home');
 };
 
 const auth = (to, from, next) => {
-  const token = localStorage.getItem('token');
-  if (token) {
+  if (currentUserModule.state.loggedIn) {
     return next();
   }
   return next('/login');
@@ -43,7 +42,6 @@ const auth = (to, from, next) => {
 
 // 2FA guard: only allow if twofa_pending is set and not logged in
 const twofaGuard = (to, from, next) => {
-  const token = localStorage.getItem('token');
   const twofaPending = localStorage.getItem('twofa_pending');
   const twofaTimestamp = localStorage.getItem('twofa_timestamp');
 
@@ -59,10 +57,10 @@ const twofaGuard = (to, from, next) => {
     }
   }
 
-  if (!token && twofaPending === 'true') {
+  if (twofaPending === 'true') {
     return next();
   }
-  if (token) {
+  if (currentUserModule.state.loggedIn) {
     return next('/home');
   }
   return next('/login');

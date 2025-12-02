@@ -8,6 +8,8 @@ use App\Services\Api\V1\Zoom\ZoomService;
 use Illuminate\Support\Str;
 use Tests\TestCase;
 
+use function Safe\parse_url;
+
 class GetAuthRedirectDetailsTest extends TestCase
 {
     /** @test */

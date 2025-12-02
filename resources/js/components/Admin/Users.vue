@@ -46,14 +46,12 @@
                 <tbody>
                   <tr v-for="(user, index) in users.data" :key="user.id">
                     <td>
-                      <router-link :to="'/user/' + user.id + '/profile'" class="admin-panel-link">
+                      <router-link :to="{ name: 'Profile', params: { uuid: user.id } }" class="admin-panel-link">
                         <div>{{ user.name }}</div>
                       </router-link>
                     </td>
                     <td>{{ user.username }}</td>
-                    <td>
-                      <img :src="user.avatar" :alt="user.name || 'User avatar'" />
-                    </td>
+                    <td><img :src="$options.filters.safeUrl(user.avatar)" /></td>
                     <td>{{ user.email }}</td>
                     <td>{{ user.timezone }}</td>
                     <td>{{ user.created_at }}</td>
@@ -138,7 +136,7 @@ export default {
       );
 
       axios
-        .get('/api/v1/admin/users', {
+        .get('/admin/users', {
           params: filteredParameters,
         })
         .then((response) => {
@@ -151,7 +149,7 @@ export default {
     },
     assignUserRole(roleId, userId) {
       axios
-        .get('/api/v1/admin/assign/users/' + userId + '/roles/' + roleId)
+        .get('/admin/assign/users/' + userId + '/roles/' + roleId)
         .then((response) => {
           this.$vToastify.success(response.data.message);
           this.handleUpdateUser(response.data.user);

@@ -169,7 +169,7 @@
             </h6>
             <p class="text-muted small">Scan this QR code with your authenticator app</p>
           </div>
-          <div v-html="qrCode" aria-label="QR code for 2FA setup"></div>
+          <div v-safe-html="qrCode" aria-label="QR code for 2FA setup"></div>
         </div>
 
         <!-- Setup Instructions -->
@@ -386,7 +386,7 @@ export default {
     },
     async check2FAStatus() {
       await this.handleApiCall(
-        () => axios.get('/api/v1/twofactor/fetch-user'),
+        () => axios.get('/twofactor/fetch-user'),
         [],
         async (res) => {
           this.status = res.data.status;
@@ -403,7 +403,7 @@ export default {
     },
     async fetchRecoveryCodes() {
       await this.handleApiCall(
-        () => axios.get('/api/v1/twofactor/recovery-codes'),
+        () => axios.get('/twofactor/recovery-codes'),
         [],
         (res) => {
           this.recoveryCodes = res.data.recoveryCodes;
@@ -412,7 +412,7 @@ export default {
     },
     async enable2FA(password) {
       await this.handleApiCall(
-        () => axios.post('/api/v1/twofactor/setup', { password }),
+        () => axios.post('/twofactor/setup', { password }),
         [],
         (res) => {
           this.status = res.data.status;
@@ -425,7 +425,7 @@ export default {
     },
     async verify2FA() {
       await this.handleApiCall(
-        () => axios.post('/api/v1/twofactor/confirm', { code: this.code }),
+        () => axios.post('/twofactor/confirm', { code: this.code }),
         [],
         async (res) => {
           this.recoveryCodes = res.data.recoveryCodes;
@@ -439,7 +439,7 @@ export default {
     },
     async regenerateCodes() {
       await this.handleApiCall(
-        () => axios.get('/api/v1/twofactor/recovery-codes'),
+        () => axios.get('/twofactor/recovery-codes'),
         [],
         (res) => {
           this.recoveryCodes = res.data.recoveryCodes;
@@ -450,7 +450,7 @@ export default {
     },
     async disable2FA() {
       await this.handleApiCall(
-        () => axios.delete('/api/v1/twofactor/disable'),
+        () => axios.delete('/twofactor/disable'),
         [],
         (res) => {
           this.status = res.data.status;

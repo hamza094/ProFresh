@@ -16,7 +16,7 @@
                 type="button"
                 role="tab"
                 @click="switchTab(tab.key)">
-                <i :class="`fas ${tab.icon} me-2`"></i>
+                <i :class="`fa-solid ${tab.icon} me-2`"></i>
                 {{ tab.label }}
                 <span :class="`badge bg-${tab.badge} ms-2`">
                   {{ tabData[tab.key].count }}
@@ -62,12 +62,12 @@
               <!-- Empty State -->
               <div v-else class="empty-state">
                 <div class="empty-state-content">
-                  <i :class="`fas ${currentTabConfig.emptyIcon} empty-icon`"></i>
+                  <i :class="`fa-solid ${currentTabConfig.emptyIcon} empty-icon`"></i>
                   <h4 class="empty-title">{{ currentTabConfig.emptyTitle }}</h4>
                   <p class="empty-text">{{ currentTabConfig.emptyText }}</p>
                   <div class="empty-actions" v-if="currentTab === 'active'">
                     <button @click.prevent="showPanel" class="btn btn-primary">
-                      <i class="fas fa-plus me-2"></i>
+                      <i class="fa-solid fa-plus me-2"></i>
                       Create Your First Project
                     </button>
                   </div>
@@ -259,7 +259,7 @@ export default {
      * @returns {Promise} API response
      */
     async makeApiRequest(params) {
-      return axios.get('/api/v1/user/projects', { params });
+      return axios.get('/user/projects', { params });
     },
 
     /**
@@ -269,8 +269,6 @@ export default {
      */
     handleApiSuccess(response, type) {
       const data = response.data;
-      console.log('Projects response:', data); // Debug log
-
       this.tabData[type].list = data.projects.data;
       this.tabData[type].count = data.projectsCount;
       this.tabData[type].pagination = data.projects;

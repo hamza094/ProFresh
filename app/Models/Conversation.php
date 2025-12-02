@@ -8,10 +8,18 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
+use Throwable;
+
+use function Safe\preg_match_all;
+use function Safe\preg_replace;
 
 class Conversation extends Model
 {
     use HasFactory;
+
+    private const FILE_URL_TTL_MINUTES = 5;
 
     protected $guarded = [];
 
@@ -76,5 +84,30 @@ class Conversation extends Model
         : User::whereIn('username', $this->mentionedUsers())
             ->select('id', 'uuid', 'name', 'username')
             ->get();
+    }
+
+    public function getFileUrlAttribute(): ?string
+    {
+        if (! $this->file) {
+            return null;
+        }
+
+        if (str_starts_with($this->file, 'http')) {
+            return $this->file;
+        }
+
+        try {
+            return Storage::disk('s3')->temporaryUrl(
+                $this->file,
+                now()->addMinutes(self::FILE_URL_TTL_MINUTES)
+            );
+        } catch (Throwable $e) {
+            Log::warning('Failed generating conversation file URL', [
+                'conversation_id' => $this->id,
+                'error' => $e->getMessage(),
+            ]);
+
+            return null;
+        }
     }
 }

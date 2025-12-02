@@ -39,10 +39,9 @@
             <hr />
             <h3>Update Password:</h3>
 
-            <span
-              v-html="showIcon(showCurrentPassword)"
-              @click="toggleShowCurrentPassword"
-              class="eye-icon float-right"></span>
+            <span @click="toggleShowCurrentPassword" class="eye-icon float-right" role="button" tabindex="0">{{
+              showIcon(showCurrentPassword)
+            }}</span>
 
             <form-input
               label="Current Password:"
@@ -51,7 +50,9 @@
               :type="currentPasswordFieldType"
               id="current_password" />
 
-            <span v-html="showIcon(showPassword)" @click="toggleShowPassword" class="eye-icon float-right"></span>
+            <span @click="toggleShowPassword" class="eye-icon float-right" role="button" tabindex="0">{{
+              showIcon(showPassword)
+            }}</span>
 
             <form-input
               label="New Password:"
@@ -115,7 +116,8 @@ export default {
     },
     showIcon: function () {
       return function (show) {
-        return show ? '&#x1F441;' : '&#x1F576;';
+        // return plain Unicode characters (safe to render via interpolation)
+        return show ? '👁' : '🕶';
       };
     },
   },
@@ -155,7 +157,7 @@ export default {
       }
 
       axios
-        .patch(`/api/v1/users/${this.user.id}`, this.form)
+        .patch(`/users/${this.user.id}`, this.form)
         .then((response) => {
           this.$vToastify.success('Profile Updated Successfully');
           this.updateUser(response.data.user);

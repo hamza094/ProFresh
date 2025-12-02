@@ -8,6 +8,8 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
+use function Safe\json_encode;
+
 class VerifyZoomWebhook
 {
     /**

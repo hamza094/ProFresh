@@ -6,19 +6,19 @@
           <a href="/"><img src="/img/profresh.png" class="main-img" alt="" /></a>
 
           <div v-if="loggedIn">
-            <router-link to="/dashboard" class="panel-list_item">
+            <router-link :to="{ name: 'Dashboard' }" class="panel-list_item">
               <p>
                 <span class="icon">
-                  <i class="icon-logo far fa-calendar"></i>
+                  <i class="icon-logo fa-regular fa-calendar"></i>
                   <span class="icon-name">Dashboard</span>
                 </span>
               </p>
             </router-link>
 
-            <router-link to="/projects" class="panel-list_item">
+            <router-link :to="{ name: 'Projects' }" class="panel-list_item">
               <p>
                 <span class="icon">
-                  <i class="icon-logo fab fa-product-hunt"></i>
+                  <i class="icon-logo fa-brands fa-product-hunt"></i>
                   <span class="icon-name">Projects</span>
                 </span>
               </p>
@@ -26,28 +26,28 @@
 
             <project-button></project-button>
 
-            <router-link :to="`/user/${user.id}/profile`" class="panel-list_item">
+            <router-link :to="{ name: 'Profile', params: { uuid: user.id } }" class="panel-list_item">
               <p>
                 <span class="icon">
-                  <i class="icon-logo fas fa-user-circle"></i>
+                  <i class="icon-logo fa-solid fa-user-circle"></i>
                   <span class="icon-name">Profile</span>
                 </span>
               </p>
             </router-link>
 
-            <router-link to="/subscriptions" class="panel-list_item">
+            <router-link :to="{ name: 'Subscription' }" class="panel-list_item">
               <p>
                 <span class="icon">
-                  <i class="icon-logo far fa-credit-card"></i>
+                  <i class="icon-logo fa-regular fa-credit-card"></i>
                   <span class="icon-name">Subsctiption</span>
                 </span>
               </p>
             </router-link>
 
-            <router-link to="/admin/panel" class="panel-list_item">
+            <router-link :to="{ name: 'AdminPanel' }" class="panel-list_item">
               <p>
                 <span class="icon">
-                  <i class="icon-logo fas fa-user-lock"></i>
+                  <i class="icon-logo fa-solid fa-user-lock"></i>
                   <span class="icon-name">Admin Panel</span>
                 </span>
               </p>
@@ -56,7 +56,7 @@
             <a href="" @click.prevent="signOut()" class="panel-list_item">
               <p>
                 <span class="icon"
-                  ><i class="icon-logo fas fa-sign-out-alt"></i><span class="icon-name">Logout</span></span
+                  ><i class="icon-logo fa-solid fa-sign-out-alt"></i><span class="icon-name">Logout</span></span
                 >
               </p>
             </a>
@@ -68,7 +68,7 @@
         <vue-progress-bar></vue-progress-bar>
 
         <nav class="navbar navbar-expand-md navbar-light bg-white">
-          <router-link class="navbar-brand" to="/home"><b>Profresh</b></router-link>
+          <router-link class="navbar-brand" :to="{ name: 'Home' }"><b>Profresh</b></router-link>
 
           <button
             class="navbar-toggler"
@@ -87,10 +87,10 @@
             <ul class="navbar-nav ml-auto">
               <!-- Authentication Links -->
               <li class="nav-item" v-if="!loggedIn">
-                <router-link class="nav-link" to="/login">Sign In</router-link>
+                <router-link class="nav-link" :to="{ name: 'Login' }">Sign In</router-link>
               </li>
               <li class="nav-item" v-if="!loggedIn">
-                <router-link class="nav-link" to="/register">Sign Up</router-link>
+                <router-link class="nav-link" :to="{ name: 'Register' }">Sign Up</router-link>
               </li>
               <notifications class="mr-3" v-if="loggedIn"></notifications>
             </ul>
@@ -98,8 +98,8 @@
         </nav>
         <div v-if="loggedIn && showAlertNotice" class="alert alert-dark mt-2" role="alert">
           <b>
-            Upgrade your experience now! <router-link to="/subscriptions"><span>Subscribe</span></router-link> now to
-            unlock all features.
+            Upgrade your experience now!
+            <router-link :to="{ name: 'Subscription' }"><span>Subscribe</span></router-link> now to unlock all features.
           </b>
         </div>
         <router-view> </router-view>

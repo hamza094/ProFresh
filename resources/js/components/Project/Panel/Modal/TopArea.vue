@@ -2,7 +2,7 @@
   <div>
     <div class="edit-border-bottom">
       <div class="task-modal_content">
-        <span v-if="editing == task.id">
+        <span v-if="editing === task.id">
           <input class="title-form form-control" name="title" v-model="form.title" v-text="task.title" />
 
           <span class="btn btn-link btn-sm" @click="updateTitle(task.id)">Update</span>
@@ -18,7 +18,7 @@
       <span class="text-danger font-italic" v-if="errors?.title" v-text="errors?.title?.[0]"></span>
     </div>
 
-    <div v-if="state == 'archived'" class="alert alert-warning" role="alert">
+    <div v-if="state === 'archived'" class="alert alert-warning" role="alert">
       Please note that this task is currently archived. Currently, you can only delete or unarchive this task.
     </div>
   </div>

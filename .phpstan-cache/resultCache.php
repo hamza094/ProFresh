@@ -1,12 +1,12 @@
 <?php declare(strict_types = 1);
 
 return [
-	'lastFullAnalysisTime' => 1762265922,
+	'lastFullAnalysisTime' => 1764085314,
 	'meta' => array (
   'cacheVersion' => 'v12-linesToIgnore',
   'phpstanVersion' => '1.12.32',
   'phpVersion' => 80221,
-  'projectConfig' => '{conditionalTags: {Larastan\\Larastan\\Rules\\NoEnvCallsOutsideOfConfigRule: {phpstan.rules.rule: %noEnvCallsOutsideOfConfig%}, Larastan\\Larastan\\Rules\\NoModelMakeRule: {phpstan.rules.rule: %noModelMake%}, Larastan\\Larastan\\Rules\\NoUnnecessaryCollectionCallRule: {phpstan.rules.rule: %noUnnecessaryCollectionCall%}, Larastan\\Larastan\\Rules\\OctaneCompatibilityRule: {phpstan.rules.rule: %checkOctaneCompatibility%}, Larastan\\Larastan\\Rules\\UnusedViewsRule: {phpstan.rules.rule: %checkUnusedViews%}, Larastan\\Larastan\\Rules\\ModelAppendsRule: {phpstan.rules.rule: %checkModelAppends%}, Larastan\\Larastan\\ReturnTypes\\Helpers\\EnvFunctionDynamicFunctionReturnTypeExtension: {phpstan.broker.dynamicFunctionReturnTypeExtension: %generalizeEnvReturnType%}, Larastan\\Larastan\\ReturnTypes\\Helpers\\ConfigFunctionDynamicFunctionReturnTypeExtension: {phpstan.broker.dynamicFunctionReturnTypeExtension: %checkConfigTypes%}, Larastan\\Larastan\\ReturnTypes\\ConfigGetDynamicMethodReturnTypeExtension: {phpstan.broker.dynamicMethodReturnTypeExtension: %checkConfigTypes%}}, parameters: {universalObjectCratesClasses: [Illuminate\\Http\\Request, Illuminate\\Support\\Optional], earlyTerminatingFunctionCalls: [abort, dd], excludePaths: {analyseAndScan: [*.blade.php, */app/Paypal/CreatePlan.php, */app/Paypal/Paypal.php, */app/Paypal/PaypalAgreement.php, */app/Channels/DatabaseChannel.php, */app/Http/Controllers/Api/V1/Admin/*, */app/Repository/Admin/*, */app/Http/Resources/Api/V1/Admin/*, */app/Http/Requests/Api/V1/Admin/*], analyse: []}, mixinExcludeClasses: [Eloquent], bootstrapFiles: [D:\\apps\\profresh\\vendor\\larastan\\larastan\\bootstrap.php], checkOctaneCompatibility: false, noEnvCallsOutsideOfConfig: false, noModelMake: true, noUnnecessaryCollectionCall: true, noUnnecessaryCollectionCallOnly: [], noUnnecessaryCollectionCallExcept: [], squashedMigrationsPath: [], databaseMigrationsPath: [], disableMigrationScan: false, disableSchemaScan: false, configDirectories: [], viewDirectories: [], checkModelProperties: false, checkPhpDocMissingReturn: false, checkUnusedViews: false, checkModelAppends: false, generalizeEnvReturnType: false, checkConfigTypes: false, paths: [D:\\apps\\profresh\\app, D:\\apps\\profresh\\tests], level: 6, tmpDir: D:\\apps\\profresh\\.phpstan-cache}, rules: [Larastan\\Larastan\\Rules\\UselessConstructs\\NoUselessWithFunctionCallsRule, Larastan\\Larastan\\Rules\\UselessConstructs\\NoUselessValueFunctionCallsRule, Larastan\\Larastan\\Rules\\DeferrableServiceProviderMissingProvidesRule, Larastan\\Larastan\\Rules\\ConsoleCommand\\UndefinedArgumentOrOptionRule], services: [{class: Larastan\\Larastan\\Methods\\RelationForwardsCallsExtension, tags: [phpstan.broker.methodsClassReflectionExtension]}, {class: Larastan\\Larastan\\Methods\\ModelForwardsCallsExtension, tags: [phpstan.broker.methodsClassReflectionExtension]}, {class: Larastan\\Larastan\\Methods\\EloquentBuilderForwardsCallsExtension, tags: [phpstan.broker.methodsClassReflectionExtension]}, {class: Larastan\\Larastan\\Methods\\HigherOrderTapProxyExtension, tags: [phpstan.broker.methodsClassReflectionExtension]}, {class: Larastan\\Larastan\\Methods\\HigherOrderCollectionProxyExtension, tags: [phpstan.broker.methodsClassReflectionExtension]}, {class: Larastan\\Larastan\\Methods\\StorageMethodsClassReflectionExtension, tags: [phpstan.broker.methodsClassReflectionExtension]}, {class: Larastan\\Larastan\\Methods\\Extension, tags: [phpstan.broker.methodsClassReflectionExtension]}, {class: Larastan\\Larastan\\Methods\\ModelFactoryMethodsClassReflectionExtension, tags: [phpstan.broker.methodsClassReflectionExtension]}, {class: Larastan\\Larastan\\Methods\\RedirectResponseMethodsClassReflectionExtension, tags: [phpstan.broker.methodsClassReflectionExtension]}, {class: Larastan\\Larastan\\Methods\\MacroMethodsClassReflectionExtension, tags: [phpstan.broker.methodsClassReflectionExtension]}, {class: Larastan\\Larastan\\Methods\\ViewWithMethodsClassReflectionExtension, tags: [phpstan.broker.methodsClassReflectionExtension]}, {class: Larastan\\Larastan\\Properties\\ModelAccessorExtension, tags: [phpstan.broker.propertiesClassReflectionExtension]}, {class: Larastan\\Larastan\\Properties\\ModelPropertyExtension, tags: [phpstan.broker.propertiesClassReflectionExtension]}, {class: Larastan\\Larastan\\Properties\\HigherOrderCollectionProxyPropertyExtension, tags: [phpstan.broker.propertiesClassReflectionExtension]}, {class: Larastan\\Larastan\\Types\\RelationDynamicMethodReturnTypeExtension, tags: [phpstan.broker.dynamicMethodReturnTypeExtension]}, {class: Larastan\\Larastan\\Types\\ModelRelationsDynamicMethodReturnTypeExtension, tags: [phpstan.broker.dynamicMethodReturnTypeExtension]}, {class: Larastan\\Larastan\\ReturnTypes\\HigherOrderTapProxyExtension, tags: [phpstan.broker.dynamicMethodReturnTypeExtension]}, {class: Larastan\\Larastan\\ReturnTypes\\ContainerArrayAccessDynamicMethodReturnTypeExtension, tags: [phpstan.broker.dynamicMethodReturnTypeExtension], arguments: {className: Illuminate\\Contracts\\Container\\Container}}, {class: Larastan\\Larastan\\ReturnTypes\\ContainerArrayAccessDynamicMethodReturnTypeExtension, tags: [phpstan.broker.dynamicMethodReturnTypeExtension], arguments: {className: Illuminate\\Container\\Container}}, {class: Larastan\\Larastan\\ReturnTypes\\ContainerArrayAccessDynamicMethodReturnTypeExtension, tags: [phpstan.broker.dynamicMethodReturnTypeExtension], arguments: {className: Illuminate\\Foundation\\Application}}, {class: Larastan\\Larastan\\ReturnTypes\\ContainerArrayAccessDynamicMethodReturnTypeExtension, tags: [phpstan.broker.dynamicMethodReturnTypeExtension], arguments: {className: Illuminate\\Contracts\\Foundation\\Application}}, {class: Larastan\\Larastan\\Properties\\ModelRelationsExtension, tags: [phpstan.broker.propertiesClassReflectionExtension]}, {class: Larastan\\Larastan\\ReturnTypes\\ModelOnlyDynamicMethodReturnTypeExtension, tags: [phpstan.broker.dynamicMethodReturnTypeExtension]}, {class: Larastan\\Larastan\\ReturnTypes\\ModelFactoryDynamicStaticMethodReturnTypeExtension, tags: [phpstan.broker.dynamicStaticMethodReturnTypeExtension]}, {class: Larastan\\Larastan\\ReturnTypes\\ModelDynamicStaticMethodReturnTypeExtension, tags: [phpstan.broker.dynamicStaticMethodReturnTypeExtension]}, {class: Larastan\\Larastan\\ReturnTypes\\AppMakeDynamicReturnTypeExtension, tags: [phpstan.broker.dynamicStaticMethodReturnTypeExtension]}, {class: Larastan\\Larastan\\ReturnTypes\\AuthExtension, tags: [phpstan.broker.dynamicStaticMethodReturnTypeExtension]}, {class: Larastan\\Larastan\\ReturnTypes\\GuardDynamicStaticMethodReturnTypeExtension, tags: [phpstan.broker.dynamicStaticMethodReturnTypeExtension]}, {class: Larastan\\Larastan\\ReturnTypes\\AuthManagerExtension, tags: [phpstan.broker.dynamicMethodReturnTypeExtension]}, {class: Larastan\\Larastan\\ReturnTypes\\DateExtension, tags: [phpstan.broker.dynamicStaticMethodReturnTypeExtension]}, {class: Larastan\\Larastan\\ReturnTypes\\GuardExtension, tags: [phpstan.broker.dynamicMethodReturnTypeExtension]}, {class: Larastan\\Larastan\\ReturnTypes\\RequestFileExtension, tags: [phpstan.broker.dynamicMethodReturnTypeExtension]}, {class: Larastan\\Larastan\\ReturnTypes\\RequestRouteExtension, tags: [phpstan.broker.dynamicMethodReturnTypeExtension]}, {class: Larastan\\Larastan\\ReturnTypes\\RequestUserExtension, tags: [phpstan.broker.dynamicMethodReturnTypeExtension]}, {class: Larastan\\Larastan\\ReturnTypes\\EloquentBuilderExtension, tags: [phpstan.broker.dynamicMethodReturnTypeExtension]}, {class: Larastan\\Larastan\\ReturnTypes\\RelationCollectionExtension, tags: [phpstan.broker.dynamicMethodReturnTypeExtension]}, {class: Larastan\\Larastan\\ReturnTypes\\ModelFindExtension, tags: [phpstan.broker.dynamicStaticMethodReturnTypeExtension]}, {class: Larastan\\Larastan\\ReturnTypes\\BuilderModelFindExtension, tags: [phpstan.broker.dynamicMethodReturnTypeExtension]}, {class: Larastan\\Larastan\\ReturnTypes\\TestCaseExtension, tags: [phpstan.broker.dynamicMethodReturnTypeExtension]}, {class: Larastan\\Larastan\\Support\\CollectionHelper}, {class: Larastan\\Larastan\\ReturnTypes\\Helpers\\AuthExtension, tags: [phpstan.broker.dynamicFunctionReturnTypeExtension]}, {class: Larastan\\Larastan\\ReturnTypes\\Helpers\\CollectExtension, tags: [phpstan.broker.dynamicFunctionReturnTypeExtension]}, {class: Larastan\\Larastan\\ReturnTypes\\Helpers\\NowAndTodayExtension, tags: [phpstan.broker.dynamicFunctionReturnTypeExtension]}, {class: Larastan\\Larastan\\ReturnTypes\\Helpers\\ResponseExtension, tags: [phpstan.broker.dynamicFunctionReturnTypeExtension]}, {class: Larastan\\Larastan\\ReturnTypes\\Helpers\\ValidatorExtension, tags: [phpstan.broker.dynamicFunctionReturnTypeExtension]}, {class: Larastan\\Larastan\\ReturnTypes\\CollectionFilterRejectDynamicReturnTypeExtension, tags: [phpstan.broker.dynamicMethodReturnTypeExtension]}, {class: Larastan\\Larastan\\ReturnTypes\\CollectionWhereNotNullDynamicReturnTypeExtension, tags: [phpstan.broker.dynamicMethodReturnTypeExtension]}, {class: Larastan\\Larastan\\ReturnTypes\\NewModelQueryDynamicMethodReturnTypeExtension, tags: [phpstan.broker.dynamicMethodReturnTypeExtension]}, {class: Larastan\\Larastan\\ReturnTypes\\FactoryDynamicMethodReturnTypeExtension, tags: [phpstan.broker.dynamicMethodReturnTypeExtension]}, {class: Larastan\\Larastan\\Types\\AbortIfFunctionTypeSpecifyingExtension, tags: [phpstan.typeSpecifier.functionTypeSpecifyingExtension], arguments: {methodName: abort, negate: false}}, {class: Larastan\\Larastan\\Types\\AbortIfFunctionTypeSpecifyingExtension, tags: [phpstan.typeSpecifier.functionTypeSpecifyingExtension], arguments: {methodName: abort, negate: true}}, {class: Larastan\\Larastan\\Types\\AbortIfFunctionTypeSpecifyingExtension, tags: [phpstan.typeSpecifier.functionTypeSpecifyingExtension], arguments: {methodName: throw, negate: false}}, {class: Larastan\\Larastan\\Types\\AbortIfFunctionTypeSpecifyingExtension, tags: [phpstan.typeSpecifier.functionTypeSpecifyingExtension], arguments: {methodName: throw, negate: true}}, {class: Larastan\\Larastan\\ReturnTypes\\Helpers\\AppExtension, tags: [phpstan.broker.dynamicFunctionReturnTypeExtension]}, {class: Larastan\\Larastan\\ReturnTypes\\Helpers\\ValueExtension, tags: [phpstan.broker.dynamicFunctionReturnTypeExtension]}, {class: Larastan\\Larastan\\ReturnTypes\\Helpers\\StrExtension, tags: [phpstan.broker.dynamicFunctionReturnTypeExtension]}, {class: Larastan\\Larastan\\ReturnTypes\\Helpers\\TapExtension, tags: [phpstan.broker.dynamicFunctionReturnTypeExtension]}, {class: Larastan\\Larastan\\ReturnTypes\\StorageDynamicStaticMethodReturnTypeExtension, tags: [phpstan.broker.dynamicStaticMethodReturnTypeExtension]}, {class: Larastan\\Larastan\\Types\\GenericEloquentCollectionTypeNodeResolverExtension, tags: [phpstan.phpDoc.typeNodeResolverExtension]}, {class: Larastan\\Larastan\\Types\\ViewStringTypeNodeResolverExtension, tags: [phpstan.phpDoc.typeNodeResolverExtension]}, {class: Larastan\\Larastan\\Rules\\OctaneCompatibilityRule}, {class: Larastan\\Larastan\\Rules\\NoEnvCallsOutsideOfConfigRule, arguments: {configDirectories: %configDirectories%}}, {class: Larastan\\Larastan\\Rules\\NoModelMakeRule}, {class: Larastan\\Larastan\\Rules\\NoUnnecessaryCollectionCallRule, arguments: {onlyMethods: %noUnnecessaryCollectionCallOnly%, excludeMethods: %noUnnecessaryCollectionCallExcept%}}, {class: Larastan\\Larastan\\Rules\\ModelAppendsRule}, {class: Larastan\\Larastan\\Types\\GenericEloquentBuilderTypeNodeResolverExtension, tags: [phpstan.phpDoc.typeNodeResolverExtension]}, {class: Larastan\\Larastan\\ReturnTypes\\AppEnvironmentReturnTypeExtension, tags: [phpstan.broker.dynamicMethodReturnTypeExtension], arguments: {class: Illuminate\\Foundation\\Application}}, {class: Larastan\\Larastan\\ReturnTypes\\AppEnvironmentReturnTypeExtension, tags: [phpstan.broker.dynamicMethodReturnTypeExtension], arguments: {class: Illuminate\\Contracts\\Foundation\\Application}}, {class: Larastan\\Larastan\\ReturnTypes\\AppFacadeEnvironmentReturnTypeExtension, tags: [phpstan.broker.dynamicStaticMethodReturnTypeExtension]}, {class: Larastan\\Larastan\\Types\\ModelProperty\\ModelPropertyTypeNodeResolverExtension, tags: [phpstan.phpDoc.typeNodeResolverExtension], arguments: {active: %checkModelProperties%}}, {class: Larastan\\Larastan\\Types\\RelationParserHelper, arguments: {parser: @currentPhpVersionSimpleDirectParser}}, {class: Larastan\\Larastan\\Properties\\MigrationHelper, arguments: {databaseMigrationPath: %databaseMigrationsPath%, disableMigrationScan: %disableMigrationScan%, parser: @currentPhpVersionSimpleDirectParser, reflectionProvider: @reflectionProvider}}, {class: Larastan\\Larastan\\Properties\\SquashedMigrationHelper, arguments: {schemaPaths: %squashedMigrationsPath%, disableSchemaScan: %disableSchemaScan%}}, {class: Larastan\\Larastan\\Properties\\ModelCastHelper}, {class: Larastan\\Larastan\\Properties\\ModelPropertyHelper}, {class: Larastan\\Larastan\\Rules\\ModelRuleHelper}, {class: Larastan\\Larastan\\Methods\\BuilderHelper, arguments: {checkProperties: %checkModelProperties%}}, {class: Larastan\\Larastan\\Rules\\RelationExistenceRule, tags: [phpstan.rules.rule]}, {class: Larastan\\Larastan\\Rules\\CheckDispatchArgumentTypesCompatibleWithClassConstructorRule, arguments: {dispatchableClass: Illuminate\\Foundation\\Bus\\Dispatchable}, tags: [phpstan.rules.rule]}, {class: Larastan\\Larastan\\Rules\\CheckDispatchArgumentTypesCompatibleWithClassConstructorRule, arguments: {dispatchableClass: Illuminate\\Foundation\\Events\\Dispatchable}, tags: [phpstan.rules.rule]}, {class: Larastan\\Larastan\\Properties\\Schema\\MySqlDataTypeToPhpTypeConverter}, {class: Larastan\\Larastan\\LarastanStubFilesExtension, tags: [phpstan.stubFilesExtension]}, {class: Larastan\\Larastan\\Rules\\UnusedViewsRule}, {class: Larastan\\Larastan\\Collectors\\UsedViewFunctionCollector, tags: [phpstan.collector]}, {class: Larastan\\Larastan\\Collectors\\UsedEmailViewCollector, tags: [phpstan.collector]}, {class: Larastan\\Larastan\\Collectors\\UsedViewMakeCollector, tags: [phpstan.collector]}, {class: Larastan\\Larastan\\Collectors\\UsedViewFacadeMakeCollector, tags: [phpstan.collector]}, {class: Larastan\\Larastan\\Collectors\\UsedRouteFacadeViewCollector, tags: [phpstan.collector]}, {class: Larastan\\Larastan\\Collectors\\UsedViewInAnotherViewCollector, arguments: {parser: @currentPhpVersionSimpleDirectParser}}, {class: Larastan\\Larastan\\Support\\ViewFileHelper, arguments: {viewDirectories: %viewDirectories%}}, {class: Larastan\\Larastan\\ReturnTypes\\ApplicationMakeDynamicReturnTypeExtension, tags: [phpstan.broker.dynamicMethodReturnTypeExtension]}, {class: Larastan\\Larastan\\ReturnTypes\\ContainerMakeDynamicReturnTypeExtension, tags: [phpstan.broker.dynamicMethodReturnTypeExtension]}, {class: Larastan\\Larastan\\ReturnTypes\\ConsoleCommand\\ArgumentDynamicReturnTypeExtension, tags: [phpstan.broker.dynamicMethodReturnTypeExtension]}, {class: Larastan\\Larastan\\ReturnTypes\\ConsoleCommand\\HasArgumentDynamicReturnTypeExtension, tags: [phpstan.broker.dynamicMethodReturnTypeExtension]}, {class: Larastan\\Larastan\\ReturnTypes\\ConsoleCommand\\OptionDynamicReturnTypeExtension, tags: [phpstan.broker.dynamicMethodReturnTypeExtension]}, {class: Larastan\\Larastan\\ReturnTypes\\ConsoleCommand\\HasOptionDynamicReturnTypeExtension, tags: [phpstan.broker.dynamicMethodReturnTypeExtension]}, {class: Larastan\\Larastan\\ReturnTypes\\TranslatorGetReturnTypeExtension, tags: [phpstan.broker.dynamicMethodReturnTypeExtension]}, {class: Larastan\\Larastan\\ReturnTypes\\LangGetReturnTypeExtension, tags: [phpstan.broker.dynamicStaticMethodReturnTypeExtension]}, {class: Larastan\\Larastan\\ReturnTypes\\TransHelperReturnTypeExtension, tags: [phpstan.broker.dynamicFunctionReturnTypeExtension]}, {class: Larastan\\Larastan\\ReturnTypes\\DoubleUnderscoreHelperReturnTypeExtension, tags: [phpstan.broker.dynamicFunctionReturnTypeExtension]}, {class: Larastan\\Larastan\\ReturnTypes\\AppMakeHelper}, {class: Larastan\\Larastan\\Internal\\ConsoleApplicationResolver}, {class: Larastan\\Larastan\\Internal\\ConsoleApplicationHelper}, {class: Larastan\\Larastan\\Support\\HigherOrderCollectionProxyHelper}, {class: Larastan\\Larastan\\ReturnTypes\\Helpers\\ConfigFunctionDynamicFunctionReturnTypeExtension}, {class: Larastan\\Larastan\\ReturnTypes\\ConfigGetDynamicMethodReturnTypeExtension}, {class: Larastan\\Larastan\\Support\\ConfigParser, arguments: {parser: @currentPhpVersionSimpleDirectParser, configPaths: %configDirectories%}}, {class: Larastan\\Larastan\\ReturnTypes\\Helpers\\EnvFunctionDynamicFunctionReturnTypeExtension}, {class: Larastan\\Larastan\\ReturnTypes\\FormRequestSafeDynamicMethodReturnTypeExtension, tags: [phpstan.broker.dynamicMethodReturnTypeExtension]}]}',
+  'projectConfig' => '{conditionalTags: {Larastan\\Larastan\\Rules\\NoEnvCallsOutsideOfConfigRule: {phpstan.rules.rule: %noEnvCallsOutsideOfConfig%}, Larastan\\Larastan\\Rules\\NoModelMakeRule: {phpstan.rules.rule: %noModelMake%}, Larastan\\Larastan\\Rules\\NoUnnecessaryCollectionCallRule: {phpstan.rules.rule: %noUnnecessaryCollectionCall%}, Larastan\\Larastan\\Rules\\OctaneCompatibilityRule: {phpstan.rules.rule: %checkOctaneCompatibility%}, Larastan\\Larastan\\Rules\\UnusedViewsRule: {phpstan.rules.rule: %checkUnusedViews%}, Larastan\\Larastan\\Rules\\ModelAppendsRule: {phpstan.rules.rule: %checkModelAppends%}, Larastan\\Larastan\\ReturnTypes\\Helpers\\EnvFunctionDynamicFunctionReturnTypeExtension: {phpstan.broker.dynamicFunctionReturnTypeExtension: %generalizeEnvReturnType%}, Larastan\\Larastan\\ReturnTypes\\Helpers\\ConfigFunctionDynamicFunctionReturnTypeExtension: {phpstan.broker.dynamicFunctionReturnTypeExtension: %checkConfigTypes%}, Larastan\\Larastan\\ReturnTypes\\ConfigGetDynamicMethodReturnTypeExtension: {phpstan.broker.dynamicMethodReturnTypeExtension: %checkConfigTypes%}}, parameters: {universalObjectCratesClasses: [Illuminate\\Http\\Request, Illuminate\\Support\\Optional], earlyTerminatingFunctionCalls: [abort, dd], excludePaths: {analyseAndScan: [*.blade.php, */app/Paypal/CreatePlan.php, */app/Paypal/Paypal.php, */app/Paypal/PaypalAgreement.php, */app/Channels/DatabaseChannel.php, */app/Http/Controllers/Api/V1/Admin/*, */app/Repository/Admin/*, */app/Http/Resources/Api/V1/Admin/*, */app/Http/Requests/Api/V1/Admin/*], analyse: []}, mixinExcludeClasses: [Eloquent], bootstrapFiles: [D:\\apps\\profresh\\vendor\\larastan\\larastan\\bootstrap.php], checkOctaneCompatibility: false, noEnvCallsOutsideOfConfig: false, noModelMake: true, noUnnecessaryCollectionCall: true, noUnnecessaryCollectionCallOnly: [], noUnnecessaryCollectionCallExcept: [], squashedMigrationsPath: [], databaseMigrationsPath: [], disableMigrationScan: false, disableSchemaScan: false, configDirectories: [], viewDirectories: [], checkModelProperties: false, checkPhpDocMissingReturn: false, checkUnusedViews: false, checkModelAppends: false, generalizeEnvReturnType: false, checkConfigTypes: false, allowInRootDir: null, filesRootDir: %allowInRootDir%, disallowedNamespaces: [], disallowedClasses: [], disallowedMethodCalls: [], disallowedStaticCalls: [], disallowedFunctionCalls: [], disallowedConstants: [], disallowedEnums: [], disallowedSuperglobals: [], disallowedAttributes: [], disallowedControlStructures: [], paths: [D:\\apps\\profresh\\app, D:\\apps\\profresh\\tests], level: 6, tmpDir: D:\\apps\\profresh\\.phpstan-cache}, rules: [Larastan\\Larastan\\Rules\\UselessConstructs\\NoUselessWithFunctionCallsRule, Larastan\\Larastan\\Rules\\UselessConstructs\\NoUselessValueFunctionCallsRule, Larastan\\Larastan\\Rules\\DeferrableServiceProviderMissingProvidesRule, Larastan\\Larastan\\Rules\\ConsoleCommand\\UndefinedArgumentOrOptionRule], services: {{class: Larastan\\Larastan\\Methods\\RelationForwardsCallsExtension, tags: [phpstan.broker.methodsClassReflectionExtension]}, {class: Larastan\\Larastan\\Methods\\ModelForwardsCallsExtension, tags: [phpstan.broker.methodsClassReflectionExtension]}, {class: Larastan\\Larastan\\Methods\\EloquentBuilderForwardsCallsExtension, tags: [phpstan.broker.methodsClassReflectionExtension]}, {class: Larastan\\Larastan\\Methods\\HigherOrderTapProxyExtension, tags: [phpstan.broker.methodsClassReflectionExtension]}, {class: Larastan\\Larastan\\Methods\\HigherOrderCollectionProxyExtension, tags: [phpstan.broker.methodsClassReflectionExtension]}, {class: Larastan\\Larastan\\Methods\\StorageMethodsClassReflectionExtension, tags: [phpstan.broker.methodsClassReflectionExtension]}, {class: Larastan\\Larastan\\Methods\\Extension, tags: [phpstan.broker.methodsClassReflectionExtension]}, {class: Larastan\\Larastan\\Methods\\ModelFactoryMethodsClassReflectionExtension, tags: [phpstan.broker.methodsClassReflectionExtension]}, {class: Larastan\\Larastan\\Methods\\RedirectResponseMethodsClassReflectionExtension, tags: [phpstan.broker.methodsClassReflectionExtension]}, {class: Larastan\\Larastan\\Methods\\MacroMethodsClassReflectionExtension, tags: [phpstan.broker.methodsClassReflectionExtension]}, {class: Larastan\\Larastan\\Methods\\ViewWithMethodsClassReflectionExtension, tags: [phpstan.broker.methodsClassReflectionExtension]}, {class: Larastan\\Larastan\\Properties\\ModelAccessorExtension, tags: [phpstan.broker.propertiesClassReflectionExtension]}, {class: Larastan\\Larastan\\Properties\\ModelPropertyExtension, tags: [phpstan.broker.propertiesClassReflectionExtension]}, {class: Larastan\\Larastan\\Properties\\HigherOrderCollectionProxyPropertyExtension, tags: [phpstan.broker.propertiesClassReflectionExtension]}, {class: Larastan\\Larastan\\Types\\RelationDynamicMethodReturnTypeExtension, tags: [phpstan.broker.dynamicMethodReturnTypeExtension]}, {class: Larastan\\Larastan\\Types\\ModelRelationsDynamicMethodReturnTypeExtension, tags: [phpstan.broker.dynamicMethodReturnTypeExtension]}, {class: Larastan\\Larastan\\ReturnTypes\\HigherOrderTapProxyExtension, tags: [phpstan.broker.dynamicMethodReturnTypeExtension]}, {class: Larastan\\Larastan\\ReturnTypes\\ContainerArrayAccessDynamicMethodReturnTypeExtension, tags: [phpstan.broker.dynamicMethodReturnTypeExtension], arguments: {className: Illuminate\\Contracts\\Container\\Container}}, {class: Larastan\\Larastan\\ReturnTypes\\ContainerArrayAccessDynamicMethodReturnTypeExtension, tags: [phpstan.broker.dynamicMethodReturnTypeExtension], arguments: {className: Illuminate\\Container\\Container}}, {class: Larastan\\Larastan\\ReturnTypes\\ContainerArrayAccessDynamicMethodReturnTypeExtension, tags: [phpstan.broker.dynamicMethodReturnTypeExtension], arguments: {className: Illuminate\\Foundation\\Application}}, {class: Larastan\\Larastan\\ReturnTypes\\ContainerArrayAccessDynamicMethodReturnTypeExtension, tags: [phpstan.broker.dynamicMethodReturnTypeExtension], arguments: {className: Illuminate\\Contracts\\Foundation\\Application}}, {class: Larastan\\Larastan\\Properties\\ModelRelationsExtension, tags: [phpstan.broker.propertiesClassReflectionExtension]}, {class: Larastan\\Larastan\\ReturnTypes\\ModelOnlyDynamicMethodReturnTypeExtension, tags: [phpstan.broker.dynamicMethodReturnTypeExtension]}, {class: Larastan\\Larastan\\ReturnTypes\\ModelFactoryDynamicStaticMethodReturnTypeExtension, tags: [phpstan.broker.dynamicStaticMethodReturnTypeExtension]}, {class: Larastan\\Larastan\\ReturnTypes\\ModelDynamicStaticMethodReturnTypeExtension, tags: [phpstan.broker.dynamicStaticMethodReturnTypeExtension]}, {class: Larastan\\Larastan\\ReturnTypes\\AppMakeDynamicReturnTypeExtension, tags: [phpstan.broker.dynamicStaticMethodReturnTypeExtension]}, {class: Larastan\\Larastan\\ReturnTypes\\AuthExtension, tags: [phpstan.broker.dynamicStaticMethodReturnTypeExtension]}, {class: Larastan\\Larastan\\ReturnTypes\\GuardDynamicStaticMethodReturnTypeExtension, tags: [phpstan.broker.dynamicStaticMethodReturnTypeExtension]}, {class: Larastan\\Larastan\\ReturnTypes\\AuthManagerExtension, tags: [phpstan.broker.dynamicMethodReturnTypeExtension]}, {class: Larastan\\Larastan\\ReturnTypes\\DateExtension, tags: [phpstan.broker.dynamicStaticMethodReturnTypeExtension]}, {class: Larastan\\Larastan\\ReturnTypes\\GuardExtension, tags: [phpstan.broker.dynamicMethodReturnTypeExtension]}, {class: Larastan\\Larastan\\ReturnTypes\\RequestFileExtension, tags: [phpstan.broker.dynamicMethodReturnTypeExtension]}, {class: Larastan\\Larastan\\ReturnTypes\\RequestRouteExtension, tags: [phpstan.broker.dynamicMethodReturnTypeExtension]}, {class: Larastan\\Larastan\\ReturnTypes\\RequestUserExtension, tags: [phpstan.broker.dynamicMethodReturnTypeExtension]}, {class: Larastan\\Larastan\\ReturnTypes\\EloquentBuilderExtension, tags: [phpstan.broker.dynamicMethodReturnTypeExtension]}, {class: Larastan\\Larastan\\ReturnTypes\\RelationCollectionExtension, tags: [phpstan.broker.dynamicMethodReturnTypeExtension]}, {class: Larastan\\Larastan\\ReturnTypes\\ModelFindExtension, tags: [phpstan.broker.dynamicStaticMethodReturnTypeExtension]}, {class: Larastan\\Larastan\\ReturnTypes\\BuilderModelFindExtension, tags: [phpstan.broker.dynamicMethodReturnTypeExtension]}, {class: Larastan\\Larastan\\ReturnTypes\\TestCaseExtension, tags: [phpstan.broker.dynamicMethodReturnTypeExtension]}, {class: Larastan\\Larastan\\Support\\CollectionHelper}, {class: Larastan\\Larastan\\ReturnTypes\\Helpers\\AuthExtension, tags: [phpstan.broker.dynamicFunctionReturnTypeExtension]}, {class: Larastan\\Larastan\\ReturnTypes\\Helpers\\CollectExtension, tags: [phpstan.broker.dynamicFunctionReturnTypeExtension]}, {class: Larastan\\Larastan\\ReturnTypes\\Helpers\\NowAndTodayExtension, tags: [phpstan.broker.dynamicFunctionReturnTypeExtension]}, {class: Larastan\\Larastan\\ReturnTypes\\Helpers\\ResponseExtension, tags: [phpstan.broker.dynamicFunctionReturnTypeExtension]}, {class: Larastan\\Larastan\\ReturnTypes\\Helpers\\ValidatorExtension, tags: [phpstan.broker.dynamicFunctionReturnTypeExtension]}, {class: Larastan\\Larastan\\ReturnTypes\\CollectionFilterRejectDynamicReturnTypeExtension, tags: [phpstan.broker.dynamicMethodReturnTypeExtension]}, {class: Larastan\\Larastan\\ReturnTypes\\CollectionWhereNotNullDynamicReturnTypeExtension, tags: [phpstan.broker.dynamicMethodReturnTypeExtension]}, {class: Larastan\\Larastan\\ReturnTypes\\NewModelQueryDynamicMethodReturnTypeExtension, tags: [phpstan.broker.dynamicMethodReturnTypeExtension]}, {class: Larastan\\Larastan\\ReturnTypes\\FactoryDynamicMethodReturnTypeExtension, tags: [phpstan.broker.dynamicMethodReturnTypeExtension]}, {class: Larastan\\Larastan\\Types\\AbortIfFunctionTypeSpecifyingExtension, tags: [phpstan.typeSpecifier.functionTypeSpecifyingExtension], arguments: {methodName: abort, negate: false}}, {class: Larastan\\Larastan\\Types\\AbortIfFunctionTypeSpecifyingExtension, tags: [phpstan.typeSpecifier.functionTypeSpecifyingExtension], arguments: {methodName: abort, negate: true}}, {class: Larastan\\Larastan\\Types\\AbortIfFunctionTypeSpecifyingExtension, tags: [phpstan.typeSpecifier.functionTypeSpecifyingExtension], arguments: {methodName: throw, negate: false}}, {class: Larastan\\Larastan\\Types\\AbortIfFunctionTypeSpecifyingExtension, tags: [phpstan.typeSpecifier.functionTypeSpecifyingExtension], arguments: {methodName: throw, negate: true}}, {class: Larastan\\Larastan\\ReturnTypes\\Helpers\\AppExtension, tags: [phpstan.broker.dynamicFunctionReturnTypeExtension]}, {class: Larastan\\Larastan\\ReturnTypes\\Helpers\\ValueExtension, tags: [phpstan.broker.dynamicFunctionReturnTypeExtension]}, {class: Larastan\\Larastan\\ReturnTypes\\Helpers\\StrExtension, tags: [phpstan.broker.dynamicFunctionReturnTypeExtension]}, {class: Larastan\\Larastan\\ReturnTypes\\Helpers\\TapExtension, tags: [phpstan.broker.dynamicFunctionReturnTypeExtension]}, {class: Larastan\\Larastan\\ReturnTypes\\StorageDynamicStaticMethodReturnTypeExtension, tags: [phpstan.broker.dynamicStaticMethodReturnTypeExtension]}, {class: Larastan\\Larastan\\Types\\GenericEloquentCollectionTypeNodeResolverExtension, tags: [phpstan.phpDoc.typeNodeResolverExtension]}, {class: Larastan\\Larastan\\Types\\ViewStringTypeNodeResolverExtension, tags: [phpstan.phpDoc.typeNodeResolverExtension]}, {class: Larastan\\Larastan\\Rules\\OctaneCompatibilityRule}, {class: Larastan\\Larastan\\Rules\\NoEnvCallsOutsideOfConfigRule, arguments: {configDirectories: %configDirectories%}}, {class: Larastan\\Larastan\\Rules\\NoModelMakeRule}, {class: Larastan\\Larastan\\Rules\\NoUnnecessaryCollectionCallRule, arguments: {onlyMethods: %noUnnecessaryCollectionCallOnly%, excludeMethods: %noUnnecessaryCollectionCallExcept%}}, {class: Larastan\\Larastan\\Rules\\ModelAppendsRule}, {class: Larastan\\Larastan\\Types\\GenericEloquentBuilderTypeNodeResolverExtension, tags: [phpstan.phpDoc.typeNodeResolverExtension]}, {class: Larastan\\Larastan\\ReturnTypes\\AppEnvironmentReturnTypeExtension, tags: [phpstan.broker.dynamicMethodReturnTypeExtension], arguments: {class: Illuminate\\Foundation\\Application}}, {class: Larastan\\Larastan\\ReturnTypes\\AppEnvironmentReturnTypeExtension, tags: [phpstan.broker.dynamicMethodReturnTypeExtension], arguments: {class: Illuminate\\Contracts\\Foundation\\Application}}, {class: Larastan\\Larastan\\ReturnTypes\\AppFacadeEnvironmentReturnTypeExtension, tags: [phpstan.broker.dynamicStaticMethodReturnTypeExtension]}, {class: Larastan\\Larastan\\Types\\ModelProperty\\ModelPropertyTypeNodeResolverExtension, tags: [phpstan.phpDoc.typeNodeResolverExtension], arguments: {active: %checkModelProperties%}}, {class: Larastan\\Larastan\\Types\\RelationParserHelper, arguments: {parser: @currentPhpVersionSimpleDirectParser}}, {class: Larastan\\Larastan\\Properties\\MigrationHelper, arguments: {databaseMigrationPath: %databaseMigrationsPath%, disableMigrationScan: %disableMigrationScan%, parser: @currentPhpVersionSimpleDirectParser, reflectionProvider: @reflectionProvider}}, {class: Larastan\\Larastan\\Properties\\SquashedMigrationHelper, arguments: {schemaPaths: %squashedMigrationsPath%, disableSchemaScan: %disableSchemaScan%}}, {class: Larastan\\Larastan\\Properties\\ModelCastHelper}, {class: Larastan\\Larastan\\Properties\\ModelPropertyHelper}, {class: Larastan\\Larastan\\Rules\\ModelRuleHelper}, {class: Larastan\\Larastan\\Methods\\BuilderHelper, arguments: {checkProperties: %checkModelProperties%}}, {class: Larastan\\Larastan\\Rules\\RelationExistenceRule, tags: [phpstan.rules.rule]}, {class: Larastan\\Larastan\\Rules\\CheckDispatchArgumentTypesCompatibleWithClassConstructorRule, arguments: {dispatchableClass: Illuminate\\Foundation\\Bus\\Dispatchable}, tags: [phpstan.rules.rule]}, {class: Larastan\\Larastan\\Rules\\CheckDispatchArgumentTypesCompatibleWithClassConstructorRule, arguments: {dispatchableClass: Illuminate\\Foundation\\Events\\Dispatchable}, tags: [phpstan.rules.rule]}, {class: Larastan\\Larastan\\Properties\\Schema\\MySqlDataTypeToPhpTypeConverter}, {class: Larastan\\Larastan\\LarastanStubFilesExtension, tags: [phpstan.stubFilesExtension]}, {class: Larastan\\Larastan\\Rules\\UnusedViewsRule}, {class: Larastan\\Larastan\\Collectors\\UsedViewFunctionCollector, tags: [phpstan.collector]}, {class: Larastan\\Larastan\\Collectors\\UsedEmailViewCollector, tags: [phpstan.collector]}, {class: Larastan\\Larastan\\Collectors\\UsedViewMakeCollector, tags: [phpstan.collector]}, {class: Larastan\\Larastan\\Collectors\\UsedViewFacadeMakeCollector, tags: [phpstan.collector]}, {class: Larastan\\Larastan\\Collectors\\UsedRouteFacadeViewCollector, tags: [phpstan.collector]}, {class: Larastan\\Larastan\\Collectors\\UsedViewInAnotherViewCollector, arguments: {parser: @currentPhpVersionSimpleDirectParser}}, {class: Larastan\\Larastan\\Support\\ViewFileHelper, arguments: {viewDirectories: %viewDirectories%}}, {class: Larastan\\Larastan\\ReturnTypes\\ApplicationMakeDynamicReturnTypeExtension, tags: [phpstan.broker.dynamicMethodReturnTypeExtension]}, {class: Larastan\\Larastan\\ReturnTypes\\ContainerMakeDynamicReturnTypeExtension, tags: [phpstan.broker.dynamicMethodReturnTypeExtension]}, {class: Larastan\\Larastan\\ReturnTypes\\ConsoleCommand\\ArgumentDynamicReturnTypeExtension, tags: [phpstan.broker.dynamicMethodReturnTypeExtension]}, {class: Larastan\\Larastan\\ReturnTypes\\ConsoleCommand\\HasArgumentDynamicReturnTypeExtension, tags: [phpstan.broker.dynamicMethodReturnTypeExtension]}, {class: Larastan\\Larastan\\ReturnTypes\\ConsoleCommand\\OptionDynamicReturnTypeExtension, tags: [phpstan.broker.dynamicMethodReturnTypeExtension]}, {class: Larastan\\Larastan\\ReturnTypes\\ConsoleCommand\\HasOptionDynamicReturnTypeExtension, tags: [phpstan.broker.dynamicMethodReturnTypeExtension]}, {class: Larastan\\Larastan\\ReturnTypes\\TranslatorGetReturnTypeExtension, tags: [phpstan.broker.dynamicMethodReturnTypeExtension]}, {class: Larastan\\Larastan\\ReturnTypes\\LangGetReturnTypeExtension, tags: [phpstan.broker.dynamicStaticMethodReturnTypeExtension]}, {class: Larastan\\Larastan\\ReturnTypes\\TransHelperReturnTypeExtension, tags: [phpstan.broker.dynamicFunctionReturnTypeExtension]}, {class: Larastan\\Larastan\\ReturnTypes\\DoubleUnderscoreHelperReturnTypeExtension, tags: [phpstan.broker.dynamicFunctionReturnTypeExtension]}, {class: Larastan\\Larastan\\ReturnTypes\\AppMakeHelper}, {class: Larastan\\Larastan\\Internal\\ConsoleApplicationResolver}, {class: Larastan\\Larastan\\Internal\\ConsoleApplicationHelper}, {class: Larastan\\Larastan\\Support\\HigherOrderCollectionProxyHelper}, {class: Larastan\\Larastan\\ReturnTypes\\Helpers\\ConfigFunctionDynamicFunctionReturnTypeExtension}, {class: Larastan\\Larastan\\ReturnTypes\\ConfigGetDynamicMethodReturnTypeExtension}, {class: Larastan\\Larastan\\Support\\ConfigParser, arguments: {parser: @currentPhpVersionSimpleDirectParser, configPaths: %configDirectories%}}, {class: Larastan\\Larastan\\ReturnTypes\\Helpers\\EnvFunctionDynamicFunctionReturnTypeExtension}, {class: Larastan\\Larastan\\ReturnTypes\\FormRequestSafeDynamicMethodReturnTypeExtension, tags: [phpstan.broker.dynamicMethodReturnTypeExtension]}, {class: TheCodingMachine\\Safe\\PHPStan\\Rules\\UseSafeFunctionsRule, tags: [phpstan.rules.rule]}, {class: TheCodingMachine\\Safe\\PHPStan\\Rules\\UseSafeClassesRule, tags: [phpstan.rules.rule]}, {class: TheCodingMachine\\Safe\\PHPStan\\Type\\Php\\ReplaceSafeFunctionsDynamicReturnTypeExtension, tags: [phpstan.broker.dynamicFunctionReturnTypeExtension]}, Spaze\\PHPStan\\Rules\\Disallowed\\Allowed\\Allowed, Spaze\\PHPStan\\Rules\\Disallowed\\Allowed\\AllowedConfigFactory, Spaze\\PHPStan\\Rules\\Disallowed\\Allowed\\AllowedPath, Spaze\\PHPStan\\Rules\\Disallowed\\Allowed\\GetAttributesWhenInSignature, Spaze\\PHPStan\\Rules\\Disallowed\\DisallowedAttributeFactory, Spaze\\PHPStan\\Rules\\Disallowed\\DisallowedCallFactory, Spaze\\PHPStan\\Rules\\Disallowed\\DisallowedConstantFactory, Spaze\\PHPStan\\Rules\\Disallowed\\DisallowedControlStructureFactory, Spaze\\PHPStan\\Rules\\Disallowed\\DisallowedNamespaceFactory, Spaze\\PHPStan\\Rules\\Disallowed\\DisallowedSuperglobalFactory, {arguments: {rootDir: %filesRootDir%}}, Spaze\\PHPStan\\Rules\\Disallowed\\Formatter\\Formatter, Spaze\\PHPStan\\Rules\\Disallowed\\Identifier\\Identifier, Spaze\\PHPStan\\Rules\\Disallowed\\Normalizer\\Normalizer, Spaze\\PHPStan\\Rules\\Disallowed\\RuleErrors\\DisallowedAttributeRuleErrors, {arguments: {forbiddenFunctionCalls: %disallowedFunctionCalls%, forbiddenMethodCalls: %disallowedMethodCalls%, forbiddenStaticCalls: %disallowedStaticCalls%}}, Spaze\\PHPStan\\Rules\\Disallowed\\RuleErrors\\DisallowedConstantRuleErrors, Spaze\\PHPStan\\Rules\\Disallowed\\RuleErrors\\DisallowedControlStructureRuleErrors, Spaze\\PHPStan\\Rules\\Disallowed\\RuleErrors\\DisallowedFunctionRuleErrors, Spaze\\PHPStan\\Rules\\Disallowed\\RuleErrors\\DisallowedMethodRuleErrors, Spaze\\PHPStan\\Rules\\Disallowed\\RuleErrors\\DisallowedNamespaceRuleErrors, Spaze\\PHPStan\\Rules\\Disallowed\\RuleErrors\\DisallowedCallsRuleErrors, Spaze\\PHPStan\\Rules\\Disallowed\\RuleErrors\\DisallowedVariableRuleErrors, Spaze\\PHPStan\\Rules\\Disallowed\\Type\\TypeResolver, Spaze\\PHPStan\\Rules\\Disallowed\\UsageFactory\\NamespaceUsageFactory, {factory: {arguments: {forbiddenNamespaces: %disallowedNamespaces%}}, tags: [phpstan.rules.rule]}, {factory: {arguments: {forbiddenNamespaces: %disallowedClasses%}}, tags: [phpstan.rules.rule]}, {factory: {arguments: {forbiddenCalls: %disallowedMethodCalls%}}, tags: [phpstan.rules.rule]}, {factory: {arguments: {forbiddenCalls: %disallowedMethodCalls%}}, tags: [phpstan.rules.rule]}, {factory: {arguments: {forbiddenCalls: %disallowedStaticCalls%}}, tags: [phpstan.rules.rule]}, {factory: {arguments: {forbiddenCalls: %disallowedFunctionCalls%}}, tags: [phpstan.rules.rule]}, {factory: {arguments: {forbiddenCalls: %disallowedFunctionCalls%}}, tags: [phpstan.rules.rule]}, {factory: {arguments: {forbiddenCalls: %disallowedFunctionCalls%}}, tags: [phpstan.rules.rule]}, {factory: {arguments: {forbiddenCalls: %disallowedFunctionCalls%}}, tags: [phpstan.rules.rule]}, {factory: {arguments: {forbiddenCalls: %disallowedFunctionCalls%}}, tags: [phpstan.rules.rule]}, {factory: {arguments: {forbiddenCalls: %disallowedFunctionCalls%}}, tags: [phpstan.rules.rule]}, {factory: {arguments: {forbiddenCalls: %disallowedFunctionCalls%}}, tags: [phpstan.rules.rule]}, {factory: {arguments: {forbiddenCalls: %disallowedFunctionCalls%}}, tags: [phpstan.rules.rule]}, {factory: {arguments: {forbiddenCalls: %disallowedFunctionCalls%}}, tags: [phpstan.rules.rule]}, {factory: {arguments: {forbiddenCalls: %disallowedFunctionCalls%}}, tags: [phpstan.rules.rule]}, {factory: {arguments: {forbiddenCalls: %disallowedMethodCalls%}}, tags: [phpstan.rules.rule]}, {factory: {arguments: {forbiddenCalls: %disallowedStaticCalls%}}, tags: [phpstan.rules.rule]}, {factory: {arguments: {disallowedConstants: %disallowedConstants%}}, tags: [phpstan.rules.rule]}, classConstantUsages: {factory: {arguments: {disallowedConstants: %disallowedConstants%}}, tags: [phpstan.rules.rule]}, {factory: {arguments: {disallowedConstants: %disallowedEnums%}}, tags: [phpstan.rules.rule]}, {factory: {arguments: {disallowedVariables: {arguments: [%disallowedSuperglobals%]}}}, tags: [phpstan.rules.rule]}, {factory: {arguments: {disallowedAttributes: %disallowedAttributes%}}, tags: [phpstan.rules.rule]}, {factory: {arguments: {disallowedControlStructures: {arguments: [%disallowedControlStructures%]}}}, tags: [phpstan.rules.rule]}, {factory: {arguments: {disallowedControlStructures: {arguments: [%disallowedControlStructures%]}}}, tags: [phpstan.rules.rule]}, {factory: {arguments: {disallowedControlStructures: {arguments: [%disallowedControlStructures%]}}}, tags: [phpstan.rules.rule]}, {factory: {arguments: {disallowedControlStructures: {arguments: [%disallowedControlStructures%]}}}, tags: [phpstan.rules.rule]}, {factory: {arguments: {disallowedControlStructures: {arguments: [%disallowedControlStructures%]}}}, tags: [phpstan.rules.rule]}, {factory: {arguments: {disallowedControlStructures: {arguments: [%disallowedControlStructures%]}}}, tags: [phpstan.rules.rule]}, {factory: {arguments: {disallowedControlStructures: {arguments: [%disallowedControlStructures%]}}}, tags: [phpstan.rules.rule]}, {factory: {arguments: {disallowedControlStructures: {arguments: [%disallowedControlStructures%]}}}, tags: [phpstan.rules.rule]}, {factory: {arguments: {disallowedControlStructures: {arguments: [%disallowedControlStructures%]}}}, tags: [phpstan.rules.rule]}, {factory: {arguments: {disallowedControlStructures: {arguments: [%disallowedControlStructures%]}}}, tags: [phpstan.rules.rule]}, {factory: {arguments: {disallowedControlStructures: {arguments: [%disallowedControlStructures%]}}}, tags: [phpstan.rules.rule]}, {factory: {arguments: {disallowedControlStructures: {arguments: [%disallowedControlStructures%]}}}, tags: [phpstan.rules.rule]}, {factory: {arguments: {disallowedControlStructures: {arguments: [%disallowedControlStructures%]}}}, tags: [phpstan.rules.rule]}, {factory: {arguments: {disallowedControlStructures: {arguments: [%disallowedControlStructures%]}}}, tags: [phpstan.rules.rule]}, {factory: {arguments: {disallowedControlStructures: {arguments: [%disallowedControlStructures%]}}}, tags: [phpstan.rules.rule]}, {factory: Spaze\\PHPStan\\Rules\\Disallowed\\HelperRules\\SetCurrentClassMethodNameHelperRule, tags: [phpstan.rules.rule]}, {factory: Spaze\\PHPStan\\Rules\\Disallowed\\HelperRules\\UnsetCurrentClassMethodNameHelperRule, tags: [phpstan.rules.rule]}, {factory: Spaze\\PHPStan\\Rules\\Disallowed\\HelperRules\\SetCurrentFunctionNameHelperRule, tags: [phpstan.rules.rule]}, {factory: Spaze\\PHPStan\\Rules\\Disallowed\\HelperRules\\UnsetCurrentFunctionNameHelperRule, tags: [phpstan.rules.rule]}}}',
   'analysedPaths' => 
   array (
     0 => 'D:\\apps\\profresh\\app',
@@ -17,7 +17,7 @@ return [
   ),
   'composerLocks' => 
   array (
-    'D:/apps/profresh/composer.lock' => 'edc7db320476d125ca223ec0d7e92761a5f6bec1',
+    'D:/apps/profresh/composer.lock' => 'a25798a752ca3efd747ef7e27bffbba9ed9e6f53',
   ),
   'composerInstalled' => 
   array (
@@ -259,9 +259,9 @@ return [
         ),
         'dedoc/scramble' => 
         array (
-          'pretty_version' => 'v0.11.33',
-          'version' => '0.11.33.0',
-          'reference' => '3c44e2ec517045590cb36b165967283fd5798edc',
+          'pretty_version' => 'v0.13.2',
+          'version' => '0.13.2.0',
+          'reference' => '0879b46a2b398e7e55598f5a25e0783c3e3ae43c',
           'type' => 'library',
           'install_path' => 'D:\\apps\\profresh\\vendor\\composer/../dedoc/scramble',
           'aliases' => 
@@ -364,6 +364,30 @@ return [
           array (
           ),
           'dev_requirement' => false,
+        ),
+        'enlightn/enlightn' => 
+        array (
+          'pretty_version' => 'v2.10.0',
+          'version' => '2.10.0.0',
+          'reference' => '983ce84674609be77a1723475f8d2bd205575af2',
+          'type' => 'library',
+          'install_path' => 'D:\\apps\\profresh\\vendor\\composer/../enlightn/enlightn',
+          'aliases' => 
+          array (
+          ),
+          'dev_requirement' => true,
+        ),
+        'enlightn/security-checker' => 
+        array (
+          'pretty_version' => 'v2.0.0',
+          'version' => '2.0.0.0',
+          'reference' => 'd495ab07639388c7c770c5223aa0d42fee1d2604',
+          'type' => 'library',
+          'install_path' => 'D:\\apps\\profresh\\vendor\\composer/../enlightn/security-checker',
+          'aliases' => 
+          array (
+          ),
+          'dev_requirement' => true,
         ),
         'evenement/evenement' => 
         array (
@@ -1547,6 +1571,18 @@ return [
           ),
           'dev_requirement' => true,
         ),
+        'phpstan/phpstan-deprecation-rules' => 
+        array (
+          'pretty_version' => '1.2.1',
+          'version' => '1.2.1.0',
+          'reference' => 'f94d246cc143ec5a23da868f8f7e1393b50eaa82',
+          'type' => 'phpstan-extension',
+          'install_path' => 'D:\\apps\\profresh\\vendor\\composer/../phpstan/phpstan-deprecation-rules',
+          'aliases' => 
+          array (
+          ),
+          'dev_requirement' => true,
+        ),
         'phpunit/php-code-coverage' => 
         array (
           'pretty_version' => '11.0.11',
@@ -2306,9 +2342,9 @@ return [
         ),
         'spatie/laravel-permission' => 
         array (
-          'pretty_version' => '6.22.0',
-          'version' => '6.22.0.0',
-          'reference' => '8c87966ddc21893bfda54b792047473703992625',
+          'pretty_version' => '6.23.0',
+          'version' => '6.23.0.0',
+          'reference' => '9e41247bd512b1e6c229afbc1eb528f7565ae3bb',
           'type' => 'library',
           'install_path' => 'D:\\apps\\profresh\\vendor\\composer/../spatie/laravel-permission',
           'aliases' => 
@@ -2371,6 +2407,18 @@ return [
           array (
           ),
           'dev_requirement' => false,
+        ),
+        'spaze/phpstan-disallowed-calls' => 
+        array (
+          'pretty_version' => 'v4.7.0',
+          'version' => '4.7.0.0',
+          'reference' => '0765102eeb154da8a3bcef3200375bb4297a2141',
+          'type' => 'phpstan-extension',
+          'install_path' => 'D:\\apps\\profresh\\vendor\\composer/../spaze/phpstan-disallowed-calls',
+          'aliases' => 
+          array (
+          ),
+          'dev_requirement' => true,
         ),
         'squizlabs/php_codesniffer' => 
         array (
@@ -2831,6 +2879,42 @@ return [
           array (
           ),
           'dev_requirement' => false,
+        ),
+        'symfony/yaml' => 
+        array (
+          'pretty_version' => 'v7.3.5',
+          'version' => '7.3.5.0',
+          'reference' => '90208e2fc6f68f613eae7ca25a2458a931b1bacc',
+          'type' => 'library',
+          'install_path' => 'D:\\apps\\profresh\\vendor\\composer/../symfony/yaml',
+          'aliases' => 
+          array (
+          ),
+          'dev_requirement' => true,
+        ),
+        'thecodingmachine/phpstan-safe-rule' => 
+        array (
+          'pretty_version' => 'v1.2.0',
+          'version' => '1.2.0.0',
+          'reference' => '8a7b88e0d54f209a488095085f183e9174c40e1e',
+          'type' => 'phpstan-extension',
+          'install_path' => 'D:\\apps\\profresh\\vendor\\composer/../thecodingmachine/phpstan-safe-rule',
+          'aliases' => 
+          array (
+          ),
+          'dev_requirement' => true,
+        ),
+        'thecodingmachine/safe' => 
+        array (
+          'pretty_version' => 'v2.5.0',
+          'version' => '2.5.0.0',
+          'reference' => '3115ecd6b4391662b4931daac4eba6b07a2ac1f0',
+          'type' => 'library',
+          'install_path' => 'D:\\apps\\profresh\\vendor\\composer/../thecodingmachine/safe',
+          'aliases' => 
+          array (
+          ),
+          'dev_requirement' => true,
         ),
         'theseer/tokenizer' => 
         array (
@@ -3453,41 +3537,6 @@ return [
       ),
     )),
   ),
-  'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\Auth\\ResetPasswordController.php' => 
-  array (
-    0 => 
-    \PHPStan\Analyser\Error::__set_state(array(
-       'message' => 'Method App\\Http\\Controllers\\Api\\Auth\\ResetPasswordController::sendResetLink() has no return type specified.',
-       'file' => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\Auth\\ResetPasswordController.php',
-       'line' => 32,
-       'canBeIgnored' => true,
-       'filePath' => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\Auth\\ResetPasswordController.php',
-       'traitFilePath' => NULL,
-       'tip' => NULL,
-       'nodeLine' => 32,
-       'nodeType' => 'PHPStan\\Node\\InClassMethodNode',
-       'identifier' => 'missingType.return',
-       'metadata' => 
-      array (
-      ),
-    )),
-    1 => 
-    \PHPStan\Analyser\Error::__set_state(array(
-       'message' => 'Method App\\Http\\Controllers\\Api\\Auth\\ResetPasswordController::resetPassword() has no return type specified.',
-       'file' => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\Auth\\ResetPasswordController.php',
-       'line' => 48,
-       'canBeIgnored' => true,
-       'filePath' => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\Auth\\ResetPasswordController.php',
-       'traitFilePath' => NULL,
-       'tip' => NULL,
-       'nodeLine' => 48,
-       'nodeType' => 'PHPStan\\Node\\InClassMethodNode',
-       'identifier' => 'missingType.return',
-       'metadata' => 
-      array (
-      ),
-    )),
-  ),
   'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\ActivityController.php' => 
   array (
     0 => 
@@ -3698,12 +3747,12 @@ return [
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Method App\\Http\\Controllers\\Api\\V1\\ProjectController::update() has no return type specified.',
        'file' => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\ProjectController.php',
-       'line' => 80,
+       'line' => 82,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\ProjectController.php',
        'traitFilePath' => NULL,
        'tip' => NULL,
-       'nodeLine' => 80,
+       'nodeLine' => 82,
        'nodeType' => 'PHPStan\\Node\\InClassMethodNode',
        'identifier' => 'missingType.return',
        'metadata' => 
@@ -4266,12 +4315,12 @@ return [
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Method App\\Http\\Requests\\Api\\V1\\MessageRequest::validator() has no return type specified.',
        'file' => 'D:\\apps\\profresh\\app\\Http\\Requests\\Api\\V1\\MessageRequest.php',
-       'line' => 20,
+       'line' => 22,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\app\\Http\\Requests\\Api\\V1\\MessageRequest.php',
        'traitFilePath' => NULL,
        'tip' => NULL,
-       'nodeLine' => 20,
+       'nodeLine' => 22,
        'nodeType' => 'PHPStan\\Node\\InClassMethodNode',
        'identifier' => 'missingType.return',
        'metadata' => 
@@ -4282,12 +4331,12 @@ return [
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Method App\\Http\\Requests\\Api\\V1\\MessageRequest::validator() has parameter $factory with no type specified.',
        'file' => 'D:\\apps\\profresh\\app\\Http\\Requests\\Api\\V1\\MessageRequest.php',
-       'line' => 20,
+       'line' => 22,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\app\\Http\\Requests\\Api\\V1\\MessageRequest.php',
        'traitFilePath' => NULL,
        'tip' => NULL,
-       'nodeLine' => 20,
+       'nodeLine' => 22,
        'nodeType' => 'PHPStan\\Node\\InClassMethodNode',
        'identifier' => 'missingType.parameter',
        'metadata' => 
@@ -4298,12 +4347,12 @@ return [
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Method App\\Http\\Requests\\Api\\V1\\MessageRequest::sanitize() has no return type specified.',
        'file' => 'D:\\apps\\profresh\\app\\Http\\Requests\\Api\\V1\\MessageRequest.php',
-       'line' => 27,
+       'line' => 29,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\app\\Http\\Requests\\Api\\V1\\MessageRequest.php',
        'traitFilePath' => NULL,
        'tip' => NULL,
-       'nodeLine' => 27,
+       'nodeLine' => 29,
        'nodeType' => 'PHPStan\\Node\\InClassMethodNode',
        'identifier' => 'missingType.return',
        'metadata' => 
@@ -4314,12 +4363,12 @@ return [
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Method App\\Http\\Requests\\Api\\V1\\MessageRequest::rules() return type has no value type specified in iterable type array.',
        'file' => 'D:\\apps\\profresh\\app\\Http\\Requests\\Api\\V1\\MessageRequest.php',
-       'line' => 39,
+       'line' => 41,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\app\\Http\\Requests\\Api\\V1\\MessageRequest.php',
        'traitFilePath' => NULL,
        'tip' => 'See: https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type',
-       'nodeLine' => 39,
+       'nodeLine' => 41,
        'nodeType' => 'PHPStan\\Node\\InClassMethodNode',
        'identifier' => 'missingType.iterableValue',
        'metadata' => 
@@ -4330,12 +4379,12 @@ return [
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Method App\\Http\\Requests\\Api\\V1\\MessageRequest::messages() return type has no value type specified in iterable type array.',
        'file' => 'D:\\apps\\profresh\\app\\Http\\Requests\\Api\\V1\\MessageRequest.php',
-       'line' => 52,
+       'line' => 54,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\app\\Http\\Requests\\Api\\V1\\MessageRequest.php',
        'traitFilePath' => NULL,
        'tip' => 'See: https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type',
-       'nodeLine' => 52,
+       'nodeLine' => 54,
        'nodeType' => 'PHPStan\\Node\\InClassMethodNode',
        'identifier' => 'missingType.iterableValue',
        'metadata' => 
@@ -6417,12 +6466,12 @@ return [
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Class App\\Models\\Conversation uses generic trait Illuminate\\Database\\Eloquent\\Factories\\HasFactory but does not specify its types: TFactory',
        'file' => 'D:\\apps\\profresh\\app\\Models\\Conversation.php',
-       'line' => 14,
+       'line' => 20,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\app\\Models\\Conversation.php',
        'traitFilePath' => NULL,
        'tip' => NULL,
-       'nodeLine' => 14,
+       'nodeLine' => 20,
        'nodeType' => 'PhpParser\\Node\\Stmt\\TraitUse',
        'identifier' => 'missingType.generics',
        'metadata' => 
@@ -6433,12 +6482,12 @@ return [
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Method App\\Models\\Conversation::project() should return Illuminate\\Database\\Eloquent\\Relations\\BelongsTo<App\\Models\\Project, App\\Models\\Conversation> but returns Illuminate\\Database\\Eloquent\\Relations\\BelongsTo<App\\Models\\Project, $this(App\\Models\\Conversation)>.',
        'file' => 'D:\\apps\\profresh\\app\\Models\\Conversation.php',
-       'line' => 25,
+       'line' => 33,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\app\\Models\\Conversation.php',
        'traitFilePath' => NULL,
        'tip' => 'Template type TDeclaringModel on class Illuminate\\Database\\Eloquent\\Relations\\BelongsTo is not covariant. Learn more: <fg=cyan>https://phpstan.org/blog/whats-up-with-template-covariant</>',
-       'nodeLine' => 25,
+       'nodeLine' => 33,
        'nodeType' => 'PhpParser\\Node\\Stmt\\Return_',
        'identifier' => 'return.type',
        'metadata' => 
@@ -6449,12 +6498,12 @@ return [
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Method App\\Models\\Conversation::user() should return Illuminate\\Database\\Eloquent\\Relations\\BelongsTo<App\\Models\\User, App\\Models\\Conversation> but returns Illuminate\\Database\\Eloquent\\Relations\\BelongsTo<App\\Models\\User, $this(App\\Models\\Conversation)>.',
        'file' => 'D:\\apps\\profresh\\app\\Models\\Conversation.php',
-       'line' => 35,
+       'line' => 43,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\app\\Models\\Conversation.php',
        'traitFilePath' => NULL,
        'tip' => 'Template type TDeclaringModel on class Illuminate\\Database\\Eloquent\\Relations\\BelongsTo is not covariant. Learn more: <fg=cyan>https://phpstan.org/blog/whats-up-with-template-covariant</>',
-       'nodeLine' => 35,
+       'nodeLine' => 43,
        'nodeType' => 'PhpParser\\Node\\Stmt\\Return_',
        'identifier' => 'return.type',
        'metadata' => 
@@ -6465,12 +6514,12 @@ return [
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Method App\\Models\\Conversation::setMessageAttribute() has parameter $message with no type specified.',
        'file' => 'D:\\apps\\profresh\\app\\Models\\Conversation.php',
-       'line' => 38,
+       'line' => 46,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\app\\Models\\Conversation.php',
        'traitFilePath' => NULL,
        'tip' => NULL,
-       'nodeLine' => 38,
+       'nodeLine' => 46,
        'nodeType' => 'PHPStan\\Node\\InClassMethodNode',
        'identifier' => 'missingType.parameter',
        'metadata' => 
@@ -6481,12 +6530,12 @@ return [
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Method App\\Models\\Conversation::mentionedUsers() return type has no value type specified in iterable type array.',
        'file' => 'D:\\apps\\profresh\\app\\Models\\Conversation.php',
-       'line' => 47,
+       'line' => 55,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\app\\Models\\Conversation.php',
        'traitFilePath' => NULL,
        'tip' => 'See: https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type',
-       'nodeLine' => 47,
+       'nodeLine' => 55,
        'nodeType' => 'PHPStan\\Node\\InClassMethodNode',
        'identifier' => 'missingType.iterableValue',
        'metadata' => 
@@ -6495,30 +6544,14 @@ return [
     )),
     5 => 
     \PHPStan\Analyser\Error::__set_state(array(
-       'message' => 'Offset 1 on array{array<int, string>, array<int, non-empty-string>} on left side of ?? always exists and is not nullable.',
-       'file' => 'D:\\apps\\profresh\\app\\Models\\Conversation.php',
-       'line' => 57,
-       'canBeIgnored' => true,
-       'filePath' => 'D:\\apps\\profresh\\app\\Models\\Conversation.php',
-       'traitFilePath' => NULL,
-       'tip' => NULL,
-       'nodeLine' => 57,
-       'nodeType' => 'PhpParser\\Node\\Expr\\BinaryOp\\Coalesce',
-       'identifier' => 'nullCoalesce.offset',
-       'metadata' => 
-      array (
-      ),
-    )),
-    6 => 
-    \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Method App\\Models\\Conversation::mentionedUsersData() return type with generic class Illuminate\\Support\\Collection does not specify its types: TKey, TValue',
        'file' => 'D:\\apps\\profresh\\app\\Models\\Conversation.php',
-       'line' => 72,
+       'line' => 80,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\app\\Models\\Conversation.php',
        'traitFilePath' => NULL,
        'tip' => NULL,
-       'nodeLine' => 72,
+       'nodeLine' => 80,
        'nodeType' => 'PHPStan\\Node\\InClassMethodNode',
        'identifier' => 'missingType.generics',
        'metadata' => 
@@ -8802,12 +8835,12 @@ return [
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Method App\\Services\\Api\\V1\\ConversationService::createConversation() has parameter $data with no value type specified in iterable type array.',
        'file' => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\ConversationService.php',
-       'line' => 115,
+       'line' => 119,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\ConversationService.php',
        'traitFilePath' => NULL,
        'tip' => 'See: https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type',
-       'nodeLine' => 115,
+       'nodeLine' => 119,
        'nodeType' => 'PHPStan\\Node\\InClassMethodNode',
        'identifier' => 'missingType.iterableValue',
        'metadata' => 
@@ -9772,12 +9805,12 @@ return [
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Method Tests\\Feature\\Api\\Auth\\OAuthTest::mockSocialite() has no return type specified.',
        'file' => 'D:\\apps\\profresh\\tests\\Feature\\Api\\Auth\\OAuthTest.php',
-       'line' => 79,
+       'line' => 81,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\tests\\Feature\\Api\\Auth\\OAuthTest.php',
        'traitFilePath' => NULL,
        'tip' => NULL,
-       'nodeLine' => 79,
+       'nodeLine' => 81,
        'nodeType' => 'PHPStan\\Node\\InClassMethodNode',
        'identifier' => 'missingType.return',
        'metadata' => 
@@ -9788,12 +9821,12 @@ return [
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Method Tests\\Feature\\Api\\Auth\\OAuthTest::mockSocialite() has parameter $provider with no type specified.',
        'file' => 'D:\\apps\\profresh\\tests\\Feature\\Api\\Auth\\OAuthTest.php',
-       'line' => 79,
+       'line' => 81,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\tests\\Feature\\Api\\Auth\\OAuthTest.php',
        'traitFilePath' => NULL,
        'tip' => NULL,
-       'nodeLine' => 79,
+       'nodeLine' => 81,
        'nodeType' => 'PHPStan\\Node\\InClassMethodNode',
        'identifier' => 'missingType.parameter',
        'metadata' => 
@@ -9804,12 +9837,12 @@ return [
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Method Tests\\Feature\\Api\\Auth\\OAuthTest::mockSocialite() has parameter $user with no type specified.',
        'file' => 'D:\\apps\\profresh\\tests\\Feature\\Api\\Auth\\OAuthTest.php',
-       'line' => 79,
+       'line' => 81,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\tests\\Feature\\Api\\Auth\\OAuthTest.php',
        'traitFilePath' => NULL,
        'tip' => NULL,
-       'nodeLine' => 79,
+       'nodeLine' => 81,
        'nodeType' => 'PHPStan\\Node\\InClassMethodNode',
        'identifier' => 'missingType.parameter',
        'metadata' => 
@@ -9820,12 +9853,12 @@ return [
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Call to an undefined method Mockery\\Expectation::shouldReceive().',
        'file' => 'D:\\apps\\profresh\\tests\\Feature\\Api\\Auth\\OAuthTest.php',
-       'line' => 81,
+       'line' => 83,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\tests\\Feature\\Api\\Auth\\OAuthTest.php',
        'traitFilePath' => NULL,
        'tip' => NULL,
-       'nodeLine' => 81,
+       'nodeLine' => 83,
        'nodeType' => 'PhpParser\\Node\\Expr\\MethodCall',
        'identifier' => 'method.notFound',
        'metadata' => 
@@ -9906,12 +9939,12 @@ return [
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Property Tests\\Feature\\Api\\Auth\\TwoFactorAuthenticationTest::$user (App\\Models\\User) does not accept Illuminate\\Database\\Eloquent\\Model.',
        'file' => 'D:\\apps\\profresh\\tests\\Feature\\Api\\Auth\\TwoFactorAuthenticationTest.php',
-       'line' => 222,
+       'line' => 265,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\tests\\Feature\\Api\\Auth\\TwoFactorAuthenticationTest.php',
        'traitFilePath' => NULL,
        'tip' => NULL,
-       'nodeLine' => 222,
+       'nodeLine' => 265,
        'nodeType' => 'PHPStan\\Node\\PropertyAssignNode',
        'identifier' => 'assign.propertyType',
        'metadata' => 
@@ -9922,12 +9955,12 @@ return [
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Method Tests\\Feature\\Api\\Auth\\TwoFactorAuthenticationTest::createMockedUser() has parameter $expectations with no value type specified in iterable type array.',
        'file' => 'D:\\apps\\profresh\\tests\\Feature\\Api\\Auth\\TwoFactorAuthenticationTest.php',
-       'line' => 246,
+       'line' => 290,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\tests\\Feature\\Api\\Auth\\TwoFactorAuthenticationTest.php',
        'traitFilePath' => NULL,
        'tip' => 'See: https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type',
-       'nodeLine' => 246,
+       'nodeLine' => 290,
        'nodeType' => 'PHPStan\\Node\\InClassMethodNode',
        'identifier' => 'missingType.iterableValue',
        'metadata' => 
@@ -9938,12 +9971,12 @@ return [
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Call to an undefined method Mockery\\ExpectationInterface|Mockery\\HigherOrderMessage::with().',
        'file' => 'D:\\apps\\profresh\\tests\\Feature\\Api\\Auth\\TwoFactorAuthenticationTest.php',
-       'line' => 262,
+       'line' => 306,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\tests\\Feature\\Api\\Auth\\TwoFactorAuthenticationTest.php',
        'traitFilePath' => NULL,
        'tip' => NULL,
-       'nodeLine' => 262,
+       'nodeLine' => 306,
        'nodeType' => 'PhpParser\\Node\\Expr\\MethodCall',
        'identifier' => 'method.notFound',
        'metadata' => 
@@ -9954,12 +9987,12 @@ return [
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Access to an undefined property Mockery\\LegacyMockInterface::$id.',
        'file' => 'D:\\apps\\profresh\\tests\\Feature\\Api\\Auth\\TwoFactorAuthenticationTest.php',
-       'line' => 271,
+       'line' => 315,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\tests\\Feature\\Api\\Auth\\TwoFactorAuthenticationTest.php',
        'traitFilePath' => NULL,
        'tip' => 'Learn more: <fg=cyan>https://phpstan.org/blog/solving-phpstan-access-to-undefined-property</>',
-       'nodeLine' => 271,
+       'nodeLine' => 315,
        'nodeType' => 'PHPStan\\Node\\PropertyAssignNode',
        'identifier' => 'property.notFound',
        'metadata' => 
@@ -9970,12 +10003,12 @@ return [
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Access to an undefined property Mockery\\LegacyMockInterface::$email.',
        'file' => 'D:\\apps\\profresh\\tests\\Feature\\Api\\Auth\\TwoFactorAuthenticationTest.php',
-       'line' => 272,
+       'line' => 316,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\tests\\Feature\\Api\\Auth\\TwoFactorAuthenticationTest.php',
        'traitFilePath' => NULL,
        'tip' => 'Learn more: <fg=cyan>https://phpstan.org/blog/solving-phpstan-access-to-undefined-property</>',
-       'nodeLine' => 272,
+       'nodeLine' => 316,
        'nodeType' => 'PHPStan\\Node\\PropertyAssignNode',
        'identifier' => 'property.notFound',
        'metadata' => 
@@ -9986,12 +10019,12 @@ return [
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Access to an undefined property Mockery\\LegacyMockInterface::$password.',
        'file' => 'D:\\apps\\profresh\\tests\\Feature\\Api\\Auth\\TwoFactorAuthenticationTest.php',
-       'line' => 273,
+       'line' => 317,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\tests\\Feature\\Api\\Auth\\TwoFactorAuthenticationTest.php',
        'traitFilePath' => NULL,
        'tip' => 'Learn more: <fg=cyan>https://phpstan.org/blog/solving-phpstan-access-to-undefined-property</>',
-       'nodeLine' => 273,
+       'nodeLine' => 317,
        'nodeType' => 'PHPStan\\Node\\PropertyAssignNode',
        'identifier' => 'property.notFound',
        'metadata' => 
@@ -10002,12 +10035,12 @@ return [
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Method Tests\\Feature\\Api\\Auth\\TwoFactorAuthenticationTest::createMockedUser() should return App\\Models\\User but returns Mockery\\LegacyMockInterface.',
        'file' => 'D:\\apps\\profresh\\tests\\Feature\\Api\\Auth\\TwoFactorAuthenticationTest.php',
-       'line' => 275,
+       'line' => 319,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\tests\\Feature\\Api\\Auth\\TwoFactorAuthenticationTest.php',
        'traitFilePath' => NULL,
        'tip' => NULL,
-       'nodeLine' => 275,
+       'nodeLine' => 319,
        'nodeType' => 'PhpParser\\Node\\Stmt\\Return_',
        'identifier' => 'return.type',
        'metadata' => 
@@ -11161,22 +11194,6 @@ return [
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Property Tests\\Feature\\Api\\Middleware\\Zoom\\VerifyWebhookTest::$payload has no type specified.',
        'file' => 'D:\\apps\\profresh\\tests\\Feature\\Api\\Middleware\\Zoom\\VerifyWebhookTest.php',
-       'line' => 16,
-       'canBeIgnored' => true,
-       'filePath' => 'D:\\apps\\profresh\\tests\\Feature\\Api\\Middleware\\Zoom\\VerifyWebhookTest.php',
-       'traitFilePath' => NULL,
-       'tip' => NULL,
-       'nodeLine' => 16,
-       'nodeType' => 'PHPStan\\Node\\ClassPropertyNode',
-       'identifier' => 'missingType.property',
-       'metadata' => 
-      array (
-      ),
-    )),
-    1 => 
-    \PHPStan\Analyser\Error::__set_state(array(
-       'message' => 'Property Tests\\Feature\\Api\\Middleware\\Zoom\\VerifyWebhookTest::$timestamp has no type specified.',
-       'file' => 'D:\\apps\\profresh\\tests\\Feature\\Api\\Middleware\\Zoom\\VerifyWebhookTest.php',
        'line' => 18,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\tests\\Feature\\Api\\Middleware\\Zoom\\VerifyWebhookTest.php',
@@ -11189,16 +11206,32 @@ return [
       array (
       ),
     )),
-    2 => 
+    1 => 
     \PHPStan\Analyser\Error::__set_state(array(
-       'message' => 'Method Tests\\Feature\\Api\\Middleware\\Zoom\\VerifyWebhookTest::buildSignature() has parameter $payload with no type specified.',
+       'message' => 'Property Tests\\Feature\\Api\\Middleware\\Zoom\\VerifyWebhookTest::$timestamp has no type specified.',
        'file' => 'D:\\apps\\profresh\\tests\\Feature\\Api\\Middleware\\Zoom\\VerifyWebhookTest.php',
-       'line' => 101,
+       'line' => 20,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\tests\\Feature\\Api\\Middleware\\Zoom\\VerifyWebhookTest.php',
        'traitFilePath' => NULL,
        'tip' => NULL,
-       'nodeLine' => 101,
+       'nodeLine' => 20,
+       'nodeType' => 'PHPStan\\Node\\ClassPropertyNode',
+       'identifier' => 'missingType.property',
+       'metadata' => 
+      array (
+      ),
+    )),
+    2 => 
+    \PHPStan\Analyser\Error::__set_state(array(
+       'message' => 'Method Tests\\Feature\\Api\\Middleware\\Zoom\\VerifyWebhookTest::buildSignature() has parameter $payload with no type specified.',
+       'file' => 'D:\\apps\\profresh\\tests\\Feature\\Api\\Middleware\\Zoom\\VerifyWebhookTest.php',
+       'line' => 103,
+       'canBeIgnored' => true,
+       'filePath' => 'D:\\apps\\profresh\\tests\\Feature\\Api\\Middleware\\Zoom\\VerifyWebhookTest.php',
+       'traitFilePath' => NULL,
+       'tip' => NULL,
+       'nodeLine' => 103,
        'nodeType' => 'PHPStan\\Node\\InClassMethodNode',
        'identifier' => 'missingType.parameter',
        'metadata' => 
@@ -12384,12 +12417,12 @@ return [
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Access to an undefined property Illuminate\\Database\\Eloquent\\Model::$id.',
        'file' => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\MessageTest.php',
-       'line' => 78,
+       'line' => 80,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\MessageTest.php',
        'traitFilePath' => NULL,
        'tip' => 'Learn more: <fg=cyan>https://phpstan.org/blog/solving-phpstan-access-to-undefined-property</>',
-       'nodeLine' => 78,
+       'nodeLine' => 80,
        'nodeType' => 'PhpParser\\Node\\Expr\\PropertyFetch',
        'identifier' => 'property.notFound',
        'metadata' => 
@@ -13534,12 +13567,12 @@ return [
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Access to an undefined property Illuminate\\Database\\Eloquent\\Model::$id.',
        'file' => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\ProjectHealthScoreFeatureTest.php',
-       'line' => 27,
+       'line' => 29,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\ProjectHealthScoreFeatureTest.php',
        'traitFilePath' => NULL,
        'tip' => 'Learn more: <fg=cyan>https://phpstan.org/blog/solving-phpstan-access-to-undefined-property</>',
-       'nodeLine' => 27,
+       'nodeLine' => 29,
        'nodeType' => 'PhpParser\\Node\\Expr\\PropertyFetch',
        'identifier' => 'property.notFound',
        'metadata' => 
@@ -13550,12 +13583,12 @@ return [
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Parameter #1 $project of method App\\Actions\\ProjectMetrics\\ProjectHealthRecalculationAction::handle() expects App\\Models\\Project, Illuminate\\Database\\Eloquent\\Model given.',
        'file' => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\ProjectHealthScoreFeatureTest.php',
-       'line' => 31,
+       'line' => 33,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\ProjectHealthScoreFeatureTest.php',
        'traitFilePath' => NULL,
        'tip' => NULL,
-       'nodeLine' => 31,
+       'nodeLine' => 33,
        'nodeType' => 'PhpParser\\Node\\Expr\\MethodCall',
        'identifier' => 'argument.type',
        'metadata' => 
@@ -13566,12 +13599,12 @@ return [
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Access to an undefined property Illuminate\\Database\\Eloquent\\Model::$id.',
        'file' => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\ProjectHealthScoreFeatureTest.php',
-       'line' => 34,
+       'line' => 36,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\ProjectHealthScoreFeatureTest.php',
        'traitFilePath' => NULL,
        'tip' => 'Learn more: <fg=cyan>https://phpstan.org/blog/solving-phpstan-access-to-undefined-property</>',
-       'nodeLine' => 34,
+       'nodeLine' => 36,
        'nodeType' => 'PhpParser\\Node\\Expr\\PropertyFetch',
        'identifier' => 'property.notFound',
        'metadata' => 
@@ -13582,12 +13615,12 @@ return [
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Parameter #1 $project of method App\\Actions\\ProjectMetrics\\ProjectHealthRecalculationAction::handle() expects App\\Models\\Project, Illuminate\\Database\\Eloquent\\Model given.',
        'file' => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\ProjectHealthScoreFeatureTest.php',
-       'line' => 45,
+       'line' => 47,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\ProjectHealthScoreFeatureTest.php',
        'traitFilePath' => NULL,
        'tip' => NULL,
-       'nodeLine' => 45,
+       'nodeLine' => 47,
        'nodeType' => 'PhpParser\\Node\\Expr\\MethodCall',
        'identifier' => 'argument.type',
        'metadata' => 
@@ -13598,12 +13631,12 @@ return [
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Parameter #1 $project of method App\\Actions\\ProjectMetrics\\ProjectHealthRecalculationAction::handle() expects App\\Models\\Project, Illuminate\\Database\\Eloquent\\Model given.',
        'file' => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\ProjectHealthScoreFeatureTest.php',
-       'line' => 61,
+       'line' => 63,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\ProjectHealthScoreFeatureTest.php',
        'traitFilePath' => NULL,
        'tip' => NULL,
-       'nodeLine' => 61,
+       'nodeLine' => 63,
        'nodeType' => 'PhpParser\\Node\\Expr\\MethodCall',
        'identifier' => 'argument.type',
        'metadata' => 
@@ -13614,12 +13647,12 @@ return [
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Parameter #1 $project of method App\\Actions\\ProjectMetrics\\ProjectHealthRecalculationAction::handle() expects App\\Models\\Project, Illuminate\\Database\\Eloquent\\Model given.',
        'file' => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\ProjectHealthScoreFeatureTest.php',
-       'line' => 62,
+       'line' => 64,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\ProjectHealthScoreFeatureTest.php',
        'traitFilePath' => NULL,
        'tip' => NULL,
-       'nodeLine' => 62,
+       'nodeLine' => 64,
        'nodeType' => 'PhpParser\\Node\\Expr\\MethodCall',
        'identifier' => 'argument.type',
        'metadata' => 
@@ -13630,12 +13663,12 @@ return [
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Access to an undefined property Illuminate\\Database\\Eloquent\\Model::$id.',
        'file' => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\ProjectHealthScoreFeatureTest.php',
-       'line' => 73,
+       'line' => 75,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\ProjectHealthScoreFeatureTest.php',
        'traitFilePath' => NULL,
        'tip' => 'Learn more: <fg=cyan>https://phpstan.org/blog/solving-phpstan-access-to-undefined-property</>',
-       'nodeLine' => 73,
+       'nodeLine' => 75,
        'nodeType' => 'PhpParser\\Node\\Expr\\PropertyFetch',
        'identifier' => 'property.notFound',
        'metadata' => 
@@ -13646,12 +13679,12 @@ return [
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Access to an undefined property Illuminate\\Database\\Eloquent\\Model::$health_score.',
        'file' => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\ProjectHealthScoreFeatureTest.php',
-       'line' => 84,
+       'line' => 86,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\ProjectHealthScoreFeatureTest.php',
        'traitFilePath' => NULL,
        'tip' => 'Learn more: <fg=cyan>https://phpstan.org/blog/solving-phpstan-access-to-undefined-property</>',
-       'nodeLine' => 84,
+       'nodeLine' => 86,
        'nodeType' => 'PhpParser\\Node\\Expr\\PropertyFetch',
        'identifier' => 'property.notFound',
        'metadata' => 
@@ -13662,12 +13695,12 @@ return [
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Access to an undefined property Illuminate\\Database\\Eloquent\\Model::$health_score_calculated_at.',
        'file' => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\ProjectHealthScoreFeatureTest.php',
-       'line' => 85,
+       'line' => 87,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\ProjectHealthScoreFeatureTest.php',
        'traitFilePath' => NULL,
        'tip' => 'Learn more: <fg=cyan>https://phpstan.org/blog/solving-phpstan-access-to-undefined-property</>',
-       'nodeLine' => 85,
+       'nodeLine' => 87,
        'nodeType' => 'PhpParser\\Node\\Expr\\PropertyFetch',
        'identifier' => 'property.notFound',
        'metadata' => 
@@ -13678,12 +13711,12 @@ return [
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Call to function is_string() with Illuminate\\Broadcasting\\PrivateChannel will always evaluate to false.',
        'file' => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\ProjectHealthScoreFeatureTest.php',
-       'line' => 90,
+       'line' => 92,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\ProjectHealthScoreFeatureTest.php',
        'traitFilePath' => NULL,
        'tip' => NULL,
-       'nodeLine' => 90,
+       'nodeLine' => 92,
        'nodeType' => 'PhpParser\\Node\\Expr\\FuncCall',
        'identifier' => 'function.impossibleType',
        'metadata' => 
@@ -13694,12 +13727,12 @@ return [
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Property Illuminate\\Broadcasting\\Channel::$name (string) on left side of ?? is not nullable.',
        'file' => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\ProjectHealthScoreFeatureTest.php',
-       'line' => 90,
+       'line' => 92,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\ProjectHealthScoreFeatureTest.php',
        'traitFilePath' => NULL,
        'tip' => NULL,
-       'nodeLine' => 90,
+       'nodeLine' => 92,
        'nodeType' => 'PhpParser\\Node\\Expr\\BinaryOp\\Coalesce',
        'identifier' => 'nullCoalesce.property',
        'metadata' => 
@@ -13707,22 +13740,6 @@ return [
       ),
     )),
     11 => 
-    \PHPStan\Analyser\Error::__set_state(array(
-       'message' => 'Access to an undefined property Illuminate\\Database\\Eloquent\\Model::$id.',
-       'file' => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\ProjectHealthScoreFeatureTest.php',
-       'line' => 92,
-       'canBeIgnored' => true,
-       'filePath' => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\ProjectHealthScoreFeatureTest.php',
-       'traitFilePath' => NULL,
-       'tip' => 'Learn more: <fg=cyan>https://phpstan.org/blog/solving-phpstan-access-to-undefined-property</>',
-       'nodeLine' => 92,
-       'nodeType' => 'PhpParser\\Node\\Expr\\PropertyFetch',
-       'identifier' => 'property.notFound',
-       'metadata' => 
-      array (
-      ),
-    )),
-    12 => 
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Access to an undefined property Illuminate\\Database\\Eloquent\\Model::$id.',
        'file' => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\ProjectHealthScoreFeatureTest.php',
@@ -13738,16 +13755,32 @@ return [
       array (
       ),
     )),
-    13 => 
+    12 => 
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Access to an undefined property Illuminate\\Database\\Eloquent\\Model::$id.',
        'file' => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\ProjectHealthScoreFeatureTest.php',
-       'line' => 103,
+       'line' => 96,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\ProjectHealthScoreFeatureTest.php',
        'traitFilePath' => NULL,
        'tip' => 'Learn more: <fg=cyan>https://phpstan.org/blog/solving-phpstan-access-to-undefined-property</>',
-       'nodeLine' => 103,
+       'nodeLine' => 96,
+       'nodeType' => 'PhpParser\\Node\\Expr\\PropertyFetch',
+       'identifier' => 'property.notFound',
+       'metadata' => 
+      array (
+      ),
+    )),
+    13 => 
+    \PHPStan\Analyser\Error::__set_state(array(
+       'message' => 'Access to an undefined property Illuminate\\Database\\Eloquent\\Model::$id.',
+       'file' => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\ProjectHealthScoreFeatureTest.php',
+       'line' => 105,
+       'canBeIgnored' => true,
+       'filePath' => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\ProjectHealthScoreFeatureTest.php',
+       'traitFilePath' => NULL,
+       'tip' => 'Learn more: <fg=cyan>https://phpstan.org/blog/solving-phpstan-access-to-undefined-property</>',
+       'nodeLine' => 105,
        'nodeType' => 'PhpParser\\Node\\Expr\\PropertyFetch',
        'identifier' => 'property.notFound',
        'metadata' => 
@@ -13758,12 +13791,12 @@ return [
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Access to an undefined property Illuminate\\Database\\Eloquent\\Model::$id.',
        'file' => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\ProjectHealthScoreFeatureTest.php',
-       'line' => 119,
+       'line' => 121,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\ProjectHealthScoreFeatureTest.php',
        'traitFilePath' => NULL,
        'tip' => 'Learn more: <fg=cyan>https://phpstan.org/blog/solving-phpstan-access-to-undefined-property</>',
-       'nodeLine' => 119,
+       'nodeLine' => 121,
        'nodeType' => 'PhpParser\\Node\\Expr\\PropertyFetch',
        'identifier' => 'property.notFound',
        'metadata' => 
@@ -13774,12 +13807,12 @@ return [
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Access to an undefined property Illuminate\\Database\\Eloquent\\Model::$id.',
        'file' => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\ProjectHealthScoreFeatureTest.php',
-       'line' => 124,
+       'line' => 126,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\ProjectHealthScoreFeatureTest.php',
        'traitFilePath' => NULL,
        'tip' => 'Learn more: <fg=cyan>https://phpstan.org/blog/solving-phpstan-access-to-undefined-property</>',
-       'nodeLine' => 124,
+       'nodeLine' => 126,
        'nodeType' => 'PhpParser\\Node\\Expr\\PropertyFetch',
        'identifier' => 'property.notFound',
        'metadata' => 
@@ -13790,12 +13823,12 @@ return [
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Access to an undefined property Illuminate\\Database\\Eloquent\\Model::$health_score.',
        'file' => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\ProjectHealthScoreFeatureTest.php',
-       'line' => 132,
+       'line' => 134,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\ProjectHealthScoreFeatureTest.php',
        'traitFilePath' => NULL,
        'tip' => 'Learn more: <fg=cyan>https://phpstan.org/blog/solving-phpstan-access-to-undefined-property</>',
-       'nodeLine' => 132,
+       'nodeLine' => 134,
        'nodeType' => 'PhpParser\\Node\\Expr\\PropertyFetch',
        'identifier' => 'property.notFound',
        'metadata' => 
@@ -13806,12 +13839,12 @@ return [
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Access to an undefined property Illuminate\\Database\\Eloquent\\Model::$health_score_calculated_at.',
        'file' => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\ProjectHealthScoreFeatureTest.php',
-       'line' => 133,
+       'line' => 135,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\ProjectHealthScoreFeatureTest.php',
        'traitFilePath' => NULL,
        'tip' => 'Learn more: <fg=cyan>https://phpstan.org/blog/solving-phpstan-access-to-undefined-property</>',
-       'nodeLine' => 133,
+       'nodeLine' => 135,
        'nodeType' => 'PhpParser\\Node\\Expr\\PropertyFetch',
        'identifier' => 'property.notFound',
        'metadata' => 
@@ -13822,12 +13855,12 @@ return [
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Access to an undefined property Illuminate\\Database\\Eloquent\\Model::$health_status.',
        'file' => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\ProjectHealthScoreFeatureTest.php',
-       'line' => 145,
+       'line' => 147,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\ProjectHealthScoreFeatureTest.php',
        'traitFilePath' => NULL,
        'tip' => 'Learn more: <fg=cyan>https://phpstan.org/blog/solving-phpstan-access-to-undefined-property</>',
-       'nodeLine' => 145,
+       'nodeLine' => 147,
        'nodeType' => 'PhpParser\\Node\\Expr\\PropertyFetch',
        'identifier' => 'property.notFound',
        'metadata' => 
@@ -13838,12 +13871,12 @@ return [
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Access to an undefined property Illuminate\\Database\\Eloquent\\Model::$health_status.',
        'file' => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\ProjectHealthScoreFeatureTest.php',
-       'line' => 146,
+       'line' => 148,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\ProjectHealthScoreFeatureTest.php',
        'traitFilePath' => NULL,
        'tip' => 'Learn more: <fg=cyan>https://phpstan.org/blog/solving-phpstan-access-to-undefined-property</>',
-       'nodeLine' => 146,
+       'nodeLine' => 148,
        'nodeType' => 'PhpParser\\Node\\Expr\\PropertyFetch',
        'identifier' => 'property.notFound',
        'metadata' => 
@@ -13854,12 +13887,12 @@ return [
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Access to an undefined property Illuminate\\Database\\Eloquent\\Model::$health_status.',
        'file' => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\ProjectHealthScoreFeatureTest.php',
-       'line' => 147,
+       'line' => 149,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\ProjectHealthScoreFeatureTest.php',
        'traitFilePath' => NULL,
        'tip' => 'Learn more: <fg=cyan>https://phpstan.org/blog/solving-phpstan-access-to-undefined-property</>',
-       'nodeLine' => 147,
+       'nodeLine' => 149,
        'nodeType' => 'PhpParser\\Node\\Expr\\PropertyFetch',
        'identifier' => 'property.notFound',
        'metadata' => 
@@ -14247,12 +14280,12 @@ return [
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Access to an undefined property Illuminate\\Database\\Eloquent\\Model::$email.',
        'file' => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\RecordActivityTest.php',
-       'line' => 145,
+       'line' => 147,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\RecordActivityTest.php',
        'traitFilePath' => NULL,
        'tip' => 'Learn more: <fg=cyan>https://phpstan.org/blog/solving-phpstan-access-to-undefined-property</>',
-       'nodeLine' => 145,
+       'nodeLine' => 147,
        'nodeType' => 'PhpParser\\Node\\Expr\\PropertyFetch',
        'identifier' => 'property.notFound',
        'metadata' => 
@@ -14263,12 +14296,12 @@ return [
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Parameter #1 $user of static method Laravel\\Sanctum\\Sanctum<Laravel\\Sanctum\\PersonalAccessToken>::actingAs() expects Illuminate\\Contracts\\Auth\\Authenticatable|Laravel\\Sanctum\\HasApiTokens, Illuminate\\Database\\Eloquent\\Model given.',
        'file' => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\RecordActivityTest.php',
-       'line' => 159,
+       'line' => 161,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\RecordActivityTest.php',
        'traitFilePath' => NULL,
        'tip' => NULL,
-       'nodeLine' => 158,
+       'nodeLine' => 160,
        'nodeType' => 'PhpParser\\Node\\Expr\\StaticCall',
        'identifier' => 'argument.type',
        'metadata' => 
@@ -14279,12 +14312,12 @@ return [
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Access to an undefined property Illuminate\\Database\\Eloquent\\Model::$uuid.',
        'file' => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\RecordActivityTest.php',
-       'line' => 174,
+       'line' => 176,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\RecordActivityTest.php',
        'traitFilePath' => NULL,
        'tip' => 'Learn more: <fg=cyan>https://phpstan.org/blog/solving-phpstan-access-to-undefined-property</>',
-       'nodeLine' => 174,
+       'nodeLine' => 176,
        'nodeType' => 'PhpParser\\Node\\Expr\\PropertyFetch',
        'identifier' => 'property.notFound',
        'metadata' => 
@@ -14640,12 +14673,12 @@ return [
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Access to an undefined property Illuminate\\Database\\Eloquent\\Model::$id.',
        'file' => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\TaskFeaturesTest.php',
-       'line' => 135,
+       'line' => 137,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\TaskFeaturesTest.php',
        'traitFilePath' => NULL,
        'tip' => 'Learn more: <fg=cyan>https://phpstan.org/blog/solving-phpstan-access-to-undefined-property</>',
-       'nodeLine' => 135,
+       'nodeLine' => 137,
        'nodeType' => 'PhpParser\\Node\\Expr\\PropertyFetch',
        'identifier' => 'property.notFound',
        'metadata' => 
@@ -14656,12 +14689,12 @@ return [
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Access to an undefined property Illuminate\\Database\\Eloquent\\Model::$id.',
        'file' => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\TaskFeaturesTest.php',
-       'line' => 142,
+       'line' => 144,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\TaskFeaturesTest.php',
        'traitFilePath' => NULL,
        'tip' => 'Learn more: <fg=cyan>https://phpstan.org/blog/solving-phpstan-access-to-undefined-property</>',
-       'nodeLine' => 142,
+       'nodeLine' => 144,
        'nodeType' => 'PhpParser\\Node\\Expr\\PropertyFetch',
        'identifier' => 'property.notFound',
        'metadata' => 
@@ -14672,12 +14705,12 @@ return [
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Method Tests\\Feature\\Api\\V1\\TaskFeaturesTest::assignMembersToTask() has no return type specified.',
        'file' => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\TaskFeaturesTest.php',
-       'line' => 148,
+       'line' => 150,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\TaskFeaturesTest.php',
        'traitFilePath' => NULL,
        'tip' => NULL,
-       'nodeLine' => 148,
+       'nodeLine' => 150,
        'nodeType' => 'PHPStan\\Node\\InClassMethodNode',
        'identifier' => 'missingType.return',
        'metadata' => 
@@ -14688,12 +14721,12 @@ return [
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Method Tests\\Feature\\Api\\V1\\TaskFeaturesTest::assignMembersToTask() has parameter $members with no value type specified in iterable type array.',
        'file' => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\TaskFeaturesTest.php',
-       'line' => 148,
+       'line' => 150,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\TaskFeaturesTest.php',
        'traitFilePath' => NULL,
        'tip' => 'See: https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type',
-       'nodeLine' => 148,
+       'nodeLine' => 150,
        'nodeType' => 'PHPStan\\Node\\InClassMethodNode',
        'identifier' => 'missingType.iterableValue',
        'metadata' => 
@@ -14704,12 +14737,12 @@ return [
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Method Tests\\Feature\\Api\\V1\\TaskFeaturesTest::unassignMemberFromTask() has no return type specified.',
        'file' => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\TaskFeaturesTest.php',
-       'line' => 156,
+       'line' => 158,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\TaskFeaturesTest.php',
        'traitFilePath' => NULL,
        'tip' => NULL,
-       'nodeLine' => 156,
+       'nodeLine' => 158,
        'nodeType' => 'PHPStan\\Node\\InClassMethodNode',
        'identifier' => 'missingType.return',
        'metadata' => 
@@ -17296,21 +17329,21 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Console\\Commands\\RemoveAbondonProjects.php' => 
   array (
-    'fileHash' => '12eb7d5c399f80822b9a614fd5104942bef56b56',
+    'fileHash' => '6cf95725dfd874a4c69973ec4dd615d95611f378',
     'dependentFiles' => 
     array (
     ),
   ),
   'D:\\apps\\profresh\\app\\Console\\Commands\\ScheduledMessages.php' => 
   array (
-    'fileHash' => 'aae73af40b547d52e1e67b8bee520838e3010266',
+    'fileHash' => '1da6c5494fdc8d43270359d7835a228ec23ce2f7',
     'dependentFiles' => 
     array (
     ),
   ),
   'D:\\apps\\profresh\\app\\Console\\Commands\\TaskNotify.php' => 
   array (
-    'fileHash' => '883c23da03ff28dab467d3f5197d1c838f217f74',
+    'fileHash' => '68b1dca665cd7b4fb04567d21655a4feac4cab52',
     'dependentFiles' => 
     array (
     ),
@@ -17328,6 +17361,28 @@ return [
     'fileHash' => '521a31430d5f449e3524d695c0a5ae3f433813c3',
     'dependentFiles' => 
     array (
+    ),
+  ),
+  'D:\\apps\\profresh\\app\\DataTransferObjects\\Auth\\AuthPayload.php' => 
+  array (
+    'fileHash' => 'e24a14c298aaeba47f422ea6cb14c818e74da331',
+    'dependentFiles' => 
+    array (
+      0 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\Auth\\LoginController.php',
+      1 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\Auth\\OAuthController.php',
+      2 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\Auth\\SpaAuthController.php',
+      3 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\Auth\\TwoFactorController.php',
+      4 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\Auth\\LoginUserService.php',
+    ),
+  ),
+  'D:\\apps\\profresh\\app\\DataTransferObjects\\Auth\\LoginResult.php' => 
+  array (
+    'fileHash' => 'e04321ac455b1643ee30b2f0f008da5edf2c40c4',
+    'dependentFiles' => 
+    array (
+      0 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\Auth\\LoginController.php',
+      1 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\Auth\\SpaAuthController.php',
+      2 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\Auth\\LoginUserService.php',
     ),
   ),
   'D:\\apps\\profresh\\app\\DataTransferObjects\\Paddle\\Data.php' => 
@@ -17555,7 +17610,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Events\\DashboardActivity.php' => 
   array (
-    'fileHash' => 'fa5fd3d2a5461ecdb187356281e1dd9b7931929a',
+    'fileHash' => 'bbce6ddee746322e357d941af0f53d24b8c6d148',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Providers\\EventServiceProvider.php',
@@ -17613,7 +17668,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Events\\UserHasRegistered.php' => 
   array (
-    'fileHash' => '7a5737b3c72b31b1c5e24909c1ed33de938deecc',
+    'fileHash' => 'fd3d253c7393e6a59d6892d7faa4cc3a088d2c9e',
     'dependentFiles' => 
     array (
     ),
@@ -17623,15 +17678,15 @@ return [
     'fileHash' => '3ff9764d16f3e327f6b284b86e2d8c30ebc0bcf9',
     'dependentFiles' => 
     array (
-      0 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\Auth\\LoginController.php',
-      1 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\Auth\\OAuthController.php',
-      2 => 'D:\\apps\\profresh\\app\\Listeners\\SaveUserTimezone.php',
-      3 => 'D:\\apps\\profresh\\app\\Providers\\EventServiceProvider.php',
+      0 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\Auth\\OAuthController.php',
+      1 => 'D:\\apps\\profresh\\app\\Listeners\\SaveUserTimezone.php',
+      2 => 'D:\\apps\\profresh\\app\\Providers\\EventServiceProvider.php',
+      3 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\Auth\\LoginUserService.php',
     ),
   ),
   'D:\\apps\\profresh\\app\\Exceptions\\Handler.php' => 
   array (
-    'fileHash' => '700484f19226cce957e3c7d71621be61e7bb68ff',
+    'fileHash' => '0cd07a804c4135287d87e2b598c9407cd6167130',
     'dependentFiles' => 
     array (
     ),
@@ -17710,48 +17765,56 @@ return [
       1 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\Auth\\OAuthController.php',
       2 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\Auth\\RegisterController.php',
       3 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\Auth\\ResetPasswordController.php',
-      4 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\Auth\\VerificationController.php',
-      5 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\AvatarController.php',
-      6 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\ConversationController.php',
-      7 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\FeaturesController.php',
-      8 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\InvitationController.php',
-      9 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\NotificationsController.php',
-      10 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\ProjectController.php',
-      11 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\TaskController.php',
-      12 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\UserController.php',
+      4 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\Auth\\SpaAuthController.php',
+      5 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\Auth\\VerificationController.php',
+      6 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\AvatarController.php',
+      7 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\ConversationController.php',
+      8 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\FeaturesController.php',
+      9 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\InvitationController.php',
+      10 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\NotificationsController.php',
+      11 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\ProjectController.php',
+      12 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\TaskController.php',
+      13 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\UserController.php',
     ),
   ),
   'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\Auth\\LoginController.php' => 
   array (
-    'fileHash' => '85fcfcb96a4b7b921ee2a65ed09151857605a0ff',
+    'fileHash' => 'dcfd866ca975517dbb0065a869b6d4052dea33ea',
     'dependentFiles' => 
     array (
     ),
   ),
   'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\Auth\\OAuthController.php' => 
   array (
-    'fileHash' => 'db2c8474fc0318e1b6981f287e768da69f334f34',
+    'fileHash' => '0bbf03e2a31274190153be71161a6f14cba2ba0a',
     'dependentFiles' => 
     array (
     ),
   ),
   'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\Auth\\RegisterController.php' => 
   array (
-    'fileHash' => 'b166a6f432a6b7fdffddd092a783b19c53289248',
+    'fileHash' => '14691b9f4517871ca5b111f6d5f64ab84a912a9e',
     'dependentFiles' => 
     array (
     ),
   ),
   'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\Auth\\ResetPasswordController.php' => 
   array (
-    'fileHash' => 'c03e82c5998df1280c3d71a0b0c91a85aaefede9',
+    'fileHash' => '1aca29fb71d01f950e7864063c33a735bd94d949',
+    'dependentFiles' => 
+    array (
+    ),
+  ),
+  'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\Auth\\SpaAuthController.php' => 
+  array (
+    'fileHash' => 'e45cbc0a85532d31ec9ad38cdddfb0cb39877b9a',
     'dependentFiles' => 
     array (
     ),
   ),
   'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\Auth\\TwoFactorController.php' => 
   array (
-    'fileHash' => '52a7313296581d1a16fe70ac273c1b26441fab21',
+    'fileHash' => '223ee00af3bcb37c773d6ccc87424b0cfb90e97f',
     'dependentFiles' => 
     array (
     ),
@@ -17765,7 +17828,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\OAuth\\ZoomAuthController.php' => 
   array (
-    'fileHash' => '597a4b39948106225d3cdb901614d610c5636772',
+    'fileHash' => 'fe301e784a8348d7f779a7135c4f9798b2f8597e',
     'dependentFiles' => 
     array (
     ),
@@ -17779,7 +17842,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\AvatarController.php' => 
   array (
-    'fileHash' => 'c2ffad18cfc485735954df969d666ffd85254413',
+    'fileHash' => '26ee80bf100fd180a0e2fc97a5d90dc55775088c',
     'dependentFiles' => 
     array (
     ),
@@ -17800,14 +17863,14 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\InvitationController.php' => 
   array (
-    'fileHash' => 'ae3d4319ee92e265a46228a98afdb1c6a5030c24',
+    'fileHash' => '19a018863b3fb74176a30199db8130a9f016e28b',
     'dependentFiles' => 
     array (
     ),
   ),
   'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\MessageController.php' => 
   array (
-    'fileHash' => '65086cf5f9376304c301edc6d255510fb9d0e6c6',
+    'fileHash' => '512f3b1ba2873baea0faa1262f00db688e496fe0',
     'dependentFiles' => 
     array (
     ),
@@ -17821,7 +17884,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\ProjectController.php' => 
   array (
-    'fileHash' => '56c540d157d0b7dbc881fe83aaf6122ade51a036',
+    'fileHash' => '210e40be78d44bd64184dd28a7eabef3c483df63',
     'dependentFiles' => 
     array (
     ),
@@ -17849,14 +17912,14 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\SubscriptionController.php' => 
   array (
-    'fileHash' => 'a6e39edcc1be735f45c8185911f3b86aeff189b4',
+    'fileHash' => 'e5dcc043410252d4c4fd432b82585cbeca67b4d4',
     'dependentFiles' => 
     array (
     ),
   ),
   'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\TaskController.php' => 
   array (
-    'fileHash' => '311770503c43d41406c2b5ecb9a091ff1c7c9228',
+    'fileHash' => '85c0db0db0c27b351fffa9f28d9071bc0230b882',
     'dependentFiles' => 
     array (
     ),
@@ -17884,7 +17947,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\UserController.php' => 
   array (
-    'fileHash' => '85613d7bc7d00df1eb0882ad5e57b3ade7fe5c2b',
+    'fileHash' => '17053262ec1b4760e59aeed5e6dbc60e45e60b2e',
     'dependentFiles' => 
     array (
     ),
@@ -17905,7 +17968,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\ZoomMeetingController.php' => 
   array (
-    'fileHash' => '90b9e9bb9780a27ba1337040e2340683cf11b49c',
+    'fileHash' => '2e64976f0d20d34951d4d06ab4a63cc5825060bf',
     'dependentFiles' => 
     array (
     ),
@@ -17927,31 +17990,32 @@ return [
       2 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\Auth\\OAuthController.php',
       3 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\Auth\\RegisterController.php',
       4 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\Auth\\ResetPasswordController.php',
-      5 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\Auth\\TwoFactorController.php',
-      6 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\Auth\\VerificationController.php',
-      7 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\OAuth\\ZoomAuthController.php',
-      8 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\ActivityController.php',
-      9 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\AvatarController.php',
-      10 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\ConversationController.php',
-      11 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\FeaturesController.php',
-      12 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\InvitationController.php',
-      13 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\MessageController.php',
-      14 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\NotificationsController.php',
-      15 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\ProjectController.php',
-      16 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\ProjectDashboardController.php',
-      17 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\ProjectInsightsController.php',
-      18 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\StageController.php',
-      19 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\SubscriptionController.php',
-      20 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\TaskController.php',
-      21 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\TaskFeaturesController.php',
-      22 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\TaskStatusController.php',
-      23 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\TokenController.php',
-      24 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\UserController.php',
-      25 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\UserInvitationsController.php',
-      26 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\Webhooks\\ZoomWebhookController.php',
-      27 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\ZoomMeetingController.php',
-      28 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\Zoom\\ZoomTokenController.php',
-      29 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\HomeController.php',
+      5 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\Auth\\SpaAuthController.php',
+      6 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\Auth\\TwoFactorController.php',
+      7 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\Auth\\VerificationController.php',
+      8 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\OAuth\\ZoomAuthController.php',
+      9 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\ActivityController.php',
+      10 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\AvatarController.php',
+      11 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\ConversationController.php',
+      12 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\FeaturesController.php',
+      13 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\InvitationController.php',
+      14 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\MessageController.php',
+      15 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\NotificationsController.php',
+      16 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\ProjectController.php',
+      17 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\ProjectDashboardController.php',
+      18 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\ProjectInsightsController.php',
+      19 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\StageController.php',
+      20 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\SubscriptionController.php',
+      21 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\TaskController.php',
+      22 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\TaskFeaturesController.php',
+      23 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\TaskStatusController.php',
+      24 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\TokenController.php',
+      25 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\UserController.php',
+      26 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\UserInvitationsController.php',
+      27 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\Webhooks\\ZoomWebhookController.php',
+      28 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\ZoomMeetingController.php',
+      29 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\Zoom\\ZoomTokenController.php',
+      30 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\HomeController.php',
     ),
   ),
   'D:\\apps\\profresh\\app\\Http\\Controllers\\HomeController.php' => 
@@ -17979,7 +18043,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Http\\Integrations\\Zoom\\Requests\\CreateMeeting.php' => 
   array (
-    'fileHash' => 'a4dce65415a2b87cb0cb47b13e47a6090fd62b27',
+    'fileHash' => 'a682d4e02b2d5e5ca69a30b931a1f9705f8a06e4',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\Zoom\\ZoomService.php',
@@ -18027,7 +18091,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Http\\Integrations\\Zoom\\Requests\\UpdateMeeting.php' => 
   array (
-    'fileHash' => '5533074cc846886a4d39074ee544f553bd756c28',
+    'fileHash' => '28d407b1ba51c8ab06adb73890c4b2f64f5a6b05',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\Zoom\\ZoomService.php',
@@ -18036,7 +18100,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Http\\Integrations\\Zoom\\ZoomConnector.php' => 
   array (
-    'fileHash' => '4ba2c0bc4838c16cd0e936c31840c368dc08d28a',
+    'fileHash' => '5376c979fb51f424ef1d6ce9958e170c19a0f5aa',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\Zoom\\ZoomService.php',
@@ -18044,7 +18108,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Http\\Kernel.php' => 
   array (
-    'fileHash' => '4d68c825131f8e02ff69235e5d4fa02f9398bb3e',
+    'fileHash' => 'db5f27df37b5bb8b0aa4bb94722032671f540f2b',
     'dependentFiles' => 
     array (
     ),
@@ -18152,11 +18216,12 @@ return [
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Http\\Kernel.php',
+      1 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\Auth\\AuthenticationTest.php',
     ),
   ),
   'D:\\apps\\profresh\\app\\Http\\Middleware\\VerifyZoomWebhook.php' => 
   array (
-    'fileHash' => 'e843913e01a96fa0c8612c8c5e985602d846ac57',
+    'fileHash' => '7dba12ac3141064746bb79bece5eca881a0585bb',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Http\\Kernel.php',
@@ -18181,10 +18246,11 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Http\\Requests\\Api\\V1\\Auth\\LoginUserRequest.php' => 
   array (
-    'fileHash' => 'd708a6ed25cafa330efcd2e85e8a6d1dbe142667',
+    'fileHash' => 'f6dd3f35c6731698c9472216fb39675fadb0e805',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\Auth\\LoginController.php',
+      1 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\Auth\\SpaAuthController.php',
     ),
   ),
   'D:\\apps\\profresh\\app\\Http\\Requests\\Api\\V1\\Auth\\PrepareTwoFactorRequest.php' => 
@@ -18197,15 +18263,16 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Http\\Requests\\Api\\V1\\Auth\\RegisterUserRequest.php' => 
   array (
-    'fileHash' => '0291de5212abd3f8677b9519731912191071b34b',
+    'fileHash' => '2f8ef3609ded919cdf49573c8acc8d9b6331a6fe',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\Auth\\RegisterController.php',
+      1 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\Auth\\ResetPasswordController.php',
     ),
   ),
   'D:\\apps\\profresh\\app\\Http\\Requests\\Api\\V1\\Auth\\TwoFactorLoginRequest.php' => 
   array (
-    'fileHash' => 'c2ed1e073610b299f11b81f68f26a00eb4b70d6e',
+    'fileHash' => 'dd3b4cd56ab2144fa0bffdcbd8ba73a899200501',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\Auth\\TwoFactorController.php',
@@ -18231,7 +18298,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Http\\Requests\\Api\\V1\\InvitationUsersRequest.php' => 
   array (
-    'fileHash' => '410e871088915b555a4d948e531b7188e3e3c0bc',
+    'fileHash' => '30b3048090d143f079416c60fc9ce67e621e0d57',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\InvitationController.php',
@@ -18239,7 +18306,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Http\\Requests\\Api\\V1\\MessageRequest.php' => 
   array (
-    'fileHash' => '5c683c0f3404e0999c8a4618ee563ed8f19d7c6a',
+    'fileHash' => '9a2fabb4fb30d3c14560b862a8133844dec02072',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\MessageController.php',
@@ -18255,7 +18322,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Http\\Requests\\Api\\V1\\ProjectStoreRequest.php' => 
   array (
-    'fileHash' => '1c157cf3e323912d92ff0e1e53e8a2bc038d5389',
+    'fileHash' => '9d3e9f4d97d5b8c80a338a6dec82795006aef6cd',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\ProjectController.php',
@@ -18263,7 +18330,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Http\\Requests\\Api\\V1\\ProjectUpdateRequest.php' => 
   array (
-    'fileHash' => 'bd9fb8a196f7180dc8909d4a7e75848dd18790de',
+    'fileHash' => '235d6e098db85f614e1a677c5b6de937ff096d93',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\ProjectController.php',
@@ -18271,7 +18338,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Http\\Requests\\Api\\V1\\StageRequest.php' => 
   array (
-    'fileHash' => '2ff9f4a102bedd9cfac293310284f4edf905cbcc',
+    'fileHash' => 'cbdca5558f655cdff5d4445e0bd4e426f81f28a8',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\FeaturesController.php',
@@ -18287,7 +18354,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Http\\Requests\\Api\\V1\\TaskMembersRequest.php' => 
   array (
-    'fileHash' => '2e9237795b944a23897e060a61f9f3c2a6a1826b',
+    'fileHash' => '302a4083ecc3af8fd2fa32dca0c50eb8fabbdae8',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\TaskFeaturesController.php',
@@ -18295,7 +18362,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Http\\Requests\\Api\\V1\\TaskRequest.php' => 
   array (
-    'fileHash' => 'e5651eae81c5242e9b5cb6aeaa418adcd1a99067',
+    'fileHash' => '24f8c8e9978a5d0268e400865115ba00b5e043ab',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\TaskController.php',
@@ -18303,7 +18370,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Http\\Requests\\Api\\V1\\TaskUpdate.php' => 
   array (
-    'fileHash' => '5839d052addcb722f13aaad8fe6e6041927ca24a',
+    'fileHash' => '7f821014b3b56f8f338df8bc57261e26d02acebb',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\TaskController.php',
@@ -18311,7 +18378,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Http\\Requests\\Api\\V1\\UserActivitiesRequest.php' => 
   array (
-    'fileHash' => '6bf8ec5054051c650b264d1be11b3d69ea065f95',
+    'fileHash' => 'fa30e5784ae0a13823abd7f727d14cae8fd07323',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\ProjectDashboardController.php',
@@ -18327,7 +18394,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Http\\Requests\\Api\\V1\\UserTasksRequest.php' => 
   array (
-    'fileHash' => '316a95cda00612ec79a0a2a1bef94451616379e5',
+    'fileHash' => 'de97043342149e1bb802f40dffeaddfdc0ff79e1',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\ProjectDashboardController.php',
@@ -18336,7 +18403,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Http\\Requests\\Api\\V1\\UserTokenRequest.php' => 
   array (
-    'fileHash' => '14d55fc4d2556fae574f517f83e09a8416686d46',
+    'fileHash' => '45ca13c72fbd3538b1e596319981d78525b7247a',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\TokenController.php',
@@ -18352,7 +18419,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Http\\Requests\\Api\\V1\\Zoom\\MeetingStoreRequest.php' => 
   array (
-    'fileHash' => '68676a475f243faa4fcb43038dd2188110d527f5',
+    'fileHash' => 'ffa3a94b5c97d524933bde345a2d8782c3f2339e',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\ZoomMeetingController.php',
@@ -18360,7 +18427,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Http\\Requests\\Api\\V1\\Zoom\\MeetingUpdateRequest.php' => 
   array (
-    'fileHash' => '521e3288b3c75603d6bcedbdeb1b458492fb5aa0',
+    'fileHash' => '7b54f0dd22de8f059bb908617542cd6ca4643766',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\ZoomMeetingController.php',
@@ -18376,7 +18443,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\ActivityResource.php' => 
   array (
-    'fileHash' => 'd5207adce4de882cf58cccf76755b8e8042be735',
+    'fileHash' => 'd1e2c684af64852b427be5bcf9a89ed90a25e1d5',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Events\\ActivityLogged.php',
@@ -18386,7 +18453,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\ConversationResource.php' => 
   array (
-    'fileHash' => '3809ffbe2e9db081958f6ea39917a5a246df8d88',
+    'fileHash' => '0fe507173b65ae72c0954cebc5013be2a57e2c31',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Events\\NewMessage.php',
@@ -18541,7 +18608,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\UserActivitiesResource.php' => 
   array (
-    'fileHash' => '53a4276e25b2cc178afe085b74076bf7a8c8f23a',
+    'fileHash' => '6f6d61cfbaa9ebaf575fbeabd258fc03b06b568b',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\ProjectDashboardController.php',
@@ -18576,14 +18643,12 @@ return [
     'fileHash' => 'feff949f1f935bdf7ccb21dc4d5cf9af1ef06cc5',
     'dependentFiles' => 
     array (
-      0 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\Auth\\LoginController.php',
-      1 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\Auth\\OAuthController.php',
-      2 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\Auth\\RegisterController.php',
-      3 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\Auth\\TwoFactorController.php',
-      4 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\UserController.php',
-      5 => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\ProjectInvitaionResource.php',
-      6 => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\UserTasksResource.php',
-      7 => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\Zoom\\MeetingResource.php',
+      0 => 'D:\\apps\\profresh\\app\\DataTransferObjects\\Auth\\AuthPayload.php',
+      1 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\Auth\\RegisterController.php',
+      2 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\UserController.php',
+      3 => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\ProjectInvitaionResource.php',
+      4 => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\UserTasksResource.php',
+      5 => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\Zoom\\MeetingResource.php',
     ),
   ),
   'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\Zoom\\MeetingResource.php' => 
@@ -18612,7 +18677,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Http\\Views\\Composers\\ViewServiceProvider.php' => 
   array (
-    'fileHash' => 'e7c456b439c1bb32dfc2b1dc88d207a8eec0cdc0',
+    'fileHash' => '1a45349828524a8330b1eb0010cbb31105873c57',
     'dependentFiles' => 
     array (
     ),
@@ -18666,7 +18731,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Jobs\\MailMessage.php' => 
   array (
-    'fileHash' => '5523db583481a3a40a2530bc644d5e9f6a84ebf4',
+    'fileHash' => '634baf13dd96a4153d167be37d59f9ae912c4839',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\MessageService.php',
@@ -18675,7 +18740,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Jobs\\QueuedPasswordResetJob.php' => 
   array (
-    'fileHash' => '622be09fd4053094aaf268187c0be657381280b2',
+    'fileHash' => '8af4e3b71af9a1ea4c5f95f4841363251a95a17b',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Models\\User.php',
@@ -18683,7 +18748,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Jobs\\QueuedVerifyEmailJob.php' => 
   array (
-    'fileHash' => '710279278b7b95ad928c5e92669cf583a7704904',
+    'fileHash' => 'd8f1777654a418c8c6a4a7592eb222911bd83839',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Models\\User.php',
@@ -18701,7 +18766,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Jobs\\SmsMessage.php' => 
   array (
-    'fileHash' => 'c77ed1afbc6469a0c3e63107290179678d89bf21',
+    'fileHash' => '036085ec43f78590c56f621ac61de8628bd44fc9',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\MessageService.php',
@@ -18710,7 +18775,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Jobs\\Webhooks\\Mailgun\\ProcessEmailStatusWebhook.php' => 
   array (
-    'fileHash' => '6efcb30c4ec3a7f6788d36e27b06321254477f23',
+    'fileHash' => '40bd5b26aae3a4f9d4c47ea16079814e42f2be30',
     'dependentFiles' => 
     array (
     ),
@@ -18727,7 +18792,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Jobs\\Webhooks\\Zoom\\MeetingEndsWebhook.php' => 
   array (
-    'fileHash' => 'd8b0711d843c5b06c685c92403935a9c520ac70f',
+    'fileHash' => '3ea5e43d549a56902734e14adc91293cf2c9ec89',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\Webhooks\\ZoomWebhookController.php',
@@ -18737,7 +18802,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Jobs\\Webhooks\\Zoom\\StartMeetingWebhook.php' => 
   array (
-    'fileHash' => '39c1d2c7a59d3a3033b3005fcb8d534e43f7e81e',
+    'fileHash' => '0aa50d3fd02f0f3dc16887140e16c8b9d0547598',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\Webhooks\\ZoomWebhookController.php',
@@ -18757,7 +18822,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Listeners\\PaddleErrorListener.php' => 
   array (
-    'fileHash' => '69454a1748ef2d3a3ddd1f5445a5a6cdb783ef0a',
+    'fileHash' => '37c9e8831e21520578e8359d3cfd68d689c0ca55',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Providers\\EventServiceProvider.php',
@@ -18765,7 +18830,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Listeners\\PaddleEventListener.php' => 
   array (
-    'fileHash' => 'a7cc0b06d29c92f5064146ce83812df614cd627b',
+    'fileHash' => '08872d55b2072dc0f8c27c516edd1aaea842badb',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Providers\\EventServiceProvider.php',
@@ -18773,7 +18838,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Listeners\\SaveUserTimezone.php' => 
   array (
-    'fileHash' => 'fd393ed2718053bb2ac642e145c25bef9809e575',
+    'fileHash' => 'c0c1be55f11b746e994ca8ab205f141c0349fd9e',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Providers\\EventServiceProvider.php',
@@ -18831,7 +18896,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Models\\Conversation.php' => 
   array (
-    'fileHash' => 'b53f0e37e31eb9ca1f0ac28df291a446ad275221',
+    'fileHash' => 'bdbbb8a9d54b767a176c4fe4907d2287c1121417',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Events\\NewMessage.php',
@@ -18875,7 +18940,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Models\\Message.php' => 
   array (
-    'fileHash' => '65cea778042ecada4e1b727b4fda2730daf5e961',
+    'fileHash' => 'cc3f5f51b50cbb2b910cc487d2cdb1b00e92d606',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Console\\Commands\\ScheduledMessages.php',
@@ -19121,135 +19186,143 @@ return [
       0 => 'D:\\apps\\profresh\\app\\Actions\\DeleteProfileAction.php',
       1 => 'D:\\apps\\profresh\\app\\Actions\\OAuthAction.php',
       2 => 'D:\\apps\\profresh\\app\\Actions\\TaskDueAction.php',
-      3 => 'D:\\apps\\profresh\\app\\Events\\PasswordUpdateEvent.php',
-      4 => 'D:\\apps\\profresh\\app\\Events\\UserLogin.php',
-      5 => 'D:\\apps\\profresh\\app\\Exports\\ProjectsExport.php',
-      6 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\Auth\\LoginController.php',
-      7 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\Auth\\OAuthController.php',
-      8 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\Auth\\RegisterController.php',
-      9 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\Auth\\TwoFactorController.php',
-      10 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\Auth\\VerificationController.php',
-      11 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\OAuth\\ZoomAuthController.php',
-      12 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\AvatarController.php',
-      13 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\InvitationController.php',
-      14 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\NotificationsController.php',
-      15 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\ProjectController.php',
-      16 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\SubscriptionController.php',
-      17 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\TaskFeaturesController.php',
-      18 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\TokenController.php',
-      19 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\UserController.php',
-      20 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\UserInvitationsController.php',
-      21 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\ZoomMeetingController.php',
-      22 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\Zoom\\ZoomTokenController.php',
-      23 => 'D:\\apps\\profresh\\app\\Http\\Middleware\\CheckSubscription.php',
-      24 => 'D:\\apps\\profresh\\app\\Http\\Middleware\\TrackLastActiveAt.php',
-      25 => 'D:\\apps\\profresh\\app\\Http\\Requests\\Api\\V1\\Auth\\ConfirmTwoFactorRequest.php',
-      26 => 'D:\\apps\\profresh\\app\\Http\\Requests\\Api\\V1\\Auth\\DisableTwoFactorRequest.php',
-      27 => 'D:\\apps\\profresh\\app\\Http\\Requests\\Api\\V1\\Auth\\PrepareTwoFactorRequest.php',
-      28 => 'D:\\apps\\profresh\\app\\Http\\Requests\\Api\\V1\\Auth\\TwoFactorLoginRequest.php',
-      29 => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\ActivityResource.php',
-      30 => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\ConversationResource.php',
-      31 => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\InvitedUserResource.php',
-      32 => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\NotificationResource.php',
-      33 => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\ProjectInvitaionResource.php',
-      34 => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\ProjectResource.php',
-      35 => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\SubscriptionResource.php',
-      36 => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\TaskResource.php',
-      37 => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\Task\\TaskMemberResource.php',
-      38 => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\UserResource.php',
-      39 => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\UserTasksResource.php',
-      40 => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\UsersResource.php',
-      41 => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\Zoom\\MeetingResource.php',
-      42 => 'D:\\apps\\profresh\\app\\Http\\Views\\Composers\\ProjectComposer.php',
-      43 => 'D:\\apps\\profresh\\app\\Interfaces\\Paddle.php',
-      44 => 'D:\\apps\\profresh\\app\\Interfaces\\Zoom.php',
-      45 => 'D:\\apps\\profresh\\app\\Jobs\\QueuedPasswordResetJob.php',
-      46 => 'D:\\apps\\profresh\\app\\Jobs\\QueuedVerifyEmailJob.php',
-      47 => 'D:\\apps\\profresh\\app\\Jobs\\Webhooks\\Zoom\\MeetingEndsWebhook.php',
-      48 => 'D:\\apps\\profresh\\app\\Jobs\\Webhooks\\Zoom\\StartMeetingWebhook.php',
-      49 => 'D:\\apps\\profresh\\app\\Listeners\\SaveUserTimezone.php',
-      50 => 'D:\\apps\\profresh\\app\\Listeners\\SendPasswordUpdateEmail.php',
-      51 => 'D:\\apps\\profresh\\app\\Models\\Activity.php',
-      52 => 'D:\\apps\\profresh\\app\\Models\\Conversation.php',
-      53 => 'D:\\apps\\profresh\\app\\Models\\Meeting.php',
-      54 => 'D:\\apps\\profresh\\app\\Models\\Message.php',
-      55 => 'D:\\apps\\profresh\\app\\Models\\Paypal.php',
-      56 => 'D:\\apps\\profresh\\app\\Models\\Project.php',
-      57 => 'D:\\apps\\profresh\\app\\Models\\Stage.php',
-      58 => 'D:\\apps\\profresh\\app\\Models\\Task.php',
-      59 => 'D:\\apps\\profresh\\app\\Models\\TaskStatus.php',
-      60 => 'D:\\apps\\profresh\\app\\Models\\UserInfo.php',
-      61 => 'D:\\apps\\profresh\\app\\Policies\\ConversationPolicy.php',
-      62 => 'D:\\apps\\profresh\\app\\Policies\\ProjectsPolicy.php',
-      63 => 'D:\\apps\\profresh\\app\\Policies\\TasksPolicy.php',
-      64 => 'D:\\apps\\profresh\\app\\Policies\\UsersPolicy.php',
-      65 => 'D:\\apps\\profresh\\app\\Providers\\AuthServiceProvider.php',
-      66 => 'D:\\apps\\profresh\\app\\Repository\\TaskRepository.php',
-      67 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\Auth\\LoginUserService.php',
-      68 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\ConversationService.php',
-      69 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\DashboardService.php',
-      70 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\FileService.php',
-      71 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\InvitationService.php',
-      72 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\MessageService.php',
-      73 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\Paddle\\SubscriptionService.php',
-      74 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\Paddle\\SubscriptionServiceFake.php',
-      75 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\ProjectService.php',
-      76 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\Task\\TaskFeatureService.php',
-      77 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\Task\\TaskService.php',
-      78 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\UserService.php',
-      79 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\Zoom\\ZoomService.php',
-      80 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\Zoom\\ZoomServiceFake.php',
-      81 => 'D:\\apps\\profresh\\app\\Services\\PaddleApi\\FakePaddleService.php',
-      82 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\Auth\\AuthenticationTest.php',
-      83 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\Auth\\OAuthTest.php',
-      84 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\Auth\\ResetPasswordTest.php',
-      85 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\Auth\\TwoFactorAuthenticationTest.php',
-      86 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\Auth\\VerificationTest.php',
-      87 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\Controllers\\OAuth\\ZoomController\\CallbackTest.php',
-      88 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\Controllers\\OAuth\\ZoomController\\RedirectTest.php',
-      89 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\Controllers\\Paddle\\SubscriptionTest.php',
-      90 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\Controllers\\Zoom\\DeleteMeetingTest.php',
-      91 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\Controllers\\Zoom\\GetZakTokenTest.php',
-      92 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\Controllers\\Zoom\\StoreMeetingTest.php',
-      93 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\Controllers\\Zoom\\UpdateMeetingTest.php',
-      94 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\Jobs\\Webhooks\\Zoom\\EndedMeetingWebhookTest.php',
-      95 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\Jobs\\Webhooks\\Zoom\\StartMeetingWebhookTest.php',
-      96 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\Services\\Paddle\\SubscriptionTest.php',
-      97 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\Services\\Zoom\\ZoomService\\GetZakTokenTest.php',
-      98 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\Services\\Zoom\\ZoomService\\MeetingCreateTest.php',
-      99 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\Services\\Zoom\\ZoomService\\MeetingDeleteTest.php',
-      100 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\Services\\Zoom\\ZoomService\\MeetingUpdateTest.php',
-      101 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\ActivityTest.php',
-      102 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\Admin\\UsersTest.php',
-      103 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\ApplicationTest.php',
-      104 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\ConversationTest.php',
-      105 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\InvitationTest.php',
-      106 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\JobsTest.php',
-      107 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\MeetingTest.php',
-      108 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\MessageTest.php',
-      109 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\MessageValidationTest.php',
-      110 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\NotificationsTest.php',
-      111 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\ProjectDashBoard\\DashboardTest.php',
-      112 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\ProjectDashBoard\\ProjectChartTests.php',
-      113 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\ProjectDashBoard\\UserActivitiesTest.php',
-      114 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\ProjectDashBoard\\UserKpiMetricesTest.php',
-      115 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\ProjectDashBoard\\UserProjectsPageTest.php',
-      116 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\ProjectDashBoard\\UserTasksDataTest.php',
-      117 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\ProjectFeatureTest.php',
-      118 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\ProjectInsightsApiTest.php',
-      119 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\RecordActivityTest.php',
-      120 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\SearchableTest.php',
-      121 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\StageTest.php',
-      122 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\TaskFeaturesTest.php',
-      123 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\TaskNotifyTest.php',
-      124 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\TaskTest.php',
-      125 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\UserAvatarTest.php',
-      126 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\UserInvitationTest.php',
-      127 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\UserNotificationsTest.php',
-      128 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\UserTest.php',
-      129 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\UserTokenTest.php',
-      130 => 'D:\\apps\\profresh\\tests\\Unit\\ProjectTest.php',
-      131 => 'D:\\apps\\profresh\\tests\\Unit\\Repository\\DashboardInsightsRepositoryTest.php',
+      3 => 'D:\\apps\\profresh\\app\\DataTransferObjects\\Auth\\AuthPayload.php',
+      4 => 'D:\\apps\\profresh\\app\\DataTransferObjects\\Auth\\LoginResult.php',
+      5 => 'D:\\apps\\profresh\\app\\Events\\PasswordUpdateEvent.php',
+      6 => 'D:\\apps\\profresh\\app\\Events\\UserLogin.php',
+      7 => 'D:\\apps\\profresh\\app\\Exports\\ProjectsExport.php',
+      8 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\Auth\\LoginController.php',
+      9 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\Auth\\OAuthController.php',
+      10 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\Auth\\RegisterController.php',
+      11 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\Auth\\ResetPasswordController.php',
+      12 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\Auth\\SpaAuthController.php',
+      13 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\Auth\\TwoFactorController.php',
+      14 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\Auth\\VerificationController.php',
+      15 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\OAuth\\ZoomAuthController.php',
+      16 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\AvatarController.php',
+      17 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\InvitationController.php',
+      18 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\NotificationsController.php',
+      19 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\ProjectController.php',
+      20 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\SubscriptionController.php',
+      21 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\TaskFeaturesController.php',
+      22 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\TokenController.php',
+      23 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\UserController.php',
+      24 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\UserInvitationsController.php',
+      25 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\ZoomMeetingController.php',
+      26 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\Zoom\\ZoomTokenController.php',
+      27 => 'D:\\apps\\profresh\\app\\Http\\Middleware\\CheckSubscription.php',
+      28 => 'D:\\apps\\profresh\\app\\Http\\Middleware\\TrackLastActiveAt.php',
+      29 => 'D:\\apps\\profresh\\app\\Http\\Requests\\Api\\V1\\Auth\\ConfirmTwoFactorRequest.php',
+      30 => 'D:\\apps\\profresh\\app\\Http\\Requests\\Api\\V1\\Auth\\DisableTwoFactorRequest.php',
+      31 => 'D:\\apps\\profresh\\app\\Http\\Requests\\Api\\V1\\Auth\\LoginUserRequest.php',
+      32 => 'D:\\apps\\profresh\\app\\Http\\Requests\\Api\\V1\\Auth\\PrepareTwoFactorRequest.php',
+      33 => 'D:\\apps\\profresh\\app\\Http\\Requests\\Api\\V1\\Auth\\TwoFactorLoginRequest.php',
+      34 => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\ActivityResource.php',
+      35 => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\ConversationResource.php',
+      36 => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\InvitedUserResource.php',
+      37 => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\NotificationResource.php',
+      38 => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\ProjectInvitaionResource.php',
+      39 => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\ProjectResource.php',
+      40 => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\SubscriptionResource.php',
+      41 => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\TaskResource.php',
+      42 => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\Task\\TaskMemberResource.php',
+      43 => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\UserResource.php',
+      44 => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\UserTasksResource.php',
+      45 => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\UsersResource.php',
+      46 => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\Zoom\\MeetingResource.php',
+      47 => 'D:\\apps\\profresh\\app\\Http\\Views\\Composers\\ProjectComposer.php',
+      48 => 'D:\\apps\\profresh\\app\\Interfaces\\Paddle.php',
+      49 => 'D:\\apps\\profresh\\app\\Interfaces\\Zoom.php',
+      50 => 'D:\\apps\\profresh\\app\\Jobs\\QueuedPasswordResetJob.php',
+      51 => 'D:\\apps\\profresh\\app\\Jobs\\QueuedVerifyEmailJob.php',
+      52 => 'D:\\apps\\profresh\\app\\Jobs\\Webhooks\\Zoom\\MeetingEndsWebhook.php',
+      53 => 'D:\\apps\\profresh\\app\\Jobs\\Webhooks\\Zoom\\StartMeetingWebhook.php',
+      54 => 'D:\\apps\\profresh\\app\\Listeners\\SaveUserTimezone.php',
+      55 => 'D:\\apps\\profresh\\app\\Listeners\\SendPasswordUpdateEmail.php',
+      56 => 'D:\\apps\\profresh\\app\\Models\\Activity.php',
+      57 => 'D:\\apps\\profresh\\app\\Models\\Conversation.php',
+      58 => 'D:\\apps\\profresh\\app\\Models\\Meeting.php',
+      59 => 'D:\\apps\\profresh\\app\\Models\\Message.php',
+      60 => 'D:\\apps\\profresh\\app\\Models\\Paypal.php',
+      61 => 'D:\\apps\\profresh\\app\\Models\\Project.php',
+      62 => 'D:\\apps\\profresh\\app\\Models\\Stage.php',
+      63 => 'D:\\apps\\profresh\\app\\Models\\Task.php',
+      64 => 'D:\\apps\\profresh\\app\\Models\\TaskStatus.php',
+      65 => 'D:\\apps\\profresh\\app\\Models\\UserInfo.php',
+      66 => 'D:\\apps\\profresh\\app\\Policies\\ConversationPolicy.php',
+      67 => 'D:\\apps\\profresh\\app\\Policies\\ProjectsPolicy.php',
+      68 => 'D:\\apps\\profresh\\app\\Policies\\TasksPolicy.php',
+      69 => 'D:\\apps\\profresh\\app\\Policies\\UsersPolicy.php',
+      70 => 'D:\\apps\\profresh\\app\\Providers\\AuthServiceProvider.php',
+      71 => 'D:\\apps\\profresh\\app\\Providers\\RouteServiceProvider.php',
+      72 => 'D:\\apps\\profresh\\app\\Repository\\TaskRepository.php',
+      73 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\Auth\\LoginUserService.php',
+      74 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\ConversationService.php',
+      75 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\DashboardService.php',
+      76 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\FileService.php',
+      77 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\InvitationService.php',
+      78 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\MessageService.php',
+      79 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\Paddle\\SubscriptionService.php',
+      80 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\Paddle\\SubscriptionServiceFake.php',
+      81 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\ProjectService.php',
+      82 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\Task\\TaskFeatureService.php',
+      83 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\Task\\TaskService.php',
+      84 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\UserService.php',
+      85 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\Zoom\\ZoomService.php',
+      86 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\Zoom\\ZoomServiceFake.php',
+      87 => 'D:\\apps\\profresh\\app\\Services\\PaddleApi\\FakePaddleService.php',
+      88 => 'D:\\apps\\profresh\\app\\Services\\TwoFactor\\TwoFactorStateManager.php',
+      89 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\Auth\\AuthenticationTest.php',
+      90 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\Auth\\OAuthTest.php',
+      91 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\Auth\\ResetPasswordTest.php',
+      92 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\Auth\\TwoFactorAuthenticationTest.php',
+      93 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\Auth\\VerificationTest.php',
+      94 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\Controllers\\OAuth\\ZoomController\\CallbackTest.php',
+      95 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\Controllers\\OAuth\\ZoomController\\RedirectTest.php',
+      96 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\Controllers\\Paddle\\SubscriptionTest.php',
+      97 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\Controllers\\Zoom\\DeleteMeetingTest.php',
+      98 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\Controllers\\Zoom\\GetZakTokenTest.php',
+      99 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\Controllers\\Zoom\\StoreMeetingTest.php',
+      100 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\Controllers\\Zoom\\UpdateMeetingTest.php',
+      101 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\Jobs\\Webhooks\\Zoom\\EndedMeetingWebhookTest.php',
+      102 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\Jobs\\Webhooks\\Zoom\\StartMeetingWebhookTest.php',
+      103 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\Services\\Paddle\\SubscriptionTest.php',
+      104 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\Services\\Zoom\\ZoomService\\GetZakTokenTest.php',
+      105 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\Services\\Zoom\\ZoomService\\MeetingCreateTest.php',
+      106 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\Services\\Zoom\\ZoomService\\MeetingDeleteTest.php',
+      107 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\Services\\Zoom\\ZoomService\\MeetingUpdateTest.php',
+      108 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\ActivityTest.php',
+      109 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\Admin\\UsersTest.php',
+      110 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\ApplicationTest.php',
+      111 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\ConversationTest.php',
+      112 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\InvitationTest.php',
+      113 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\JobsTest.php',
+      114 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\MeetingTest.php',
+      115 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\MessageTest.php',
+      116 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\MessageValidationTest.php',
+      117 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\NotificationsTest.php',
+      118 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\ProjectDashBoard\\DashboardTest.php',
+      119 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\ProjectDashBoard\\ProjectChartTests.php',
+      120 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\ProjectDashBoard\\UserActivitiesTest.php',
+      121 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\ProjectDashBoard\\UserKpiMetricesTest.php',
+      122 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\ProjectDashBoard\\UserProjectsPageTest.php',
+      123 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\ProjectDashBoard\\UserTasksDataTest.php',
+      124 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\ProjectFeatureTest.php',
+      125 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\ProjectInsightsApiTest.php',
+      126 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\RecordActivityTest.php',
+      127 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\SearchableTest.php',
+      128 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\StageTest.php',
+      129 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\TaskFeaturesTest.php',
+      130 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\TaskNotifyTest.php',
+      131 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\TaskTest.php',
+      132 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\UserAvatarTest.php',
+      133 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\UserInvitationTest.php',
+      134 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\UserNotificationsTest.php',
+      135 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\UserTest.php',
+      136 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\UserTokenTest.php',
+      137 => 'D:\\apps\\profresh\\tests\\Unit\\ProjectTest.php',
+      138 => 'D:\\apps\\profresh\\tests\\Unit\\Repository\\DashboardInsightsRepositoryTest.php',
+      139 => 'D:\\apps\\profresh\\tests\\Unit\\Services\\TwoFactorStateManagerTest.php',
     ),
   ),
   'D:\\apps\\profresh\\app\\Models\\UserInfo.php' => 
@@ -19310,7 +19383,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Notifications\\TaskDue.php' => 
   array (
-    'fileHash' => 'be8e0824df1856734ba21e13b3c988150c65c544',
+    'fileHash' => '4d54bd73a54c06b6bdd18dc9e713617379b1822c',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Actions\\TaskDueAction.php',
@@ -19378,21 +19451,21 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Providers\\AppServiceProvider.php' => 
   array (
-    'fileHash' => '75c9a4f8b08be6a50ab7f0a89405e1015496f7e5',
+    'fileHash' => '995c546108eafa27498ce99bb0514bc58747f182',
     'dependentFiles' => 
     array (
     ),
   ),
   'D:\\apps\\profresh\\app\\Providers\\AuthServiceProvider.php' => 
   array (
-    'fileHash' => '7def7488c8d460f0b3b77a9a87a2c4507b4016f1',
+    'fileHash' => '3b49c5f6b7fb3d3b3520402deb9eea94df348a37',
     'dependentFiles' => 
     array (
     ),
   ),
   'D:\\apps\\profresh\\app\\Providers\\BroadcastServiceProvider.php' => 
   array (
-    'fileHash' => 'e444ddf2654ebf3a30e301476f9e0c154a025c47',
+    'fileHash' => '55492fb88f7b2cfce03b98b1080103b62f82bd34',
     'dependentFiles' => 
     array (
     ),
@@ -19406,7 +19479,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Providers\\RouteServiceProvider.php' => 
   array (
-    'fileHash' => '3fe1da3a65a40c3443239f8577c8ac3699a78aee',
+    'fileHash' => '68a1f6770d070d3dd2d55dbb563ec8d101ff4a12',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\Auth\\RegisterController.php',
@@ -19506,7 +19579,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Repository\\TaskRepository.php' => 
   array (
-    'fileHash' => '50936fe5a15400b5e6a3f6b0859ab4641c7efa1d',
+    'fileHash' => 'e065f722a3c1885a9bcab5155904400a58a229d6',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\TaskFeaturesController.php',
@@ -19530,7 +19603,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Rules\\MeetingDateTime.php' => 
   array (
-    'fileHash' => '7805b8e5319adb7d506ded0cd0e6006b6e02eb59',
+    'fileHash' => 'b6cb6b575707caadf938955f133a044d451c76f4',
     'dependentFiles' => 
     array (
     ),
@@ -19552,7 +19625,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Services\\Api\\V1\\Admin\\DashboardService.php' => 
   array (
-    'fileHash' => 'db24d1475325168ad551dc5325b667d8b031c66f',
+    'fileHash' => 'ee4064028983527083f093a4a42618429011683e',
     'dependentFiles' => 
     array (
     ),
@@ -19566,16 +19639,18 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Services\\Api\\V1\\Auth\\LoginUserService.php' => 
   array (
-    'fileHash' => 'f68fd2b792d9fa7b079ccfc81b41b7286612f550',
+    'fileHash' => '11431bdcbf2683b773959590918bddb906b1d9da',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\Auth\\LoginController.php',
       1 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\Auth\\OAuthController.php',
+      2 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\Auth\\SpaAuthController.php',
+      3 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\Auth\\TwoFactorController.php',
     ),
   ),
   'D:\\apps\\profresh\\app\\Services\\Api\\V1\\ConversationService.php' => 
   array (
-    'fileHash' => '7a4a1b223a1abe18a696f170f3dcf42482125fe7',
+    'fileHash' => '41c7e8c4beb0292317749c373f76b8b67d13ffb8',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\ConversationController.php',
@@ -19608,7 +19683,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Services\\Api\\V1\\FeatureService.php' => 
   array (
-    'fileHash' => '1dedb94fe2d4e0d095839aefe0972a8d45631cb1',
+    'fileHash' => '10c5acfddded8802a69db4b6281cb86f8d1f8d1b',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\FeaturesController.php',
@@ -19616,7 +19691,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Services\\Api\\V1\\FileService.php' => 
   array (
-    'fileHash' => '39a553204bc30c3b6f4119b7a26fb7328ae0824f',
+    'fileHash' => 'd47d8fbeccef42944f50cfe897184767f8935312',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\AvatarController.php',
@@ -19626,7 +19701,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Services\\Api\\V1\\InvitationService.php' => 
   array (
-    'fileHash' => '1ab460fcfb9f0cb819a823604cf6d336fa843258',
+    'fileHash' => '521161c2df98762f8bca546d8d38ab266672ab1a',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\InvitationController.php',
@@ -19643,7 +19718,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Services\\Api\\V1\\MessageService.php' => 
   array (
-    'fileHash' => 'a3c47b13a7d06878d68e5c81ec393f6159060f50',
+    'fileHash' => '85a4d63ce7841f3980e7ba1cdd2fd2d222d7108f',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Console\\Commands\\ScheduledMessages.php',
@@ -19685,7 +19760,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Services\\Api\\V1\\ProjectService.php' => 
   array (
-    'fileHash' => '3a48c5b4f9c375a34cccab04b1edd4f0b0f5c398',
+    'fileHash' => 'bebc1328983804a4c0a4ee66176486b9a571dfa7',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\FeaturesController.php',
@@ -19694,7 +19769,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Services\\Api\\V1\\SendSmsService.php' => 
   array (
-    'fileHash' => 'e7132e9576e0d73678cc3fbd37d7b368efa121f5',
+    'fileHash' => '4d8e72bdb35819caf9be32598365d6d60d4ab5e0',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Jobs\\SmsMessage.php',
@@ -19704,7 +19779,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Services\\Api\\V1\\Task\\TaskFeatureService.php' => 
   array (
-    'fileHash' => 'da6ba43beea81716b911624e951e5628d13b9694',
+    'fileHash' => 'f05f89514bc3c660406b05af84a7682a326e4251',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\TaskFeaturesController.php',
@@ -19751,7 +19826,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Services\\Api\\V1\\Zoom\\ZoomServiceFake.php' => 
   array (
-    'fileHash' => 'bf0ae80ade0a6ad54a3335fb54568f30e2556aa4',
+    'fileHash' => 'f50f6c938c78b9ccb259e446ea5b30def75a62f7',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\Controllers\\OAuth\\ZoomController\\CallbackTest.php',
@@ -19830,11 +19905,20 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Services\\ProjectInsightsPreloader.php' => 
   array (
-    'fileHash' => 'c50c5e705aa873cfc4912679d05b17d4b8282407',
+    'fileHash' => 'be19e1276ddb9bf30e6d47c99563686f330a6731',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Jobs\\RecalculateProjectHealth.php',
       1 => 'D:\\apps\\profresh\\app\\Repository\\ProjectInsightsRepository.php',
+    ),
+  ),
+  'D:\\apps\\profresh\\app\\Services\\TwoFactor\\TwoFactorStateManager.php' => 
+  array (
+    'fileHash' => 'c7cf6066c6bb41cc46512d7ac231daad439e2c42',
+    'dependentFiles' => 
+    array (
+      0 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\Auth\\LoginUserService.php',
+      1 => 'D:\\apps\\profresh\\tests\\Unit\\Services\\TwoFactorStateManagerTest.php',
     ),
   ),
   'D:\\apps\\profresh\\app\\Traits\\ApiResponses.php' => 
@@ -19852,131 +19936,139 @@ return [
       0 => 'D:\\apps\\profresh\\app\\Actions\\DeleteProfileAction.php',
       1 => 'D:\\apps\\profresh\\app\\Actions\\OAuthAction.php',
       2 => 'D:\\apps\\profresh\\app\\Actions\\TaskDueAction.php',
-      3 => 'D:\\apps\\profresh\\app\\Events\\PasswordUpdateEvent.php',
-      4 => 'D:\\apps\\profresh\\app\\Events\\UserLogin.php',
-      5 => 'D:\\apps\\profresh\\app\\Exports\\ProjectsExport.php',
-      6 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\Auth\\LoginController.php',
-      7 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\Auth\\OAuthController.php',
-      8 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\Auth\\RegisterController.php',
-      9 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\Auth\\TwoFactorController.php',
-      10 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\Auth\\VerificationController.php',
-      11 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\OAuth\\ZoomAuthController.php',
-      12 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\AvatarController.php',
-      13 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\InvitationController.php',
-      14 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\NotificationsController.php',
-      15 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\ProjectController.php',
-      16 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\SubscriptionController.php',
-      17 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\TaskFeaturesController.php',
-      18 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\TokenController.php',
-      19 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\UserController.php',
-      20 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\UserInvitationsController.php',
-      21 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\ZoomMeetingController.php',
-      22 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\Zoom\\ZoomTokenController.php',
-      23 => 'D:\\apps\\profresh\\app\\Http\\Middleware\\CheckSubscription.php',
-      24 => 'D:\\apps\\profresh\\app\\Http\\Middleware\\TrackLastActiveAt.php',
-      25 => 'D:\\apps\\profresh\\app\\Http\\Requests\\Api\\V1\\Auth\\ConfirmTwoFactorRequest.php',
-      26 => 'D:\\apps\\profresh\\app\\Http\\Requests\\Api\\V1\\Auth\\DisableTwoFactorRequest.php',
-      27 => 'D:\\apps\\profresh\\app\\Http\\Requests\\Api\\V1\\Auth\\PrepareTwoFactorRequest.php',
-      28 => 'D:\\apps\\profresh\\app\\Http\\Requests\\Api\\V1\\Auth\\TwoFactorLoginRequest.php',
-      29 => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\ActivityResource.php',
-      30 => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\InvitedUserResource.php',
-      31 => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\ProjectResource.php',
-      32 => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\SubscriptionResource.php',
-      33 => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\Task\\TaskMemberResource.php',
-      34 => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\UserResource.php',
-      35 => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\UsersResource.php',
-      36 => 'D:\\apps\\profresh\\app\\Http\\Views\\Composers\\ProjectComposer.php',
-      37 => 'D:\\apps\\profresh\\app\\Interfaces\\Paddle.php',
-      38 => 'D:\\apps\\profresh\\app\\Interfaces\\Zoom.php',
-      39 => 'D:\\apps\\profresh\\app\\Jobs\\QueuedPasswordResetJob.php',
-      40 => 'D:\\apps\\profresh\\app\\Jobs\\QueuedVerifyEmailJob.php',
-      41 => 'D:\\apps\\profresh\\app\\Jobs\\Webhooks\\Zoom\\MeetingEndsWebhook.php',
-      42 => 'D:\\apps\\profresh\\app\\Jobs\\Webhooks\\Zoom\\StartMeetingWebhook.php',
-      43 => 'D:\\apps\\profresh\\app\\Listeners\\SaveUserTimezone.php',
-      44 => 'D:\\apps\\profresh\\app\\Listeners\\SendPasswordUpdateEmail.php',
-      45 => 'D:\\apps\\profresh\\app\\Models\\Activity.php',
-      46 => 'D:\\apps\\profresh\\app\\Models\\Conversation.php',
-      47 => 'D:\\apps\\profresh\\app\\Models\\Meeting.php',
-      48 => 'D:\\apps\\profresh\\app\\Models\\Message.php',
-      49 => 'D:\\apps\\profresh\\app\\Models\\Paypal.php',
-      50 => 'D:\\apps\\profresh\\app\\Models\\Project.php',
-      51 => 'D:\\apps\\profresh\\app\\Models\\Stage.php',
-      52 => 'D:\\apps\\profresh\\app\\Models\\Task.php',
-      53 => 'D:\\apps\\profresh\\app\\Models\\TaskStatus.php',
-      54 => 'D:\\apps\\profresh\\app\\Models\\User.php',
-      55 => 'D:\\apps\\profresh\\app\\Models\\UserInfo.php',
-      56 => 'D:\\apps\\profresh\\app\\Policies\\ConversationPolicy.php',
-      57 => 'D:\\apps\\profresh\\app\\Policies\\ProjectsPolicy.php',
-      58 => 'D:\\apps\\profresh\\app\\Policies\\TasksPolicy.php',
-      59 => 'D:\\apps\\profresh\\app\\Policies\\UsersPolicy.php',
-      60 => 'D:\\apps\\profresh\\app\\Providers\\AuthServiceProvider.php',
-      61 => 'D:\\apps\\profresh\\app\\Repository\\TaskRepository.php',
-      62 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\Auth\\LoginUserService.php',
-      63 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\ConversationService.php',
-      64 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\DashboardService.php',
-      65 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\FileService.php',
-      66 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\InvitationService.php',
-      67 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\MessageService.php',
-      68 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\Paddle\\SubscriptionService.php',
-      69 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\Paddle\\SubscriptionServiceFake.php',
-      70 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\ProjectService.php',
-      71 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\Task\\TaskFeatureService.php',
-      72 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\Task\\TaskService.php',
-      73 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\UserService.php',
-      74 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\Zoom\\ZoomService.php',
-      75 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\Zoom\\ZoomServiceFake.php',
-      76 => 'D:\\apps\\profresh\\app\\Services\\PaddleApi\\FakePaddleService.php',
-      77 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\Auth\\AuthenticationTest.php',
-      78 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\Auth\\OAuthTest.php',
-      79 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\Auth\\ResetPasswordTest.php',
-      80 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\Auth\\TwoFactorAuthenticationTest.php',
-      81 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\Auth\\VerificationTest.php',
-      82 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\Controllers\\OAuth\\ZoomController\\CallbackTest.php',
-      83 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\Controllers\\OAuth\\ZoomController\\RedirectTest.php',
-      84 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\Controllers\\Paddle\\SubscriptionTest.php',
-      85 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\Controllers\\Zoom\\DeleteMeetingTest.php',
-      86 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\Controllers\\Zoom\\GetZakTokenTest.php',
-      87 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\Controllers\\Zoom\\StoreMeetingTest.php',
-      88 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\Controllers\\Zoom\\UpdateMeetingTest.php',
-      89 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\Jobs\\Webhooks\\Zoom\\EndedMeetingWebhookTest.php',
-      90 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\Jobs\\Webhooks\\Zoom\\StartMeetingWebhookTest.php',
-      91 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\Services\\Paddle\\SubscriptionTest.php',
-      92 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\Services\\Zoom\\ZoomService\\GetZakTokenTest.php',
-      93 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\Services\\Zoom\\ZoomService\\MeetingCreateTest.php',
-      94 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\Services\\Zoom\\ZoomService\\MeetingDeleteTest.php',
-      95 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\Services\\Zoom\\ZoomService\\MeetingUpdateTest.php',
-      96 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\ActivityTest.php',
-      97 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\Admin\\UsersTest.php',
-      98 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\ApplicationTest.php',
-      99 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\ConversationTest.php',
-      100 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\InvitationTest.php',
-      101 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\JobsTest.php',
-      102 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\MeetingTest.php',
-      103 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\MessageTest.php',
-      104 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\MessageValidationTest.php',
-      105 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\NotificationsTest.php',
-      106 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\ProjectDashBoard\\DashboardTest.php',
-      107 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\ProjectDashBoard\\ProjectChartTests.php',
-      108 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\ProjectDashBoard\\UserActivitiesTest.php',
-      109 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\ProjectDashBoard\\UserKpiMetricesTest.php',
-      110 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\ProjectDashBoard\\UserProjectsPageTest.php',
-      111 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\ProjectDashBoard\\UserTasksDataTest.php',
-      112 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\ProjectFeatureTest.php',
-      113 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\ProjectInsightsApiTest.php',
-      114 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\RecordActivityTest.php',
-      115 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\SearchableTest.php',
-      116 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\StageTest.php',
-      117 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\TaskFeaturesTest.php',
-      118 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\TaskNotifyTest.php',
-      119 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\TaskTest.php',
-      120 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\UserAvatarTest.php',
-      121 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\UserInvitationTest.php',
-      122 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\UserNotificationsTest.php',
-      123 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\UserTest.php',
-      124 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\UserTokenTest.php',
-      125 => 'D:\\apps\\profresh\\tests\\Unit\\Api\\V1\\HasSubscriptionTest.php',
-      126 => 'D:\\apps\\profresh\\tests\\Unit\\ProjectTest.php',
-      127 => 'D:\\apps\\profresh\\tests\\Unit\\Repository\\DashboardInsightsRepositoryTest.php',
+      3 => 'D:\\apps\\profresh\\app\\DataTransferObjects\\Auth\\AuthPayload.php',
+      4 => 'D:\\apps\\profresh\\app\\DataTransferObjects\\Auth\\LoginResult.php',
+      5 => 'D:\\apps\\profresh\\app\\Events\\PasswordUpdateEvent.php',
+      6 => 'D:\\apps\\profresh\\app\\Events\\UserLogin.php',
+      7 => 'D:\\apps\\profresh\\app\\Exports\\ProjectsExport.php',
+      8 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\Auth\\LoginController.php',
+      9 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\Auth\\OAuthController.php',
+      10 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\Auth\\RegisterController.php',
+      11 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\Auth\\ResetPasswordController.php',
+      12 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\Auth\\SpaAuthController.php',
+      13 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\Auth\\TwoFactorController.php',
+      14 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\Auth\\VerificationController.php',
+      15 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\OAuth\\ZoomAuthController.php',
+      16 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\AvatarController.php',
+      17 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\InvitationController.php',
+      18 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\NotificationsController.php',
+      19 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\ProjectController.php',
+      20 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\SubscriptionController.php',
+      21 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\TaskFeaturesController.php',
+      22 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\TokenController.php',
+      23 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\UserController.php',
+      24 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\UserInvitationsController.php',
+      25 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\ZoomMeetingController.php',
+      26 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\Zoom\\ZoomTokenController.php',
+      27 => 'D:\\apps\\profresh\\app\\Http\\Middleware\\CheckSubscription.php',
+      28 => 'D:\\apps\\profresh\\app\\Http\\Middleware\\TrackLastActiveAt.php',
+      29 => 'D:\\apps\\profresh\\app\\Http\\Requests\\Api\\V1\\Auth\\ConfirmTwoFactorRequest.php',
+      30 => 'D:\\apps\\profresh\\app\\Http\\Requests\\Api\\V1\\Auth\\DisableTwoFactorRequest.php',
+      31 => 'D:\\apps\\profresh\\app\\Http\\Requests\\Api\\V1\\Auth\\LoginUserRequest.php',
+      32 => 'D:\\apps\\profresh\\app\\Http\\Requests\\Api\\V1\\Auth\\PrepareTwoFactorRequest.php',
+      33 => 'D:\\apps\\profresh\\app\\Http\\Requests\\Api\\V1\\Auth\\TwoFactorLoginRequest.php',
+      34 => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\ActivityResource.php',
+      35 => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\InvitedUserResource.php',
+      36 => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\ProjectResource.php',
+      37 => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\SubscriptionResource.php',
+      38 => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\Task\\TaskMemberResource.php',
+      39 => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\UserResource.php',
+      40 => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\UsersResource.php',
+      41 => 'D:\\apps\\profresh\\app\\Http\\Views\\Composers\\ProjectComposer.php',
+      42 => 'D:\\apps\\profresh\\app\\Interfaces\\Paddle.php',
+      43 => 'D:\\apps\\profresh\\app\\Interfaces\\Zoom.php',
+      44 => 'D:\\apps\\profresh\\app\\Jobs\\QueuedPasswordResetJob.php',
+      45 => 'D:\\apps\\profresh\\app\\Jobs\\QueuedVerifyEmailJob.php',
+      46 => 'D:\\apps\\profresh\\app\\Jobs\\Webhooks\\Zoom\\MeetingEndsWebhook.php',
+      47 => 'D:\\apps\\profresh\\app\\Jobs\\Webhooks\\Zoom\\StartMeetingWebhook.php',
+      48 => 'D:\\apps\\profresh\\app\\Listeners\\SaveUserTimezone.php',
+      49 => 'D:\\apps\\profresh\\app\\Listeners\\SendPasswordUpdateEmail.php',
+      50 => 'D:\\apps\\profresh\\app\\Models\\Activity.php',
+      51 => 'D:\\apps\\profresh\\app\\Models\\Conversation.php',
+      52 => 'D:\\apps\\profresh\\app\\Models\\Meeting.php',
+      53 => 'D:\\apps\\profresh\\app\\Models\\Message.php',
+      54 => 'D:\\apps\\profresh\\app\\Models\\Paypal.php',
+      55 => 'D:\\apps\\profresh\\app\\Models\\Project.php',
+      56 => 'D:\\apps\\profresh\\app\\Models\\Stage.php',
+      57 => 'D:\\apps\\profresh\\app\\Models\\Task.php',
+      58 => 'D:\\apps\\profresh\\app\\Models\\TaskStatus.php',
+      59 => 'D:\\apps\\profresh\\app\\Models\\User.php',
+      60 => 'D:\\apps\\profresh\\app\\Models\\UserInfo.php',
+      61 => 'D:\\apps\\profresh\\app\\Policies\\ConversationPolicy.php',
+      62 => 'D:\\apps\\profresh\\app\\Policies\\ProjectsPolicy.php',
+      63 => 'D:\\apps\\profresh\\app\\Policies\\TasksPolicy.php',
+      64 => 'D:\\apps\\profresh\\app\\Policies\\UsersPolicy.php',
+      65 => 'D:\\apps\\profresh\\app\\Providers\\AuthServiceProvider.php',
+      66 => 'D:\\apps\\profresh\\app\\Providers\\RouteServiceProvider.php',
+      67 => 'D:\\apps\\profresh\\app\\Repository\\TaskRepository.php',
+      68 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\Auth\\LoginUserService.php',
+      69 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\ConversationService.php',
+      70 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\DashboardService.php',
+      71 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\FileService.php',
+      72 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\InvitationService.php',
+      73 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\MessageService.php',
+      74 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\Paddle\\SubscriptionService.php',
+      75 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\Paddle\\SubscriptionServiceFake.php',
+      76 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\ProjectService.php',
+      77 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\Task\\TaskFeatureService.php',
+      78 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\Task\\TaskService.php',
+      79 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\UserService.php',
+      80 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\Zoom\\ZoomService.php',
+      81 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\Zoom\\ZoomServiceFake.php',
+      82 => 'D:\\apps\\profresh\\app\\Services\\PaddleApi\\FakePaddleService.php',
+      83 => 'D:\\apps\\profresh\\app\\Services\\TwoFactor\\TwoFactorStateManager.php',
+      84 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\Auth\\AuthenticationTest.php',
+      85 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\Auth\\OAuthTest.php',
+      86 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\Auth\\ResetPasswordTest.php',
+      87 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\Auth\\TwoFactorAuthenticationTest.php',
+      88 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\Auth\\VerificationTest.php',
+      89 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\Controllers\\OAuth\\ZoomController\\CallbackTest.php',
+      90 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\Controllers\\OAuth\\ZoomController\\RedirectTest.php',
+      91 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\Controllers\\Paddle\\SubscriptionTest.php',
+      92 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\Controllers\\Zoom\\DeleteMeetingTest.php',
+      93 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\Controllers\\Zoom\\GetZakTokenTest.php',
+      94 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\Controllers\\Zoom\\StoreMeetingTest.php',
+      95 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\Controllers\\Zoom\\UpdateMeetingTest.php',
+      96 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\Jobs\\Webhooks\\Zoom\\EndedMeetingWebhookTest.php',
+      97 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\Jobs\\Webhooks\\Zoom\\StartMeetingWebhookTest.php',
+      98 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\Services\\Paddle\\SubscriptionTest.php',
+      99 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\Services\\Zoom\\ZoomService\\GetZakTokenTest.php',
+      100 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\Services\\Zoom\\ZoomService\\MeetingCreateTest.php',
+      101 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\Services\\Zoom\\ZoomService\\MeetingDeleteTest.php',
+      102 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\Services\\Zoom\\ZoomService\\MeetingUpdateTest.php',
+      103 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\ActivityTest.php',
+      104 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\Admin\\UsersTest.php',
+      105 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\ApplicationTest.php',
+      106 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\ConversationTest.php',
+      107 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\InvitationTest.php',
+      108 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\JobsTest.php',
+      109 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\MeetingTest.php',
+      110 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\MessageTest.php',
+      111 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\MessageValidationTest.php',
+      112 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\NotificationsTest.php',
+      113 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\ProjectDashBoard\\DashboardTest.php',
+      114 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\ProjectDashBoard\\ProjectChartTests.php',
+      115 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\ProjectDashBoard\\UserActivitiesTest.php',
+      116 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\ProjectDashBoard\\UserKpiMetricesTest.php',
+      117 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\ProjectDashBoard\\UserProjectsPageTest.php',
+      118 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\ProjectDashBoard\\UserTasksDataTest.php',
+      119 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\ProjectFeatureTest.php',
+      120 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\ProjectInsightsApiTest.php',
+      121 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\RecordActivityTest.php',
+      122 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\SearchableTest.php',
+      123 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\StageTest.php',
+      124 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\TaskFeaturesTest.php',
+      125 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\TaskNotifyTest.php',
+      126 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\TaskTest.php',
+      127 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\UserAvatarTest.php',
+      128 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\UserInvitationTest.php',
+      129 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\UserNotificationsTest.php',
+      130 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\UserTest.php',
+      131 => 'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\UserTokenTest.php',
+      132 => 'D:\\apps\\profresh\\tests\\Unit\\Api\\V1\\HasSubscriptionTest.php',
+      133 => 'D:\\apps\\profresh\\tests\\Unit\\ProjectTest.php',
+      134 => 'D:\\apps\\profresh\\tests\\Unit\\Repository\\DashboardInsightsRepositoryTest.php',
+      135 => 'D:\\apps\\profresh\\tests\\Unit\\Services\\TwoFactorStateManagerTest.php',
     ),
     'usedTraitDependentFiles' => 
     array (
@@ -20260,7 +20352,8 @@ return [
       62 => 'D:\\apps\\profresh\\tests\\Unit\\ProjectTest.php',
       63 => 'D:\\apps\\profresh\\tests\\Unit\\Repository\\DashboardInsightsRepositoryTest.php',
       64 => 'D:\\apps\\profresh\\tests\\Unit\\Services\\DashboardInsightsServiceTest.php',
-      65 => 'D:\\apps\\profresh\\tests\\Unit\\TaskTest.php',
+      65 => 'D:\\apps\\profresh\\tests\\Unit\\Services\\TwoFactorStateManagerTest.php',
+      66 => 'D:\\apps\\profresh\\tests\\Unit\\TaskTest.php',
     ),
     'usedTraitDependentFiles' => 
     array (
@@ -20329,54 +20422,55 @@ return [
       62 => 'D:\\apps\\profresh\\tests\\Unit\\ProjectTest.php',
       63 => 'D:\\apps\\profresh\\tests\\Unit\\Repository\\DashboardInsightsRepositoryTest.php',
       64 => 'D:\\apps\\profresh\\tests\\Unit\\Services\\DashboardInsightsServiceTest.php',
-      65 => 'D:\\apps\\profresh\\tests\\Unit\\TaskTest.php',
+      65 => 'D:\\apps\\profresh\\tests\\Unit\\Services\\TwoFactorStateManagerTest.php',
+      66 => 'D:\\apps\\profresh\\tests\\Unit\\TaskTest.php',
     ),
   ),
   'D:\\apps\\profresh\\tests\\Feature\\Api\\Actions\\ZoomActionTest.php' => 
   array (
-    'fileHash' => '5c7c48a3dca26b8c099935be7426f0c3dbd759d5',
+    'fileHash' => '6f06aa8ac579f0b7359444bb3a705cd67654cfa6',
     'dependentFiles' => 
     array (
     ),
   ),
   'D:\\apps\\profresh\\tests\\Feature\\Api\\Auth\\AuthenticationTest.php' => 
   array (
-    'fileHash' => 'e917b29df82cb239ed87bd9d9c18037df705992f',
+    'fileHash' => '7c36c385fe8c6bbc83f662c16636fee74d5a5c65',
     'dependentFiles' => 
     array (
     ),
   ),
   'D:\\apps\\profresh\\tests\\Feature\\Api\\Auth\\OAuthTest.php' => 
   array (
-    'fileHash' => '01ef2b9ce2894e5235743d62ec0f8d0121b90d13',
+    'fileHash' => 'f34f771086f1959b0aa495dfa431a519474cdfe2',
     'dependentFiles' => 
     array (
     ),
   ),
   'D:\\apps\\profresh\\tests\\Feature\\Api\\Auth\\ResetPasswordTest.php' => 
   array (
-    'fileHash' => '5e2c8c80b67c2ce38d821f65c4f9b6795f8f40b3',
+    'fileHash' => 'b965baba0ea46af98ff615b5e853eba4c5035103',
     'dependentFiles' => 
     array (
     ),
   ),
   'D:\\apps\\profresh\\tests\\Feature\\Api\\Auth\\TwoFactorAuthenticationTest.php' => 
   array (
-    'fileHash' => 'a7efaed60e9d7a0d42fce8c3937efa5629d08aa6',
+    'fileHash' => '81e8091fc5ed382b5a3877d389d8da2e59ee4e41',
     'dependentFiles' => 
     array (
     ),
   ),
   'D:\\apps\\profresh\\tests\\Feature\\Api\\Auth\\VerificationTest.php' => 
   array (
-    'fileHash' => '9c9a1351e44fe6835e2109a0a26b5b2eeeebbc6b',
+    'fileHash' => 'e25008cd102c64586344f29f804115c80b8f5450',
     'dependentFiles' => 
     array (
     ),
   ),
   'D:\\apps\\profresh\\tests\\Feature\\Api\\Controllers\\OAuth\\ZoomController\\CallbackTest.php' => 
   array (
-    'fileHash' => '76b7213bf0c920c0a2f0420330517209f4b48006',
+    'fileHash' => '1dc407b1d75abad59f0589755eda7b19be37a30f',
     'dependentFiles' => 
     array (
     ),
@@ -20390,84 +20484,84 @@ return [
   ),
   'D:\\apps\\profresh\\tests\\Feature\\Api\\Controllers\\Paddle\\SubscriptionTest.php' => 
   array (
-    'fileHash' => '626e0fd36c42ba387f42a7bedf38646e152762b4',
+    'fileHash' => '2c408bf22007b547b876c4f1adfe727a7c0e1bb3',
     'dependentFiles' => 
     array (
     ),
   ),
   'D:\\apps\\profresh\\tests\\Feature\\Api\\Controllers\\Webhooks\\ZoomWebhookControllerTest.php' => 
   array (
-    'fileHash' => '1ba6566a9ef421694fbd965b2e89f582593fd20b',
+    'fileHash' => 'a3926da48e0351e3622b892f8ad36599ce23a0d4',
     'dependentFiles' => 
     array (
     ),
   ),
   'D:\\apps\\profresh\\tests\\Feature\\Api\\Controllers\\Zoom\\DeleteMeetingTest.php' => 
   array (
-    'fileHash' => '5f2d798fd9aed213aa436b328f9599ab47a844cc',
+    'fileHash' => 'e50d5216cd9aa49eea087b322239ce35fcf39bf1',
     'dependentFiles' => 
     array (
     ),
   ),
   'D:\\apps\\profresh\\tests\\Feature\\Api\\Controllers\\Zoom\\GetZakTokenTest.php' => 
   array (
-    'fileHash' => '39c2662f16f152de32e78e1ffd379f15325bcd61',
+    'fileHash' => 'eef68df123a5a648ce662b306c03c5b968087e80',
     'dependentFiles' => 
     array (
     ),
   ),
   'D:\\apps\\profresh\\tests\\Feature\\Api\\Controllers\\Zoom\\StoreMeetingTest.php' => 
   array (
-    'fileHash' => 'dd9c015daf83476613d5b2761f240f56c483f8f1',
+    'fileHash' => '8bbb30bea232029b0954d2de47262ecd4a8a9311',
     'dependentFiles' => 
     array (
     ),
   ),
   'D:\\apps\\profresh\\tests\\Feature\\Api\\Controllers\\Zoom\\UpdateMeetingTest.php' => 
   array (
-    'fileHash' => '4234e282d88d47e5cae78981b1aa9d8dd467c9a4',
+    'fileHash' => '331191ce57345150e1a8e4cb9303d6b59a67c511',
     'dependentFiles' => 
     array (
     ),
   ),
   'D:\\apps\\profresh\\tests\\Feature\\Api\\Jobs\\Webhooks\\Zoom\\EndedMeetingWebhookTest.php' => 
   array (
-    'fileHash' => 'e32a307f937bcb9e02dbafe799ff66b065a880bf',
+    'fileHash' => '20bc305c0ec452918d5b466cf819560d453ac4e2',
     'dependentFiles' => 
     array (
     ),
   ),
   'D:\\apps\\profresh\\tests\\Feature\\Api\\Jobs\\Webhooks\\Zoom\\ProcessMeetingDeleteTest.php' => 
   array (
-    'fileHash' => 'b01bce87535449bafdd634428cb590705ec642ce',
+    'fileHash' => '98837e592a1f6a274fd6fdb092743710fb1e17ce',
     'dependentFiles' => 
     array (
     ),
   ),
   'D:\\apps\\profresh\\tests\\Feature\\Api\\Jobs\\Webhooks\\Zoom\\ProcessMeetingUpdateWebhookTest.php' => 
   array (
-    'fileHash' => '6cc55c842ca6aa927aeda7e2ae8bdb8b4329c2fe',
+    'fileHash' => 'f6243c435d4f502d6923dd346345f3cbfa6c4a7f',
     'dependentFiles' => 
     array (
     ),
   ),
   'D:\\apps\\profresh\\tests\\Feature\\Api\\Jobs\\Webhooks\\Zoom\\StartMeetingWebhookTest.php' => 
   array (
-    'fileHash' => '35f48d3ed447dab5e3334733e323dda81eaa5f29',
+    'fileHash' => '71849daee39c94b0dfe41b063f7e1dc5c0b60ee7',
     'dependentFiles' => 
     array (
     ),
   ),
   'D:\\apps\\profresh\\tests\\Feature\\Api\\Middleware\\Zoom\\VerifyWebhookTest.php' => 
   array (
-    'fileHash' => '8bbafb3717f59b8628b5734029bb7f5f37f4bb73',
+    'fileHash' => '160899cbbb25c0811ba7913dcb0a60247402f6ef',
     'dependentFiles' => 
     array (
     ),
   ),
   'D:\\apps\\profresh\\tests\\Feature\\Api\\Services\\Paddle\\SubscriptionTest.php' => 
   array (
-    'fileHash' => '1c8c3b88241c7559e96194398795c3a53cbb31fc',
+    'fileHash' => '535d52ca9c0b285fbf00bb5bbc7230d7487d6f07',
     'dependentFiles' => 
     array (
     ),
@@ -20481,168 +20575,168 @@ return [
   ),
   'D:\\apps\\profresh\\tests\\Feature\\Api\\Services\\Zoom\\ZoomService\\GetAuthRedirectDetailsTest.php' => 
   array (
-    'fileHash' => '234ddd4da07a4dab32ba849bf9aa8c6119375b10',
+    'fileHash' => '619f434543bdc8ae203157fecb1b8d4653a72937',
     'dependentFiles' => 
     array (
     ),
   ),
   'D:\\apps\\profresh\\tests\\Feature\\Api\\Services\\Zoom\\ZoomService\\GetZakTokenTest.php' => 
   array (
-    'fileHash' => 'dd105ba3f60e2c329c87ed0128f5750ab457ca38',
+    'fileHash' => '537d6769308ee9bbdc9a31aa6baf005bb7875a48',
     'dependentFiles' => 
     array (
     ),
   ),
   'D:\\apps\\profresh\\tests\\Feature\\Api\\Services\\Zoom\\ZoomService\\MeetingCreateTest.php' => 
   array (
-    'fileHash' => '7f2d61e650daba7055c220c3a10386f2b91336ee',
+    'fileHash' => '48569bd00c875fa1e0d00080f47d6e36572b4cb0',
     'dependentFiles' => 
     array (
     ),
   ),
   'D:\\apps\\profresh\\tests\\Feature\\Api\\Services\\Zoom\\ZoomService\\MeetingDeleteTest.php' => 
   array (
-    'fileHash' => 'abece2b8d5503377318e218a3b51fcf46e690d1e',
+    'fileHash' => 'bfa5c09c236ea6ba212dfc2457a08a8da6c4fe65',
     'dependentFiles' => 
     array (
     ),
   ),
   'D:\\apps\\profresh\\tests\\Feature\\Api\\Services\\Zoom\\ZoomService\\MeetingUpdateTest.php' => 
   array (
-    'fileHash' => 'be6fa3679fa7d85de8552aed3bc79f997a2f0eb8',
+    'fileHash' => '25390b36706d603619c57c3137fa6c70061e0bff',
     'dependentFiles' => 
     array (
     ),
   ),
   'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\ActivityTest.php' => 
   array (
-    'fileHash' => 'a2ff79ee0a30b65baaa4f69ed562ed41498f2c5d',
+    'fileHash' => '9ed683caee612a515d55a713270173b4cb5789bd',
     'dependentFiles' => 
     array (
     ),
   ),
   'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\Admin\\UsersTest.php' => 
   array (
-    'fileHash' => 'c6662e37ae2d5e92d5773579533e40f09bb5615c',
+    'fileHash' => '362e40d612d15bc9d6938cada78ec618d6ec02cf',
     'dependentFiles' => 
     array (
     ),
   ),
   'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\ApplicationTest.php' => 
   array (
-    'fileHash' => 'fcb4c0f892f6cc72ae022c0c208a85120cde8ef7',
+    'fileHash' => '34958686f7ce207a66c463a2b9d93b982591f4e4',
     'dependentFiles' => 
     array (
     ),
   ),
   'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\ConversationTest.php' => 
   array (
-    'fileHash' => '3fc520a09bb19afb7c03451b05f3eede712179cf',
+    'fileHash' => 'b02b59d3655a2ea4a0565f9ad0709e3028969d95',
     'dependentFiles' => 
     array (
     ),
   ),
   'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\FileUploadTest.php' => 
   array (
-    'fileHash' => 'bc277e5f05d4318c86e828800522050bc7230db1',
+    'fileHash' => '076f49dc3e83807db4498a7c3430b288074534bc',
     'dependentFiles' => 
     array (
     ),
   ),
   'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\InvitationTest.php' => 
   array (
-    'fileHash' => '9bcba49fc660b87e6442734834b25cd507106cb5',
+    'fileHash' => '7a7d607329af8d401b1de7aeb271ce84e1b3dbe6',
     'dependentFiles' => 
     array (
     ),
   ),
   'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\JobsTest.php' => 
   array (
-    'fileHash' => '81c3a05cf106156de29a6db053922286a2b55349',
+    'fileHash' => 'd1e1c9246c5f5f5fbd71f981e2f3330c1548037a',
     'dependentFiles' => 
     array (
     ),
   ),
   'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\MeetingTest.php' => 
   array (
-    'fileHash' => '18d6636e68817178a8b6075278e119e6c1b2d075',
+    'fileHash' => '4fad3d8829b00feb9c087105dcb14b16b86f9167',
     'dependentFiles' => 
     array (
     ),
   ),
   'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\MessageTest.php' => 
   array (
-    'fileHash' => 'a06eda78352227a93dbf4023e0f8160e8696644c',
+    'fileHash' => 'c6aeee83446187e7fbb3b071d0bc6ce6521fc4c5',
     'dependentFiles' => 
     array (
     ),
   ),
   'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\MessageValidationTest.php' => 
   array (
-    'fileHash' => 'dc238d41beca758b1c481260a697df3df8a01bcd',
+    'fileHash' => 'f5491b5ad836df40d78d475df36a557fa0f308aa',
     'dependentFiles' => 
     array (
     ),
   ),
   'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\NotificationsTest.php' => 
   array (
-    'fileHash' => '1c6d631c22f80d54eb82ea3ea9da4cb4ae54fb0f',
+    'fileHash' => '8d0a47035cb7d652077e32db499f66612d9d7e5d',
     'dependentFiles' => 
     array (
     ),
   ),
   'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\ProjectDashBoard\\DashboardTest.php' => 
   array (
-    'fileHash' => 'da37ca411c51d68ced610a8c36ebf41dd431c379',
+    'fileHash' => 'c2b5ae9ad9d79d014cd1b617fb07b417bd79f9ad',
     'dependentFiles' => 
     array (
     ),
   ),
   'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\ProjectDashBoard\\ProjectChartTests.php' => 
   array (
-    'fileHash' => '30f5451fbdf196bbdc91b3f32c151a2d6bb2ae99',
+    'fileHash' => 'ccd6d73d872c6c6ade2e6e605fb56f66b80ce9f7',
     'dependentFiles' => 
     array (
     ),
   ),
   'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\ProjectDashBoard\\UserActivitiesTest.php' => 
   array (
-    'fileHash' => 'c94214c9ff1c1ee5c62366c717c8becc5485bbe1',
+    'fileHash' => '14c9c490dcff05f180e9600a1266ed91c758d111',
     'dependentFiles' => 
     array (
     ),
   ),
   'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\ProjectDashBoard\\UserKpiMetricesTest.php' => 
   array (
-    'fileHash' => '92de87f403c3c9f5a5c39d2bb297695c68cedcfa',
+    'fileHash' => '37906029a4995b891113212866a6b7bf22f37633',
     'dependentFiles' => 
     array (
     ),
   ),
   'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\ProjectDashBoard\\UserProjectsPageTest.php' => 
   array (
-    'fileHash' => 'c93dd148b4a5ca6f9c63f27e0ee454ea348800d3',
+    'fileHash' => '6f410390f6e7dd0b13fc88566e0c713a8f180e57',
     'dependentFiles' => 
     array (
     ),
   ),
   'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\ProjectDashBoard\\UserTasksDataTest.php' => 
   array (
-    'fileHash' => '7f2ec25eb2a1e7065eea3cf777fb3df78878608a',
+    'fileHash' => '9c18ffbd64d35f8f71907b7750849e2f675117ce',
     'dependentFiles' => 
     array (
     ),
   ),
   'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\ProjectFeatureTest.php' => 
   array (
-    'fileHash' => '25794e9ed350662da07041713abe4d8b303f2561',
+    'fileHash' => 'c5a0014bf4214af5aabfa2bafe1a6a26c6941f07',
     'dependentFiles' => 
     array (
     ),
   ),
   'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\ProjectHealthScoreFeatureTest.php' => 
   array (
-    'fileHash' => '36b27f2ac138c9ee8dc7acdf0cf381e9ef1a0773',
+    'fileHash' => '0a4fed5991e4d064e78eae8bf2e31e774daeeb6f',
     'dependentFiles' => 
     array (
     ),
@@ -20656,84 +20750,84 @@ return [
   ),
   'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\ProjectMailableTest.php' => 
   array (
-    'fileHash' => '0019cb92aeeea8b5babd5ea6b029b72e58e5bfa9',
+    'fileHash' => '8da04dc1fb15819c723f7b090ca83d0490e62235',
     'dependentFiles' => 
     array (
     ),
   ),
   'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\RecordActivityTest.php' => 
   array (
-    'fileHash' => 'f34db9119e5dda255d428b985f76279e9dae8e94',
+    'fileHash' => 'f4007da939d43714aa3ff6e4400f960e48131091',
     'dependentFiles' => 
     array (
     ),
   ),
   'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\SearchableTest.php' => 
   array (
-    'fileHash' => 'e7c69c47b94dba05473bbd86723afd53b9f5f180',
+    'fileHash' => '72fd5b95826decbc9d7b80eb2604d32605102520',
     'dependentFiles' => 
     array (
     ),
   ),
   'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\StageTest.php' => 
   array (
-    'fileHash' => 'b8b3efbd2b9368f7bbcdfb278df50461f9de4f7c',
+    'fileHash' => 'ae324b926cbf85fbbc529bf18744d19e2c60a802',
     'dependentFiles' => 
     array (
     ),
   ),
   'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\TaskFeaturesTest.php' => 
   array (
-    'fileHash' => 'c06e00cd8772f467e40282221f6a3de2f42368f7',
+    'fileHash' => 'fd0ca311517d151ad3156c59bf71f55d7ed5c79e',
     'dependentFiles' => 
     array (
     ),
   ),
   'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\TaskNotifyTest.php' => 
   array (
-    'fileHash' => '6e271e5a70e6104b62c6690c72f20dc5d6ccf77b',
+    'fileHash' => 'b8ce48ade50c5af3a3f30d5048fd9ba48ac048b9',
     'dependentFiles' => 
     array (
     ),
   ),
   'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\TaskTest.php' => 
   array (
-    'fileHash' => '4bcbca8053d60d3cad710756abb06637c82a339f',
+    'fileHash' => 'db86b021cbc62e039781265df40e4d0ee47d6b30',
     'dependentFiles' => 
     array (
     ),
   ),
   'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\UserAvatarTest.php' => 
   array (
-    'fileHash' => 'e7767224efa4395d00bdb7f7c7e220acc2beb309',
+    'fileHash' => 'f46b2a8699e050ce637087e83c617830fc980f9e',
     'dependentFiles' => 
     array (
     ),
   ),
   'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\UserInvitationTest.php' => 
   array (
-    'fileHash' => '28be0bebbb62d1e4c52bd62a2c7c96f93cd94cb3',
+    'fileHash' => 'e868df00286e9d410e5aeca8ee35e70f477ed78b',
     'dependentFiles' => 
     array (
     ),
   ),
   'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\UserNotificationsTest.php' => 
   array (
-    'fileHash' => 'b94ebc516b39c4102c97d242e7f9839f9f8d8e62',
+    'fileHash' => 'be64f0fa36974740799958c0183dfed9c583e03c',
     'dependentFiles' => 
     array (
     ),
   ),
   'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\UserTest.php' => 
   array (
-    'fileHash' => '892a734566e97ba3faf70f15bad6c2c71d223538',
+    'fileHash' => '99b1be11a42b968613daef22ad4f468f2f03ab58',
     'dependentFiles' => 
     array (
     ),
   ),
   'D:\\apps\\profresh\\tests\\Feature\\Api\\V1\\UserTokenTest.php' => 
   array (
-    'fileHash' => 'af3f8105795ef27d1452a8299283362712334faa',
+    'fileHash' => 'ec742c74066a78578ac027bba09357d7526f2aac',
     'dependentFiles' => 
     array (
     ),
@@ -20819,7 +20913,8 @@ return [
       61 => 'D:\\apps\\profresh\\tests\\Unit\\ProjectTest.php',
       62 => 'D:\\apps\\profresh\\tests\\Unit\\Repository\\DashboardInsightsRepositoryTest.php',
       63 => 'D:\\apps\\profresh\\tests\\Unit\\Services\\DashboardInsightsServiceTest.php',
-      64 => 'D:\\apps\\profresh\\tests\\Unit\\TaskTest.php',
+      64 => 'D:\\apps\\profresh\\tests\\Unit\\Services\\TwoFactorStateManagerTest.php',
+      65 => 'D:\\apps\\profresh\\tests\\Unit\\TaskTest.php',
     ),
   ),
   'D:\\apps\\profresh\\tests\\Traits\\InteractsWithPaddle.php' => 
@@ -20858,14 +20953,14 @@ return [
   ),
   'D:\\apps\\profresh\\tests\\Unit\\Api\\V1\\HasSubscriptionTest.php' => 
   array (
-    'fileHash' => '309c8db373bb5c27378449f1041258ae89ef573c',
+    'fileHash' => 'c345fbfcbe88e62ffa8a968a0cbc961c23610e87',
     'dependentFiles' => 
     array (
     ),
   ),
   'D:\\apps\\profresh\\tests\\Unit\\MentionedUserTest.php' => 
   array (
-    'fileHash' => 'cf4443f36f377faf22e31c50611d6b528ddc97f4',
+    'fileHash' => '163ce0799fbca1fdc9b7729e89444cacc1100756',
     'dependentFiles' => 
     array (
     ),
@@ -20886,28 +20981,35 @@ return [
   ),
   'D:\\apps\\profresh\\tests\\Unit\\ProjectTest.php' => 
   array (
-    'fileHash' => '54581f8a930e51c420ed47ec50f14b7c33ad97b7',
+    'fileHash' => '089467bc78d7a49d3a8f067948201e3fae755c1e',
     'dependentFiles' => 
     array (
     ),
   ),
   'D:\\apps\\profresh\\tests\\Unit\\Repository\\DashboardInsightsRepositoryTest.php' => 
   array (
-    'fileHash' => '5a70fecf22a600cea82a5de28e4b3571abbd45a8',
+    'fileHash' => '9bfc88f10dd042dcd984df572760a33fdb03d59e',
     'dependentFiles' => 
     array (
     ),
   ),
   'D:\\apps\\profresh\\tests\\Unit\\Services\\DashboardInsightsServiceTest.php' => 
   array (
-    'fileHash' => '661d4d88168686aa9ad75a3d325598f9424c0836',
+    'fileHash' => '74e3efe868a5a03454d25b5f77044e77b064b327',
+    'dependentFiles' => 
+    array (
+    ),
+  ),
+  'D:\\apps\\profresh\\tests\\Unit\\Services\\TwoFactorStateManagerTest.php' => 
+  array (
+    'fileHash' => '653b1728dc76e6a2c77ca3f765082be91a9455ef',
     'dependentFiles' => 
     array (
     ),
   ),
   'D:\\apps\\profresh\\tests\\Unit\\TaskTest.php' => 
   array (
-    'fileHash' => '58407b0af91fd5229468e5efd8dcec8c43db59ae',
+    'fileHash' => '58bf4d907edf2d46385f36019ac498f1ec22732e',
     'dependentFiles' => 
     array (
     ),
@@ -22849,6 +22951,194 @@ return [
            'returnType' => NULL,
            'parameters' => 
           array (
+          ),
+           'attributes' => 
+          array (
+          ),
+        )),
+      ),
+       'attributes' => 
+      array (
+      ),
+    )),
+  ),
+  'D:\\apps\\profresh\\app\\DataTransferObjects\\Auth\\AuthPayload.php' => 
+  array (
+    0 => 
+    \PHPStan\Dependency\ExportedNode\ExportedClassNode::__set_state(array(
+       'name' => 'App\\DataTransferObjects\\Auth\\AuthPayload',
+       'phpDoc' => NULL,
+       'abstract' => false,
+       'final' => true,
+       'extends' => NULL,
+       'implements' => 
+      array (
+      ),
+       'usedTraits' => 
+      array (
+      ),
+       'traitUseAdaptations' => 
+      array (
+      ),
+       'statements' => 
+      array (
+        0 => 
+        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
+           'name' => '__construct',
+           'phpDoc' => NULL,
+           'byRef' => false,
+           'public' => true,
+           'private' => false,
+           'abstract' => false,
+           'final' => false,
+           'static' => false,
+           'returnType' => NULL,
+           'parameters' => 
+          array (
+            0 => 
+            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
+               'name' => 'user',
+               'type' => 'App\\Models\\User',
+               'byRef' => false,
+               'variadic' => false,
+               'hasDefault' => false,
+               'attributes' => 
+              array (
+              ),
+            )),
+            1 => 
+            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
+               'name' => 'accessToken',
+               'type' => '?string',
+               'byRef' => false,
+               'variadic' => false,
+               'hasDefault' => true,
+               'attributes' => 
+              array (
+              ),
+            )),
+            2 => 
+            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
+               'name' => 'message',
+               'type' => 'string',
+               'byRef' => false,
+               'variadic' => false,
+               'hasDefault' => true,
+               'attributes' => 
+              array (
+              ),
+            )),
+            3 => 
+            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
+               'name' => 'status',
+               'type' => 'string',
+               'byRef' => false,
+               'variadic' => false,
+               'hasDefault' => true,
+               'attributes' => 
+              array (
+              ),
+            )),
+          ),
+           'attributes' => 
+          array (
+          ),
+        )),
+        1 => 
+        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
+           'name' => 'toArray',
+           'phpDoc' => 
+          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
+             'phpDocString' => '/**
+     * Convert to array suitable for JSON response.
+     *
+     * @return array<string, mixed>
+     */',
+             'namespace' => 'App\\DataTransferObjects\\Auth',
+             'uses' => 
+            array (
+              'usersresource' => 'App\\Http\\Resources\\Api\\V1\\UsersResource',
+              'user' => 'App\\Models\\User',
+            ),
+             'constUses' => 
+            array (
+            ),
+          )),
+           'byRef' => false,
+           'public' => true,
+           'private' => false,
+           'abstract' => false,
+           'final' => false,
+           'static' => false,
+           'returnType' => 'array',
+           'parameters' => 
+          array (
+          ),
+           'attributes' => 
+          array (
+          ),
+        )),
+      ),
+       'attributes' => 
+      array (
+      ),
+    )),
+  ),
+  'D:\\apps\\profresh\\app\\DataTransferObjects\\Auth\\LoginResult.php' => 
+  array (
+    0 => 
+    \PHPStan\Dependency\ExportedNode\ExportedClassNode::__set_state(array(
+       'name' => 'App\\DataTransferObjects\\Auth\\LoginResult',
+       'phpDoc' => NULL,
+       'abstract' => false,
+       'final' => true,
+       'extends' => NULL,
+       'implements' => 
+      array (
+      ),
+       'usedTraits' => 
+      array (
+      ),
+       'traitUseAdaptations' => 
+      array (
+      ),
+       'statements' => 
+      array (
+        0 => 
+        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
+           'name' => '__construct',
+           'phpDoc' => NULL,
+           'byRef' => false,
+           'public' => true,
+           'private' => false,
+           'abstract' => false,
+           'final' => false,
+           'static' => false,
+           'returnType' => NULL,
+           'parameters' => 
+          array (
+            0 => 
+            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
+               'name' => 'user',
+               'type' => 'App\\Models\\User',
+               'byRef' => false,
+               'variadic' => false,
+               'hasDefault' => false,
+               'attributes' => 
+              array (
+              ),
+            )),
+            1 => 
+            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
+               'name' => 'twoFactor',
+               'type' => 'bool',
+               'byRef' => false,
+               'variadic' => false,
+               'hasDefault' => false,
+               'attributes' => 
+              array (
+              ),
+            )),
           ),
            'attributes' => 
           array (
@@ -26567,20 +26857,16 @@ return [
           \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
              'phpDocString' => '/**
      * @unauthenticated
-     *
-     * Login User.
+     * Token-based login (for mobile/3rd-party clients).
      *
      * This method authenticates the user using provided credentials
-     * and returns an API token upon successful login.
+     * and returns a personal access token upon successful login.
      */',
              'namespace' => 'App\\Http\\Controllers\\Api\\Auth',
              'uses' => 
             array (
-              'userlogin' => 'App\\Events\\UserLogin',
               'apicontroller' => 'App\\Http\\Controllers\\Api\\ApiController',
               'loginuserrequest' => 'App\\Http\\Requests\\Api\\V1\\Auth\\LoginUserRequest',
-              'usersresource' => 'App\\Http\\Resources\\Api\\V1\\UsersResource',
-              'user' => 'App\\Models\\User',
               'loginuserservice' => 'App\\Services\\Api\\V1\\Auth\\LoginUserService',
               'jsonresponse' => 'Illuminate\\Http\\JsonResponse',
               'request' => 'Illuminate\\Http\\Request',
@@ -26619,18 +26905,16 @@ return [
            'name' => 'logout',
            'phpDoc' => 
           \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
-             'phpDocString' => '/** Logout User
+             'phpDocString' => '/**
+     * Logout token client.
      *
-     * Signs out the user and destroy\'s the API token.
-     * */',
+     * Revokes the currently authenticated personal access token.
+     */',
              'namespace' => 'App\\Http\\Controllers\\Api\\Auth',
              'uses' => 
             array (
-              'userlogin' => 'App\\Events\\UserLogin',
               'apicontroller' => 'App\\Http\\Controllers\\Api\\ApiController',
               'loginuserrequest' => 'App\\Http\\Requests\\Api\\V1\\Auth\\LoginUserRequest',
-              'usersresource' => 'App\\Http\\Resources\\Api\\V1\\UsersResource',
-              'user' => 'App\\Models\\User',
               'loginuserservice' => 'App\\Services\\Api\\V1\\Auth\\LoginUserService',
               'jsonresponse' => 'Illuminate\\Http\\JsonResponse',
               'request' => 'Illuminate\\Http\\Request',
@@ -26735,11 +27019,12 @@ return [
               'oauthprovider' => 'App\\Enums\\OAuthProvider',
               'userlogin' => 'App\\Events\\UserLogin',
               'apicontroller' => 'App\\Http\\Controllers\\Api\\ApiController',
-              'usersresource' => 'App\\Http\\Resources\\Api\\V1\\UsersResource',
               'loginuserservice' => 'App\\Services\\Api\\V1\\Auth\\LoginUserService',
-              'exception' => 'Exception',
               'jsonresponse' => 'Illuminate\\Http\\JsonResponse',
+              'request' => 'Illuminate\\Http\\Request',
+              'log' => 'Illuminate\\Support\\Facades\\Log',
               'socialite' => 'Laravel\\Socialite\\Facades\\Socialite',
+              'throwable' => 'Throwable',
             ),
              'constUses' => 
             array (
@@ -26788,11 +27073,12 @@ return [
               'oauthprovider' => 'App\\Enums\\OAuthProvider',
               'userlogin' => 'App\\Events\\UserLogin',
               'apicontroller' => 'App\\Http\\Controllers\\Api\\ApiController',
-              'usersresource' => 'App\\Http\\Resources\\Api\\V1\\UsersResource',
               'loginuserservice' => 'App\\Services\\Api\\V1\\Auth\\LoginUserService',
-              'exception' => 'Exception',
               'jsonresponse' => 'Illuminate\\Http\\JsonResponse',
+              'request' => 'Illuminate\\Http\\Request',
+              'log' => 'Illuminate\\Support\\Facades\\Log',
               'socialite' => 'Laravel\\Socialite\\Facades\\Socialite',
+              'throwable' => 'Throwable',
             ),
              'constUses' => 
             array (
@@ -26822,6 +27108,17 @@ return [
             \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
                'name' => 'action',
                'type' => 'App\\Actions\\OAuthAction',
+               'byRef' => false,
+               'variadic' => false,
+               'hasDefault' => false,
+               'attributes' => 
+              array (
+              ),
+            )),
+            2 => 
+            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
+               'name' => 'request',
+               'type' => 'Illuminate\\Http\\Request',
                'byRef' => false,
                'variadic' => false,
                'hasDefault' => false,
@@ -26882,9 +27179,10 @@ return [
               'usersresource' => 'App\\Http\\Resources\\Api\\V1\\UsersResource',
               'user' => 'App\\Models\\User',
               'routeserviceprovider' => 'App\\Providers\\RouteServiceProvider',
-              'exception' => 'Exception',
               'registered' => 'Illuminate\\Auth\\Events\\Registered',
               'jsonresponse' => 'Illuminate\\Http\\JsonResponse',
+              'log' => 'Illuminate\\Support\\Facades\\Log',
+              'throwable' => 'Throwable',
             ),
              'constUses' => 
             array (
@@ -26919,9 +27217,10 @@ return [
               'usersresource' => 'App\\Http\\Resources\\Api\\V1\\UsersResource',
               'user' => 'App\\Models\\User',
               'routeserviceprovider' => 'App\\Providers\\RouteServiceProvider',
-              'exception' => 'Exception',
               'registered' => 'Illuminate\\Auth\\Events\\Registered',
               'jsonresponse' => 'Illuminate\\Http\\JsonResponse',
+              'log' => 'Illuminate\\Support\\Facades\\Log',
+              'throwable' => 'Throwable',
             ),
              'constUses' => 
             array (
@@ -26991,10 +27290,13 @@ return [
             array (
               'apicontroller' => 'App\\Http\\Controllers\\Api\\ApiController',
               'controller' => 'App\\Http\\Controllers\\Controller',
+              'registeruserrequest' => 'App\\Http\\Requests\\Api\\V1\\Auth\\RegisterUserRequest',
               'user' => 'App\\Models\\User',
               'passwordreset' => 'Illuminate\\Auth\\Events\\PasswordReset',
+              'jsonresponse' => 'Illuminate\\Http\\JsonResponse',
               'request' => 'Illuminate\\Http\\Request',
               'hash' => 'Illuminate\\Support\\Facades\\Hash',
+              'log' => 'Illuminate\\Support\\Facades\\Log',
               'password' => 'Illuminate\\Support\\Facades\\Password',
               'str' => 'Illuminate\\Support\\Str',
             ),
@@ -27008,7 +27310,7 @@ return [
            'abstract' => false,
            'final' => false,
            'static' => false,
-           'returnType' => NULL,
+           'returnType' => 'Illuminate\\Http\\JsonResponse',
            'parameters' => 
           array (
             0 => 
@@ -27040,10 +27342,13 @@ return [
             array (
               'apicontroller' => 'App\\Http\\Controllers\\Api\\ApiController',
               'controller' => 'App\\Http\\Controllers\\Controller',
+              'registeruserrequest' => 'App\\Http\\Requests\\Api\\V1\\Auth\\RegisterUserRequest',
               'user' => 'App\\Models\\User',
               'passwordreset' => 'Illuminate\\Auth\\Events\\PasswordReset',
+              'jsonresponse' => 'Illuminate\\Http\\JsonResponse',
               'request' => 'Illuminate\\Http\\Request',
               'hash' => 'Illuminate\\Support\\Facades\\Hash',
+              'log' => 'Illuminate\\Support\\Facades\\Log',
               'password' => 'Illuminate\\Support\\Facades\\Password',
               'str' => 'Illuminate\\Support\\Str',
             ),
@@ -27057,7 +27362,161 @@ return [
            'abstract' => false,
            'final' => false,
            'static' => false,
+           'returnType' => 'Illuminate\\Http\\JsonResponse',
+           'parameters' => 
+          array (
+            0 => 
+            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
+               'name' => 'request',
+               'type' => 'Illuminate\\Http\\Request',
+               'byRef' => false,
+               'variadic' => false,
+               'hasDefault' => false,
+               'attributes' => 
+              array (
+              ),
+            )),
+          ),
+           'attributes' => 
+          array (
+          ),
+        )),
+      ),
+       'attributes' => 
+      array (
+      ),
+    )),
+  ),
+  'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\Auth\\SpaAuthController.php' => 
+  array (
+    0 => 
+    \PHPStan\Dependency\ExportedNode\ExportedClassNode::__set_state(array(
+       'name' => 'App\\Http\\Controllers\\Api\\Auth\\SpaAuthController',
+       'phpDoc' => NULL,
+       'abstract' => false,
+       'final' => false,
+       'extends' => 'App\\Http\\Controllers\\Api\\ApiController',
+       'implements' => 
+      array (
+      ),
+       'usedTraits' => 
+      array (
+      ),
+       'traitUseAdaptations' => 
+      array (
+      ),
+       'statements' => 
+      array (
+        0 => 
+        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
+           'name' => '__construct',
+           'phpDoc' => NULL,
+           'byRef' => false,
+           'public' => true,
+           'private' => false,
+           'abstract' => false,
+           'final' => false,
+           'static' => false,
            'returnType' => NULL,
+           'parameters' => 
+          array (
+            0 => 
+            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
+               'name' => 'loginUserService',
+               'type' => 'App\\Services\\Api\\V1\\Auth\\LoginUserService',
+               'byRef' => false,
+               'variadic' => false,
+               'hasDefault' => false,
+               'attributes' => 
+              array (
+              ),
+            )),
+          ),
+           'attributes' => 
+          array (
+          ),
+        )),
+        1 => 
+        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
+           'name' => 'loginSpa',
+           'phpDoc' => 
+          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
+             'phpDocString' => '/**
+     * @unauthenticated
+     * SPA session login (cookie-based via Sanctum stateful).
+     *
+     * Establishes a session for first-party SPA clients.
+     */',
+             'namespace' => 'App\\Http\\Controllers\\Api\\Auth',
+             'uses' => 
+            array (
+              'apicontroller' => 'App\\Http\\Controllers\\Api\\ApiController',
+              'loginuserrequest' => 'App\\Http\\Requests\\Api\\V1\\Auth\\LoginUserRequest',
+              'loginuserservice' => 'App\\Services\\Api\\V1\\Auth\\LoginUserService',
+              'jsonresponse' => 'Illuminate\\Http\\JsonResponse',
+              'request' => 'Illuminate\\Http\\Request',
+              'auth' => 'Illuminate\\Support\\Facades\\Auth',
+            ),
+             'constUses' => 
+            array (
+            ),
+          )),
+           'byRef' => false,
+           'public' => true,
+           'private' => false,
+           'abstract' => false,
+           'final' => false,
+           'static' => false,
+           'returnType' => 'Illuminate\\Http\\JsonResponse',
+           'parameters' => 
+          array (
+            0 => 
+            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
+               'name' => 'request',
+               'type' => 'App\\Http\\Requests\\Api\\V1\\Auth\\LoginUserRequest',
+               'byRef' => false,
+               'variadic' => false,
+               'hasDefault' => false,
+               'attributes' => 
+              array (
+              ),
+            )),
+          ),
+           'attributes' => 
+          array (
+          ),
+        )),
+        2 => 
+        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
+           'name' => 'logoutSpa',
+           'phpDoc' => 
+          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
+             'phpDocString' => '/**
+     * SPA session logout (cookie-based via Sanctum stateful).
+     *
+     * Destroys the current session and regenerates CSRF token.
+     */',
+             'namespace' => 'App\\Http\\Controllers\\Api\\Auth',
+             'uses' => 
+            array (
+              'apicontroller' => 'App\\Http\\Controllers\\Api\\ApiController',
+              'loginuserrequest' => 'App\\Http\\Requests\\Api\\V1\\Auth\\LoginUserRequest',
+              'loginuserservice' => 'App\\Services\\Api\\V1\\Auth\\LoginUserService',
+              'jsonresponse' => 'Illuminate\\Http\\JsonResponse',
+              'request' => 'Illuminate\\Http\\Request',
+              'auth' => 'Illuminate\\Support\\Facades\\Auth',
+            ),
+             'constUses' => 
+            array (
+            ),
+          )),
+           'byRef' => false,
+           'public' => true,
+           'private' => false,
+           'abstract' => false,
+           'final' => false,
+           'static' => false,
+           'returnType' => 'Illuminate\\Http\\JsonResponse',
            'parameters' => 
           array (
             0 => 
@@ -27103,7 +27562,7 @@ return [
           'disabletwofactorrequest' => 'App\\Http\\Requests\\Api\\V1\\Auth\\DisableTwoFactorRequest',
           'preparetwofactorrequest' => 'App\\Http\\Requests\\Api\\V1\\Auth\\PrepareTwoFactorRequest',
           'twofactorloginrequest' => 'App\\Http\\Requests\\Api\\V1\\Auth\\TwoFactorLoginRequest',
-          'usersresource' => 'App\\Http\\Resources\\Api\\V1\\UsersResource',
+          'loginuserservice' => 'App\\Services\\Api\\V1\\Auth\\LoginUserService',
           'jsonresponse' => 'Illuminate\\Http\\JsonResponse',
           'request' => 'Illuminate\\Http\\Request',
         ),
@@ -27127,6 +27586,35 @@ return [
       array (
         0 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
+           'name' => '__construct',
+           'phpDoc' => NULL,
+           'byRef' => false,
+           'public' => true,
+           'private' => false,
+           'abstract' => false,
+           'final' => false,
+           'static' => false,
+           'returnType' => NULL,
+           'parameters' => 
+          array (
+            0 => 
+            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
+               'name' => 'loginUserService',
+               'type' => 'App\\Services\\Api\\V1\\Auth\\LoginUserService',
+               'byRef' => false,
+               'variadic' => false,
+               'hasDefault' => false,
+               'attributes' => 
+              array (
+              ),
+            )),
+          ),
+           'attributes' => 
+          array (
+          ),
+        )),
+        1 => 
+        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'getUserStatus',
            'phpDoc' => 
           \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
@@ -27142,7 +27630,7 @@ return [
               'disabletwofactorrequest' => 'App\\Http\\Requests\\Api\\V1\\Auth\\DisableTwoFactorRequest',
               'preparetwofactorrequest' => 'App\\Http\\Requests\\Api\\V1\\Auth\\PrepareTwoFactorRequest',
               'twofactorloginrequest' => 'App\\Http\\Requests\\Api\\V1\\Auth\\TwoFactorLoginRequest',
-              'usersresource' => 'App\\Http\\Resources\\Api\\V1\\UsersResource',
+              'loginuserservice' => 'App\\Services\\Api\\V1\\Auth\\LoginUserService',
               'jsonresponse' => 'Illuminate\\Http\\JsonResponse',
               'request' => 'Illuminate\\Http\\Request',
             ),
@@ -27175,7 +27663,7 @@ return [
           array (
           ),
         )),
-        1 => 
+        2 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'prepareTwoFactor',
            'phpDoc' => 
@@ -27192,7 +27680,7 @@ return [
               'disabletwofactorrequest' => 'App\\Http\\Requests\\Api\\V1\\Auth\\DisableTwoFactorRequest',
               'preparetwofactorrequest' => 'App\\Http\\Requests\\Api\\V1\\Auth\\PrepareTwoFactorRequest',
               'twofactorloginrequest' => 'App\\Http\\Requests\\Api\\V1\\Auth\\TwoFactorLoginRequest',
-              'usersresource' => 'App\\Http\\Resources\\Api\\V1\\UsersResource',
+              'loginuserservice' => 'App\\Services\\Api\\V1\\Auth\\LoginUserService',
               'jsonresponse' => 'Illuminate\\Http\\JsonResponse',
               'request' => 'Illuminate\\Http\\Request',
             ),
@@ -27225,7 +27713,7 @@ return [
           array (
           ),
         )),
-        2 => 
+        3 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'confirmTwoFactor',
            'phpDoc' => 
@@ -27242,7 +27730,7 @@ return [
               'disabletwofactorrequest' => 'App\\Http\\Requests\\Api\\V1\\Auth\\DisableTwoFactorRequest',
               'preparetwofactorrequest' => 'App\\Http\\Requests\\Api\\V1\\Auth\\PrepareTwoFactorRequest',
               'twofactorloginrequest' => 'App\\Http\\Requests\\Api\\V1\\Auth\\TwoFactorLoginRequest',
-              'usersresource' => 'App\\Http\\Resources\\Api\\V1\\UsersResource',
+              'loginuserservice' => 'App\\Services\\Api\\V1\\Auth\\LoginUserService',
               'jsonresponse' => 'Illuminate\\Http\\JsonResponse',
               'request' => 'Illuminate\\Http\\Request',
             ),
@@ -27275,7 +27763,7 @@ return [
           array (
           ),
         )),
-        3 => 
+        4 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'twoFactorLogin',
            'phpDoc' => 
@@ -27292,7 +27780,7 @@ return [
               'disabletwofactorrequest' => 'App\\Http\\Requests\\Api\\V1\\Auth\\DisableTwoFactorRequest',
               'preparetwofactorrequest' => 'App\\Http\\Requests\\Api\\V1\\Auth\\PrepareTwoFactorRequest',
               'twofactorloginrequest' => 'App\\Http\\Requests\\Api\\V1\\Auth\\TwoFactorLoginRequest',
-              'usersresource' => 'App\\Http\\Resources\\Api\\V1\\UsersResource',
+              'loginuserservice' => 'App\\Services\\Api\\V1\\Auth\\LoginUserService',
               'jsonresponse' => 'Illuminate\\Http\\JsonResponse',
               'request' => 'Illuminate\\Http\\Request',
             ),
@@ -27325,7 +27813,7 @@ return [
           array (
           ),
         )),
-        4 => 
+        5 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'showRecoveryCodes',
            'phpDoc' => 
@@ -27342,7 +27830,7 @@ return [
               'disabletwofactorrequest' => 'App\\Http\\Requests\\Api\\V1\\Auth\\DisableTwoFactorRequest',
               'preparetwofactorrequest' => 'App\\Http\\Requests\\Api\\V1\\Auth\\PrepareTwoFactorRequest',
               'twofactorloginrequest' => 'App\\Http\\Requests\\Api\\V1\\Auth\\TwoFactorLoginRequest',
-              'usersresource' => 'App\\Http\\Resources\\Api\\V1\\UsersResource',
+              'loginuserservice' => 'App\\Services\\Api\\V1\\Auth\\LoginUserService',
               'jsonresponse' => 'Illuminate\\Http\\JsonResponse',
               'request' => 'Illuminate\\Http\\Request',
             ),
@@ -27375,7 +27863,7 @@ return [
           array (
           ),
         )),
-        5 => 
+        6 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'disableTwoFactorAuth',
            'phpDoc' => 
@@ -27392,7 +27880,7 @@ return [
               'disabletwofactorrequest' => 'App\\Http\\Requests\\Api\\V1\\Auth\\DisableTwoFactorRequest',
               'preparetwofactorrequest' => 'App\\Http\\Requests\\Api\\V1\\Auth\\PrepareTwoFactorRequest',
               'twofactorloginrequest' => 'App\\Http\\Requests\\Api\\V1\\Auth\\TwoFactorLoginRequest',
-              'usersresource' => 'App\\Http\\Resources\\Api\\V1\\UsersResource',
+              'loginuserservice' => 'App\\Services\\Api\\V1\\Auth\\LoginUserService',
               'jsonresponse' => 'Illuminate\\Http\\JsonResponse',
               'request' => 'Illuminate\\Http\\Request',
             ),
@@ -31443,6 +31931,7 @@ return [
               'user' => 'App\\Models\\User',
               'userservice' => 'App\\Services\\Api\\V1\\UserService',
               'jsonresponse' => 'Illuminate\\Http\\JsonResponse',
+              'request' => 'Illuminate\\Http\\Request',
             ),
              'constUses' => 
             array (
@@ -31464,6 +31953,55 @@ return [
         )),
         1 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
+           'name' => 'me',
+           'phpDoc' => 
+          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
+             'phpDocString' => '/**
+     * Get the currently authenticated user.
+     */',
+             'namespace' => 'App\\Http\\Controllers\\Api\\V1',
+             'uses' => 
+            array (
+              'apicontroller' => 'App\\Http\\Controllers\\Api\\ApiController',
+              'userrequest' => 'App\\Http\\Requests\\Api\\V1\\UserRequest',
+              'userresource' => 'App\\Http\\Resources\\Api\\V1\\UserResource',
+              'usersresource' => 'App\\Http\\Resources\\Api\\V1\\UsersResource',
+              'user' => 'App\\Models\\User',
+              'userservice' => 'App\\Services\\Api\\V1\\UserService',
+              'jsonresponse' => 'Illuminate\\Http\\JsonResponse',
+              'request' => 'Illuminate\\Http\\Request',
+            ),
+             'constUses' => 
+            array (
+            ),
+          )),
+           'byRef' => false,
+           'public' => true,
+           'private' => false,
+           'abstract' => false,
+           'final' => false,
+           'static' => false,
+           'returnType' => 'Illuminate\\Http\\JsonResponse',
+           'parameters' => 
+          array (
+            0 => 
+            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
+               'name' => 'request',
+               'type' => 'Illuminate\\Http\\Request',
+               'byRef' => false,
+               'variadic' => false,
+               'hasDefault' => false,
+               'attributes' => 
+              array (
+              ),
+            )),
+          ),
+           'attributes' => 
+          array (
+          ),
+        )),
+        2 => 
+        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'show',
            'phpDoc' => 
           \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
@@ -31482,6 +32020,7 @@ return [
               'user' => 'App\\Models\\User',
               'userservice' => 'App\\Services\\Api\\V1\\UserService',
               'jsonresponse' => 'Illuminate\\Http\\JsonResponse',
+              'request' => 'Illuminate\\Http\\Request',
             ),
              'constUses' => 
             array (
@@ -31512,7 +32051,7 @@ return [
           array (
           ),
         )),
-        2 => 
+        3 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'update',
            'phpDoc' => 
@@ -31532,6 +32071,7 @@ return [
               'user' => 'App\\Models\\User',
               'userservice' => 'App\\Services\\Api\\V1\\UserService',
               'jsonresponse' => 'Illuminate\\Http\\JsonResponse',
+              'request' => 'Illuminate\\Http\\Request',
             ),
              'constUses' => 
             array (
@@ -31584,7 +32124,7 @@ return [
           array (
           ),
         )),
-        3 => 
+        4 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'destroy',
            'phpDoc' => 
@@ -31604,6 +32144,7 @@ return [
               'user' => 'App\\Models\\User',
               'userservice' => 'App\\Services\\Api\\V1\\UserService',
               'jsonresponse' => 'Illuminate\\Http\\JsonResponse',
+              'request' => 'Illuminate\\Http\\Request',
             ),
              'constUses' => 
             array (
@@ -31634,7 +32175,7 @@ return [
           array (
           ),
         )),
-        4 => 
+        5 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'forceDestroy',
            'phpDoc' => 
@@ -31654,6 +32195,7 @@ return [
               'user' => 'App\\Models\\User',
               'userservice' => 'App\\Services\\Api\\V1\\UserService',
               'jsonresponse' => 'Illuminate\\Http\\JsonResponse',
+              'request' => 'Illuminate\\Http\\Request',
             ),
              'constUses' => 
             array (
@@ -32753,9 +33295,9 @@ return [
              'uses' => 
             array (
               'meeting' => 'App\\DataTransferObjects\\Zoom\\Meeting',
-              'datetimeimmutable' => 'DateTimeImmutable',
               'cache' => 'Illuminate\\Support\\Facades\\Cache',
               'reflectionclass' => 'ReflectionClass',
+              'datetimeimmutable' => 'Safe\\DateTimeImmutable',
               'hasbody' => 'Saloon\\Contracts\\Body\\HasBody',
               'method' => 'Saloon\\Enums\\Method',
               'request' => 'Saloon\\Http\\Request',
@@ -32791,9 +33333,9 @@ return [
              'uses' => 
             array (
               'meeting' => 'App\\DataTransferObjects\\Zoom\\Meeting',
-              'datetimeimmutable' => 'DateTimeImmutable',
               'cache' => 'Illuminate\\Support\\Facades\\Cache',
               'reflectionclass' => 'ReflectionClass',
+              'datetimeimmutable' => 'Safe\\DateTimeImmutable',
               'hasbody' => 'Saloon\\Contracts\\Body\\HasBody',
               'method' => 'Saloon\\Enums\\Method',
               'request' => 'Saloon\\Http\\Request',
@@ -32845,9 +33387,9 @@ return [
              'uses' => 
             array (
               'meeting' => 'App\\DataTransferObjects\\Zoom\\Meeting',
-              'datetimeimmutable' => 'DateTimeImmutable',
               'cache' => 'Illuminate\\Support\\Facades\\Cache',
               'reflectionclass' => 'ReflectionClass',
+              'datetimeimmutable' => 'Safe\\DateTimeImmutable',
               'hasbody' => 'Saloon\\Contracts\\Body\\HasBody',
               'method' => 'Saloon\\Enums\\Method',
               'request' => 'Saloon\\Http\\Request',
@@ -32917,9 +33459,9 @@ return [
              'uses' => 
             array (
               'meeting' => 'App\\DataTransferObjects\\Zoom\\Meeting',
-              'datetimeimmutable' => 'DateTimeImmutable',
               'cache' => 'Illuminate\\Support\\Facades\\Cache',
               'reflectionclass' => 'ReflectionClass',
+              'datetimeimmutable' => 'Safe\\DateTimeImmutable',
               'hasbody' => 'Saloon\\Contracts\\Body\\HasBody',
               'method' => 'Saloon\\Enums\\Method',
               'request' => 'Saloon\\Http\\Request',
@@ -32960,9 +33502,9 @@ return [
              'uses' => 
             array (
               'meeting' => 'App\\DataTransferObjects\\Zoom\\Meeting',
-              'datetimeimmutable' => 'DateTimeImmutable',
               'cache' => 'Illuminate\\Support\\Facades\\Cache',
               'reflectionclass' => 'ReflectionClass',
+              'datetimeimmutable' => 'Safe\\DateTimeImmutable',
               'hasbody' => 'Saloon\\Contracts\\Body\\HasBody',
               'method' => 'Saloon\\Enums\\Method',
               'request' => 'Saloon\\Http\\Request',
@@ -33730,9 +34272,9 @@ return [
              'namespace' => 'App\\Http\\Integrations\\Zoom\\Requests',
              'uses' => 
             array (
-              'datetimeimmutable' => 'DateTimeImmutable',
               'cache' => 'Illuminate\\Support\\Facades\\Cache',
               'reflectionclass' => 'ReflectionClass',
+              'datetimeimmutable' => 'Safe\\DateTimeImmutable',
               'hasbody' => 'Saloon\\Contracts\\Body\\HasBody',
               'method' => 'Saloon\\Enums\\Method',
               'request' => 'Saloon\\Http\\Request',
@@ -33766,9 +34308,9 @@ return [
              'namespace' => 'App\\Http\\Integrations\\Zoom\\Requests',
              'uses' => 
             array (
-              'datetimeimmutable' => 'DateTimeImmutable',
               'cache' => 'Illuminate\\Support\\Facades\\Cache',
               'reflectionclass' => 'ReflectionClass',
+              'datetimeimmutable' => 'Safe\\DateTimeImmutable',
               'hasbody' => 'Saloon\\Contracts\\Body\\HasBody',
               'method' => 'Saloon\\Enums\\Method',
               'request' => 'Saloon\\Http\\Request',
@@ -33818,9 +34360,9 @@ return [
              'namespace' => 'App\\Http\\Integrations\\Zoom\\Requests',
              'uses' => 
             array (
-              'datetimeimmutable' => 'DateTimeImmutable',
               'cache' => 'Illuminate\\Support\\Facades\\Cache',
               'reflectionclass' => 'ReflectionClass',
+              'datetimeimmutable' => 'Safe\\DateTimeImmutable',
               'hasbody' => 'Saloon\\Contracts\\Body\\HasBody',
               'method' => 'Saloon\\Enums\\Method',
               'request' => 'Saloon\\Http\\Request',
@@ -33859,9 +34401,9 @@ return [
              'namespace' => 'App\\Http\\Integrations\\Zoom\\Requests',
              'uses' => 
             array (
-              'datetimeimmutable' => 'DateTimeImmutable',
               'cache' => 'Illuminate\\Support\\Facades\\Cache',
               'reflectionclass' => 'ReflectionClass',
+              'datetimeimmutable' => 'Safe\\DateTimeImmutable',
               'hasbody' => 'Saloon\\Contracts\\Body\\HasBody',
               'method' => 'Saloon\\Enums\\Method',
               'request' => 'Saloon\\Http\\Request',
@@ -33900,9 +34442,9 @@ return [
              'namespace' => 'App\\Http\\Integrations\\Zoom\\Requests',
              'uses' => 
             array (
-              'datetimeimmutable' => 'DateTimeImmutable',
               'cache' => 'Illuminate\\Support\\Facades\\Cache',
               'reflectionclass' => 'ReflectionClass',
+              'datetimeimmutable' => 'Safe\\DateTimeImmutable',
               'hasbody' => 'Saloon\\Contracts\\Body\\HasBody',
               'method' => 'Saloon\\Enums\\Method',
               'request' => 'Saloon\\Http\\Request',
@@ -35460,7 +36002,10 @@ return [
              'namespace' => 'App\\Http\\Requests\\Api\\V1\\Auth',
              'uses' => 
             array (
+              'user' => 'App\\Models\\User',
+              'validatorcontract' => 'Illuminate\\Contracts\\Validation\\Validator',
               'formrequest' => 'Illuminate\\Foundation\\Http\\FormRequest',
+              'hash' => 'Illuminate\\Support\\Facades\\Hash',
             ),
              'constUses' => 
             array (
@@ -35491,7 +36036,10 @@ return [
              'namespace' => 'App\\Http\\Requests\\Api\\V1\\Auth',
              'uses' => 
             array (
+              'user' => 'App\\Models\\User',
+              'validatorcontract' => 'Illuminate\\Contracts\\Validation\\Validator',
               'formrequest' => 'Illuminate\\Foundation\\Http\\FormRequest',
+              'hash' => 'Illuminate\\Support\\Facades\\Hash',
             ),
              'constUses' => 
             array (
@@ -35506,6 +36054,51 @@ return [
            'returnType' => 'array',
            'parameters' => 
           array (
+          ),
+           'attributes' => 
+          array (
+          ),
+        )),
+        2 => 
+        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
+           'name' => 'withValidator',
+           'phpDoc' => 
+          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
+             'phpDocString' => '/**
+     * After base validation, verify credentials belong to a real user.
+     */',
+             'namespace' => 'App\\Http\\Requests\\Api\\V1\\Auth',
+             'uses' => 
+            array (
+              'user' => 'App\\Models\\User',
+              'validatorcontract' => 'Illuminate\\Contracts\\Validation\\Validator',
+              'formrequest' => 'Illuminate\\Foundation\\Http\\FormRequest',
+              'hash' => 'Illuminate\\Support\\Facades\\Hash',
+            ),
+             'constUses' => 
+            array (
+            ),
+          )),
+           'byRef' => false,
+           'public' => true,
+           'private' => false,
+           'abstract' => false,
+           'final' => false,
+           'static' => false,
+           'returnType' => 'void',
+           'parameters' => 
+          array (
+            0 => 
+            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
+               'name' => 'validator',
+               'type' => 'Illuminate\\Contracts\\Validation\\Validator',
+               'byRef' => false,
+               'variadic' => false,
+               'hasDefault' => false,
+               'attributes' => 
+              array (
+              ),
+            )),
           ),
            'attributes' => 
           array (
@@ -35688,6 +36281,40 @@ return [
       array (
         0 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
+           'name' => 'passwordRules',
+           'phpDoc' => 
+          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
+             'phpDocString' => '/**
+     * Centralized password validation rules for reuse across auth flows.
+     *
+     * @return array<int, string|\\Illuminate\\Contracts\\Validation\\Rule>
+     */',
+             'namespace' => 'App\\Http\\Requests\\Api\\V1\\Auth',
+             'uses' => 
+            array (
+              'formrequest' => 'Illuminate\\Foundation\\Http\\FormRequest',
+              'password' => 'Illuminate\\Validation\\Rules\\Password',
+            ),
+             'constUses' => 
+            array (
+            ),
+          )),
+           'byRef' => false,
+           'public' => true,
+           'private' => false,
+           'abstract' => false,
+           'final' => false,
+           'static' => true,
+           'returnType' => 'array',
+           'parameters' => 
+          array (
+          ),
+           'attributes' => 
+          array (
+          ),
+        )),
+        1 => 
+        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'authorize',
            'phpDoc' => 
           \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
@@ -35718,7 +36345,7 @@ return [
           array (
           ),
         )),
-        1 => 
+        2 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'rules',
            'phpDoc' => 
@@ -35750,7 +36377,7 @@ return [
           array (
           ),
         )),
-        2 => 
+        3 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'messages',
            'phpDoc' => 
@@ -35807,7 +36434,7 @@ return [
           'user' => 'App\\Models\\User',
           'exception' => 'Exception',
           'formrequest' => 'Illuminate\\Foundation\\Http\\FormRequest',
-          'hash' => 'Illuminate\\Support\\Facades\\Hash',
+          'cache' => 'Illuminate\\Support\\Facades\\Cache',
           'validator' => 'Illuminate\\Validation\\Validator',
         ),
          'constUses' => 
@@ -35842,7 +36469,7 @@ return [
               'user' => 'App\\Models\\User',
               'exception' => 'Exception',
               'formrequest' => 'Illuminate\\Foundation\\Http\\FormRequest',
-              'hash' => 'Illuminate\\Support\\Facades\\Hash',
+              'cache' => 'Illuminate\\Support\\Facades\\Cache',
               'validator' => 'Illuminate\\Validation\\Validator',
             ),
              'constUses' => 
@@ -35879,7 +36506,7 @@ return [
               'user' => 'App\\Models\\User',
               'exception' => 'Exception',
               'formrequest' => 'Illuminate\\Foundation\\Http\\FormRequest',
-              'hash' => 'Illuminate\\Support\\Facades\\Hash',
+              'cache' => 'Illuminate\\Support\\Facades\\Cache',
               'validator' => 'Illuminate\\Validation\\Validator',
             ),
              'constUses' => 
@@ -35914,7 +36541,7 @@ return [
               'user' => 'App\\Models\\User',
               'exception' => 'Exception',
               'formrequest' => 'Illuminate\\Foundation\\Http\\FormRequest',
-              'hash' => 'Illuminate\\Support\\Facades\\Hash',
+              'cache' => 'Illuminate\\Support\\Facades\\Cache',
               'validator' => 'Illuminate\\Validation\\Validator',
             ),
              'constUses' => 
@@ -38075,9 +38702,9 @@ return [
              'namespace' => 'App\\Http\\Requests\\Api\\V1\\Zoom',
              'uses' => 
             array (
-              'datetimeimmutable' => 'DateTimeImmutable',
               'exception' => 'Exception',
               'formrequest' => 'Illuminate\\Foundation\\Http\\FormRequest',
+              'datetimeimmutable' => 'Safe\\DateTimeImmutable',
             ),
              'constUses' => 
             array (
@@ -38110,9 +38737,9 @@ return [
              'namespace' => 'App\\Http\\Requests\\Api\\V1\\Zoom',
              'uses' => 
             array (
-              'datetimeimmutable' => 'DateTimeImmutable',
               'exception' => 'Exception',
               'formrequest' => 'Illuminate\\Foundation\\Http\\FormRequest',
+              'datetimeimmutable' => 'Safe\\DateTimeImmutable',
             ),
              'constUses' => 
             array (
@@ -38187,9 +38814,9 @@ return [
              'namespace' => 'App\\Http\\Requests\\Api\\V1\\Zoom',
              'uses' => 
             array (
-              'datetimeimmutable' => 'DateTimeImmutable',
               'exception' => 'Exception',
               'formrequest' => 'Illuminate\\Foundation\\Http\\FormRequest',
+              'datetimeimmutable' => 'Safe\\DateTimeImmutable',
             ),
              'constUses' => 
             array (
@@ -38222,9 +38849,9 @@ return [
              'namespace' => 'App\\Http\\Requests\\Api\\V1\\Zoom',
              'uses' => 
             array (
-              'datetimeimmutable' => 'DateTimeImmutable',
               'exception' => 'Exception',
               'formrequest' => 'Illuminate\\Foundation\\Http\\FormRequest',
+              'datetimeimmutable' => 'Safe\\DateTimeImmutable',
             ),
              'constUses' => 
             array (
@@ -43725,7 +44352,7 @@ return [
               'userlogin' => 'App\\Events\\UserLogin',
               'exception' => 'Exception',
               'http' => 'Illuminate\\Support\\Facades\\Http',
-              'log' => 'Log',
+              'log' => 'Illuminate\\Support\\Facades\\Log',
             ),
              'constUses' => 
             array (
@@ -43759,7 +44386,7 @@ return [
               'userlogin' => 'App\\Events\\UserLogin',
               'exception' => 'Exception',
               'http' => 'Illuminate\\Support\\Facades\\Http',
-              'log' => 'Log',
+              'log' => 'Illuminate\\Support\\Facades\\Log',
             ),
              'constUses' => 
             array (
@@ -44314,6 +44941,9 @@ return [
               'model' => 'Illuminate\\Database\\Eloquent\\Model',
               'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
               'collection' => 'Illuminate\\Support\\Collection',
+              'log' => 'Illuminate\\Support\\Facades\\Log',
+              'storage' => 'Illuminate\\Support\\Facades\\Storage',
+              'throwable' => 'Throwable',
             ),
              'constUses' => 
             array (
@@ -44350,6 +44980,9 @@ return [
               'model' => 'Illuminate\\Database\\Eloquent\\Model',
               'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
               'collection' => 'Illuminate\\Support\\Collection',
+              'log' => 'Illuminate\\Support\\Facades\\Log',
+              'storage' => 'Illuminate\\Support\\Facades\\Storage',
+              'throwable' => 'Throwable',
             ),
              'constUses' => 
             array (
@@ -44427,6 +45060,24 @@ return [
            'final' => false,
            'static' => false,
            'returnType' => 'Illuminate\\Support\\Collection',
+           'parameters' => 
+          array (
+          ),
+           'attributes' => 
+          array (
+          ),
+        )),
+        6 => 
+        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
+           'name' => 'getFileUrlAttribute',
+           'phpDoc' => NULL,
+           'byRef' => false,
+           'public' => true,
+           'private' => false,
+           'abstract' => false,
+           'final' => false,
+           'static' => false,
+           'returnType' => '?string',
            'parameters' => 
           array (
           ),
@@ -51266,7 +51917,10 @@ return [
              'namespace' => 'App\\Providers',
              'uses' => 
             array (
+              'limit' => 'Illuminate\\Cache\\RateLimiting\\Limit',
               'serviceprovider' => 'Illuminate\\Foundation\\Support\\Providers\\RouteServiceProvider',
+              'request' => 'Illuminate\\Http\\Request',
+              'ratelimiter' => 'Illuminate\\Support\\Facades\\RateLimiter',
               'route' => 'Illuminate\\Support\\Facades\\Route',
             ),
              'constUses' => 
@@ -51285,7 +51939,10 @@ return [
              'namespace' => 'App\\Providers',
              'uses' => 
             array (
+              'limit' => 'Illuminate\\Cache\\RateLimiting\\Limit',
               'serviceprovider' => 'Illuminate\\Foundation\\Support\\Providers\\RouteServiceProvider',
+              'request' => 'Illuminate\\Http\\Request',
+              'ratelimiter' => 'Illuminate\\Support\\Facades\\RateLimiter',
               'route' => 'Illuminate\\Support\\Facades\\Route',
             ),
              'constUses' => 
@@ -51317,7 +51974,10 @@ return [
              'namespace' => 'App\\Providers',
              'uses' => 
             array (
+              'limit' => 'Illuminate\\Cache\\RateLimiting\\Limit',
               'serviceprovider' => 'Illuminate\\Foundation\\Support\\Providers\\RouteServiceProvider',
+              'request' => 'Illuminate\\Http\\Request',
+              'ratelimiter' => 'Illuminate\\Support\\Facades\\RateLimiter',
               'route' => 'Illuminate\\Support\\Facades\\Route',
             ),
              'constUses' => 
@@ -51340,6 +52000,24 @@ return [
         )),
         3 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
+           'name' => 'configureRateLimiting',
+           'phpDoc' => NULL,
+           'byRef' => false,
+           'public' => false,
+           'private' => false,
+           'abstract' => false,
+           'final' => false,
+           'static' => false,
+           'returnType' => 'void',
+           'parameters' => 
+          array (
+          ),
+           'attributes' => 
+          array (
+          ),
+        )),
+        4 => 
+        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'mapWebRoutes',
            'phpDoc' => 
           \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
@@ -51353,43 +52031,10 @@ return [
              'namespace' => 'App\\Providers',
              'uses' => 
             array (
+              'limit' => 'Illuminate\\Cache\\RateLimiting\\Limit',
               'serviceprovider' => 'Illuminate\\Foundation\\Support\\Providers\\RouteServiceProvider',
-              'route' => 'Illuminate\\Support\\Facades\\Route',
-            ),
-             'constUses' => 
-            array (
-            ),
-          )),
-           'byRef' => false,
-           'public' => false,
-           'private' => false,
-           'abstract' => false,
-           'final' => false,
-           'static' => false,
-           'returnType' => NULL,
-           'parameters' => 
-          array (
-          ),
-           'attributes' => 
-          array (
-          ),
-        )),
-        4 => 
-        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
-           'name' => 'mapApiRoutes',
-           'phpDoc' => 
-          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
-             'phpDocString' => '/**
-     * Define the "api" routes for the application.
-     *
-     * These routes are typically stateless.
-     *
-     * @return void
-     */',
-             'namespace' => 'App\\Providers',
-             'uses' => 
-            array (
-              'serviceprovider' => 'Illuminate\\Foundation\\Support\\Providers\\RouteServiceProvider',
+              'request' => 'Illuminate\\Http\\Request',
+              'ratelimiter' => 'Illuminate\\Support\\Facades\\RateLimiter',
               'route' => 'Illuminate\\Support\\Facades\\Route',
             ),
              'constUses' => 
@@ -51412,6 +52057,45 @@ return [
         )),
         5 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
+           'name' => 'mapApiRoutes',
+           'phpDoc' => 
+          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
+             'phpDocString' => '/**
+     * Define the "api" routes for the application.
+     *
+     * These routes are typically stateless.
+     *
+     * @return void
+     */',
+             'namespace' => 'App\\Providers',
+             'uses' => 
+            array (
+              'limit' => 'Illuminate\\Cache\\RateLimiting\\Limit',
+              'serviceprovider' => 'Illuminate\\Foundation\\Support\\Providers\\RouteServiceProvider',
+              'request' => 'Illuminate\\Http\\Request',
+              'ratelimiter' => 'Illuminate\\Support\\Facades\\RateLimiter',
+              'route' => 'Illuminate\\Support\\Facades\\Route',
+            ),
+             'constUses' => 
+            array (
+            ),
+          )),
+           'byRef' => false,
+           'public' => false,
+           'private' => false,
+           'abstract' => false,
+           'final' => false,
+           'static' => false,
+           'returnType' => NULL,
+           'parameters' => 
+          array (
+          ),
+           'attributes' => 
+          array (
+          ),
+        )),
+        6 => 
+        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'mapAuthRoutes',
            'phpDoc' => 
           \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
@@ -51425,7 +52109,10 @@ return [
              'namespace' => 'App\\Providers',
              'uses' => 
             array (
+              'limit' => 'Illuminate\\Cache\\RateLimiting\\Limit',
               'serviceprovider' => 'Illuminate\\Foundation\\Support\\Providers\\RouteServiceProvider',
+              'request' => 'Illuminate\\Http\\Request',
+              'ratelimiter' => 'Illuminate\\Support\\Facades\\RateLimiter',
               'route' => 'Illuminate\\Support\\Facades\\Route',
             ),
              'constUses' => 
@@ -53248,8 +53935,8 @@ return [
              'namespace' => 'App\\Rules',
              'uses' => 
             array (
-              'datetimeimmutable' => 'DateTimeImmutable',
               'rule' => 'Illuminate\\Contracts\\Validation\\Rule',
+              'datetimeimmutable' => 'Safe\\DateTimeImmutable',
             ),
              'constUses' => 
             array (
@@ -53284,8 +53971,8 @@ return [
              'namespace' => 'App\\Rules',
              'uses' => 
             array (
-              'datetimeimmutable' => 'DateTimeImmutable',
               'rule' => 'Illuminate\\Contracts\\Validation\\Rule',
+              'datetimeimmutable' => 'Safe\\DateTimeImmutable',
             ),
              'constUses' => 
             array (
@@ -53340,8 +54027,8 @@ return [
              'namespace' => 'App\\Rules',
              'uses' => 
             array (
-              'datetimeimmutable' => 'DateTimeImmutable',
               'rule' => 'Illuminate\\Contracts\\Validation\\Rule',
+              'datetimeimmutable' => 'Safe\\DateTimeImmutable',
             ),
              'constUses' => 
             array (
@@ -53867,29 +54554,8 @@ return [
       array (
         0 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
-           'name' => 'attemptLogin',
-           'phpDoc' => 
-          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
-             'phpDocString' => '/**
-     * Attempt to authenticate the user.
-     *
-     * @param  string  $email
-     * @param  string  $password
-     * @return User
-     *
-     * @throws ValidationException
-     */',
-             'namespace' => 'App\\Services\\Api\\V1\\Auth',
-             'uses' => 
-            array (
-              'user' => 'App\\Models\\User',
-              'hash' => 'Illuminate\\Support\\Facades\\Hash',
-              'validationexception' => 'Illuminate\\Validation\\ValidationException',
-            ),
-             'constUses' => 
-            array (
-            ),
-          )),
+           'name' => '__construct',
+           'phpDoc' => NULL,
            'byRef' => false,
            'public' => true,
            'private' => false,
@@ -53901,19 +54567,8 @@ return [
           array (
             0 => 
             \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
-               'name' => 'email',
-               'type' => NULL,
-               'byRef' => false,
-               'variadic' => false,
-               'hasDefault' => false,
-               'attributes' => 
-              array (
-              ),
-            )),
-            1 => 
-            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
-               'name' => 'password',
-               'type' => NULL,
+               'name' => 'twoFactorStateManager',
+               'type' => 'App\\Services\\TwoFactor\\TwoFactorStateManager',
                'byRef' => false,
                'variadic' => false,
                'hasDefault' => false,
@@ -53928,22 +54583,85 @@ return [
         )),
         1 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
-           'name' => 'handleTwoFactor',
+           'name' => 'startLoginFlow',
            'phpDoc' => 
           \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
              'phpDocString' => '/**
-     * Handle 2FA session setup if enabled.
-     *
-     * @param  User  $user
-     * @param  string  $email
-     * @param  string  $password
+     * Start the login flow shared by different controllers.
      */',
              'namespace' => 'App\\Services\\Api\\V1\\Auth',
              'uses' => 
             array (
+              'authpayload' => 'App\\DataTransferObjects\\Auth\\AuthPayload',
+              'loginresult' => 'App\\DataTransferObjects\\Auth\\LoginResult',
+              'userlogin' => 'App\\Events\\UserLogin',
               'user' => 'App\\Models\\User',
-              'hash' => 'Illuminate\\Support\\Facades\\Hash',
-              'validationexception' => 'Illuminate\\Validation\\ValidationException',
+              'twofactorstatemanager' => 'App\\Services\\TwoFactor\\TwoFactorStateManager',
+              'jsonresponse' => 'Illuminate\\Http\\JsonResponse',
+              'request' => 'Illuminate\\Http\\Request',
+              'auth' => 'Illuminate\\Support\\Facades\\Auth',
+            ),
+             'constUses' => 
+            array (
+            ),
+          )),
+           'byRef' => false,
+           'public' => true,
+           'private' => false,
+           'abstract' => false,
+           'final' => false,
+           'static' => false,
+           'returnType' => 'App\\DataTransferObjects\\Auth\\LoginResult',
+           'parameters' => 
+          array (
+            0 => 
+            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
+               'name' => 'email',
+               'type' => 'string',
+               'byRef' => false,
+               'variadic' => false,
+               'hasDefault' => false,
+               'attributes' => 
+              array (
+              ),
+            )),
+            1 => 
+            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
+               'name' => 'password',
+               'type' => 'string',
+               'byRef' => false,
+               'variadic' => false,
+               'hasDefault' => false,
+               'attributes' => 
+              array (
+              ),
+            )),
+          ),
+           'attributes' => 
+          array (
+          ),
+        )),
+        2 => 
+        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
+           'name' => 'initializeTwoFactorState',
+           'phpDoc' => 
+          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
+             'phpDocString' => '/**
+     * Initialize the two-factor state if the user has 2FA enabled.
+     *
+     * The email is read from the provided user to avoid duplication.
+     */',
+             'namespace' => 'App\\Services\\Api\\V1\\Auth',
+             'uses' => 
+            array (
+              'authpayload' => 'App\\DataTransferObjects\\Auth\\AuthPayload',
+              'loginresult' => 'App\\DataTransferObjects\\Auth\\LoginResult',
+              'userlogin' => 'App\\Events\\UserLogin',
+              'user' => 'App\\Models\\User',
+              'twofactorstatemanager' => 'App\\Services\\TwoFactor\\TwoFactorStateManager',
+              'jsonresponse' => 'Illuminate\\Http\\JsonResponse',
+              'request' => 'Illuminate\\Http\\Request',
+              'auth' => 'Illuminate\\Support\\Facades\\Auth',
             ),
              'constUses' => 
             array (
@@ -53961,7 +54679,105 @@ return [
             0 => 
             \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
                'name' => 'user',
-               'type' => NULL,
+               'type' => 'App\\Models\\User',
+               'byRef' => false,
+               'variadic' => false,
+               'hasDefault' => false,
+               'attributes' => 
+              array (
+              ),
+            )),
+          ),
+           'attributes' => 
+          array (
+          ),
+        )),
+        3 => 
+        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
+           'name' => 'twoFactorStateResponse',
+           'phpDoc' => 
+          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
+             'phpDocString' => '/**
+     * Return the standardized two-factor response when required.
+     */',
+             'namespace' => 'App\\Services\\Api\\V1\\Auth',
+             'uses' => 
+            array (
+              'authpayload' => 'App\\DataTransferObjects\\Auth\\AuthPayload',
+              'loginresult' => 'App\\DataTransferObjects\\Auth\\LoginResult',
+              'userlogin' => 'App\\Events\\UserLogin',
+              'user' => 'App\\Models\\User',
+              'twofactorstatemanager' => 'App\\Services\\TwoFactor\\TwoFactorStateManager',
+              'jsonresponse' => 'Illuminate\\Http\\JsonResponse',
+              'request' => 'Illuminate\\Http\\Request',
+              'auth' => 'Illuminate\\Support\\Facades\\Auth',
+            ),
+             'constUses' => 
+            array (
+            ),
+          )),
+           'byRef' => false,
+           'public' => true,
+           'private' => false,
+           'abstract' => false,
+           'final' => false,
+           'static' => false,
+           'returnType' => '?Illuminate\\Http\\JsonResponse',
+           'parameters' => 
+          array (
+            0 => 
+            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
+               'name' => 'result',
+               'type' => 'App\\DataTransferObjects\\Auth\\LoginResult',
+               'byRef' => false,
+               'variadic' => false,
+               'hasDefault' => false,
+               'attributes' => 
+              array (
+              ),
+            )),
+          ),
+           'attributes' => 
+          array (
+          ),
+        )),
+        4 => 
+        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
+           'name' => 'performSessionLogin',
+           'phpDoc' => 
+          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
+             'phpDocString' => '/**
+     * Perform the session login flow for SPA clients and return the auth payload.
+     */',
+             'namespace' => 'App\\Services\\Api\\V1\\Auth',
+             'uses' => 
+            array (
+              'authpayload' => 'App\\DataTransferObjects\\Auth\\AuthPayload',
+              'loginresult' => 'App\\DataTransferObjects\\Auth\\LoginResult',
+              'userlogin' => 'App\\Events\\UserLogin',
+              'user' => 'App\\Models\\User',
+              'twofactorstatemanager' => 'App\\Services\\TwoFactor\\TwoFactorStateManager',
+              'jsonresponse' => 'Illuminate\\Http\\JsonResponse',
+              'request' => 'Illuminate\\Http\\Request',
+              'auth' => 'Illuminate\\Support\\Facades\\Auth',
+            ),
+             'constUses' => 
+            array (
+            ),
+          )),
+           'byRef' => false,
+           'public' => true,
+           'private' => false,
+           'abstract' => false,
+           'final' => false,
+           'static' => false,
+           'returnType' => 'App\\DataTransferObjects\\Auth\\AuthPayload',
+           'parameters' => 
+          array (
+            0 => 
+            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
+               'name' => 'user',
+               'type' => 'App\\Models\\User',
                'byRef' => false,
                'variadic' => false,
                'hasDefault' => false,
@@ -53971,19 +54787,188 @@ return [
             )),
             1 => 
             \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
-               'name' => 'email',
-               'type' => NULL,
+               'name' => 'request',
+               'type' => 'Illuminate\\Http\\Request',
                'byRef' => false,
                'variadic' => false,
                'hasDefault' => false,
+               'attributes' => 
+              array (
+              ),
+            )),
+          ),
+           'attributes' => 
+          array (
+          ),
+        )),
+        5 => 
+        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
+           'name' => 'performApiLogin',
+           'phpDoc' => 
+          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
+             'phpDocString' => '/**
+     * Complete the login for the requested and return the payload.
+     */',
+             'namespace' => 'App\\Services\\Api\\V1\\Auth',
+             'uses' => 
+            array (
+              'authpayload' => 'App\\DataTransferObjects\\Auth\\AuthPayload',
+              'loginresult' => 'App\\DataTransferObjects\\Auth\\LoginResult',
+              'userlogin' => 'App\\Events\\UserLogin',
+              'user' => 'App\\Models\\User',
+              'twofactorstatemanager' => 'App\\Services\\TwoFactor\\TwoFactorStateManager',
+              'jsonresponse' => 'Illuminate\\Http\\JsonResponse',
+              'request' => 'Illuminate\\Http\\Request',
+              'auth' => 'Illuminate\\Support\\Facades\\Auth',
+            ),
+             'constUses' => 
+            array (
+            ),
+          )),
+           'byRef' => false,
+           'public' => true,
+           'private' => false,
+           'abstract' => false,
+           'final' => false,
+           'static' => false,
+           'returnType' => 'App\\DataTransferObjects\\Auth\\AuthPayload',
+           'parameters' => 
+          array (
+            0 => 
+            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
+               'name' => 'user',
+               'type' => 'App\\Models\\User',
+               'byRef' => false,
+               'variadic' => false,
+               'hasDefault' => false,
+               'attributes' => 
+              array (
+              ),
+            )),
+            1 => 
+            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
+               'name' => 'request',
+               'type' => 'Illuminate\\Http\\Request',
+               'byRef' => false,
+               'variadic' => false,
+               'hasDefault' => false,
+               'attributes' => 
+              array (
+              ),
+            )),
+          ),
+           'attributes' => 
+          array (
+          ),
+        )),
+        6 => 
+        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
+           'name' => 'createApiToken',
+           'phpDoc' => 
+          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
+             'phpDocString' => '/**
+     * @param  array<int, string>  $abilities
+     */',
+             'namespace' => 'App\\Services\\Api\\V1\\Auth',
+             'uses' => 
+            array (
+              'authpayload' => 'App\\DataTransferObjects\\Auth\\AuthPayload',
+              'loginresult' => 'App\\DataTransferObjects\\Auth\\LoginResult',
+              'userlogin' => 'App\\Events\\UserLogin',
+              'user' => 'App\\Models\\User',
+              'twofactorstatemanager' => 'App\\Services\\TwoFactor\\TwoFactorStateManager',
+              'jsonresponse' => 'Illuminate\\Http\\JsonResponse',
+              'request' => 'Illuminate\\Http\\Request',
+              'auth' => 'Illuminate\\Support\\Facades\\Auth',
+            ),
+             'constUses' => 
+            array (
+            ),
+          )),
+           'byRef' => false,
+           'public' => true,
+           'private' => false,
+           'abstract' => false,
+           'final' => false,
+           'static' => false,
+           'returnType' => 'string',
+           'parameters' => 
+          array (
+            0 => 
+            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
+               'name' => 'user',
+               'type' => 'App\\Models\\User',
+               'byRef' => false,
+               'variadic' => false,
+               'hasDefault' => false,
+               'attributes' => 
+              array (
+              ),
+            )),
+            1 => 
+            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
+               'name' => 'name',
+               'type' => '?string',
+               'byRef' => false,
+               'variadic' => false,
+               'hasDefault' => true,
                'attributes' => 
               array (
               ),
             )),
             2 => 
             \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
-               'name' => 'password',
-               'type' => NULL,
+               'name' => 'abilities',
+               'type' => 'array',
+               'byRef' => false,
+               'variadic' => false,
+               'hasDefault' => true,
+               'attributes' => 
+              array (
+              ),
+            )),
+          ),
+           'attributes' => 
+          array (
+          ),
+        )),
+        7 => 
+        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
+           'name' => 'buildAuthSuccessPayload',
+           'phpDoc' => 
+          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
+             'phpDocString' => '/**
+     * Build the standard authentication success payload used by controllers.
+     */',
+             'namespace' => 'App\\Services\\Api\\V1\\Auth',
+             'uses' => 
+            array (
+              'authpayload' => 'App\\DataTransferObjects\\Auth\\AuthPayload',
+              'loginresult' => 'App\\DataTransferObjects\\Auth\\LoginResult',
+              'userlogin' => 'App\\Events\\UserLogin',
+              'user' => 'App\\Models\\User',
+              'twofactorstatemanager' => 'App\\Services\\TwoFactor\\TwoFactorStateManager',
+              'jsonresponse' => 'Illuminate\\Http\\JsonResponse',
+              'request' => 'Illuminate\\Http\\Request',
+              'auth' => 'Illuminate\\Support\\Facades\\Auth',
+            ),
+             'constUses' => 
+            array (
+            ),
+          )),
+           'byRef' => false,
+           'public' => true,
+           'private' => false,
+           'abstract' => false,
+           'final' => false,
+           'static' => false,
+           'returnType' => 'App\\DataTransferObjects\\Auth\\AuthPayload',
+           'parameters' => 
+          array (
+            0 => 
+            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
+               'name' => 'user',
+               'type' => 'App\\Models\\User',
                'byRef' => false,
                'variadic' => false,
                'hasDefault' => false,
@@ -53991,6 +54976,55 @@ return [
               array (
               ),
             )),
+            1 => 
+            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
+               'name' => 'token',
+               'type' => '?string',
+               'byRef' => false,
+               'variadic' => false,
+               'hasDefault' => true,
+               'attributes' => 
+              array (
+              ),
+            )),
+          ),
+           'attributes' => 
+          array (
+          ),
+        )),
+        8 => 
+        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
+           'name' => 'buildTwoFactorRequiredResponse',
+           'phpDoc' => 
+          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
+             'phpDocString' => '/**
+     * Standardized 2FA required response used across controllers.
+     */',
+             'namespace' => 'App\\Services\\Api\\V1\\Auth',
+             'uses' => 
+            array (
+              'authpayload' => 'App\\DataTransferObjects\\Auth\\AuthPayload',
+              'loginresult' => 'App\\DataTransferObjects\\Auth\\LoginResult',
+              'userlogin' => 'App\\Events\\UserLogin',
+              'user' => 'App\\Models\\User',
+              'twofactorstatemanager' => 'App\\Services\\TwoFactor\\TwoFactorStateManager',
+              'jsonresponse' => 'Illuminate\\Http\\JsonResponse',
+              'request' => 'Illuminate\\Http\\Request',
+              'auth' => 'Illuminate\\Support\\Facades\\Auth',
+            ),
+             'constUses' => 
+            array (
+            ),
+          )),
+           'byRef' => false,
+           'public' => true,
+           'private' => false,
+           'abstract' => false,
+           'final' => false,
+           'static' => false,
+           'returnType' => 'Illuminate\\Http\\JsonResponse',
+           'parameters' => 
+          array (
           ),
            'attributes' => 
           array (
@@ -54043,7 +55077,6 @@ return [
               'project' => 'App\\Models\\Project',
               'usermentioned' => 'App\\Notifications\\UserMentioned',
               'exception' => 'Exception',
-              'request' => 'Illuminate\\Http\\Request',
               'log' => 'Illuminate\\Support\\Facades\\Log',
               'notification' => 'Illuminate\\Support\\Facades\\Notification',
               'storage' => 'Illuminate\\Support\\Facades\\Storage',
@@ -54096,7 +55129,6 @@ return [
               'project' => 'App\\Models\\Project',
               'usermentioned' => 'App\\Notifications\\UserMentioned',
               'exception' => 'Exception',
-              'request' => 'Illuminate\\Http\\Request',
               'log' => 'Illuminate\\Support\\Facades\\Log',
               'notification' => 'Illuminate\\Support\\Facades\\Notification',
               'storage' => 'Illuminate\\Support\\Facades\\Storage',
@@ -54762,8 +55794,8 @@ return [
             )),
             1 => 
             \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
-               'name' => 'fileInputName',
-               'type' => 'string',
+               'name' => 'file',
+               'type' => 'Illuminate\\Http\\UploadedFile',
                'byRef' => false,
                'variadic' => false,
                'hasDefault' => false,
@@ -54804,7 +55836,7 @@ return [
               'filetype' => 'App\\Enums\\FileType',
               'user' => 'App\\Models\\User',
               'exception' => 'Exception',
-              'file' => 'File',
+              'filesystemadapter' => 'Illuminate\\Filesystem\\FilesystemAdapter',
               'uploadedfile' => 'Illuminate\\Http\\UploadedFile',
               'db' => 'Illuminate\\Support\\Facades\\DB',
               'storage' => 'Illuminate\\Support\\Facades\\Storage',
@@ -58644,6 +59676,216 @@ return [
       ),
     )),
   ),
+  'D:\\apps\\profresh\\app\\Services\\TwoFactor\\TwoFactorStateManager.php' => 
+  array (
+    0 => 
+    \PHPStan\Dependency\ExportedNode\ExportedClassNode::__set_state(array(
+       'name' => 'App\\Services\\TwoFactor\\TwoFactorStateManager',
+       'phpDoc' => NULL,
+       'abstract' => false,
+       'final' => true,
+       'extends' => NULL,
+       'implements' => 
+      array (
+      ),
+       'usedTraits' => 
+      array (
+      ),
+       'traitUseAdaptations' => 
+      array (
+      ),
+       'statements' => 
+      array (
+        0 => 
+        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
+           'name' => 'createState',
+           'phpDoc' => 
+          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
+             'phpDocString' => '/**
+     * Create a new 2FA state: cache entry + encrypted session payload.
+     *
+     * @return string Generated token.
+     */',
+             'namespace' => 'App\\Services\\TwoFactor',
+             'uses' => 
+            array (
+              'user' => 'App\\Models\\User',
+              'cache' => 'Illuminate\\Support\\Facades\\Cache',
+              'str' => 'Illuminate\\Support\\Str',
+              'throwable' => 'Throwable',
+            ),
+             'constUses' => 
+            array (
+            ),
+          )),
+           'byRef' => false,
+           'public' => true,
+           'private' => false,
+           'abstract' => false,
+           'final' => false,
+           'static' => false,
+           'returnType' => 'string',
+           'parameters' => 
+          array (
+            0 => 
+            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
+               'name' => 'user',
+               'type' => 'App\\Models\\User',
+               'byRef' => false,
+               'variadic' => false,
+               'hasDefault' => false,
+               'attributes' => 
+              array (
+              ),
+            )),
+            1 => 
+            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
+               'name' => 'email',
+               'type' => 'string',
+               'byRef' => false,
+               'variadic' => false,
+               'hasDefault' => false,
+               'attributes' => 
+              array (
+              ),
+            )),
+          ),
+           'attributes' => 
+          array (
+          ),
+        )),
+        1 => 
+        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
+           'name' => 'forgetStateFromSession',
+           'phpDoc' => 
+          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
+             'phpDocString' => '/**
+     * Forget any 2FA state stored in session and cache.
+     */',
+             'namespace' => 'App\\Services\\TwoFactor',
+             'uses' => 
+            array (
+              'user' => 'App\\Models\\User',
+              'cache' => 'Illuminate\\Support\\Facades\\Cache',
+              'str' => 'Illuminate\\Support\\Str',
+              'throwable' => 'Throwable',
+            ),
+             'constUses' => 
+            array (
+            ),
+          )),
+           'byRef' => false,
+           'public' => true,
+           'private' => false,
+           'abstract' => false,
+           'final' => false,
+           'static' => false,
+           'returnType' => 'void',
+           'parameters' => 
+          array (
+          ),
+           'attributes' => 
+          array (
+          ),
+        )),
+        2 => 
+        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
+           'name' => 'resolve',
+           'phpDoc' => 
+          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
+             'phpDocString' => '/**
+     * Resolve a cached 2FA state by token.
+     *
+     * @return array<string,mixed>|null
+     */',
+             'namespace' => 'App\\Services\\TwoFactor',
+             'uses' => 
+            array (
+              'user' => 'App\\Models\\User',
+              'cache' => 'Illuminate\\Support\\Facades\\Cache',
+              'str' => 'Illuminate\\Support\\Str',
+              'throwable' => 'Throwable',
+            ),
+             'constUses' => 
+            array (
+            ),
+          )),
+           'byRef' => false,
+           'public' => true,
+           'private' => false,
+           'abstract' => false,
+           'final' => false,
+           'static' => false,
+           'returnType' => '?array',
+           'parameters' => 
+          array (
+            0 => 
+            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
+               'name' => 'token',
+               'type' => 'string',
+               'byRef' => false,
+               'variadic' => false,
+               'hasDefault' => false,
+               'attributes' => 
+              array (
+              ),
+            )),
+          ),
+           'attributes' => 
+          array (
+          ),
+        )),
+        3 => 
+        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
+           'name' => 'delete',
+           'phpDoc' => 
+          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
+             'phpDocString' => '/**
+     * Delete a cached 2FA state by token.
+     */',
+             'namespace' => 'App\\Services\\TwoFactor',
+             'uses' => 
+            array (
+              'user' => 'App\\Models\\User',
+              'cache' => 'Illuminate\\Support\\Facades\\Cache',
+              'str' => 'Illuminate\\Support\\Str',
+              'throwable' => 'Throwable',
+            ),
+             'constUses' => 
+            array (
+            ),
+          )),
+           'byRef' => false,
+           'public' => true,
+           'private' => false,
+           'abstract' => false,
+           'final' => false,
+           'static' => false,
+           'returnType' => 'void',
+           'parameters' => 
+          array (
+            0 => 
+            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
+               'name' => 'token',
+               'type' => 'string',
+               'byRef' => false,
+               'variadic' => false,
+               'hasDefault' => false,
+               'attributes' => 
+              array (
+              ),
+            )),
+          ),
+           'attributes' => 
+          array (
+          ),
+        )),
+      ),
+       'attributes' => 
+      array (
+      ),
+    )),
+  ),
   'D:\\apps\\profresh\\app\\Traits\\ApiResponses.php' => 
   array (
     0 => 
@@ -59711,6 +60953,7 @@ return [
              'namespace' => 'Tests\\Feature\\Api\\Auth',
              'uses' => 
             array (
+              'verifycsrftoken' => 'App\\Http\\Middleware\\VerifyCsrfToken',
               'user' => 'App\\Models\\User',
               'refreshdatabase' => 'Illuminate\\Foundation\\Testing\\RefreshDatabase',
               'hash' => 'Illuminate\\Support\\Facades\\Hash',
@@ -59737,13 +60980,14 @@ return [
         )),
         2 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
-           'name' => 'return_user_and_access_token_after_successful_login',
+           'name' => 'api_login_returns_user_and_access_token_after_successful_login',
            'phpDoc' => 
           \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
              'phpDocString' => '/** @test */',
              'namespace' => 'Tests\\Feature\\Api\\Auth',
              'uses' => 
             array (
+              'verifycsrftoken' => 'App\\Http\\Middleware\\VerifyCsrfToken',
               'user' => 'App\\Models\\User',
               'refreshdatabase' => 'Illuminate\\Foundation\\Testing\\RefreshDatabase',
               'hash' => 'Illuminate\\Support\\Facades\\Hash',
@@ -59770,13 +61014,14 @@ return [
         )),
         3 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
-           'name' => 'show_validation_email_error',
+           'name' => 'spa_session_login_returns_payload_without_access_token',
            'phpDoc' => 
           \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
              'phpDocString' => '/** @test */',
              'namespace' => 'Tests\\Feature\\Api\\Auth',
              'uses' => 
             array (
+              'verifycsrftoken' => 'App\\Http\\Middleware\\VerifyCsrfToken',
               'user' => 'App\\Models\\User',
               'refreshdatabase' => 'Illuminate\\Foundation\\Testing\\RefreshDatabase',
               'hash' => 'Illuminate\\Support\\Facades\\Hash',
@@ -59803,13 +61048,14 @@ return [
         )),
         4 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
-           'name' => 'show_validation_password_errors',
+           'name' => 'show_validation_email_error',
            'phpDoc' => 
           \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
              'phpDocString' => '/** @test */',
              'namespace' => 'Tests\\Feature\\Api\\Auth',
              'uses' => 
             array (
+              'verifycsrftoken' => 'App\\Http\\Middleware\\VerifyCsrfToken',
               'user' => 'App\\Models\\User',
               'refreshdatabase' => 'Illuminate\\Foundation\\Testing\\RefreshDatabase',
               'hash' => 'Illuminate\\Support\\Facades\\Hash',
@@ -59836,13 +61082,14 @@ return [
         )),
         5 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
-           'name' => 'authenticated_user_can_logout',
+           'name' => 'show_validation_password_errors',
            'phpDoc' => 
           \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
              'phpDocString' => '/** @test */',
              'namespace' => 'Tests\\Feature\\Api\\Auth',
              'uses' => 
             array (
+              'verifycsrftoken' => 'App\\Http\\Middleware\\VerifyCsrfToken',
               'user' => 'App\\Models\\User',
               'refreshdatabase' => 'Illuminate\\Foundation\\Testing\\RefreshDatabase',
               'hash' => 'Illuminate\\Support\\Facades\\Hash',
@@ -59869,6 +61116,40 @@ return [
         )),
         6 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
+           'name' => 'authenticated_user_can_logout',
+           'phpDoc' => 
+          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
+             'phpDocString' => '/** @test */',
+             'namespace' => 'Tests\\Feature\\Api\\Auth',
+             'uses' => 
+            array (
+              'verifycsrftoken' => 'App\\Http\\Middleware\\VerifyCsrfToken',
+              'user' => 'App\\Models\\User',
+              'refreshdatabase' => 'Illuminate\\Foundation\\Testing\\RefreshDatabase',
+              'hash' => 'Illuminate\\Support\\Facades\\Hash',
+              'sanctum' => 'Laravel\\Sanctum\\Sanctum',
+              'testcase' => 'Tests\\TestCase',
+            ),
+             'constUses' => 
+            array (
+            ),
+          )),
+           'byRef' => false,
+           'public' => true,
+           'private' => false,
+           'abstract' => false,
+           'final' => false,
+           'static' => false,
+           'returnType' => 'void',
+           'parameters' => 
+          array (
+          ),
+           'attributes' => 
+          array (
+          ),
+        )),
+        7 => 
+        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'registration_with_existing_email_not_allowed',
            'phpDoc' => 
           \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
@@ -59876,6 +61157,7 @@ return [
              'namespace' => 'Tests\\Feature\\Api\\Auth',
              'uses' => 
             array (
+              'verifycsrftoken' => 'App\\Http\\Middleware\\VerifyCsrfToken',
               'user' => 'App\\Models\\User',
               'refreshdatabase' => 'Illuminate\\Foundation\\Testing\\RefreshDatabase',
               'hash' => 'Illuminate\\Support\\Facades\\Hash',
@@ -60192,8 +61474,9 @@ return [
         array (
           'user' => 'App\\Models\\User',
           'refreshdatabase' => 'Illuminate\\Foundation\\Testing\\RefreshDatabase',
-          'db' => 'Illuminate\\Support\\Facades\\DB',
+          'cache' => 'Illuminate\\Support\\Facades\\Cache',
           'hash' => 'Illuminate\\Support\\Facades\\Hash',
+          'testresponse' => 'Illuminate\\Testing\\TestResponse',
           'sanctum' => 'Laravel\\Sanctum\\Sanctum',
           'mockery' => 'Mockery',
           'testcase' => 'Tests\\TestCase',
@@ -60312,8 +61595,9 @@ return [
             array (
               'user' => 'App\\Models\\User',
               'refreshdatabase' => 'Illuminate\\Foundation\\Testing\\RefreshDatabase',
-              'db' => 'Illuminate\\Support\\Facades\\DB',
+              'cache' => 'Illuminate\\Support\\Facades\\Cache',
               'hash' => 'Illuminate\\Support\\Facades\\Hash',
+              'testresponse' => 'Illuminate\\Testing\\TestResponse',
               'sanctum' => 'Laravel\\Sanctum\\Sanctum',
               'mockery' => 'Mockery',
               'testcase' => 'Tests\\TestCase',
@@ -60347,8 +61631,9 @@ return [
             array (
               'user' => 'App\\Models\\User',
               'refreshdatabase' => 'Illuminate\\Foundation\\Testing\\RefreshDatabase',
-              'db' => 'Illuminate\\Support\\Facades\\DB',
+              'cache' => 'Illuminate\\Support\\Facades\\Cache',
               'hash' => 'Illuminate\\Support\\Facades\\Hash',
+              'testresponse' => 'Illuminate\\Testing\\TestResponse',
               'sanctum' => 'Laravel\\Sanctum\\Sanctum',
               'mockery' => 'Mockery',
               'testcase' => 'Tests\\TestCase',
@@ -60382,8 +61667,9 @@ return [
             array (
               'user' => 'App\\Models\\User',
               'refreshdatabase' => 'Illuminate\\Foundation\\Testing\\RefreshDatabase',
-              'db' => 'Illuminate\\Support\\Facades\\DB',
+              'cache' => 'Illuminate\\Support\\Facades\\Cache',
               'hash' => 'Illuminate\\Support\\Facades\\Hash',
+              'testresponse' => 'Illuminate\\Testing\\TestResponse',
               'sanctum' => 'Laravel\\Sanctum\\Sanctum',
               'mockery' => 'Mockery',
               'testcase' => 'Tests\\TestCase',
@@ -60417,8 +61703,9 @@ return [
             array (
               'user' => 'App\\Models\\User',
               'refreshdatabase' => 'Illuminate\\Foundation\\Testing\\RefreshDatabase',
-              'db' => 'Illuminate\\Support\\Facades\\DB',
+              'cache' => 'Illuminate\\Support\\Facades\\Cache',
               'hash' => 'Illuminate\\Support\\Facades\\Hash',
+              'testresponse' => 'Illuminate\\Testing\\TestResponse',
               'sanctum' => 'Laravel\\Sanctum\\Sanctum',
               'mockery' => 'Mockery',
               'testcase' => 'Tests\\TestCase',
@@ -60452,8 +61739,9 @@ return [
             array (
               'user' => 'App\\Models\\User',
               'refreshdatabase' => 'Illuminate\\Foundation\\Testing\\RefreshDatabase',
-              'db' => 'Illuminate\\Support\\Facades\\DB',
+              'cache' => 'Illuminate\\Support\\Facades\\Cache',
               'hash' => 'Illuminate\\Support\\Facades\\Hash',
+              'testresponse' => 'Illuminate\\Testing\\TestResponse',
               'sanctum' => 'Laravel\\Sanctum\\Sanctum',
               'mockery' => 'Mockery',
               'testcase' => 'Tests\\TestCase',
@@ -60487,8 +61775,9 @@ return [
             array (
               'user' => 'App\\Models\\User',
               'refreshdatabase' => 'Illuminate\\Foundation\\Testing\\RefreshDatabase',
-              'db' => 'Illuminate\\Support\\Facades\\DB',
+              'cache' => 'Illuminate\\Support\\Facades\\Cache',
               'hash' => 'Illuminate\\Support\\Facades\\Hash',
+              'testresponse' => 'Illuminate\\Testing\\TestResponse',
               'sanctum' => 'Laravel\\Sanctum\\Sanctum',
               'mockery' => 'Mockery',
               'testcase' => 'Tests\\TestCase',
@@ -60513,7 +61802,7 @@ return [
         )),
         11 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
-           'name' => 'it_fails_two_factor_login_with_missing_session',
+           'name' => 'it_stores_two_factor_state_in_cache_when_login_requires_two_factor',
            'phpDoc' => 
           \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
              'phpDocString' => '/** @test */',
@@ -60522,8 +61811,9 @@ return [
             array (
               'user' => 'App\\Models\\User',
               'refreshdatabase' => 'Illuminate\\Foundation\\Testing\\RefreshDatabase',
-              'db' => 'Illuminate\\Support\\Facades\\DB',
+              'cache' => 'Illuminate\\Support\\Facades\\Cache',
               'hash' => 'Illuminate\\Support\\Facades\\Hash',
+              'testresponse' => 'Illuminate\\Testing\\TestResponse',
               'sanctum' => 'Laravel\\Sanctum\\Sanctum',
               'mockery' => 'Mockery',
               'testcase' => 'Tests\\TestCase',
@@ -60548,6 +61838,114 @@ return [
         )),
         12 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
+           'name' => 'it_clears_cached_two_factor_state_when_invalid_code_is_submitted',
+           'phpDoc' => 
+          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
+             'phpDocString' => '/** @test */',
+             'namespace' => 'Tests\\Feature\\Api\\Auth',
+             'uses' => 
+            array (
+              'user' => 'App\\Models\\User',
+              'refreshdatabase' => 'Illuminate\\Foundation\\Testing\\RefreshDatabase',
+              'cache' => 'Illuminate\\Support\\Facades\\Cache',
+              'hash' => 'Illuminate\\Support\\Facades\\Hash',
+              'testresponse' => 'Illuminate\\Testing\\TestResponse',
+              'sanctum' => 'Laravel\\Sanctum\\Sanctum',
+              'mockery' => 'Mockery',
+              'testcase' => 'Tests\\TestCase',
+            ),
+             'constUses' => 
+            array (
+            ),
+          )),
+           'byRef' => false,
+           'public' => true,
+           'private' => false,
+           'abstract' => false,
+           'final' => false,
+           'static' => false,
+           'returnType' => 'void',
+           'parameters' => 
+          array (
+          ),
+           'attributes' => 
+          array (
+          ),
+        )),
+        13 => 
+        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
+           'name' => 'it_logs_in_via_web_guard_and_returns_auth_payload_after_successful_two_factor',
+           'phpDoc' => 
+          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
+             'phpDocString' => '/** @test */',
+             'namespace' => 'Tests\\Feature\\Api\\Auth',
+             'uses' => 
+            array (
+              'user' => 'App\\Models\\User',
+              'refreshdatabase' => 'Illuminate\\Foundation\\Testing\\RefreshDatabase',
+              'cache' => 'Illuminate\\Support\\Facades\\Cache',
+              'hash' => 'Illuminate\\Support\\Facades\\Hash',
+              'testresponse' => 'Illuminate\\Testing\\TestResponse',
+              'sanctum' => 'Laravel\\Sanctum\\Sanctum',
+              'mockery' => 'Mockery',
+              'testcase' => 'Tests\\TestCase',
+            ),
+             'constUses' => 
+            array (
+            ),
+          )),
+           'byRef' => false,
+           'public' => true,
+           'private' => false,
+           'abstract' => false,
+           'final' => false,
+           'static' => false,
+           'returnType' => 'void',
+           'parameters' => 
+          array (
+          ),
+           'attributes' => 
+          array (
+          ),
+        )),
+        14 => 
+        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
+           'name' => 'it_fails_two_factor_login_with_missing_session',
+           'phpDoc' => 
+          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
+             'phpDocString' => '/** @test */',
+             'namespace' => 'Tests\\Feature\\Api\\Auth',
+             'uses' => 
+            array (
+              'user' => 'App\\Models\\User',
+              'refreshdatabase' => 'Illuminate\\Foundation\\Testing\\RefreshDatabase',
+              'cache' => 'Illuminate\\Support\\Facades\\Cache',
+              'hash' => 'Illuminate\\Support\\Facades\\Hash',
+              'testresponse' => 'Illuminate\\Testing\\TestResponse',
+              'sanctum' => 'Laravel\\Sanctum\\Sanctum',
+              'mockery' => 'Mockery',
+              'testcase' => 'Tests\\TestCase',
+            ),
+             'constUses' => 
+            array (
+            ),
+          )),
+           'byRef' => false,
+           'public' => true,
+           'private' => false,
+           'abstract' => false,
+           'final' => false,
+           'static' => false,
+           'returnType' => 'void',
+           'parameters' => 
+          array (
+          ),
+           'attributes' => 
+          array (
+          ),
+        )),
+        15 => 
+        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'it_fails_two_factor_login_with_expired_session',
            'phpDoc' => 
           \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
@@ -60557,8 +61955,9 @@ return [
             array (
               'user' => 'App\\Models\\User',
               'refreshdatabase' => 'Illuminate\\Foundation\\Testing\\RefreshDatabase',
-              'db' => 'Illuminate\\Support\\Facades\\DB',
+              'cache' => 'Illuminate\\Support\\Facades\\Cache',
               'hash' => 'Illuminate\\Support\\Facades\\Hash',
+              'testresponse' => 'Illuminate\\Testing\\TestResponse',
               'sanctum' => 'Laravel\\Sanctum\\Sanctum',
               'mockery' => 'Mockery',
               'testcase' => 'Tests\\TestCase',
@@ -62696,8 +64095,8 @@ return [
               'getrefreshtokenrequest' => 'App\\Http\\Integrations\\Zoom\\Requests\\GetRefreshTokenRequest',
               'user' => 'App\\Models\\User',
               'zoomservice' => 'App\\Services\\Api\\V1\\Zoom\\ZoomService',
-              'datetimeimmutable' => 'DateTimeImmutable',
               'refreshdatabase' => 'Illuminate\\Foundation\\Testing\\RefreshDatabase',
+              'datetimeimmutable' => 'Safe\\DateTimeImmutable',
               'method' => 'Saloon\\Enums\\Method',
               'mockresponse' => 'Saloon\\Http\\Faking\\MockResponse',
               'pendingrequest' => 'Saloon\\Http\\PendingRequest',
@@ -62736,8 +64135,8 @@ return [
               'getrefreshtokenrequest' => 'App\\Http\\Integrations\\Zoom\\Requests\\GetRefreshTokenRequest',
               'user' => 'App\\Models\\User',
               'zoomservice' => 'App\\Services\\Api\\V1\\Zoom\\ZoomService',
-              'datetimeimmutable' => 'DateTimeImmutable',
               'refreshdatabase' => 'Illuminate\\Foundation\\Testing\\RefreshDatabase',
+              'datetimeimmutable' => 'Safe\\DateTimeImmutable',
               'method' => 'Saloon\\Enums\\Method',
               'mockresponse' => 'Saloon\\Http\\Faking\\MockResponse',
               'pendingrequest' => 'Saloon\\Http\\PendingRequest',
@@ -62776,8 +64175,8 @@ return [
               'getrefreshtokenrequest' => 'App\\Http\\Integrations\\Zoom\\Requests\\GetRefreshTokenRequest',
               'user' => 'App\\Models\\User',
               'zoomservice' => 'App\\Services\\Api\\V1\\Zoom\\ZoomService',
-              'datetimeimmutable' => 'DateTimeImmutable',
               'refreshdatabase' => 'Illuminate\\Foundation\\Testing\\RefreshDatabase',
+              'datetimeimmutable' => 'Safe\\DateTimeImmutable',
               'method' => 'Saloon\\Enums\\Method',
               'mockresponse' => 'Saloon\\Http\\Faking\\MockResponse',
               'pendingrequest' => 'Saloon\\Http\\PendingRequest',
@@ -63508,6 +64907,7 @@ return [
               'filetype' => 'App\\Enums\\FileType',
               'fileservice' => 'App\\Services\\Api\\V1\\FileService',
               'refreshdatabase' => 'Illuminate\\Foundation\\Testing\\RefreshDatabase',
+              'uploadedfile' => 'Illuminate\\Http\\UploadedFile',
               'validationexception' => 'Illuminate\\Validation\\ValidationException',
               'testcase' => 'Tests\\TestCase',
             ),
@@ -71829,6 +73229,117 @@ return [
               'dashboardinsightsrepository' => 'App\\Repository\\DashboardInsightsRepository',
               'dashboardinsightsservice' => 'App\\Services\\Api\\V1\\Dashboard\\DashboardInsightsService',
               'refreshdatabase' => 'Illuminate\\Foundation\\Testing\\RefreshDatabase',
+              'testcase' => 'Tests\\TestCase',
+            ),
+             'constUses' => 
+            array (
+            ),
+          )),
+           'byRef' => false,
+           'public' => true,
+           'private' => false,
+           'abstract' => false,
+           'final' => false,
+           'static' => false,
+           'returnType' => 'void',
+           'parameters' => 
+          array (
+          ),
+           'attributes' => 
+          array (
+          ),
+        )),
+      ),
+       'attributes' => 
+      array (
+      ),
+    )),
+  ),
+  'D:\\apps\\profresh\\tests\\Unit\\Services\\TwoFactorStateManagerTest.php' => 
+  array (
+    0 => 
+    \PHPStan\Dependency\ExportedNode\ExportedClassNode::__set_state(array(
+       'name' => 'Tests\\Unit\\Services\\TwoFactorStateManagerTest',
+       'phpDoc' => NULL,
+       'abstract' => false,
+       'final' => false,
+       'extends' => 'Tests\\TestCase',
+       'implements' => 
+      array (
+      ),
+       'usedTraits' => 
+      array (
+        0 => 'Illuminate\\Foundation\\Testing\\RefreshDatabase',
+      ),
+       'traitUseAdaptations' => 
+      array (
+      ),
+       'statements' => 
+      array (
+        0 => 
+        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
+           'name' => 'setUp',
+           'phpDoc' => NULL,
+           'byRef' => false,
+           'public' => false,
+           'private' => false,
+           'abstract' => false,
+           'final' => false,
+           'static' => false,
+           'returnType' => 'void',
+           'parameters' => 
+          array (
+          ),
+           'attributes' => 
+          array (
+          ),
+        )),
+        1 => 
+        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
+           'name' => 'it_creates_state_with_configured_cache_and_session_keys',
+           'phpDoc' => 
+          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
+             'phpDocString' => '/** @test */',
+             'namespace' => 'Tests\\Unit\\Services',
+             'uses' => 
+            array (
+              'user' => 'App\\Models\\User',
+              'twofactorstatemanager' => 'App\\Services\\TwoFactor\\TwoFactorStateManager',
+              'refreshdatabase' => 'Illuminate\\Foundation\\Testing\\RefreshDatabase',
+              'cache' => 'Illuminate\\Support\\Facades\\Cache',
+              'testcase' => 'Tests\\TestCase',
+            ),
+             'constUses' => 
+            array (
+            ),
+          )),
+           'byRef' => false,
+           'public' => true,
+           'private' => false,
+           'abstract' => false,
+           'final' => false,
+           'static' => false,
+           'returnType' => 'void',
+           'parameters' => 
+          array (
+          ),
+           'attributes' => 
+          array (
+          ),
+        )),
+        2 => 
+        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
+           'name' => 'it_forgets_state_from_session_and_cache',
+           'phpDoc' => 
+          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
+             'phpDocString' => '/** @test */',
+             'namespace' => 'Tests\\Unit\\Services',
+             'uses' => 
+            array (
+              'user' => 'App\\Models\\User',
+              'twofactorstatemanager' => 'App\\Services\\TwoFactor\\TwoFactorStateManager',
+              'refreshdatabase' => 'Illuminate\\Foundation\\Testing\\RefreshDatabase',
+              'cache' => 'Illuminate\\Support\\Facades\\Cache',
               'testcase' => 'Tests\\TestCase',
             ),
              'constUses' => 

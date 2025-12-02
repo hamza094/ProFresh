@@ -68,14 +68,14 @@
               class="btn btn-primary btn-sm"
               v-if="form.tasks && form.tasks.length < 3"
               @click.prevent="addTask">
-              <i class="fas fa-plus-circle"></i> Add new Task Field
+              <i class="fa-solid fa-plus-circle"></i> Add new Task Field
             </button>
             <button
               v-if="form.tasks && form.tasks.length > 0"
               type="btn"
               class="btn btn-danger btn-sm"
               @click.prevent="removeTask">
-              <i class="fa fa-minus-circle" aria-hidden="true"></i> Remove Task Field
+              <i class="fa-solid fa-minus-circle" aria-hidden="true"></i> Remove Task Field
             </button>
           </div>
 
@@ -127,12 +127,12 @@ export default {
     },
     loadStages() {
       axios
-        .get('/api/v1/stages')
+        .get('/stages')
         .then((response) => {
           this.stages = response.data;
         })
         .catch((error) => {
-          console.log(error.response.data.errors);
+          this.handleErrorResponse(error);
         });
     },
     addTask() {
@@ -147,7 +147,7 @@ export default {
         delete formData.tasks;
       }
       axios
-        .post('/api/v1/projects', formData)
+        .post('/projects', formData)
         .then((response) => {
           this.$vToastify.success('New project created');
           this.form = { stage_id: 1, tasks: [] };

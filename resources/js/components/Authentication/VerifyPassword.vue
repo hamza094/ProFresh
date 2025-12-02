@@ -10,10 +10,10 @@
                 ><h5>Your Account has been verified Successfully. Please log in to continue</h5></span
               >
             </div>
-            <div class="card-body" v-if="error == 'verification.already_verified'">
+            <div class="card-body" v-if="error === 'verification.already_verified'">
               <span class="badge badge-info"><h5>Account already verified. Please log in to continue</h5></span>
             </div>
-            <div class="card-body" v-if="error == 'verification.invalid'">
+            <div class="card-body" v-if="error === 'verification.invalid'">
               <span class="badge badge-danger"
                 ><h5>Verification Error. Please log in to get the verified link again</h5></span
               >
@@ -26,14 +26,13 @@
 </template>
 
 <script>
-const qs = (params) =>
-  Object.keys(params)
-    .map((key) => `${key}=${params[key]}`)
-    .join('&');
+// Use axios `params` for query encoding instead of manual builder
 export default {
   async beforeRouteEnter(to, from, next) {
     try {
-      const { data } = await axios.post(`/api/v1/email/verify/${to.params.user}?${qs(to.query)}`);
+      const { data } = await axios.post(`/email/verify/${encodeURIComponent(to.params.user)}`, null, {
+        params: to.query,
+      });
       next((vm) => {
         vm.success = data.status;
         vm.$store.dispatch('currentUser/updateVerifiedStatus', true);

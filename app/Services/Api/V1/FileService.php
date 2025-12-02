@@ -7,7 +7,7 @@ namespace App\Services\Api\V1;
 use App\Enums\FileType;
 use App\Models\User;
 use Exception;
-use File;
+use Illuminate\Filesystem\FilesystemAdapter;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -16,17 +16,19 @@ use Illuminate\Validation\ValidationException;
 use InvalidArgumentException;
 use Spatie\ImageOptimizer\OptimizerChainFactory;
 
+use function Safe\parse_url;
+
 class FileService
 {
-    // Stores a file in S3 and returns its public URL
+    // Stores a file in S3 and returns its URL (avatars) or storage key (private files)
 
-    public function store(int|string $id, string $fileInputName, string $fileType): string
+    public function store(int|string $id, UploadedFile $file, string $fileType): string
     {
-        $file = request()->file($fileInputName);
-
-        if (! $file) {
+        // Reject invalid or empty uploads early to avoid attempting remote
+        // storage operations (which require external config like S3 region).
+        if (! $file->isValid() || $file->getSize() === 0) {
             throw ValidationException::withMessages([
-                'file' => 'File not found',
+                'file' => 'Invalid file upload',
             ]);
         }
 
@@ -36,7 +38,7 @@ class FileService
         // If the file is an image, optimize it before uploading
         $this->optimizeFile($file);
 
-        return $this->uploadFileToS3($folderName, $file, $fileName);
+        return $this->uploadFileToS3($folderName, $file, $fileName, $fileType);
 
     }
 
@@ -49,22 +51,11 @@ class FileService
     public function deleteFile(User $user): void
     {
         DB::transaction(function () use ($user): void {
-            // Use avatar_path if available, fallback to avatar (for legacy)
             $avatarUrl = $user->avatar_path ?? $user->avatar;
-            if (! $avatarUrl) {
-                return;
-            }
+            $filePath = $this->extractStoragePath($avatarUrl);
 
-            // Extract the S3 file path robustly
-            $parsed = parse_url($avatarUrl);
-            $filePath = ltrim($parsed['path'] ?? '', '/');
-            if ($filePath === '' || $filePath === '0') {
-                // If parsing fails, fallback to Str::after
-                $filePath = Str::after($avatarUrl, '.com/');
-            }
-
-            if ($filePath) {
-                Storage::disk('s3')->delete($filePath);
+            if ($filePath !== null) {
+                $this->disk()->delete($filePath);
             }
 
             $user->update(['avatar_path' => null]);
@@ -94,16 +85,46 @@ class FileService
         }
     }
 
-    private function uploadFileToS3(string $folderName, UploadedFile $file, string $fileName): string
+    private function uploadFileToS3(string $folderName, UploadedFile $file, string $fileName, string $fileType): string
     {
-        $s3Disk = Storage::disk('s3');
+        $disk = $this->disk();
+        $visibility = $fileType === FileType::AVATAR ? 'public' : 'private';
 
         try {
-            $path = $s3Disk->putFileAs($folderName, $file, $fileName, 'public');
+            $path = $disk->putFileAs($folderName, $file, $fileName, $visibility);
         } catch (Exception $e) {
             throw ValidationException::withMessages(['File upload failed: '.$e->getMessage()]);
         }
 
-        return $s3Disk->url($path);
+        if ($fileType === FileType::AVATAR) {
+            return $disk->url($path);
+        }
+
+        return $path;
+    }
+
+    private function disk(): FilesystemAdapter
+    {
+        return Storage::disk('s3');
+    }
+
+    private function extractStoragePath(?string $url): ?string
+    {
+        if (! $url) {
+            return null;
+        }
+
+        if (! str_starts_with($url, 'http')) {
+            return ltrim($url, '/');
+        }
+
+        $path = parse_url($url, PHP_URL_PATH) ?: '';
+        if ($path === '' || $path === '0') {
+            $path = Str::after($url, '.com/');
+        }
+
+        $path = ltrim($path, '/');
+
+        return $path === '' ? null : $path;
     }
 }

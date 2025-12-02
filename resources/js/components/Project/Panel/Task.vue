@@ -2,7 +2,7 @@
   <div class="task">
     <div class="task-top">
       <span>
-        <i class="fas fa-tasks"></i> <b>Tasks</b>
+        <i class="fa-solid fa-tasks"></i> <b>Tasks</b>
         <button
           type="button"
           class="btn btn-link p-0"
@@ -10,7 +10,7 @@
           data-target="#taskProject"
           aria-expanded="false"
           aria-controls="taskProject">
-          <i class="fas fa-angle-down float-right"></i>
+          <i class="fa-solid fa-angle-down float-right"></i>
         </button>
       </span>
     </div>
@@ -35,7 +35,7 @@
             <div v-if="tasks" class="task-list">
               <span class="float-right">
                 <a @click.prevent="archiveTasks" class="panel-list_item">
-                  <i class="fas fa-tasks"></i>
+                  <i class="fa-solid fa-tasks"></i>
                 </a>
               </span>
 
@@ -51,7 +51,7 @@
                   <div class="card-body task-card_body">
                     <span>{{ task.title }}</span>
                     <span class="float-right mt-4"
-                      ><small><i class="far fa-clock"> </i> {{ task.created_at | shortDate }}</small></span
+                      ><small><i class="fa-regular fa-clock"> </i> {{ task.created_at | shortDate }}</small></span
                     >
                   </div>
                 </div>
@@ -141,7 +141,7 @@ export default {
     openModal(task) {
       //this.$Progress.start();
       axios
-        .get('/api/v1/projects/' + this.slug + '/tasks/' + task.id, { useProgress: true })
+        .get('/projects/' + this.slug + '/tasks/' + task.id, { useProgress: true })
         .then((response) => {
           //this.$Progress.finish();
           this.setTask(response.data);
@@ -154,7 +154,7 @@ export default {
 
     add() {
       axios
-        .post('/api/v1/projects/' + this.slug + '/tasks', this.form, { useProgress: true })
+        .post('/projects/' + this.slug + '/tasks', this.form, { useProgress: true })
         .then(() => {
           this.$vToastify.success('Project Task added');
           this.form.title = '';

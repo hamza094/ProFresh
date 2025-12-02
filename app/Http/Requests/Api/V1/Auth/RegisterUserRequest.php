@@ -10,6 +10,22 @@ use Illuminate\Validation\Rules\Password;
 class RegisterUserRequest extends FormRequest
 {
     /**
+     * Centralized password validation rules for reuse across auth flows.
+     *
+     * @return array<int, string|\Illuminate\Contracts\Validation\Rule>
+     */
+    public static function passwordRules(): array
+    {
+        return [
+            'required',
+            'string',
+            'confirmed',
+            'min:8',
+            Password::default(),
+        ];
+    }
+
+    /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
@@ -33,13 +49,7 @@ class RegisterUserRequest extends FormRequest
              *
              * @example Berry@04
              */
-            'password' => [
-                'required',
-                'string',
-                'confirmed',
-                'min:8',
-                Password::default(),
-            ],
+            'password' => self::passwordRules(),
         ];
     }
 

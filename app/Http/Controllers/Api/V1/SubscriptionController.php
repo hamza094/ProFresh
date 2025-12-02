@@ -14,7 +14,7 @@ class SubscriptionController extends Controller
 {
     public function subscribe(Paddle $paddle, SubscriptionRequest $request): JsonResponse
     {
-        $payLink = $paddle->subscribe(auth()->user(), $request->input('plan'));
+        $payLink = $paddle->subscribe(auth()->user(), (string) $request->string('plan')->trim());
 
         return response()->json([
             'paylink' => $payLink,
@@ -30,7 +30,7 @@ class SubscriptionController extends Controller
 
     public function swap(Paddle $paddle, SubscriptionRequest $request): JsonResponse
     {
-        $result = $paddle->swap(auth()->user(), $request->input('plan'));
+        $result = $paddle->swap(auth()->user(), (string) $request->string('plan')->trim());
 
         return response()->json([
             'message' => $result['message'],
@@ -40,7 +40,7 @@ class SubscriptionController extends Controller
 
     public function cancel(Paddle $paddle, SubscriptionRequest $request): JsonResponse
     {
-        $result = $paddle->cancel(auth()->user(), $request->input('plan'));
+        $result = $paddle->cancel(auth()->user(), (string) $request->string('plan')->trim());
 
         return response()->json([
             'message' => $result['message'],

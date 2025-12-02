@@ -22,31 +22,21 @@ use Illuminate\Support\Facades\Broadcast;
     return (int) $user->id === (int) $id;
 });*/
 
-Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
-    return (int) $user->id === (int) $id;
-});
+Broadcast::channel('App.Models.User.{id}', fn ($user, $id): bool => (int) $user->id === (int) $id);
 
-Broadcast::channel('activities.project.{id}', function ($user, $id) {
+Broadcast::channel('activities.project.{id}', function ($user, $id): bool {
     $project = Project::where('id', $id)
         ->firstOrFail();
 
-    if ($user->can('access', $project)) {
-        return true;
-    }
-
-    return false;
+    return (bool) $user->can('access', $project);
 });
 
-Broadcast::channel('project.{slug}.conversations', function ($user, $slug) {
+Broadcast::channel('project.{slug}.conversations', function ($user, $slug): bool {
 
     $project = Project::with('user')->where('slug', $slug)
         ->firstOrFail();
 
-    if ($user->can('access', $project)) {
-        return true;
-    }
-
-    return false;
+    return (bool) $user->can('access', $project);
 });
 
 Broadcast::channel('deleteConversation.{slug}', function ($user, $slug) {
@@ -77,7 +67,7 @@ Broadcast::channel('chatroom.{slug}', function ($user, $slug) {
     }
 });
 
-Broadcast::channel('meetingStatus.{id}', function ($user, $id) {
+Broadcast::channel('meetingStatus.{id}', function ($user, $id): bool {
     $meeting = Meeting::find($id);
     $project = $meeting->project;
 
@@ -87,12 +77,8 @@ Broadcast::channel('meetingStatus.{id}', function ($user, $id) {
 });
 
 // Authorization for project health updates. Users who can `access` the project may listen.
-Broadcast::channel('project.{id}.health', function ($user, $id) {
+Broadcast::channel('project.{id}.health', function ($user, $id): bool {
     $project = Project::where('id', $id)->firstOrFail();
 
-    if ($user->can('access', $project)) {
-        return true;
-    }
-
-    return false;
+    return (bool) $user->can('access', $project);
 });

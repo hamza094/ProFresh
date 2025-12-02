@@ -12,10 +12,11 @@ use App\Models\Conversation;
 use App\Models\Project;
 use App\Notifications\UserMentioned;
 use Exception;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Storage;
+
+use function Safe\parse_url;
 
 class ConversationService
 {
@@ -87,8 +88,7 @@ class ConversationService
     {
         DeleteConversation::dispatch($conversation->id, $project->slug);
 
-        // Need updated and use laravel 11 defered function
-        $this->deleteFileIfExists($conversation->file);
+        defer(fn () => $this->deleteFileIfExists($conversation->file));
 
         $conversation->delete();
     }
@@ -105,8 +105,12 @@ class ConversationService
         }
 
         // Check if a file is present in the request and process the upload
-        if ($request->has('file')) {
-            $data['file'] = $this->fileService->store($project->id, 'file', FileType::CONVERSATION);
+        if ($request->hasFile('file')) {
+            $data['file'] = $this->fileService->store(
+                $project->id,
+                $request->file('file'),
+                FileType::CONVERSATION
+            );
         }
 
         return $data;
@@ -121,13 +125,22 @@ class ConversationService
 
     private function deleteFileIfExists(?string $filePath): void
     {
-        if ($filePath) {
-            try {
-                $path = parse_url($filePath, PHP_URL_PATH) ?: '';
-                Storage::disk('s3')->delete(ltrim($path, '/'));
-            } catch (Exception $e) {
-                Log::error('S3 file deletion error', ['file' => $filePath, 'error' => $e->getMessage()]);
-            }
+        if (! $filePath) {
+            return;
+        }
+
+        $path = str_starts_with($filePath, 'http')
+            ? ltrim(parse_url($filePath, PHP_URL_PATH) ?: '', '/')
+            : $filePath;
+
+        if ($path === '') {
+            return;
+        }
+
+        try {
+            Storage::disk('s3')->delete($path);
+        } catch (Exception $e) {
+            Log::error('S3 file deletion error', ['file' => $filePath, 'error' => $e->getMessage()]);
         }
     }
 }

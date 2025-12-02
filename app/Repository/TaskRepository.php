@@ -15,7 +15,7 @@ class TaskRepository
     {
         // Check with load test
 
-        $searchTerm = $request->input('search');
+        $searchTerm = (string) $request->string('search')->trim();
 
         return $project->activeMembers()
             ->select('users.id', 'name', 'username')

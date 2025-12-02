@@ -1,16 +1,23 @@
 const state = {
-  project:{},
-  user:{},
-  getStage:0,
+  project: {},
+  user: {},
+  members: [],
+  getStage: 0,
 };
 
 
 const mutations = {
     setProject(state, project) {
       state.project = { ...project };
-      state.user = project.user;
-      state.getStage = project.stage.id;
-      state.members.unshift(project.user);
+      state.user = project.user || {};
+      state.members = Array.isArray(project.members) ? [...project.members] : [];
+      state.getStage = project?.stage?.id || 0;
+
+      // Ensure the project owner (user) is always included in members list without duplicates
+      const ownerUuid = state.user?.uuid;
+      if (ownerUuid && !state.members.some((member) => member?.uuid === ownerUuid)) {
+        state.members.unshift(state.user);
+      }
     },
     nameUpdate(state, { name, slug }) {
     state.project = {
@@ -61,17 +68,15 @@ const mutations = {
 };
 
 const actions = {
-   loadProject({ commit }, slug) {
-      return axios.get(`/api/v1/projects/${slug}`)
-        .then(response => {
-        commit('setProject', response.data);
-
-        this.$bus.emit('projectSlug',{slug:response.data.slug});
-        })
-        .catch(error => {
-          //console.log(error.response.data.errors);
-        })
-      },
+  async loadProject({ commit }, slug) {
+    try {
+      const { data } = await axios.get(`/projects/${slug}`);
+      commit('setProject', data);
+      return data;
+    } catch (error) {
+      throw error;
+    }
+  },
 };
 
 export default{

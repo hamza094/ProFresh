@@ -33,7 +33,7 @@ export default {
       const state = this.$route.query.state;
 
       axios
-        .get(`/api/v1/oauth/zoom/callback?code=${code}&state=${state}`)
+        .get('/oauth/zoom/callback', { params: { code, state } })
         .then((response) => {
           this.$router.push(`/user/${this.user.uuid}/profile`);
           this.$vToastify.success(response.data.success);

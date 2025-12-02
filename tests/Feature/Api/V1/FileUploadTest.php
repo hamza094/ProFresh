@@ -7,6 +7,7 @@ namespace Tests\Feature\Api\V1;
 use App\Enums\FileType;
 use App\Services\Api\V1\FileService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Validation\ValidationException;
 use Tests\TestCase;
 
@@ -31,8 +32,10 @@ class FileUploadTest extends TestCase
         $id = 1;
 
         $this->expectException(ValidationException::class);
-        $this->expectExceptionMessage('File not found');
+        $this->expectExceptionMessage('Invalid file upload');
 
-        $this->fileService->store($id, 'missing_file', $this->fileType);
+        $invalidFile = UploadedFile::fake()->create('invalid.txt', 0);
+
+        $this->fileService->store($id, $invalidFile, $this->fileType);
     }
 }

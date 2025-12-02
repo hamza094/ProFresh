@@ -9,6 +9,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Tests\TestCase;
 
+use function Safe\json_encode;
+
 class VerifyWebhookTest extends TestCase
 {
     private const WEBHOOK_TEST_PATH = '/_test/webhook';

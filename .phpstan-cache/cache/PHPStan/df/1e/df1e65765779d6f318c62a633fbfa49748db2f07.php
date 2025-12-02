@@ -1,7 +1,9 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 // variadic-method-App\Actions\ProjectMetrics\CommunicationHealthMetricAction-resolveCommunicationConfig-D:\apps\profresh\app\Actions\ProjectMetrics\CommunicationHealthMetricAction.php
-return \PHPStan\Cache\CacheItem::__set_state(array(
-   'variableKey' => '1762177719-v4',
-   'data' => false,
-));
+return PHPStan\Cache\CacheItem::__set_state([
+    'variableKey' => '1763192816-v4',
+    'data' => false,
+]);

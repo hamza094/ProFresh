@@ -97,7 +97,7 @@ export default {
     resetPassword() {
       this.$Progress.start();
       axios
-        .post('/api/v1/reset-password', {
+        .post('/reset-password', {
           email: this.form.email,
           password: this.form.password,
           password_confirmation: this.form.password_confirmation,

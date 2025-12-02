@@ -38,7 +38,7 @@ export default {
   methods: {
     async fetchData() {
       try {
-        const response = await axios.get('/api/v1/data');
+        const response = await axios.get('/data');
         const data = response.data;
 
         this.chartData.labels = data.map((item) => item.month);

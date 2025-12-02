@@ -4,8 +4,8 @@
     <div class="dashboard-project m-4">
       <p class="dashboard-heading float-left"><b>Recent Active Projects</b></p>
       <span class="float-right">
-        <router-link to="/projects" class="btn btn-sm btn-primary">
-          <i class="fas fa-list"></i> View All Projects
+        <router-link :to="{ name: 'Projects' }" class="btn btn-sm btn-primary">
+          <i class="fa-solid fa-list"></i> View All Projects
         </router-link>
       </span>
     </div>
@@ -19,7 +19,7 @@
         </div>
 
         <div class="col-md-4" v-for="project in projects" :key="project.id">
-          <router-link :to="'/projects/' + project.slug" class="dashboard-link">
+          <router-link :to="{ name: 'ProjectPage', params: { slug: project.slug } }" class="dashboard-link">
             <div class="dashboard-projects mt-5 active-projects">
               <div class="project-status">
                 <b>Active</b>
@@ -93,7 +93,7 @@ export default {
   },
   methods: {
     loadDashboardProjects() {
-      axios.get('/api/v1/user/dashboard-projects').then(({ data }) => this.getData(data));
+      axios.get('/user/dashboard-projects').then(({ data }) => this.getData(data));
     },
 
     getData(data) {

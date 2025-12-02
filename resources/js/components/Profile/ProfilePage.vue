@@ -12,11 +12,11 @@
         <FeatureDropdown :feature-pop="featurePop">
           <ul v-if="owner">
             <li v-if="user.avatar" class="feature-dropdown_item-content" @click="deleteAvatar">
-              <i class="far fa-user-circle"></i> Remove Avatar
+              <i class="fa-regular fa-user-circle"></i> Remove Avatar
             </li>
 
             <li class="feature-dropdown_item-content" @click.prevent="deleteProfile()">
-              <i class="far fa-trash-alt"></i>Delete Profile
+              <i class="fa-regular fa-trash-alt"></i>Delete Profile
             </li>
           </ul>
         </FeatureDropdown>
@@ -133,7 +133,7 @@ export default {
 
     loadUser() {
       axios
-        .get('/api/v1/users/' + this.$route.params.uuid)
+        .get('/users/' + encodeURIComponent(this.$route.params.uuid))
         .then((response) => {
           const user = response.data.user;
           this.updateUser(user);
@@ -150,7 +150,7 @@ export default {
           this.$vToastify.loader('Please Wait Removing Avatar');
 
           axios
-            .patch('/api/v1/users/' + this.user.id + '/avatar_remove')
+            .patch('/users/' + this.user.id + '/avatar_remove')
             .then((response) => {
               this.$vToastify.info(response.data.message);
               this.user.avatar = null;
@@ -171,7 +171,7 @@ export default {
       this.sweetAlert('Yes, delete it!').then((result) => {
         if (result.value) {
           axios
-            .delete('/api/v1/users/' + this.user.id)
+            .delete('/users/' + this.user.id)
             .then((response) => {
               this.$vToastify.success(response.data.message);
               this.$store.dispatch('currentUser/deleteUser');

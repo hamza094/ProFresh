@@ -10,12 +10,17 @@
           <div class="card invitation border-secondary">
             <div class="card-header text-center">
               Project Name:
-              <router-link :to="`/projects/'${project.slug}`">{{ project.name }}</router-link>
+              <router-link :to="{ name: 'ProjectPage', params: { slug: project.slug } }">{{
+                project.name
+              }}</router-link>
             </div>
             <div class="card-body mt-1 text-center">
               <p>
                 Owner Name:
-                <router-link :to="`/user/${project.owner.uuid}/profile`" target="_blank"
+                <router-link
+                  :to="{ name: 'Profile', params: { uuid: project.owner.uuid } }"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   >{{ project.owner.name }}
                 </router-link>
               </p>
@@ -59,7 +64,7 @@ export default {
     async fetchInvitations() {
       this.loading = true;
       try {
-        const { data } = await axios.get('/api/v1/me/invitations');
+        const { data } = await axios.get('/me/invitations');
         this.invitations = data.invitations || [];
         if (data.message) {
           this.serverMessage = data.message;
@@ -73,7 +78,7 @@ export default {
     async becomeMember(slug) {
       this.$Progress.start();
       try {
-        const { data } = await axios.get(`/api/v1/projects/${slug}/accept-invitation`);
+        const { data } = await axios.get(`/projects/${slug}/accept-invitation`);
         this.$Progress.finish();
         this.$vToastify.success(data.message);
 
@@ -86,7 +91,7 @@ export default {
     async rejectInvitation(slug) {
       this.$Progress.start();
       try {
-        const { data } = await axios.get(`/api/v1/projects/${slug}/reject/invitation`);
+        const { data } = await axios.get(`/projects/${slug}/reject/invitation`);
         this.$Progress.finish();
         this.$vToastify.info(data.message);
 

@@ -28,7 +28,7 @@ final class ZoomAuthController extends Controller
 
     public function callback(Request $request): JsonResponse
     {
-        if ($request->input('error') === 'access_denied') {
+        if ($request->string('error')->trim()->exactly('access_denied')) {
             return response()->json(['error' => 'Zoom account connection denied'], 400);
         }
 
@@ -41,9 +41,9 @@ final class ZoomAuthController extends Controller
         }
 
         $callbackDetails = new AuthorizationCallbackDetails(
-            authorizationCode: $request->input('code'),
+            authorizationCode: (string) $request->string('code')->trim(),
             expectedState: session()->pull('oauth_zoom_state'),
-            state: $request->input('state'),
+            state: (string) $request->string('state')->trim(),
             codeVerifier: session()->pull('oauth_zoom_code_verifier'),
         );
 

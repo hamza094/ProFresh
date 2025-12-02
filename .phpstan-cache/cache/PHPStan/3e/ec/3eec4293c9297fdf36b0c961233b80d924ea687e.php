@@ -2,6 +2,6 @@
 
 // variadic-method-App\Http\Requests\Api\V1\Auth\PrepareTwoFactorRequest-validateTwoFactorStatus-D:\apps\profresh\app\Http\Requests\Api\V1\Auth\PrepareTwoFactorRequest.php
 return \PHPStan\Cache\CacheItem::__set_state(array(
-   'variableKey' => '1762177750-v4',
+   'variableKey' => '1763822640-v4',
    'data' => false,
 ));

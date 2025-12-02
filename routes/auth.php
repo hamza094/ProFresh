@@ -19,31 +19,39 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::group(['prefix' => 'v1'], function () {
+Route::group(['prefix' => 'v1'], function (): void {
 
-    Route::group(['middleware' => 'guest:api'], function () {
+    Route::group(['middleware' => 'guest:api'], function (): void {
 
         Route::post('register', [RegisterController::class, 'register'])
-            ->name('auth.register');
+            ->name('auth.register')
+            ->middleware('throttle:auth-register');
 
         Route::post('login', [LoginController::class, 'login'])
-            ->name('auth.login');
+            ->name('auth.login')
+            ->middleware('throttle:auth-login');
 
-        Route::post('/forgot-password', [ResetPasswordController::class, 'sendResetLink'])->name('password.email');
+        Route::post('/forgot-password', [ResetPasswordController::class, 'sendResetLink'])
+            ->name('password.email')
+            ->middleware('throttle:password-email');
 
-        Route::post('/reset-password', [ResetPasswordController::class, 'resetPassword'])->name('password.email');
+        Route::post('/reset-password', [ResetPasswordController::class, 'resetPassword'])
+            ->name('password.update')
+            ->middleware('throttle:password-reset');
 
         Route::get('/password/reset/{token}', [VerificationController::class, 'resetForm'])->name('password.reset');
 
     });
 
-    Route::group(['middleware' => ['auth:sanctum']], function () {
+    Route::group(['middleware' => ['auth:sanctum']], function (): void {
 
         Route::post('/email/verify/{user}', [VerificationController::class, 'verify'])
-            ->name('verification.verify');
+            ->name('verification.verify')
+            ->middleware('throttle:verification');
 
         Route::post('/email/resend/{user}', [VerificationController::class, 'resend'])
-            ->name('verification.resend');
+            ->name('verification.resend')
+            ->middleware('throttle:verification');
 
         Route::post('logout', [LoginController::class, 'logout'])->name('auth.logout');
 
@@ -51,6 +59,4 @@ Route::group(['prefix' => 'v1'], function () {
 
 });
 
-Route::fallback(function () {
-    return response()->json(['message' => 'Not Found.'], 404);
-});
+Route::fallback(fn () => response()->json(['message' => 'Not Found.'], 404));

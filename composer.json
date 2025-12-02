@@ -44,6 +44,7 @@
     "jamesmills/laravel-timezone": "dev-master as 1.7.0"
   },
   "require-dev": {
+    "enlightn/enlightn": "^2.10",
     "fakerphp/faker": "^1.23",
     "kitloong/laravel-migrations-generator": "^7.2",
     "larastan/larastan": "^2.0",
@@ -54,7 +55,9 @@
     "phpunit/phpunit": "^11.0.1",
     "rector/rector": "^1.2",
     "spatie/laravel-ignition": "^2.0",
-    "squizlabs/php_codesniffer": "3.*"
+    "spaze/phpstan-disallowed-calls": "^4.7",
+    "squizlabs/php_codesniffer": "3.*",
+    "thecodingmachine/phpstan-safe-rule": "^1.2"
   },
   "config": {
     "optimize-autoloader": true,

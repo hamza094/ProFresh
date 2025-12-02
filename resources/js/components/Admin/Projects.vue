@@ -15,7 +15,7 @@
             <div class="card-body border-bottom py-3">
               <div class="d-flex">
                 <div class="filter-dropdown">
-                  <span class="filter" @click="isPop = !isPop">Filters <i class="fas fa-filter"></i></span>
+                  <span class="filter" @click="isPop = !isPop">Filters <i class="fa-solid fa-filter"></i></span>
                   <div class="filter-dropdown_item" v-show="isPop">
                     <div class="container">
                       <div class="filter-content">
@@ -191,12 +191,12 @@
                       No.
                       <i
                         v-if="currentSort === 'asc' || currentSort === ''"
-                        class="fas fa-angle-up angle-pointer"
+                        class="fa-solid fa-angle-up angle-pointer"
                         @click="toggleSort('asc')"></i>
 
                       <i
                         v-if="currentSort === 'desc'"
-                        class="fas fa-angle-down angle-pointer"
+                        class="fa-solid fa-angle-down angle-pointer"
                         @click="toggleSort('desc')"></i>
                     </th>
                     <th>Name</th>
@@ -222,7 +222,9 @@
                     </td>
                     <td>{{ project.id }}</td>
                     <td>
-                      <router-link :to="'/projects/' + project.slug" class="admin-panel-link">
+                      <router-link
+                        :to="{ name: 'ProjectPage', params: { slug: project.slug } }"
+                        class="admin-panel-link">
                         <span>{{ project.name }}</span>
                       </router-link>
                     </td>
@@ -241,7 +243,9 @@
                       <span v-else class="bg badge bg-warning me-1">{{ project.state }}</span>
                     </td>
                     <td>
-                      <router-link :to="'/user/' + project.owner.id + '/profile'" class="admin-panel-link">
+                      <router-link
+                        :to="{ name: 'Profile', params: { uuid: project.owner.id } }"
+                        class="admin-panel-link">
                         <div>{{ project.owner.name }}</div>
                         <div>({{ project.owner.username }})</div>
                       </router-link>
@@ -317,7 +321,7 @@ export default {
   methods: {
     loadStages() {
       axios
-        .get('/api/v1/stages')
+        .get('/stages')
         .then((response) => {
           this.stages = response.data;
         })
@@ -372,7 +376,7 @@ export default {
       );
 
       axios
-        .get(`/api/v1/admin/projects`, {
+        .get(`/admin/projects`, {
           params: filteredParameters,
         })
         .then((response) => {
@@ -405,7 +409,7 @@ export default {
       this.sweetAlert('Yes, Delete Selected ' + this.selectedProjects.length + ' Projects!').then((result) => {
         if (result.value) {
           axios
-            .delete('/api/v1/admin/projects/bulk-delete', {
+            .delete('/admin/projects/bulk-delete', {
               data: { project_ids: this.selectedProjects },
             })
             .then((response) => {

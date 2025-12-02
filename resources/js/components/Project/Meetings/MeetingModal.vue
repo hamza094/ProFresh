@@ -137,7 +137,7 @@ export default {
       this.initializeMeetingCreation();
 
       axios
-        .post(`/api/v1/projects/${this.projectSlug}/meetings`, this.form)
+        .post(`/projects/${this.projectSlug}/meetings`, this.form)
         .then((response) => {
           this.$bus.emit('get-results');
           this.$vToastify.success(response.data.message);

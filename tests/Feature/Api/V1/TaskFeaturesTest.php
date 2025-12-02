@@ -116,13 +116,15 @@ class TaskFeaturesTest extends TestCase
 
         $this->project->members()->attach($user->id, ['active' => true]);
 
-        $response = $this->getJson(route('task.members.search', [
+        $response = $this->withoutExceptionHandling()->getJson(route('task.members.search', [
             'project' => $this->project->slug,
             'task' => $task->id,
             'search' => 'test',
         ]))->assertSuccessful();
 
-        $this->assertCount(1, $response->json());
+        $payload = $response->json();
+
+        $this->assertCount(1, $payload);
     }
 
     /** @test */

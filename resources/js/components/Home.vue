@@ -31,7 +31,7 @@ export default {
     ...mapActions('subscribeUser', ['userSubscription']),
     resendMail() {
       axios
-        .post('/api/v1/email/resend/' + this.user.uuid, {})
+        .post('/email/resend/' + this.user.uuid, {})
         .then(() => {
           this.$vToastify.success('Verification link sent successfully');
         })

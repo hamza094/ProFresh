@@ -251,7 +251,7 @@ export default {
       this.initializeUpdateMeeting();
       const filteredForm = this.filterForm();
       axios
-        .patch(`/api/v1/projects/${this.projectSlug}/meetings/${id}`, filteredForm)
+        .patch(`/projects/${this.projectSlug}/meetings/${id}`, filteredForm)
         .then((response) => {
           this.meeting = response.data.meeting;
           this.updateMeetingInState(this.meeting);
@@ -271,7 +271,7 @@ export default {
       this.setLoading('Deleting meeting, please wait...', 'start');
       this.loader = true;
       axios
-        .delete(`/api/v1/projects/${this.projectSlug}/meetings/${meeting}`)
+        .delete(`/projects/${this.projectSlug}/meetings/${meeting}`)
         .then((response) => {
           this.meetingModalClose();
           this.removeMeetingFromState(meeting);
@@ -293,7 +293,7 @@ export default {
     getMeeting(meetingId) {
       this.$Progress.start();
       axios
-        .get(`/api/v1/projects/${this.projectSlug}/meetings/${meetingId}`)
+        .get(`/projects/${this.projectSlug}/meetings/${meetingId}`)
         .then((response) => {
           this.meeting = response.data.data;
           this.form.agenda = this.meeting.agenda;

@@ -15,7 +15,7 @@
 
         <li>
           <span class="activity-more">
-            <router-link :to="'/project/' + name + '/' + slug + '/activities'" class="dashboard-link"
+            <router-link :to="{ name: 'Activities', params: { name: name, slug: slug } }" class="dashboard-link"
               >View More</router-link
             >
           </span>

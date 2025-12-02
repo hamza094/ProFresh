@@ -7,7 +7,7 @@ namespace App\Http\Requests\Api\V1\Auth;
 use App\Models\User;
 use Exception;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Validation\Validator;
 
 /**
@@ -18,6 +18,12 @@ use Illuminate\Validation\Validator;
  */
 class TwoFactorLoginRequest extends FormRequest
 {
+    private const SESSION_ERROR_MESSAGE = 'Your session verification window expired. Please log in again.';
+
+    private const CODE_ERROR_MESSAGE = 'That verification code is incorrect or has expired.';
+
+    private ?string $twoFactorToken = null;
+
     /**
      * Determine if the user is authorized to make this request.
      */
@@ -69,7 +75,7 @@ class TwoFactorLoginRequest extends FormRequest
 
         // Validate 2FA code
         if (! $user->validateTwoFactorCode($code)) {
-            $this->addCodeError($validator);
+            $this->addInvalidCodeError($validator);
 
             return;
         }
@@ -83,15 +89,9 @@ class TwoFactorLoginRequest extends FormRequest
      */
     private function getUserFromSession(): ?User
     {
-        $encryptedCreds = session('2fa_login');
+        $creds = $this->pullSessionCredentials();
 
-        if (! $encryptedCreds) {
-            return null;
-        }
-
-        try {
-            $creds = decrypt($encryptedCreds);
-        } catch (Exception) {
+        if (! $creds) {
             return null;
         }
 
@@ -99,10 +99,21 @@ class TwoFactorLoginRequest extends FormRequest
             return null;
         }
 
-        // Look up the user from database
-        $user = User::where('email', $creds['email'])->first();
+        $this->twoFactorToken = $creds['token'];
+        $cacheKey = $this->cacheKey();
 
-        return $this->isValidUser($user, $creds['password']) ? $user : null;
+        if (! $cacheKey) {
+            return null;
+        }
+
+        // Atomically pull (get+delete) the cache entry so token cannot be reused
+        $cached = Cache::pull($cacheKey);
+
+        if (! is_array($cached)) {
+            return null;
+        }
+
+        return $this->resolveUserFromCache($cached);
     }
 
     /**
@@ -112,18 +123,10 @@ class TwoFactorLoginRequest extends FormRequest
      */
     private function isValidSessionData(array $creds): bool
     {
-        return ! empty($creds['email'])
-            && ! empty($creds['password'])
+        return isset($creds['token'])
+            && is_string($creds['token'])
             && ! empty($creds['expires_at'])
             && ! now()->greaterThan($creds['expires_at']);
-    }
-
-    /**
-     * Validate user exists and password matches
-     */
-    private function isValidUser(?User $user, string $password): bool
-    {
-        return $user && Hash::check($password, $user->password);
     }
 
     /**
@@ -131,14 +134,82 @@ class TwoFactorLoginRequest extends FormRequest
      */
     private function addSessionError(Validator $validator): void
     {
-        $validator->errors()->add('code', 'Session expired or invalid. Please login again.');
+        $validator->errors()->add('code', self::SESSION_ERROR_MESSAGE);
     }
 
     /**
      * Add invalid code error to validator
      */
-    private function addCodeError(Validator $validator): void
+    private function addInvalidCodeError(Validator $validator): void
     {
-        $validator->errors()->add('code', 'Invalid code provided.');
+        $validator->errors()->add('code', self::CODE_ERROR_MESSAGE);
+    }
+
+    private function cacheKey(): ?string
+    {
+        return $this->twoFactorToken ? $this->cachePrefix().$this->twoFactorToken : null;
+    }
+
+    /**
+     * Resolve a user from the cached 2FA state.
+     *
+     * @param  array<string, mixed>  $cached
+     */
+    private function resolveUserFromCache(array $cached): ?User
+    {
+        if (! empty($cached['user_id'])) {
+            $user = User::find($cached['user_id']);
+            if ($user) {
+                return $user;
+            }
+        }
+
+        if (! empty($cached['email'])) {
+            return User::where('email', $cached['email'])->first();
+        }
+
+        return null;
+    }
+
+    /**
+     * Decrypt the encrypted session credentials.
+     *
+     * @return array<string, mixed>|null
+     */
+    private function decryptCredentials(string $encryptedCreds): ?array
+    {
+        try {
+            $creds = decrypt($encryptedCreds);
+        } catch (Exception) {
+            return null;
+        }
+
+        return is_array($creds) ? $creds : null;
+    }
+
+    /**
+     * Pull and decrypt session credentials.
+     *
+     * @return array<string, mixed>|null
+     */
+    private function pullSessionCredentials(): ?array
+    {
+        $encrypted = session()->pull($this->sessionKey());
+
+        if (! $encrypted) {
+            return null;
+        }
+
+        return $this->decryptCredentials($encrypted);
+    }
+
+    private function sessionKey(): string
+    {
+        return (string) config('two-factor.login_state.session_key', '2fa_login');
+    }
+
+    private function cachePrefix(): string
+    {
+        return (string) config('two-factor.login_state.cache_prefix', '2fa_login:');
     }
 }

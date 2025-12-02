@@ -19,12 +19,14 @@ class ConversationResource extends JsonResource
      */
     public function toArray($request): array
     {
+        $fileUrl = $this->file_url;
+
         return [
             'id' => $this->id,
 
             'message' => $this->whenNotNull($this->message),
 
-            'file' => $this->whenNotNull($this->file),
+            'file' => $this->when((bool) $fileUrl, fn () => $fileUrl),
 
             'user' => new InvitedUserResource($this->whenLoaded('user')),
 
