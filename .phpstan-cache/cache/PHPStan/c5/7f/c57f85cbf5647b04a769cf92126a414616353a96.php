@@ -1,7 +1,0 @@
-<?php declare(strict_types = 1);
-
-// variadic-method-App\Services\TwoFactor\TwoFactorStateManager-decryptState-D:\apps\profresh\app\Services\TwoFactor\TwoFactorStateManager.php
-return \PHPStan\Cache\CacheItem::__set_state(array(
-   'variableKey' => '1764774937-v4',
-   'data' => false,
-));

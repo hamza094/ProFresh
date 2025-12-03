@@ -1,9 +1,0 @@
-<?php
-
-declare(strict_types=1);
-
-// variadic-method-App\Models\Task-newEloquentBuilder-D:\apps\profresh\app\Models\Task.php
-return PHPStan\Cache\CacheItem::__set_state([
-    'variableKey' => '1763192868-v4',
-    'data' => false,
-]);
