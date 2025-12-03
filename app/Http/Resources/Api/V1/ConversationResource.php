@@ -8,6 +8,8 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 /**
  * @mixin \App\Models\Conversation
+ *
+ * @property-read string|null $file_url
  */
 class ConversationResource extends JsonResource
 {

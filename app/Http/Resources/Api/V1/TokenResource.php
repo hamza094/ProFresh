@@ -12,6 +12,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
 class TokenResource extends JsonResource
 {
     private const DATETIME_FORMAT = 'Y-m-d H:i:s';
+
     /**
      * Transform the resource into an array.
      *

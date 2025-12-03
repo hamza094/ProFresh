@@ -11,6 +11,7 @@ use JsonSerializable;
 class UserActivitiesResource extends JsonResource
 {
     private const DELETED = '(deleted)';
+
     /**
      * Transform the resource into an array.
      *
@@ -54,9 +55,9 @@ class UserActivitiesResource extends JsonResource
 
     protected function created_project(): string
     {
-                return $this->project
-                    ? "Project {$this->project->name} created"
-                    : 'Project '.self::DELETED.' created';
+        return $this->project
+            ? "Project {$this->project->name} created"
+            : 'Project '.self::DELETED.' created';
     }
 
     protected function updated_project(): string
@@ -85,16 +86,16 @@ class UserActivitiesResource extends JsonResource
 
     protected function deleted_project(): string
     {
-                return $this->project
-                    ? "Project {$this->project->name} archived"
-                    : 'Project '.self::DELETED.' archived';
+        return $this->project
+            ? "Project {$this->project->name} archived"
+            : 'Project '.self::DELETED.' archived';
     }
 
     protected function restored_project(): string
     {
-                return $this->project
-                    ? "Project {$this->project->name} restored"
-                    : 'Project '.self::DELETED.' restored';
+        return $this->project
+            ? "Project {$this->project->name} restored"
+            : 'Project '.self::DELETED.' restored';
     }
 
     protected function created_task(): string

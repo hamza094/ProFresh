@@ -56,7 +56,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'D:\\apps\\profresh\\app\\Actions\\ProjectMetrics\\ActivityHealthMetricAction.php' => 
     array (
-      0 => '1a0a41643ee55f7ec9bbd2f955c8136546803d7b',
+      0 => '5cc0a6659193b224c142e8edd16be91402688aad',
       1 => 
       array (
         0 => 'app\\actions\\projectmetrics\\activityhealthmetricaction',
@@ -161,7 +161,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'D:\\apps\\profresh\\app\\Actions\\ProjectMetrics\\TeamCollaborationMetricAction.php' => 
     array (
-      0 => '3394c6c52a83240841e52af616a4f6ac264927a7',
+      0 => '19dcb1bbb985138f6d33ba9a8cbdede4822c5027',
       1 => 
       array (
         0 => 'app\\actions\\projectmetrics\\teamcollaborationmetricaction',
@@ -820,7 +820,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'D:\\apps\\profresh\\app\\Exceptions\\Handler.php' => 
     array (
-      0 => '0cd07a804c4135287d87e2b598c9407cd6167130',
+      0 => '2daff08f5a710c55a2d77f27e2b3ecb3c5fd1530',
       1 => 
       array (
         0 => 'app\\exceptions\\handler',
@@ -938,7 +938,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\Auth\\LoginController.php' => 
     array (
-      0 => 'dcfd866ca975517dbb0065a869b6d4052dea33ea',
+      0 => 'bfa7f03f4387e898f98154adaddcc85c7b8a322f',
       1 => 
       array (
         0 => 'app\\http\\controllers\\api\\auth\\logincontroller',
@@ -955,7 +955,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\Auth\\OAuthController.php' => 
     array (
-      0 => '0bbf03e2a31274190153be71161a6f14cba2ba0a',
+      0 => '25ea6fcef70679767803d6799aa1c1a150643652',
       1 => 
       array (
         0 => 'app\\http\\controllers\\api\\auth\\oauthcontroller',
@@ -1003,7 +1003,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\Auth\\TwoFactorController.php' => 
     array (
-      0 => '223ee00af3bcb37c773d6ccc87424b0cfb90e97f',
+      0 => '245be83b3a253811b89b2524b1fe87f45b04ee85',
       1 => 
       array (
         0 => 'app\\http\\controllers\\api\\auth\\twofactorcontroller',
@@ -1822,7 +1822,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'D:\\apps\\profresh\\app\\Http\\Requests\\Api\\V1\\Auth\\LoginUserRequest.php' => 
     array (
-      0 => 'f6dd3f35c6731698c9472216fb39675fadb0e805',
+      0 => '6bd7f11445ab44fec6d069a073f7ae95109e6b27',
       1 => 
       array (
         0 => 'app\\http\\requests\\api\\v1\\auth\\loginuserrequest',
@@ -1875,7 +1875,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'D:\\apps\\profresh\\app\\Http\\Requests\\Api\\V1\\Auth\\TwoFactorLoginRequest.php' => 
     array (
-      0 => 'dd3b4cd56ab2144fa0bffdcbd8ba73a899200501',
+      0 => 'c92f3e05808af9e9d2d49e2e83af86f51c6db253',
       1 => 
       array (
         0 => 'app\\http\\requests\\api\\v1\\auth\\twofactorloginrequest',
@@ -2278,7 +2278,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\ConversationResource.php' => 
     array (
-      0 => '0fe507173b65ae72c0954cebc5013be2a57e2c31',
+      0 => 'bc52c0aa3918d23959274881144df74e9b520cf0',
       1 => 
       array (
         0 => 'app\\http\\resources\\api\\v1\\conversationresource',
@@ -2519,7 +2519,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\TokenResource.php' => 
     array (
-      0 => '5ce995bb23a0ea2d8b3634b96066679100591bc4',
+      0 => '795f01fb593629ca84ca88916903f459d8af0c5f',
       1 => 
       array (
         0 => 'app\\http\\resources\\api\\v1\\tokenresource',
@@ -2534,7 +2534,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\UserActivitiesResource.php' => 
     array (
-      0 => '6f6d61cfbaa9ebaf575fbeabd258fc03b06b568b',
+      0 => 'aa2c3892bdc63922963a5d83275a9931890cf3e6',
       1 => 
       array (
         0 => 'app\\http\\resources\\api\\v1\\useractivitiesresource',
@@ -3034,7 +3034,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'D:\\apps\\profresh\\app\\Models\\Conversation.php' => 
     array (
-      0 => 'bdbbb8a9d54b767a176c4fe4907d2287c1121417',
+      0 => '3a4b5ead60e60ed5b8a88000d8ed4b4c81f0f810',
       1 => 
       array (
         0 => 'app\\models\\conversation',
@@ -3047,6 +3047,9 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         3 => 'app\\models\\mentionedusers',
         4 => 'app\\models\\mentionedusersdata',
         5 => 'app\\models\\getfileurlattribute',
+        6 => 'app\\models\\booted',
+        7 => 'app\\models\\resolvestoragepath',
+        8 => 'app\\models\\deletefileifexists',
       ),
       3 => 
       array (
@@ -3864,7 +3867,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'D:\\apps\\profresh\\app\\Services\\Api\\V1\\Auth\\LoginUserService.php' => 
     array (
-      0 => '11431bdcbf2683b773959590918bddb906b1d9da',
+      0 => 'c8c068abd91546b163762dc2be219701bf51f2ba',
       1 => 
       array (
         0 => 'app\\services\\api\\v1\\auth\\loginuserservice',
@@ -4375,7 +4378,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'D:\\apps\\profresh\\app\\Services\\Insights\\TeamCollaborationInsightBuilder.php' => 
     array (
-      0 => 'a3024dafe36181b1114f66bded1ff61d9029df97',
+      0 => '1a3f0cff293db1127f19b3ce3a0ddd132f8c2435',
       1 => 
       array (
         0 => 'app\\services\\insights\\teamcollaborationinsightbuilder',
@@ -4513,7 +4516,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'D:\\apps\\profresh\\app\\DataTransferObjects\\Auth\\AuthPayload.php' => 
     array (
-      0 => 'e24a14c298aaeba47f422ea6cb14c818e74da331',
+      0 => '9f4dcadebeaa9689bf83aaa0fea4d59affdd01cd',
       1 => 
       array (
         0 => 'app\\datatransferobjects\\auth\\authpayload',
@@ -4544,7 +4547,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\Auth\\SpaAuthController.php' => 
     array (
-      0 => 'e45cbc0a85532d31ec9ad38cdddfb0cb39877b9a',
+      0 => '4306471badf41a1f44f2390b73538c6d344b87c8',
       1 => 
       array (
         0 => 'app\\http\\controllers\\api\\auth\\spaauthcontroller',
@@ -4561,7 +4564,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'D:\\apps\\profresh\\app\\Services\\TwoFactor\\TwoFactorStateManager.php' => 
     array (
-      0 => 'c7cf6066c6bb41cc46512d7ac231daad439e2c42',
+      0 => '2ca12874c3ddb7d7ac1cb1758eb087d5c632e757',
       1 => 
       array (
         0 => 'app\\services\\twofactor\\twofactorstatemanager',

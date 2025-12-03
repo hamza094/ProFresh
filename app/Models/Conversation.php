@@ -12,9 +12,14 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Throwable;
 
+use function Safe\parse_url;
 use function Safe\preg_match_all;
 use function Safe\preg_replace;
 
+/**
+ * @property string|null $file
+ * @property-read string|null $file_url
+ */
 class Conversation extends Model
 {
     use HasFactory;
@@ -86,9 +91,38 @@ class Conversation extends Model
             ->get();
     }
 
-    
+    public function getFileUrlAttribute(): ?string
+    {
+        $file = (string) ($this->file ?? '');
 
-   /**
+        if ($file === '') {
+            return null;
+        }
+
+        if (str_starts_with($file, 'http')) {
+            return $file;
+        }
+
+        try {
+            return Storage::disk('s3')->temporaryUrl(
+                $file,
+                now()->addMinutes(self::FILE_URL_TTL_MINUTES)
+            );
+        } catch (Throwable $e) {
+            Log::warning('Failed generating conversation file URL', ['file' => $file, 'error' => $e->getMessage()]);
+
+            return null;
+        }
+    }
+
+    protected static function booted(): void
+    {
+        static::deleted(function (self $conversation): void {
+            $conversation->deleteFileIfExists($conversation->file);
+        });
+    }
+
+    /**
      * Resolve the storage path for a file. If given a full HTTP URL, parse
      * and return the path portion without a leading slash. Returns an empty
      * string when the path cannot be determined.

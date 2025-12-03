@@ -1,7 +1,7 @@
 <?php declare(strict_types = 1);
 
 return [
-	'lastFullAnalysisTime' => 1764085314,
+	'lastFullAnalysisTime' => 1764773734,
 	'meta' => array (
   'cacheVersion' => 'v12-linesToIgnore',
   'phpstanVersion' => '1.12.32',
@@ -17,7 +17,7 @@ return [
   ),
   'composerLocks' => 
   array (
-    'D:/apps/profresh/composer.lock' => 'a25798a752ca3efd747ef7e27bffbba9ed9e6f53',
+    'D:/apps/profresh/composer.lock' => '314e4f4ccc6ae2785e15390738fcd4d539082e30',
   ),
   'composerInstalled' => 
   array (
@@ -3458,13 +3458,13 @@ return [
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'PHPDoc type array of property App\\Exceptions\\Handler::$dontReport is not covariant with PHPDoc type array<int, class-string<Throwable>> of overridden property Illuminate\\Foundation\\Exceptions\\Handler::$dontReport.',
        'file' => 'D:\\apps\\profresh\\app\\Exceptions\\Handler.php',
-       'line' => 26,
+       'line' => 28,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\app\\Exceptions\\Handler.php',
        'traitFilePath' => NULL,
        'tip' => 'You can fix 3rd party PHPDoc types with stub files:
    <fg=cyan>https://phpstan.org/user-guide/stub-files</>',
-       'nodeLine' => 26,
+       'nodeLine' => 28,
        'nodeType' => 'PHPStan\\Node\\ClassPropertyNode',
        'identifier' => 'property.phpDocType',
        'metadata' => 
@@ -3475,12 +3475,12 @@ return [
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Property App\\Exceptions\\Handler::$dontReport type has no value type specified in iterable type array.',
        'file' => 'D:\\apps\\profresh\\app\\Exceptions\\Handler.php',
-       'line' => 26,
+       'line' => 28,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\app\\Exceptions\\Handler.php',
        'traitFilePath' => NULL,
        'tip' => 'See: https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type',
-       'nodeLine' => 26,
+       'nodeLine' => 28,
        'nodeType' => 'PHPStan\\Node\\ClassPropertyNode',
        'identifier' => 'missingType.iterableValue',
        'metadata' => 
@@ -3491,13 +3491,13 @@ return [
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'PHPDoc type array of property App\\Exceptions\\Handler::$dontFlash is not covariant with PHPDoc type array<int, string> of overridden property Illuminate\\Foundation\\Exceptions\\Handler::$dontFlash.',
        'file' => 'D:\\apps\\profresh\\app\\Exceptions\\Handler.php',
-       'line' => 35,
+       'line' => 37,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\app\\Exceptions\\Handler.php',
        'traitFilePath' => NULL,
        'tip' => 'You can fix 3rd party PHPDoc types with stub files:
    <fg=cyan>https://phpstan.org/user-guide/stub-files</>',
-       'nodeLine' => 35,
+       'nodeLine' => 37,
        'nodeType' => 'PHPStan\\Node\\ClassPropertyNode',
        'identifier' => 'property.phpDocType',
        'metadata' => 
@@ -3508,12 +3508,12 @@ return [
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Property App\\Exceptions\\Handler::$dontFlash type has no value type specified in iterable type array.',
        'file' => 'D:\\apps\\profresh\\app\\Exceptions\\Handler.php',
-       'line' => 35,
+       'line' => 37,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\app\\Exceptions\\Handler.php',
        'traitFilePath' => NULL,
        'tip' => 'See: https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type',
-       'nodeLine' => 35,
+       'nodeLine' => 37,
        'nodeType' => 'PHPStan\\Node\\ClassPropertyNode',
        'identifier' => 'missingType.iterableValue',
        'metadata' => 
@@ -3524,12 +3524,12 @@ return [
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Parameter $e of anonymous function has invalid type App\\Exceptions\\MethodNotAllowedHttpException.',
        'file' => 'D:\\apps\\profresh\\app\\Exceptions\\Handler.php',
-       'line' => 74,
+       'line' => 76,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\app\\Exceptions\\Handler.php',
        'traitFilePath' => NULL,
        'tip' => NULL,
-       'nodeLine' => 74,
+       'nodeLine' => 76,
        'nodeType' => 'PhpParser\\Node\\Expr\\Closure',
        'identifier' => 'class.notFound',
        'metadata' => 
@@ -5664,12 +5664,12 @@ return [
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Method App\\Http\\Resources\\Api\\V1\\UserActivitiesResource::toArray() return type has no value type specified in iterable type array.',
        'file' => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\UserActivitiesResource.php',
-       'line' => 19,
+       'line' => 21,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\UserActivitiesResource.php',
        'traitFilePath' => NULL,
        'tip' => 'See: https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type',
-       'nodeLine' => 19,
+       'nodeLine' => 21,
        'nodeType' => 'PHPStan\\Node\\InClassMethodNode',
        'identifier' => 'missingType.iterableValue',
        'metadata' => 
@@ -5680,12 +5680,12 @@ return [
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Method App\\Http\\Resources\\Api\\V1\\UserActivitiesResource::toArray() return type with generic interface Illuminate\\Contracts\\Support\\Arrayable does not specify its types: TKey, TValue',
        'file' => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\UserActivitiesResource.php',
-       'line' => 19,
+       'line' => 21,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\UserActivitiesResource.php',
        'traitFilePath' => NULL,
        'tip' => NULL,
-       'nodeLine' => 19,
+       'nodeLine' => 21,
        'nodeType' => 'PHPStan\\Node\\InClassMethodNode',
        'identifier' => 'missingType.generics',
        'metadata' => 
@@ -5695,38 +5695,6 @@ return [
     2 => 
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Access to an undefined property App\\Http\\Resources\\Api\\V1\\UserActivitiesResource::$id.',
-       'file' => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\UserActivitiesResource.php',
-       'line' => 22,
-       'canBeIgnored' => true,
-       'filePath' => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\UserActivitiesResource.php',
-       'traitFilePath' => NULL,
-       'tip' => 'Learn more: <fg=cyan>https://phpstan.org/blog/solving-phpstan-access-to-undefined-property</>',
-       'nodeLine' => 22,
-       'nodeType' => 'PhpParser\\Node\\Expr\\PropertyFetch',
-       'identifier' => 'property.notFound',
-       'metadata' => 
-      array (
-      ),
-    )),
-    3 => 
-    \PHPStan\Analyser\Error::__set_state(array(
-       'message' => 'Access to an undefined property App\\Http\\Resources\\Api\\V1\\UserActivitiesResource::$description.',
-       'file' => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\UserActivitiesResource.php',
-       'line' => 23,
-       'canBeIgnored' => true,
-       'filePath' => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\UserActivitiesResource.php',
-       'traitFilePath' => NULL,
-       'tip' => 'Learn more: <fg=cyan>https://phpstan.org/blog/solving-phpstan-access-to-undefined-property</>',
-       'nodeLine' => 23,
-       'nodeType' => 'PhpParser\\Node\\Expr\\PropertyFetch',
-       'identifier' => 'property.notFound',
-       'metadata' => 
-      array (
-      ),
-    )),
-    4 => 
-    \PHPStan\Analyser\Error::__set_state(array(
-       'message' => 'Access to an undefined property App\\Http\\Resources\\Api\\V1\\UserActivitiesResource::$description.',
        'file' => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\UserActivitiesResource.php',
        'line' => 24,
        'canBeIgnored' => true,
@@ -5740,7 +5708,7 @@ return [
       array (
       ),
     )),
-    5 => 
+    3 => 
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Access to an undefined property App\\Http\\Resources\\Api\\V1\\UserActivitiesResource::$description.',
        'file' => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\UserActivitiesResource.php',
@@ -5756,9 +5724,9 @@ return [
       array (
       ),
     )),
-    6 => 
+    4 => 
     \PHPStan\Analyser\Error::__set_state(array(
-       'message' => 'Access to an undefined property App\\Http\\Resources\\Api\\V1\\UserActivitiesResource::$project.',
+       'message' => 'Access to an undefined property App\\Http\\Resources\\Api\\V1\\UserActivitiesResource::$description.',
        'file' => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\UserActivitiesResource.php',
        'line' => 26,
        'canBeIgnored' => true,
@@ -5772,9 +5740,9 @@ return [
       array (
       ),
     )),
-    7 => 
+    5 => 
     \PHPStan\Analyser\Error::__set_state(array(
-       'message' => 'Access to an undefined property App\\Http\\Resources\\Api\\V1\\UserActivitiesResource::$created_at.',
+       'message' => 'Access to an undefined property App\\Http\\Resources\\Api\\V1\\UserActivitiesResource::$description.',
        'file' => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\UserActivitiesResource.php',
        'line' => 27,
        'canBeIgnored' => true,
@@ -5788,16 +5756,48 @@ return [
       array (
       ),
     )),
-    8 => 
+    6 => 
     \PHPStan\Analyser\Error::__set_state(array(
-       'message' => 'Access to an undefined property App\\Http\\Resources\\Api\\V1\\UserActivitiesResource::$user_id.',
+       'message' => 'Access to an undefined property App\\Http\\Resources\\Api\\V1\\UserActivitiesResource::$project.',
        'file' => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\UserActivitiesResource.php',
-       'line' => 30,
+       'line' => 28,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\UserActivitiesResource.php',
        'traitFilePath' => NULL,
        'tip' => 'Learn more: <fg=cyan>https://phpstan.org/blog/solving-phpstan-access-to-undefined-property</>',
-       'nodeLine' => 30,
+       'nodeLine' => 28,
+       'nodeType' => 'PhpParser\\Node\\Expr\\PropertyFetch',
+       'identifier' => 'property.notFound',
+       'metadata' => 
+      array (
+      ),
+    )),
+    7 => 
+    \PHPStan\Analyser\Error::__set_state(array(
+       'message' => 'Access to an undefined property App\\Http\\Resources\\Api\\V1\\UserActivitiesResource::$created_at.',
+       'file' => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\UserActivitiesResource.php',
+       'line' => 29,
+       'canBeIgnored' => true,
+       'filePath' => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\UserActivitiesResource.php',
+       'traitFilePath' => NULL,
+       'tip' => 'Learn more: <fg=cyan>https://phpstan.org/blog/solving-phpstan-access-to-undefined-property</>',
+       'nodeLine' => 29,
+       'nodeType' => 'PhpParser\\Node\\Expr\\PropertyFetch',
+       'identifier' => 'property.notFound',
+       'metadata' => 
+      array (
+      ),
+    )),
+    8 => 
+    \PHPStan\Analyser\Error::__set_state(array(
+       'message' => 'Access to an undefined property App\\Http\\Resources\\Api\\V1\\UserActivitiesResource::$user_id.',
+       'file' => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\UserActivitiesResource.php',
+       'line' => 32,
+       'canBeIgnored' => true,
+       'filePath' => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\UserActivitiesResource.php',
+       'traitFilePath' => NULL,
+       'tip' => 'Learn more: <fg=cyan>https://phpstan.org/blog/solving-phpstan-access-to-undefined-property</>',
+       'nodeLine' => 32,
        'nodeType' => 'PhpParser\\Node\\Expr\\PropertyFetch',
        'identifier' => 'property.notFound',
        'metadata' => 
@@ -5808,12 +5808,12 @@ return [
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Method App\\Http\\Resources\\Api\\V1\\UserActivitiesResource::getSubjectDetails() return type has no value type specified in iterable type array.',
        'file' => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\UserActivitiesResource.php',
-       'line' => 46,
+       'line' => 48,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\UserActivitiesResource.php',
        'traitFilePath' => NULL,
        'tip' => 'See: https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type',
-       'nodeLine' => 46,
+       'nodeLine' => 48,
        'nodeType' => 'PHPStan\\Node\\InClassMethodNode',
        'identifier' => 'missingType.iterableValue',
        'metadata' => 
@@ -5824,12 +5824,12 @@ return [
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Access to an undefined property App\\Http\\Resources\\Api\\V1\\UserActivitiesResource::$subject_type.',
        'file' => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\UserActivitiesResource.php',
-       'line' => 49,
+       'line' => 51,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\UserActivitiesResource.php',
        'traitFilePath' => NULL,
        'tip' => 'Learn more: <fg=cyan>https://phpstan.org/blog/solving-phpstan-access-to-undefined-property</>',
-       'nodeLine' => 49,
+       'nodeLine' => 51,
        'nodeType' => 'PhpParser\\Node\\Expr\\PropertyFetch',
        'identifier' => 'property.notFound',
        'metadata' => 
@@ -5840,12 +5840,12 @@ return [
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Access to an undefined property App\\Http\\Resources\\Api\\V1\\UserActivitiesResource::$subject.',
        'file' => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\UserActivitiesResource.php',
-       'line' => 50,
+       'line' => 52,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\UserActivitiesResource.php',
        'traitFilePath' => NULL,
        'tip' => 'Learn more: <fg=cyan>https://phpstan.org/blog/solving-phpstan-access-to-undefined-property</>',
-       'nodeLine' => 50,
+       'nodeLine' => 52,
        'nodeType' => 'PhpParser\\Node\\Expr\\PropertyFetch',
        'identifier' => 'property.notFound',
        'metadata' => 
@@ -5856,12 +5856,12 @@ return [
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Access to an undefined property App\\Http\\Resources\\Api\\V1\\UserActivitiesResource::$project.',
        'file' => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\UserActivitiesResource.php',
-       'line' => 56,
+       'line' => 58,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\UserActivitiesResource.php',
        'traitFilePath' => NULL,
        'tip' => 'Learn more: <fg=cyan>https://phpstan.org/blog/solving-phpstan-access-to-undefined-property</>',
-       'nodeLine' => 56,
+       'nodeLine' => 58,
        'nodeType' => 'PhpParser\\Node\\Expr\\PropertyFetch',
        'identifier' => 'property.notFound',
        'metadata' => 
@@ -5872,12 +5872,12 @@ return [
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Access to an undefined property App\\Http\\Resources\\Api\\V1\\UserActivitiesResource::$project.',
        'file' => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\UserActivitiesResource.php',
-       'line' => 63,
+       'line' => 65,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\UserActivitiesResource.php',
        'traitFilePath' => NULL,
        'tip' => 'Learn more: <fg=cyan>https://phpstan.org/blog/solving-phpstan-access-to-undefined-property</>',
-       'nodeLine' => 63,
+       'nodeLine' => 65,
        'nodeType' => 'PhpParser\\Node\\Expr\\PropertyFetch',
        'identifier' => 'property.notFound',
        'metadata' => 
@@ -5888,12 +5888,12 @@ return [
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Access to an undefined property App\\Http\\Resources\\Api\\V1\\UserActivitiesResource::$project.',
        'file' => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\UserActivitiesResource.php',
-       'line' => 87,
+       'line' => 89,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\UserActivitiesResource.php',
        'traitFilePath' => NULL,
        'tip' => 'Learn more: <fg=cyan>https://phpstan.org/blog/solving-phpstan-access-to-undefined-property</>',
-       'nodeLine' => 87,
+       'nodeLine' => 89,
        'nodeType' => 'PhpParser\\Node\\Expr\\PropertyFetch',
        'identifier' => 'property.notFound',
        'metadata' => 
@@ -5904,12 +5904,12 @@ return [
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Access to an undefined property App\\Http\\Resources\\Api\\V1\\UserActivitiesResource::$project.',
        'file' => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\UserActivitiesResource.php',
-       'line' => 94,
+       'line' => 96,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\UserActivitiesResource.php',
        'traitFilePath' => NULL,
        'tip' => 'Learn more: <fg=cyan>https://phpstan.org/blog/solving-phpstan-access-to-undefined-property</>',
-       'nodeLine' => 94,
+       'nodeLine' => 96,
        'nodeType' => 'PhpParser\\Node\\Expr\\PropertyFetch',
        'identifier' => 'property.notFound',
        'metadata' => 
@@ -5920,12 +5920,12 @@ return [
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Access to an undefined property App\\Http\\Resources\\Api\\V1\\UserActivitiesResource::$subject.',
        'file' => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\UserActivitiesResource.php',
-       'line' => 101,
+       'line' => 103,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\UserActivitiesResource.php',
        'traitFilePath' => NULL,
        'tip' => 'Learn more: <fg=cyan>https://phpstan.org/blog/solving-phpstan-access-to-undefined-property</>',
-       'nodeLine' => 101,
+       'nodeLine' => 103,
        'nodeType' => 'PhpParser\\Node\\Expr\\PropertyFetch',
        'identifier' => 'property.notFound',
        'metadata' => 
@@ -5936,12 +5936,12 @@ return [
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Access to an undefined property App\\Http\\Resources\\Api\\V1\\UserActivitiesResource::$project.',
        'file' => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\UserActivitiesResource.php',
-       'line' => 102,
+       'line' => 104,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\UserActivitiesResource.php',
        'traitFilePath' => NULL,
        'tip' => 'Learn more: <fg=cyan>https://phpstan.org/blog/solving-phpstan-access-to-undefined-property</>',
-       'nodeLine' => 102,
+       'nodeLine' => 104,
        'nodeType' => 'PhpParser\\Node\\Expr\\PropertyFetch',
        'identifier' => 'property.notFound',
        'metadata' => 
@@ -5952,12 +5952,12 @@ return [
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Access to an undefined property App\\Http\\Resources\\Api\\V1\\UserActivitiesResource::$project.',
        'file' => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\UserActivitiesResource.php',
-       'line' => 106,
+       'line' => 108,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\UserActivitiesResource.php',
        'traitFilePath' => NULL,
        'tip' => 'Learn more: <fg=cyan>https://phpstan.org/blog/solving-phpstan-access-to-undefined-property</>',
-       'nodeLine' => 106,
+       'nodeLine' => 108,
        'nodeType' => 'PhpParser\\Node\\Expr\\PropertyFetch',
        'identifier' => 'property.notFound',
        'metadata' => 
@@ -5968,12 +5968,12 @@ return [
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Access to an undefined property App\\Http\\Resources\\Api\\V1\\UserActivitiesResource::$subject.',
        'file' => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\UserActivitiesResource.php',
-       'line' => 113,
+       'line' => 115,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\UserActivitiesResource.php',
        'traitFilePath' => NULL,
        'tip' => 'Learn more: <fg=cyan>https://phpstan.org/blog/solving-phpstan-access-to-undefined-property</>',
-       'nodeLine' => 113,
+       'nodeLine' => 115,
        'nodeType' => 'PhpParser\\Node\\Expr\\PropertyFetch',
        'identifier' => 'property.notFound',
        'metadata' => 
@@ -5984,12 +5984,12 @@ return [
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Access to an undefined property App\\Http\\Resources\\Api\\V1\\UserActivitiesResource::$project.',
        'file' => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\UserActivitiesResource.php',
-       'line' => 116,
+       'line' => 118,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\UserActivitiesResource.php',
        'traitFilePath' => NULL,
        'tip' => 'Learn more: <fg=cyan>https://phpstan.org/blog/solving-phpstan-access-to-undefined-property</>',
-       'nodeLine' => 116,
+       'nodeLine' => 118,
        'nodeType' => 'PhpParser\\Node\\Expr\\PropertyFetch',
        'identifier' => 'property.notFound',
        'metadata' => 
@@ -6000,12 +6000,12 @@ return [
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Access to an undefined property App\\Http\\Resources\\Api\\V1\\UserActivitiesResource::$project.',
        'file' => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\UserActivitiesResource.php',
-       'line' => 127,
+       'line' => 129,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\UserActivitiesResource.php',
        'traitFilePath' => NULL,
        'tip' => 'Learn more: <fg=cyan>https://phpstan.org/blog/solving-phpstan-access-to-undefined-property</>',
-       'nodeLine' => 127,
+       'nodeLine' => 129,
        'nodeType' => 'PhpParser\\Node\\Expr\\PropertyFetch',
        'identifier' => 'property.notFound',
        'metadata' => 
@@ -6016,12 +6016,12 @@ return [
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Access to an undefined property App\\Http\\Resources\\Api\\V1\\UserActivitiesResource::$subject.',
        'file' => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\UserActivitiesResource.php',
-       'line' => 128,
+       'line' => 130,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\UserActivitiesResource.php',
        'traitFilePath' => NULL,
        'tip' => 'Learn more: <fg=cyan>https://phpstan.org/blog/solving-phpstan-access-to-undefined-property</>',
-       'nodeLine' => 128,
+       'nodeLine' => 130,
        'nodeType' => 'PhpParser\\Node\\Expr\\PropertyFetch',
        'identifier' => 'property.notFound',
        'metadata' => 
@@ -6032,12 +6032,12 @@ return [
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Access to an undefined property App\\Http\\Resources\\Api\\V1\\UserActivitiesResource::$subject.',
        'file' => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\UserActivitiesResource.php',
-       'line' => 138,
+       'line' => 140,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\UserActivitiesResource.php',
        'traitFilePath' => NULL,
        'tip' => 'Learn more: <fg=cyan>https://phpstan.org/blog/solving-phpstan-access-to-undefined-property</>',
-       'nodeLine' => 138,
+       'nodeLine' => 140,
        'nodeType' => 'PhpParser\\Node\\Expr\\PropertyFetch',
        'identifier' => 'property.notFound',
        'metadata' => 
@@ -6048,12 +6048,12 @@ return [
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Access to an undefined property App\\Http\\Resources\\Api\\V1\\UserActivitiesResource::$subject.',
        'file' => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\UserActivitiesResource.php',
-       'line' => 139,
+       'line' => 141,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\UserActivitiesResource.php',
        'traitFilePath' => NULL,
        'tip' => 'Learn more: <fg=cyan>https://phpstan.org/blog/solving-phpstan-access-to-undefined-property</>',
-       'nodeLine' => 139,
+       'nodeLine' => 141,
        'nodeType' => 'PhpParser\\Node\\Expr\\PropertyFetch',
        'identifier' => 'property.notFound',
        'metadata' => 
@@ -6064,12 +6064,12 @@ return [
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Access to an undefined property App\\Http\\Resources\\Api\\V1\\UserActivitiesResource::$project.',
        'file' => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\UserActivitiesResource.php',
-       'line' => 146,
+       'line' => 148,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\UserActivitiesResource.php',
        'traitFilePath' => NULL,
        'tip' => 'Learn more: <fg=cyan>https://phpstan.org/blog/solving-phpstan-access-to-undefined-property</>',
-       'nodeLine' => 146,
+       'nodeLine' => 148,
        'nodeType' => 'PhpParser\\Node\\Expr\\PropertyFetch',
        'identifier' => 'property.notFound',
        'metadata' => 
@@ -6080,12 +6080,12 @@ return [
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Access to an undefined property App\\Http\\Resources\\Api\\V1\\UserActivitiesResource::$project.',
        'file' => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\UserActivitiesResource.php',
-       'line' => 153,
+       'line' => 155,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\UserActivitiesResource.php',
        'traitFilePath' => NULL,
        'tip' => 'Learn more: <fg=cyan>https://phpstan.org/blog/solving-phpstan-access-to-undefined-property</>',
-       'nodeLine' => 153,
+       'nodeLine' => 155,
        'nodeType' => 'PhpParser\\Node\\Expr\\PropertyFetch',
        'identifier' => 'property.notFound',
        'metadata' => 
@@ -6096,12 +6096,12 @@ return [
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Access to an undefined property App\\Http\\Resources\\Api\\V1\\UserActivitiesResource::$project.',
        'file' => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\UserActivitiesResource.php',
-       'line' => 160,
+       'line' => 162,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\UserActivitiesResource.php',
        'traitFilePath' => NULL,
        'tip' => 'Learn more: <fg=cyan>https://phpstan.org/blog/solving-phpstan-access-to-undefined-property</>',
-       'nodeLine' => 160,
+       'nodeLine' => 162,
        'nodeType' => 'PhpParser\\Node\\Expr\\PropertyFetch',
        'identifier' => 'property.notFound',
        'metadata' => 
@@ -6112,12 +6112,12 @@ return [
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Access to an undefined property App\\Http\\Resources\\Api\\V1\\UserActivitiesResource::$project.',
        'file' => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\UserActivitiesResource.php',
-       'line' => 167,
+       'line' => 169,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\UserActivitiesResource.php',
        'traitFilePath' => NULL,
        'tip' => 'Learn more: <fg=cyan>https://phpstan.org/blog/solving-phpstan-access-to-undefined-property</>',
-       'nodeLine' => 167,
+       'nodeLine' => 169,
        'nodeType' => 'PhpParser\\Node\\Expr\\PropertyFetch',
        'identifier' => 'property.notFound',
        'metadata' => 
@@ -6128,12 +6128,12 @@ return [
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Access to an undefined property App\\Http\\Resources\\Api\\V1\\UserActivitiesResource::$project.',
        'file' => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\UserActivitiesResource.php',
-       'line' => 174,
+       'line' => 176,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\UserActivitiesResource.php',
        'traitFilePath' => NULL,
        'tip' => 'Learn more: <fg=cyan>https://phpstan.org/blog/solving-phpstan-access-to-undefined-property</>',
-       'nodeLine' => 174,
+       'nodeLine' => 176,
        'nodeType' => 'PhpParser\\Node\\Expr\\PropertyFetch',
        'identifier' => 'property.notFound',
        'metadata' => 
@@ -6144,12 +6144,12 @@ return [
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Access to an undefined property App\\Http\\Resources\\Api\\V1\\UserActivitiesResource::$subject.',
        'file' => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\UserActivitiesResource.php',
-       'line' => 175,
+       'line' => 177,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\UserActivitiesResource.php',
        'traitFilePath' => NULL,
        'tip' => 'Learn more: <fg=cyan>https://phpstan.org/blog/solving-phpstan-access-to-undefined-property</>',
-       'nodeLine' => 175,
+       'nodeLine' => 177,
        'nodeType' => 'PhpParser\\Node\\Expr\\PropertyFetch',
        'identifier' => 'property.notFound',
        'metadata' => 
@@ -6160,12 +6160,12 @@ return [
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Access to an undefined property App\\Http\\Resources\\Api\\V1\\UserActivitiesResource::$project.',
        'file' => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\UserActivitiesResource.php',
-       'line' => 182,
+       'line' => 184,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\UserActivitiesResource.php',
        'traitFilePath' => NULL,
        'tip' => 'Learn more: <fg=cyan>https://phpstan.org/blog/solving-phpstan-access-to-undefined-property</>',
-       'nodeLine' => 182,
+       'nodeLine' => 184,
        'nodeType' => 'PhpParser\\Node\\Expr\\PropertyFetch',
        'identifier' => 'property.notFound',
        'metadata' => 
@@ -6176,12 +6176,12 @@ return [
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Access to an undefined property App\\Http\\Resources\\Api\\V1\\UserActivitiesResource::$subject.',
        'file' => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\UserActivitiesResource.php',
-       'line' => 183,
+       'line' => 185,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\UserActivitiesResource.php',
        'traitFilePath' => NULL,
        'tip' => 'Learn more: <fg=cyan>https://phpstan.org/blog/solving-phpstan-access-to-undefined-property</>',
-       'nodeLine' => 183,
+       'nodeLine' => 185,
        'nodeType' => 'PhpParser\\Node\\Expr\\PropertyFetch',
        'identifier' => 'property.notFound',
        'metadata' => 
@@ -6192,12 +6192,12 @@ return [
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Access to an undefined property App\\Http\\Resources\\Api\\V1\\UserActivitiesResource::$project.',
        'file' => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\UserActivitiesResource.php',
-       'line' => 190,
+       'line' => 192,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\UserActivitiesResource.php',
        'traitFilePath' => NULL,
        'tip' => 'Learn more: <fg=cyan>https://phpstan.org/blog/solving-phpstan-access-to-undefined-property</>',
-       'nodeLine' => 190,
+       'nodeLine' => 192,
        'nodeType' => 'PhpParser\\Node\\Expr\\PropertyFetch',
        'identifier' => 'property.notFound',
        'metadata' => 
@@ -6208,12 +6208,12 @@ return [
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Access to an undefined property App\\Http\\Resources\\Api\\V1\\UserActivitiesResource::$description.',
        'file' => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\UserActivitiesResource.php',
-       'line' => 197,
+       'line' => 199,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\UserActivitiesResource.php',
        'traitFilePath' => NULL,
        'tip' => 'Learn more: <fg=cyan>https://phpstan.org/blog/solving-phpstan-access-to-undefined-property</>',
-       'nodeLine' => 197,
+       'nodeLine' => 199,
        'nodeType' => 'PhpParser\\Node\\Expr\\PropertyFetch',
        'identifier' => 'property.notFound',
        'metadata' => 
@@ -6224,12 +6224,12 @@ return [
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Access to an undefined property App\\Http\\Resources\\Api\\V1\\UserActivitiesResource::$description.',
        'file' => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\UserActivitiesResource.php',
-       'line' => 197,
+       'line' => 199,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\UserActivitiesResource.php',
        'traitFilePath' => NULL,
        'tip' => 'Learn more: <fg=cyan>https://phpstan.org/blog/solving-phpstan-access-to-undefined-property</>',
-       'nodeLine' => 197,
+       'nodeLine' => 199,
        'nodeType' => 'PhpParser\\Node\\Expr\\PropertyFetch',
        'identifier' => 'property.notFound',
        'metadata' => 
@@ -6466,12 +6466,12 @@ return [
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Class App\\Models\\Conversation uses generic trait Illuminate\\Database\\Eloquent\\Factories\\HasFactory but does not specify its types: TFactory',
        'file' => 'D:\\apps\\profresh\\app\\Models\\Conversation.php',
-       'line' => 20,
+       'line' => 25,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\app\\Models\\Conversation.php',
        'traitFilePath' => NULL,
        'tip' => NULL,
-       'nodeLine' => 20,
+       'nodeLine' => 25,
        'nodeType' => 'PhpParser\\Node\\Stmt\\TraitUse',
        'identifier' => 'missingType.generics',
        'metadata' => 
@@ -6482,12 +6482,12 @@ return [
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Method App\\Models\\Conversation::project() should return Illuminate\\Database\\Eloquent\\Relations\\BelongsTo<App\\Models\\Project, App\\Models\\Conversation> but returns Illuminate\\Database\\Eloquent\\Relations\\BelongsTo<App\\Models\\Project, $this(App\\Models\\Conversation)>.',
        'file' => 'D:\\apps\\profresh\\app\\Models\\Conversation.php',
-       'line' => 33,
+       'line' => 38,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\app\\Models\\Conversation.php',
        'traitFilePath' => NULL,
        'tip' => 'Template type TDeclaringModel on class Illuminate\\Database\\Eloquent\\Relations\\BelongsTo is not covariant. Learn more: <fg=cyan>https://phpstan.org/blog/whats-up-with-template-covariant</>',
-       'nodeLine' => 33,
+       'nodeLine' => 38,
        'nodeType' => 'PhpParser\\Node\\Stmt\\Return_',
        'identifier' => 'return.type',
        'metadata' => 
@@ -6498,12 +6498,12 @@ return [
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Method App\\Models\\Conversation::user() should return Illuminate\\Database\\Eloquent\\Relations\\BelongsTo<App\\Models\\User, App\\Models\\Conversation> but returns Illuminate\\Database\\Eloquent\\Relations\\BelongsTo<App\\Models\\User, $this(App\\Models\\Conversation)>.',
        'file' => 'D:\\apps\\profresh\\app\\Models\\Conversation.php',
-       'line' => 43,
+       'line' => 48,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\app\\Models\\Conversation.php',
        'traitFilePath' => NULL,
        'tip' => 'Template type TDeclaringModel on class Illuminate\\Database\\Eloquent\\Relations\\BelongsTo is not covariant. Learn more: <fg=cyan>https://phpstan.org/blog/whats-up-with-template-covariant</>',
-       'nodeLine' => 43,
+       'nodeLine' => 48,
        'nodeType' => 'PhpParser\\Node\\Stmt\\Return_',
        'identifier' => 'return.type',
        'metadata' => 
@@ -6514,12 +6514,12 @@ return [
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Method App\\Models\\Conversation::setMessageAttribute() has parameter $message with no type specified.',
        'file' => 'D:\\apps\\profresh\\app\\Models\\Conversation.php',
-       'line' => 46,
+       'line' => 51,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\app\\Models\\Conversation.php',
        'traitFilePath' => NULL,
        'tip' => NULL,
-       'nodeLine' => 46,
+       'nodeLine' => 51,
        'nodeType' => 'PHPStan\\Node\\InClassMethodNode',
        'identifier' => 'missingType.parameter',
        'metadata' => 
@@ -6530,12 +6530,12 @@ return [
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Method App\\Models\\Conversation::mentionedUsers() return type has no value type specified in iterable type array.',
        'file' => 'D:\\apps\\profresh\\app\\Models\\Conversation.php',
-       'line' => 55,
+       'line' => 60,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\app\\Models\\Conversation.php',
        'traitFilePath' => NULL,
        'tip' => 'See: https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type',
-       'nodeLine' => 55,
+       'nodeLine' => 60,
        'nodeType' => 'PHPStan\\Node\\InClassMethodNode',
        'identifier' => 'missingType.iterableValue',
        'metadata' => 
@@ -6546,12 +6546,12 @@ return [
     \PHPStan\Analyser\Error::__set_state(array(
        'message' => 'Method App\\Models\\Conversation::mentionedUsersData() return type with generic class Illuminate\\Support\\Collection does not specify its types: TKey, TValue',
        'file' => 'D:\\apps\\profresh\\app\\Models\\Conversation.php',
-       'line' => 80,
+       'line' => 85,
        'canBeIgnored' => true,
        'filePath' => 'D:\\apps\\profresh\\app\\Models\\Conversation.php',
        'traitFilePath' => NULL,
        'tip' => NULL,
-       'nodeLine' => 80,
+       'nodeLine' => 85,
        'nodeType' => 'PHPStan\\Node\\InClassMethodNode',
        'identifier' => 'missingType.generics',
        'metadata' => 
@@ -17209,7 +17209,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Actions\\ProjectMetrics\\ActivityHealthMetricAction.php' => 
   array (
-    'fileHash' => '1a0a41643ee55f7ec9bbd2f955c8136546803d7b',
+    'fileHash' => '5cc0a6659193b224c142e8edd16be91402688aad',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Actions\\ProjectMetrics\\ProjectHealthMetricAction.php',
@@ -17268,7 +17268,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Actions\\ProjectMetrics\\TeamCollaborationMetricAction.php' => 
   array (
-    'fileHash' => '3394c6c52a83240841e52af616a4f6ac264927a7',
+    'fileHash' => '19dcb1bbb985138f6d33ba9a8cbdede4822c5027',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Actions\\ProjectMetrics\\ProjectHealthMetricAction.php',
@@ -17365,7 +17365,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\DataTransferObjects\\Auth\\AuthPayload.php' => 
   array (
-    'fileHash' => 'e24a14c298aaeba47f422ea6cb14c818e74da331',
+    'fileHash' => '9f4dcadebeaa9689bf83aaa0fea4d59affdd01cd',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\Auth\\LoginController.php',
@@ -17686,7 +17686,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Exceptions\\Handler.php' => 
   array (
-    'fileHash' => '0cd07a804c4135287d87e2b598c9407cd6167130',
+    'fileHash' => '2daff08f5a710c55a2d77f27e2b3ecb3c5fd1530',
     'dependentFiles' => 
     array (
     ),
@@ -17779,14 +17779,14 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\Auth\\LoginController.php' => 
   array (
-    'fileHash' => 'dcfd866ca975517dbb0065a869b6d4052dea33ea',
+    'fileHash' => 'bfa7f03f4387e898f98154adaddcc85c7b8a322f',
     'dependentFiles' => 
     array (
     ),
   ),
   'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\Auth\\OAuthController.php' => 
   array (
-    'fileHash' => '0bbf03e2a31274190153be71161a6f14cba2ba0a',
+    'fileHash' => '25ea6fcef70679767803d6799aa1c1a150643652',
     'dependentFiles' => 
     array (
     ),
@@ -17807,14 +17807,14 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\Auth\\SpaAuthController.php' => 
   array (
-    'fileHash' => 'e45cbc0a85532d31ec9ad38cdddfb0cb39877b9a',
+    'fileHash' => '4306471badf41a1f44f2390b73538c6d344b87c8',
     'dependentFiles' => 
     array (
     ),
   ),
   'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\Auth\\TwoFactorController.php' => 
   array (
-    'fileHash' => '223ee00af3bcb37c773d6ccc87424b0cfb90e97f',
+    'fileHash' => '245be83b3a253811b89b2524b1fe87f45b04ee85',
     'dependentFiles' => 
     array (
     ),
@@ -18246,7 +18246,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Http\\Requests\\Api\\V1\\Auth\\LoginUserRequest.php' => 
   array (
-    'fileHash' => 'f6dd3f35c6731698c9472216fb39675fadb0e805',
+    'fileHash' => '6bd7f11445ab44fec6d069a073f7ae95109e6b27',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\Auth\\LoginController.php',
@@ -18272,7 +18272,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Http\\Requests\\Api\\V1\\Auth\\TwoFactorLoginRequest.php' => 
   array (
-    'fileHash' => 'dd3b4cd56ab2144fa0bffdcbd8ba73a899200501',
+    'fileHash' => 'c92f3e05808af9e9d2d49e2e83af86f51c6db253',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\Auth\\TwoFactorController.php',
@@ -18453,7 +18453,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\ConversationResource.php' => 
   array (
-    'fileHash' => '0fe507173b65ae72c0954cebc5013be2a57e2c31',
+    'fileHash' => 'bc52c0aa3918d23959274881144df74e9b520cf0',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Events\\NewMessage.php',
@@ -18600,7 +18600,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\TokenResource.php' => 
   array (
-    'fileHash' => '5ce995bb23a0ea2d8b3634b96066679100591bc4',
+    'fileHash' => '795f01fb593629ca84ca88916903f459d8af0c5f',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\TokenController.php',
@@ -18608,7 +18608,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Http\\Resources\\Api\\V1\\UserActivitiesResource.php' => 
   array (
-    'fileHash' => '6f6d61cfbaa9ebaf575fbeabd258fc03b06b568b',
+    'fileHash' => 'aa2c3892bdc63922963a5d83275a9931890cf3e6',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\V1\\ProjectDashboardController.php',
@@ -18896,7 +18896,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Models\\Conversation.php' => 
   array (
-    'fileHash' => 'bdbbb8a9d54b767a176c4fe4907d2287c1121417',
+    'fileHash' => '3a4b5ead60e60ed5b8a88000d8ed4b4c81f0f810',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Events\\NewMessage.php',
@@ -19639,7 +19639,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Services\\Api\\V1\\Auth\\LoginUserService.php' => 
   array (
-    'fileHash' => '11431bdcbf2683b773959590918bddb906b1d9da',
+    'fileHash' => 'c8c068abd91546b163762dc2be219701bf51f2ba',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Http\\Controllers\\Api\\Auth\\LoginController.php',
@@ -19889,7 +19889,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Services\\Insights\\TeamCollaborationInsightBuilder.php' => 
   array (
-    'fileHash' => 'a3024dafe36181b1114f66bded1ff61d9029df97',
+    'fileHash' => '1a3f0cff293db1127f19b3ce3a0ddd132f8c2435',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\ProjectInsightService.php',
@@ -19914,7 +19914,7 @@ return [
   ),
   'D:\\apps\\profresh\\app\\Services\\TwoFactor\\TwoFactorStateManager.php' => 
   array (
-    'fileHash' => 'c7cf6066c6bb41cc46512d7ac231daad439e2c42',
+    'fileHash' => '2ca12874c3ddb7d7ac1cb1758eb087d5c632e757',
     'dependentFiles' => 
     array (
       0 => 'D:\\apps\\profresh\\app\\Services\\Api\\V1\\Auth\\LoginUserService.php',
@@ -20435,14 +20435,14 @@ return [
   ),
   'D:\\apps\\profresh\\tests\\Feature\\Api\\Auth\\AuthenticationTest.php' => 
   array (
-    'fileHash' => '7c36c385fe8c6bbc83f662c16636fee74d5a5c65',
+    'fileHash' => 'ca1fccebd371f16171c46f3113cbc16567cf1152',
     'dependentFiles' => 
     array (
     ),
   ),
   'D:\\apps\\profresh\\tests\\Feature\\Api\\Auth\\OAuthTest.php' => 
   array (
-    'fileHash' => 'f34f771086f1959b0aa495dfa431a519474cdfe2',
+    'fileHash' => 'f45ed5072be47f8296b8a1c68fcbefca589f2b8d',
     'dependentFiles' => 
     array (
     ),
@@ -20456,7 +20456,7 @@ return [
   ),
   'D:\\apps\\profresh\\tests\\Feature\\Api\\Auth\\TwoFactorAuthenticationTest.php' => 
   array (
-    'fileHash' => '81e8091fc5ed382b5a3877d389d8da2e59ee4e41',
+    'fileHash' => '6d968454be78fc12c45ab45ae8fbf3b2133af415',
     'dependentFiles' => 
     array (
     ),
@@ -21002,7 +21002,7 @@ return [
   ),
   'D:\\apps\\profresh\\tests\\Unit\\Services\\TwoFactorStateManagerTest.php' => 
   array (
-    'fileHash' => '653b1728dc76e6a2c77ca3f765082be91a9455ef',
+    'fileHash' => '74f5a78b3a01300167e169371aa3b926f4ae70fc',
     'dependentFiles' => 
     array (
     ),
@@ -39358,6 +39358,8 @@ return [
       \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
          'phpDocString' => '/**
  * @mixin \\App\\Models\\Conversation
+ *
+ * @property-read string|null $file_url
  */',
          'namespace' => 'App\\Http\\Resources\\Api\\V1',
          'uses' => 
@@ -44892,7 +44894,27 @@ return [
     0 => 
     \PHPStan\Dependency\ExportedNode\ExportedClassNode::__set_state(array(
        'name' => 'App\\Models\\Conversation',
-       'phpDoc' => NULL,
+       'phpDoc' => 
+      \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
+         'phpDocString' => '/**
+ * @property string|null $file
+ * @property-read string|null $file_url
+ */',
+         'namespace' => 'App\\Models',
+         'uses' => 
+        array (
+          'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
+          'model' => 'Illuminate\\Database\\Eloquent\\Model',
+          'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
+          'collection' => 'Illuminate\\Support\\Collection',
+          'log' => 'Illuminate\\Support\\Facades\\Log',
+          'storage' => 'Illuminate\\Support\\Facades\\Storage',
+          'throwable' => 'Throwable',
+        ),
+         'constUses' => 
+        array (
+        ),
+      )),
        'abstract' => false,
        'final' => false,
        'extends' => 'Illuminate\\Database\\Eloquent\\Model',
@@ -45078,6 +45100,24 @@ return [
            'final' => false,
            'static' => false,
            'returnType' => '?string',
+           'parameters' => 
+          array (
+          ),
+           'attributes' => 
+          array (
+          ),
+        )),
+        7 => 
+        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
+           'name' => 'booted',
+           'phpDoc' => NULL,
+           'byRef' => false,
+           'public' => false,
+           'private' => false,
+           'abstract' => false,
+           'final' => false,
+           'static' => true,
+           'returnType' => 'void',
            'parameters' => 
           array (
           ),
@@ -54625,17 +54665,6 @@ return [
               array (
               ),
             )),
-            1 => 
-            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
-               'name' => 'password',
-               'type' => 'string',
-               'byRef' => false,
-               'variadic' => false,
-               'hasDefault' => false,
-               'attributes' => 
-              array (
-              ),
-            )),
           ),
            'attributes' => 
           array (
@@ -54838,17 +54867,6 @@ return [
             \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
                'name' => 'user',
                'type' => 'App\\Models\\User',
-               'byRef' => false,
-               'variadic' => false,
-               'hasDefault' => false,
-               'attributes' => 
-              array (
-              ),
-            )),
-            1 => 
-            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
-               'name' => 'request',
-               'type' => 'Illuminate\\Http\\Request',
                'byRef' => false,
                'variadic' => false,
                'hasDefault' => false,

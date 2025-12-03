@@ -38,7 +38,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'D:\\apps\\profresh\\tests\\Feature\\Api\\Auth\\AuthenticationTest.php' => 
     array (
-      0 => '7c36c385fe8c6bbc83f662c16636fee74d5a5c65',
+      0 => 'ca1fccebd371f16171c46f3113cbc16567cf1152',
       1 => 
       array (
         0 => 'tests\\feature\\api\\auth\\authenticationtest',
@@ -60,7 +60,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'D:\\apps\\profresh\\tests\\Feature\\Api\\Auth\\OAuthTest.php' => 
     array (
-      0 => 'f34f771086f1959b0aa495dfa431a519474cdfe2',
+      0 => 'f45ed5072be47f8296b8a1c68fcbefca589f2b8d',
       1 => 
       array (
         0 => 'tests\\feature\\api\\auth\\oauthtest',
@@ -95,7 +95,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'D:\\apps\\profresh\\tests\\Feature\\Api\\Auth\\TwoFactorAuthenticationTest.php' => 
     array (
-      0 => '81e8091fc5ed382b5a3877d389d8da2e59ee4e41',
+      0 => '6d968454be78fc12c45ab45ae8fbf3b2133af415',
       1 => 
       array (
         0 => 'tests\\feature\\api\\auth\\twofactorauthenticationtest',
@@ -1336,7 +1336,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'D:\\apps\\profresh\\tests\\Unit\\Services\\TwoFactorStateManagerTest.php' => 
     array (
-      0 => '653b1728dc76e6a2c77ca3f765082be91a9455ef',
+      0 => '74f5a78b3a01300167e169371aa3b926f4ae70fc',
       1 => 
       array (
         0 => 'tests\\unit\\services\\twofactorstatemanagertest',

@@ -2,6 +2,6 @@
 
 // variadic-method-Tests\Feature\Api\Auth\TwoFactorAuthenticationTest-enableTwoFactorForUser-D:\apps\profresh\tests\Feature\Api\Auth\TwoFactorAuthenticationTest.php
 return \PHPStan\Cache\CacheItem::__set_state(array(
-   'variableKey' => '1764604083-v4',
+   'variableKey' => '1764662551-v4',
    'data' => false,
 ));

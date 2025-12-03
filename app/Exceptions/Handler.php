@@ -19,6 +19,7 @@ use Throwable;
 class Handler extends ExceptionHandler
 {
     private const API_PREFIX = 'api/*';
+
     /**
      * A list of the exception types that are not reported.
      *
