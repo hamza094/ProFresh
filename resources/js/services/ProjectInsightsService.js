@@ -54,7 +54,7 @@ class ProjectInsightsService {
 
       // Expect flattened API response shape from ProjectInsightsResource:
       // { success, project_id, project_name, insights, generated_at, sections_requested, message }
-      if (resp && resp.success) {
+      if (resp?.success) {
         const insights = Array.isArray(resp.insights) ? resp.insights : [];
         const project_id = resp.project_id ?? null;
         const project_name = resp.project_name ?? null;

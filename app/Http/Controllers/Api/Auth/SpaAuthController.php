@@ -23,7 +23,7 @@ class SpaAuthController extends ApiController
      */
     public function loginSpa(LoginUserRequest $request): JsonResponse
     {
-        $result = $this->loginUserService->startLoginFlow($request->email, $request->password);
+        $result = $this->loginUserService->startLoginFlow($request->email);
 
         $user = $result->user;
 

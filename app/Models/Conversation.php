@@ -86,28 +86,44 @@ class Conversation extends Model
             ->get();
     }
 
-    public function getFileUrlAttribute(): ?string
+    
+
+   /**
+     * Resolve the storage path for a file. If given a full HTTP URL, parse
+     * and return the path portion without a leading slash. Returns an empty
+     * string when the path cannot be determined.
+     */
+    private function resolveStoragePath(?string $filePath): string
     {
-        if (! $this->file) {
-            return null;
+        if (! $filePath) {
+            return '';
         }
 
-        if (str_starts_with($this->file, 'http')) {
-            return $this->file;
+        $path = $filePath;
+        if (str_starts_with($filePath, 'http')) {
+            try {
+                $path = ltrim(parse_url($filePath, PHP_URL_PATH) ?: '', '/');
+            } catch (Throwable $e) {
+                Log::warning('Failed parsing file URL', ['file' => $filePath, 'error' => $e->getMessage()]);
+                $path = '';
+            }
+        }
+
+        return $path;
+    }
+
+    private function deleteFileIfExists(?string $filePath): void
+    {
+        $path = $this->resolveStoragePath($filePath);
+
+        if ($path === '') {
+            return;
         }
 
         try {
-            return Storage::disk('s3')->temporaryUrl(
-                $this->file,
-                now()->addMinutes(self::FILE_URL_TTL_MINUTES)
-            );
-        } catch (Throwable $e) {
-            Log::warning('Failed generating conversation file URL', [
-                'conversation_id' => $this->id,
-                'error' => $e->getMessage(),
-            ]);
-
-            return null;
+            Storage::disk('s3')->delete($path);
+        } catch (Exception $e) {
+            Log::error('S3 file deletion error', ['file' => $filePath, 'error' => $e->getMessage()]);
         }
     }
 }
