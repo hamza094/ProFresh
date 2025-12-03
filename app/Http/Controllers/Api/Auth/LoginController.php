@@ -23,7 +23,7 @@ class LoginController extends ApiController
      */
     public function login(LoginUserRequest $request): JsonResponse
     {
-        $result = $this->loginUserService->startLoginFlow($request->email, $request->password);
+        $result = $this->loginUserService->startLoginFlow($request->email);
 
         $user = $result->user;
 
@@ -31,7 +31,7 @@ class LoginController extends ApiController
             return $response;
         }
 
-        $payload = $this->loginUserService->performApiLogin($user, $request);
+        $payload = $this->loginUserService->performApiLogin($user);
 
         return response()->json($payload->toArray(), 200);
     }

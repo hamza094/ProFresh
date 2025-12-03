@@ -5,7 +5,7 @@ export default {
       const data = response?.data;
 
       // Log structured error details only in development to avoid leaking information in production.
-      if (typeof import.meta !== 'undefined' && import.meta.env && import.meta.env.DEV) {
+      if (import.meta?.env?.DEV) {
         console.debug('API error response', {
           status: response?.status,
           message: data?.message,
@@ -15,7 +15,7 @@ export default {
       }
 
       if (data?.errors) {
-        if (typeof this.errors !== 'undefined') {
+        if (this.errors !== undefined) {
           this.errors = data.errors;
         }
         return;

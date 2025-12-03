@@ -68,14 +68,14 @@ export default {
   },
   computed: {
     attributes() {
-      return [
-        ...this.activities.map((activity) => ({
+      return this.activities
+        .map((activity) => ({
           dates: activity.created_at ? moment(activity.created_at).toDate() : null,
           bar: { color: activity.color },
           popover: true,
           customData: activity,
-        })),
-      ].filter((attr) => attr.dates !== null);
+        }))
+        .filter((attr) => attr.dates !== null);
     },
   },
   mounted() {

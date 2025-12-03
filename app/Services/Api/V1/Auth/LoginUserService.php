@@ -20,7 +20,7 @@ class LoginUserService
     /**
      * Start the login flow shared by different controllers.
      */
-    public function startLoginFlow(string $email, string $password): LoginResult
+    public function startLoginFlow(string $email): LoginResult
     {
         $user = User::where('email', $email)->first();
         $twoFactor = $this->initializeTwoFactorState($user);
@@ -75,7 +75,7 @@ class LoginUserService
     /**
      * Complete the login for the requested and return the payload.
      */
-    public function performApiLogin(User $user, Request $request): AuthPayload
+    public function performApiLogin(User $user): AuthPayload
     {
         $token = $this->createApiToken($user);
 

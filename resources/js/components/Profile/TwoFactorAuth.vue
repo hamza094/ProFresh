@@ -311,7 +311,7 @@ export default {
     // Initialize Bootstrap tooltips
     this.$nextTick().then(() => {
       if (window.bootstrap) {
-        const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+        const tooltipTriggerList = Array.from(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
         tooltipTriggerList.forEach(function (tooltipTriggerEl) {
           new window.bootstrap.Tooltip(tooltipTriggerEl);
         });

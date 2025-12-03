@@ -308,14 +308,13 @@ export default {
     },
 
     removeMember(id) {
-      var self = this;
       this.sweetAlert('Yes, Remove Member').then((result) => {
-        if (result.value) {
+        if (result.isConfirmed) {
           axios
             .get('/projects/' + this.slug + '/remove/member/' + id, { useProgress: true })
             .then((response) => {
               this.detachMember(response.data.user.uuid);
-              self.$vToastify.info(response.data.message);
+              this.$vToastify.info(response.data.message);
             })
             .catch((error) => {
               this.$vToastify.warning(error.response?.data?.error || 'Failed to remove the member. Try again.');
@@ -326,7 +325,7 @@ export default {
 
     cancelRequest(userId) {
       this.sweetAlert('Yes, cancel request').then((result) => {
-        if (!result.value) return;
+        if (!result.isConfirmed) return;
 
         axios
           .get(`/projects/${this.slug}/cancel/invitation/users/${userId}`, { useProgress: true })

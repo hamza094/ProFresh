@@ -41,7 +41,7 @@ final class TeamCollaborationInsightBuilder implements InsightBuilderInterface
         $participationRate = $this->calculateParticipationRate($memberCount, $participantCount);
 
         return [
-            'type' => $type = $this->determineInsightType($score, $participationRate),
+            'type' => $this->determineInsightType($score, $participationRate),
             'title' => $this->generateTitle($score, $participationRate),
             'message' => $this->generateMessage($score, $memberCount, $meetingCount, $participationRate, $participantCount),
             'data' => ['value' => $score],

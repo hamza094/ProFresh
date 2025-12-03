@@ -79,9 +79,7 @@ final class TwoFactorStateManager
         [$cachePrefix] = $this->getLoginStateConfig();
 
         /** @var array<string,mixed>|null $state */
-        $state = Cache::get($cachePrefix.$token);
-
-        return $state;
+        return Cache::get($cachePrefix.$token);
     }
 
     /**

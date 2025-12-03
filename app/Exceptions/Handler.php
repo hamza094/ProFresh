@@ -18,6 +18,7 @@ use Throwable;
 
 class Handler extends ExceptionHandler
 {
+    private const API_PREFIX = 'api/*';
     /**
      * A list of the exception types that are not reported.
      *
@@ -56,7 +57,7 @@ class Handler extends ExceptionHandler
         $this->reportable(function (Throwable $e): void {});
 
         $this->renderable(function (NotFoundHttpException $e, $request) {
-            if ($request->is('api/*')) {
+            if ($request->is(self::API_PREFIX)) {
                 return response()->json([
                     'message' => 'Sorry Record not found.',
                 ], 404);
@@ -64,7 +65,7 @@ class Handler extends ExceptionHandler
         });
 
         $this->renderable(function (HttpException $e, $request) {
-            if ($request->is('api/*')) {
+            if ($request->is(self::API_PREFIX)) {
                 return response()->json([
                     'message' => $e->getMessage(),
                 ], $e->getStatusCode());
@@ -72,7 +73,7 @@ class Handler extends ExceptionHandler
         });
 
         $this->renderable(function (MethodNotAllowedHttpException $e, $request) {
-            if ($request->is('api/*')) {
+            if ($request->is(self::API_PREFIX)) {
                 return response()->json([
                     'message' => 'The HTTP method used for the request is not allowed.',
                 ], 405);
@@ -80,7 +81,7 @@ class Handler extends ExceptionHandler
         });
 
         $this->renderable(function (\Illuminate\Validation\ValidationException $e, $request) {
-            if ($request->is('api/*')) {
+            if ($request->is(self::API_PREFIX)) {
                 return response()->json([
                     'message' => 'Validation Error',
                     'errors' => $e->errors(),
@@ -89,7 +90,7 @@ class Handler extends ExceptionHandler
         });
 
         $this->renderable(function (LaravelPaddleException $e, $request) {
-            if ($request->is('api/*')) {
+            if ($request->is(self::API_PREFIX)) {
                 return response()->json([
                     'message' => 'A payment error occurred: '.$e->getMessage(),
                 ], 422);
@@ -97,7 +98,7 @@ class Handler extends ExceptionHandler
         });
 
         $this->renderable(function (ZoomException $e, $request) {
-            if ($request->is('api/*')) {
+            if ($request->is(self::API_PREFIX)) {
                 return response()->json([
                     'error' => $e->getMessage() ?: 'Zoom error',
                 ], 400);
@@ -105,7 +106,7 @@ class Handler extends ExceptionHandler
         });
 
         $this->renderable(function (NotFoundException $e, $request) {
-            if ($request->is('api/*')) {
+            if ($request->is(self::API_PREFIX)) {
                 return response()->json([
                     'error' => $e->getMessage() ?: 'Resource not found',
                 ], 404);
@@ -113,7 +114,7 @@ class Handler extends ExceptionHandler
         });
 
         $this->renderable(function (UnauthorizedException $e, $request) {
-            if ($request->is('api/*')) {
+            if ($request->is(self::API_PREFIX)) {
                 return response()->json([
                     'error' => $e->getMessage() ?: 'Unauthorized',
                 ], 403);
@@ -121,7 +122,7 @@ class Handler extends ExceptionHandler
         });
 
         $this->renderable(function (RateLimitReachedException $e, $request) {
-            if ($request->is('api/*')) {
+            if ($request->is(self::API_PREFIX)) {
                 return response()->json([
                     'error' => 'Rate limit exceeded. Please try again in '.$e->getLimit()->getRemainingSeconds().' seconds.',
                 ], 429);
@@ -129,7 +130,7 @@ class Handler extends ExceptionHandler
         });
 
         $this->renderable(function (S3Exception $e, $request) {
-            if ($request->is('api/*')) {
+            if ($request->is(self::API_PREFIX)) {
                 return response()->json([
                     'message' => 'S3 Error: '.$e->getMessage(),
                 ], 500);

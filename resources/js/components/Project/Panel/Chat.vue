@@ -380,7 +380,7 @@ export default {
     listenForNewMessage() {
       Echo.private(`project.${this.slug}.conversations`)
         .listen('NewMessage', (e) => {
-          if (!this.conversations.data.find((conv) => conv.id === e.id)) {
+          if (!this.conversations.data.some((conv) => conv.id === e.id)) {
             this.conversations.data.push(e);
           }
         })

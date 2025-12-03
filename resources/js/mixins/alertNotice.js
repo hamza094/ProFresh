@@ -16,13 +16,12 @@ export default {
     },
 
     performAction($message, $axiosCall) {
-      var self = this;
       this.sweetAlert($message).then((result) => {
-        if (result.value) {
+        if (result.isConfirmed) {
           $axiosCall
             .then((response) => {
               this.$vToastify.success(response.data.message);
-              self.$router.push('/dashboard');
+              this.$router.push('/dashboard');
             })
             .catch((error) => {
               // show a helpful message and log the error for debugging

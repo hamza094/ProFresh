@@ -11,6 +11,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
  */
 class TokenResource extends JsonResource
 {
+    private const DATETIME_FORMAT = 'Y-m-d H:i:s';
     /**
      * Transform the resource into an array.
      *
@@ -46,21 +47,21 @@ class TokenResource extends JsonResource
              *
              * @example "2025-07-08 12:34:56"
              */
-            'last_used_at' => $this->last_used_at ? $this->last_used_at->format('Y-m-d H:i:s') : null,
+            'last_used_at' => $this->last_used_at ? $this->last_used_at->format(self::DATETIME_FORMAT) : null,
 
             /**
              * Token creation date (Y-m-d H:i:s)
              *
              * @example "2025-07-01 09:00:00"
              */
-            'created_at' => $this->created_at ? $this->created_at->format('Y-m-d H:i:s') : null,
+            'created_at' => $this->created_at ? $this->created_at->format(self::DATETIME_FORMAT) : null,
 
             /**
              * Token expiration date (Y-m-d H:i:s), or null if does not expire
              *
              * @example "2025-12-31 23:59:59"
              */
-            'expires_at' => $this->expires_at ? $this->expires_at->format('Y-m-d H:i:s') : null,
+            'expires_at' => $this->expires_at ? $this->expires_at->format(self::DATETIME_FORMAT) : null,
         ];
     }
 }
